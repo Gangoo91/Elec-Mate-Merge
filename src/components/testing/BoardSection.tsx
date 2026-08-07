@@ -2,6 +2,8 @@
 import React, { useMemo, useState, useCallback, useEffect, useRef, memo } from 'react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Button } from '@/components/ui/button';
+import ScheduleToolbar from './ScheduleToolbar';
+import type { ZsBasis } from '@/utils/regulationChecker/zsValidator';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -46,6 +48,14 @@ export interface BoardToolCallbacks {
    * thing anyone does one-handed at a consumer unit.
    */
   onFindReplace?: () => void;
+  /** Flip the order of every circuit on this board. */
+  onReverseOrder?: () => void;
+  /** Which maximum a measured Zs is judged against (100% or 0.8 ×). */
+  zsBasis?: ZsBasis;
+  onZsBasisChange?: (basis: ZsBasis) => void;
+  /** Whether the grid marks non-compliant cells and rows. */
+  showChecks?: boolean;
+  onShowChecksChange?: (show: boolean) => void;
 }
 
 interface BoardSectionProps {
@@ -867,100 +877,25 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 circuit or tools at all. flex-wrap lets the buttons wrap on
                 narrow landscape widths. */}
             {children && !isMobile && (
-              <div className="flex flex-wrap items-center gap-3 border-t border-white/[0.1] pt-4">
-                <h3 className="text-sm font-semibold text-white">Circuits</h3>
-                <span className="text-[12px] tabular-nums text-white/60">{circuitCount}</span>
-                {showTools && tools && (
-                  <div className="ml-auto flex items-center gap-2 shrink-0">
-                    {/* One flat bar, not a dropdown.
-                        Every tool is a peer here — a menu hid them behind an
-                        extra click and, worse, hid whether they existed at all
-                        (five were passed in and never rendered for months).
-                        Spread across a single row, the toolbar is a statement
-                        of what this board can do.
-
-                        Order follows the job: capture, then correct, then
-                        check, then add. Voice sits last as a mode rather than
-                        an action. `flex-wrap` lets it fold on a narrow desktop
-                        instead of overflowing. */}
-                    {/* Grouped by what the tool does to the schedule, with a
-                        hairline between groups. Eight identical grey buttons
-                        gave the eye nothing to sort by — the difference between
-                        "read a board into the table" and "sweep a value across
-                        it" matters, and one of them is far harder to undo.
-
-                        The tint is carried on the border, not the fill: a
-                        coloured wash on eight buttons turns the toolbar into a
-                        rainbow, whereas a coloured edge groups them and leaves
-                        the bar calm. */}
-                    {[
-                      { fn: tools.onScanBoard, label: 'AI scan', group: 'capture' },
-                      { fn: tools.onQuickRcdPresets, label: 'RCD presets', group: 'edit' },
-                      { fn: tools.onFindReplace, label: 'Find & replace', group: 'edit' },
-                    ]
-                      .filter((t) => t.fn)
-                      .map((t, i, arr) => (
-                        <React.Fragment key={t.label}>
-                          {i > 0 && arr[i - 1].group !== t.group && (
-                            <span aria-hidden className="mx-1 h-6 w-px shrink-0 bg-white/[0.14]" />
-                          )}
-                          <Button
-                            onClick={t.fn}
-                            className={cn(
-                              'h-11 px-3 rounded-xl border bg-white/[0.06] text-white text-[13px] font-semibold transition-colors duration-150 ease-out touch-manipulation',
-                              t.group === 'capture'
-                                ? 'border-sky-400/30 hover:bg-sky-400/[0.12]'
-                                : 'border-violet-400/30 hover:bg-violet-400/[0.12]'
-                            )}
-                          >
-                            {t.label}
-                          </Button>
-                        </React.Fragment>
-                      ))}
-                    <span aria-hidden className="mx-1 h-6 w-px shrink-0 bg-white/[0.14]" />
-                    {tools.onValidate && (
-                      <Button
-                        onClick={tools.onValidate}
-                        className="h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation border border-white/[0.12] bg-white/[0.06] text-white transition-colors duration-150 ease-out hover:bg-white/[0.12]"
-                      >
-                        Validate
-                        {/* Solid pill, not a translucent wash on the whole
-                            button — amber at low opacity over near-black turns
-                            olive/brown. Full-opacity accent on a small element
-                            reads clean and keeps the toolbar calm. */}
-                        {tools.validateIssueCount ? (
-                          <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-bold tabular-nums text-black">
-                            {tools.validateIssueCount}
-                          </span>
-                        ) : null}
-                      </Button>
-                    )}
-                    <Button
-                      onClick={onAddCircuit}
-                      className="h-11 px-3 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-semibold touch-manipulation"
-                    >
-                      Add circuit
-                    </Button>
-                    <Button
-                      onClick={tools.onVoiceToggle}
-                      disabled={tools.voiceConnecting}
-                      className={cn(
-                        'h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation',
-                        tools.voiceActive
-                          ? 'bg-green-500 text-black hover:bg-green-500/90'
-                          : 'border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white'
-                      )}
-                    >
-                      {tools.voiceActive
-                        ? 'Stop'
-                        : tools.voiceConnecting
-                          ? 'Connecting'
-                          : 'Voice'}
-                    </Button>
-                  </div>
-                )}
-              </div>
+              <ScheduleToolbar
+                circuitCount={circuitCount}
+                onAddCircuit={onAddCircuit}
+                onScanBoard={showTools ? tools?.onScanBoard : undefined}
+                onVoiceToggle={showTools ? tools?.onVoiceToggle : undefined}
+                voiceActive={tools?.voiceActive}
+                voiceConnecting={tools?.voiceConnecting}
+                onQuickRcdPresets={showTools ? tools?.onQuickRcdPresets : undefined}
+                onFindReplace={showTools ? tools?.onFindReplace : undefined}
+                onReverseOrder={showTools ? tools?.onReverseOrder : undefined}
+                onValidate={showTools ? tools?.onValidate : undefined}
+                validateIssueCount={tools?.validateIssueCount}
+                zsBasis={tools?.zsBasis}
+                onZsBasisChange={showTools ? tools?.onZsBasisChange : undefined}
+                showChecks={tools?.showChecks}
+                onShowChecksChange={showTools ? tools?.onShowChecksChange : undefined}
+              />
             )}
+
 
             {/* Mobile tools bar — text-only buttons on the neutral recipe */}
             {isMobile && showTools && tools && (
@@ -1008,6 +943,55 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     </Button>
                   )}
                 </div>
+
+                {/* The Zs basis decides which circuits fail, and it is set for
+                    the whole certificate — so a phone that inherits 80% from
+                    the desktop has to say so. Reading a clean grid without
+                    knowing which limit produced it is the failure this exists
+                    to prevent. Sits below the actions because it is state, not
+                    something you do. */}
+                {(tools.onZsBasisChange || tools.onShowChecksChange) && (
+                  <div className="mt-2 flex items-center gap-2">
+                    {tools.onZsBasisChange && (
+                      <div className="flex h-11 flex-1 items-center gap-1 rounded-xl border border-white/[0.12] bg-white/[0.04] px-1">
+                        <span className="px-1.5 text-[12px] font-medium text-white">Zs</span>
+                        {([100, 80] as const).map((basis) => (
+                          <button
+                            key={basis}
+                            type="button"
+                            onClick={() => tools.onZsBasisChange?.(basis)}
+                            aria-pressed={(tools.zsBasis ?? 100) === basis}
+                            className={cn(
+                              'h-9 flex-1 rounded-lg text-[12px] font-semibold tabular-nums touch-manipulation',
+                              (tools.zsBasis ?? 100) === basis
+                                ? 'bg-elec-yellow text-black'
+                                : 'text-white'
+                            )}
+                          >
+                            {basis}%
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {tools.onShowChecksChange && (
+                      <button
+                        type="button"
+                        onClick={() => tools.onShowChecksChange?.(!(tools.showChecks ?? true))}
+                        aria-pressed={tools.showChecks ?? true}
+                        className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-semibold text-white touch-manipulation"
+                      >
+                        <span
+                          aria-hidden
+                          className={cn(
+                            'h-2 w-2 rounded-full',
+                            (tools.showChecks ?? true) ? 'bg-elec-yellow' : 'bg-white/25'
+                          )}
+                        />
+                        {(tools.showChecks ?? true) ? 'Checks' : 'Checks off'}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

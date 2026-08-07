@@ -470,7 +470,7 @@ export default function ConsumerUnitReplacementManchesterPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Manchester | Fuse Board Upgrade"
-      description="How much does a consumer unit replacement cost in Manchester in 2026? Local pricing for fuse board upgrades across Greater Manchester…"
+      description="How much does a consumer unit replacement cost in Manchester in 2026? Local pricing for fuse board upgrades across Greater Manchester."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

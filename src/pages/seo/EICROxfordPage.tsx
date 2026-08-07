@@ -590,7 +590,7 @@ export default function EICROxfordPage() {
   return (
     <GuideTemplate
       title="EICR Oxford | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Oxford for 2026. Landlord legal requirements, Oxford City Council enforcement, Victorian HMO housing stock findings, observation codes…"
+      description="EICR costs in Oxford for 2026. Landlord legal requirements, Oxford City Council enforcement, Victorian HMO housing stock findings, observation codes."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

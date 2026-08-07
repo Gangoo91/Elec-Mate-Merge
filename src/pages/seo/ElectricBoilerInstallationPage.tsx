@@ -1,8 +1,30 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import { Zap, Thermometer, FileCheck2, ClipboardCheck, ShieldCheck } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared surface classes — edge-to-edge on phones, inset from sm: up
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-5 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-5 sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const noteCn =
+  '-mx-5 my-5 rounded-none border-y border-elec-yellow/30 bg-elec-yellow/[0.07] p-5 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const tableWrap =
+  '-mx-5 my-5 overflow-x-auto border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const tableCn = 'w-full min-w-[36rem] border-collapse text-left text-sm text-white';
+const thCn =
+  'whitespace-nowrap border-b border-white/[0.16] bg-white/[0.05] px-4 py-3 font-semibold text-white';
+const tdCn = 'border-b border-white/[0.08] px-4 py-3 align-top text-white';
+
+const subHeadCn = 'mb-3 text-[15px] font-semibold tracking-tight text-white';
+const listCn = 'my-4 list-disc space-y-2 pl-5 text-white marker:text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -14,9 +36,9 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'types', label: 'Types of Electric Boiler' },
   { id: 'sizing', label: 'Sizing — kW Calculation' },
-  { id: 'wiring', label: 'Wiring Requirements (BS 7671)' },
+  { id: 'wiring', label: 'Circuit Sizing & Wiring' },
+  { id: 'types', label: 'Types of Electric Boiler' },
   { id: 'part-p', label: 'Part P Notification' },
   { id: 'costs', label: 'Typical Installation Costs' },
   { id: 'vs-gas', label: 'Electric vs Gas Boiler' },
@@ -26,48 +48,63 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Electric boilers require a dedicated radial circuit — typically 10mm\u00b2 twin and earth cable protected by a 45A double-pole MCB for boilers up to 9.6kW. Larger boilers (12kW to 15kW) may require 16mm\u00b2 cable on a 63A circuit. Always size the circuit from first principles using BS 7671 Chapter 43.',
-  'The boiler kW output must be sized to meet the calculated heat loss of the property. A rough rule for well-insulated UK homes is 1kW per 10m\u00b2 of floor space, but a proper heat loss calculation per BS EN 12831 is required for accurate sizing.',
-  'Electric boiler installation in a dwelling that involves a new circuit is notifiable work under Part P of the Building Regulations in England. A registered competent person (NICEIC, NAPIT, ELECSA) can self-certify and notify building control.',
-  'Electric boilers cost between \u00a31,500 and \u00a35,000 to supply and install depending on the boiler type and output. Running costs are higher than gas in pence-per-kWh terms, but the lower installation cost and zero maintenance make them attractive for off-gas properties.',
-  'Flow boilers (also called electric combi or combination boilers) provide both central heating and hot water on demand. Heat battery systems store energy in a ceramic core during cheap-rate periods, offering Economy 7-compatible operation.',
+  'A 9kW single-phase electric boiler draws about 39A at 230V, so it needs a dedicated radial circuit — commonly 10mm² twin and earth on a 40A circuit-breaker. Size every circuit from the design current using Regulation 433.1.1 (Ib ≤ In ≤ Iz) and the correction factors in BS 7671 Appendix 4.',
+  'Note that 45A is not a standard BS EN 60898 circuit-breaker rating. Table 41.3 lists 3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100 and 125A. 45A is a BS 88-3 fuse rating, which is where the figure quoted on many boiler pages comes from.',
+  'A boiler circuit rated above 32A supplying only fixed equipment falls outside Regulation 411.3.2.2, so Table 41.1 does not apply to it. In a TN system the permitted disconnection time is 5s (Regulation 411.3.2.3); in a TT system it is 1s (Regulation 411.3.2.4).',
+  'Boiler output must match the calculated heat loss of the property. A rough rule for well-insulated UK homes is 1kW per 10m² of floor area, but a room-by-room heat loss calculation to BS EN 12831 is what actually sizes the appliance.',
+  'Installing an electric boiler on a new circuit in a dwelling is notifiable under Part P of the Building Regulations in England. An Electrical Installation Certificate is required, and Regulation 644.3 requires it to carry Schedule(s) of Inspection plus Schedule(s) of Circuit Details and Test Results.',
 ];
 
 const faqs = [
   {
-    question: 'Can an electric boiler replace a gas boiler directly?',
-    answer:
-      'Yes, in most cases an electric boiler can replace a gas boiler using the existing radiator and pipework. Electric boilers deliver hot water at similar flow temperatures to gas boilers (typically 55\u00b0C to 75\u00b0C), so existing radiators sized for a gas system are usually appropriate. The key difference is the electrical supply: the boiler requires a dedicated high-current circuit rather than a standard 13A socket. The gas supply pipe must be capped by a Gas Safe registered engineer. The electrical installation must be certificated and notified under Part P.',
-  },
-  {
     question: 'What size circuit does an electric boiler need?',
     answer:
-      'The circuit size depends on the boiler output rating. For a 6kW boiler (26A), a 6mm\u00b2 cable on a 32A double-pole MCB is appropriate. For a 9kW boiler (39A), 10mm\u00b2 cable on a 45A MCB is standard. For a 12kW boiler (52A), 10mm\u00b2 on a 63A MCB should be checked for volt drop, or 16mm\u00b2 used. Always account for the installation method (clipped direct, in conduit, in insulation), grouping, and volt drop requirements of BS 7671. The circuit must terminate at a double-pole isolator adjacent to the boiler.',
+      'Size it from the design current. At 230V a 6kW boiler draws 26A (6mm² twin and earth, 32A circuit-breaker), a 9kW boiler draws 39A (10mm², 40A), a 9.6kW boiler draws 42A (10mm², 50A), a 12kW boiler draws 52A (10mm² with the volt drop verified, or 16mm², on a 63A device) and a 14.4kW boiler draws 63A (16mm², 63A). Anything above about 14.4kW exceeds the 63A top of the usual domestic range and normally needs a three-phase supply. Apply the Appendix 4 correction factors for installation method, ambient temperature, grouping and thermal insulation, and check volt drop against Table 4Ab. The circuit must terminate at a double-pole isolator adjacent to the boiler.',
+  },
+  {
+    question: 'Is 45A the right MCB for a 9kW electric boiler?',
+    answer:
+      'No. 45A is not one of the circuit-breaker ratings tabulated in BS 7671 Table 41.3 for devices to BS EN 60898 — that series runs 3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125A. 45A is a fuse rating (it appears in Table 41.2 under BS 88-3 fuse system C), which is why the figure is so widely repeated for shower and boiler circuits. A 9kW boiler draws 39.1A at 230V, so the correct device under Regulation 433.1.1 is a 40A circuit-breaker, provided the cable rating Iz is at least 40A after correction factors.',
+  },
+  {
+    question: 'What disconnection time applies to an electric boiler circuit?',
+    answer:
+      'Regulation 411.3.2.2 applies the Table 41.1 maximum disconnection times to final circuits rated up to 63A with socket-outlets, and up to 32A supplying only fixed connected current-using equipment. A boiler circuit protected at 40A, 50A or 63A supplying fixed equipment is not covered by that regulation, so Regulation 411.3.2.3 permits 5s in a TN system and Regulation 411.3.2.4 permits 1s in a TT system. Table 41.3 gives the maximum earth fault loop impedance for circuit-breakers for both the 0.4s and the 5s cases.',
+  },
+  {
+    question: 'Does an electric boiler circuit need a 30mA RCD?',
+    answer:
+      'BS 7671 does not impose a blanket 30mA requirement on fixed-equipment circuits. Regulation 411.3.3 applies to socket-outlets rated up to 32A and to mobile equipment up to 32A used outdoors, and Regulation 411.3.4 applies to AC final circuits supplying luminaires in domestic premises — neither covers a boiler. The requirement usually bites through the cable route instead: Regulation 522.6.202 and Table 52.1 require additional protection by a 30mA RCD (Regulation 415.1.1 characteristics) for a cable concealed less than 50mm deep in a wall unless it is mechanically protected to Regulation 522.6.204. In practice most boiler circuits are run in a wall, so an RCBO is the usual answer.',
+  },
+  {
+    question: 'Can an electric boiler replace a gas boiler directly?',
+    answer:
+      'Yes, in most cases an electric boiler can reuse the existing radiators and pipework. Electric boilers deliver hot water at similar flow temperatures to gas boilers (typically 55°C to 75°C), so radiators sized for a gas system are usually appropriate. The difference is the electrical supply: the boiler needs a dedicated high-current circuit, not a 13A socket. The gas supply must be capped by a Gas Safe registered engineer. The electrical work must be certificated and notified under Part P.',
   },
   {
     question: 'Does an electric boiler need a separate consumer unit?',
     answer:
-      'A separate consumer unit is not a regulatory requirement, but may be practical if the existing consumer unit does not have sufficient ways or spare capacity. The boiler circuit needs a dedicated double-pole MCB (not shared with any other circuit). Where the existing board is an older rewirable fuse board or lacks RCD protection, upgrading to a modern split-load or RCBO consumer unit is strongly recommended before adding a high-current boiler circuit.',
-  },
-  {
-    question: 'What is a heat battery electric boiler?',
-    answer:
-      'A heat battery (also called a thermal store or electric thermal storage boiler) stores heat in a high-density ceramic core, charged using cheap-rate electricity during Economy 7 off-peak periods. The stored heat is then used to provide central heating and domestic hot water throughout the day without drawing electricity at the high day rate. Examples include the Sunamp UniQ and Tepeo ZEB. They are particularly suited to homes switching from night storage heating where Economy 7 wiring already exists.',
+      'A separate consumer unit is not a regulatory requirement, but it may be practical if the existing board has no spare ways or insufficient capacity. The boiler needs its own dedicated protective device, not a shared one. Where the existing board is a rewirable fuse board or has no RCD protection, upgrade it before adding a high-current boiler circuit — and check the main switch: Regulation 462.1.201 requires a main switch intended for operation by ordinary persons to interrupt both live conductors of a single-phase supply.',
   },
   {
     question: 'How do I calculate the right kW output for an electric boiler?',
     answer:
-      'The correct method is a room-by-room heat loss calculation per BS EN 12831, which accounts for the building fabric U-values, infiltration, ventilation, and design temperatures. As a quick rule of thumb for a well-insulated UK property: allow approximately 1kW per 10m\u00b2 of heated floor area. A 3-bedroom semi-detached house of around 90m\u00b2 would therefore require approximately a 9kW boiler. Older, poorly insulated properties may need 1.5kW to 2kW per 10m\u00b2. Always err on the side of slightly oversized for comfort, but oversizing significantly increases electricity demand.',
+      'The correct method is a room-by-room heat loss calculation to BS EN 12831, accounting for fabric U-values, infiltration, ventilation and design temperatures. As a rule of thumb for a well-insulated UK property, allow roughly 1kW per 10m² of heated floor area, so a 90m² three-bedroom semi lands near 9kW. Older, poorly insulated properties may need 1.5kW to 2kW per 10m². Oversizing is not free — it pushes up the design current and may force a larger cable, a bigger device, or a supply upgrade.',
+  },
+  {
+    question: 'What is a heat battery electric boiler?',
+    answer:
+      'A heat battery (also called a thermal store or electric thermal storage boiler) stores heat in a dense thermal core, charged on cheap-rate electricity during off-peak periods. The stored heat then serves central heating and domestic hot water through the day without drawing power at the day rate. Tepeo ZEB uses a solid heat core; Sunamp UniQ uses a phase-change material. They suit homes switching from night storage heating where Economy 7 wiring already exists.',
   },
   {
     question: 'Is an electric boiler cheaper to run than gas?',
     answer:
-      'No — at current UK energy prices, electricity costs approximately 3 to 4 times more per kWh than natural gas. A gas boiler at 90% efficiency costs roughly \u00a30.06 to \u00a30.07 per kWh of useful heat. An electric boiler at 100% efficiency costs approximately \u00a30.24 to \u00a30.28 per kWh of useful heat (at April 2024 price cap rates). However, electric boilers have lower installation costs, zero servicing costs, no combustion risk, and no carbon monoxide hazard. For off-gas properties (no gas grid connection), the alternative is often LPG or oil, which are similarly expensive. Pairing with a solar PV system can significantly reduce running costs.',
+      'No. Electricity costs several times more per kWh than mains gas in the UK, and although an electric boiler converts essentially all of that energy to heat while a gas boiler loses some up the flue, the fuel price gap is far wider than the efficiency gap. Always quote running costs from the customer’s current tariff rather than a headline figure. Electric boilers do have lower installation costs, no annual gas service, no combustion products and no carbon monoxide risk. For off-gas properties the realistic alternatives are LPG or oil, which are also expensive, and pairing with solar PV or a time-of-use tariff can cut the gap significantly.',
   },
   {
     question: 'Do electric boilers require annual servicing?',
     answer:
-      'Electric boilers have far fewer moving parts than gas boilers and do not require an annual Gas Safe service. However, manufacturers typically recommend an annual check by a qualified electrician: inspecting the immersion element(s), anode condition, thermostat operation, pressure relief valve, and electrical connections. The electrical installation should also be checked periodically. An EICR on the supply circuit is recommended every 5 years or on change of occupancy.',
+      'Electric boilers have far fewer moving parts than gas boilers and need no Gas Safe service. Manufacturers typically still recommend an annual check of the heating element(s), thermostat, pressure relief valve and electrical connections. For the installation itself, Regulation 652.1 requires the interval between periodic inspections to be determined having regard to the type of installation; a privately rented dwelling in England has a statutory maximum of five years.',
   },
 ];
 
@@ -115,214 +152,265 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
-    id: 'types',
-    heading: 'Types of Electric Boiler',
-    content: (
-      <>
-        <p>
-          Electric boilers are available in several configurations, each suited to different
-          property types and heating requirements. Understanding the differences helps electricians
-          specify the right product and size the electrical supply correctly.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Flow Boilers (Electric Combi)</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                Heat water as it flows through the boiler on demand — no stored hot water cylinder
-                required. Available in outputs from 4kW to 14.4kW. Suitable for smaller properties
-                with lower hot water demand. Examples: Comet, Heatrae Sadia Electromax, EHC.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                Direct replacement for a gas combi boiler. No cold water storage tank required.
-                Requires a dedicated high-current circuit from the consumer unit.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Electric System Boilers (with Cylinder)
-          </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                Heat water in a separate hot water cylinder via a primary circuit. Suitable for
-                larger properties with high hot water demand or multiple bathrooms. Output typically
-                6kW to 14.4kW. The cylinder may have its own immersion element as a backup.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                Works well where a hot water cylinder already exists (replacing gas system boiler).
-                Requires both a boiler circuit and a separate cylinder immersion circuit.
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Heat Battery Systems</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                Store thermal energy in a high-density ceramic core during off-peak periods (Economy
-                7 or Octopus Go tariffs). Release stored heat for both space heating and domestic
-                hot water throughout the day. Sunamp UniQ and Tepeo ZEB are leading UK products.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                Can significantly reduce running costs versus a standard flow boiler by using
-                cheap-rate electricity. Require Economy 7 or time-of-use tariff to maximise savings.
-                Physical footprint is compact relative to stored capacity.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </>
-    ),
-  },
-  {
     id: 'sizing',
     heading: 'Sizing an Electric Boiler — kW Calculation',
     content: (
       <>
         <p>
-          Correct sizing is critical for both comfort and efficiency. An undersized electric boiler
-          will fail to maintain design temperatures during cold weather. An oversized boiler wastes
-          capital and may draw more current than the electrical installation can support.
+          Get the output right first: the kW figure drives the design current, which drives the
+          cable, the protective device and — on larger properties — whether the existing supply is
+          adequate at all. An undersized boiler will not hold design temperature in cold weather. An
+          oversized one wastes capital and can push the circuit past what the installation supports.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Reference Sizing Guide</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>1-bedroom flat (50m\u00b2):</strong> 4kW to 6kW boiler
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>2-bedroom house (70m\u00b2):</strong> 6kW to 9kW boiler
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>3-bedroom semi-detached (90m\u00b2):</strong> 9kW to 12kW boiler
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>4-bedroom detached (120m\u00b2):</strong> 12kW to 14.4kW boiler
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Older/poorly insulated property:</strong> add 30 to 50% to above figures
-              </span>
-            </li>
-          </ul>
+
+        <h3 className={subHeadCn}>Indicative output by property size</h3>
+        <div className={tableWrap}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Property</th>
+                <th className={thCn}>Floor area</th>
+                <th className={thCn}>Indicative output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={tdCn}>1-bedroom flat</td>
+                <td className={tdCn}>50m&sup2;</td>
+                <td className={tdCn}>4kW to 6kW</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>2-bedroom house</td>
+                <td className={tdCn}>70m&sup2;</td>
+                <td className={tdCn}>6kW to 9kW</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>3-bedroom semi-detached</td>
+                <td className={tdCn}>90m&sup2;</td>
+                <td className={tdCn}>9kW to 12kW</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>4-bedroom detached</td>
+                <td className={tdCn}>120m&sup2;</td>
+                <td className={tdCn}>12kW to 14.4kW</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Older or poorly insulated</td>
+                <td className={tdCn}>Any</td>
+                <td className={tdCn}>Add 30% to 50% to the figures above</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
         <p>
-          These figures are indicative only. The correct approach is a full heat loss calculation
-          per BS EN 12831 for the specific property, accounting for wall U-values, window area,
-          floor and roof insulation, and local design temperature (typically -3\u00b0C for most of
-          England, colder for Scotland and upland areas).
+          These figures are a sanity check, not a design. The correct approach is a room-by-room
+          heat loss calculation to BS EN 12831 for the specific property, accounting for wall
+          U-values, window area, floor and roof insulation, and the local external design
+          temperature.
         </p>
         <p>
-          For properties with existing radiators sized for a gas boiler running at 70\u00b0C flow
-          temperature, the radiator system should cope well with an electric boiler. If upgrading to
-          a heat pump at a later date, radiators sized for 55\u00b0C or lower may be needed.
+          Where the radiators were sized for a gas boiler running at around 70&deg;C flow
+          temperature, they will cope with an electric boiler at similar flow temperatures. If a
+          heat pump is likely later, radiators sized for 55&deg;C or lower will be needed at that
+          point.
         </p>
       </>
     ),
   },
   {
     id: 'wiring',
-    heading: 'Wiring Requirements Under BS 7671',
+    heading: 'Circuit Sizing and Wiring Under BS 7671',
     content: (
       <>
         <p>
-          Electric boiler installation is one of the more demanding domestic electrical jobs in
-          terms of current-carrying requirements. The dedicated radial circuit must be sized
-          correctly and installed in accordance with BS 7671:2018+A4:2026.
+          An electric boiler is one of the highest fixed loads in a dwelling. It takes a dedicated
+          radial circuit, sized from the design current and installed in accordance with BS
+          7671:2018+A4:2026. Start from Regulation 433.1.1 — the design current I<sub>b</sub> must
+          not exceed the device rating I<sub>n</sub>, which must not exceed the corrected cable
+          rating I<sub>z</sub>.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Circuit Specifications by Boiler Output
-          </h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>4kW to 6kW (17A to 26A):</strong> 6mm\u00b2 T&amp;E, 32A DP MCB
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>6kW to 9.6kW (26A to 42A):</strong> 10mm\u00b2 T&amp;E, 45A DP MCB
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>9.6kW to 12kW (42A to 52A):</strong> 10mm\u00b2 T&amp;E on 63A MCB (check
-                volt drop) or 16mm\u00b2 T&amp;E on 63A MCB
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>12kW to 15kW (52A to 65A):</strong> 16mm\u00b2 T&amp;E, 63A DP MCB
-              </span>
-            </li>
-          </ul>
-          <p className="text-sm text-white mt-4 opacity-80">
-            Above figures assume installation method C (clipped direct, single circuit, no grouping
-            derating) at an ambient temperature of 30\u00b0C. Adjust for actual installation
-            conditions per BS 7671 Appendix 4.
+
+        <h3 className={subHeadCn}>Circuit by boiler output (single-phase, 230V)</h3>
+        <div className={tableWrap}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Output</th>
+                <th className={thCn}>
+                  Design current I<sub>b</sub>
+                </th>
+                <th className={thCn}>Circuit-breaker</th>
+                <th className={thCn}>Typical cable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={tdCn}>6kW</td>
+                <td className={tdCn}>26A</td>
+                <td className={tdCn}>32A</td>
+                <td className={tdCn}>6mm&sup2; twin and earth</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>9kW</td>
+                <td className={tdCn}>39A</td>
+                <td className={tdCn}>40A</td>
+                <td className={tdCn}>10mm&sup2; twin and earth</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>9.6kW</td>
+                <td className={tdCn}>42A</td>
+                <td className={tdCn}>50A</td>
+                <td className={tdCn}>10mm&sup2; twin and earth</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>12kW</td>
+                <td className={tdCn}>52A</td>
+                <td className={tdCn}>63A</td>
+                <td className={tdCn}>10mm&sup2; (verify volt drop) or 16mm&sup2;</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>14.4kW</td>
+                <td className={tdCn}>63A</td>
+                <td className={tdCn}>63A</td>
+                <td className={tdCn}>16mm&sup2; twin and earth</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Above 14.4kW</td>
+                <td className={tdCn}>Over 63A</td>
+                <td className={tdCn}>Beyond the standard domestic range</td>
+                <td className={tdCn}>Three-phase supply, or split across circuits</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The cable sizes above assume reference method C (clipped direct), a single unbunched
+          circuit and an ambient temperature of 30&deg;C. Every one of those assumptions has a
+          correction factor in Appendix 4 — grouping, ambient temperature, thermal insulation, and a
+          semi-enclosed fuse where one is used. Apply the factors for the actual route before
+          confirming the cable.
+        </p>
+
+        <div className={noteCn}>
+          <h3 className={subHeadCn}>45A is a fuse rating, not a circuit-breaker rating</h3>
+          <p className="text-white">
+            Boiler and shower guides routinely specify a &ldquo;45A MCB&rdquo;. Table 41.3 of BS
+            7671 tabulates circuit-breakers to BS EN 60898 at 3, 6, 10, 16, 20, 25, 32, 40, 50, 63,
+            80, 100 and 125A — there is no 45A entry. 45A appears in Table 41.2 as a BS 88-3 fuse
+            rating. For a 9kW boiler at 39.1A the correct device is a 40A circuit-breaker; for a
+            9.6kW boiler at 41.7A it is 50A.
           </p>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
+
+        <h3 className={subHeadCn}>Disconnection time — Table 41.1 usually does not apply</h3>
+        <p>
+          Regulation 411.3.2.2 applies the Table 41.1 maximum disconnection times to final circuits
+          with a rated current not exceeding 63A with one or more socket-outlets, and 32A supplying
+          only fixed connected current-using equipment. A boiler circuit protected at 40A, 50A or
+          63A supplying fixed equipment falls outside both limbs, so:
+        </p>
+        <ul className={listCn}>
+          <li>
+            In a TN system, Regulation 411.3.2.3 permits a disconnection time not exceeding 5s.
+          </li>
+          <li>In a TT system, Regulation 411.3.2.4 permits a disconnection time not exceeding 1s.</li>
+          <li>
+            Table 41.3 gives maximum Z<sub>s</sub> values for circuit-breakers for both the 0.4s
+            case of Regulation 411.3.2.2 and the 5s case of Regulation 411.3.2.3 — read the right
+            column.
+          </li>
+        </ul>
+        <p>
+          A boiler circuit protected at 32A or below and supplying only the fixed appliance is
+          covered by Regulation 411.3.2.2, and the Table 41.1 times do apply.
+        </p>
+
+        <h3 className={subHeadCn}>Isolation, RCD protection, volt drop and bonding</h3>
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Double-pole isolation</strong> — Regulation 462.2 requires isolation of all live conductors, so a means of
-                isolation for each item of fixed equipment. For electric boilers, a lockable
-                double-pole isolator switch adjacent to the boiler (typically within 2m) is standard
-                practice. The isolator must interrupt both live and neutral conductors.
-              </span>
+            <li>
+              <strong className="text-white">Double-pole isolation.</strong> Regulation 462.2
+              requires every circuit to be provided with isolation means for all live conductors,
+              except as detailed in Regulation 461.2. A single-pole circuit-breaker does not isolate
+              the neutral, so a lockable double-pole isolator adjacent to the boiler is the normal
+              way of meeting this. Regulation 462.3 lists the acceptable precautions against
+              inadvertent closure: a lockable space or enclosure, padlocking, or siting the device
+              adjacent to the equipment.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>RCD protection</strong> — The boiler circuit must satisfy the automatic
-                disconnection times in Table 41.1 (Regulation 411.3.1.2). Note that Regulation
-                411.3.3 (A4:2026) applies only to socket-outlets rated up to 32A; it does not
-                directly mandate RCD protection for high-current fixed equipment circuits. However,
-                30mA RCD protection is strongly recommended best practice for boiler circuits and is
-                required by many DNOs and competent-person schemes. Regulation 411.3.4 (A4:2026)
-                separately mandates 30mA RCD on all AC lighting circuits in domestic premises. Use
-                an RCBO or a dual-RCD consumer unit to achieve this protection.
-              </span>
+            <li>
+              <strong className="text-white">RCD protection.</strong> There is no blanket 30mA
+              requirement for fixed-equipment circuits. Regulation 411.3.3 covers socket-outlets
+              rated up to 32A and mobile equipment up to 32A for use outdoors; Regulation 411.3.4
+              covers AC final circuits supplying luminaires in domestic premises. Neither reaches a
+              boiler. What usually does is the cable route: Regulation 522.6.202 and Table 52.1
+              require additional protection by a 30mA RCD to Regulation 415.1.1 for a cable
+              concealed less than 50mm from the surface of a wall, unless it is mechanically
+              protected in one of the ways set out in Regulation 522.6.204. Since most boiler
+              circuits are chased into a wall, an RCBO is the practical answer.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Volt drop check</strong> — for long cable runs from consumer unit to boiler
-                (over 15m at high current), verify that volt drop is within acceptable limits for
-                power circuits. Use the mV/A/m values from BS 7671 Appendix 4 (e.g. Table 4D1A for
-                copper T&amp;E clipped direct) to calculate volt drop for the design current and
-                cable length. Use 16mm\u00b2 cable on longer runs if 10mm\u00b2 gives excessive volt
-                drop.
-              </span>
+            <li>
+              <strong className="text-white">Volt drop.</strong> Table 4Ab of Appendix 4 gives 5%
+              for uses other than lighting on an installation supplied directly from a public low
+              voltage distribution system — about 11.5V at 230V. Calculate from the mV/A/m figures
+              for the cable in use: for flat twin and earth with a protective conductor that is
+              Table 4D5, not Table 4D1A, which is for single-core cables. On long runs at high
+              current, 16mm&sup2; may be needed on volt drop alone. Regulation 643.11 covers
+              verification of voltage drop.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Earth bonding</strong> — confirm main protective bonding is in place for
-                water and gas services per Regulation 544.1.2. The bonding connection shall be made
-                as near as practicable to the point of entry of the service into the premises.
-                Supplementary bonding within the airing cupboard or boiler room is not routinely
-                required in modern installations meeting the main bonding requirement.
-              </span>
+            <li>
+              <strong className="text-white">Main protective bonding.</strong> Confirm main
+              protective bonding to water, gas and any other services. Regulation 544.1.2 requires
+              the connection to be made as near as practicable to the point of entry of that part
+              into the premises, to the consumer&rsquo;s hard metal pipework and before any branch
+              pipework, and where practicable within 600mm of the meter outlet union.
             </li>
           </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'types',
+    heading: 'Types of Electric Boiler',
+    content: (
+      <>
+        <p>
+          Electric boilers come in three broad configurations. The difference matters electrically
+          as well as commercially: a flow boiler is a single high-current circuit, a system boiler
+          usually adds a second circuit for the cylinder immersion, and a heat battery is designed
+          around an off-peak tariff.
+        </p>
+
+        <div className={cardCn}>
+          <h3 className={subHeadCn}>Flow boilers (electric combi)</h3>
+          <p className="text-white">
+            Heat water on demand as it flows through the boiler — no stored hot water cylinder.
+            Outputs run from about 4kW to 14.4kW, suiting smaller properties with modest hot water
+            demand. A direct replacement for a gas combi, with no cold water storage tank, but it
+            needs a dedicated high-current circuit from the consumer unit.
+          </p>
+        </div>
+
+        <div className={cardCn}>
+          <h3 className={subHeadCn}>Electric system boilers (with cylinder)</h3>
+          <p className="text-white">
+            Heat a separate hot water cylinder via a primary circuit, which suits larger properties
+            with high hot water demand or multiple bathrooms. Typical outputs are 6kW to 14.4kW, and
+            the cylinder often has its own immersion element as backup. Works well where a cylinder
+            already exists, but budget for both a boiler circuit and a separate immersion circuit.
+          </p>
+        </div>
+
+        <div className={cardCn}>
+          <h3 className={subHeadCn}>Heat battery systems</h3>
+          <p className="text-white">
+            Store thermal energy during off-peak periods on Economy 7 or a time-of-use tariff, then
+            release it for space heating and domestic hot water through the day. Tepeo ZEB uses a
+            dense solid heat core; Sunamp UniQ uses a phase-change material. Running costs can be
+            well below a standard flow boiler, but only with an off-peak tariff in place, and the
+            physical footprint is compact relative to stored capacity.
+          </p>
         </div>
       </>
     ),
@@ -333,42 +421,39 @@ const sections = [
     content: (
       <>
         <p>
-          The installation of an electric boiler in a dwelling involves adding a new circuit and is
-          therefore notifiable work under Part P of the Building Regulations in England. The same
-          principle applies in Wales. Scotland uses a different system (Building Standards) and
-          Northern Ireland has its own regulations.
+          Installing an electric boiler in a dwelling means adding a new circuit, which is
+          notifiable work under Part P of the Building Regulations in England, and under the
+          equivalent Welsh provisions. Scotland works to Building Standards and Northern Ireland to
+          its own regulations.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Registered competent person:</strong> NICEIC, NAPIT, ELECSA, or other
-                approved scheme members can self-certify and notify building control automatically.
-                The homeowner receives a Building Regulations compliance certificate.
-              </span>
+            <li>
+              <strong className="text-white">Registered competent person.</strong> Members of
+              NICEIC, NAPIT or another government-approved competent person scheme can self-certify
+              and notify building control automatically. The householder receives a Building
+              Regulations compliance certificate.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Non-registered electrician:</strong> must notify the local authority
-                building control (LABC) before starting work and pay the applicable inspection fee.
-                Building control will inspect on completion and issue a compliance certificate if
-                satisfactory.
-              </span>
+            <li>
+              <strong className="text-white">Non-registered electrician.</strong> Notify local
+              authority building control before starting work and pay the inspection fee. Building
+              control inspects on completion and issues the compliance certificate if satisfied.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Electrical Installation Certificate:</strong> an EIC must be issued for any
-                new circuit. Use the{' '}
-                <SEOAppBridge href="/eic-certificate" label="Elec-Mate EIC Certificate tool" /> to
-                generate a compliant certificate on-site.
-              </span>
+            <li>
+              <strong className="text-white">Electrical Installation Certificate.</strong> An EIC is
+              required for any new circuit. Use the{' '}
+              <SEOInternalLink href="/eic-certificate">
+                Elec-Mate EIC Certificate tool
+              </SEOInternalLink>{' '}
+              to produce a compliant certificate on site.
             </li>
           </ul>
         </div>
         <p>
-          Failure to notify can result in difficulty selling the property, as solicitors routinely
-          request evidence of Part P compliance for electrical work done since 2005. A retrospective
-          inspection can be arranged but costs more than the original notification.
+          Failing to notify causes trouble at sale, because solicitors routinely ask for evidence of
+          Part P compliance for electrical work carried out since Part P came into force in January
+          2005. A retrospective inspection can be arranged, but it costs more than notifying at the
+          time.
         </p>
       </>
     ),
@@ -379,48 +464,45 @@ const sections = [
     content: (
       <>
         <p>
-          Installation costs depend on the boiler output, type, distance from the consumer unit,
-          whether an existing cylinder is being retained or replaced, and whether the consumer unit
-          needs upgrading.
+          Cost depends on output, boiler type, distance from the consumer unit, whether a cylinder is
+          retained or replaced, and whether the board needs upgrading. The figures below are
+          indicative UK ranges — always price from your own rates.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Electric flow boiler (6kW to 9kW), supply and fit:</strong> \u00a31,500 to
-                \u00a32,800
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Electric flow boiler (12kW to 15kW), supply and fit:</strong> \u00a32,200 to
-                \u00a34,000
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Heat battery system (e.g. Tepeo ZEB):</strong> \u00a33,500 to \u00a35,500
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Consumer unit upgrade (if required):</strong> \u00a3500 to \u00a31,200
-                additional
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>New 10mm\u00b2 or 16mm\u00b2 radial circuit (up to 15m):</strong> \u00a3250
-                to \u00a3600 additional
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Gas pipe capping by Gas Safe engineer:</strong> \u00a380 to \u00a3200
-                (separate contractor, required when removing a gas boiler)
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrap}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Item</th>
+                <th className={thCn}>Typical range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={tdCn}>Electric flow boiler 6kW to 9kW, supply and fit</td>
+                <td className={tdCn}>&pound;1,500 to &pound;2,800</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Electric flow boiler 12kW to 14.4kW, supply and fit</td>
+                <td className={tdCn}>&pound;2,200 to &pound;4,000</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Heat battery system</td>
+                <td className={tdCn}>&pound;3,500 to &pound;5,500</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Consumer unit upgrade, if required</td>
+                <td className={tdCn}>&pound;500 to &pound;1,200 additional</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>New 10mm&sup2; or 16mm&sup2; radial circuit, up to 15m</td>
+                <td className={tdCn}>&pound;250 to &pound;600 additional</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Gas pipe capping by a Gas Safe engineer</td>
+                <td className={tdCn}>&pound;80 to &pound;200, separate contractor</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
@@ -431,52 +513,34 @@ const sections = [
     content: (
       <>
         <p>
-          The choice between electric and gas is not always straightforward. Electric boilers have
-          advantages that are often overlooked when comparing headline fuel costs.
+          The comparison is rarely settled by the headline fuel price alone, though that is the
+          single biggest factor. Electricity costs several times more per kWh than mains gas in the
+          UK, and the efficiency advantage of an electric boiler does not close that gap.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Advantages of Electric Boilers</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>100% efficient — all electrical energy converted to heat, no flue losses</span>
+        <div className={cardCn}>
+          <h3 className={subHeadCn}>In favour of electric</h3>
+          <ul className={listCn}>
+            <li>
+              Essentially all the electrical energy drawn becomes heat — there are no flue losses.
             </li>
-            <li className="flex items-start gap-3">
-              <span>No annual Gas Safe service required — lower ongoing maintenance cost</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>No combustion products — zero carbon monoxide risk</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>No flue required — more flexible positioning within the property</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>Lower installation cost versus gas for off-gas properties</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>Grid electricity is increasingly low-carbon as renewable generation grows</span>
-            </li>
+            <li>No annual Gas Safe service, so lower ongoing maintenance cost.</li>
+            <li>No combustion products, so no carbon monoxide risk.</li>
+            <li>No flue, so far more flexibility on where the unit goes.</li>
+            <li>Lower installation cost than gas for a property with no gas connection.</li>
+            <li>Grid electricity carbon intensity keeps falling as renewable generation grows.</li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Disadvantages</h3>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                Higher fuel cost — electricity is 3 to 4x more expensive per kWh than gas at current
-                prices
-              </span>
+        <div className={cardCn}>
+          <h3 className={subHeadCn}>Against</h3>
+          <ul className={listCn}>
+            <li>Fuel cost per kWh is several times that of mains gas.</li>
+            <li>
+              Limited maximum output — most single-phase electric boilers stop at about 14.4kW,
+              where gas boilers run to 35kW and beyond.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                Limited maximum output — most electric boilers top out at 14.4kW versus gas boilers
-                at 35kW+
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                May require significant electrical supply upgrades (consumer unit, meter capacity,
-                DNO consent)
-              </span>
+            <li>
+              May force electrical work well beyond the boiler itself: consumer unit, main tails,
+              metering capacity or DNO consent.
             </li>
           </ul>
         </div>
@@ -485,80 +549,85 @@ const sections = [
   },
   {
     id: 'for-electricians',
-    heading: 'For Electricians — Electric Boiler Installation Paperwork',
+    heading: 'For Electricians — Certification and Testing',
     content: (
       <>
         <p>
-          Every electric boiler installation in a dwelling requires an Electrical Installation
-          Certificate. Where the consumer unit is also upgraded, this must be included in the scope
-          of the EIC. Elec-Mate provides all the certification tools needed for boiler installation
-          jobs.
+          Every electric boiler installation in a dwelling needs an Electrical Installation
+          Certificate, and where the consumer unit is changed at the same time that work belongs in
+          the same scope. Regulation 644.1 requires the EIC on completion of verification of a new
+          circuit; Regulation 644.4.201 only permits a Minor Works Certificate where no new circuit
+          is provided, which is not the case here.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
-                — generate compliant EICs for new boiler circuits with BS 7671 test results.
-              </span>
+            <li>
+              <SEOInternalLink href="/eic-certificate">
+                Electrical Installation Certificate
+              </SEOInternalLink>{' '}
+              — generate compliant EICs for new boiler circuits with the BS 7671 test results
+              attached.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — inspect
-                and report on the existing installation before adding the boiler circuit.
-              </span>
+            <li>
+              <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate</SEOInternalLink> —
+              inspect and report on the existing installation before adding the boiler circuit.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <SEOInternalLink
-                  href="/guides/eicr-observation-codes-explained"
-                  label="EICR observation codes"
-                />{' '}
-                — understand what to record when the existing installation has deficiencies.
-              </span>
+            <li>
+              <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+                EICR observation codes
+              </SEOInternalLink>{' '}
+              — what to record when the existing installation has deficiencies.
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Testing and Certification</h3>
-          <p className="text-white mb-3">
-            Under BS 7671:2018+A4:2026 (Regulation 644.3) and GN3, an Electrical Installation
-            Certificate must be accompanied by Schedules of Circuit Details and Schedules of Test
-            Results. For a new boiler circuit the following tests are mandatory:
-          </p>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Continuity of CPC</strong> — verify the circuit protective conductor is
-                continuous from the consumer unit to the boiler isolator earth terminal.
-              </span>
+
+        <h3 className={subHeadCn}>What the certificate must carry</h3>
+        <p>
+          Regulation 644.3 requires the Certificate to state the extent of the work covered and to
+          include Schedule(s) of Inspection, plus Schedule(s) of Circuit Details and Schedule(s) of
+          Test Results, based on the models in Appendix 6. Regulation 644.4 requires it to be issued
+          to the person ordering the work together with those records, and the recommended interval
+          to the first periodic inspection to be recorded on it.
+        </p>
+
+        <h3 className={subHeadCn}>Tests for a new boiler circuit</h3>
+        <div className={cardCn}>
+          <ul className="space-y-4 text-white">
+            <li>
+              <strong className="text-white">Continuity of conductors (Regulation 643.2).</strong>{' '}
+              Verify the circuit protective conductor is continuous from the consumer unit to the
+              earth terminal at the boiler isolator. This test must be done before the earth fault
+              loop impedance measurement.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Insulation resistance</strong> — test between live conductors and between
-                live conductors and earth at 500V DC with the boiler disconnected. Record all
-                measured values on the Schedule of Test Results.
-              </span>
+            <li>
+              <strong className="text-white">Insulation resistance (Regulation 643.3).</strong> Test
+              between live conductors, and between live conductors and the protective conductor, at
+              the Table 64 voltage — 500V DC for a 230V circuit, minimum 1M&Omega; — with the boiler
+              disconnected. Regulation 643.3.3, new at A4:2026, then requires a second test at 250V
+              DC between live conductors and the protective conductor after the equipment is
+              connected, again with a minimum of 1M&Omega;.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Polarity</strong> — confirm that the line conductor is connected to the line
-                terminal of the isolator and that the MCB at the consumer unit operates on the line
-                conductor only.
-              </span>
+            <li>
+              <strong className="text-white">Polarity (Regulation 643.6).</strong> Confirm the line
+              conductor lands on the line terminal of the isolator and that the protective device at
+              the board is in the line conductor only.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Earth fault loop impedance (Z&#x2093;)</strong> — measure Z&#x2093; at the
-                boiler isolator and verify it is low enough to achieve the required disconnection
-                time under Table 41.1 for the protective device fitted.
-              </span>
+            <li>
+              <strong className="text-white">
+                Earth fault loop impedance (Regulation 643.7.3.1).
+              </strong>{' '}
+              Measure Z<sub>s</sub> at the boiler isolator and compare it against the Table 41.3
+              value for the device fitted, using the 5s column where the circuit exceeds 32A and
+              supplies only fixed equipment.
+            </li>
+            <li>
+              <strong className="text-white">RCD verification (Regulation 643.8).</strong> Where an
+              RCD provides additional protection, verify it with equipment to BS EN 61557-6. The
+              note to Regulation 643.7.1 deems effectiveness verified where a general non-delay type
+              RCD disconnects within 300ms on an alternating current test at rated residual
+              operating current I&Delta;n.
             </li>
           </ul>
-          <p className="text-sm text-white mt-4 opacity-80">
-            The Schedule of Test Results shall be given to the person ordering the work together
-            with the signed EIC (OSG Reg 9.1, GN3 Reg 1.3).
-          </p>
         </div>
       </>
     ),
@@ -572,25 +641,28 @@ const sections = [
 export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Boiler Installation: Cable Size & Wiring (BS 7671)"
-      description="Electric boiler wiring guide: cable and breaker size by kW, supply and RCD requirements, and load and diversity to BS 7671."
+      title="Electric Boiler Size & Wiring: 9kW = 39A, 10mm²"
+      description="Size an electric boiler at ~1kW per 10m² of floor area. A 9kW boiler draws 39A: wire it in 10mm² twin and earth on a dedicated 40A radial. Part P, testing and costs."
       datePublished="2024-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"
       badgeIcon={Thermometer}
       heroTitle={
         <>
-          Electric Boiler Installation <span className="text-yellow-400">— Complete UK Guide</span>
+          Electric Boiler Installation{' '}
+          <span className="text-elec-yellow">— Complete UK Guide</span>
         </>
       }
-      heroSubtitle="Everything you need to know about installing an electric boiler: types, correct sizing, BS 7671 circuit requirements, Part P notification, and realistic costs for UK properties."
+      heroSubtitle="Sizing, circuit design, disconnection times, Part P notification, testing and realistic costs for electric boiler installations in UK dwellings."
       readingTime={11}
       answerBox={{
         question: 'What cable size and circuit does an electric boiler need?',
         answer:
-          'It depends on the boiler kW rating and supply. As a guide, a 9kW single-phase electric boiler draws around 39A and is commonly wired in 10mm² twin and earth on a 40A breaker; larger 12kW+ units (50A+) often need a higher-rated dedicated circuit or a three-phase supply. Always size from the design current and apply correction factors (BS 7671 Reg 433.1.1), on a dedicated circuit with 30mA RCD protection.',
+          'Size it from the design current. At 230V a 9kW electric boiler draws 39A, so it takes a dedicated radial in 10mm² twin and earth on a 40A circuit-breaker; a 12kW unit draws 52A and a 14.4kW unit 63A, needing 16mm² and a 63A device. Above about 14.4kW you are past the 63A domestic range and into a three-phase supply. Apply the Appendix 4 correction factors and satisfy Regulation 433.1.1 — Ib ≤ In ≤ Iz.',
+        detail:
+          'Note that 45A is not a BS EN 60898 circuit-breaker rating: Table 41.3 runs 32A, 40A, 50A, 63A. And because a boiler circuit above 32A supplies fixed equipment, Table 41.1 does not apply to it — 5s in a TN system under Regulation 411.3.2.3, 1s in a TT system under Regulation 411.3.2.4.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

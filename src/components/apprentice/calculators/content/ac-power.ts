@@ -48,6 +48,7 @@ export const acPowerContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Fundamental theory. Power-triangle relationships exact; engine uses √3 correctly for 3-phase.',
+    notes:
+      'Fundamental theory. Power-triangle relationships exact; engine uses √3 correctly for 3-phase.',
   },
 };

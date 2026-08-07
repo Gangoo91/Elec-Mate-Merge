@@ -884,7 +884,7 @@ export default function ElectricianSelfEmployedPage() {
   return (
     <GuideTemplate
       title="Going Self-Employed as an Electrician UK | Complete Guide"
-      description="Complete guide to going self-employed as an electrician in the UK. Sole trader vs limited company, HMRC registration, insurance…"
+      description="Complete guide to going self-employed as an electrician in the UK. Sole trader vs limited company, HMRC registration, insurance."
       datePublished="2024-05-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -654,7 +654,7 @@ export default function SchoolElectricalCostPage() {
   return (
     <GuideTemplate
       title="School Electrical Installation Cost UK 2025 | Educational"
-      description="School electrical installation costs UK 2025. BB93 acoustic compliance, ICT infrastructure, emergency lighting to BS 5266-1, access control, solar PV…"
+      description="School electrical installation costs UK 2025. BB93 acoustic compliance, ICT infrastructure, emergency lighting to BS 5266-1, access control, solar PV."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

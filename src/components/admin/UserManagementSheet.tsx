@@ -36,7 +36,6 @@ import {
   Snowflake,
   LogIn,
   Send,
-  Timer,
   AlertTriangle,
 } from 'lucide-react';
 import { formatDistanceToNow, format } from 'date-fns';
@@ -502,7 +501,7 @@ export default function UserManagementSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Drag Handle */}
           <div className="flex justify-center pt-3 pb-1">
@@ -652,12 +651,11 @@ export default function UserManagementSheet({
 
             <div className="px-4 space-y-3 pb-6">
 
-            {/* Where They Spend Time */}
+            {/* Where they spend time */}
             {activityData?.areaBreakdown && activityData.areaBreakdown.length > 0 && (
-              <div className="rounded-xl border border-border p-4 space-y-3">
-                <h4 className="font-medium flex items-center gap-2">
-                  <Eye className="h-4 w-4 text-blue-400" />
-                  Where They Spend Time
+              <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
+                <h4 className="text-sm font-semibold text-white">
+                  Where they spend time
                 </h4>
                 <div className="space-y-2">
                   {activityData.areaBreakdown
@@ -684,7 +682,7 @@ export default function UserManagementSheet({
                         <div key={area.area} className="space-y-1">
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-white font-medium">{config.label}</span>
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-3 text-xs text-white">
                               <span>{area.page_views} pages</span>
                               {area.seconds_in_area > 0 && (
                                 <span className="font-medium text-white">
@@ -711,10 +709,9 @@ export default function UserManagementSheet({
 
             {/* Study Centre Detail */}
             {activityData?.studyDetail && activityData.studyDetail.length > 0 && (
-              <div className="rounded-xl border border-border p-4 space-y-3">
-                <h4 className="font-medium flex items-center gap-2">
-                  <GraduationCap className="h-4 w-4 text-purple-400" />
-                  Study Centre Activity
+              <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
+                <h4 className="text-sm font-semibold text-white">
+                  Study centre activity
                 </h4>
                 <div className="space-y-1.5">
                   {activityData.studyDetail.slice(0, 8).map((s, i) => {
@@ -725,20 +722,20 @@ export default function UserManagementSheet({
                       ? s.section_slug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
                       : '';
                     return (
-                      <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 text-sm">
+                      <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.04] text-sm">
                         <div className="w-1 self-stretch rounded-full bg-purple-500 opacity-60" />
                         <div className="flex-1 min-w-0">
                           <p className="text-white truncate font-medium">
                             {moduleName || s.course_level || 'Study Page'}
                           </p>
                           {sectionName && (
-                            <p className="text-xs text-muted-foreground truncate">{sectionName}</p>
+                            <p className="text-xs text-white truncate">{sectionName}</p>
                           )}
                         </div>
                         <div className="text-right shrink-0">
                           <p className="text-xs text-white">{s.views} views</p>
                           {s.seconds_spent > 0 && (
-                            <p className="text-[10px] text-muted-foreground">
+                            <p className="text-[10px] text-white">
                               {formatTimeSpent(s.seconds_spent)}
                             </p>
                           )}
@@ -750,12 +747,11 @@ export default function UserManagementSheet({
               </div>
             )}
 
-            {/* User Journey Timeline */}
+            {/* What they did Timeline */}
             {journeyMilestones.length > 0 && (
-              <div className="rounded-xl border border-border p-4 space-y-3">
-                <h4 className="font-medium flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-cyan-400" />
-                  User Journey
+              <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
+                <h4 className="text-sm font-semibold text-white">
+                  What they did
                 </h4>
                 <div className="relative pl-4">
                   {/* Vertical line */}
@@ -812,11 +808,10 @@ export default function UserManagementSheet({
               </div>
             )}
 
-            {/* Current Subscription Status */}
-            <div className="rounded-xl border border-border p-4 space-y-3">
-              <h4 className="font-medium flex items-center gap-2">
-                <Zap className="h-4 w-4 text-yellow-400" />
-                Subscription Status
+            {/* Current Subscription */}
+            <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
+              <h4 className="text-sm font-semibold text-white">
+                Subscription
               </h4>
 
               {user.subscribed ? (
@@ -832,20 +827,20 @@ export default function UserManagementSheet({
                   </div>
 
                   {user.free_access_granted && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-white">
                       <Gift className="h-4 w-4 text-yellow-400" />
                       <span>Admin-granted free access</span>
                     </div>
                   )}
 
                   {user.free_access_expires_at && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       Expires: {format(new Date(user.free_access_expires_at), 'dd MMM yyyy')}
                     </p>
                   )}
 
                   {user.free_access_reason && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       Reason: {user.free_access_reason}
                     </p>
                   )}
@@ -859,7 +854,7 @@ export default function UserManagementSheet({
             </div>
 
             {/* Subscription Management */}
-            <div className="space-y-4 border-t border-border pt-4 mt-4">
+            <div className="space-y-4 border-t border-white/[0.10] pt-4 mt-4">
               <h4 className="text-sm font-semibold flex items-center gap-2">
                 <CreditCard className="h-4 w-4 text-yellow-400" />
                 Subscription Management
@@ -867,7 +862,7 @@ export default function UserManagementSheet({
 
               {/* Current status display */}
               <div className="flex items-center gap-2 text-sm">
-                <span className="text-muted-foreground">Current:</span>
+                <span className="text-white">Current:</span>
                 <Badge>{user.subscription_tier || 'No tier'}</Badge>
                 <Badge variant={user.subscribed ? 'default' : 'outline'}>
                   {user.subscribed ? 'Subscribed' : 'Not subscribed'}
@@ -879,7 +874,7 @@ export default function UserManagementSheet({
                 <label className="text-sm font-medium">
                   Extend Trial / Subscription Until
                   {user.subscription_end && (
-                    <span className="ml-2 text-xs text-muted-foreground">
+                    <span className="ml-2 text-xs text-white">
                       (currently: {format(new Date(user.subscription_end), 'dd MMM yyyy')})
                     </span>
                   )}
@@ -941,9 +936,8 @@ export default function UserManagementSheet({
 
             {/* Actions */}
             {!user.subscribed || user.free_access_granted ? (
-              <div className="rounded-xl border border-border p-4 space-y-4">
-                <h4 className="font-medium flex items-center gap-2">
-                  <Gift className="h-4 w-4 text-yellow-400" />
+              <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-4">
+                <h4 className="text-sm font-semibold text-white">
                   {user.free_access_granted ? 'Manage Free Access' : 'Grant Free Access'}
                 </h4>
 
@@ -1038,7 +1032,7 @@ export default function UserManagementSheet({
           </div>
 
           {/* Footer Actions */}
-          <SheetFooter className="p-4 border-t border-border gap-2">
+          <SheetFooter className="p-4 border-t border-white/[0.10] gap-2">
             {user.free_access_granted || (user.subscribed && !user.stripe_customer_id) ? (
               <>
                 <Button
@@ -1090,7 +1084,7 @@ export default function UserManagementSheet({
                 )}
               </Button>
             ) : (
-              <p className="flex-1 text-sm text-muted-foreground text-center py-3">
+              <p className="flex-1 text-sm text-white text-center py-3">
                 Managed via Stripe subscription
               </p>
             )}
@@ -1098,7 +1092,7 @@ export default function UserManagementSheet({
 
           {/* Extra actions passed by parent (e.g. admin controls) */}
           {extraActions && (
-            <div className="p-4 border-t border-border space-y-2">
+            <div className="p-4 border-t border-white/[0.10] space-y-2">
               {extraActions}
             </div>
           )}

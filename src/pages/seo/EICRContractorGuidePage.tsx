@@ -569,7 +569,7 @@ export default function EICRContractorGuidePage() {
   return (
     <GuideTemplate
       title="EICR for Electrical Contractors UK | How to Carry Out EICR"
-      description="Contractor guide to carrying out EICRs correctly. Who can carry out an EICR, City and Guilds 2391/2394/2395 qualifications, correct test equipment…"
+      description="Contractor guide to carrying out EICRs correctly. Who can carry out an EICR, City and Guilds 2391/2394/2395 qualifications, correct test equipment."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

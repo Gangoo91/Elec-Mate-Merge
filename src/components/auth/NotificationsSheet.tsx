@@ -15,18 +15,28 @@ interface NotificationsSheetProps {
 }
 
 // ─── Tone tokens per notification type ──────────────────────────────────
-// Single source of truth — controls the left rule colour and the inline
-// icon tint. No coloured "chips" or backgrounds anywhere; type is communicated
-// purely by the rule + icon hue.
+/**
+ * Left rule colour and inline icon tint.
+ *
+ * Was six hues — emerald, amber, red, blue, purple, yellow. In a real list that
+ * is five different colours on screen at once (wellbeing pink, update purple,
+ * action-needed red, work blue, finance green), and when every row is coloured
+ * none of them signals anything.
+ *
+ * Now three tones, by what the row asks of you:
+ *   needs you       -> amber, the same "attention" colour used for low stock
+ *   worth knowing   -> elec-yellow, the brand accent
+ *   for information -> neutral
+ */
 const TONE_BY_TYPE: Record<string, { rule: string; icon: string; Icon: typeof Check }> = {
-  success: { rule: 'bg-emerald-400', icon: 'text-emerald-400', Icon: Check },
+  error: { rule: 'bg-amber-400', icon: 'text-amber-400', Icon: AlertTriangle },
   warning: { rule: 'bg-amber-400', icon: 'text-amber-400', Icon: AlertTriangle },
-  error: { rule: 'bg-red-400', icon: 'text-red-400', Icon: AlertTriangle },
-  message: { rule: 'bg-blue-400', icon: 'text-blue-400', Icon: MessageSquare },
-  update: { rule: 'bg-purple-400', icon: 'text-purple-400', Icon: Sparkles },
+  success: { rule: 'bg-elec-yellow', icon: 'text-elec-yellow', Icon: Check },
   certificate: { rule: 'bg-elec-yellow', icon: 'text-elec-yellow', Icon: FileText },
+  message: { rule: 'bg-white/40', icon: 'text-white', Icon: MessageSquare },
+  update: { rule: 'bg-white/40', icon: 'text-white', Icon: Sparkles },
 };
-const DEFAULT_TONE = { rule: 'bg-elec-yellow', icon: 'text-elec-yellow', Icon: Zap };
+const DEFAULT_TONE = { rule: 'bg-white/40', icon: 'text-white', Icon: Zap };
 
 const toneFor = (type: string | undefined) => (type && TONE_BY_TYPE[type]) || DEFAULT_TONE;
 
@@ -136,7 +146,7 @@ const NotificationRow = ({
               onDelete();
             }
           }}
-          className="shrink-0 self-start mt-0.5 h-7 w-7 rounded-full flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/[0.08] opacity-0 group-hover:opacity-100 sm:opacity-0 transition-opacity touch-manipulation"
+          className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center self-start rounded-full text-white hover:text-red-400 hover:bg-red-500/[0.08] opacity-0 group-hover:opacity-100 sm:opacity-0 transition-opacity touch-manipulation"
         >
           <X className="h-3.5 w-3.5" />
         </span>
@@ -234,7 +244,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
         className={cn(
-          'p-0 flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.06]',
+          'flex flex-col bg-[#16161b] p-0 border-white/[0.14]',
           isMobile ? 'h-[85vh] rounded-t-2xl overflow-hidden' : 'w-[400px] max-w-[400px]'
         )}
       >
@@ -269,7 +279,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
                 <button
                   type="button"
                   onClick={clearAllNotifications}
-                  className="text-[12px] font-medium text-white/55 hover:text-red-400 transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-amber-400 transition-colors touch-manipulation"
                 >
                   Clear
                 </button>

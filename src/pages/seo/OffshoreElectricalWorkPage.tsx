@@ -402,7 +402,7 @@ export default function OffshoreElectricalWorkPage() {
   return (
     <GuideTemplate
       title="Offshore Electrical Work UK | Platforms, Wind Farms and Pay"
-      description="Complete guide to offshore electrical work in the UK. OPITO BOSIET/FOET, OGUK medical, IEC 61892, ATEX/CompEx requirements, pay rates of £600–£1,200/day…"
+      description="Complete guide to offshore electrical work in the UK. OPITO BOSIET/FOET, OGUK medical, IEC 61892, ATEX/CompEx requirements, pay rates of £600–£1,200/day."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -16,7 +16,7 @@ export default function HowToPriceElectricalJobsPage() {
   return (
     <GuideTemplate
       title="How to Price Electrical Jobs UK 2026 | Pricing Guide"
-      description="Complete guide to pricing electrical work in the UK. Covers day rates, fixed prices, per-point pricing, cost-plus, hourly rate calculation…"
+      description="Complete guide to pricing electrical work in the UK. Covers day rates, fixed prices, per-point pricing, cost-plus, hourly rate calculation."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
       breadcrumbs={[

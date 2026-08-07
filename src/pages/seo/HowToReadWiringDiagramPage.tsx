@@ -38,7 +38,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'There are three main types of electrical diagram used in the UK: schematic (circuit) diagrams showing how components are connected electrically, wiring diagrams showing physical connections between components, and single-line (one-line) diagrams used for power distribution systems.',
-  'The UK traditionally uses BS symbols derived from BS EN 60617 (now aligned with IEC 60617). Most modern UK electrical drawings use IEC symbols, which are the international standard. Both symbol sets appear on UK drawings, and electricians need to recognise both.',
+  'The UK traditionally uses BS symbols derived from IEC 60617 (now aligned with IEC 60617). Most modern UK electrical drawings use IEC symbols, which are the international standard. Both symbol sets appear on UK drawings, and electricians need to recognise both.',
   'A single-line diagram (SLD) represents three-phase power systems using a single line per phase for clarity. It shows the distribution hierarchy from supply to load, protective devices, transformer ratings, and bus arrangements. SLDs are essential for commercial and industrial electrical work.',
   'Reading a wiring diagram requires identifying the supply point, tracing the circuit from supply through the protective device to the load, identifying switching arrangements, and noting the conductor colours and sizes specified.',
   'Three-phase diagrams show all three phases and neutral (and sometimes earth). Understanding star (Y) and delta connections, phase labelling (L1, L2, L3), and how three-phase loads are distributed across phases is essential for commercial and industrial work.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What electrical symbols do UK drawings use?',
     answer:
-      'UK electrical drawings use symbols based on BS EN 60617, which is the British adoption of the IEC 60617 international standard. In practice, most modern UK electrical drawings use IEC symbols, which are the same standard. Older UK drawings may use legacy BS symbols that differ from IEC equivalents. The IET Wiring Regulations (BS 7671) reference IEC 60617 for circuit symbols. Where drawings use non-standard symbols, a symbol legend (key) should always be provided.',
+      'UK electrical drawings use symbols based on IEC 60617, which is the British adoption of the IEC 60617 international standard. In practice, most modern UK electrical drawings use IEC symbols, which are the same standard. Older UK drawings may use legacy BS symbols that differ from IEC equivalents. The IET Wiring Regulations (BS 7671) reference IEC 60617 for circuit symbols. Where drawings use non-standard symbols, a symbol legend (key) should always be provided.',
   },
   {
     question: 'What is a single-line diagram and when is it used?',
@@ -198,7 +198,7 @@ const sections = [
               <span>
                 <strong>IEC 60617 (current standard)</strong> — the International Electrotechnical
                 Commission standard for graphical symbols for electrical diagrams. The UK adopted
-                this as BS EN 60617. Modern UK electrical drawings use IEC 60617 symbols. This is
+                this as IEC 60617. Modern UK electrical drawings use IEC 60617 symbols. This is
                 what you will encounter on current drawings from UK and international engineers.
               </span>
             </li>
@@ -232,7 +232,7 @@ const sections = [
       <>
         <p>
           The following are the most frequently encountered symbols on UK electrical drawings, based
-          on IEC 60617 / BS EN 60617.
+          on IEC 60617 / IEC 60617.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -632,7 +632,7 @@ export default function HowToReadWiringDiagramPage() {
   return (
     <GuideTemplate
       title="How to Read a Wiring Diagram | UK Electrical Drawing Guide"
-      description="How to read electrical wiring diagrams, circuit diagrams, and single-line diagrams. IEC vs BS symbols, common symbols (switches, motors, transformers…"
+      description="How to read electrical wiring diagrams, circuit diagrams, and single-line diagrams. IEC vs BS symbols, common symbols (switches, motors, transformers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

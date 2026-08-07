@@ -20,7 +20,7 @@ export default function ElectricalConduitsGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Conduit Guide | Types, Sizing & Installation"
-      description="Complete guide to electrical conduit for UK installations. PVC conduit, galvanised steel conduit, flexible conduit, sizes, bending techniques…"
+      description="Complete guide to electrical conduit for UK installations. PVC conduit, galvanised steel conduit, flexible conduit, sizes, bending techniques."
       datePublished="2025-06-01"
       dateModified="2026-05-18"
       breadcrumbs={[

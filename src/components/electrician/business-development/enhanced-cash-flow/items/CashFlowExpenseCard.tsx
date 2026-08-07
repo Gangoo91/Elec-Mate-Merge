@@ -117,7 +117,7 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 type="checkbox"
                 checked={category.variable}
                 onChange={(e) => onUpdate(category.id, { variable: e.target.checked })}
-                className="w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                className="w-4 h-4 rounded border-white/20 bg-white/5 text-elec-yellow focus:ring-elec-yellow/60 focus:ring-offset-0"
               />
               <span className="text-sm text-white">Variable cost</span>
             </label>
@@ -128,7 +128,7 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 type="checkbox"
                 checked={category.vatable !== false}
                 onChange={(e) => onUpdate(category.id, { vatable: e.target.checked })}
-                className="w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                className="w-4 h-4 rounded border-white/20 bg-white/5 text-elec-yellow focus:ring-elec-yellow/60 focus:ring-offset-0"
               />
               <span className="text-sm text-white">VAT on this cost</span>
             </label>

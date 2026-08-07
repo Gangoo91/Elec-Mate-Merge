@@ -21,7 +21,7 @@ import {
   Gauge,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'EV Charger Certificate App | BS 7671 Section 722';
+const PAGE_TITLE = 'EV Charger Installation Certificate App | BS 7671 Section 722';
 const PAGE_DESCRIPTION =
   'Create EV charger installation certificates on your phone. BS 7671 Section 722 compliant. PME assessment, load management, and digital signatures. Start free.';
 
@@ -29,17 +29,17 @@ const faqs = [
   {
     question: 'Do I need a separate certificate for every EV charger installation?',
     answer:
-      'Yes. Every EV charger installation requires its own Electrical Installation Certificate (EIC) as specified in BS 7671. The certificate must document the supply characteristics, earthing arrangement, circuit details, and all test results for the dedicated EV charging circuit. If you are installing a charger at a property that also requires other electrical work, the EV circuit can be included on the same EIC, but the Section 722 requirements must be specifically addressed. Elec-Mate pre-populates the Section 722 checklist items so nothing is missed.',
+      'A dedicated EV charging point is a new circuit, and Regulation 644.4.201 only allows a Minor Electrical Installation Works Certificate where the work does not include the provision of a new circuit. So an Electrical Installation Certificate is required, issued to the person ordering the work under Regulation 644.1. It does not have to be a standalone document — if you are carrying out other work at the same property, the EV circuit can sit on the same EIC, provided the Section 722 requirements are specifically addressed and the circuit details and test results are recorded. Regulation 644.4.202 confirms certificates may be produced in written or electronic form, so long as their authenticity and integrity can be verified. Elec-Mate pre-populates the Section 722 checklist items so nothing is missed.',
   },
   {
     question: 'What earthing arrangement is required for an EV charger on a PME supply?',
     answer:
-      'Under Regulation 722.411.4.1 of BS 7671, a PME (TN-C-S) earthing facility must not be used as the means of earthing for the protective conductor contact of a charging point located outdoors (or one that might reasonably be expected to charge a vehicle outdoors) unless one of the permitted alternative methods is used. The most common method is to install a separate installation earth electrode for the circuit, effectively creating a TT arrangement, alongside the required 30mA RCD. This guards against an open PEN conductor fault putting a dangerous potential on the vehicle body via the charging cable. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
+      'Under Regulation 722.411.4.1, a PME earthing facility shall not be used as the means of earthing for the protective conductor contact of a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle located outdoors, unless one of methods (b) to (e) is used. Method (b) connects the installation main earthing terminal to an installation earth electrode through a protective conductor complying with Regulation 544.1.1, sized so that the voltage between the main earthing terminal and Earth cannot exceed 70V RMS during an open-circuit PEN fault. Methods (c), (d) and (e) instead use a device that disconnects the vehicle from the live conductors and from protective earth within 5 seconds — on CPC-to-Earth voltage above 70V RMS for (c), or on the line-to-neutral utilisation voltage leaving the 207V to 253V band for (d). Note 3 to the regulation warns that simply creating a TT earthing system for the charging equipment, or the whole installation, may not be an appropriate alternative because sufficient separation from buried metalwork connected to the supply PEN conductor cannot always be achieved. Elec-Mate includes a PME assessment checklist that walks you through this requirement step by step.',
   },
   {
     question: 'What is the minimum cable size for a 32A EV charger circuit?',
     answer:
-      'The minimum cable size depends on the installation method, cable type, ambient temperature, and circuit length. For a typical domestic installation using thermoplastic (PVC) twin-and-earth cable (6242Y) clipped direct in a thermally insulated wall, 6mm² is generally the minimum for a 32A circuit. However, you must always perform a voltage drop calculation to ensure the drop does not exceed the 5% limit for a final circuit (11.5V on a 230V supply). For longer cable runs, 10mm² may be required. If using SWA (steel wire armoured) cable for an external run to a garage or outbuilding, 4mm² may be sufficient depending on the installation method and derating factors. Always calculate using the specific conditions of the installation.',
+      'The minimum cable size depends on the installation method, cable type, ambient temperature, grouping and circuit length. For a typical domestic installation using thermoplastic (PVC) twin-and-earth cable clipped direct, 6mm² is a common starting point for a 32A circuit — but it is a starting point, not an answer. You must select the conductor for the actual reference method and correction factors, then check voltage drop. Table 4Ab of BS 7671 sets the voltage drop between the origin of the installation and any load point at 5% for circuits other than lighting on a low voltage installation supplied directly from a public low voltage distribution system, which is 11.5V on a 230V nominal supply. For longer runs, 10mm² may be required. For an external run to a garage or outbuilding, SWA is typically used and the size again depends on installation method and derating. Always calculate using the specific conditions of the installation.',
   },
   {
     question: 'Do I need to notify the DNO before installing an EV charger?',
@@ -49,19 +49,19 @@ const faqs = [
   {
     question: 'What type of RCD and circuit breaker is required for an EV charger?',
     answer:
-      'The EV charging circuit must have 30mA RCD additional protection (Regulation 415.1), and Regulation 722.531.3.101 governs the type of RCD and the handling of DC fault currents. Where the charging equipment does not itself provide protection against DC fault current, a Type B RCD must be used, or a Type A RCD combined with a residual direct current detecting device (RDC-DD to BS IEC 62955). For a standard 7kW domestic charger the protective device is typically rated at 32A; a 32A Type A RCBO with an integral or upstream RDC-DD is a common solution. Always check the charger manufacturer installation manual for specific protection requirements.',
+      'Additional protection is provided by an RCD with a rated residual operating current not exceeding 30mA (Regulation 415.1.1), and Regulation 722.531.3.101 governs the type of RCD and the handling of DC fault currents. Where the charging equipment does not itself provide protection against DC fault current, a Type B RCD must be used, or a Type A RCD combined with a residual direct current detecting device (RDC-DD to BS IEC 62955, defined in Part 2 as detecting and evaluating 6mA DC residual current and switching the monitored circuit). For a standard 7kW domestic charger the protective device is typically rated at 32A; a 32A Type A RCBO with an integral or upstream RDC-DD is a common solution. Always check the charger manufacturer installation manual for specific protection requirements.',
   },
   {
-    question: 'Is a specific grant available to help with the cost of EV charger installation?',
+    question: 'Is a grant available to help with the cost of EV charger installation?',
     answer:
-      "The UK government's EV chargepoint grant (administered by Ozev, formerly OLEV) provides funding towards the cost of installing an EV charger at residential properties. As of 2025, the grant covers 75% of the installation cost, up to a maximum of £350 per installation, for eligible properties including flats, rental properties, and homes without off-street parking in specific schemes. The grant must be applied for by an Ozev-authorised installer before installation begins — it cannot be claimed retrospectively. Landlords of residential properties can also access the Ozev residential landlord scheme. As an electrician, being Ozev-registered opens an additional revenue stream and is increasingly sought by clients. The EV charger certificate and commissioning documentation required for grant claims are built into Elec-Mate's EV charger certificate workflow.",
+      "Government support for domestic and workplace charge points has run through several schemes administered by the Office for Zero Emission Vehicles (OZEV), including the Electric Vehicle Homecharge Scheme and the Workplace Charging Scheme. Eligibility, grant values and the schemes themselves change, so check the current position on GOV.UK before quoting a figure to a customer — this page deliberately does not print a grant amount that may since have moved. What does not change is the documentation: grant claims are made by an authorised installer, generally before the work, and are supported by the Electrical Installation Certificate, photographs of the installed equipment, and evidence of the DNO notification. Elec-Mate's EV charger certificate produces that documentation in one export.",
   },
 ];
 
 const howToSteps = [
   {
     name: 'Assess the supply and earthing',
-    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S), you will need to install a separate installation earth electrode for the EV circuit (unless a permitted alternative method is used) as required by Regulation 722.411.4.1.',
+    text: 'Before starting, assess the existing supply characteristics. Record the earthing arrangement (TN-C-S, TN-S, or TT), the supply fuse rating, and the current maximum demand. If the supply is PME (TN-C-S) and the charging point is outdoors, or might reasonably be expected to charge a vehicle outdoors, decide which of methods (b) to (e) of Regulation 722.411.4.1 you will use and record it.',
   },
   {
     name: 'Open a new EV charger certificate',
@@ -69,11 +69,11 @@ const howToSteps = [
   },
   {
     name: 'Complete the PME assessment',
-    text: 'Work through the PME assessment checklist in the app. This covers the earthing arrangement evaluation, earth electrode installation details (if required), protective conductor sizing, and RCD selection. The app validates your entries against the Section 722 requirements.',
+    text: 'Work through the PME assessment checklist in the app. This covers the earthing arrangement evaluation, the Regulation 722.411.4.1 method selected, earth electrode details and measured resistance where method (b) is used, protective conductor sizing, and RCD selection. The app validates your entries against the Section 722 requirements.',
   },
   {
     name: 'Enter circuit details and test results',
-    text: 'Record the circuit details including cable type, size, length, and installation method. Enter all test results: continuity of protective conductors (R1+R2), insulation resistance, earth fault loop impedance (Zs), prospective fault current (PSCC), polarity, and RCD operating time. The app checks values against BS 7671 limits.',
+    text: 'Record the circuit details including cable type, size, length, and installation method. Enter all test results: continuity of protective conductors (R1+R2), insulation resistance, polarity, earth fault loop impedance (Zs), prospective fault current, and RCD operation. The app checks values against BS 7671 limits and prompts you for the recommended interval to the first periodic inspection, which Regulation 644.4 requires to be recorded on the certificate.',
   },
   {
     name: 'Document load management',
@@ -90,25 +90,25 @@ const features = [
     icon: ShieldCheck,
     title: 'Section 722 Compliant',
     description:
-      'Every EV charger certificate includes the full BS 7671 Section 722 checklist. PME assessment, earthing requirements…',
+      'Every EV charger certificate carries the BS 7671 Section 722 checklist: PME assessment, earthing method, RCD type and equipment standards.',
   },
   {
     icon: Activity,
     title: 'PME Assessment Built In',
     description:
-      'The dedicated PME assessment section walks you through Regulation 722.411.4.1. Earth electrode requirements, protective conductor sizing…',
+      'The PME section walks you through methods (b) to (e) of Regulation 722.411.4.1, records which one you used, and captures the electrode resistance where it applies.',
   },
   {
     icon: Gauge,
     title: 'Maximum Demand Calculator',
     description:
-      'Calculate the total maximum demand including the new EV charger. The app flags when the load exceeds the supply fuse rating and prompts you to document…',
+      'Total the existing loads plus the new charge point. The app flags when demand exceeds the supply fuse rating and prompts you to record the load curtailment arrangement.',
   },
   {
     icon: Smartphone,
     title: 'Complete on Your Phone',
     description:
-      'Fill out the entire EV charger certificate on site using your phone or tablet. Works offline with automatic saving…',
+      'Fill out the whole certificate on site from a phone or tablet. Works offline, saves as you go, and syncs when you have signal again.',
   },
   {
     icon: PenTool,
@@ -120,7 +120,7 @@ const features = [
     icon: Download,
     title: 'PDF Export for Grant Claims',
     description:
-      'Export a professional PDF that meets scheme provider and grant submission requirements. All Section 722 documentation, test results…',
+      'Export a professional PDF for scheme providers and grant submissions, with the Section 722 documentation, test results and signatures in one file. Regulation 644.4.202 permits certificates in electronic form.',
   },
 ];
 
@@ -166,7 +166,7 @@ const howToSchema = {
 
 export default function EVChargerCertificatePage() {
   useSEO({
-    title: 'EV Charger Installation Certificate App | BS 7671 Section 722',
+    title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -225,13 +225,100 @@ export default function EVChargerCertificatePage() {
       {/* E-E-A-T attribution */}
       <section className="py-4 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 text-sm text-white/60">
+          <div className="flex items-center gap-3 text-sm text-white">
             <FileCheck2 className="w-4 h-4 text-yellow-400 shrink-0" />
             <span>
               Technical content reviewed by NICEIC-registered electricians. Regulations cited from
-              BS&nbsp;7671:2018+A4:2026 (IET Wiring Regulations, 18th Edition).
+              BS&nbsp;7671:2018+A4:2026 (IET Wiring Regulations).
             </span>
           </div>
+        </div>
+      </section>
+
+      {/* Answer-first summary */}
+      <section className="py-10 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            The short answer: what Section 722 asks of you
+          </h2>
+          <p className="text-white mb-6 leading-relaxed">
+            The regulation numbers you need on a domestic EV charging point, in one place.
+          </p>
+          <div className="-mx-5 sm:mx-0 overflow-x-auto sm:rounded-2xl sm:border sm:border-white/10 border-y border-white/10">
+            <table className="w-full min-w-[34rem] text-sm text-left">
+              <thead className="bg-white/[0.06] text-white">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Question</th>
+                  <th className="px-4 py-3 font-semibold">Answer</th>
+                  <th className="px-4 py-3 font-semibold whitespace-nowrap">Regulation</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white">
+                <tr>
+                  <td className="px-4 py-3 align-top">Which certificate?</td>
+                  <td className="px-4 py-3 align-top">
+                    An Electrical Installation Certificate. A dedicated charging point is a new
+                    circuit, so a Minor Works certificate is not an option.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">644.1, 644.4.201</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">PME supply, outdoor charging point?</td>
+                  <td className="px-4 py-3 align-top">
+                    The PME earthing facility must not be the means of earthing for the protective
+                    conductor contact unless one of methods (b) to (e) is used.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">722.411.4.1</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">Additional protection?</td>
+                  <td className="px-4 py-3 align-top">
+                    RCD with a rated residual operating current not exceeding{' '}
+                    <span className="font-semibold text-yellow-400">30mA</span>.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">415.1.1</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">DC fault current?</td>
+                  <td className="px-4 py-3 align-top">
+                    Type B RCD, or Type A plus an RDC-DD to BS&nbsp;IEC&nbsp;62955, where the
+                    equipment does not provide it itself.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">722.531.3.101</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">PEN conductor in the circuit?</td>
+                  <td className="px-4 py-3 align-top">
+                    Not permitted. A circuit supplying EV charging equipment shall not include a PEN
+                    conductor.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">722.312.2.1</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">AFDD needed?</td>
+                  <td className="px-4 py-3 align-top">
+                    Not required for circuits supplying EV charging equipment to the BS&nbsp;EN&nbsp;61851
+                    series incorporating socket-outlets or vehicle connectors to
+                    BS&nbsp;EN&nbsp;IEC&nbsp;62196-2.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">722.421.1.7.201</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top">Voltage drop limit?</td>
+                  <td className="px-4 py-3 align-top">
+                    <span className="font-semibold text-yellow-400">5%</span> origin to load point
+                    for circuits other than lighting, on a supply taken directly from the public LV
+                    network — 11.5V at 230V.
+                  </td>
+                  <td className="px-4 py-3 align-top whitespace-nowrap">Table 4Ab</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white text-sm mt-4 leading-relaxed">
+            Section 722 does not apply to charging points that employ inductive charging, or that
+            charge mobility scooters and similar vehicles of 10A and less (Regulation 722.1).
+          </p>
         </div>
       </section>
 
@@ -250,16 +337,19 @@ export default function EVChargerCertificatePage() {
               Specifically, it is the EIC produced after installing a dedicated electric vehicle
               charging point, certifying that the installation has been designed, constructed,
               inspected, and tested in accordance with BS 7671:2018+A4:2026 (the IET Wiring
-              Regulations, 18th Edition), with particular attention to the requirements of Section
-              722, which deals specifically with the supply of electric vehicles.
+              Regulations), with particular attention to the requirements of Section 722, which
+              deals specifically with circuits intended to supply electric vehicles for charging
+              purposes.
             </p>
             <p>
-              The certificate is a legal document. It confirms to the property owner, the
-              Distribution Network Operator (DNO), and any competent person scheme provider that the
-              EV charging installation meets the required safety standards. Without a valid EIC, the
-              installation cannot be signed off through a competent person scheme, and the property
-              owner may not be able to claim any available government grants or meet their insurance
-              obligations.
+              Regulation 644.1 requires the certificate to be issued to the person ordering the work
+              on completion of verification, and Regulation 644.5 requires it to be compiled and
+              authenticated by a skilled person competent to verify that the requirements of BS 7671
+              have been met. It confirms to the property owner, the Distribution Network Operator
+              (DNO), and any competent person scheme provider that the EV charging installation
+              meets the required safety standards. Without it the installation cannot be signed off
+              through a competent person scheme, and the property owner may struggle to support a
+              grant claim or an insurance question later.
             </p>
             <p>
               Unlike a standard domestic circuit installation, an EV charger certificate must
@@ -294,109 +384,218 @@ export default function EVChargerCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Section 722 of BS 7671:2018+A4:2026 sets out the particular requirements for the
-              supply of electric vehicles. It applies to circuits intended to supply electric
-              vehicles, including those for charging at residential properties, workplaces, and
-              public charging locations. Understanding these requirements is essential for every
-              electrician installing EV chargers.
+              Section 722 of BS 7671:2018+A4:2026 sets out the particular requirements for circuits
+              intended to supply electric vehicles for charging purposes — residential, workplace
+              and public. Regulation 722.1 excludes only two things: charging points that employ
+              inductive charging, and those that charge mobility scooters and similar vehicles of
+              10A and less.
             </p>
+
+            <h3 className="text-lg font-bold text-white pt-2">What changed at A4:2026</h3>
             <p>
-              The section covers several critical areas. Regulation 722.411.4.1 addresses the
-              earthing arrangements where the supply is TN-C-S (PME). Because an open PEN conductor
-              fault could place a dangerous potential on the vehicle body via the charging cable,
-              the regulation prohibits using the PME earthing facility for the protective conductor
-              contact of an outdoor charging point unless one of the permitted alternative methods
-              is used. This is one of the most important and most commonly misunderstood
-              requirements in EV charger installation.
+              The A4 amendment makes significant changes to Regulation 722.411.4.1 concerning the
+              use of a PME supply, and the published change note is blunt about the most important
+              one: <strong>the exception concerning reasonably practicable has been deleted</strong>
+              . The old escape route of arguing that an alternative method was not reasonably
+              practicable is gone. Changes were also made to the requirements for external
+              influences, RCDs, socket-outlets and connectors. Separately, Regulation 722.311.201
+              permits load curtailment to be taken into account when determining maximum demand.
             </p>
+
+            <h3 className="text-lg font-bold text-white pt-2">Earthing on a PME supply</h3>
+            <p>
+              Regulation 722.411.4.1 addresses the earthing arrangement where the supply is TN-C-S
+              (PME). Because an open PEN conductor fault could place a dangerous potential on the
+              vehicle body via the charging cable, a PME earthing facility shall not be used as the
+              means of earthing for the protective conductor contact of a charging point located
+              outdoors, or one that might reasonably be expected to be used to charge a vehicle
+              located outdoors, unless one of methods (b) to (e) is used. This is the most commonly
+              misunderstood requirement in EV charger installation, and it is set out in full in the
+              next section.
+            </p>
+
+            <h3 className="text-lg font-bold text-white pt-2">Protective measures not permitted</h3>
+            <p>
+              Two groups of protective measures are ruled out. Regulation 722.410.3.5 prohibits
+              obstacles and placing out of reach (Section 417). Regulation 722.410.3.6 prohibits
+              non-conducting location (Regulation 418.1) and earth-free local equipotential bonding
+              (Regulation 418.2). Where electrical separation is used instead, Regulation 722.413.1.2
+              limits it to the supply of one electric vehicle from one unearthed source, through a
+              fixed isolating transformer complying with BS EN 61558-2-4.
+            </p>
+
+            <h3 className="text-lg font-bold text-white pt-2">Circuit design and RCD selection</h3>
             <p>
               The circuit must be designed for continuous duty — the cable and protective device
               must be rated for the full load current drawn continuously. For a standard 7kW
               domestic charger, this means a 32A circuit with no diversity applied. Under Regulation
-              722.312.2.1, a circuit supplying EV charging equipment in a TN system shall not include
-              a PEN conductor. Regulation 722.531.3.101 governs the selection of the RCD and the
-              detection of DC fault current for the charging circuit.
+              722.312.2.1, a circuit supplying charging equipment for electric vehicles shall not
+              include a PEN conductor. Additional protection is provided by an RCD with a rated
+              residual operating current not exceeding 30mA (Regulation 415.1.1), and Regulation
+              722.531.3.101 governs the selection of the RCD and the detection of DC fault current.
+              Where the charging equipment does not itself provide protection against DC fault
+              current, that means a Type B RCD, or a Type A RCD combined with a residual direct
+              current detecting device (RDC-DD to BS IEC 62955 — defined in Part 2 as detecting and
+              evaluating 6mA DC residual current and switching the monitored circuit). Always check
+              the charger manufacturer installation instructions.
             </p>
+
+            <h3 className="text-lg font-bold text-white pt-2">Equipment standards and AFDDs</h3>
             <p>
-              The circuit must have 30mA RCD additional protection in line with Regulation 415.1.
-              The type of RCD depends on the charger: where the charging equipment does not itself
-              provide protection against DC fault current, Regulation 722.531.3.101 requires a Type B
-              RCD, or a Type A RCD combined with a residual direct current detecting device (RDC-DD
-              to BS IEC 62955) that disconnects on a smooth DC residual current of 6mA or above.
-              Always check the charger manufacturer installation instructions.
-            </p>
-            <p className="text-white/80 text-sm">
-              Note: where the protective measure of electrical separation is used (Regulation
-              722.413.1.2), it is limited to the supply of one electric vehicle from one unearthed
-              source through a fixed isolating transformer. AFDDs are not required for circuits
-              supplying EV charging equipment conforming to the BS EN 61851 series that incorporate
-              socket-outlets or vehicle connectors to BS EN IEC 62196-2 (Regulation 722.421.1.7.201).
+              Regulation 722.511.101 requires EV charging equipment to comply with the appropriate
+              parts of the BS EN 61851 series. AFDDs are not required for circuits supplying EV
+              charging equipment conforming to the BS EN 61851 series that incorporate
+              socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2 (Regulation
+              722.421.1.7.201).
             </p>
           </div>
         </div>
       </section>
 
-      {/* PME Earthing and TT Requirement */}
+      {/* PME earthing — Regulation 722.411.4.1 */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            PME Earthing and the TT Earth Electrode Requirement
+            PME Supplies: The Four Permitted Methods Under Regulation 722.411.4.1
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The majority of domestic properties in the UK are supplied with a TN-C-S (PME)
-              earthing system. Under Regulation 722.411.4.1, where an EV charger is installed on a
-              PME supply, a PME earthing facility must not be used as the means of earthing for the
-              protective conductor contact of a charging point located outdoors (or one that might
-              reasonably be expected to charge a vehicle outdoors) unless one of the permitted
-              alternative methods applies. The most common method is to install a separate
-              installation earth electrode for the EV circuit, effectively creating a TT earthing
-              arrangement for that circuit alone. (Indent (a) of this regulation was deleted by
-              BS 7671:2018+A2:2022, and the A4:2026 amendment adds a further alternative method.)
+              Most domestic properties in the UK are supplied with a TN-C-S (PME) earthing system.
+              Regulation 722.411.4.1 states that a PME earthing facility shall not be used as the
+              means of earthing for the protective conductor contact of a charging point located
+              outdoors, or that might reasonably be expected to be used to charge a vehicle located
+              outdoors, unless one of the listed methods is used. Indent (a) was deleted by
+              BS 7671:2018+A2:2022, leaving four: (b), (c), (d) and (e).
             </p>
             <p>
-              The reason for this requirement is safety. On a PME supply, the neutral and earth are
-              combined in the supply cable (the PEN conductor). If the PEN conductor becomes
-              disconnected (an open PEN fault), the voltage on the PME earth terminal can rise to a
-              dangerous level. Because an EV charging cable provides a direct metallic connection
-              between the installation earth and the vehicle chassis, a person touching the vehicle
-              during an open PEN fault could receive a lethal electric shock. By using a separate TT
-              earth electrode for the EV circuit, this risk is eliminated because the vehicle earth
-              is independent of the PME system.
-            </p>
-            <p>
-              Installing the earth electrode requires driving a copper-clad earth rod into the
-              ground, typically to a depth of 1.2 to 2.4 metres. The earth electrode resistance (Ra)
-              must be measured and recorded. Combined with the 30mA RCD, the product of Ra and the
-              RCD operating current must not exceed 50V (i.e., Ra must be less than approximately
-              1667 ohms for a 30mA RCD, though in practice a much lower value is desirable for
-              reliable operation).
-            </p>
-            <p>
-              There are some exceptions. If the property already has a TN-S earthing system (where
-              the earth is provided by the cable sheath), or if it has an existing TT system, the
-              separate earth electrode for the EV circuit may not be required — though the 30mA RCD
-              protection is still mandatory. Some newer chargers with built-in earth monitoring may
-              offer alternative protective measures, but the installer must always follow the
-              specific requirements in BS 7671 and the charger manufacturer instructions.
+              The reason is an open PEN fault. On a PME supply the neutral and earth are combined in
+              the supply cable, and if that PEN conductor is lost the voltage on the installation
+              earth terminal can rise dangerously. The charging cable puts a metallic connection
+              between the installation earth and the vehicle body, so a person touching the vehicle
+              is exposed to that rise. Every one of the four methods is a way of making sure the
+              voltage a person can touch is limited, or removed quickly.
             </p>
           </div>
-          <div className="mt-6 rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
+
+          <div className="mt-6 -mx-5 sm:mx-0 overflow-x-auto sm:rounded-2xl sm:border sm:border-white/10 border-y border-white/10">
+            <table className="w-full min-w-[36rem] text-sm text-left">
+              <thead className="bg-white/[0.06] text-white">
+                <tr>
+                  <th className="px-4 py-3 font-semibold whitespace-nowrap">Method</th>
+                  <th className="px-4 py-3 font-semibold">What it requires</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white">
+                <tr>
+                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(a)</td>
+                  <td className="px-4 py-3 align-top">
+                    Deleted by BS 7671:2018+A2:2022.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(b)</td>
+                  <td className="px-4 py-3 align-top">
+                    The main earthing terminal of the installation is connected to an installation
+                    earth electrode by a protective conductor complying with Regulation 544.1.1. The
+                    electrode resistance to Earth must be such that the voltage between the main
+                    earthing terminal and Earth cannot exceed{' '}
+                    <span className="font-semibold">70V RMS</span> in the event of an open-circuit
+                    PEN fault on the low voltage network.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(c)</td>
+                  <td className="px-4 py-3 align-top">
+                    A device that disconnects the vehicle from the live conductors and from
+                    protective earth, in accordance with Regulation 543.3.3.101(b), within 5s where
+                    the voltage between the circuit protective conductor and Earth exceeds 70V RMS
+                    due to an open-circuit PEN fault. It need not operate if the voltage exceeds 70V
+                    RMS for less than 4s. It must provide isolation, be selected in accordance with
+                    Table 537.4, and be resettable only when the voltage is back below 70V RMS.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(d)</td>
+                  <td className="px-4 py-3 align-top">
+                    The same 5s disconnection, triggered instead by the utilisation voltage at the
+                    charging point between line and neutral going above{' '}
+                    <span className="font-semibold">253V RMS</span> or below{' '}
+                    <span className="font-semibold">207V RMS</span>. It must provide isolation, be
+                    selected in accordance with Table 537.4, and be resettable only within the 207V
+                    to 253V band.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 align-top font-semibold text-yellow-400">(e)</td>
+                  <td className="px-4 py-3 align-top">
+                    An alternative device to (c) or (d) that does not result in a lesser degree of
+                    safety, operating by the same disconnection from live conductors and protective
+                    earth, providing isolation and selected in accordance with Table 537.4.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white text-sm mt-4 leading-relaxed">
+            Equivalent means of functionality for (c), (d) and (e) may be built into the charging
+            equipment itself, which is how most modern open-PEN-protected wallboxes satisfy the
+            regulation.
+          </p>
+
+          <h3 className="text-xl font-bold text-white mt-10 mb-4">
+            Sizing the electrode for method (b)
+          </h3>
+          <div className="space-y-4 text-white leading-relaxed">
+            <p>
+              Method (b) is <strong>not</strong> a TT conversion. The installation stays on the PME
+              earthing facility; the electrode is added to hold the main earthing terminal below 70V
+              RMS relative to Earth during an open PEN event. The electrode resistance must be
+              measured and recorded.
+            </p>
+            <p>
+              Annex A722, Item A722.3 gives the formula for the maximum permitted resistance — the
+              sum of the earth electrode resistance and the protective conductor connecting it to
+              the main earthing terminal — and gives separate single-phase and three-phase
+              expressions. Its Note 1 warns that earth electrodes with a resistance above 200Ω may
+              be unstable, and caps the design value at 200Ω where the three-phase formula would
+              give more. Where the protective conductor to the electrode is buried in the ground,
+              its cross-sectional area must be not less than that stated in Table 54.1.
+            </p>
+            <p>
+              Where a device to method (c), (d) or (e) is used, protective conductors and
+              exposed-conductive-parts downstream of that device must have no connection to the
+              protective conductors or exposed-conductive-parts of any circuit not protected by the
+              same device, and no connection to any extraneous-conductive-part.
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white text-lg mb-2">
-                  Common PME Installation Mistake
+                  &ldquo;Just rod it and call it TT&rdquo; is not the compliant answer
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  A frequent error is connecting the EV charging circuit earth to the existing PME
-                  earth bar in the consumer unit. This defeats the purpose of the TT earthing
-                  requirement. The earth electrode conductor for the EV circuit must be run
-                  separately back to the earth rod, and the EV circuit RCD must be positioned so
-                  that it only protects the TT-earthed EV circuit, not any PME-earthed circuits.
+                  Note 3 to Regulation 722.411.4.1 says it plainly: creating a TT earthing system
+                  for the charging equipment, or for the whole installation, as an alternative to
+                  using the PME earthing facility with one of methods (b) to (e) may not be an
+                  appropriate solution, because of the inability to provide sufficient separation
+                  from buried metalwork connected to the supply PEN conductor. Pick one of the four
+                  methods and record which one you used on the certificate.
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="mt-4 rounded-2xl bg-white/[0.04] border border-white/10 p-5">
+            <h3 className="font-bold text-white text-lg mb-2">Gone at A4:2026</h3>
+            <p className="text-white text-sm leading-relaxed">
+              The A4:2026 change note for Section 722 records that the exception concerning
+              reasonably practicable has been deleted from Regulation 722.411.4.1. If your habit was
+              to justify leaving a PME earth in place because an alternative was not reasonably
+              practicable, that justification no longer exists in the regulation.
+            </p>
           </div>
         </div>
       </section>
@@ -423,12 +622,12 @@ export default function EVChargerCertificatePage() {
               requesting a supply upgrade from the DNO.
             </p>
             <p>
-              DNO notification is generally required when connecting a load of 13.8kVA
-              (approximately 60A single phase) or above, or when the total demand of the property
-              will exceed the existing supply capacity. In practice, most DNOs ask to be notified of
-              all EV charger installations through their online portals. This notification helps the
-              DNO manage the local network and plan for the increasing demand from electric vehicles
-              across the grid.
+              The threshold commonly quoted for prior approval rather than notification is a load of
+              13.8kVA (about 60A single phase) or above, or where the total demand will exceed the
+              existing supply capacity — but thresholds and process vary by DNO, so check the
+              relevant operator's own guidance rather than relying on a rule of thumb. In practice
+              most DNOs ask to be notified of every EV charge point installation through their online
+              portal, which helps them plan for rising demand across the local network.
             </p>
             <p>
               Elec-Mate includes a maximum demand calculator within the EV charger certificate. You
@@ -449,39 +648,32 @@ export default function EVChargerCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Load management is increasingly important as more EV chargers are installed on the UK
-              electrical network. A CT (current transformer) clamp is typically installed on the
-              supply tails to monitor the total current drawn by the property in real time. The
-              charger uses this data to dynamically adjust its charging rate, reducing the output
-              when other loads are active and increasing it when demand is low.
+              Regulation 722.311.201 states that load curtailment, including load reduction or
+              disconnection, either automatically or manually, may be taken into account when
+              determining the maximum demand of the installation or part thereof. That single
+              sentence is what makes documented load management a design solution rather than a
+              workaround: a properly recorded system can legitimately reduce the assessed maximum
+              demand, which is often what avoids a supply upgrade.
             </p>
             <p>
-              This dynamic load balancing ensures the supply fuse is never overloaded, even when an
-              electric shower and an EV charger are both running simultaneously. It eliminates the
-              need for a supply upgrade in many installations and is a cost-effective solution for
-              properties with limited supply capacity.
+              In practice, a CT (current transformer) clamp is installed on the supply tails to
+              monitor the total current drawn by the property in real time. The charge point uses
+              that data to adjust its charging rate dynamically, backing off when other loads are
+              active and increasing again when demand falls, so the supply fuse is not asked to
+              carry more than it is rated for when a shower and a charge point run together.
             </p>
             <p>
               Smart charging goes further than simple load management. Under the Electric Vehicles
-              (Smart Charge Points) Regulations 2021, all new domestic and workplace EV chargers
-              must be "smart" by default. This means they must be capable of being remotely
-              controlled, must default to off-peak charging times, and must respond to signals from
-              the electricity network to help balance supply and demand.
+              (Smart Charge Points) Regulations 2021, new domestic and workplace charge points sold
+              in Great Britain must have smart functionality: the ability to be remotely controlled,
+              default off-peak charging times, and a response to signals from the electricity
+              network to help balance supply and demand.
             </p>
             <p>
-              From an installation certificate perspective, the load management and smart charging
-              configuration must be documented. The certificate should record whether a CT clamp has
-              been installed, the maximum current limit set by the load management device, and the
-              smart charging settings configured during commissioning. Elec-Mate provides dedicated
-              fields for all of this documentation.
-            </p>
-            <p>
-              Regulation 722.311.201 (A4:2026) explicitly permits load curtailment — including
-              automatic or manual load reduction or disconnection — to be taken into account when
-              determining the maximum demand of the installation or any part thereof. This means a
-              properly documented CT-clamp load management system can legitimately reduce the
-              assessed maximum demand, potentially avoiding the need for a supply upgrade or DNO
-              capacity increase.
+              From a certification point of view, all of this needs to be recorded. The certificate
+              should state whether a CT clamp has been installed, the maximum current limit set by
+              the load management device, and the smart charging settings configured during
+              commissioning. Elec-Mate provides dedicated fields for all of it.
             </p>
           </div>
         </div>
@@ -495,10 +687,13 @@ export default function EVChargerCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Electric vehicle charging is categorised into four modes defined by BS EN 61851-1. For
+              Electric vehicle charging is categorised into modes defined by the BS EN 61851 series,
+              which Regulation 722.511.101 requires EV charging equipment to comply with. For
               domestic and workplace installations in the UK, the three most relevant are Mode 1,
-              Mode 2, and Mode 3. Understanding these modes is important for selecting the correct
-              protective measures and completing the installation certificate accurately.
+              Mode 2, and Mode 3. Section 722 applies to circuits intended to supply electric
+              vehicles for charging purposes regardless of mode — it is not mode-specific, and the
+              only exclusions in Regulation 722.1 are inductive charging and mobility scooters and
+              similar vehicles of 10A and less.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -510,10 +705,10 @@ export default function EVChargerCertificatePage() {
                 <h3 className="font-bold text-white text-lg">Mode 1</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Charging from a standard 13A domestic socket outlet. No communication between the
-                charger and the vehicle. Limited to approximately 3kW. Not recommended for regular
-                use in the UK due to the risk of overheating sockets under prolonged continuous
-                load. BS 7671 Section 722 does not apply to Mode 1 charging.
+                Charging from a standard 13A domestic socket-outlet. No communication between the
+                charger and the vehicle, and no in-cable protection. Limited to roughly 3kW. Not
+                recommended for regular use in the UK because of the risk of overheating a general
+                purpose socket-outlet under a prolonged continuous load.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -571,12 +766,15 @@ export default function EVChargerCertificatePage() {
               — always check the manufacturer instructions.
             </p>
             <p>
-              Cable sizing for a 32A continuous load requires careful consideration of all derating
-              factors. The minimum cable size for a typical domestic installation is 6mm²
-              twin-and-earth (for thermoplastic insulated cable clipped direct). However, this
-              assumes favourable conditions: ambient temperature not exceeding 30 degrees Celsius,
-              no grouping with other cables, and a circuit length short enough to keep the voltage
-              drop within the 5% limit (11.5V on a 230V supply).
+              Cable sizing for a 32A continuous load requires careful consideration of all
+              correction factors. A common starting point for a typical domestic installation is
+              6mm² thermoplastic twin-and-earth clipped direct. That is a starting point only: it
+              assumes favourable conditions — an ambient temperature no higher than the 30°C the
+              tabulated ratings are based on, no grouping with other cables, no thermal insulation,
+              and a length short enough to stay inside the voltage drop limit. Select from the
+              tabulated rating for the actual reference method and apply the Appendix 4 correction
+              factors; never apply an installation-method multiplier on top of a rating that already
+              accounts for the method.
             </p>
             <p>
               For longer cable runs — common when the charger is mounted on an external wall or in a
@@ -610,22 +808,22 @@ export default function EVChargerCertificatePage() {
               <li className="flex items-start gap-3">
                 <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Voltage drop:</strong> Must not exceed 5% (11.5V on 230V supply) for the
-                  complete circuit
+                  <strong>Voltage drop:</strong> 5% from the origin of the installation to the
+                  charging point &mdash; 11.5V on a 230V nominal supply (Table 4Ab)
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Earthing:</strong> Separate installation earth electrode on PME supplies
-                  where an alternative method is not used (Regulation 722.411.4.1)
+                  <strong>Earthing on PME:</strong> one of methods (b) to (e) of Regulation
+                  722.411.4.1, recorded on the certificate
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Isolation:</strong> Local isolator adjacent to the charger for maintenance
-                  and emergency disconnection
+                  <strong>Conductor arrangement:</strong> no PEN conductor in the circuit supplying
+                  the charging equipment (Regulation 722.312.2.1)
                 </span>
               </li>
             </ul>
@@ -636,15 +834,15 @@ export default function EVChargerCertificatePage() {
             <h3 className="font-bold text-white text-lg mb-4">
               Choosing the RCD: DC Fault Current Protection (Regulation 722.531.3.101)
             </h3>
-            <div className="overflow-hidden rounded-2xl border border-white/10">
-              <table className="w-full text-sm text-left">
+            <div className="-mx-5 sm:mx-0 overflow-x-auto sm:rounded-2xl sm:border sm:border-white/10 border-y border-white/10">
+              <table className="w-full min-w-[32rem] text-sm text-left">
                 <thead className="bg-white/[0.06] text-white">
                   <tr>
                     <th className="px-4 py-3 font-semibold">Scenario</th>
                     <th className="px-4 py-3 font-semibold">Acceptable protection</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/10 text-white/90">
+                <tbody className="divide-y divide-white/10 text-white">
                   <tr>
                     <td className="px-4 py-3 align-top">
                       Charger does <strong>not</strong> provide its own DC fault current protection
@@ -668,16 +866,18 @@ export default function EVChargerCertificatePage() {
                       Additional protection (all scenarios)
                     </td>
                     <td className="px-4 py-3 align-top">
-                      30mA rated residual operating current required (Regulation 415.1)
+                      RCD with a rated residual operating current not exceeding 30mA (Regulation
+                      415.1.1)
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-white/70 text-xs mt-3 leading-relaxed">
-              A plain Type AC RCD is not suitable for an EV charging circuit. Always confirm the
-              protection arrangement against the charger manufacturer's installation instructions and
-              BS 7671 Section 722.
+            <p className="text-white text-sm mt-3 leading-relaxed">
+              A plain Type AC RCD is not suitable for an EV charging circuit, and BS 7671 notes that
+              a Type AC RCD should not be fitted upstream of a Type A, Type F or Type B device.
+              Always confirm the protection arrangement against the charger manufacturer's
+              installation instructions and BS 7671 Section 722.
             </p>
           </div>
 
@@ -686,13 +886,13 @@ export default function EVChargerCertificatePage() {
             <h3 className="font-bold text-white text-lg mb-2">
               Cable Sizing Guidance for a 32A (7kW) Charging Circuit
             </h3>
-            <p className="text-white/70 text-sm mb-4 leading-relaxed">
+            <p className="text-white text-sm mb-4 leading-relaxed">
               Indicative starting points only — the conductor must always be sized for the actual
-              installation method, ambient temperature, grouping and run length, then verified
-              against the voltage-drop limit. Calculate every circuit individually.
+              reference method, ambient temperature, grouping and run length, then verified against
+              the voltage-drop limit. Calculate every circuit individually.
             </p>
-            <div className="overflow-hidden rounded-2xl border border-white/10">
-              <table className="w-full text-sm text-left">
+            <div className="-mx-5 sm:mx-0 overflow-x-auto sm:rounded-2xl sm:border sm:border-white/10 border-y border-white/10">
+              <table className="w-full min-w-[36rem] text-sm text-left">
                 <thead className="bg-white/[0.06] text-white">
                   <tr>
                     <th className="px-4 py-3 font-semibold">Scenario</th>
@@ -700,7 +900,7 @@ export default function EVChargerCertificatePage() {
                     <th className="px-4 py-3 font-semibold">Note</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/10 text-white/90">
+                <tbody className="divide-y divide-white/10 text-white">
                   <tr>
                     <td className="px-4 py-3 align-top">Short run, clipped direct (PVC twin &amp; earth)</td>
                     <td className="px-4 py-3 align-top font-medium text-yellow-400">6mm&sup2;</td>
@@ -720,19 +920,20 @@ export default function EVChargerCertificatePage() {
               </table>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
-                <p className="text-xs uppercase tracking-wide text-blue-300 mb-1">Design current</p>
+              <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
+                <p className="text-xs uppercase tracking-wide text-white mb-1">Design current</p>
                 <p className="text-white text-sm">
                   32A drawn continuously &mdash; <strong>no diversity</strong> applied to a single
                   dedicated EV charging circuit.
                 </p>
               </div>
-              <div className="rounded-xl bg-blue-900/30 border border-blue-700/40 p-4">
-                <p className="text-xs uppercase tracking-wide text-blue-300 mb-1">Voltage drop</p>
+              <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
+                <p className="text-xs uppercase tracking-wide text-white mb-1">Voltage drop</p>
                 <p className="text-white text-sm">
-                  Keep within <strong>5%</strong> for &ldquo;other uses&rdquo; circuits supplied from
-                  a public LV network (about <strong>11.5V</strong> on 230V), per BS 7671 Appendix 4
-                  (Table 4Ab).
+                  <strong>5%</strong> between the origin of the installation and any load point, for
+                  circuits other than lighting on a low voltage installation supplied directly from
+                  a public LV distribution system &mdash; <strong>11.5V</strong> at 230V nominal
+                  (Appendix 4, Table 4Ab).
                 </p>
               </div>
             </div>
@@ -750,10 +951,11 @@ export default function EVChargerCertificatePage() {
             <p>
               The UK government has offered various grant schemes to support the uptake of electric
               vehicles, including grants towards the cost of installing domestic and workplace EV
-              chargers. The Office for Zero Emission Vehicles (OZEV) historically administered the
-              Electric Vehicle Homecharge Scheme (EVHS) and the Workplace Charging Scheme (WCS).
-              While the specific schemes available may change over time, the documentation
-              requirements remain broadly similar.
+              charge points. The Office for Zero Emission Vehicles (OZEV) has administered these,
+              including the Electric Vehicle Homecharge Scheme and the Workplace Charging Scheme.
+              Scheme names, values and eligibility change, so confirm the current position on
+              GOV.UK before you quote — but the documentation requirements have stayed broadly the
+              same.
             </p>
             <p>
               To claim a grant, installers typically need to submit the completed Electrical
@@ -823,7 +1025,7 @@ export default function EVChargerCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Create EV Charger Certificates on Your Phone"
-            description="BS 7671 Section 722 compliant EV charger installation certificates with PME assessment, load management documentation…"
+            description="BS 7671 Section 722 compliant EV charger installation certificates, with the PME assessment, load management record and test results in one export."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -861,28 +1063,23 @@ export default function EVChargerCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">
-              EV Charger Certificate Requirements UK
-            </SEOInternalLink>
-            <SEOInternalLink href="/tools/eicr-certificate">
-              EICR Certificate Guide 2026
-            </SEOInternalLink>
-            <SEOInternalLink href="/ev-charger-grants">EV Charger Grants UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-installation">
-              EV Charger Installation UK 2026
-            </SEOInternalLink>
-            <SEOInternalLink href="/guides/napit-certificate-guide">
-              NAPIT Certificate Guide
-            </SEOInternalLink>
-            <SEOInternalLink href="/ev-charger-brand-comparison">
-              Best EV Charger UK 2025
-            </SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-error-codes">
-              EV Charger Error Codes
-            </SEOInternalLink>
-            <SEOInternalLink href="/guides/ev-charger-installation-birmingham">
-              EV Charger Installation Birmingham 2026
-            </SEOInternalLink>
+            {[
+              ['/guides/ev-charger-certificate-requirements', 'EV Charger Certificate Requirements UK'],
+              ['/tools/eicr-certificate', 'EICR Certificate Guide 2026'],
+              ['/ev-charger-grants', 'EV Charger Grants UK 2026'],
+              ['/guides/ev-charger-installation', 'EV Charger Installation UK 2026'],
+              ['/guides/napit-certificate-guide', 'NAPIT Certificate Guide'],
+              ['/ev-charger-brand-comparison', 'Best EV Charger UK'],
+              ['/guides/ev-charger-error-codes', 'EV Charger Error Codes'],
+              ['/guides/ev-charger-installation-birmingham', 'EV Charger Installation Birmingham 2026'],
+            ].map(([href, label]) => (
+              <div
+                key={href}
+                className="flex min-h-[44px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2 touch-manipulation"
+              >
+                <SEOInternalLink href={href}>{label}</SEOInternalLink>
+              </div>
+            ))}
           </div>
         </div>
       </section>

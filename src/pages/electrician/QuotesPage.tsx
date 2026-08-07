@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils';
 import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import { QuoteCard } from '@/components/electrician/quote-builder/QuoteCard';
+import StartDateRequestPanel from '@/components/electrician/quote-builder/StartDateRequestPanel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
@@ -174,6 +175,17 @@ const QuotesPage = () => {
 
     return sorted;
   }, [savedQuotes, invoicedQuotes, filter, searchQuery, quickFilter, dateRange, sortBy]);
+
+  /*
+   * Quotes where the client named a start date that has not been confirmed.
+   *
+   * `booked_slot_start` is what confirmation writes, so a quote drops off this
+   * list the moment the date is accepted into the diary.
+   */
+  const awaitingStartConfirmation = useMemo(
+    () => savedQuotes.filter((q) => q.requested_start_date && !q.booked_slot_start),
+    [savedQuotes]
+  );
 
   const filteredValue = useMemo(
     () => filteredQuotes.reduce((acc, q) => acc + (q.total || 0), 0),
@@ -478,6 +490,15 @@ const QuotesPage = () => {
       {/* Content */}
       <PullToRefresh onRefresh={refreshQuotes} isRefreshing={loading}>
         <div className="px-4 py-4 space-y-6 pb-24">
+          {/*
+            ELE-1513 — clients who accepted a quote and asked to start on a
+            given day. Above the pipeline because someone is sitting waiting
+            on the answer, and this is where the notification deep-links to.
+          */}
+          {awaitingStartConfirmation.map((q) => (
+            <StartDateRequestPanel key={q.id} quote={q} />
+          ))}
+
           {/* 01 · PIPELINE — open editorial grid */}
           <div>
             <div className="flex items-baseline gap-2">

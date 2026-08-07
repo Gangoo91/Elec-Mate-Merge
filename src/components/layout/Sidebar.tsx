@@ -78,14 +78,32 @@ const Sidebar = ({
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-[60] flex w-64 flex-col',
-          'backdrop-blur-xl bg-elec-dark/90 border-r border-white/10',
+          // A panel, not more page. `bg-elec-dark/90` is the SAME colour as the
+          // content behind it, so the only thing separating navigation from
+          // page was a 10%-white hairline. Lifting it a few points reads as a
+          // surface in front, which is what a sidebar is.
+          'backdrop-blur-xl bg-[hsl(0_0%_8%_/_0.95)] border-r border-white/[0.12]',
           'shadow-2xl shadow-black/50',
           'transition-transform duration-300 ease-in-out',
-          // Desktop: normally in the flow (lg:relative). When collapsed, flip to fixed and slide
-          // off so the main column reclaims the 256px.
+          /*
+           * Desktop: in the flow, but STICKY to the viewport and one screen
+           * tall.
+           *
+           * It was `lg:relative` with no height, so the column grew to the
+           * full document — 2,029px on a 900px viewport — and three things
+           * followed. The subscription badge in the footer sat 1,964px down
+           * the page, so nobody ever saw it without scrolling to the very
+           * bottom. The nav scrolled away with the content, so navigation was
+           * unreachable while reading anything long. And `overflow-y-auto` on
+           * the nav never engaged, because a 1,887px box never overflows.
+           *
+           * `sticky top-0 h-screen` fixes all three at once: the footer is
+           * always on screen, the nav stays put, and the nav scrolls itself
+           * when the item list is taller than the viewport.
+           */
           desktopCollapsed
             ? 'lg:fixed lg:-translate-x-full lg:z-[60]'
-            : 'lg:relative lg:translate-x-0 lg:z-auto',
+            : 'lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:z-auto',
           open ? 'translate-x-0' : '-translate-x-full',
           // Hide completely on mobile/tablet when closed
           !open && !desktopCollapsed && 'max-lg:invisible',

@@ -83,9 +83,11 @@ export const searchablePages: SearchablePage[] = [
     category: 'Hubs',
   },
   {
-    name: 'Mental Health',
+    // Labelled to match the sidebar, which calls this hub Wellbeing. The old
+    // name stays in keywords so searching either term still finds it.
+    name: 'Wellbeing',
     path: '/mental-health',
-    keywords: ['wellbeing', 'mental', 'health', 'support'],
+    keywords: ['wellbeing', 'mental', 'health', 'support', 'mental health'],
     icon: Heart,
     category: 'Hubs',
   },

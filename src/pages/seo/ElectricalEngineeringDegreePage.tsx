@@ -882,7 +882,7 @@ export default function ElectricalEngineeringDegreePage() {
       />
       <GuideTemplate
         title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
-        description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership…"
+        description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership."
         datePublished="2026-03-27"
         dateModified="2026-06-10"
         breadcrumbs={breadcrumbs}

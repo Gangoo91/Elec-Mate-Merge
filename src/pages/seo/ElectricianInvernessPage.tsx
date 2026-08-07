@@ -524,7 +524,7 @@ export default function ElectricianInvernessPage() {
       noindex={true}
       localArea="Inverness"
       title="Electrician in Inverness | Local Electricians 2026"
-      description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs…"
+      description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

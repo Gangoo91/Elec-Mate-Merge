@@ -428,7 +428,7 @@ export default function ACVsDCEarthingPage() {
   return (
     <GuideTemplate
       title="AC vs DC Earthing for Solar PV and EV Charging | UK Guide"
-      description="Complete guide to AC vs DC earthing for UK electricians. Type B RCD requirement for DC fault currents (BS 7671 Regulation 411.3.3 and Table 7.3(ii))…"
+      description="Complete guide to AC vs DC earthing for UK electricians. Type B RCD requirement for DC fault currents (BS 7671 Regulation 411.3.3 and Table 7.3(ii))."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

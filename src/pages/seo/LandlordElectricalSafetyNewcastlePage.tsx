@@ -681,7 +681,7 @@ export default function LandlordElectricalSafetyNewcastlePage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Newcastle | EICR for Landlords"
-      description="Landlord electrical safety requirements in Newcastle upon Tyne. 2020 Regulations explained, Newcastle City Council enforcement…"
+      description="Landlord electrical safety requirements in Newcastle upon Tyne. 2020 Regulations explained, Newcastle City Council enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

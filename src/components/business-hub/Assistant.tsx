@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
-  Sparkles,
   X,
   Send,
   Loader2,
@@ -1093,24 +1092,28 @@ export function Assistant({
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-background/95 backdrop-blur-sm">
+            {/* No sparkles. A glowing gradient tile with a ✨ in it is the most
+                over-used mark in software — every AI feature in every product
+                has one, which makes it say "this is AI" and nothing else. It
+                told an electrician nothing about what Mate does for them.
+                "Your AI partner" went with it for the same reason.
+
+                What remains is what the Mate bar on the hub already uses: the
+                name, and a live dot. The dot is the only part that carried
+                information — it says this thing is running — and it costs 8px.
+                Same mark at the entry point and inside the sheet, so opening
+                Mate feels continuous rather than like arriving somewhere new. */}
             <div className="flex items-center gap-2.5">
-              <div className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-                <Sparkles className="h-4.5 w-4.5 text-black" />
-                {/* live pulse — Mate is on */}
-                <span
-                  aria-hidden="true"
-                  className="absolute -top-0.5 -right-0.5 flex h-2 w-2"
-                >
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-elec-yellow ring-2 ring-background" />
-                </span>
-              </div>
-              <div>
-                <h2 className="text-[15px] font-bold text-white leading-none mb-0.5">
+              <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-elec-yellow" />
+              </span>
+              <div className="flex items-baseline gap-2">
+                <h2 className="text-[16px] font-semibold leading-none tracking-tight text-white">
                   Mate
                 </h2>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45 leading-none">
-                  Your AI partner
+                <p className="text-[11px] leading-none text-white">
+                  {messages.length > 0 ? 'Working from your live data' : 'Ready'}
                 </p>
               </div>
             </div>
@@ -1119,7 +1122,7 @@ export function Assistant({
                 <button
                   type="button"
                   onClick={startNewChat}
-                  className="h-9 w-9 rounded-xl flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation"
+                  className="h-9 w-9 rounded-xl flex items-center justify-center text-white hover:text-white hover:bg-white/10 touch-manipulation"
                   aria-label="New chat"
                 >
                   <RotateCcw className="h-4 w-4" />
@@ -1128,7 +1131,7 @@ export function Assistant({
               <button
                 type="button"
                 onClick={onClose}
-                className="h-9 w-9 rounded-xl flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation"
+                className="h-9 w-9 rounded-xl flex items-center justify-center text-white hover:text-white hover:bg-white/10 touch-manipulation"
                 aria-label="Close"
               >
                 <X className="h-5 w-5" />
@@ -1182,7 +1185,7 @@ export function Assistant({
               ))
             )}
             {sending && !isStreaming && (
-              <div className="flex items-center gap-2 text-[13px] text-white/60 px-1">
+              <div className="flex items-center gap-2 text-[13px] text-white px-1">
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-elec-yellow" />
                 Thinking…
               </div>
@@ -1210,7 +1213,7 @@ export function Assistant({
               </div>
             )}
             {!voice.supported && messages.length === 0 && (
-              <div className="px-3 pb-1 text-[10px] text-white/35">
+              <div className="px-3 pb-1 text-[10px] text-white">
                 Voice dictation isn't available in this browser — try Chrome or Safari.
               </div>
             )}
@@ -1234,7 +1237,7 @@ export function Assistant({
                   }}
                   rows={1}
                   placeholder={voice.listening ? 'Listening…' : 'Message Mate…'}
-                  className="w-full resize-none rounded-xl bg-white/[0.05] border border-white/[0.08] text-white text-[15px] leading-[20px] placeholder:text-white/40 px-3 py-[11px] pr-3 focus:outline-none focus:border-elec-yellow/50 focus:bg-white/[0.07] max-h-[120px] touch-manipulation transition-colors"
+                  className="max-h-[120px] w-full resize-none rounded-xl border border-white/[0.18] bg-white/[0.08] px-3.5 py-[11px] text-[16px] leading-[20px] text-white transition-colors placeholder:text-white/50 touch-manipulation focus:border-elec-yellow focus:bg-white/[0.11] focus:outline-none focus:ring-0"
                   style={{
                     height: '44px',
                     minHeight: '44px',
@@ -1251,7 +1254,7 @@ export function Assistant({
                     'h-11 w-11 p-0 rounded-xl shrink-0 flex items-center justify-center touch-manipulation transition-colors',
                     voice.listening
                       ? 'bg-red-500/20 text-red-300 border border-red-500/40'
-                      : 'bg-white/[0.06] text-white/70 hover:bg-white/[0.1]'
+                      : 'border border-white/[0.18] bg-white/[0.08] text-white hover:border-elec-yellow/50 hover:bg-white/[0.12]'
                   )}
                 >
                   {voice.listening ? (
@@ -1278,7 +1281,7 @@ export function Assistant({
                     'h-11 w-11 p-0 rounded-xl shrink-0 touch-manipulation',
                     input.trim() && isOnline
                       ? 'bg-gradient-to-br from-elec-yellow to-amber-500 text-black active:scale-[0.95]'
-                      : 'bg-white/10 text-white/40'
+                      : 'bg-white/10 text-white'
                   )}
                 >
                   <Send className="h-5 w-5" />

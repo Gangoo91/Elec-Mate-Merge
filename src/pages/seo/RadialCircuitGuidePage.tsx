@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -19,6 +21,7 @@ const tocItems = [
   { id: 'when-to-use-radial', label: 'When to Use a Radial Circuit' },
   { id: 'radial-vs-ring', label: 'Radial vs Ring Final Circuit' },
   { id: 'cable-sizing', label: 'Cable Sizing for Radials' },
+  { id: 'calculator', label: 'Cable Sizing Calculator' },
   { id: 'circuit-protection', label: 'Circuit Protection Requirements' },
   { id: 'common-applications', label: 'Common Radial Applications' },
   { id: 'testing-radial', label: 'Testing a Radial Circuit' },
@@ -30,16 +33,16 @@ const tocItems = [
 const keyTakeaways = [
   'A radial circuit runs from the distribution board to each outlet in sequence, terminating at the last point — unlike a ring circuit which loops back to the board.',
   'Radial circuits are the preferred choice for dedicated appliance circuits (cookers, showers, immersion heaters) and lighting circuits throughout the UK.',
-  'BS 7671 permits a 20A radial on 2.5mm\u00B2 cable serving up to 50m\u00B2 floor area, or a 32A radial on 4mm\u00B2 cable serving up to 75m\u00B2 floor area for socket outlets.',
+  'Appendix 15 of BS 7671 (informative) shows a 20A radial on 2.5mm\u00B2 cable for socket outlets and notes that the floor area served has historically been limited to 50m\u00B2; the larger arrangement is a 32A radial on 4mm\u00B2 cable, traditionally taken as up to 75m\u00B2.',
   'Correct cable sizing depends on the protective device rating, installation method, grouping, ambient temperature, and thermal insulation — use the correction factors from Appendix 4 of BS 7671.',
-  "Elec-Mate's cable sizing calculator applies all BS 7671 correction factors automatically and checks voltage drop against the 5% limit for radial circuits.",
+  "Elec-Mate's cable sizing calculator applies all BS 7671 correction factors automatically and checks voltage drop against the BS 7671 Table 4Ab limits — 3% for lighting and 5% for other uses.",
 ];
 
 const faqs = [
   {
     question: 'What is the maximum floor area for a 20A radial circuit?',
     answer:
-      'Under BS 7671, a 20A radial circuit using 2.5mm\u00B2 cable can serve a floor area of up to 50m\u00B2 for general-purpose socket outlets. This makes it suitable for smaller rooms such as bedrooms, home offices, and utility rooms. If the floor area exceeds 50m\u00B2, you should either use a 32A radial on 4mm\u00B2 cable (which serves up to 75m\u00B2) or install a ring final circuit. The floor area limits are guidance figures from the IET On-Site Guide and Guidance Note 1 — they are not absolute regulation limits, but they represent accepted good practice and are the figures most competent person scheme assessors will expect you to follow.',
+      'Under BS 7671, a 20A radial circuit using 2.5mm\u00B2 cable can serve a floor area of up to 50m\u00B2 for general-purpose socket outlets. This makes it suitable for smaller rooms such as bedrooms, home offices, and utility rooms. If the floor area exceeds 50m\u00B2, you should either use a 32A radial on 4mm\u00B2 cable (which serves up to 75m\u00B2) or install a ring final circuit. The floor area limits are guidance figures — Appendix 15 of BS 7671 is informative and words it as "historically, the floor area served has been limited to 50 m²", and the IET On-Site Guide gives the same figures in its standard circuit arrangements. They are not absolute regulation limits, but they represent accepted good practice and are the figures most competent person scheme assessors will expect you to follow.',
   },
   {
     question: 'Can I use a radial circuit instead of a ring circuit for sockets?',
@@ -49,22 +52,22 @@ const faqs = [
   {
     question: 'What cable size do I need for a radial circuit?',
     answer:
-      'The cable size depends on the protective device rating, the installation method (reference method), and the applicable correction factors. For a 20A radial, 2.5mm\u00B2 twin and earth (6242Y) is standard when installed using Reference Method C (clipped direct) or Reference Method A (enclosed in conduit in a thermally insulating wall). For a 32A radial, 4mm\u00B2 twin and earth is the minimum. However, you must apply correction factors for grouping (Ca), ambient temperature (Ca), and thermal insulation (Ci) as set out in Appendix 4 of BS 7671. If the cable passes through insulation, you may need to increase the cable size. You must also check that the voltage drop does not exceed 5% of the nominal supply voltage (i.e., 11.5V for a 230V supply) under the design current.',
+      'The cable size depends on the protective device rating, the installation method (reference method), and the applicable correction factors. For a 20A radial, 2.5mm\u00B2 twin and earth (6242Y) is standard when installed using Reference Method C (clipped direct) or Reference Method A (enclosed in conduit in a thermally insulating wall). For a 32A radial, 4mm\u00B2 twin and earth is the minimum. However, you must apply the Appendix 4 rating factors for grouping (Cg, Tables 4C1 to 4C6), ambient temperature (Ca, Tables 4B1 and 4B2), and thermal insulation (Ci). If the cable passes through insulation, you may need to increase the cable size. You must also check voltage drop against Table 4Ab: for an installation supplied directly from a public low voltage distribution system the limit is 5% for uses other than lighting (11.5V on a 230V supply) and 3% for lighting (6.9V), measured under the design current.',
   },
   {
     question: 'Do radial circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A4:2026, socket outlet circuits rated up to 32A in domestic premises require 30mA RCD protection (Regulation 411.3.3). This applies to radial circuits serving socket outlets just as it does to ring circuits. For lighting circuits, Regulation 411.3.4 (introduced in A4:2026) now requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic (household) premises — not only those in bathrooms or with cables concealed at less than 50mm depth. Radial lighting circuits are explicitly included. In practice, this means RCBO boards or split-load consumer units with RCD protection on every lighting circuit are now required for all new domestic installations and alterations.',
+      'Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires 30mA RCD additional protection for socket-outlets with a rated current not exceeding 32A. Note that the 32A threshold is the rating of the socket-outlet, not of the circuit — a 13A socket on a 32A radial is squarely within scope. The only exception is a documented risk assessment, and that exception is not available for a dwelling. This applies to radial circuits serving socket outlets just as it does to ring circuits. For lighting circuits, Regulation 411.3.4 (introduced in A4:2026) now requires 30mA RCD additional protection on all AC final circuits supplying luminaires in domestic (household) premises — not only those in bathrooms or with cables concealed at less than 50mm depth. Radial lighting circuits are explicitly included. In practice, this means RCBO boards or split-load consumer units with RCD protection on every lighting circuit are now required for all new domestic installations and alterations.',
   },
   {
     question: 'How do I test a radial circuit?',
     answer:
-      'Testing a radial circuit follows the standard sequence set out in BS 7671 Chapter 64 and GN3 (Guidance Note 3: Inspection and Testing). The key tests are: continuity of protective conductors (R1+R2 method), insulation resistance (minimum 1M\u03A9 at 500V DC for a 230V circuit), polarity verification at every point, earth fault loop impedance (Zs) at the furthest point (which must not exceed the maximum Zs value for the protective device from Table 41.3 for circuit-breakers, or Table 41.2 for fuses at 0.4 s), and prospective fault current at the origin. For a radial circuit, the R1+R2 continuity test is simpler than for a ring circuit because there is only one path — you do not need to perform the ring circuit continuity test (the three-step method). The measured Zs at the furthest point must be checked against the tabulated maximum to ensure disconnection within the required time. Be careful with the old rule of thumb that fixed equipment gets 5 seconds — the Table 41.1 times (0.4 s on a TN system at 230 V) apply to final circuits up to 63 A with socket-outlets AND to final circuits up to 32 A supplying only fixed connected equipment. Regulation 411.3.2.2 holds the maximum disconnection times; the 5-second figure belongs to distribution circuits.',
+      'Testing a radial circuit follows the standard sequence set out in BS 7671 Chapter 64 and GN3 (Guidance Note 3: Inspection and Testing). The key tests are: continuity of protective conductors (R1+R2 method), insulation resistance (minimum 1M\u03A9 at 500V DC for a 230V circuit), polarity verification at every point, earth fault loop impedance (Zs) at the furthest point (which must not exceed the maximum Zs value for the protective device from Table 41.3 for circuit-breakers, or Table 41.2 for fuses at 0.4 s), and prospective fault current at the origin. For a radial circuit, the R1+R2 continuity test is simpler than for a ring circuit because there is only one path — you do not need to perform the ring circuit continuity test (the three-step method). The measured Zs at the furthest point must be checked against the tabulated maximum to ensure disconnection within the required time. Be careful with the old rule of thumb that fixed equipment gets 5 seconds — the Table 41.1 times (0.4 s on a TN system at 230 V) apply to final circuits up to 63 A with socket-outlets AND to final circuits up to 32 A supplying only fixed connected equipment. Regulation 411.3.2.2 holds the maximum disconnection times; the 5-second figure comes from Regulation 411.3.2.3, which covers distribution circuits and any circuit not covered by 411.3.2.2.',
   },
   {
     question: 'Is a spur allowed on a radial circuit?',
     answer:
-      'Yes, spurs are permitted from radial circuits, subject to the same rules that apply to spurs from ring circuits. A fused spur (via a fused connection unit) can supply any load up to the rating of the fuse in the FCU. An unfused spur from a radial circuit is also permitted but should supply no more than one single or one twin socket outlet, or one item of fixed equipment. The total load on the radial circuit, including all spurs, must not exceed the rating of the protective device. In practice, spurs from radial circuits are common for supplying fixed appliances such as extractor fans, waste disposal units, or additional socket outlets in locations where extending the main radial cable would be impractical.',
+      'Yes, spurs are permitted from radial circuits, subject to the same rules that apply to spurs from ring circuits. A fused spur (via a fused connection unit) can supply any load up to the rating of the fuse in the FCU. An unfused spur from a radial circuit is also permitted, but Figure 15B of Appendix 15 of BS 7671 is specific: an unfused spur run in 2.5mm² cable should feed one single or one twin socket-outlet only. Fixed equipment is fed from a fused connection unit (maximum 13A fuse), not from an unfused spur. The total load on the radial circuit, including all spurs, must not exceed the rating of the protective device. In practice, spurs from radial circuits are common for supplying fixed appliances such as extractor fans, waste disposal units, or additional socket outlets in locations where extending the main radial cable would be impractical.',
   },
   {
     question: 'What is the advantage of radial circuits over ring circuits?',
@@ -78,7 +81,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Calculate the correct cable size for any radial circuit with automatic BS 7671 correction factors and voltage drop check.',
+      'Calculate the correct cable size for any radial circuit with automatic BS 7671 rating factors and voltage drop check.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -86,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
-      'Check voltage drop for radial circuits against the 5% BS 7671 limit with cable length and load inputs.',
+      'Check voltage drop for radial circuits against the BS 7671 Table 4Ab limits — 3% lighting, 5% other uses — with cable length and load inputs.',
     icon: Zap,
     category: 'Tool',
   },
@@ -134,6 +137,12 @@ const sections = [
     heading: 'What Is a Radial Circuit?',
     content: (
       <>
+        <a
+          href="#calculator"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+        >
+          Jump to the free cable sizing calculator
+        </a>
         <p>
           A radial circuit is an electrical circuit that starts at the distribution board (consumer
           unit) and runs to each outlet or load point in sequence, terminating at the last point on
@@ -393,19 +402,58 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
-            Duplicate CPC on Radial Socket-Outlet Circuits
+            High Protective Conductor Current: Radial Socket-Outlet Circuits
           </h3>
           <p className="text-white text-sm leading-relaxed">
-            The IET On-Site Guide (9th Ed, Reg 7.5.3 / Figure 7.5.3(ii)) permits a duplicate
-            protective conductor (duplicate CPC) to be installed alongside the circuit conductors of
-            a radial final circuit supplying socket-outlets. Where fitted, the duplicate CPC must be
-            routed physically alongside the live, neutral, and main CPC conductors for the full
-            length of the run and terminated at the distribution board. Keeping the duplicate CPC
-            close to the other conductors also reduces electromagnetic compatibility (EMC) effects.
-            This is good practice where enhanced earth-fault performance is required, and is a
-            question regularly asked by installation assessors.
+            A duplicate protective conductor on a radial socket-outlet circuit is not a general
+            good-practice option — it belongs to one specific case. Regulation 543.7.2.201 applies
+            where a final circuit has a number of socket-outlets or connection units intended to
+            supply two or more items of equipment and the total protective conductor current in
+            normal service is known or reasonably expected to exceed 10mA. That circuit must have a
+            high integrity protective conductor connection. For a radial, the two acceptable
+            arrangements are a single protective conductor connected as a ring, or a separate
+            protective conductor provided at the final socket-outlet by connection to metal conduit
+            or ducting. The IET On-Site Guide covers the same ground at 7.5.3 and adds that the
+            duplicate protective conductor should be kept close to the circuit conductors to reduce
+            electromagnetic compatibility (EMC) effects. Regulation 543.7.1.205 also requires
+            information at the distribution board identifying circuits with a high protective
+            conductor current.
           </p>
         </div>
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Size the Cable for Your Radial Circuit',
+    content: (
+      <>
+        <p>
+          The tables above are the standard arrangements for standard conditions. Your circuit is
+          rarely standard — it is grouped with five other cables in a joist notch, it runs through
+          150mm of loft insulation, or the last socket is 28 metres from the board. Put the real
+          numbers in below and the calculator does the Appendix 4 work for you: it applies the
+          grouping (Cg), ambient temperature (Ca) and thermal insulation (Ci) rating factors, checks
+          the corrected current-carrying capacity against the device rating, and checks voltage drop
+          at your cable length against the Table 4Ab limits — 3% for lighting, 5% for other uses.
+        </p>
+        <p>Free to use, no sign-up and no email required.</p>
+        <CalculatorSurface>
+          <CableSizingCalculator />
+        </CalculatorSurface>
+        <p>
+          If the result comes back a size larger than you expected, the usual cause is insulation or
+          grouping rather than the load itself — the{' '}
+          <SEOInternalLink href="/guides/correction-factors-bs-7671">
+            correction factors guide
+          </SEOInternalLink>{' '}
+          explains which factor bit you. For a long radial where voltage drop rather than capacity is
+          the limit, work the run through the{' '}
+          <SEOInternalLink href="/tools/voltage-drop-calculator">
+            voltage drop calculator
+          </SEOInternalLink>{' '}
+          before you order the drum.
+        </p>
       </>
     ),
   },
@@ -432,21 +480,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <span>
                 <strong>Automatic disconnection of supply (Regulation 411.3.2.2)</strong> — this is
-                the regulation that decides which disconnection time your radial has to meet, and
-                it catches people out. Regulation 411.3.2.2 holds the maximum disconnection times, and Table 41.1 applies to two categories of final circuit:
-                those rated up to 63 A that include one or more socket-outlets, and those rated up
-                to 32 A supplying only fixed connected current-using equipment. So a 20 A radial
-                feeding fixed equipment is <em>not</em> a 5-second circuit — it is 0.4 s on a TN
-                system at 230 V, the same as a socket-outlet circuit. The 5-second time is for distribution circuits, and for final circuits above those
-                thresholds. The earth fault loop impedance (Zs) at the furthest point must
-                not exceed the maximum for the device type and rating.
+                the regulation that decides which disconnection time your radial has to meet, and it
+                catches people out. Regulation 411.3.2.2 holds the maximum disconnection times, and
+                Table 41.1 applies to two categories of final circuit: those rated up to 63 A that
+                include one or more socket-outlets, and those rated up to 32 A supplying only fixed
+                connected current-using equipment. So a 20 A radial feeding fixed equipment is{' '}
+                <em>not</em> a 5-second circuit — it is 0.4 s on a TN system at 230 V, the same as a
+                socket-outlet circuit. The 5-second time is for distribution circuits, and for final
+                circuits above those thresholds. The earth fault loop impedance (Zs) at the furthest
+                point must not exceed the maximum for the device type and rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>RCD protection (Regulation 411.3.3)</strong> — socket outlet circuits rated
-                up to 32A in domestic premises require 30mA RCD protection. This is achieved using
-                either an RCD upstream of the MCB or an RCBO combining both functions.
+                <strong>RCD protection (Regulation 411.3.3)</strong> — 30mA RCD additional
+                protection is required for socket-outlets with a rated current not exceeding 32A.
+                The threshold is the rating of the socket-outlet, not the rating of the circuit. The
+                exception for a documented risk assessment is not available for a dwelling. This is
+                achieved using either an RCD upstream of the MCB or an RCBO combining both
+                functions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -456,9 +508,14 @@ const sections = [
                     Surge protection (SPD)
                   </SEOInternalLink>
                 </strong>{' '}
-                — BS 7671:2018+A4:2026 requires a risk assessment for surge protection on all new
-                installations and alterations. Where the consequence of an overvoltage would be
-                serious, a Type 2 SPD must be installed at the origin.
+                — the risk assessment method has gone. BS 7671:2018+A4:2026 deleted Regulation 443.5
+                and Annex A443. Under the redrafted Regulation 443.4.1, protection against transient
+                overvoltages shall be provided where the consequence of the overvoltage could result
+                in serious injury or loss of human life, or significant financial or data loss; for
+                all other cases it shall still be provided unless the owner of the installation
+                declares that the loss or damage would be tolerable and accepts the risk. An SPD
+                installed at the origin of the installation shall be Type 1 or Type 2 (Regulation
+                534.4.1.1) — Type 1 where the building has a lightning protection system.
               </span>
             </li>
           </ul>
@@ -538,8 +595,8 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
-          can generate a complete circuit schedule for a domestic installation, specifying radial or
+          <SEOInternalLink href="/ai-circuit-designer">AI circuit designer</SEOInternalLink> can
+          generate a complete circuit schedule for a domestic installation, specifying radial or
           ring circuits for each area based on the load, floor area, and your design preferences.
         </p>
       </>
@@ -580,8 +637,10 @@ const sections = [
             <li>
               <strong>Earth fault loop impedance (Zs).</strong> Measure at the furthest point on the
               circuit. The measured value must not exceed the maximum Zs for the protective device
-              type and rating (Table 41.3 or 41.4 of BS 7671). Apply the 0.8 correction factor if
-              comparing with tabulated values at a higher conductor temperature.
+              type and rating — Table 41.2 of BS 7671 for fuses at 0.4 s, or Table 41.3 for
+              circuit-breakers. (Table 41.4 is the 5 s fuse table and does not apply to a final
+              circuit covered by Regulation 411.3.2.2.) Apply the 0.8 correction factor if comparing
+              with tabulated values at a higher conductor temperature.
             </li>
             <li>
               <strong>
@@ -589,9 +648,9 @@ const sections = [
               </strong>{' '}
               If the circuit is RCD-protected, test using an alternating current test at the rated
               residual operating current (IΔn — 30mA for domestic circuits), as required by BS
-              7671:2018+A4:2026 Regulation 643.3. Note: the previous Table 3A time/current criteria
-              (300ms at 1× IΔn, 40ms at 5× IΔn) have been deleted in A4:2026 — the revised
-              requirement is an AC test at IΔn regardless of RCD type (AC, A, F, B).
+              7671:2018+A4:2026 Regulation 643.8. Note: the previous Appendix 3 Table 3A
+              time/current criteria (300ms at 1× IΔn, 40ms at 5× IΔn) have been deleted in A4:2026 —
+              the revised requirement is an AC test at IΔn regardless of RCD type (AC, A, F, B).
             </li>
           </ol>
         </div>
@@ -640,9 +699,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>Missing RCD protection on socket circuits.</strong> All socket outlet
-                circuits rated up to 32A in domestic premises must have 30mA RCD protection. This
-                applies to radial circuits as well as ring circuits.
+                <strong>Missing RCD protection on socket circuits.</strong> Socket-outlets with a
+                rated current not exceeding 32A must have 30mA RCD additional protection, and in a
+                dwelling there is no risk-assessment exception. This applies to radial circuits as
+                well as ring circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -672,10 +732,10 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="What Is a Radial Circuit? 20A + 32A Cable Sizes (BS 7671)"
-      description="Radial circuits explained: how they differ from ring finals, 20A radials in 2.5mm² (up to 50m²), 32A in 4mm² (up to 75m²), MCB selection + cable size tables."
+      title="What Is a Radial Circuit? 20A 2.5mm², 32A 4mm²"
+      description="A radial runs from the board to the last outlet — no return leg. 20A on 2.5mm² covers up to 50m² floor area, 32A on 4mm² up to 75m². Cable, MCB, testing."
       datePublished="2025-06-15"
-      dateModified="2026-07-02"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

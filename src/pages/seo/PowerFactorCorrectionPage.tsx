@@ -705,7 +705,7 @@ export default function PowerFactorCorrectionPage() {
   return (
     <GuideTemplate
       title="Power Factor Correction UK | PFC Installation Guide for Businesses"
-      description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks…"
+      description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

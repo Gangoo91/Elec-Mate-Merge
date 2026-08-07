@@ -654,7 +654,7 @@ export default function LoftConversionElectricsPage() {
   return (
     <GuideTemplate
       title="Loft Conversion Electrics | Wiring Requirements UK"
-      description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection…"
+      description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

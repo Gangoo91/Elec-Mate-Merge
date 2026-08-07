@@ -18,6 +18,7 @@ import {
   CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { solarPvContent } from './content/solar-pv';
@@ -357,369 +358,379 @@ const SolarPVCalculator = () => {
       title="Solar PV System Calculator"
       description="Calculate solar panel performance, energy generation, and financial returns for UK installations"
     >
-      {/* System Configuration */}
-      <CalculatorSection title="System Configuration">
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="System Size"
-            unit="kWp"
-            inputMode="decimal"
-            value={systemSize}
-            onChange={setSystemSize}
-            placeholder="e.g. 4.0"
-            hint="Typical UK homes: 3-6kWp"
-          />
-          <CalculatorSelect
-            label="Performance Ratio"
-            value={panelEfficiency}
-            onChange={setPanelEfficiency}
-            options={efficiencyOptions}
-          />
-          <CalculatorSelect
-            label="Location"
-            value={location}
-            onChange={setLocation}
-            options={locationOptions}
-            placeholder="Select location"
-          />
-          <CalculatorSelect
-            label="Roof Orientation"
-            value={roofOrientation}
-            onChange={setRoofOrientation}
-            options={orientationOptions}
-          />
-          <CalculatorInput
-            label="Roof Tilt"
-            unit="°"
-            inputMode="decimal"
-            value={roofTilt}
-            onChange={setRoofTilt}
-            placeholder="35"
-            hint="Optimal: 35°"
-          />
-          <CalculatorInput
-            label="Electricity Rate"
-            unit="£/kWh"
-            inputMode="decimal"
-            value={electricityRate}
-            onChange={setElectricityRate}
-            placeholder="0.25"
-            hint="UK average: £0.25"
-          />
-          <CalculatorSelect
-            label="Self-consumption Rate"
-            value={selfConsumptionRate}
-            onChange={setSelfConsumptionRate}
-            options={selfConsumptionOptions}
-          />
-          <CalculatorInput
-            label="SEG Export Rate"
-            unit="£/kWh"
-            inputMode="decimal"
-            value={exportRate}
-            onChange={setExportRate}
-            placeholder="0.10"
-            hint="Typical: £0.04-0.15"
-          />
-          <CalculatorSelect
-            label="VAT Rate"
-            value={vatRate}
-            onChange={setVatRate}
-            options={[
-              { value: '0', label: '0% — domestic (GB, to Mar 2027)' },
-              { value: '5', label: '5% — reduced rate' },
-              { value: '20', label: '20% — standard / commercial' },
-            ]}
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
+      <CalculatorPanes
+        form={
+          <>
+            {/* System Configuration */}
+            <CalculatorSection title="System Configuration">
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="System Size"
+                  unit="kWp"
+                  inputMode="decimal"
+                  value={systemSize}
+                  onChange={setSystemSize}
+                  placeholder="e.g. 4.0"
+                  hint="Typical UK homes: 3-6kWp"
+                />
+                <CalculatorSelect
+                  label="Performance Ratio"
+                  value={panelEfficiency}
+                  onChange={setPanelEfficiency}
+                  options={efficiencyOptions}
+                />
+                <CalculatorSelect
+                  label="Location"
+                  value={location}
+                  onChange={setLocation}
+                  options={locationOptions}
+                  placeholder="Select location"
+                />
+                <CalculatorSelect
+                  label="Roof Orientation"
+                  value={roofOrientation}
+                  onChange={setRoofOrientation}
+                  options={orientationOptions}
+                />
+                <CalculatorInput
+                  label="Roof Tilt"
+                  unit="°"
+                  inputMode="decimal"
+                  value={roofTilt}
+                  onChange={setRoofTilt}
+                  placeholder="35"
+                  hint="Optimal: 35°"
+                />
+                <CalculatorInput
+                  label="Electricity Rate"
+                  unit="£/kWh"
+                  inputMode="decimal"
+                  value={electricityRate}
+                  onChange={setElectricityRate}
+                  placeholder="0.25"
+                  hint="UK average: £0.25"
+                />
+                <CalculatorSelect
+                  label="Self-consumption Rate"
+                  value={selfConsumptionRate}
+                  onChange={setSelfConsumptionRate}
+                  options={selfConsumptionOptions}
+                />
+                <CalculatorInput
+                  label="SEG Export Rate"
+                  unit="£/kWh"
+                  inputMode="decimal"
+                  value={exportRate}
+                  onChange={setExportRate}
+                  placeholder="0.10"
+                  hint="Typical: £0.04-0.15"
+                />
+                <CalculatorSelect
+                  label="VAT Rate"
+                  value={vatRate}
+                  onChange={setVatRate}
+                  options={[
+                    { value: '0', label: '0% — domestic (GB, to Mar 2027)' },
+                    { value: '5', label: '5% — reduced rate' },
+                    { value: '20', label: '20% — standard / commercial' },
+                  ]}
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
 
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!systemSize || !location}
-        showReset={!!result}
-      />
-
-      {/* Results */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={
-                result.viability === 'Excellent'
-                  ? 'pass'
-                  : result.viability === 'Good'
-                    ? 'pass'
-                    : result.viability === 'Fair'
-                      ? 'warning'
-                      : 'fail'
-              }
-              label={`${result.viability} Viability`}
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Annual Generation</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.annualGeneration.toLocaleString()} kWh
-            </p>
-            <p className="text-sm text-white mt-2">
-              {result.dailyGeneration} kWh/day | {result.systemPR}% Performance Ratio
-            </p>
-          </div>
-
-          <ResultsGrid columns={3}>
-            <ResultValue
+            <CalculatorActions
               category={CAT}
-              label="Daily Generation"
-              value={result.dailyGeneration.toString()}
-              unit="kWh"
-              size="sm"
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!systemSize || !location}
+              showReset={!!result}
             />
-            <ResultValue
-              category={CAT}
-              label="Annual Savings"
-              value={`£${result.annualSavings}`}
-              size="sm"
-            />
-            <ResultValue
-              category={CAT}
-              label="Payback Period"
-              value={result.paybackPeriod.toString()}
-              unit="years"
-              size="sm"
-            />
-          </ResultsGrid>
-
-          {/* Cost Estimate */}
-          <CalculatorSection title="2025 Cost Estimate">
-            <div className="grid grid-cols-2 gap-3 mb-3">
-              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p
-                  className="text-2xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  £{result.costEstimate.totalCost.toLocaleString()}
-                </p>
-                <p className="text-xs text-white">{result.costEstimate.category}</p>
-              </div>
-              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <p
-                  className="text-2xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  £{result.costEstimate.costPerKw.toLocaleString()}
-                </p>
-                <p className="text-xs text-white">Per kW installed</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm">
-              {[
-                { label: 'Panels', value: result.costEstimate.breakdown.panels },
-                { label: 'Inverter', value: result.costEstimate.breakdown.inverter },
-                { label: 'Installation', value: result.costEstimate.breakdown.installation },
-                { label: 'Electrical', value: result.costEstimate.breakdown.electrical },
-                { label: 'Scaffolding', value: result.costEstimate.breakdown.scaffolding },
-                { label: 'MCS & DNO', value: result.costEstimate.breakdown.mcsAndDno },
-              ].map((item) => (
-                <div key={item.label} className="flex justify-between">
-                  <span className="text-white">{item.label}</span>
-                  <span className="text-white">£{item.value.toLocaleString()}</span>
+          </>
+        }
+        result={
+          <>
+            {/* Results */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={
+                      result.viability === 'Excellent'
+                        ? 'pass'
+                        : result.viability === 'Good'
+                          ? 'pass'
+                          : result.viability === 'Fair'
+                            ? 'warning'
+                            : 'fail'
+                    }
+                    label={`${result.viability} Viability`}
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
                 </div>
-              ))}
-              <div className="flex justify-between pt-2 border-t border-white/10">
-                <span className="text-white font-medium">VAT ({vatRate}%)</span>
-                <span className="text-white font-semibold">
-                  £{result.costEstimate.breakdown.vat.toLocaleString()}
-                </span>
-              </div>
-            </div>
-          </CalculatorSection>
 
-          {/* Environmental Impact */}
-          <CalculatorSection title="Environmental Impact">
-            <ResultsGrid columns={2}>
-              <ResultValue
-                category={CAT}
-                label="CO₂ Saved / Year"
-                value={result.co2Savings.toString()}
-                unit="kg"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Trees Equivalent"
-                value={Math.round(result.co2Savings / 21).toString()}
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorSection>
-
-          {/* 25-Year Degradation */}
-          <CalculatorSection title="25-Year Output Forecast">
-            <div className="space-y-2">
-              <div className="grid grid-cols-3 gap-2 text-xs font-medium text-white border-b border-white/10 pb-1.5">
-                <span>Year</span>
-                <span className="text-right">Annual Output</span>
-                <span className="text-right">Cumulative</span>
-              </div>
-              {result.degradation.map((d) => (
-                <div key={d.year} className="grid grid-cols-3 gap-2 text-sm text-white">
-                  <span>Year {d.year}</span>
-                  <span className="text-right">{d.output.toLocaleString()} kWh</span>
-                  <span className="text-right">{(d.cumulative / 1000).toFixed(1)} MWh</span>
-                </div>
-              ))}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between text-sm">
-                <span className="text-white font-medium">Lifetime Generation</span>
-                <span className="text-white font-bold">
-                  {(result.lifetimeGeneration / 1000).toFixed(1)} MWh
-                </span>
-              </div>
-              <p className="text-xs text-white">
-                Based on ~2% first-year loss + 0.5%/yr degradation (NREL data)
-              </p>
-            </div>
-          </CalculatorSection>
-
-          <CalculatorDivider category={CAT} />
-
-          {/* How It Worked Out */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'System factors',
-                formula: `Orientation: ${roofOrientation} = ${result.orientationFactor}% | Tilt: ${roofTilt}° = ${result.tiltFactor}% | PR: ${result.systemPR}%`,
-              },
-              {
-                label: 'Annual generation',
-                formula: `E = ${systemSize}kWp × ${result.irradiance} kWh/m²/yr × ${result.orientationFactor}% × ${result.tiltFactor}% × ${result.systemPR}%`,
-                value: `${result.annualGeneration.toLocaleString()} kWh/year`,
-              },
-              {
-                label: 'Self-consumption savings',
-                formula: `${result.selfConsumedEnergy.toLocaleString()} kWh × £${electricityRate}`,
-                value: `£${result.savingsFromSelfConsumption}`,
-              },
-              {
-                label: 'Export income',
-                formula: `${result.exportedEnergy.toLocaleString()} kWh × £${exportRate}`,
-                value: `£${result.incomeFromExport}`,
-              },
-              {
-                label: 'Total annual savings',
-                value: `£${result.annualSavings}/year`,
-              },
-              {
-                label: 'Payback period',
-                formula: `£${result.costEstimate.totalCost.toLocaleString()} ÷ £${result.annualSavings}`,
-                value: `${result.paybackPeriod} years`,
-              },
-            ]}
-          />
-
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-4"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">System Performance</p>
-                  <p className="text-sm text-white">
-                    {systemSize}kWp system with {result.systemPR}% performance ratio.{' '}
-                    {roofOrientation} orientation provides {result.orientationFactor}% of optimal.{' '}
-                    {roofTilt}° tilt achieves {result.tiltFactor}% efficiency. Expected 25-year
-                    generation: {(result.lifetimeGeneration / 1000).toFixed(1)} MWh (includes panel
-                    degradation).
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Annual Generation</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.annualGeneration.toLocaleString()} kWh
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {result.dailyGeneration} kWh/day | {result.systemPR}% Performance Ratio
                   </p>
                 </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Financial Analysis</p>
-                  <p className="text-sm text-white">
-                    Payback: {result.paybackPeriod} years using £
-                    {result.costEstimate.totalCost.toLocaleString()}. Monthly savings: ~£
-                    {Math.round(result.annualSavings / 12)}. 25-year total savings: ~£
-                    {Math.round(result.annualSavings * 25 * 0.94).toLocaleString()} (adjusted for
-                    degradation).
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Installation Tips</p>
-                  <ul className="space-y-1">
+
+                <ResultsGrid columns={3}>
+                  <ResultValue
+                    category={CAT}
+                    label="Daily Generation"
+                    value={result.dailyGeneration.toString()}
+                    unit="kWh"
+                    size="sm"
+                  />
+                  <ResultValue
+                    category={CAT}
+                    label="Annual Savings"
+                    value={`£${result.annualSavings}`}
+                    size="sm"
+                  />
+                  <ResultValue
+                    category={CAT}
+                    label="Payback Period"
+                    value={result.paybackPeriod.toString()}
+                    unit="years"
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* Cost Estimate */}
+                <CalculatorSection title="2025 Cost Estimate">
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                      <p
+                        className="text-2xl font-bold bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                        }}
+                      >
+                        £{result.costEstimate.totalCost.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-white">{result.costEstimate.category}</p>
+                    </div>
+                    <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                      <p
+                        className="text-2xl font-bold bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                        }}
+                      >
+                        £{result.costEstimate.costPerKw.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-white">Per kW installed</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm">
                     {[
-                      'Use MCS-certified installer for warranty and SEG',
-                      `Submit ${result.dnoConnectionType} application before installation`,
-                      'Consider optimisers if partial shading exists',
-                      'Install bird guards and cleaning access points',
-                    ].map((tip) => (
-                      <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        {tip}
-                      </li>
+                      { label: 'Panels', value: result.costEstimate.breakdown.panels },
+                      { label: 'Inverter', value: result.costEstimate.breakdown.inverter },
+                      { label: 'Installation', value: result.costEstimate.breakdown.installation },
+                      { label: 'Electrical', value: result.costEstimate.breakdown.electrical },
+                      { label: 'Scaffolding', value: result.costEstimate.breakdown.scaffolding },
+                      { label: 'MCS & DNO', value: result.costEstimate.breakdown.mcsAndDno },
+                    ].map((item) => (
+                      <div key={item.label} className="flex justify-between">
+                        <span className="text-white">{item.label}</span>
+                        <span className="text-white">£{item.value.toLocaleString()}</span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
+                    <div className="flex justify-between pt-2 border-t border-white/10">
+                      <span className="text-white font-medium">VAT ({vatRate}%)</span>
+                      <span className="text-white font-semibold">
+                        £{result.costEstimate.breakdown.vat.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                </CalculatorSection>
+
+                {/* Environmental Impact */}
+                <CalculatorSection title="Environmental Impact">
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      category={CAT}
+                      label="CO₂ Saved / Year"
+                      value={result.co2Savings.toString()}
+                      unit="kg"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Trees Equivalent"
+                      value={Math.round(result.co2Savings / 21).toString()}
+                      size="sm"
+                    />
+                  </ResultsGrid>
+                </CalculatorSection>
+
+                {/* 25-Year Degradation */}
+                <CalculatorSection title="25-Year Output Forecast">
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-3 gap-2 text-xs font-medium text-white border-b border-white/10 pb-1.5">
+                      <span>Year</span>
+                      <span className="text-right">Annual Output</span>
+                      <span className="text-right">Cumulative</span>
+                    </div>
+                    {result.degradation.map((d) => (
+                      <div key={d.year} className="grid grid-cols-3 gap-2 text-sm text-white">
+                        <span>Year {d.year}</span>
+                        <span className="text-right">{d.output.toLocaleString()} kWh</span>
+                        <span className="text-right">{(d.cumulative / 1000).toFixed(1)} MWh</span>
+                      </div>
+                    ))}
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-sm">
+                      <span className="text-white font-medium">Lifetime Generation</span>
+                      <span className="text-white font-bold">
+                        {(result.lifetimeGeneration / 1000).toFixed(1)} MWh
+                      </span>
+                    </div>
+                    <p className="text-xs text-white">
+                      Based on ~2% first-year loss + 0.5%/yr degradation (NREL data)
+                    </p>
+                  </div>
+                </CalculatorSection>
+
+                <CalculatorDivider category={CAT} />
+
+                {/* How It Worked Out */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'System factors',
+                      formula: `Orientation: ${roofOrientation} = ${result.orientationFactor}% | Tilt: ${roofTilt}° = ${result.tiltFactor}% | PR: ${result.systemPR}%`,
+                    },
+                    {
+                      label: 'Annual generation',
+                      formula: `E = ${systemSize}kWp × ${result.irradiance} kWh/m²/yr × ${result.orientationFactor}% × ${result.tiltFactor}% × ${result.systemPR}%`,
+                      value: `${result.annualGeneration.toLocaleString()} kWh/year`,
+                    },
+                    {
+                      label: 'Self-consumption savings',
+                      formula: `${result.selfConsumedEnergy.toLocaleString()} kWh × £${electricityRate}`,
+                      value: `£${result.savingsFromSelfConsumption}`,
+                    },
+                    {
+                      label: 'Export income',
+                      formula: `${result.exportedEnergy.toLocaleString()} kWh × £${exportRate}`,
+                      value: `£${result.incomeFromExport}`,
+                    },
+                    {
+                      label: 'Total annual savings',
+                      value: `£${result.annualSavings}/year`,
+                    },
+                    {
+                      label: 'Payback period',
+                      formula: `£${result.costEstimate.totalCost.toLocaleString()} ÷ £${result.annualSavings}`,
+                      value: `${result.paybackPeriod} years`,
+                    },
+                  ]}
+                />
+
+                {/* What This Means */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-4"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">System Performance</p>
+                        <p className="text-sm text-white">
+                          {systemSize}kWp system with {result.systemPR}% performance ratio.{' '}
+                          {roofOrientation} orientation provides {result.orientationFactor}% of
+                          optimal. {roofTilt}° tilt achieves {result.tiltFactor}% efficiency.
+                          Expected 25-year generation:{' '}
+                          {(result.lifetimeGeneration / 1000).toFixed(1)} MWh (includes panel
+                          degradation).
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Financial Analysis</p>
+                        <p className="text-sm text-white">
+                          Payback: {result.paybackPeriod} years using £
+                          {result.costEstimate.totalCost.toLocaleString()}. Monthly savings: ~£
+                          {Math.round(result.annualSavings / 12)}. 25-year total savings: ~£
+                          {Math.round(result.annualSavings * 25 * 0.94).toLocaleString()} (adjusted
+                          for degradation).
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Installation Tips</p>
+                        <ul className="space-y-1">
+                          {[
+                            'Use MCS-certified installer for warranty and SEG',
+                            `Submit ${result.dnoConnectionType} application before installation`,
+                            'Consider optimisers if partial shading exists',
+                            'Install bird guards and cleaning access points',
+                          ].map((tip) => (
+                            <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {tip}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Grounded guidance + standards */}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+            )}
 
-          {/* Grounded guidance + standards */}
-          <CalculatorEditorial content={solarPvContent} category={CAT} />
-        </div>
-      )}
-
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Solar PV Generation"
-        formula="E = P_kWp × G × F_orient × F_tilt × PR"
-        variables={[
-          { symbol: 'P_kWp', description: 'System size (kWp)' },
-          { symbol: 'G', description: 'Annual irradiance (kWh/m²/yr)' },
-          { symbol: 'F_orient', description: 'Orientation factor' },
-          { symbol: 'F_tilt', description: 'Tilt factor' },
-          { symbol: 'PR', description: 'Performance ratio (accounts for all system losses)' },
-        ]}
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Solar PV Generation"
+              formula="E = P_kWp × G × F_orient × F_tilt × PR"
+              variables={[
+                { symbol: 'P_kWp', description: 'System size (kWp)' },
+                { symbol: 'G', description: 'Annual irradiance (kWh/m²/yr)' },
+                { symbol: 'F_orient', description: 'Orientation factor' },
+                { symbol: 'F_tilt', description: 'Tilt factor' },
+                { symbol: 'PR', description: 'Performance ratio (accounts for all system losses)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={solarPvContent} category={CAT} />}
       />
     </CalculatorCard>
   );

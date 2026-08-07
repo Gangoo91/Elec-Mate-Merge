@@ -13,7 +13,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
-import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWorksValidation';
+import { validateMinorWorksFormData } from '@/utils/minorWorksValidation';
+import { formatMinorWorksJson } from '@/utils/minorWorksJsonFormatter';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
@@ -172,84 +173,20 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   // merge, PDF-safe logos, per-field formatting and the QS countersignature —
   // shared by Generate and Email so the email path can attach a PDF built
   // from the same data even before the user ever taps Generate.
-  const buildFormattedPayload = async (savedReportId?: string) => {
-    // Merge company branding into form data
-    let dataWithBranding = { ...formData };
-    if (hasSavedCompanyBranding) {
-      const branding = loadCompanyBranding();
-      if (branding) {
-        dataWithBranding = {
-          ...dataWithBranding,
-          companyLogo: branding.companyLogo || dataWithBranding.companyLogo || '',
-          companyName:
-            branding.companyName ||
-            dataWithBranding.companyName ||
-            dataWithBranding.contractorName ||
-            '',
-          companyAddress:
-            branding.companyAddress ||
-            dataWithBranding.companyAddress ||
-            dataWithBranding.contractorAddress ||
-            '',
-          companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
-          companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
-          brandingTagline: branding.companyTagline || dataWithBranding.brandingTagline || '',
-          brandingAccentColor:
-            branding.companyAccentColor || dataWithBranding.brandingAccentColor || '#d69e2e',
-          brandingWebsite: branding.companyWebsite || dataWithBranding.brandingWebsite || '',
-          schemeLogo: branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
-        };
-      }
-    }
-
-    // ELE-876 — resolve scheme + company logos to PDF-safe data URLs before
-    // the edge function receives them. Relative paths like
-    // `/logos/schemes/niceic.png` would otherwise render as broken images
-    // in PDFMonkey because it can't fetch our static asset paths.
-    const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-      '@/utils/resolveSchemeLogo'
+  /*
+   * The payload build lives in `@/utils/minorWorksJsonFormatter` so that
+   * something other than this component can see it. It used to be a closure
+   * here, which made Minor Works the only certificate whose payload no test and
+   * no tooling could reach — and the only row in the mapping report nobody
+   * could verify. Branding is passed in because a hook cannot be called from a
+   * module, and that was the thing keeping it locked inside a component.
+   */
+  const buildFormattedPayload = async (savedReportId?: string) =>
+    formatMinorWorksJson(
+      formData,
+      savedReportId,
+      hasSavedCompanyBranding ? loadCompanyBranding() : null
     );
-    const resolvedSchemeLogo = await resolveSchemeLogo(
-      dataWithBranding.schemeLogoDataUrl ||
-        dataWithBranding.registrationSchemeLogo ||
-        dataWithBranding.schemeLogo,
-      dataWithBranding.registrationScheme || dataWithBranding.schemeProvider
-    );
-    const resolvedCompanyLogo = await resolveCompanyLogo(
-      dataWithBranding.companyLogo
-    );
-    dataWithBranding = {
-      ...dataWithBranding,
-      schemeLogo: resolvedSchemeLogo,
-      schemeLogoDataUrl: resolvedSchemeLogo,
-      registrationSchemeLogo: resolvedSchemeLogo,
-      companyLogo: resolvedCompanyLogo,
-    };
-
-    // Format form data for better PDF presentation
-    const formattedFormData = { ...dataWithBranding };
-    Object.keys(formattedFormData).forEach((key) => {
-      if (formattedFormData[key]) {
-        formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
-      }
-    });
-
-    // Qualifying Supervisor countersignature — included in the payload when
-    // the latest QS review is approved (rendered once the template has a QS
-    // block; unknown keys are ignored by PDFMonkey until then).
-    const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
-      '@/utils/qsReviewPdf'
-    );
-    const qsReview = savedReportId ? await getLatestApprovedQsReview(savedReportId) : null;
-    if (qsReview) {
-      formattedFormData.qsName = qsReview.reviewer_name;
-      formattedFormData.qsSignature = qsReview.qs_signature;
-      formattedFormData.qsPosition = qsReview.qs_position;
-      formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
-    }
-
-    return formattedFormData;
-  };
 
   // --- PDF generation ---
   const handleGeneratePDF = async () => {

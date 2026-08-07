@@ -521,7 +521,7 @@ export default function LightningProtectionGuidePage() {
   return (
     <GuideTemplate
       title="Lightning Protection Guide | BS EN 62305 and SPDs UK"
-      description="Complete guide to lightning protection for buildings in the UK. BS EN 62305 standard, risk assessment, surge protection devices (SPDs)…"
+      description="Complete guide to lightning protection for buildings in the UK. BS EN 62305 standard, risk assessment, surge protection devices (SPDs)."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

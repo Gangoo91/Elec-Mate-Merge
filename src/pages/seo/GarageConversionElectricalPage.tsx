@@ -482,7 +482,7 @@ export default function GarageConversionElectricalPage() {
   return (
     <GuideTemplate
       title="Garage Conversion Electrical Work | Wiring Guide UK"
-      description="Complete guide to electrical work in a garage conversion. Upgrading from garage supply to habitable room standard, heating options…"
+      description="Complete guide to electrical work in a garage conversion. Upgrading from garage supply to habitable room standard, heating options."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

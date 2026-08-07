@@ -186,7 +186,9 @@ const ZsLookupGuidance = () => {
         </div>
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <h4 className="text-[14px] text-white font-medium mb-1">Example 2: Circuit design check</h4>
+          <h4 className="text-[14px] text-white font-medium mb-1">
+            Example 2: Circuit design check
+          </h4>
           <div className="text-[13px] text-white/85 space-y-0.5 font-mono">
             <p>Protection: 16A Type C MCB</p>
             <p>Maximum Zs (100%): 1.37Ω</p>

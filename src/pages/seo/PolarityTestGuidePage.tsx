@@ -5,6 +5,24 @@ import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import { FileCheck2, Zap, ClipboardCheck, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 // -------------------------------------------------------------------
+// Shared classes
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-4 mt-6 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const plainCardCn =
+  '-mx-4 mt-6 rounded-none border-y border-white/10 bg-white/[0.04] p-4 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const tableWrapCn =
+  '-mx-4 mt-6 overflow-x-auto border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const thCn = 'px-4 py-3 text-left text-[13px] font-semibold text-white whitespace-nowrap';
+const tdCn = 'px-4 py-3 align-top text-sm text-white';
+
+// -------------------------------------------------------------------
 // Data
 // -------------------------------------------------------------------
 
@@ -14,8 +32,9 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'what-reg-643-6-requires', label: 'What Reg 643.6 Requires' },
   { id: 'why-polarity-matters', label: 'Why Polarity Matters' },
-  { id: 'what-to-check', label: 'What to Look For' },
+  { id: 'what-to-check', label: 'What to Check, Point by Point' },
   { id: 'bell-and-battery-method', label: 'Bell and Battery Method (Dead Test)' },
   { id: 'continuity-tester-method', label: 'Using a Continuity Tester' },
   { id: 'switch-positions', label: 'Live Verification at Switch Positions' },
@@ -28,48 +47,48 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Polarity testing verifies that all single-pole protective and switching devices are connected in the line conductor only, and that all accessories are wired with correct line and neutral connections. This is required by BS 7671 Regulation 643.6.',
-  'The principal danger of incorrect polarity is that a luminaire, appliance, or socket outlet may be live even when the switch controlling it is in the off position. A reversed socket outlet has the live pin where the neutral should be, creating a shock risk when inserting a plug.',
-  'The bell and battery (or buzzer) method is the traditional dead polarity test — it uses a low-voltage continuity indication between two conductors to trace their route without applying mains voltage. Modern continuity testers achieve the same result more reliably.',
-  'Polarity must be checked at every socket outlet, every switch position, every luminaire, and every fixed appliance connection point. The test is performed dead (installation isolated) for the initial verification.',
-  'Common causes of polarity reversal include: conductors transposed at the consumer unit, brown and blue reversed at a socket or junction box, and incorrect connection of intermediate or two-way switching conductors.',
+  'BS 7671 Regulation 643.6 requires three things to be verified: (a) every fuse and single-pole control and protective device is connected in the line conductor only; (b) except for E14 and E27 lampholders to BS EN 60238, centre contact bayonet and Edison screw lampholders have the outer or screwed contact connected to the neutral; and (c) wiring has been correctly connected throughout the installation.',
+  'Polarity of the supply at the origin shall be verified before the installation is energised. Regulation 643.1 puts polarity last in the pre-energisation order: 643.2 continuity, 643.3 insulation resistance, 643.4 SELV/PELV or electrical separation, 643.5 floors and walls, then 643.6 polarity.',
+  'The principal danger of incorrect polarity is that a luminaire, appliance or socket-outlet stays live when the switch controlling it is off. Regulation 132.14.1 requires a single-pole fuse, switch or circuit-breaker to be inserted in the line conductor only, and Regulation 530.3.3 forbids a switching device in the neutral conductor alone.',
+  'The bell and battery (or buzzer) method is the traditional dead polarity test — a low-voltage continuity indication between two conductors, used to trace their route without applying mains voltage. A low-resistance continuity tester or multifunction instrument does the same job with a numerical reading.',
+  'Polarity is checked at the origin, at every socket-outlet, every switch position, every luminaire and every fixed appliance connection. On periodic inspection, Regulation 651.2 requires the inspection to be supplemented by appropriate tests from Chapter 64 — polarity among them.',
 ];
 
 const faqs = [
   {
     question: 'Why is polarity testing required?',
     answer:
-      'BS 7671 Regulation 643.6 requires polarity to be verified during the initial verification of a new installation and during every periodic inspection and test. Incorrect polarity creates shock and fire hazards: a single-pole switch in the neutral rather than the line conductor leaves the connected luminaire or appliance at line potential when switched off. A reversed socket outlet has the line conductor connected to the larger neutral pin, potentially energising a double-insulated appliance chassis. These hazards can exist for years without being apparent during normal use.',
+      'Incorrect polarity creates shock and fire hazards, so BS 7671 Regulation 643.6 requires polarity to be verified as part of initial verification, and Regulation 651.2 requires periodic inspection to be supplemented by the appropriate tests from Chapter 64. A single-pole switch or fuse in the neutral rather than the line conductor leaves the connected luminaire or appliance at line potential when it is switched off — the load is dead but the wiring is not. On a reversed socket-outlet, an appliance whose own switch or internal fuse sits in what it believes is the line conductor is left permanently energised inside. These hazards can exist for years without being apparent during normal use, because everything still works.',
   },
   {
     question: 'What is the bell and battery polarity test?',
     answer:
-      'The bell and battery (or buzzer) test is a traditional dead polarity test method. A low-voltage battery and a buzzer or bell are connected in series, with the two terminals used as test probes. When the probes are connected to two conductors that share a continuous path, the circuit is complete and the buzzer sounds. The method is used to trace which conductor at one point corresponds to which conductor at another point — for example, to verify that the brown conductor at a socket outlet connects back to the line busbar at the consumer unit. Modern instruments (multifunction testers, continuity testers) are more reliable and are now preferred.',
+      'The bell and battery (or buzzer) test is a traditional dead polarity test method. A low-voltage battery and a buzzer or bell are connected in series, with the two free ends used as test probes. When the probes are connected to two conductors that share a continuous path, the circuit is complete and the buzzer sounds. The method is used to trace which conductor at one point corresponds to which conductor at another point — for example, to verify that the brown conductor at a socket-outlet connects back to the line busbar at the consumer unit. Modern instruments are more reliable and are now preferred: Regulation 643.1 requires measuring instruments to be chosen in accordance with the relevant parts of BS EN 61557, or to provide no lesser degree of performance and safety.',
   },
   {
     question: 'What must be checked during a polarity test?',
     answer:
-      'BS 7671 Regulation 643.6 requires polarity to be verified for: all single-pole switching and protective devices (MCBs, fuses, switches — these must all be in the line conductor); all socket outlets (line must be at the correct terminal, neutral at the correct terminal, and earth at the correct terminal); all luminaire connections (for ES lampholders, the outer screwed contact shall be connected to neutral per Reg 559.5.1.206 — E14 and E27 lampholders complying with BS EN 60238 are excepted); all fixed appliance connections; and the line and neutral at the consumer unit busbars (line bus must feed MCBs, neutral bus must be connected to neutral conductors only).',
+      'Regulation 643.6 sets out the checks. First, where relevant, the polarity of the supply at the origin of the installation shall be verified before the installation is energised, and where single-pole switching devices are not permitted in the neutral conductor a test shall be made to verify that all such devices are connected in the line conductor(s) only. Then, during the polarity test it shall be verified that: (a) every fuse and single-pole control and protective device is connected in the line conductor only; (b) except for E14 and E27 lampholders complying with BS EN 60238, in circuits having an earthed neutral conductor, centre contact bayonet and Edison screw lampholders have the outer or screwed contacts connected to the neutral conductor; and (c) wiring has been correctly connected throughout the installation. Item (c) is what takes you round every socket-outlet, switch, luminaire and fixed appliance connection.',
   },
   {
     question: 'Can you check polarity with the installation live?',
     answer:
-      'Polarity can be verified live using a voltage indicator or a multifunction tester in voltage measurement mode. Measuring between the line terminal and a known earth reference confirms which terminal is live. However, initial polarity verification (for an Electrical Installation Certificate) should be carried out dead using a continuity test method, as live testing at every socket and switch position while working on an energised installation increases risk. On EICR work, a combination of dead and live methods is acceptable.',
+      'Polarity can be confirmed live using a voltage indicator or a multifunction tester in voltage measurement mode — measuring between a terminal and a known earth reference tells you which conductor is at line potential. But Regulation 643.1 places the polarity test in the group of tests to be carried out before the installation is energised, so on initial verification the dead continuity method comes first and live checks confirm it afterwards. On an EICR, where the installation is already in service, a combination of dead and live methods is normal, with the extent and any limitations agreed and recorded in the report.',
   },
   {
     question: 'What are the most common polarity errors?',
     answer:
-      'The most common polarity errors are: line and neutral transposed at a socket outlet (brown to neutral terminal, blue to line terminal); a single-pole switch wired in the neutral conductor rather than the line conductor (the switched circuit remains live when the switch is off); reversed connections at the consumer unit (line conductors connected to the neutral bar, neutral conductors to MCBs); line and neutral transposed at a junction box (affecting all accessories downstream); and incorrect wiring of intermediate switching strapping conductors.',
+      'The most common polarity errors are: line and neutral transposed at a socket-outlet (brown into the neutral terminal, blue into the line terminal); a single-pole switch or fuse wired in the neutral conductor rather than the line conductor, contrary to Regulations 132.14.1 and 530.3.3; reversed connections at the consumer unit, where line conductors land on the neutral bar and neutrals feed the protective devices; line and neutral transposed at a junction box, affecting every accessory downstream of it; and, at a ceiling rose, the permanent line and the switch wire transposed so the lamp sits between the switched conductor and the line rather than between the switched conductor and the neutral.',
   },
   {
     question: 'How do you trace a polarity fault?',
     answer:
-      'Start at the consumer unit and work outwards. With the installation isolated and proved dead, confirm that the brown (or red on older installations) conductors connect to the line terminals of the MCBs/fuses and the blue (or black) conductors connect to the neutral bar. Then work circuit by circuit: at the first accessory on each circuit, confirm line and neutral are correctly identified. If a reversal is found, disconnect and re-check the preceding junction to locate where the reversal occurred. A colour-coded schedule of the installation helps locate reversals efficiently.',
+      'Start at the consumer unit and work outwards. With the installation isolated and proved dead, confirm that the brown (or red on older installations) conductors connect to the line terminals of the protective devices and the blue (or black) conductors connect to the neutral bar. Then work circuit by circuit: at the first accessory on each circuit, confirm line and neutral are correctly identified. If a reversal is found, disconnect and re-check the preceding junction to locate where the reversal occurred. Marking each conductor as it is proved, with coloured tape at the board, stops you re-testing the same conductor twice.',
   },
   {
     question: 'Does polarity testing apply to three-phase installations?',
     answer:
-      'Yes. For three-phase installations, polarity testing (Reg 643.6) verifies that each phase conductor (L1, L2, L3) connects to the correct MCB or fuse, and that phase, neutral, and earth are correctly connected at all three-phase accessories, distribution boards, and motor connections. Phase rotation — the sequential order of L1, L2, L3 — is a separately performed and recorded test. BS 7671 Reg 643.11 and GN3 Reg 2.30 require phase rotation to be tested at the point closest to each three-phase load before energisation (to prevent incorrect motor direction of rotation), and the result shall be recorded as a distinct item on the Generic Schedule of Test Results (Appendix 6). Phase rotation is not the same as polarity: polarity confirms correct conductor identity at every point, whilst phase rotation confirms the cyclic sequence of the three phases. For the full three-phase testing context including loop impedance and Zs, see the loop impedance testing guide.',
+      'Yes. On a three-phase installation, polarity verification under Regulation 643.6 confirms that each line conductor connects to the correct protective device and that line, neutral and CPC are correctly connected at every distribution board, three-phase accessory and motor connection. Phase sequence is a separate test with its own regulation: Regulation 643.9 requires that, for polyphase circuits, it shall be verified that the phase sequence is maintained at all relevant points throughout the installation. The two are not the same — polarity confirms conductor identity at every point, whilst phase sequence confirms the cyclic order of the three lines, which is what determines the direction of rotation of a motor. For the loop impedance side of three-phase testing, see the loop impedance testing guide.',
   },
 ];
 
@@ -92,7 +111,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
-    description: 'Half-rated, rated, and 5 times current RCD test procedures.',
+    description:
+      'Verifying RCD operation under Reg 643.8 with test equipment to BS EN 61557-6, and what A4:2026 changed.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -125,49 +145,106 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
+    id: 'what-reg-643-6-requires',
+    heading: 'What Reg 643.6 Requires',
+    content: (
+      <>
+        <p>
+          Polarity is not a general instruction to &ldquo;check the wiring&rdquo;. It is three
+          specific verifications, plus a check at the origin.{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
+          Regulation 643.6 first requires that, where relevant, the polarity of the supply at the
+          origin of the installation is verified before the installation is energised, and that
+          where single-pole switching devices are not permitted in the neutral conductor, a test is
+          made to verify all such devices are connected in the line conductor(s) only. It then lists
+          what must be verified during the test itself.
+        </p>
+        <div className={tableWrapCn}>
+          <table className="w-full min-w-[560px] border-collapse">
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>643.6</th>
+                <th className={thCn}>What must be verified</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/10">
+                <td className={`${tdCn} font-semibold`}>(a)</td>
+                <td className={tdCn}>
+                  Every fuse and single-pole control and protective device is connected in the line
+                  conductor only.
+                </td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={`${tdCn} font-semibold`}>(b)</td>
+                <td className={tdCn}>
+                  In circuits having an earthed neutral conductor, centre contact bayonet and Edison
+                  screw lampholders have the outer or screwed contacts connected to the neutral
+                  conductor — except for E14 and E27 lampholders complying with BS&nbsp;EN&nbsp;60238.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>(c)</td>
+                <td className={tdCn}>
+                  Wiring has been correctly connected throughout the installation.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className={cardCn}>
+          <h3 className="text-sm font-semibold text-white">
+            Where polarity sits in the test sequence
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-white">
+            Regulation 643.1 requires the tests of Regulations 643.2 to 643.6, where relevant, to be
+            carried out in that order before the installation is energised — 643.2 continuity of
+            conductors, 643.3 insulation resistance, 643.4 protection by SELV, PELV or by electrical
+            separation, 643.5 insulation resistance/impedance of floors and walls, and 643.6
+            polarity. Polarity is therefore the last of the five dead tests. Where the installation
+            incorporates an earth electrode, the test of Regulation 643.7.2 is also carried out
+            before energising.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'why-polarity-matters',
     heading: 'Why Polarity Matters — The Safety Case',
     content: (
       <>
         <p>
-          Polarity is the correct assignment of line and neutral conductors throughout an electrical
-          installation. Getting it wrong is not simply an administrative error — incorrect polarity
-          creates real and potentially lethal hazards.{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-          Regulation 643.6 makes polarity verification mandatory at initial installation and at
-          every periodic inspection.
+          Getting polarity wrong is not an administrative error. Regulation 132.14.1 requires a
+          single-pole fuse, switch or circuit-breaker to be inserted in the line conductor only, and
+          Regulation 530.3.3 states that a switching device shall not be inserted in the neutral
+          conductor alone. Breach either and the installation still works — which is precisely what
+          makes it dangerous.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Switch in the neutral — live when off</strong>: A single-pole switch wired
-                in the neutral conductor rather than the line conductor will switch the circuit off
-                (no current flows) but leaves the entire circuit wiring at line potential. The
-                luminaire or appliance is live even when the switch is in the off position. Anyone
-                changing a lamp or touching the centre contact of an ES (Edison Screw) lamp holder
-                could receive a fatal shock.
-              </span>
+            <li>
+              <strong>Switch in the neutral — live when off.</strong> A single-pole switch wired in
+              the neutral conductor will switch the load off, because no current flows, but leaves
+              the whole circuit at line potential. The luminaire or appliance is live even with the
+              switch in the off position. Anyone changing a lamp or touching the centre contact of a
+              lampholder can receive a fatal shock.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Reversed socket outlet</strong>: If line and neutral are transposed at a
-                socket outlet, the line conductor is connected to the larger neutral slot. A
-                double-insulated appliance plugged into a reversed socket will function normally in
-                many cases, but the internal wiring is energised with reversed polarity. With some
-                appliances (particularly older ones or those with a thermal fuse in the neutral),
-                the chassis or heater element may be permanently live.
-              </span>
+            <li>
+              <strong>Reversed socket-outlet.</strong> If line and neutral are transposed at a
+              socket-outlet, everything plugged in still runs. But any appliance whose own switch,
+              fuse or thermal cut-out sits in the conductor it treats as line now has that device in
+              the neutral instead — so the appliance stays energised internally when it is switched
+              off at its own control. On a BS 1363 outlet the line and neutral apertures are the
+              same size, so nothing about the reversal is visible.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>ES lamp holders</strong>: BS 7671 Reg 559.5.1.206 requires that the outer
-                (screwed) contact of every Edison screw lampholder shall be connected to the neutral
-                conductor in TN and TT systems. This ensures that when a lamp is unscrewed, the
-                outer threaded shell that users touch is at neutral potential. If reversed, the
-                outer shell is at line potential — a hidden shock hazard. Note: E14 and E27
-                lampholders complying with BS&nbsp;EN&nbsp;60238 are excepted from this requirement.
-              </span>
+            <li>
+              <strong>Lampholders.</strong> Regulation 559.5.1.206 requires that, in circuits of a
+              TN or TT system, the outer contact of every Edison screw or single centre bayonet cap
+              type lampholder is connected to the neutral conductor. That way the threaded shell a
+              user touches when changing a lamp is at neutral potential rather than line potential.
+              The regulation also applies to track-mounted systems. E14 and E27 lampholders
+              complying with BS&nbsp;EN&nbsp;60238 are excepted.
             </li>
           </ul>
         </div>
@@ -176,55 +253,81 @@ const sections = [
   },
   {
     id: 'what-to-check',
-    heading: 'What to Check During a Polarity Test',
+    heading: 'What to Check, Point by Point',
     content: (
       <>
         <p>
-          A thorough polarity verification covers every point in the installation where a polarity
-          error could exist. This means checking at the consumer unit, at every accessory on every
-          circuit, and at every fixed appliance connection.
+          Regulation 643.6(c) — &ldquo;wiring has been correctly connected throughout the
+          installation&rdquo; — is what takes you round the whole job rather than just the board.
+          This is the working list.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Consumer unit / distribution board</strong>: Confirm that line conductors
-                from the supply connect to the line bus (feeding the MCBs or fuses). Confirm that
-                neutral conductors connect to the neutral bar. Confirm that CPCs connect to the
-                earth bar. A polarity reversal at the consumer unit affects the entire installation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Socket outlets</strong>: Verify that the line conductor connects to the line
-                terminal (right-hand terminal on a BS 1363 socket when facing the socket), neutral
-                to the neutral terminal (left-hand), and earth to the earth terminal (top).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Lighting switches</strong>: Verify that the single-pole switch interrupts
-                the line conductor only. The switch wire (typically brown, or an appropriately
-                sleeved conductor) should be line at the switch and line at the luminaire.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Luminaire connections</strong>: At every fixed luminaire connection, confirm
-                line to line terminal and neutral to neutral terminal. For ES lamp holders, confirm
-                the outer (screwed) contact is connected to neutral (Reg 559.5.1.206). Exception:
-                E14 and E27 lampholders complying with BS EN 60238 are not subject to this
-                requirement.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Fixed appliance connections</strong>: Cookers, water heaters, showers, and
-                other fixed appliances must have line at the correct terminal. Check the appliance
-                data plate or installation instructions for the correct termination.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className="w-full min-w-[640px] border-collapse">
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>Point</th>
+                <th className={thCn}>What must be true</th>
+                <th className={thCn}>Reg</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>Origin of the installation</td>
+                <td className={tdCn}>
+                  Supply polarity verified before the installation is energised.
+                </td>
+                <td className={tdCn}>643.6</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>Consumer unit / distribution board</td>
+                <td className={tdCn}>
+                  Line conductors on the line bus feeding the protective devices, neutrals on the
+                  neutral bar, CPCs on the earth bar. A reversal here affects every circuit.
+                </td>
+                <td className={tdCn}>643.6(c)</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>Fuses, MCBs and RCBOs</td>
+                <td className={tdCn}>
+                  Single-pole device in the line conductor only; never a switching device in the
+                  neutral alone.
+                </td>
+                <td className={tdCn}>132.14.1; 530.3.3; 643.6(a)</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>Lighting switches</td>
+                <td className={tdCn}>
+                  The single-pole switch interrupts the line conductor only. The switch wire is at
+                  line potential when the switch is on.
+                </td>
+                <td className={tdCn}>132.14.1; 643.6(a)</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>Socket-outlets</td>
+                <td className={tdCn}>
+                  Line, neutral and CPC each at their own terminal. On a BS 1363 outlet, line is the
+                  right-hand terminal facing the socket, neutral the left-hand, earth the top.
+                </td>
+                <td className={tdCn}>643.6(c)</td>
+              </tr>
+              <tr className="border-b border-white/10">
+                <td className={tdCn}>ES and centre-contact BC lampholders</td>
+                <td className={tdCn}>
+                  Outer (screwed) contact connected to the neutral conductor. E14 and E27
+                  lampholders to BS&nbsp;EN&nbsp;60238 excepted.
+                </td>
+                <td className={tdCn}>559.5.1.206; 643.6(b)</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Fixed appliance connections</td>
+                <td className={tdCn}>
+                  Line at the terminal the manufacturer marks as line — cookers, water heaters,
+                  showers, controls. Check the data plate or instructions.
+                </td>
+                <td className={tdCn}>643.6(c)</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
@@ -234,62 +337,48 @@ const sections = [
     heading: 'Bell and Battery Method — The Traditional Dead Polarity Test',
     content: (
       <>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <div className="flex items-start gap-3">
-            <span className="text-white">
-              <strong>Test sequence context (BS 7671:2018+A4:2026):</strong> Polarity is the sixth
-              and final pre-energisation test in the initial verification sequence. BS 7671 Reg
-              642.3 and GN3 Reg 2.12 both require tests 643.2 to 643.6 to be carried out in that
-              order before the installation is energised — continuity, insulation resistance,
-              protection by automatic disconnection, protection by separation, polarity. The dead
-              polarity test described below satisfies that final step.
-            </span>
-          </div>
-        </div>
         <p>
           The bell and battery (or buzzer) method is the original dead polarity test technique, used
           by electricians for decades before multifunction test instruments became standard. It
-          remains valid and is useful in situations where a dedicated continuity instrument is not
-          available.
+          remains a valid way of proving which conductor is which, and is useful where a dedicated
+          continuity instrument is not to hand.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ol className="space-y-4 text-white list-decimal list-inside">
+        <div className={plainCardCn}>
+          <ol className="list-inside list-decimal space-y-4 text-white">
             <li>
-              <strong>Assemble the test circuit</strong>: Connect a low-voltage battery (typically
-              4.5V or 9V) in series with a buzzer, bell, or indicator lamp. The two free ends of
-              this circuit are the test probes. When the probes are connected across a continuous
-              conductor, the circuit is complete and the indicator sounds or illuminates.
+              <strong>Assemble the test circuit.</strong> Connect a low-voltage battery (typically
+              4.5&nbsp;V or 9&nbsp;V) in series with a buzzer, bell or indicator lamp. The two free
+              ends are the test probes. Bridge a continuous conductor with them and the indicator
+              sounds or illuminates.
             </li>
             <li>
-              <strong>Isolate the installation</strong>: The test must be performed dead. Switch off
-              and isolate the supply, prove dead with an approved voltage indicator.
+              <strong>Isolate the installation.</strong> The test is dead. Switch off, isolate,
+              secure the isolation, and prove dead with an approved voltage indicator.
             </li>
             <li>
-              <strong>Disconnect at the consumer unit</strong>: Disconnect all outgoing circuit
-              conductors from the MCBs and neutral bar at the consumer unit. This allows each
-              conductor to be individually identified.
+              <strong>Separate the conductors at the board.</strong> Disconnect the outgoing circuit
+              conductors from the protective devices and the neutral bar so each conductor can be
+              identified individually.
             </li>
             <li>
-              <strong>Test at each accessory</strong>: At each socket outlet, switch, or luminaire
-              connection, use one probe at the consumer unit end of the conductor and the other
-              probe at the accessory terminal. Continuity confirms the conductor identity.
-              Non-continuity between the expected pairs indicates a transposition.
+              <strong>Test at each accessory.</strong> Put one probe on the conductor at the board
+              and the other on the terminal at the socket-outlet, switch or luminaire. Continuity
+              confirms the conductor identity; no continuity where you expected it means a
+              transposition somewhere between the two points.
             </li>
             <li>
-              <strong>Mark conductors as identified</strong>: Mark each confirmed conductor with
-              coloured tape at the consumer unit to prevent confusion.
+              <strong>Mark conductors as they are proved.</strong> Tag each confirmed conductor at
+              the board so you never test the same one twice.
             </li>
           </ol>
         </div>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <div className="flex items-start gap-3">
-            <span className="text-white">
-              <strong>Why low voltage?</strong> The bell and battery method uses a voltage far lower
-              than mains supply — safe to use on a de-energised circuit without risk of shock. The
-              instrument does not damage electronic components and can be used with accessories left
-              in place.
-            </span>
-          </div>
+        <div className={plainCardCn}>
+          <h3 className="text-sm font-semibold text-white">Why low voltage</h3>
+          <p className="mt-2 text-sm leading-relaxed text-white">
+            The test voltage is far below mains, so it can be applied to a de-energised circuit
+            without shock risk, will not damage connected electronics, and can be used with
+            accessories left in place.
+          </p>
         </div>
       </>
     ),
@@ -300,36 +389,27 @@ const sections = [
     content: (
       <>
         <p>
-          A low-resistance continuity tester (or a multifunction test instrument in continuity mode)
-          is the modern equivalent of the bell and battery. It is faster, more accurate, and
-          provides a numerical resistance reading rather than a simple pass/fail indication.
+          A low-resistance continuity tester, or a multifunction instrument in continuity mode, is
+          the modern equivalent of the bell and battery. It is faster, and it gives a numerical
+          resistance reading rather than a pass/fail beep. Regulation 643.1 requires instruments to
+          be chosen in accordance with the relevant parts of BS&nbsp;EN&nbsp;61557, or to provide no
+          lesser degree of performance and safety.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={plainCardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Null the lead resistance</strong>: Short the instrument leads together and
-                null or record the lead resistance before testing. This is particularly important on
-                short runs where lead resistance may represent a significant proportion of the total
-                reading.
-              </span>
+            <li>
+              <strong>Null the lead resistance.</strong> Short the leads together and null or record
+              the reading before testing. On short runs the leads can be a large share of the total.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Wander lead technique</strong>: Run a long wander lead from the consumer
-                unit to each accessory being tested. One instrument terminal stays at the consumer
-                unit, connected to the known line busbar conductor. The other terminal is taken to
-                the accessory and tested against each conductor terminal. Continuity to the line
-                conductor confirms correct line connection.
-              </span>
+            <li>
+              <strong>Wander lead technique.</strong> Run a long wander lead from the board to the
+              accessory. One instrument terminal stays at the board on the known line conductor; the
+              other is taken to the accessory and tested against each terminal in turn.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Polarity at each accessory</strong>: At each socket outlet, test between the
-                line terminal and the conductor connected to the consumer unit line busbar (via the
-                wander lead). Continuity confirms correct polarity. Repeat for neutral and earth
-                terminals.
-              </span>
+            <li>
+              <strong>Prove each terminal.</strong> At the accessory, continuity back to the line
+              conductor at the board confirms the line connection. Repeat for neutral and CPC so all
+              three are positively identified, not assumed by colour.
             </li>
           </ul>
         </div>
@@ -342,39 +422,27 @@ const sections = [
     content: (
       <>
         <p>
-          After the dead polarity test has been completed and the installation energised, a live
-          verification can confirm correct polarity and switching function at switch positions. This
-          is particularly important for two-way and intermediate switching arrangements.
+          Once the dead test is complete and the installation energised, live checks confirm the
+          switching actually behaves as the dead test predicted. This matters most on two-way and
+          intermediate arrangements, where the wiring is easiest to get wrong.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={plainCardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Check the switched conductor is live</strong>: With the switch in the on
-                position, measure between the switch terminal connecting to the luminaire (the
-                switch wire) and earth. This conductor must be at line potential (230V to earth).
-                With the switch in the off position, this conductor must be at neutral or near-zero
-                potential. A voltage present at the switch terminal with the switch off indicates
-                the switch is in the neutral.
-              </span>
+            <li>
+              <strong>The switched conductor.</strong> With the switch on, measure between the
+              switch wire and earth: it should sit at nominal line voltage (230&nbsp;V to earth on a
+              single-phase supply). With the switch off it should be at or near zero. Voltage still
+              present with the switch off means the switch is in the neutral.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>ES lamp holder live verification</strong>: With the lamp removed and the
-                switch in the off position, measure between the centre contact of the ES holder and
-                earth. This must be at or near zero potential. Measure between the outer threaded
-                shell and earth — this must also be at or near zero potential when off. If the
-                centre contact is live with the switch off, the switch is in the neutral.
-              </span>
+            <li>
+              <strong>ES lampholder.</strong> With the lamp out and the switch off, measure from the
+              centre contact to earth and from the outer shell to earth. Both should be at or near
+              zero. A live centre contact with the switch off means the switch is in the neutral.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Socket outlet live check</strong>: Use a socket tester (a plug-in device
-                with indicator lights) or a voltage indicator at the socket. Confirm line is at the
-                correct terminal (right-hand slot on BS 1363), neutral at the left-hand slot, and
-                earth at the top. A socket tester provides a quick indication; confirm with a
-                voltage indicator on any doubtful results.
-              </span>
+            <li>
+              <strong>Socket-outlet.</strong> A plug-in socket tester gives a fast indication at
+              every outlet; confirm anything doubtful with a voltage indicator. Line should be the
+              right-hand slot on a BS 1363 outlet, neutral the left-hand, earth the top.
             </li>
           </ul>
         </div>
@@ -387,53 +455,40 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding where polarity errors typically occur helps focus the inspection and speeds
-          up fault finding. These are the most frequently encountered polarity errors in UK domestic
-          and commercial installations.
+          Knowing where reversals normally hide shortens the inspection and the fault find. These
+          are the ones that turn up repeatedly in UK domestic and commercial work.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={plainCardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Transposed at a socket outlet</strong>: Brown (line) connected to neutral
-                terminal, blue (neutral) connected to line terminal. The socket functions normally
-                for most equipment but reversed polarity creates shock risk. Common where a socket
-                was replaced or added by an unqualified person.
-              </span>
+            <li>
+              <strong>Transposed at a socket-outlet.</strong> Brown into the neutral terminal, blue
+              into the line terminal. The outlet works normally, so it is only found by test.
+              Typical where an outlet has been replaced or added by someone unqualified.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Switch in the neutral</strong>: Particularly common in older loop-in ceiling
-                rose wiring where brown and blue conductors are close together and easy to
-                transpose. Also found where a lighting switch was added to an existing circuit
-                without checking which conductor is the line.
-              </span>
+            <li>
+              <strong>Switch in the neutral.</strong> Common in loop-in ceiling rose wiring, where
+              the permanent line, the switch wire and the neutral all meet in one accessory, and
+              where a switch has been added to an existing circuit without proving which conductor
+              is the line.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Transposed at the consumer unit</strong>: Line conductors connected to the
-                neutral bar and neutral conductors connected to MCBs. This is a whole-board reversal
-                — every circuit is affected. Can occur when a consumer unit is replaced and
-                conductors are re-terminated without adequate identification.
-              </span>
+            <li>
+              <strong>Transposed at the consumer unit.</strong> Line conductors landed on the
+              neutral bar and neutrals feeding the protective devices. This is a whole-board
+              reversal affecting every circuit, and it happens when a board is changed and
+              conductors are re-terminated without identification.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Strapping conductors reversed in two-way switching</strong>: The two
-                strapping conductors between two-way switches can be reversed, causing the switching
-                to operate correctly but with incorrect conductor identification throughout the
-                switch circuit. While the switching still functions, the switch wire may be at
-                neutral potential when the switch is in the off position, leaving the luminaire
-                connected directly to the line.
-              </span>
+            <li>
+              <strong>Common and strapper transposed in two-way switching.</strong> Swapping the two
+              strappers alone only inverts which switch position is on. The genuine polarity fault
+              is putting the feed or the switch wire on a strapper terminal instead of the common —
+              the lighting may still appear to work from one switch, but the switch is no longer
+              interrupting the line conductor as Regulation 132.14.1 requires.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Extension lead or spur added with reversed polarity</strong>: A DIY-added
-                socket or extension connected via a junction box, with line and neutral transposed
-                at the junction. Affects only the added accessories but may not be immediately
-                apparent.
-              </span>
+            <li>
+              <strong>Spur or junction added with line and neutral crossed.</strong> A joint made
+              without identifying the conductors reverses everything downstream of it while
+              everything upstream tests correct — which is why a reversal at one accessory always
+              means testing the next one along.
             </li>
           </ul>
         </div>
@@ -446,38 +501,37 @@ const sections = [
     content: (
       <>
         <p>
-          When a polarity fault is found at an accessory during the test, work backwards through the
-          circuit to locate the source. The following systematic approach minimises the time spent
-          on fault finding.
+          When a reversal shows up at an accessory, work backwards through the circuit to find where
+          it starts. Regulation 643.1 also requires that if any test indicates a failure to comply,
+          that test — and any preceding test whose results the fault may have influenced — is
+          repeated after the fault has been rectified.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ol className="space-y-4 text-white list-decimal list-inside">
+        <div className={plainCardCn}>
+          <ol className="list-inside list-decimal space-y-4 text-white">
             <li>
-              <strong>Confirm the reversal is real</strong>: Re-test with a second instrument or a
-              different method to eliminate instrument error. A socket tester and an independent
-              voltage indicator provide a cross-check.
+              <strong>Confirm the reversal is real.</strong> Re-test with a second instrument or a
+              different method. A socket tester plus an independent voltage indicator is a quick
+              cross-check against instrument or lead error.
             </li>
             <li>
-              <strong>Check the preceding junction</strong>: Work back to the last junction box,
-              ceiling rose, or intermediate accessory on the circuit. Test polarity there. If
-              correct at the junction but reversed at the accessory, the reversal is in the final
-              connection — at the accessory itself.
+              <strong>Check the preceding junction.</strong> Work back to the last joint box,
+              ceiling rose or accessory on the circuit and test there. Correct at the junction but
+              reversed at the accessory puts the fault in the final connection.
             </li>
             <li>
-              <strong>Check the consumer unit</strong>: If polarity is reversed at the first
-              accessible point on the circuit, work back to the consumer unit and check the circuit
-              terminations there. A reversal at the consumer unit affects all accessories on that
-              circuit.
+              <strong>Check the board.</strong> If polarity is already reversed at the first
+              accessible point on the circuit, the terminations at the consumer unit are the next
+              place to look.
             </li>
             <li>
-              <strong>Inspect accessible wiring</strong>: Look for obvious visual clues — a brown
-              conductor in a blue terminal, or conductor identification sleeves missing from
-              conductors that should be coloured.
+              <strong>Look before you test.</strong> A brown conductor in a terminal marked N, or a
+              conductor with no identification sleeve where one is needed, is often visible before
+              an instrument is picked up.
             </li>
             <li>
-              <strong>Document the location and remedy</strong>: Record the location of the fault
-              and the corrective action taken. On an EICR, a polarity reversal at a switch position
-              or socket outlet is a C2 observation (potentially dangerous) and must be remedied.
+              <strong>Record the location and the remedy.</strong> Note where the fault was and what
+              was done. On an EICR, a polarity reversal left in service is an observation with a
+              classification code and a description of its location.
             </li>
           </ol>
         </div>
@@ -490,36 +544,29 @@ const sections = [
     content: (
       <>
         <p>
-          Polarity test results are recorded on the Schedule of Test Results as part of the{' '}
+          Polarity is recorded as a confirmation, not a measurement — there is no reading to enter.
+          It goes on the schedule of test results accompanying the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">
             Electrical Installation Certificate or EICR
           </SEOInternalLink>
-          . BS 7671 requires confirmation that polarity has been verified — not the detailed
-          continuity readings from the polarity test (those are captured in the continuity test
-          column).
+          . Amendment 4 redrafted this schedule: the single-page generic schedule is now split into
+          a separate schedule of circuit details and a separate schedule of test results.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={plainCardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Pass/Fail per circuit</strong>: Record a tick (pass) or cross (fail) in the
-                polarity column of the schedule for each circuit tested.
-              </span>
+            <li>
+              <strong>Per circuit.</strong> Confirm polarity for each circuit tested, alongside
+              confirmation of supply polarity at the origin.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Limitations</strong>: Note any circuits or accessories where polarity could
-                not be fully verified — for example, a permanently wired appliance where access was
-                not possible. State the reason.
-              </span>
+            <li>
+              <strong>Limitations.</strong> Record any circuit or accessory where polarity could not
+              be fully verified — a permanently connected appliance you could not gain access to,
+              for example — and state why.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Observations</strong>: Any polarity fault found and not immediately remedied
-                during the inspection must be recorded as an observation (C1, C2, or C3) with a
-                description and location. A switch in the neutral is C2 (potentially dangerous). A
-                reversed socket outlet is C2.
-              </span>
+            <li>
+              <strong>Observations.</strong> Any polarity fault found and not put right during the
+              visit is recorded as an observation with a classification code, a description and its
+              location, so the person ordering the report can act on it.
             </li>
           </ul>
         </div>
@@ -537,40 +584,29 @@ const sections = [
     content: (
       <>
         <p>
-          Polarity testing is often the first test electricians learn — but it is one of the most
-          important. A methodical approach, starting at the consumer unit and working outwards
-          circuit by circuit, ensures nothing is missed and findings are easy to trace.
+          Polarity is often the first test an apprentice learns and the one most easily rushed. A
+          methodical route — origin, board, then circuit by circuit outwards — means nothing is
+          missed and any reversal is easy to locate afterwards.
         </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-start gap-4">
-              <div>
-                <h4 className="font-bold text-white mb-1">Log Polarity Results Per Circuit</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Use the{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    Elec-Mate schedule of tests
-                  </SEOInternalLink>{' '}
-                  to tick polarity as you verify each circuit. If you find a reversal, log it as an
-                  observation immediately with the accessory location — before moving to the next
-                  circuit.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <div>
-                <h4 className="font-bold text-white mb-1">Cross-Check with a Socket Tester</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  A plug-in socket tester (around £5 to £15) gives a rapid indication of polarity at
-                  every socket outlet and speeds up the polarity check significantly on larger
-                  installations. Use it alongside the continuity method — the socket tester confirms
-                  function, the continuity test confirms the conductor path.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className={cardCn}>
+          <h3 className="text-sm font-semibold text-white">Log polarity per circuit</h3>
+          <p className="mt-2 text-sm leading-relaxed text-white">
+            Use the{' '}
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Elec-Mate schedule of tests
+            </SEOInternalLink>{' '}
+            to confirm polarity as you verify each circuit. If you find a reversal, log it as an
+            observation with the accessory location straight away — before moving to the next
+            circuit, while you can still remember which cupboard it was in.
+          </p>
+        </div>
+        <div className={plainCardCn}>
+          <h3 className="text-sm font-semibold text-white">Cross-check with a socket tester</h3>
+          <p className="mt-2 text-sm leading-relaxed text-white">
+            A plug-in socket tester speeds up the check at every outlet on a large installation, but
+            it indicates function rather than proving the conductor path, and it cannot distinguish
+            every combination of fault. Use it alongside the continuity method, not instead of it.
+          </p>
         </div>
       </>
     ),
@@ -584,10 +620,10 @@ const sections = [
 export default function PolarityTestGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing: Method, Results + What Fails an EICR"
-      description="Polarity testing explained: dead test (continuity method), live test sequence, expected results, common errors, and what fails an EICR — to BS 7671 + GN3."
+      title="Polarity Test: Line Not Neutral, Reg 643.6"
+      description="A polarity test proves fuses, switches and socket-outlets are in the line, not the neutral (Reg 643.6). Bell and battery, continuity and live methods."
       datePublished="2026-03-27"
-      dateModified="2026-07-02"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
@@ -595,15 +631,15 @@ export default function PolarityTestGuidePage() {
       heroTitle={
         <>
           Polarity Testing Guide:{' '}
-          <span className="text-yellow-400">Electrical Polarity Test Methods</span>
+          <span className="text-elec-yellow">Electrical Polarity Test Methods</span>
         </>
       }
-      heroSubtitle="The complete UK electrician's guide to polarity testing — why polarity matters, the bell and battery dead test method, using a continuity tester, live verification at switch positions, common polarity errors, and how to trace and correct them."
-      readingTime={12}
+      heroSubtitle="The UK electrician's guide to polarity testing — what Regulation 643.6 actually requires, the bell and battery dead test, using a continuity tester, live verification at switch positions, and the reversals that turn up most often."
+      readingTime={11}
       answerBox={{
         question: 'What is a polarity test?',
         answer:
-          'A polarity test confirms that every fuse, single-pole switch and protective device is connected in the line conductor only and not the neutral, that socket-outlets are correctly wired, and that centre-contact lampholders have the line connected to the centre contact. BS 7671 Regulation 643.6 requires polarity to be verified — as a dead test during installation and confirmed on energisation.',
+          'A polarity test verifies that (a) every fuse and single-pole control and protective device is connected in the line conductor only, (b) except for E14 and E27 lampholders to BS EN 60238, centre contact bayonet and Edison screw lampholders have the outer or screwed contacts connected to the neutral conductor, and (c) wiring has been correctly connected throughout the installation. BS 7671 Regulation 643.6 also requires the polarity of the supply at the origin to be verified before the installation is energised. It is the last of the dead tests in the Regulation 643.1 sequence.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}
@@ -611,7 +647,7 @@ export default function PolarityTestGuidePage() {
       faqHeading="Frequently Asked Questions About Polarity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Polarity Test Results On Site with Elec-Mate"
-      ctaSubheading="Log polarity verification per circuit and record observations against specific accessories. Export a compliant EICR PDF before you leave site. 7-day free trial."
+      ctaSubheading="Confirm polarity per circuit and log observations against a specific accessory. Export a compliant EICR PDF before you leave site. 7-day free trial."
     />
   );
 }

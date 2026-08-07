@@ -18,6 +18,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { batteryBackupContent } from './content/battery-backup';
 import {
@@ -210,524 +211,536 @@ const BatteryBackupCalculator = () => {
       title="Battery Backup Calculator"
       description="Calculate runtime for battery backup systems with Peukert's equation"
     >
-      {/* Mode Selection */}
-      <div className="space-y-3">
-        <p className="text-sm font-medium text-white">Calculation Mode</p>
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            { value: 'runtime' as const, label: 'Runtime', icon: Clock },
-            { value: 'sizing' as const, label: 'Sizing', icon: Battery },
-          ].map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setMode(opt.value)}
-              className={cn(
-                'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2 min-h-11 touch-manipulation',
-                mode === opt.value
-                  ? 'bg-blue-500/20 border-blue-500/50 text-white'
-                  : 'bg-white/5 border-white/10 text-white hover:border-white/20'
-              )}
-            >
-              <opt.icon className="h-4 w-4" />
-              <span className="text-sm font-medium">{opt.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Battery Configuration */}
-      <div className="space-y-3">
-        <p className="text-sm font-medium text-white">Battery Configuration</p>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Battery Chemistry"
-            value={chemistry}
-            onChange={setChemistry}
-            options={chemistryOptions}
-          />
-          <CalculatorSelect
-            label="Inverter Type"
-            value={inverterType}
-            onChange={setInverterType}
-            options={inverterOptions}
-          />
-          <CalculatorInput
-            label="Voltage"
-            unit="V"
-            type="text"
-            inputMode="decimal"
-            value={nominalVoltage}
-            onChange={setNominalVoltage}
-            placeholder="12"
-          />
-          <CalculatorInput
-            label="Capacity"
-            unit="Ah"
-            type="text"
-            inputMode="decimal"
-            value={capacityAh}
-            onChange={setCapacityAh}
-            placeholder="100"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Temperature"
-            unit="°C"
-            type="text"
-            inputMode="decimal"
-            value={ambientTemp}
-            onChange={setAmbientTemp}
-            placeholder="20"
-          />
-          <CalculatorInput
-            label="Battery Health"
-            unit="%"
-            type="text"
-            inputMode="decimal"
-            value={batteryHealth}
-            onChange={setBatteryHealth}
-            placeholder="100"
-          />
-        </CalculatorInputGrid>
-      </div>
-
-      {/* Load Management */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-white">Load Management</p>
-          <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border bg-blue-500/20 text-blue-400 border-blue-500/30">
-            {getTotalLoadWatts()}W total
-          </span>
-        </div>
-
-        {/* Quick Add Presets */}
-        <div className="grid grid-cols-3 gap-2">
-          {LOAD_PRESETS.slice(0, 6).map((preset, index) => (
-            <button
-              key={index}
-              onClick={() => handleLoadPresetSelect(preset)}
-              className="p-2 text-xs rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 transition-colors text-white truncate min-h-11 touch-manipulation"
-            >
-              {preset.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Manual Load Entry */}
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Load Name"
-              type="text"
-              value={newLoadName}
-              onChange={setNewLoadName}
-              placeholder="e.g., LED Lights"
-            />
-            <CalculatorInput
-              label="Power"
-              unit="W"
-              type="text"
-              inputMode="decimal"
-              value={newLoadWatts}
-              onChange={setNewLoadWatts}
-              placeholder="50"
-            />
-          </CalculatorInputGrid>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <CalculatorSelect
-                label="Priority"
-                value={newLoadPriority}
-                onChange={(v) => setNewLoadPriority(v as typeof newLoadPriority)}
-                options={priorityOptions}
-              />
-            </div>
-            <button
-              onClick={addLoad}
-              disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
-              className="self-end h-12 px-4 rounded-xl bg-blue-500/20 border border-blue-500/50 text-white hover:bg-blue-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
-            >
-              <Plus className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Load List */}
-        {loads.length > 0 && (
-          <div className="space-y-2 max-h-40 overflow-y-auto">
-            {loads.map((load, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
-              >
-                <div className="flex-1 min-w-0">
-                  <span className="font-medium text-white block truncate">{load.name}</span>
-                  <span className="text-white text-xs">
-                    {load.watts}W · {load.priority}
-                    {load.dutyCycle < 1 && ` · ${Math.round(load.dutyCycle * 100)}% duty`}
-                    {load.surgeMultiplier > 1 && ` · surge ×${load.surgeMultiplier}`}
-                  </span>
-                </div>
-                <button
-                  onClick={() => removeLoad(index)}
-                  className="ml-2 p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors min-h-11 min-w-[44px] flex items-center justify-center touch-manipulation"
-                >
-                  <X className="h-3.5 w-3.5 text-red-400" />
-                </button>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Mode Selection */}
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-white">Calculation Mode</p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: 'runtime' as const, label: 'Runtime', icon: Clock },
+                  { value: 'sizing' as const, label: 'Sizing', icon: Battery },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setMode(opt.value)}
+                    className={cn(
+                      'p-3 rounded-xl border transition-colors flex items-center justify-center gap-2 min-h-11 touch-manipulation',
+                      mode === opt.value
+                        ? 'bg-white/[0.06] border-white/[0.18] text-white'
+                        : 'bg-white/5 border-white/10 text-white hover:border-white/20'
+                    )}
+                  >
+                    <opt.icon className="h-4 w-4" />
+                    <span className="text-sm font-medium">{opt.label}</span>
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
 
-      {/* Target runtime — required for sizing, optional in runtime mode.
-          BS 7671 sets no backup duration, so the target has to come from the application. */}
-      <div className="space-y-2">
-        <CalculatorInput
-          label={mode === 'sizing' ? 'Required Runtime' : 'Target Runtime (optional)'}
-          unit="hours"
-          type="text"
-          inputMode="decimal"
-          value={requiredRuntime}
-          onChange={setRequiredRuntime}
-          placeholder={mode === 'sizing' ? '8' : 'e.g. 0.5'}
-        />
-        <p className="text-xs text-white">
-          BS 7671 does not specify a backup duration. Take it from the application — emergency
-          lighting from BS 5266-1 / BS EN 1838, UPS duration from the operational requirement.
-        </p>
-      </div>
+            {/* Battery Configuration */}
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-white">Battery Configuration</p>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Battery Chemistry"
+                  value={chemistry}
+                  onChange={setChemistry}
+                  options={chemistryOptions}
+                />
+                <CalculatorSelect
+                  label="Inverter Type"
+                  value={inverterType}
+                  onChange={setInverterType}
+                  options={inverterOptions}
+                />
+                <CalculatorInput
+                  label="Voltage"
+                  unit="V"
+                  type="text"
+                  inputMode="decimal"
+                  value={nominalVoltage}
+                  onChange={setNominalVoltage}
+                  placeholder="12"
+                />
+                <CalculatorInput
+                  label="Capacity"
+                  unit="Ah"
+                  type="text"
+                  inputMode="decimal"
+                  value={capacityAh}
+                  onChange={setCapacityAh}
+                  placeholder="100"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Temperature"
+                  unit="°C"
+                  type="text"
+                  inputMode="decimal"
+                  value={ambientTemp}
+                  onChange={setAmbientTemp}
+                  placeholder="20"
+                />
+                <CalculatorInput
+                  label="Battery Health"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={batteryHealth}
+                  onChange={setBatteryHealth}
+                  placeholder="100"
+                />
+              </CalculatorInputGrid>
+            </div>
 
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!capacityAh || loads.length === 0}
-        calculateLabel={mode === 'runtime' ? 'Calculate Runtime' : 'Calculate Size'}
-        showReset={!!results}
-      />
+            {/* Load Management */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-white">Load Management</p>
+                <span className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border bg-white/[0.06] text-white border-white/[0.14]">
+                  {getTotalLoadWatts()}W total
+                </span>
+              </div>
 
-      {/* ── Results ── */}
-      {results && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={targetHours ? (results.runtime >= targetHours ? 'pass' : 'fail') : 'info'}
-              label={
-                targetHours
-                  ? results.runtime >= targetHours
-                    ? `Meets ${targetHours} h target`
-                    : `Below ${targetHours} h target`
-                  : 'Runtime estimate — no target set'
-              }
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
+              {/* Quick Add Presets */}
+              <div className="grid grid-cols-3 gap-2">
+                {LOAD_PRESETS.slice(0, 6).map((preset, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleLoadPresetSelect(preset)}
+                    className="p-2 text-xs rounded-lg bg-white/5 border border-white/10 hover:border-elec-yellow/60 hover:bg-white/[0.06] transition-colors text-white truncate min-h-11 touch-manipulation"
+                  >
+                    {preset.name}
+                  </button>
+                ))}
+              </div>
 
-          {/* Hero Value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">
-              {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
-            </p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {mode === 'runtime'
-                ? formatRuntime(results.runtime)
-                : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
-            </p>
-            <p className="text-sm text-white mt-2">
-              {selectedChemistry.name} · {getTotalLoadWatts()}W total load
-            </p>
-          </div>
+              {/* Manual Load Entry */}
+              <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3">
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Load Name"
+                    type="text"
+                    value={newLoadName}
+                    onChange={setNewLoadName}
+                    placeholder="e.g., LED Lights"
+                  />
+                  <CalculatorInput
+                    label="Power"
+                    unit="W"
+                    type="text"
+                    inputMode="decimal"
+                    value={newLoadWatts}
+                    onChange={setNewLoadWatts}
+                    placeholder="50"
+                  />
+                </CalculatorInputGrid>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <CalculatorSelect
+                      label="Priority"
+                      value={newLoadPriority}
+                      onChange={(v) => setNewLoadPriority(v as typeof newLoadPriority)}
+                      options={priorityOptions}
+                    />
+                  </div>
+                  <button
+                    onClick={addLoad}
+                    disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
+                    className="self-end h-12 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white hover:bg-white/[0.10] transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                  >
+                    <Plus className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
 
-          {/* Result Values */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Usable Energy"
-              value={results.usableEnergyWh.toFixed(0)}
-              unit="Wh"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="DC Current"
-              value={results.dcCurrent.toFixed(1)}
-              unit="A"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="C-Rate"
-              value={results.cRate.toFixed(2)}
-              unit="C"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Max C-Rate"
-              value={selectedChemistry.maxCRate.toFixed(1)}
-              unit="C"
-              category={CAT}
-              size="sm"
-            />
-            {/* Surge and inverter sizing were computed but never shown, so preset inrush data
-                had nowhere to land. */}
-            <ResultValue
-              label="Surge (inrush) Load"
-              value={results.surgePower.toFixed(0)}
-              unit="W"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Min Inverter"
-              value={results.recommendedVA.toFixed(0)}
-              unit="VA"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
+              {/* Load List */}
+              {loads.length > 0 && (
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {loads.map((load, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <span className="font-medium text-white block truncate">{load.name}</span>
+                        <span className="text-white text-xs">
+                          {load.watts}W · {load.priority}
+                          {load.dutyCycle < 1 && ` · ${Math.round(load.dutyCycle * 100)}% duty`}
+                          {load.surgeMultiplier > 1 && ` · surge ×${load.surgeMultiplier}`}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => removeLoad(index)}
+                        className="ml-2 p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors min-h-11 min-w-[44px] flex items-center justify-center touch-manipulation"
+                      >
+                        <X className="h-3.5 w-3.5 text-red-400" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          {/* C-Rate Warning */}
-          {results.cRate > selectedChemistry.maxCRate * 0.8 && (
-            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-              <p className="text-sm text-white">
-                C-rate ({results.cRate.toFixed(2)}C) is high for {selectedChemistry.name}. Consider
-                parallel batteries to reduce discharge rate and extend battery life.
+            {/* Target runtime — required for sizing, optional in runtime mode.
+            BS 7671 sets no backup duration, so the target has to come from the application. */}
+            <div className="space-y-2">
+              <CalculatorInput
+                label={mode === 'sizing' ? 'Required Runtime' : 'Target Runtime (optional)'}
+                unit="hours"
+                type="text"
+                inputMode="decimal"
+                value={requiredRuntime}
+                onChange={setRequiredRuntime}
+                placeholder={mode === 'sizing' ? '8' : 'e.g. 0.5'}
+              />
+              <p className="text-xs text-white">
+                BS 7671 does not specify a backup duration. Take it from the application — emergency
+                lighting from BS 5266-1 / BS EN 1838, UPS duration from the operational requirement.
               </p>
             </div>
-          )}
 
-          <CalculatorDivider category={CAT} />
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!capacityAh || loads.length === 0}
+              calculateLabel={mode === 'runtime' ? 'Calculate Runtime' : 'Calculate Size'}
+              showReset={!!results}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {results && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={
+                      targetHours ? (results.runtime >= targetHours ? 'pass' : 'fail') : 'info'
+                    }
+                    label={
+                      targetHours
+                        ? results.runtime >= targetHours
+                          ? `Meets ${targetHours} h target`
+                          : `Below ${targetHours} h target`
+                        : 'Runtime estimate — no target set'
+                    }
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Input values',
-                formula: `Battery: ${nominalVoltage}V × ${capacityAh}Ah | Chemistry: ${selectedChemistry.name} | Load: ${results.averagePower.toFixed(0)}W`,
-              },
-              {
-                label: 'Usable energy',
-                formula: `V × Ah × DoD × health% × tempFactor = ${nominalVoltage} × ${capacityAh} × ${selectedChemistry.defaultDoD} × ${(parseFloat(batteryHealth) / 100).toFixed(2)}`,
-                value: `${results.usableEnergyWh.toFixed(0)} Wh`,
-                description: `Depth of discharge: ${(selectedChemistry.defaultDoD * 100).toFixed(0)}% for ${selectedChemistry.name}`,
-              },
-              {
-                label: 'DC current draw',
-                formula: `(totalWatts ÷ inverterEff) ÷ voltage = (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency}) ÷ ${nominalVoltage}`,
-                value: `${results.dcCurrent.toFixed(1)} A`,
-                description: `${selectedInverter.name} efficiency: ${(selectedInverter.efficiency * 100).toFixed(0)}%`,
-              },
-              {
-                label: 'C-rate',
-                formula: `dcCurrent ÷ capacityAh = ${results.dcCurrent.toFixed(1)} ÷ ${capacityAh}`,
-                value: `${results.cRate.toFixed(2)} C`,
-                description: `Max recommended: ${selectedChemistry.maxCRate}C for ${selectedChemistry.name}`,
-              },
-              {
-                label: 'Runtime (Peukert-adjusted)',
-                formula: `usableEnergy ÷ (totalLoad ÷ inverterEff) = ${results.usableEnergyWh.toFixed(0)} ÷ (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency})`,
-                value: formatRuntime(results.runtime),
-                description: `Peukert exponent: ${selectedChemistry.peukertExponent} — accounts for capacity reduction at higher discharge rates. Gain at light loads is capped at the manufacturer's longest published rate.`,
-              },
-              {
-                label: 'Assessment',
-                value: targetHours
-                  ? results.runtime >= targetHours
-                    ? `MEETS the ${targetHours} h target you entered`
-                    : `BELOW the ${targetHours} h target — larger bank or reduced loads needed`
-                  : 'No target duration entered — BS 7671 sets none; take it from the application',
-              },
-            ]}
-          />
+                {/* Hero Value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">
+                    {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
+                  </p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {mode === 'runtime'
+                      ? formatRuntime(results.runtime)
+                      : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {selectedChemistry.name} · {getTotalLoadWatts()}W total load
+                  </p>
+                </div>
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
+                {/* Result Values */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Usable Energy"
+                    value={results.usableEnergyWh.toFixed(0)}
+                    unit="Wh"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="DC Current"
+                    value={results.dcCurrent.toFixed(1)}
+                    unit="A"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="C-Rate"
+                    value={results.cRate.toFixed(2)}
+                    unit="C"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Max C-Rate"
+                    value={selectedChemistry.maxCRate.toFixed(1)}
+                    unit="C"
+                    category={CAT}
+                    size="sm"
+                  />
+                  {/* Surge and inverter sizing were computed but never shown, so preset inrush data
+                  had nowhere to land. */}
+                  <ResultValue
+                    label="Surge (inrush) Load"
+                    value={results.surgePower.toFixed(0)}
+                    unit="W"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Min Inverter"
+                    value={results.recommendedVA.toFixed(0)}
+                    unit="VA"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* C-Rate Warning */}
+                {results.cRate > selectedChemistry.maxCRate * 0.8 && (
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                    <p className="text-sm text-white">
+                      C-rate ({results.cRate.toFixed(2)}C) is high for {selectedChemistry.name}.
+                      Consider parallel batteries to reduce discharge rate and extend battery life.
+                    </p>
+                  </div>
                 )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Usable Energy</p>
-                  <p className="text-sm text-white">
-                    {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth of
-                    discharge ({(selectedChemistry.defaultDoD * 100).toFixed(0)}% DoD for{' '}
-                    {selectedChemistry.name}), battery health, and temperature effects.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">C-Rate</p>
-                  <p className="text-sm text-white">
-                    Discharge rate of {results.cRate.toFixed(2)}C means the battery would fully
-                    discharge in {(1 / results.cRate).toFixed(1)} hours at this load. Lower C-rates
-                    extend battery life.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Inverter Efficiency</p>
-                  <p className="text-sm text-white">
-                    {selectedInverter.name} at {(selectedInverter.efficiency * 100).toFixed(0)}%
-                    efficiency — {((1 - selectedInverter.efficiency) * 100).toFixed(0)}% energy lost
-                    as heat.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    // Chapter 57 (Stationary secondary batteries) was introduced by
-                    // BS 7671:2018+A4:2026 and was missing from this panel entirely.
-                    {
-                      reg: 'Chapter 57 — scope (570.1)',
-                      desc: 'Requirements for stationary secondary batteries supplying an installation. Does not apply to batteries wholly inside pluggable UPS, central safety power supplies to BS EN 50171, fire alarm to BS 5839 or emergency lighting to BS 5266.',
-                    },
-                    {
-                      reg: 'Regulation 570.6.1.1.1',
-                      desc: 'Battery installations shall conform to the relevant parts of the BS EN IEC 62485 series.',
-                    },
-                    {
-                      // FIX: this panel previously said ventilation was a lead-acid measure.
-                      // 570.6.3 applies to the location or enclosure irrespective of chemistry.
-                      reg: 'Regulation 570.6.3 / 570.6.7.202 — ventilation',
-                      desc: 'The location or enclosure of ALL stationary secondary batteries shall be adequately ventilated, whatever the chemistry, taking account of the manufacturer’s instructions and safety data sheets. Ventilation shall not itself create a hazard and may need to discharge outdoors.',
-                    },
-                    {
-                      // FIX: Type B RCD requirement was absent.
-                      reg: 'Regulation 570.6.2.2 — RCD type',
-                      desc: 'Where an RCD protects the AC supply circuit it shall be Type B to BS EN 62423 or BS EN 60947-2, unless the PCE gives at least simple separation between AC and DC, separation is provided by separate transformer windings, or the PCE manufacturer states Type B is not required.',
-                    },
-                    {
-                      reg: 'Regulation 570.6.5 — isolation',
-                      desc: 'Every power circuit connecting to the battery shall have means of isolation conforming to Section 462 — likely needed at both ends.',
-                    },
-                    {
-                      // FIX: replaces an uncited "DC OCPD within 0.5 m of the terminals" claim
-                      // that appears nowhere in BS 7671.
-                      reg: 'Regulation 570.6.7.201 — DC fuses',
-                      desc: `DC current is ${results.dcCurrent.toFixed(1)} A; suggested device ${results.recommendedFuse} A. DC battery fuses shall be accessible only by key or tool, or removable only after opening a means of isolation suitable for on-load DC isolation.`,
-                    },
-                    {
-                      reg: 'Regulation 570.6.8.201/.202/.203 — notices',
-                      desc: 'Warning notices at the origin, at remote metering positions and at each board fed from the battery; at every access point to a battery room or enclosure; and on all PCE ("isolate both AC and DC sides before servicing").',
-                    },
-                    {
-                      // FIX: 560.7 is CIRCUITS OF SAFETY SERVICES. The battery/UPS source
-                      // requirements sit in 560.6, and UPS specifically at 560.6.12.
-                      reg: 'Regulation 560.6.12 — UPS',
-                      desc: 'Where the system is a safety service: uninterruptible power systems shall conform to BS EN 50171 in addition to the BS EN IEC 62040 series.',
-                    },
-                    {
-                      reg: 'Regulation 560.7',
-                      desc: 'Circuits of safety services — must be independent of other circuits and routed clear of fire-risk locations.',
-                    },
-                    {
-                      reg: 'Regulation 313.2',
-                      desc: 'Supplies for safety services and standby systems.',
-                    },
-                    {
-                      // FIX: duration is set by BS 5266-1 and the application, not by BS 7671.
-                      reg: 'Regulation 560.9',
-                      desc: 'Emergency lighting shall comply with BS 5266-1, BS EN 1838 and BS EN 50172. BS 7671 sets no backup duration — the required duration comes from those standards and the application.',
-                    },
-                    {
-                      reg: 'Cable derating',
-                      desc: 'The DC cable ratings used here carry no correction factors. Apply the Appendix 4 factors for ambient temperature (Ca), grouping (Cg) and thermal insulation (Ci) for the actual reference method before accepting a size.',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
+                <CalculatorDivider category={CAT} />
 
-      {/* Formula Reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Battery Backup Runtime"
-        formula="Runtime = UsableEnergy ÷ (TotalLoad ÷ InverterEfficiency)"
-        variables={[
-          {
-            symbol: 'UsableEnergy',
-            description:
-              'V × Ah × DoD × health × temperature factor — DC-side usable watt-hours (Peukert-adjusted)',
-          },
-          {
-            symbol: 'TotalLoad',
-            description: 'Sum of all AC loads in watts (each × its duty cycle)',
-          },
-          {
-            symbol: 'InverterEfficiency',
-            description: 'Converts the AC load to the DC power actually drawn from the bank',
-          },
-          {
-            symbol: 'C-rate',
-            description: 'Discharge rate relative to capacity (A ÷ Ah)',
-          },
-        ]}
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Input values',
+                      formula: `Battery: ${nominalVoltage}V × ${capacityAh}Ah | Chemistry: ${selectedChemistry.name} | Load: ${results.averagePower.toFixed(0)}W`,
+                    },
+                    {
+                      label: 'Usable energy',
+                      formula: `V × Ah × DoD × health% × tempFactor = ${nominalVoltage} × ${capacityAh} × ${selectedChemistry.defaultDoD} × ${(parseFloat(batteryHealth) / 100).toFixed(2)}`,
+                      value: `${results.usableEnergyWh.toFixed(0)} Wh`,
+                      description: `Depth of discharge: ${(selectedChemistry.defaultDoD * 100).toFixed(0)}% for ${selectedChemistry.name}`,
+                    },
+                    {
+                      label: 'DC current draw',
+                      formula: `(totalWatts ÷ inverterEff) ÷ voltage = (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency}) ÷ ${nominalVoltage}`,
+                      value: `${results.dcCurrent.toFixed(1)} A`,
+                      description: `${selectedInverter.name} efficiency: ${(selectedInverter.efficiency * 100).toFixed(0)}%`,
+                    },
+                    {
+                      label: 'C-rate',
+                      formula: `dcCurrent ÷ capacityAh = ${results.dcCurrent.toFixed(1)} ÷ ${capacityAh}`,
+                      value: `${results.cRate.toFixed(2)} C`,
+                      description: `Max recommended: ${selectedChemistry.maxCRate}C for ${selectedChemistry.name}`,
+                    },
+                    {
+                      label: 'Runtime (Peukert-adjusted)',
+                      formula: `usableEnergy ÷ (totalLoad ÷ inverterEff) = ${results.usableEnergyWh.toFixed(0)} ÷ (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency})`,
+                      value: formatRuntime(results.runtime),
+                      description: `Peukert exponent: ${selectedChemistry.peukertExponent} — accounts for capacity reduction at higher discharge rates. Gain at light loads is capped at the manufacturer's longest published rate.`,
+                    },
+                    {
+                      label: 'Assessment',
+                      value: targetHours
+                        ? results.runtime >= targetHours
+                          ? `MEETS the ${targetHours} h target you entered`
+                          : `BELOW the ${targetHours} h target — larger bank or reduced loads needed`
+                        : 'No target duration entered — BS 7671 sets none; take it from the application',
+                    },
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Usable Energy</p>
+                        <p className="text-sm text-white">
+                          {results.usableEnergyWh.toFixed(0)}Wh available after accounting for depth
+                          of discharge ({(selectedChemistry.defaultDoD * 100).toFixed(0)}% DoD for{' '}
+                          {selectedChemistry.name}), battery health, and temperature effects.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">C-Rate</p>
+                        <p className="text-sm text-white">
+                          Discharge rate of {results.cRate.toFixed(2)}C means the battery would
+                          fully discharge in {(1 / results.cRate).toFixed(1)} hours at this load.
+                          Lower C-rates extend battery life.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Inverter Efficiency</p>
+                        <p className="text-sm text-white">
+                          {selectedInverter.name} at{' '}
+                          {(selectedInverter.efficiency * 100).toFixed(0)}% efficiency —{' '}
+                          {((1 - selectedInverter.efficiency) * 100).toFixed(0)}% energy lost as
+                          heat.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── BS 7671 Reference ── */}
+                <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>BS 7671 Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showRegs && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          // Chapter 57 (Stationary secondary batteries) was introduced by
+                          // BS 7671:2018+A4:2026 and was missing from this panel entirely.
+                          {
+                            reg: 'Chapter 57 — scope (570.1)',
+                            desc: 'Requirements for stationary secondary batteries supplying an installation. Does not apply to batteries wholly inside pluggable UPS, central safety power supplies to BS EN 50171, fire alarm to BS 5839 or emergency lighting to BS 5266.',
+                          },
+                          {
+                            reg: 'Regulation 570.6.1.1.1',
+                            desc: 'Battery installations shall conform to the relevant parts of the BS EN IEC 62485 series.',
+                          },
+                          {
+                            // FIX: this panel previously said ventilation was a lead-acid measure.
+                            // 570.6.3 applies to the location or enclosure irrespective of chemistry.
+                            reg: 'Regulation 570.6.3 / 570.6.7.202 — ventilation',
+                            desc: 'The location or enclosure of ALL stationary secondary batteries shall be adequately ventilated, whatever the chemistry, taking account of the manufacturer’s instructions and safety data sheets. Ventilation shall not itself create a hazard and may need to discharge outdoors.',
+                          },
+                          {
+                            // FIX: Type B RCD requirement was absent.
+                            reg: 'Regulation 570.6.2.2 — RCD type',
+                            desc: 'Where an RCD protects the AC supply circuit it shall be Type B to BS EN 62423 or BS EN 60947-2, unless the PCE gives at least simple separation between AC and DC, separation is provided by separate transformer windings, or the PCE manufacturer states Type B is not required.',
+                          },
+                          {
+                            reg: 'Regulation 570.6.5 — isolation',
+                            desc: 'Every power circuit connecting to the battery shall have means of isolation conforming to Section 462 — likely needed at both ends.',
+                          },
+                          {
+                            // FIX: replaces an uncited "DC OCPD within 0.5 m of the terminals" claim
+                            // that appears nowhere in BS 7671.
+                            reg: 'Regulation 570.6.7.201 — DC fuses',
+                            desc: `DC current is ${results.dcCurrent.toFixed(1)} A; suggested device ${results.recommendedFuse} A. DC battery fuses shall be accessible only by key or tool, or removable only after opening a means of isolation suitable for on-load DC isolation.`,
+                          },
+                          {
+                            reg: 'Regulation 570.6.8.201/.202/.203 — notices',
+                            desc: 'Warning notices at the origin, at remote metering positions and at each board fed from the battery; at every access point to a battery room or enclosure; and on all PCE ("isolate both AC and DC sides before servicing").',
+                          },
+                          {
+                            // FIX: 560.7 is CIRCUITS OF SAFETY SERVICES. The battery/UPS source
+                            // requirements sit in 560.6, and UPS specifically at 560.6.12.
+                            reg: 'Regulation 560.6.12 — UPS',
+                            desc: 'Where the system is a safety service: uninterruptible power systems shall conform to BS EN 50171 in addition to the BS EN IEC 62040 series.',
+                          },
+                          {
+                            reg: 'Regulation 560.7',
+                            desc: 'Circuits of safety services — must be independent of other circuits and routed clear of fire-risk locations.',
+                          },
+                          {
+                            reg: 'Regulation 313.2',
+                            desc: 'Supplies for safety services and standby systems.',
+                          },
+                          {
+                            // FIX: duration is set by BS 5266-1 and the application, not by BS 7671.
+                            reg: 'Regulation 560.9',
+                            desc: 'Emergency lighting shall comply with BS 5266-1, BS EN 1838 and BS EN 50172. BS 7671 sets no backup duration — the required duration comes from those standards and the application.',
+                          },
+                          {
+                            reg: 'Cable derating',
+                            desc: 'The DC cable ratings used here carry no correction factors. Apply the Appendix 4 factors for ambient temperature (Ca), grouping (Cg) and thermal insulation (Ci) for the actual reference method before accepting a size.',
+                          },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula Reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Battery Backup Runtime"
+              formula="Runtime = UsableEnergy ÷ (TotalLoad ÷ InverterEfficiency)"
+              variables={[
+                {
+                  symbol: 'UsableEnergy',
+                  description:
+                    'V × Ah × DoD × health × temperature factor — DC-side usable watt-hours (Peukert-adjusted)',
+                },
+                {
+                  symbol: 'TotalLoad',
+                  description: 'Sum of all AC loads in watts (each × its duty cycle)',
+                },
+                {
+                  symbol: 'InverterEfficiency',
+                  description: 'Converts the AC load to the DC power actually drawn from the bank',
+                },
+                {
+                  symbol: 'C-rate',
+                  description: 'Discharge rate relative to capacity (A ÷ Ah)',
+                },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={batteryBackupContent} category={CAT} />}
       />
-      <CalculatorEditorial content={batteryBackupContent} category={CAT} />
     </CalculatorCard>
   );
 };

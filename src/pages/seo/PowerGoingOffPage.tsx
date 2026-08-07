@@ -570,7 +570,7 @@ export default function PowerGoingOffPage() {
   return (
     <GuideTemplate
       title="Power Going Off Randomly | Electrical Causes & Fixes"
-      description="Why does your power keep going off? Expert guide covering loose main fuse connections, MCB and RCD tripping, overloaded circuits, DNO supply faults…"
+      description="Why does your power keep going off? Expert guide covering loose main fuse connections, MCB and RCD tripping, overloaded circuits, DNO supply faults."
       datePublished="2025-03-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

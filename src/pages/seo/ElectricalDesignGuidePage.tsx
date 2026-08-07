@@ -647,7 +647,7 @@ export default function ElectricalDesignGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Design Guide | BS 7671 Design Process"
-      description="Complete guide to electrical design under BS 7671. Assessment of general characteristics, design current, cable selection with correction factors…"
+      description="Complete guide to electrical design under BS 7671. Assessment of general characteristics, design current, cable selection with correction factors."
       datePublished="2025-10-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -220,7 +220,7 @@ export default function LearningReview() {
               <Brain className="h-6 w-6 text-elec-yellow" />
               <div>
                 <CardTitle className="text-2xl">AI Learning Review Dashboard</CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white mt-1">
                   Review and approve knowledge base improvements from user feedback
                 </p>
               </div>
@@ -232,24 +232,24 @@ export default function LearningReview() {
                 <div className="text-2xl font-bold text-elec-yellow">
                   {suggestions.filter((s) => s.status === 'pending').length}
                 </div>
-                <div className="text-sm text-muted-foreground">Pending Review</div>
+                <div className="text-sm text-white">Pending Review</div>
               </Card>
               <Card className="p-3 sm:p-4">
                 <div className="text-2xl font-bold text-green-500">
                   {suggestions.filter((s) => s.status === 'implemented').length}
                 </div>
-                <div className="text-sm text-muted-foreground">Implemented</div>
+                <div className="text-sm text-white">Implemented</div>
               </Card>
               <Card className="p-3 sm:p-4">
                 <div className="text-2xl font-bold text-red-500">
                   {suggestions.filter((s) => s.status === 'rejected').length}
                 </div>
-                <div className="text-sm text-muted-foreground">Rejected</div>
+                <div className="text-sm text-white">Rejected</div>
               </Card>
             </div>
 
             {suggestions.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
+              <div className="text-center py-12 text-white">
                 No learning suggestions yet. Feedback analysis runs weekly.
               </div>
             ) : (
@@ -287,7 +287,7 @@ export default function LearningReview() {
                               <p className="font-semibold">
                                 {String(suggestion.suggested_knowledge_update?.topic ?? '')}
                               </p>
-                              <p className="text-muted-foreground line-clamp-2">
+                              <p className="text-white line-clamp-2">
                                 {String(suggestion.suggested_knowledge_update?.content ?? '')}
                               </p>
                             </div>

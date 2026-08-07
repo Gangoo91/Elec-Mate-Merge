@@ -564,7 +564,7 @@ export default function KitchenRewireCostPage() {
   return (
     <GuideTemplate
       title="Kitchen Rewire Cost UK 2026 | Electrical Pricing Guide"
-      description="How much does a kitchen rewire cost in the UK? Typical prices from £800 to £2,500. Cooker circuits, ring mains, under-cabinet lighting, island power…"
+      description="How much does a kitchen rewire cost in the UK? Typical prices from £800 to £2,500. Cooker circuits, ring mains, under-cabinet lighting, island power."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

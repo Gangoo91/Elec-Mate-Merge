@@ -127,7 +127,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — that means symbols per IEC 60617 (the modern replacement for BS EN 60617), notices per BS EN 60073 / 60446 etc. It's about consistency so anyone reading the drawing or label knows what they're looking at.",
+      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — that means symbols per IEC 60617 (the modern replacement for IEC 60617), notices per BS EN 60073 / 60446 etc. It's about consistency so anyone reading the drawing or label knows what they're looking at.",
   },
   {
     id: 4,
@@ -357,7 +357,7 @@ export default function Sub1() {
               <>
                 A4:2026 added this clause to nail down what 'a proper drawing' actually means.
                 Symbols on diagrams need to follow the IEC 60617 graphical symbol set (the modern
-                continuation of the old BS EN 60617). Notices need to follow BS EN 60073 (colours)
+                continuation of the old IEC 60617). Notices need to follow BS EN 60073 (colours)
                 and BS EN 60446 (markings). It's the regs catching up with the fact that home-made
                 diagrams with made-up symbols don't help anyone read the install ten years later.
               </>

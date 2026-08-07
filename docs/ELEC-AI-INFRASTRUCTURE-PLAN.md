@@ -26,8 +26,8 @@ OR (co-located on VPS):                    └───────────�
 │   - stdio transport        │              │   Supabase (existing)        │
 │   - Multi-agent routing    │              │   jtwygbeceundfgnkirof       │
 │   - One agent per user     │              │                              │
-│   Spawns MCP as subprocess │              │   - 277 tables               │
-└───────────────────────────┘              │   - 406 edge functions       │
+│   Spawns MCP as subprocess │              │   - 663 tables               │
+└───────────────────────────┘              │   - 476 edge functions       │
                                            │   - RLS per user             │
                                            │   - RAG knowledge bases      │
                                            └──────────────────────────────┘
@@ -66,7 +66,7 @@ OR (co-located on VPS):                    └───────────�
 - [x] Stripe product + prices (Business AI £29.99/month, £299.99/year)
 - [x] Webhook + check-subscription updated with `business_ai_enabled` flag
 - [x] stripePrices.ts with Business AI tier in app
-- [x] 406 edge functions in Supabase (reusable as MCP tool backends)
+- [x] 476 edge functions in Supabase (reusable as MCP tool backends)
 - [x] **MCP Server** — 74 tools, JWT auth, rate limiting, audit logging, CORS, security headers, dual transport, graceful shutdown
 
 ### MISSING (to build)

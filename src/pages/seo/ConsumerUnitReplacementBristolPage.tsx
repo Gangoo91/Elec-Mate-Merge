@@ -456,7 +456,7 @@ export default function ConsumerUnitReplacementBristolPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Bristol | Fuse Board Upgrade Cost"
-      description="How much does a consumer unit replacement cost in Bristol in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect…"
+      description="How much does a consumer unit replacement cost in Bristol in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

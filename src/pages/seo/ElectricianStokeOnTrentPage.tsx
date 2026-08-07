@@ -472,7 +472,7 @@ export default function ElectricianStokeOnTrentPage() {
     <GuideTemplate
       localArea="Stoke On Trent"
       title="Electrician in Stoke-on-Trent | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Stoke-on-Trent. Realistic 2026 pricing, NICEIC/NAPIT verification, NGED connections, Part P compliance…"
+      description="Find qualified, registered electricians in Stoke-on-Trent. Realistic 2026 pricing, NICEIC/NAPIT verification, NGED connections, Part P compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

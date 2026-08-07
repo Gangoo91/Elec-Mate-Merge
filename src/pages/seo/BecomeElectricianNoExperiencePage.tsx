@@ -625,7 +625,7 @@ export default function BecomeElectricianNoExperiencePage() {
   return (
     <GuideTemplate
       title="How to Become an Electrician with No Experience | UK Career"
-      description="Complete guide to becoming an electrician in the UK with no prior experience. Adult apprenticeships, domestic installer courses, fast-track options…"
+      description="Complete guide to becoming an electrician in the UK with no prior experience. Adult apprenticeships, domestic installer courses, fast-track options."
       datePublished="2024-08-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

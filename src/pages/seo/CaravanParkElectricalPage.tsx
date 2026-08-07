@@ -38,8 +38,8 @@ const tocItems = [
 const keyTakeaways = [
   'BS 7671:2018+A4:2026 Section 708 is the specific section governing electrical installations in caravan parks and similar locations. Every pitch supply must comply with its requirements.',
   'Each caravan pitch must be supplied through an individual supply equipment assembly incorporating overcurrent protection, 30 mA RCD protection, and a socket outlet to IEC 60309 (CEE form).',
-  'RCDs must disconnect within 40 ms at 5× the rated residual operating current. This is a life-safety requirement in the outdoor, damp environment of caravan parks.',
-  'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 20 m (Regulation 708.55.1.2).',
+  'RCD effectiveness is verified with a single alternating current test at the rated residual operating current (IΔn): a general non-delay RCD must disconnect within 300 ms, and a Type S within 130–500 ms.',
+  'Pitch supply equipment must be located adjacent to the pitch and not more than 20 m from the connection facility on the caravan or tent (Regulation 708.55.1.2).',
   'TT earthing is common at caravan parks. The product of the earth electrode resistance and RCD operating current must not exceed 50 V.',
   'The recommended periodic inspection interval for caravan park installations reflects the harsh outdoor environment and seasonal heavy use. Annual inspection is industry practice for sites in continuous operation.',
 ];
@@ -53,22 +53,22 @@ const faqs = [
   {
     question: 'What type of socket outlets must be used at caravan pitches?',
     answer:
-      'Regulation 708.553.1 requires that socket outlets at caravan pitches comply with IEC 60309 (BS EN 60309). These are the blue CEE form industrial connectors rated at 16 A, single-phase, 230 V. They are weatherproof (IP44 minimum) and designed for outdoor use. Standard domestic 13 A BS 1363 socket outlets must not be used as the primary hookup socket at caravan pitches.',
+      'Regulation 708.553.1.8 requires that each socket-outlet and its enclosure forming part of the caravan pitch electrical supply equipment complies with BS EN IEC 60309-2 and achieves a degree of protection of at least IP44 to BS EN 60529. Regulation 708.55.1.1 additionally requires the socket-outlet or connector to be interlocked so the socket contacts cannot be live when accessible. Regulation 708.55.1.5 sets the current rating at not less than 16 A — in practice the blue CEE form connector, single-phase 230 V. Standard domestic 13 A BS 1363 socket outlets must not be used as the pitch hookup socket.',
   },
   {
     question: 'What RCD protection is required for caravan park pitches?',
     answer:
-      'Each individual pitch supply must incorporate RCD protection with a rated residual operating current (IΔn) not exceeding 30 mA. Type A RCDs are required where electronic equipment in caravans may produce pulsating DC fault currents — which in practice means all new installations. At TT systems, the product of earth electrode resistance and RCD operating current must not exceed 50 V.',
+      'Each individual pitch supply must incorporate RCD protection with a rated residual operating current (IΔn) not exceeding 30 mA. Type A RCDs are required where electronic equipment in caravans may produce pulsating DC fault currents — which in practice means all new installations. Regulation 531.3.3 permits a Type AC RCD only to serve fixed equipment where it is known that the load current contains no DC components, which a pitch socket-outlet is not. On TT systems, Regulation 411.5.3 requires the product of the earth electrode resistance and the RCD rated residual operating current not to exceed 50 V.',
   },
   {
     question: 'How close must the pitch supply point be to the caravan?',
     answer:
-      'Regulation 708.55.1.2 states that caravan pitch electrical supply equipment shall be located not more than 20 m from the connection facility on the leisure accommodation vehicle or tent when on its pitch. This limits voltage drop and prevents excessively long cables creating trip hazards across the site. Pitch layouts must be designed with this 20 m limit in mind.',
+      'Regulation 708.55.1.2 states that caravan pitch electrical supply equipment shall be located adjacent to the pitch and not more than 20 m from the connection facility on the leisure accommodation vehicle or tent when on its pitch. This limits voltage drop and prevents excessively long cables creating trip hazards across the site. Pitch layouts must be designed with this 20 m limit in mind.',
   },
   {
     question: 'What earthing system is used in caravan parks?',
     answer:
-      'Caravan parks commonly use TT earthing (where the installation earth is connected to a local earth electrode) because a reliable TN-C-S protective earth is often unavailable at individual rural pitches. Earth electrode resistance must satisfy Section 708.411, and the RCD operating current × earth electrode resistance must not exceed 50 V. Critically, Regulation 708.553.1.14 contains a hard prohibition: socket-outlet protective conductors shall not be connected to a PME (TN-C-S) earthing facility. Where the site supply uses PME, an alternative earthing arrangement must be provided for the pitch socket-outlets — typically a separate TT earth electrode.',
+      'Caravan parks commonly use TT earthing (where the installation earth is connected to a local earth electrode) because a reliable TN-C-S protective earth is often unavailable at individual rural pitches. Where an RCD is used for fault protection on a TT system, Regulation 411.5.3 requires that RA × IΔn does not exceed 50 V, so the earth electrode resistance must be measured and recorded. Critically, Regulation 708.553.1.14 contains a hard prohibition: socket-outlet protective conductors shall not be connected to a PME (TN-C-S) earthing facility. Where the site supply uses PME, an alternative earthing arrangement must be provided for the pitch socket-outlets — typically a separate TT earth electrode.',
   },
   {
     question: 'How often should caravan park electrical installations be inspected?',
@@ -140,8 +140,12 @@ const sections = [
                 <strong>Scope</strong> — Section 708 covers electrical installations for supplying
                 electricity to caravans, motorhomes, and other leisure vehicles at caravan parks,
                 camping parks, and similar locations. It applies to the fixed installation from the
-                origin of supply to (and including) the pitch supply equipment. The internal wiring
-                of individual caravans is covered by a separate standard (BS EN 1648).
+                origin of supply to (and including) the pitch supply equipment. The electrical
+                installation inside an individual caravan or motor caravan is covered by a different
+                section of the same standard — Section 721 — and BS 7671 carries an explicit note
+                telling you not to mix the two. (BS EN 1648-1 and BS EN 1648-2 cover only the 12 V
+                DC extra-low-voltage installations in caravans and motor caravans, which Section 721
+                excludes.)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -184,8 +188,11 @@ const sections = [
       <>
         <p>
           Each caravan pitch must be supplied through a dedicated individual supply equipment
-          assembly. Regulation 708.553.1 sets out the minimum requirements for these assemblies,
-          typically housed in a weatherproof enclosure mounted on a post at each pitch.
+          assembly. Regulation 708.553.1.8 sets the requirement for the socket-outlet and its
+          enclosure, Regulation 708.533 for individual overcurrent protection, and Regulation
+          708.55.1.7 requires the switchgear and controlgear assembly itself to comply with BS EN
+          IEC 61439-7. These are typically housed in a weatherproof enclosure mounted on a post at
+          each pitch.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -239,10 +246,10 @@ const sections = [
     content: (
       <>
         <p>
-          The IEC 60309 standard (implemented in the UK as BS EN 60309) specifies industrial plugs,
-          socket outlets, and couplers for industrial and outdoor use. For caravan park hookups, the
-          blue 16 A, single-phase, 230 V, 50 Hz variant (clock position at 6 o'clock) is the
-          universal standard across the UK and Europe.
+          The IEC 60309 standard (implemented in the UK as BS EN IEC 60309) specifies industrial
+          plugs, socket outlets, and couplers for industrial and outdoor use. For caravan park
+          hookups, the blue 16 A, single-phase, 230 V, 50 Hz variant (clock position at 6 o'clock)
+          is the universal standard across the UK and Europe.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -302,8 +309,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA maximum IΔn</strong> — Regulation 411.3.3 (applied via Section 708)
-                requires each pitch supply socket outlet be protected by an RCD with a rated
+                <strong>30 mA maximum IΔn</strong> — Section 708 applies additional protection by
+                RCD at Regulation 708.415.1, and the general requirement at Regulation 411.3.3
+                requires additional protection by a 30 mA RCD for socket-outlets rated up to 32 A.
+                Each pitch supply socket outlet must therefore be protected by an RCD with a rated
                 residual operating current not exceeding 30 mA. This threshold provides protection
                 against fatal electric shock: the let-go current for most adults is around 10–15 mA,
                 and a 30 mA RCD limits the duration of a shock to prevent cardiac fibrillation.
@@ -314,8 +323,10 @@ const sections = [
               <span>
                 <strong>Type A RCDs</strong> — modern caravans and motorhomes contain electronic
                 equipment (battery chargers, inverter-chargers) that can produce pulsating DC
-                residual currents. Type AC RCDs do not detect pulsating DC currents. Type A RCDs are
-                required where such equipment may be connected — in practice, all new pitch supply
+                residual currents. Type AC RCDs do not detect pulsating DC currents, and Regulation
+                531.3.3 permits a Type AC RCD only to serve fixed equipment where it is known that
+                the load current contains no DC components. A pitch socket-outlet does not meet that
+                condition, so Type A is the practical minimum for all new pitch supply
                 installations.
               </span>
             </li>
@@ -323,18 +334,22 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT systems and earth electrode resistance</strong> — where TT earthing is
-                used, the product of the earth electrode resistance (RA) and the RCD rated operating
-                current (IΔn) must not exceed 50 V: RA × IΔn ≤ 50 V. With a 30 mA RCD this means the
-                earth electrode resistance must not exceed 1667 Ω, though in practice a much lower
-                resistance (under 200 Ω) is recommended.
+                used, Regulation 411.5.3 requires that the product of the earth electrode resistance
+                (RA) and the RCD rated residual operating current (IΔn) must not exceed 50 V: RA ×
+                IΔn ≤ 50 V. With a 30 mA RCD this means the earth electrode resistance must not
+                exceed 1667 Ω, though in practice a much lower resistance (under 200 Ω) is
+                recommended.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          RCDs must be tested at every periodic inspection using a calibrated RCD tester. Test
-          records should include the operating time at IΔn (must not exceed 300 ms) and at 5× IΔn
-          (must not exceed 40 ms). Results are recorded in the{' '}
+          RCDs must be tested at every periodic inspection using test equipment to BS EN 61557-6. BS
+          7671:2018+A4:2026 deleted the old multi-point test regime: effectiveness is now deemed
+          verified by a single alternating current test at the rated residual operating current
+          (IΔn), regardless of RCD Type. A general non-delay RCD must disconnect within 300 ms
+          maximum; a delay &lsquo;S&rsquo; type between 130 ms minimum and 500 ms maximum. There is
+          no ½× or 5× IΔn requirement in BS 7671. Results are recorded in the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">
             EICR schedule of test results
           </SEOInternalLink>
@@ -369,10 +384,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One supply point per pitch</strong> — each caravan pitch must have its own
-                dedicated supply point. Sharing a supply point between multiple pitches is not
-                permitted, as it prevents individual isolation, makes metering impractical, and may
-                compromise individual RCD protection requirements.
+                <strong>At least one socket-outlet per pitch</strong> — Regulation 708.55.1.4
+                requires every caravan pitch or tent pitch to be supplied by at least one
+                socket-outlet, and Regulation 708.533 requires every socket-outlet to be
+                individually protected by its own overcurrent protective device. A single enclosure
+                may serve more than one pitch, but only within the four-socket limit below.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -512,7 +528,9 @@ const sections = [
           Caravan park electrical work — installation, commissioning, and periodic inspection —
           requires knowledge of Section 708 and experience with outdoor, TT-earthed installations.
           Electricians who specialise in this work can build valuable recurring contracts with park
-          operators, who are legally required to have their installations inspected annually.
+          operators, who need periodic inspection and testing to demonstrate the installation
+          remains safe. Site licence conditions vary between local authorities, so check what the
+          specific site licence requires rather than assuming a fixed interval.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
@@ -537,10 +555,10 @@ const sections = [
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Annual Inspection Contracts</h4>
+                <h4 className="font-bold text-white mb-1">Recurring Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The recommended annual inspection interval means repeat business for the
-                  electrician. Use the{' '}
+                  The short inspection intervals typical of caravan parks mean repeat business for
+                  the electrician. Use the{' '}
                   <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   offer multi-year maintenance contracts to park operators, building predictable
                   recurring revenue.
@@ -550,8 +568,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="10th Edition EICR for Caravan Parks"
-          description="10th Edition BS 7671:2018+A4:2026 EICR inspections for caravan sites. Complete test recording, reporting, and compliance tracking."
+          title="18th Edition EICR for Caravan Parks"
+          description="BS 7671:2018+A4:2026 EICR inspections for caravan sites. Complete test recording, reporting, and compliance tracking."
           icon={FileCheck2}
         />
       </>
@@ -566,8 +584,8 @@ const sections = [
 export default function CaravanParkElectricalPage() {
   return (
     <GuideTemplate
-      title="Caravan Park Electrics: BS 7671 Section 708 Rules UK"
-      description="Caravan park electrical installations to BS 7671 Section 708: IEC 60309 CEE connectors, 30mA RCD per pitch, socket spacing, TT earthing, supply ratings."
+      title="Caravan Park Electrics: 30mA RCD, 16A CEE Socket"
+      description="BS 7671 Section 708: every pitch needs a 30mA RCD, a 16A IEC 60309 blue CEE socket, max 20m to the caravan, 4 sockets per enclosure, 0.5-1.5m high."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -580,7 +598,7 @@ export default function CaravanParkElectricalPage() {
           <span className="text-yellow-400">BS 7671 Section 708</span>
         </>
       }
-      heroSubtitle="Everything electricians and park operators need to know about caravan park electrical installations — BS 7671 Section 708 requirements, IEC 60309 CEE connectors, 30 mA RCD protection, socket outlet spacing, TT earthing, and annual inspection obligations."
+      heroSubtitle="Everything electricians and park operators need to know about caravan park electrical installations — BS 7671 Section 708 requirements, IEC 60309 CEE connectors, 30 mA RCD protection, socket outlet spacing, TT earthing, and periodic inspection obligations."
       readingTime={13}
       answerBox={{
         question: 'What are the BS 7671 rules for caravan park electrics?',

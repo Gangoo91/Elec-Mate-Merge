@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -28,6 +30,7 @@ const tocItems = [
   { id: 'tns-ze', label: 'TN-S — Expected Ze: 0.80 ohms Maximum' },
   { id: 'tncs-ze', label: 'TN-C-S (PME) — Expected Ze: 0.35 ohms Maximum' },
   { id: 'tt-ze', label: 'TT — Expected Ze: 21 ohms Maximum' },
+  { id: 'calculator', label: 'Maximum Zs Lookup (Free Calculator)' },
   { id: 'measuring-ze', label: 'How to Measure Ze' },
   { id: 'what-affects-ze', label: 'What Affects Ze' },
   { id: 'high-ze', label: 'When Ze Is Higher Than Expected' },
@@ -186,6 +189,14 @@ const sections = [
           . If Ze is unusually high, it can push every circuit in the installation towards or beyond
           the maximum, causing widespread compliance failures.
         </p>
+        <div className="pt-1">
+          <a
+            href="#calculator"
+            className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/20 touch-manipulation"
+          >
+            Look up the maximum Zs for your device
+          </a>
+        </div>
       </>
     ),
   },
@@ -349,6 +360,39 @@ const sections = [
           description="Typical maximum Ze: TN-S 0.80 ohms, TN-C-S (PME) 0.35 ohms, TT 21 ohms. How to measure external earth fault loop impedance and when to query the DNO."
           icon={Calculator}
         />
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Check Your Zs Reading Against the BS 7671 Maximum',
+    content: (
+      <>
+        <p>
+          Knowing the expected Ze for the earthing arrangement is only half the job. What decides
+          whether a circuit passes is the total loop impedance at the far end — Zs = Ze + (R1+R2) —
+          measured against the maximum for the protective device on that circuit. A TN-C-S supply at
+          0.20 ohms leaves plenty of headroom; a TN-S supply at 0.78 ohms leaves very little, and the
+          same cable run that passes on one will fail on the other.
+        </p>
+        <p>
+          Use the lookup below to find the maximum Zs for the device — MCB curve and rating, RCBO,
+          fuse or RCD — at 0.4 s or 5 s disconnection, and to check a measured Zs against it. It also
+          gives the 80% rule-of-thumb figure used when testing at ambient temperature.
+        </p>
+        <p>
+          <strong>Free to use, no sign-up and no email required.</strong>
+        </p>
+        <CalculatorSurface>
+          <BS7671ZsLookupCalculator />
+        </CalculatorSurface>
+        <p>
+          To work the sum the other way — Ze plus a measured R1+R2 to give the expected Zs — use the{' '}
+          <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
+            earth fault loop impedance calculator
+          </SEOInternalLink>
+          .
+        </p>
       </>
     ),
   },
@@ -667,8 +711,8 @@ const sections = [
 export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
-      title="Ze Values UK: Max Ze for TN-S, TN-C-S & TT + How to Test"
-      description="Ze values for every UK supply type and what to do when your reading is too high. How to measure Ze correctly, why PME is different, and the full BS 7671 maximum-value lookup — with worked examples."
+      title="Max Ze Values: TN-S 0.80Ω, TN-C-S 0.35Ω, TT 21Ω"
+      description="Maximum Ze: TN-S 0.80 Ω, TN-C-S (PME) 0.35 Ω, TT 21 Ω. How to measure Ze, why PME differs, and what to do when your reading is too high."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

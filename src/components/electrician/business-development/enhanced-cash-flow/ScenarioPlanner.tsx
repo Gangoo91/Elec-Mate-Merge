@@ -242,7 +242,7 @@ export const ScenarioPlanner = ({
         </TabsContent>
 
         <TabsContent value="whatif" className="space-y-4">
-          <Card className="border-blue-400/30 bg-blue-500/5">
+          <Card className="border-white/[0.10] bg-white/[0.04]">
             <CardHeader>
               <CardTitle className="text-elec-light">What-If Analysis</CardTitle>
             </CardHeader>
@@ -273,7 +273,7 @@ export const ScenarioPlanner = ({
               </div>
 
               {whatIfAnalysis && (
-                <div className="space-y-4 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                <div className="space-y-4 p-4 rounded-lg bg-white/[0.04] border border-white/[0.10]">
                   <h4 className="font-medium text-elec-light">Live Results</h4>
 
                   {/* Live results grid */}

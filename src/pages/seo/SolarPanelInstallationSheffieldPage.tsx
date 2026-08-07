@@ -517,7 +517,7 @@ export default function SolarPanelInstallationSheffieldPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Sheffield 2025 | Solar PV South"
-      description="Complete guide to solar panel installation in Sheffield and South Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee…"
+      description="Complete guide to solar panel installation in Sheffield and South Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

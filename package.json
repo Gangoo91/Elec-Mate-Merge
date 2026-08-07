@@ -19,6 +19,8 @@
     "lint:bias": "node scripts/check-answer-bias.mjs",
     "preview": "vite preview",
     "test": "playwright test",
+    "check:eicr": "node scripts/check-eicr-correctness.mjs",
+    "check:eicr:ci": "node scripts/check-eicr-correctness.mjs --ci",
     "check:cert-mapping": "node scripts/check-cert-mapping.mjs",
     "check:cert-mapping:ci": "node scripts/check-cert-mapping.mjs --ci",
     "test:ui": "playwright test --ui",
@@ -35,7 +37,7 @@
     "format:check": "prettier --check src/",
     "size": "size-limit",
     "lighthouse": "lhci autorun",
-    "build:seo": "NODE_OPTIONS='--max-old-space-size=16384' vite build && node scripts/generate-seo-html.mjs && (node scripts/seo-prerender.mjs || echo 'WARN: seo-prerender failed - shipping meta-only fallback HTML')",
+    "build:seo": "NODE_OPTIONS='--max-old-space-size=16384' vite build && node scripts/check-topic-registry.mjs && node scripts/generate-seo-html.mjs && (node scripts/seo-prerender.mjs || echo 'WARN: seo-prerender failed - shipping meta-only fallback HTML')",
     "build:seo:canary": "npm run build && node scripts/seo-prerender.mjs --limit 5 --verbose",
     "seo:bump-dates": "node scripts/seo-engine/bump-dates.mjs",
     "seo:bump-dates:dry": "node scripts/seo-engine/bump-dates.mjs --dry-run",
@@ -46,7 +48,12 @@
     "check:business-planning": "npx tsx scripts/check-business-planning.mjs",
     "check:job-costing": "npx tsx scripts/check-job-costing.mjs",
     "check:vat-cis": "npx tsx scripts/check-vat-cis.mjs",
-    "check:costing": "npx tsx scripts/check-costing-calculators.mjs"
+    "check:costing": "npx tsx scripts/check-costing-calculators.mjs",
+    "check:topic-registry": "node scripts/check-topic-registry.mjs",
+    "check:calculators": "node scripts/check-calculator-content.mjs",
+    "build:sitemap:mock-exams": "node scripts/generate-mock-exam-sitemap.mjs",
+    "check:question-quality:ci": "node scripts/check-question-quality.mjs --ci",
+    "check:key-integrity": "node scripts/verify-key-integrity.mjs"
   },
   "dependencies": {
     "@capacitor-community/contacts": "^7.2.0",

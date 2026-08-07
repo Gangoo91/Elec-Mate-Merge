@@ -489,7 +489,7 @@ export default function TrainingPhotoUpload() {
             </div>
             Training Photo Upload
           </h1>
-          <p className="text-muted-foreground mt-1">Upload board photos to train the AI scanner</p>
+          <p className="text-white mt-1">Upload board photos to train the AI scanner</p>
         </div>
         {stats.pending > 0 && (
           <Button
@@ -524,7 +524,7 @@ export default function TrainingPhotoUpload() {
           <Card className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700/50">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Total</span>
+                <span className="text-sm text-white">Total</span>
                 <Camera className="h-4 w-4 text-slate-400" />
               </div>
               <div className="text-2xl font-bold mt-1">{stats.total}</div>
@@ -593,7 +593,7 @@ export default function TrainingPhotoUpload() {
                 <p className="text-lg font-medium text-foreground">
                   {isDragActive ? 'Drop photos here' : 'Tap to upload board photos'}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white mt-1">
                   or drag & drop (up to 20 photos, max 10MB each)
                 </p>
               </div>
@@ -654,7 +654,7 @@ export default function TrainingPhotoUpload() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
                         <p className="font-medium truncate text-foreground">{upload.file.name}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white">
                           {(upload.file.size / 1024 / 1024).toFixed(2)} MB
                         </p>
                       </div>
@@ -727,7 +727,7 @@ export default function TrainingPhotoUpload() {
                           size="icon"
                           variant="ghost"
                           onClick={() => removeUpload(index)}
-                          className="h-10 w-10 touch-manipulation text-muted-foreground hover:text-red-500"
+                          className="h-10 w-10 touch-manipulation text-white hover:text-red-500"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -766,7 +766,7 @@ export default function TrainingPhotoUpload() {
                               3-Phase
                             </Badge>
                           )}
-                          <Badge variant="outline" className="text-muted-foreground">
+                          <Badge variant="outline" className="text-white">
                             {Math.round(upload.analysis.analysis_confidence * 100)}% confidence
                           </Badge>
                         </>
@@ -788,7 +788,7 @@ export default function TrainingPhotoUpload() {
                       <CollapsibleTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="w-full h-11 touch-manipulation justify-center gap-2 text-muted-foreground hover:text-foreground"
+                          className="w-full h-11 touch-manipulation justify-center gap-2 text-white hover:text-foreground"
                         >
                           {expandedId === index ? (
                             <>
@@ -877,7 +877,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Manufacturer
             </Label>
             {isEditing ? (
@@ -892,7 +892,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Model/Series
             </Label>
             {isEditing ? (
@@ -908,7 +908,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Age Category
             </Label>
             {isEditing ? (
@@ -934,7 +934,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Total Ways
             </Label>
             {isEditing ? (
@@ -950,7 +950,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Populated Ways
             </Label>
             {isEditing ? (
@@ -966,7 +966,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Main Switch
             </Label>
             {isEditing ? (
@@ -1015,7 +1015,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Three Phase
             </Label>
             {isEditing ? (
@@ -1036,7 +1036,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Phase Layout
             </Label>
             {isEditing ? (
@@ -1059,7 +1059,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Split Load
             </Label>
             {isEditing ? (
@@ -1079,7 +1079,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
           {structure.is_split_load && (
             <div className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              <Label className="text-white text-xs uppercase tracking-wide">
                 Split Point (Way)
               </Label>
               {isEditing ? (
@@ -1119,7 +1119,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
             ] as const
           ).map(({ key, label }) => (
             <div key={key} className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              <Label className="text-white text-xs uppercase tracking-wide">
                 {label}
               </Label>
               {isEditing ? (
@@ -1136,7 +1136,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           ))}
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               SPD Present
             </Label>
             {isEditing ? (
@@ -1156,7 +1156,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
           {analysis.devices.spd.present && (
             <div className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              <Label className="text-white text-xs uppercase tracking-wide">
                 SPD Status
               </Label>
               {isEditing ? (
@@ -1205,7 +1205,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Handwritten Labels
             </Label>
             {isEditing ? (
@@ -1224,7 +1224,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Printed Labels
             </Label>
             {isEditing ? (
@@ -1243,7 +1243,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Has Pictograms
             </Label>
             {isEditing ? (
@@ -1264,7 +1264,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         {analysis.labels.pictogram_types && analysis.labels.pictogram_types.length > 0 && (
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            <Label className="text-white text-xs uppercase tracking-wide">
               Pictogram Types
             </Label>
             <div className="flex flex-wrap gap-2">
@@ -1313,7 +1313,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
             ] as const
           ).map(({ key, label, options }) => (
             <div key={key} className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              <Label className="text-white text-xs uppercase tracking-wide">
                 {label}
               </Label>
               {isEditing ? (
@@ -1397,7 +1397,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
               >
                 {/* Position */}
                 <div className="w-16">
-                  <Label className="text-xs text-muted-foreground mb-1 block">Pos</Label>
+                  <Label className="text-xs text-white mb-1 block">Pos</Label>
                   <Input
                     type="number"
                     value={circuit.position}
@@ -1412,7 +1412,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
                 {/* Device Type */}
                 <div className="w-28">
-                  <Label className="text-xs text-muted-foreground mb-1 block">Type</Label>
+                  <Label className="text-xs text-white mb-1 block">Type</Label>
                   <Select
                     value={circuit.device_type}
                     onValueChange={(v) => {
@@ -1438,7 +1438,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
                 {/* Rating */}
                 <div className="w-24">
-                  <Label className="text-xs text-muted-foreground mb-1 block">Rating</Label>
+                  <Label className="text-xs text-white mb-1 block">Rating</Label>
                   <Select
                     value={String(circuit.rating_amps)}
                     onValueChange={(v) => {
@@ -1468,7 +1468,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
                 {/* Curve */}
                 <div className="w-20">
-                  <Label className="text-xs text-muted-foreground mb-1 block">Curve</Label>
+                  <Label className="text-xs text-white mb-1 block">Curve</Label>
                   <Select
                     value={circuit.curve || 'none'}
                     onValueChange={(v) => {
@@ -1491,7 +1491,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
                 {/* Label Text */}
                 <div className="flex-1 min-w-[140px]">
-                  <Label className="text-xs text-muted-foreground mb-1 block">Label</Label>
+                  <Label className="text-xs text-white mb-1 block">Label</Label>
                   <Input
                     value={circuit.label_text || ''}
                     onChange={(e) => {
@@ -1513,7 +1513,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                       const updated = analysis.circuits.filter((_, idx) => idx !== i);
                       updateField('circuits', updated);
                     }}
-                    className="h-10 w-10 touch-manipulation text-muted-foreground hover:text-red-500 hover:bg-red-500/10"
+                    className="h-10 w-10 touch-manipulation text-white hover:text-red-500 hover:bg-red-500/10"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -1522,7 +1522,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
             ))}
 
             {(!analysis.circuits || analysis.circuits.length === 0) && (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-white">
                 <CircuitBoard className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p>No circuits detected. Tap "Add Circuit" to add manually.</p>
               </div>
@@ -1542,13 +1542,13 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                       {circuit.position}
                     </span>
                     <span className="font-medium">{circuit.device_type}</span>
-                    <span className="text-muted-foreground">
+                    <span className="text-white">
                       {circuit.curve}
                       {circuit.rating_amps}A
                     </span>
                     {circuit.label_text && (
                       <span
-                        className="truncate text-muted-foreground text-xs ml-auto"
+                        className="truncate text-white text-xs ml-auto"
                         title={circuit.label_text}
                       >
                         {circuit.label_text}
@@ -1558,7 +1558,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">No circuits detected</p>
+              <p className="text-sm text-white">No circuits detected</p>
             )}
           </>
         )}

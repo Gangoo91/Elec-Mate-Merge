@@ -463,7 +463,7 @@ export default function ElectricianBasingstokePage() {
       noindex={true}
       localArea="Basingstoke"
       title="Electrician in Basingstoke | Local Electricians 2026"
-      description="Find qualified electricians in Basingstoke. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
+      description="Find qualified electricians in Basingstoke. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

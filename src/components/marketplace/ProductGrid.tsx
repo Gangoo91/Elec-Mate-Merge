@@ -12,6 +12,8 @@ interface ProductGridProps {
   hasMore: boolean;
   onLoadMore: () => void;
   onSave?: (product: MarketplaceProduct) => void;
+  onWatch?: (product: MarketplaceProduct) => void;
+  isProductWatched?: (id: string) => boolean;
   isProductSaved?: (productId: string) => boolean;
   className?: string;
 }
@@ -45,6 +47,8 @@ export function ProductGrid({
   hasMore,
   onLoadMore,
   onSave,
+  onWatch,
+  isProductWatched,
   isProductSaved,
   className,
 }: ProductGridProps) {
@@ -100,6 +104,8 @@ export function ProductGrid({
               product={product}
               onSave={onSave}
               isSaved={isProductSaved?.(product.id) ?? false}
+              onWatch={onWatch}
+              isWatched={isProductWatched?.(product.id) ?? false}
             />
           </motion.div>
         ))}

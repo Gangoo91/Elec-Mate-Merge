@@ -72,7 +72,7 @@ const checks = [
     question:
       "BS EN ISO 19650 (UK BIM standard) primarily addresses:",
     options: [
-      "The graphical symbols used on electrical drawings — the symbol standard that BS EN 60617 is derived from, defining breaker and cable symbols.",
+      "The graphical symbols used on electrical drawings — the symbol standard that IEC 60617 is derived from, defining breaker and cable symbols.",
       "Information management for construction — the roles, information requirements, Common Data Environment and information flows between parties across the lifecycle.",
       "The minimum hardware specification a CAD workstation must meet to run Revit — processor, memory and graphics-card requirements for BIM authoring.",
       "The cable current-carrying capacity tables for BIM-modelled circuits, replacing BS 7671 Appendix 4 when a project is delivered in a digital model.",

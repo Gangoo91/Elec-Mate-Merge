@@ -20,8 +20,8 @@ import {
 export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
-      title="Battery Backup Calculator: Runtime & Ah Size in Seconds"
-      description="Free UPS / battery backup calculator: size the battery bank and estimate runtime from your load, voltage, depth of discharge and inverter efficiency."
+      title="Battery Backup Calculator: UPS Runtime, Ah & kVA"
+      description="Runtime (hrs) = Ah x battery V x efficiency / load W. Enter your load in watts or VA and get the UPS kVA rating (125% of load VA) and battery Ah needed."
       datePublished="2026-01-25"
       dateModified="2026-06-10"
       breadcrumbs={[

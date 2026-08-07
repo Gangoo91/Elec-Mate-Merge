@@ -5,11 +5,9 @@ import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   GraduationCap,
   CreditCard,
-  CheckCircle2,
   Award,
   TrendingUp,
   ArrowUpRight,
-  FileCheck2,
   BookOpen,
   Target,
   ShieldCheck,
@@ -41,18 +39,18 @@ const tocItems = [
 
 const keyTakeaways = [
   'The ECS Gold Card is the highest standard card in the Electrotechnical Certification Scheme. It recognises electricians who can design, install, inspect, and test electrical installations — the full range of competence.',
-  'To qualify, you need: NVQ Level 3 in Electrotechnical Services, C&G 2382 (18th Edition), AM2 assessment, C&G 2391 (Inspection and Testing), AND a design qualification — typically C&G 2396 (Electrical Installation Design).',
-  'The Gold Card corresponds to the JIB Technician grade, which commands the highest standard pay rate. In 2026, this is approximately 21.13 pounds per hour nationally, 22.80 in London.',
+  'To qualify, you need: NVQ Level 3 in Electrotechnical Services, C&G 2382 covering the current Wiring Regulations (BS 7671:2018+A4:2026), AM2 assessment, C&G 2391 (Inspection and Testing), AND a design qualification — typically C&G 2396 (Electrical Installation Design).',
+  'The Gold Card corresponds to the JIB Technician grade — the highest graded rate. From 5 January 2026 that is £22.70 an hour nationally and £25.47 in the London Zone (transport-provided rates), against £18.38 and £20.58 for an Electrician.',
   'Many Gold Card holders progress to supervisory roles, start their own businesses, or move into consulting. The card is a credibility marker that distinguishes you from other electricians.',
   'You also need the ECS Health, Safety and Environmental Assessment and your card must be renewed every 5 years with current qualifications.',
-  'GN3 (9th Edition, aligned to A4:2026) states that competence for inspection and testing is best shown by holding a recognised I&T qualification AND a current level 3 BS 7671 certificate — both the 2391 and a current 2382 are needed, not just one or the other.',
+  'GN3 (9th Edition, aligned to A4:2026) says competence for inspection and testing is best shown by holding a recognised I&T qualification together with a current level 3 BS 7671 certificate — the 2391 and a current 2382 as a pair, rather than either on its own.',
 ];
 
 const faqs = [
   {
     question: 'What qualifications do I need for the ECS Gold Card?',
     answer:
-      'You need all of the following: NVQ Level 3 in Electrotechnical Services (or equivalent such as C&G 2357/2365), C&G 2382 (18th Edition Wiring Regulations — current version 2382-22), AM2 practical assessment, C&G 2391 (Inspection and Testing), a design qualification such as C&G 2396 (Electrical Installation Design), and the ECS Health, Safety and Environmental Assessment. All qualifications must be current — if your 2382 is based on an older edition, you may need to update it.',
+      'You need all of the following: NVQ Level 3 in Electrotechnical Services (or equivalent such as C&G 2357/2365), C&G 2382 covering the current Wiring Regulations, AM2 practical assessment, C&G 2391 (Inspection and Testing), a design qualification such as C&G 2396 (Electrical Installation Design), and the ECS Health, Safety and Environmental Assessment. All qualifications must be current — the current edition is BS 7671:2018+A4:2026, and the A2+A3 edition is withdrawn on 15 October 2026, so an older 2382 may need updating.',
   },
   {
     question: 'Can I get a Gold Card without the C&G 2396?',
@@ -67,7 +65,7 @@ const faqs = [
   {
     question: 'Is the Gold Card worth it financially?',
     answer:
-      'Yes. The JIB Technician rate (Gold Card grade) is approximately 2.92 pounds per hour more than the standard Electrician rate. Over a full year (based on a 37.5-hour week, 46 working weeks), that is approximately 5,037 pounds more per year at minimum rates. Many Gold Card holders earn well above JIB minimums. The total cost of the 2391 and 2396 courses is typically 1,200 to 1,800 pounds — so the investment pays for itself within the first year.',
+      'Yes. From 5 January 2026 the JIB Technician rate (£22.70 an hour, transport provided) is £4.32 an hour above the Electrician rate of £18.38. That is about £162 a week on a 37.5-hour week, or roughly £7,450 over 46 paid working weeks. Many Gold Card holders earn well above JIB minimums. Course fees for the 2391 and 2396 vary by provider and are typically quoted in the low four figures — on those rates the investment pays for itself well inside the first year.',
   },
   {
     question: 'Do I need the Gold Card to do inspection and testing work?',
@@ -153,14 +151,55 @@ const sections = [
         <p>
           In{' '}
           <SEOInternalLink href="/guides/jib-grading-explained">JIB grading terms</SEOInternalLink>,
-          the Gold Card corresponds to the Technician grade — the highest standard grade with the
-          highest minimum pay rate. It is the card that employers, clients, and site managers
-          associate with the most experienced and qualified electricians.
+          the Gold Card corresponds to the Technician grade — the highest graded rate. It is the
+          card that employers, clients, and site managers associate with the most experienced and
+          qualified electricians.
         </p>
+
+        <h3 className="mt-6 mb-2 text-base font-semibold tracking-tight text-white">
+          What the grade is worth
+        </h3>
         <p>
-          Getting the Gold Card requires commitment — you need qualifications beyond the standard
-          blue card. But the investment in additional training pays for itself through higher
-          earnings, greater career flexibility, and enhanced professional credibility.
+          JIB National Standard hourly rates, effective Monday 5 January 2026. These are minimums —
+          most Gold Card holders earn above them.
+        </p>
+        <div className="-mx-4 my-4 overflow-x-auto border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x">
+          <table className="w-full min-w-[520px] border-collapse text-sm text-white">
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th className="p-3 text-left font-semibold text-white">JIB grade</th>
+                <th className="p-3 text-right font-semibold text-white">Transport provided</th>
+                <th className="p-3 text-right font-semibold text-white">Own transport</th>
+                <th className="p-3 text-right font-semibold text-white">London Zone (TP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">Technician (Gold Card grade)</td>
+                <td className="p-3 text-right font-semibold text-elec-yellow">£22.70</td>
+                <td className="p-3 text-right font-semibold text-elec-yellow">£23.87</td>
+                <td className="p-3 text-right font-semibold text-elec-yellow">£25.47</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 text-white">Approved Electrician</td>
+                <td className="p-3 text-right text-white">£20.08</td>
+                <td className="p-3 text-right text-white">£21.19</td>
+                <td className="p-3 text-right text-white">£22.48</td>
+              </tr>
+              <tr>
+                <td className="p-3 text-white">Electrician (incl. domestic)</td>
+                <td className="p-3 text-right text-white">£18.38</td>
+                <td className="p-3 text-right text-white">£19.54</td>
+                <td className="p-3 text-right text-white">£20.58</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The step from Electrician to Technician is £4.32 an hour — about £162 a week on a
+          37.5-hour week. Getting there means qualifications beyond the standard blue card, but the
+          additional training pays for itself through higher earnings, greater career flexibility,
+          and enhanced professional credibility.
         </p>
       </>
     ),
@@ -170,124 +209,176 @@ const sections = [
     heading: 'Qualifications Needed for the Gold Card',
     content: (
       <>
-        <p>Here is the full list of qualifications required:</p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>NVQ Level 3</strong> in Electrotechnical Services (or equivalent — C&G 2357,
-                C&G 2365, or equivalent overseas qualification assessed by the JIB).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>
+        <p>Six things, all of which must be current when you apply:</p>
+        <div className="-mx-4 my-4 overflow-x-auto border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x">
+          <table className="w-full min-w-[560px] border-collapse text-sm text-white">
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th className="p-3 text-left font-semibold text-white">Requirement</th>
+                <th className="p-3 text-left font-semibold text-white">What it proves</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-white">NVQ Level 3</td>
+                <td className="p-3 text-white">
+                  Electrotechnical Services — or an equivalent such as C&amp;G 2357 or 2365, or an
+                  overseas qualification assessed by the JIB.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-white">
                   <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
-                    C&G 2382
+                    C&amp;G 2382
                   </SEOInternalLink>
-                </strong>{' '}
-                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS
-                7671:2018+A4:2026).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AM2 Assessment</strong> — the practical assessment of electrical
-                installation competence.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>C&G 2391</strong> — Inspection and Testing of Electrical Installations. This
-                qualifies you to inspect, test, and certify installations.
-              </span>
-            </li>
-          </ul>
-          <div className="mt-4 rounded-xl bg-white/[0.04] border border-white/10 p-4">
-            <p className="text-amber-300 text-sm font-semibold mb-2">
-              What does the 2391 actually test?
-            </p>
-            <p className="text-white/70 text-xs mb-3">
-              The C&G 2391 is assessed against BS 7671 Part 6 (Chapter 64 — Inspection and Testing).
-              Candidates must demonstrate competence across the full verification sequence:
-            </p>
-            <ul className="space-y-1 text-white/80 text-xs">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Continuity of protective conductors</strong> — ring finals and protective
-                  conductors (Reg 643.2)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Insulation resistance</strong> — live conductors to earth and between live
-                  conductors (Reg 643.3)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Polarity</strong> — correct connections throughout (Reg 643.6)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Earth fault loop impedance (Zs/EFLI)</strong> — protection by automatic
-                  disconnection of supply (Reg 643.7)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>RCD operating times</strong> — additional protection tests at I&Delta;n
-                  and 5×I&Delta;n (Reg 643.8)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Functional testing</strong> — switchgear, controls, interlocks, AFDD
-                  indication (Reg 643.10)
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Verification of voltage drop</strong> — compliance with installation
-                  design criteria (Chapter 64)
-                </span>
-              </li>
-            </ul>
-          </div>
-          <ul className="space-y-4 text-white mt-4">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>
+                </td>
+                <td className="p-3 text-white">
+                  The Wiring Regulations exam. It must cover the edition that is current when you
+                  apply — BS 7671:2018+A4:2026.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-white">AM2</td>
+                <td className="p-3 text-white">
+                  Practical assessment of installation, safe isolation, testing and fault finding.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-white">C&amp;G 2391</td>
+                <td className="p-3 text-white">
+                  Inspection and testing — qualifies you to inspect, test and certify installations.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-white">
                   <SEOInternalLink href="/guides/city-guilds-2396-design-course">
-                    C&G 2396
+                    C&amp;G 2396
                   </SEOInternalLink>
-                </strong>{' '}
-                — Electrical Installation Design (or equivalent design qualification — HNC, HND, or
-                degree in Electrical Engineering).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>ECS Health, Safety and Environmental Assessment</strong> — the health and
-                safety test required for all ECS card types.
-              </span>
-            </li>
-          </ul>
+                </td>
+                <td className="p-3 text-white">
+                  Electrical installation design — or an equivalent HNC, HND or degree in electrical
+                  engineering.
+                </td>
+              </tr>
+              <tr>
+                <td className="p-3 font-semibold text-white">
+                  ECS Health, Safety and Environmental
+                </td>
+                <td className="p-3 text-white">
+                  The assessment required for every ECS card type, whatever the grade.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <h3 className="mt-8 mb-2 text-base font-semibold tracking-tight text-white">
+          What the 2391 actually tests
+        </h3>
+        <p>
+          The 2391 is assessed against BS 7671 Part 6, Inspection and Testing — Chapter 64 covers
+          initial verification. Regulation 643.1 sets the order: the tests of Regulations 643.2 to
+          643.6 are carried out in that order before the installation is energised, and the
+          remainder once it is live.
+        </p>
+        <div className="-mx-4 my-4 overflow-x-auto border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x">
+          <table className="w-full min-w-[600px] border-collapse text-sm text-white">
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th className="p-3 text-left font-semibold text-white">Reg</th>
+                <th className="p-3 text-left font-semibold text-white">Test</th>
+                <th className="p-3 text-left font-semibold text-white">What you have to show</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.2</td>
+                <td className="p-3 font-semibold text-white">Continuity of conductors</td>
+                <td className="p-3 text-white">
+                  Protective and bonding conductors, plus live conductors on ring final circuits.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.3</td>
+                <td className="p-3 font-semibold text-white">Insulation resistance</td>
+                <td className="p-3 text-white">
+                  Live conductors to earth and between live conductors. A4 added a second stage at
+                  643.3.3 — a 250 V DC test after equipment is connected, minimum 1 M&Omega;.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.4</td>
+                <td className="p-3 font-semibold text-white">
+                  SELV, PELV or electrical separation
+                </td>
+                <td className="p-3 text-white">
+                  Separation of circuits confirmed by insulation resistance measurement to Table 64.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.5</td>
+                <td className="p-3 font-semibold text-white">Resistance of floors and walls</td>
+                <td className="p-3 text-white">
+                  Only where Regulation 418.1, non-conducting location, is relied on — at least
+                  three measurements per relevant surface.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.6</td>
+                <td className="p-3 font-semibold text-white">Polarity</td>
+                <td className="p-3 text-white">Correct connections throughout.</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.7</td>
+                <td className="p-3 font-semibold text-white">Automatic disconnection of supply</td>
+                <td className="p-3 text-white">
+                  Earth fault loop impedance measured and compared with Chapter 41; prospective
+                  fault current determined under 643.7.3.201.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.8</td>
+                <td className="p-3 font-semibold text-white">Additional protection</td>
+                <td className="p-3 text-white">
+                  RCD effectiveness verified with equipment to BS EN 61557-6. The note is explicit:
+                  regardless of RCD type, an alternating current test at rated residual operating
+                  current (I&Delta;n), with a general non-delay type disconnecting in 300 ms
+                  maximum.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.9</td>
+                <td className="p-3 font-semibold text-white">Check of phase sequence</td>
+                <td className="p-3 text-white">
+                  Phase sequence maintained at all relevant points on polyphase circuits.
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className="p-3 font-semibold text-elec-yellow">643.10</td>
+                <td className="p-3 font-semibold text-white">Functional testing</td>
+                <td className="p-3 text-white">
+                  Switchgear and controlgear, drives, controls and interlocks, emergency switching
+                  off and stopping, insulation monitoring — plus the RCD test facility and, where an
+                  AFDD is fitted, its manual test facility.
+                </td>
+              </tr>
+              <tr>
+                <td className="p-3 font-semibold text-elec-yellow">643.11</td>
+                <td className="p-3 font-semibold text-white">Verification of voltage drop</td>
+                <td className="p-3 text-white">
+                  Evaluated by measurement or calculation where needed to show compliance with
+                  Chapter 52. The note says it is not normally required at initial verification.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Amendment 4 deleted Table 3A, so the old half-rated-current and five-times-rated-current
+          RCD sequence is no longer an installation requirement in BS 7671. The 40 ms at 5&times;
+          figure people still quote comes from the BS EN 61008 and 61009 product standards, not from
+          Chapter 64. If your course notes predate A4, check this one before the exam.
+        </p>
       </>
     ),
   },
@@ -340,10 +431,10 @@ const sections = [
     content: (
       <>
         <p>The application process is the same as for any ECS card:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="-mx-4 my-4 border-y border-white/[0.14] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6 bg-white/[0.04]">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1:</strong> Ensure you hold all required qualifications. Gather your
                 certificates — NVQ Level 3, C&G 2382, AM2, C&G 2391, C&G 2396, and ECS Health and
@@ -351,21 +442,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2:</strong> Apply online through the JIB/ECS website. If you already
                 have an ECS card (blue or other), apply for regrading rather than a new card.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3:</strong> Upload scanned copies of all certificates, provide a
                 passport-style photo, and pay the application fee (approximately 36 to 40 pounds).
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <ArrowUpRight className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4:</strong> The JIB verifies your qualifications and issues your Gold
                 Card. Processing typically takes 2 to 4 weeks.
@@ -381,14 +472,14 @@ const sections = [
     heading: 'Benefits of the Gold Card',
     content: (
       <>
-        <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
+        <div className="-mx-4 my-4 border-y border-green-500/20 bg-green-500/10 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Higher pay</strong> — Technician grade commands the highest JIB rate.
-                Approximately 5,000 pounds more per year than the standard Electrician rate at
-                minimum JIB rates.
+                <strong>Higher pay</strong> — Technician grade commands the highest JIB rate. At the
+                2026 minimums that is £4.32 an hour above the Electrician rate, roughly £7,450 a
+                year over 46 paid working weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -431,22 +522,22 @@ const sections = [
     content: (
       <>
         <p>A few things that trip up Gold Card applicants:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className="-mx-4 my-4 border-y border-white/[0.14] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6 bg-white/[0.04]">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Outdated 2382:</strong> If your 2382 was based on the 17th Edition or
-                earlier, you need the current version (2382-22) before applying. Importantly, this
-                also applies to earlier 18th Edition versions — BS 7671:2018 has been amended four
-                times (A1:2020, A2:2022, A3:2024, A4:2026). The current consolidated edition is{' '}
-                <strong>BS 7671:2018+A4:2026</strong>. If your certificate covers only Amendment 1,
-                2, or 3, check with the JIB whether an update is required — the current 2382-22 exam
-                covers A4:2026.
+                earlier, you need a current one before applying. The same applies to earlier 18th
+                Edition versions — BS 7671:2018 has been amended four times (A1:2020, A2:2022,
+                A3:2024, A4:2026), and the current consolidated edition is{' '}
+                <strong>BS 7671:2018+A4:2026</strong>. The A2 + Corrigendum + A3 edition is
+                withdrawn on 15 October 2026, so if your certificate covers only Amendment 1, 2 or
+                3, check with the JIB whether an update is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Missing health and safety test:</strong> The ECS Health, Safety and
                 Environmental Assessment is required even if you hold SSSTS or SMSTS. Check with the
@@ -454,7 +545,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <Zap className="w-5 h-5 text-elec-yellow mt-0.5 shrink-0" />
               <span>
                 <strong>Certificate copies:</strong> Keep clear scanned copies of all certificates.
                 If you have lost a certificate, contact the awarding body (City & Guilds, etc.) for
@@ -477,37 +568,42 @@ const sections = [
           but manageable alongside full-time work. The financial and career benefits make it one of
           the best investments you can make in your electrical career.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <p className="text-amber-300 font-semibold mb-3">
+        <div className="-mx-4 my-4 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <h3 className="mb-3 text-base font-semibold tracking-tight text-white">
             Key A4:2026 changes Gold Card holders need to know
-          </p>
-          <ul className="space-y-2 text-white text-sm">
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AFDD requirement (Reg 421.1.7):</strong> Arc Fault Detection Devices are now
-                recommended for certain final circuits supplying socket-outlets. Gold Card holders
-                carrying out design and inspection work must apply this regulation and confirm AFDD
-                operational indication at completion (Regs 421.1.7, 532.6, 651.2(e)).
-              </span>
+          </h3>
+          <ul className="space-y-3 text-sm text-white">
+            <li>
+              <strong>AFDDs are no longer just a recommendation (Reg 421.1.7).</strong> Arc fault
+              detection devices to BS EN 62606 <em>shall</em> be provided for single-phase AC final
+              circuits supplying socket-outlets rated up to 32 A in high rise residential buildings,
+              houses in multiple occupation, purpose-built student accommodation and care homes. In
+              all other premises they remain recommended for the same circuits. Where used, they go
+              at the origin of the circuit protected (Reg 532.6), and the periodic inspection
+              schedule asks for confirmation that AFDD indication shows the devices are operational
+              (Regs 421.1.7, 532.6, 651.2(e)).
             </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Consolidated edition:</strong> All assessment, certification, and design
-                work must now reference BS 7671:2018+A4:2026. Pre-A4 copies reference regulation
-                numbers that no longer exist in the consolidated text.
-              </span>
+            <li>
+              <strong>Insulation resistance gained a second stage (Reg 643.3.3).</strong> Where
+              connected equipment would influence or be damaged by the test, test to Table 64 before
+              connecting it — then, once connected, apply a 250 V DC test between live conductors
+              and the protective conductor, with a minimum of 1 M&Omega;.
+            </li>
+            <li>
+              <strong>Consolidated edition.</strong> A4:2026 was issued on 15 April 2026 and may be
+              implemented immediately. The A2:2022 + Corrigendum + A3:2024 edition remains current
+              but is withdrawn on 15 October 2026 — after that date, assessment, certification and
+              design work references BS 7671:2018+A4:2026.
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
-          <p className="text-sm text-white/80 italic">
+        <div className="-mx-4 my-4 border-y border-white/[0.14] bg-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+          <p className="text-sm italic text-white">
             "Competence [for inspection and testing] is best shown by holding recognised inspection
             and testing qualifications and a current level 3 BS 7671 certificate."
           </p>
-          <p className="text-xs text-white/50 mt-2">
-            — GN3 (9th Edition, aligned to BS 7671:2018+A4:2026), Chapter 1, Reg 1.1
+          <p className="mt-2 text-xs text-white">
+            — GN3 (9th Edition, aligned to BS 7671:2018+A4:2026), Chapter 1, Section 1.1
           </p>
         </div>
         <SEOAppBridge

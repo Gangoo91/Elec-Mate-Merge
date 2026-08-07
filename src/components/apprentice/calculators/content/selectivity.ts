@@ -40,7 +40,8 @@ export const selectivityContent: CalculatorContent = {
       '3.15:1 exceeds the ~1.6:1 guide, so overload selectivity is likely',
       'For high fault currents, confirm with the manufacturers’ I²t / selectivity tables',
     ],
-    result: '3.15:1 ratio gives good overload selectivity; verify the fault region with let-through data.',
+    result:
+      '3.15:1 ratio gives good overload selectivity; verify the fault region with let-through data.',
   },
 
   standards: [

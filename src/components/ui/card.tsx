@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
+import { SURFACE_DEPTH } from '@/components/ui/card-recipe';
 
 /**
  * Card variants for consistent styling across the application.
@@ -17,11 +18,21 @@ import { cn } from '@/lib/utils';
  * - `ios-elevated` iOS elevated card with stronger blur and shadow
  */
 const cardVariants = cva(
-  'rounded-xl border shadow-none overflow-hidden transition-all duration-200 touch-manipulation',
+  cn(
+    'rounded-xl border overflow-hidden transition-all duration-200 touch-manipulation',
+    // `shadow-none` was in this string, which is why every card in the app
+    // read as a flat fill with a border round it. A card needs light: a 1px
+    // inset highlight along the top inside edge is what a real bevel does, and
+    // a faint drop shadow stops a column of cards merging into one panel.
+    // Shared with the hub card recipe so the two families are lit the same.
+    SURFACE_DEPTH
+  ),
   {
     variants: {
       variant: {
-        default: 'bg-card border-border/30',
+        // Diagonal, not flat: the light comes from the top-left, so the card
+        // has a direction. Same two-colour idea as the hub cards.
+        default: 'bg-gradient-to-br from-card to-[hsl(var(--card)/0.75)] border-border/30',
         elevated: 'bg-gradient-to-br from-elec-gray to-elec-card border-border/30',
         subtle: 'bg-muted/30 border-border/20',
         highlight: 'bg-gradient-to-br from-elec-yellow/10 to-orange-500/5 border-elec-yellow/30',

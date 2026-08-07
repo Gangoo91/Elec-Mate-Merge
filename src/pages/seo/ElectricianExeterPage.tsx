@@ -589,7 +589,7 @@ export default function ElectricianExeterPage() {
     <GuideTemplate
       localArea="Exeter"
       title="Electrician in Exeter | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Exeter. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, period property rewiring…"
+      description="Find qualified, registered electricians in Exeter. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, period property rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

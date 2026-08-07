@@ -644,7 +644,7 @@ export default function ConduitInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Conduit Installation Guide UK | Steel & Plastic Conduit"
-      description="Complete UK guide to conduit installation. Heavy gauge steel vs PVC conduit, oval vs round, bending (radius requirements), draw wires, junction boxes…"
+      description="Complete UK guide to conduit installation. Heavy gauge steel vs PVC conduit, oval vs round, bending (radius requirements), draw wires, junction boxes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

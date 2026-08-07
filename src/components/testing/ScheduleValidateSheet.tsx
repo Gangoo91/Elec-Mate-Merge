@@ -10,10 +10,10 @@
  * the verdict turns on and an honest label saying whether the rule is BS 7671
  * or ours.
  */
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { TestResult } from '@/types/testResult';
-import { checkRegulationCompliance } from '@/utils/autoRegChecker';
+import { checkRegulationCompliance, type ZsBasis } from '@/utils/autoRegChecker';
 import type { RegulationWarning } from '@/utils/regulationChecker';
 import { isRealCircuit } from '@/utils/validation/applicability';
 import { cn } from '@/lib/utils';
@@ -33,6 +33,22 @@ interface ScheduleValidateSheetProps {
   earthingArrangement?: string;
   /** Board name, so a multi-board schedule says which one was checked. */
   boardName?: string;
+  /**
+   * Scroll to this circuit and mark it when the sheet opens.
+   *
+   * Set when the sheet is opened from a flagged cell rather than the toolbar.
+   * Without it, tapping a warning on way 15 of a 23-way board lands the
+   * electrician at the top of the list to go and find it again — which is the
+   * hunt the in-cell flag existed to remove.
+   */
+  focusCircuitId?: string | null;
+  /**
+   * Which maximum a measured Zs is judged against — see `ZsBasis`.
+   *
+   * Must match the grid. A sheet that says a circuit fails while the cell it
+   * came from shows no flag is worse than either surface alone.
+   */
+  zsBasis?: ZsBasis;
   /**
    * Turn a finding into an EICR observation.
    *
@@ -121,6 +137,8 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
   testResults,
   earthingArrangement,
   boardName,
+  focusCircuitId,
+  zsBasis,
   onCreateObservation,
 }) => {
   // Findings already raised, so a second tap cannot create a duplicate. Keyed
@@ -144,7 +162,7 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
       }
       checked += 1;
 
-      const { warnings } = checkRegulationCompliance(circuit, earthingArrangement);
+      const { warnings } = checkRegulationCompliance(circuit, earthingArrangement, zsBasis);
       if (warnings.length === 0) continue;
 
       warnings.forEach((w) => {
@@ -175,20 +193,69 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
   const issueCount = totals.critical + totals.warning + totals.info;
   const allClear = circuitsChecked > 0 && issueCount === 0;
 
+  /*
+   * How wide the sheet lets itself get, decided by how much there is to show.
+   *
+   * A fixed two-column grid was the wrong answer at both ends. With one circuit
+   * it put a half-width card against an empty right half of a 2500px sheet —
+   * the electrician reads a narrow strip with a void beside it. With eight it
+   * still only used two columns and made them scroll.
+   *
+   * So the container tracks the content: one finding reads as a document at a
+   * comfortable measure, several pack into columns, many spread to three. The
+   * header uses the same width so its rule lines up with the cards under it.
+   */
+  const severitiesPresent = (['critical', 'warning', 'info'] as const).filter(
+    (sev) => totals[sev] > 0
+  ).length;
+
+  const density = findings.length >= 5 ? 3 : findings.length >= 2 ? 2 : 1;
+  const shellCn =
+    density === 3 ? 'max-w-[1680px]' : density === 2 ? 'max-w-6xl' : 'max-w-3xl';
+  const gridCn =
+    density === 3 ? 'sm:grid-cols-2 xl:grid-cols-3' : density === 2 ? 'sm:grid-cols-2' : '';
+
+  /**
+   * Bring the circuit that was tapped into view.
+   *
+   * Deferred a frame: the sheet animates in, and scrolling an element that has
+   * not been laid out yet silently does nothing. `block: 'center'` rather than
+   * 'start' so the finding sits in the middle of the sheet with its neighbours
+   * visible — landing flush against the top reads as though nothing moved.
+   */
+  useEffect(() => {
+    if (!open || !focusCircuitId) return;
+    const t = window.setTimeout(() => {
+      document
+        .querySelector(`[data-validate-circuit="${focusCircuitId}"]`)
+        ?.scrollIntoView({ block: 'center', behavior: 'auto' });
+    }, 260);
+    return () => window.clearTimeout(t);
+  }, [open, focusCircuitId]);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
+        /*
+         * Height follows the content, capped at the standard 85vh.
+         *
+         * Fixed at 85vh, a board with one finding opened a sheet that was more
+         * than half empty — the reader's eye travels down expecting more and
+         * finds nothing, which reads as "something failed to load". A long list
+         * still fills to 85vh and scrolls exactly as before; the cap is what the
+         * standard is protecting, not the floor.
+         */
+        className="flex max-h-[85vh] flex-col rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
       >
-        <div className="flex h-full flex-col bg-background">
+        <div className="flex min-h-0 flex-1 flex-col bg-background">
           {/* Header.
               No colour wash. Orange at 10% over a near-black ground reads as
               muddy brown, and a full-bleed tint on a 2500px-wide sheet is a lot
               of colour to carry a one-word status. The meaning lives in a solid
               status dot and the counts; the surface stays the app's own. */}
           <div className="border-b border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent px-5 pb-4 pt-5">
-            <div className="mx-auto w-full max-w-6xl">
+            <div className={cn("mx-auto w-full", shellCn)}>
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <span
                   aria-hidden
@@ -205,7 +272,7 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
                       : `${issueCount} thing${issueCount === 1 ? '' : 's'} to look at`}
                 </h2>
 
-                {issueCount > 0 && (
+                {issueCount > 0 && severitiesPresent > 1 && (
                   <div className="flex flex-wrap items-center gap-1.5">
                     {(['critical', 'warning', 'info'] as const)
                       .filter((sev) => totals[sev] > 0)
@@ -234,7 +301,7 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-5">
-            <div className="mx-auto w-full max-w-6xl">
+            <div className={cn("mx-auto w-full", shellCn)}>
             {circuitsChecked === 0 && (
               <p className="text-sm text-white">
                 Add circuits to the schedule and their test values, then validate.
@@ -281,11 +348,19 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
                 below the fold when both would have fitted side by side.
                 `items-start` so a card with one finding does not stretch to
                 match a card with four. */}
-            <div className="grid gap-3 sm:grid-cols-2 sm:items-start">
+            <div className={cn('grid gap-3 sm:items-start', gridCn)}>
               {findings.map((circuit) => (
                 <div
                   key={circuit.id}
-                  className="overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.07] to-white/[0.03]"
+                  data-validate-circuit={circuit.id}
+                  className={cn(
+                    'overflow-hidden rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03]',
+                    // The circuit you came from is named, so the sheet answers
+                    // "where is the thing I tapped" without you reading titles.
+                    circuit.id === focusCircuitId
+                      ? 'border-elec-yellow/60'
+                      : 'border-white/[0.14]'
+                  )}
                 >
                   {/* Circuit header — the way reference as a pill, so it reads
                       as an identifier rather than emphasis. */}
@@ -355,7 +430,7 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
                                     <button
                                       type="button"
                                       onClick={() => setPicking(key)}
-                                      className="mt-2.5 h-9 rounded-lg border border-white/[0.16] bg-white/[0.06] px-3 text-[12.5px] font-semibold text-white touch-manipulation transition-colors hover:bg-white/[0.1]"
+                                      className="mt-2.5 h-9 rounded-lg border border-elec-yellow/50 bg-transparent px-3 text-[12.5px] font-semibold text-elec-yellow touch-manipulation transition-colors hover:border-elec-yellow hover:bg-white/[0.06]"
                                     >
                                       Add as observation
                                     </button>
@@ -414,14 +489,21 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
             </div>
           </div>
 
+          {/* Close is the way out, not the point of the screen. It was a
+              full-bleed elec-yellow bar — the loudest element on a sheet whose
+              actual action ("Add as observation") sat below it in plain grey.
+              Neutral here, and on desktop it sits at the natural end of the
+              reading line rather than spanning the whole width. */}
           <div className="border-t border-white/[0.08] p-4">
+            <div className={cn('mx-auto flex w-full justify-end', shellCn)}>
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform active:scale-[0.99]"
+              className="h-11 w-full touch-manipulation rounded-xl border border-white/[0.14] bg-white/[0.06] text-[15px] font-semibold text-white transition-colors hover:bg-white/[0.1] active:scale-[0.99] sm:w-auto sm:px-8"
             >
               Close
             </button>
+            </div>
           </div>
         </div>
       </SheetContent>

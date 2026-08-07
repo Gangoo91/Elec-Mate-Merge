@@ -645,7 +645,7 @@ export default function ElectricalAcronymsGlossaryPage() {
   return (
     <GuideTemplate
       title="Electrical Acronyms & Glossary | A-Z Reference"
-      description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S…"
+      description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

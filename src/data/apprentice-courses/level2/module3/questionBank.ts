@@ -95,10 +95,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 6,
     question: 'When would you typically use SWA cable?',
     options: [
-      'Final lighting circuits inside a dry dwelling',
-      'Flexible connections to portable hand tools',
+      'Final lighting circuits run in the ceiling void of a dwelling',
+      'Flexible connections to portable hand tools on a 110 V supply',
       'Underground installations and areas requiring mechanical protection',
-      'Data and telecommunications cabling in offices',
+      'Data and telecommunications cabling in commercial office areas',
     ],
     correctAnswer: 2,
     explanation:
@@ -473,10 +473,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 29,
     question: 'What should you do if a power tool starts to vibrate excessively during use?',
     options: [
-      'Increase the speed to work through the vibration',
+      'Increase the speed to work through it',
       'Stop immediately and inspect the tool',
-      'Continue using it but wear thicker gloves',
-      'Ignore it as vibration is normal for power tools',
+      'Continue but wear anti-vibration gloves',
+      'Reduce the pressure and carry on working',
     ],
     correctAnswer: 1,
     explanation:
@@ -983,7 +983,7 @@ export const module3QuestionBank: QuestionBank[] = [
       'Seek clarification and approval for any deviations',
       'Always follow the site specification regardless of safety',
       'Proceed using whichever option is quickest to install',
-      'Ignore both and use your own judgement',
+      'Follow the manufacturer\'s instructions and say nothing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1113,9 +1113,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'How does the IET On-Site Guide require the number of cables permitted in a conduit to be determined?',
     options: [
       'By comparing the sum of the cable factors with the conduit factor from the OSG tables',
-      'By limiting the cables to exactly 50% of the bore',
-      'By weighing the cables against the conduit mass',
-      'By matching the conduit colour to the cable colour',
+      'By limiting the total cable area to exactly 50% of the conduit bore',
+      'By weighing the cables and comparing that with the mass of the conduit',
+      'By matching the conduit size to the largest cable diameter in the run',
     ],
     correctAnswer: 0,
     explanation:
@@ -1612,9 +1612,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 99,
     question: 'Which conduit material is most suitable for explosive atmospheres?',
     options: [
-      'Standard PVC conduit',
-      'Flexible plastic conduit',
-      'Unsheathed singles clipped direct',
+      'Standard heavy-gauge PVC conduit with solvent-welded joints',
+      'Flexible plastic conduit with a separate cpc drawn in',
+      'Unsheathed singles clipped direct to the structure',
       'Galvanised steel conduit with appropriate certification',
     ],
     correctAnswer: 3,
@@ -1938,9 +1938,9 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 119,
     question: 'What should be used to seal cable entries in fire-rated walls?',
     options: [
-      'Standard foam',
-      'Nothing required',
-      'Plastic putty',
+      'Standard expanding foam',
+      'Silicone bathroom sealant',
+      'Plastic grommet strip',
       'Intumescent sealant',
     ],
     correctAnswer: 3,
@@ -2117,10 +2117,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 130,
     question: 'When is RCD protection mandatory for socket outlets?',
     options: [
-      'Only for outdoor socket outlets',
-      'Only for sockets in bathrooms',
+      'For outdoor socket outlets and those in bathrooms',
+      'Only for sockets supplying portable equipment outdoors',
       'For all socket outlets up to 32A in most locations',
-      'Only for sockets used by ordinary persons in kitchens',
+      'For sockets rated above 32A in commercial premises',
     ],
     correctAnswer: 2,
     explanation:
@@ -2251,10 +2251,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 138,
     question: 'What information must be provided with electrical installation certificates?',
     options: [
-      'The retail price of every accessory used',
-      'The names of all site visitors',
+      'The retail price of every accessory and cable used on the job',
+      'The names of everyone who visited the site during the works',
       'Test results, circuit details, and any departures from standards',
-      'A photograph of the completed installation',
+      'A photograph of the completed installation and consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2446,10 +2446,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 150,
     question: 'What documentation should accompany electrical installations?',
     options: [
-      'Only a verbal confirmation to the client',
-      'A receipt for the materials purchased',
+      'A verbal confirmation to the client that the work is complete',
+      'A receipt for the materials purchased from the wholesaler',
       'Installation certificate, test results, and circuit schedules',
-      'A photograph of the consumer unit only',
+      'A photograph of the consumer unit with its circuit chart',
     ],
     correctAnswer: 2,
     explanation:
@@ -4060,7 +4060,7 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      '40ms is the figure given in the product standards BS EN 61008/61009 for a general non-delay device at 5 × IΔn. Note where it comes from: it is a characteristic of the device, not a BS 7671 test requirement. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and Regulation 643.7.3.201 now calls for a single alternating current test at IΔn to verify effectiveness, whatever the RCD type — so the 5 × IΔn test is no longer part of the required verification sequence.',
+      '40ms is the figure given in the product standards BS EN 61008/61009 for a general non-delay device at 5 × IΔn. Note where it comes from: it is a characteristic of the device, not a BS 7671 test requirement. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and Regulation 643.8 now calls for a single alternating current test at IΔn to verify effectiveness, whatever the RCD type — so the 5 × IΔn test is no longer part of the required verification sequence.',
     section: '3.6.3',
     difficulty: 'intermediate',
     topic: 'RCD Testing',
@@ -4085,10 +4085,10 @@ export const module3QuestionBank: QuestionBank[] = [
     id: 250,
     question: 'Who is qualified to issue an Electrical Installation Certificate?',
     options: [
-      'Any person who carried out part of the work',
-      'The client who paid for the installation',
+      'Any operative who carried out part of the installation work on site',
+      'The client who commissioned and paid for the installation work',
       'Qualified and competent person responsible for the design and installation',
-      'The wholesaler who supplied the materials',
+      'The wholesaler who supplied the cables and the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -4127,9 +4127,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Under the Health and Safety at Work etc. Act 1974, what duty does an employee owe whilst at work?',
     options: [
       'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
-      'A duty to provide and pay for all personal protective equipment used on site',
-      'A duty to carry out and record every site risk assessment personally',
-      'A duty to prosecute the employer for any breach of safety law',
+      'A duty to provide, maintain and pay for all the personal protective equipment used by the workforce on site',
+      'A duty to carry out and record every site risk assessment personally before any work begins each day',
+      'A duty to report the employer to the enforcing authority for any breach of health and safety law',
     ],
     correctAnswer: 0,
     explanation:
@@ -4211,10 +4211,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the practical implication for an electrician who is NOT registered with a Competent Person Scheme (e.g. NICEIC, NAPIT, ELECSA) when undertaking notifiable Part P work?',
     options: [
-      'The work is exempt from any notification requirement',
+      'The work is exempt from any notification requirement provided a certificate is issued to the client',
       'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
-      'The work can be self-certified in the same way as a registered installer',
-      'The work may only be carried out under another firm’s registration',
+      'The work can be self-certified and notified retrospectively in the same way as a registered installer',
+      'The work may only be carried out under another registered firm\'s scheme membership and certificates',
     ],
     correctAnswer: 1,
     explanation:
@@ -4228,10 +4228,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Why is following the IET On-Site Guide considered good industry practice even though it is non-statutory?',
     options: [
-      'It overrides BS 7671 where the two disagree',
-      'It is statutory law enforced by the HSE',
+      'It overrides BS 7671 wherever the two documents disagree, because it is the more recent publication',
+      'It is statutory law enforced directly by the Health and Safety Executive and local authority inspectors',
       'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
-      'It replaces the need for inspection and testing',
+      'It replaces the need for inspection and testing on small domestic jobs covered by its standard circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -4288,7 +4288,7 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'A schematic / single-line diagram uses one line per circuit with BS EN 60617 symbols to show electrical relationships. It is the primary diagram type used for distribution boards and switchgear.',
+      'A schematic / single-line diagram uses one line per circuit with IEC 60617 symbols to show electrical relationships. It is the primary diagram type used for distribution boards and switchgear.',
     section: '203-2.2',
     difficulty: 'basic',
     topic: 'Drawing types',
@@ -4298,10 +4298,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the primary purpose of a BLOCK diagram in an electrical drawing pack?',
     options: [
-      'To show the exact physical position of every accessory',
-      'To show every individual conductor connection in detail',
+      'To show the exact physical position of every accessory and the route of every cable on the floor plan',
+      'To show every individual conductor and terminal connection in enough detail for an operative to wire up',
       'To show the overall system at a high level — major items and their interconnections — without internal detail',
-      'To record the measured test results for each circuit',
+      'To record the measured test results for each circuit alongside the protective device type and rating',
     ],
     correctAnswer: 2,
     explanation:
@@ -4313,29 +4313,29 @@ export const module3QuestionBank: QuestionBank[] = [
   {
     id: 263,
     question:
-      'BS EN 60617 is the standard that defines what for electrical drawings?',
+      'IEC 60617 is the standard that defines what for electrical drawings?',
     options: [
-      'The maximum disconnection times for ADS',
-      'The colour coding of fixed-wiring conductors',
-      'The minimum cable sizes for final circuits',
+      'The maximum disconnection times for automatic disconnection of supply',
+      'The colour coding of fixed-wiring and flexible-cable conductors',
+      'The minimum conductor sizes permitted for domestic final circuits',
       'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
     ],
     correctAnswer: 3,
     explanation:
-      'BS EN 60617 specifies the standard graphical symbols (e.g. resistor, switch, socket, fuse, motor, transformer) used across electrical and electronic schematics so that drawings are interpreted consistently.',
+      'IEC 60617 specifies the standard graphical symbols (e.g. resistor, switch, socket, fuse, motor, transformer) used across electrical and electronic schematics so that drawings are interpreted consistently.',
     section: '203-2.3',
     difficulty: 'basic',
-    topic: 'BS EN 60617',
+    topic: 'IEC 60617',
   },
   {
     id: 264,
     question:
-      'Which BS EN 60617 symbol represents a switched socket-outlet on a layout drawing?',
+      'Which IEC 60617 symbol represents a switched socket-outlet on a layout drawing?',
     options: [
       'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
-      'A circle with a cross inside it',
-      'A rectangle divided into three equal sections',
-      'A triangle pointing towards a horizontal line',
+      'A circle with a cross drawn inside it and a short tail to one side',
+      'A rectangle divided into three equal sections with a diagonal line',
+      'A triangle pointing towards a horizontal line with a dot at the apex',
     ],
     correctAnswer: 0,
     explanation:
@@ -4403,9 +4403,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'What is the principal advantage of a RADIAL final circuit over a ring final circuit for socket-outlets?',
     options: [
       'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
-      'It can serve a larger floor area than a ring of the same cable size',
-      'It needs no overcurrent protective device at the origin',
-      'It does not require RCD additional protection',
+      'It can serve a much larger floor area than a ring final circuit wired in the same size of cable, so fewer circuits are needed',
+      'It needs no overcurrent protective device at the origin because the load is spread evenly along the length of the run',
+      'It does not require RCD additional protection, because there is only one route back to the board for any fault current',
     ],
     correctAnswer: 0,
     explanation:
@@ -4436,10 +4436,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Using the IET On-Site Guide cable factor / conduit factor method, what is the rule for a conduit run that contains BENDS or sets and is longer than ~3 m?',
     options: [
-      'Use the straight-run table, ignoring the bends entirely',
-      'Apply a flat 45% fill regardless of the bends',
+      'Use the straight-run table and ignore the bends entirely, since those tabulated factors already include an allowance for them',
+      'Apply a flat 45% space factor regardless of the number of bends in the run or its overall length from box to box',
       'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
-      'Double the number of cables permitted in a straight run',
+      'Double the number of cables permitted in a straight run of the same size, to allow for the extra pulling effort needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -4473,9 +4473,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'In a TN-S system, where does the protective conductor (earth) originate?',
     options: [
       'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
-      'From an earth electrode installed by the consumer at the property',
-      'From the combined PEN conductor split at the cut-out',
-      'From the incoming metallic water service pipe',
+      'An earth electrode installed by the consumer at the property and connected to the main earthing terminal',
+      'The combined PEN conductor of the supply, split into neutral and earth at the DNO cut-out',
+      'The incoming metallic water service pipe, bonded to the main earthing terminal at the intake',
     ],
     correctAnswer: 0,
     explanation:
@@ -4489,10 +4489,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Automatic Disconnection of Supply (ADS) under Reg 411 requires which three coordinated elements to function correctly?',
     options: [
-      'Double insulation, an isolating transformer, and a residual current device',
+      'Double insulation of all connected equipment, an isolating transformer at the origin of the installation, and a residual current device',
       'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
-      'Surge protection, arc fault detection, and overload protection',
-      'A separate earth electrode, a main switch, and a meter',
+      'Surge protection at the origin, arc fault detection on every final circuit, and overload protection at the distribution board',
+      'A separate earth electrode at the property, a lockable main switch on the consumer unit, and a smart meter at the intake',
     ],
     correctAnswer: 1,
     explanation:
@@ -4541,9 +4541,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'Why are EXPOSED conductive parts of a Class I appliance required to be connected to the protective earthing system?',
     options: [
       'To create a low-impedance fault path so that the protective device disconnects within the required time during an L–earth fault',
-      'To reduce the voltage drop along the final circuit',
-      'To increase the current-carrying capacity of the circuit',
-      'To prevent electromagnetic interference with nearby equipment',
+      'To reduce the voltage drop along the final circuit conductors so that the appliance receives its full rated voltage',
+      'To increase the current-carrying capacity of the circuit conductors that supply the appliance and of its flexible cord',
+      'To prevent electromagnetic interference between the appliance and other sensitive electronic equipment nearby',
     ],
     correctAnswer: 0,
     explanation:
@@ -4644,10 +4644,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Why is electricity transmitted across the National Grid at very high voltages (e.g. 400 kV / 275 kV) rather than at 230 V?',
     options: [
-      'To make the conductors safer to touch',
-      'To allow thinner insulation on the conductors',
+      'To make the overhead conductors safer to touch if a line falls to the ground',
+      'To allow thinner insulation to be used on the overhead line conductors',
       'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
-      'To increase the frequency of the supply',
+      'To increase the frequency of the supply delivered to consumers',
     ],
     correctAnswer: 2,
     explanation:
@@ -4695,10 +4695,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'What is the purpose of operating long-distance transmission as 3-phase AC rather than single-phase?',
     options: [
-      'It removes the need for any earthing of the network',
+      'It removes the need for any earthing of the transmission network, because the three phases balance each other out',
       'It produces a constant total power transfer, allows smaller conductors per kW transmitted, and enables efficient rotating-field motors',
-      'It allows the supply frequency to be doubled',
-      'It eliminates all resistive losses in the conductors',
+      'It allows the supply frequency to be doubled, so that the transformers and switchgear can be made physically smaller',
+      'It eliminates all resistive losses in the line conductors, because the three phase currents cancel out in the neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -4763,10 +4763,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Place these in the correct order from generation to consumer:',
     options: [
-      'Consumer → meter → secondary substation → primary substation → generator',
+      'Consumer → meter → secondary substation → primary substation → grid supply point → transmission lines → step-up transformer → generator',
       'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
-      'Generator → consumer → step-down transformer → transmission lines → substation',
-      'Transmission lines → generator → consumer → substation → step-up transformer',
+      'Generator → consumer → step-down transformer → transmission lines → grid supply point → primary substation → secondary substation',
+      'Transmission lines → generator → grid supply point → consumer → secondary substation → primary substation → step-up transformer',
     ],
     correctAnswer: 1,
     explanation:
@@ -4780,10 +4780,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'On the consumer side of a typical UK domestic LV supply, in what order does the supply pass from the street into the consumer unit?',
     options: [
-      'Meter → service cable → main switch → cut-out',
-      'Consumer unit → meter → cut-out → service cable',
+      'Meter → service cable → meter tails → cut-out (with DNO fuse) → main switch in consumer unit',
+      'Consumer unit → meter → meter tails → cut-out (with DNO fuse) → service cable from the street',
       'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
-      'Cut-out → consumer unit → meter → service cable',
+      'Cut-out (with DNO fuse) → consumer unit → main switch → meter tails → meter → service cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -4817,9 +4817,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'A small domestic micro-wind turbine converts which energy sequence?',
     options: [
       'Wind kinetic → mechanical (rotor/generator) → electrical (typically AC, then rectified/inverted as required)',
-      'Light → electrical directly, with no moving parts',
-      'Chemical → thermal → electrical via combustion',
-      'Heat from the ground → mechanical → electrical',
+      'Light photons → electrical directly through a semiconductor, with no moving parts in the conversion',
+      'Chemical → thermal → mechanical → electrical, by burning a fuel to drive a generator set',
+      'Heat from the ground → mechanical compression → electrical, through a refrigerant circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -4833,10 +4833,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'A ground source heat pump (GSHP) is best described as a:',
     options: [
-      'Device that generates electricity from underground heat',
+      'A generating technology that converts low-grade heat from deep underground directly into electricity for the dwelling',
       'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
-      'A boiler that burns gas to heat water for the building',
-      'A battery that stores excess solar generation underground',
+      'A high-efficiency condensing boiler that burns mains gas to heat water for the radiators and the hot water cylinder',
+      'A storage technology that holds surplus solar generation in an underground vessel for release during the evening peak',
     ],
     correctAnswer: 1,
     explanation:
@@ -4850,10 +4850,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Battery Energy Storage Systems (BESS) installed alongside domestic PV provide which primary benefit?',
     options: [
-      'They generate additional electricity from stored heat',
-      'They increase the output of the PV array directly',
+      'They generate additional electricity from the heat given off by the PV modules during the day',
+      'They increase the output of the PV array directly by raising the voltage at the module terminals',
       'They store excess generation for use at times of low generation or high tariff, increasing self-consumption',
-      'They convert the DC array output to AC for the grid',
+      'They convert the DC output of the array into AC, removing the need for a separate inverter',
     ],
     correctAnswer: 2,
     explanation:
@@ -4918,10 +4918,10 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a well-recognised ADVANTAGE of solar PV for a domestic customer?',
     options: [
-      'It produces a constant 24-hour output regardless of weather',
-      'It requires no inverter or connection agreement',
+      'It produces a constant output over the full 24 hours of the day regardless of the weather or the season of the year',
+      'It requires neither an inverter nor a connection agreement with the distribution network operator before it is used',
       'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
-      'It generates the most power on overcast winter nights',
+      'It generates the greatest output on overcast winter nights, which is exactly when household demand is at its highest',
     ],
     correctAnswer: 2,
     explanation:
@@ -4935,9 +4935,9 @@ export const module3QuestionBank: QuestionBank[] = [
     question:
       'Which of the following is a common DISADVANTAGE shared by both micro-wind and solar PV?',
     options: [
-      'They both produce hazardous combustion gases',
-      'They both require a constant supply of fuel',
-      'They both generate only DC that cannot be used',
+      'They both produce hazardous combustion gases that must be flued to outside air well away from any window or opening',
+      'They both require a constant supply of purchased fuel, so the running cost rises whenever the fuel price increases',
+      'They both generate only DC, which cannot be used by a domestic installation without fitting a rotary converter',
       'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
     ],
     correctAnswer: 3,
@@ -4953,9 +4953,9 @@ export const module3QuestionBank: QuestionBank[] = [
       'A homeowner is considering air source heat pump (ASHP) versus a gas combi boiler for heating. Which statement best summarises the trade-off?',
     options: [
       'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
-      'ASHP runs best at a high flow temperature (~70 °C) and so suits poorly insulated homes with small existing radiators',
-      'A gas combi boiler has a higher seasonal efficiency than any ASHP, so it is always the cheaper option to run',
-      'ASHP and a gas boiler have identical carbon emissions, so the choice depends only on the installation cost',
+      'ASHP runs at its best efficiency with a flow temperature of about 70 °C, so it is ideally suited to poorly insulated homes with small existing radiators; a well-insulated dwelling with underfloor heating would gain nothing at all from fitting one',
+      'A gas combi boiler has a higher seasonal efficiency than any ASHP because it burns its fuel on site rather than moving heat around, so it is always the cheaper of the two to run whatever the insulation standard of the dwelling',
+      'An ASHP and a gas boiler produce identical carbon emissions per kWh of heat delivered to the rooms, so the choice between them depends only on the installation cost and on the space available outside the property',
     ],
     correctAnswer: 0,
     explanation:

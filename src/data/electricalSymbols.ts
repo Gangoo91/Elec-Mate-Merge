@@ -1,5 +1,5 @@
 /**
- * Electrical Symbol Library — BS EN 60617 reference
+ * Electrical Symbol Library — IEC 60617 reference
  *
  * Source of truth for the 114 SVG symbols at /public/symbols/<category>/<file>.svg.
  *
@@ -21,7 +21,7 @@
  *   description — 1-3 sentence explanation of what the symbol represents
  *                  and when it is used in UK electrical drawings
  *   useContext — 1-line summary of where you encounter this on site
- *   bs60617    — BS EN 60617 reference number where applicable (optional)
+ *   iec60617    — IEC 60617 reference number where applicable (optional)
  */
 
 export type SymbolCategory =
@@ -45,7 +45,7 @@ export interface ElectricalSymbol {
   altText: string;
   description: string;
   useContext: string;
-  bs60617?: string;
+  iec60617?: string;
 }
 
 export const SYMBOL_CATEGORIES: Array<{
@@ -59,7 +59,7 @@ export const SYMBOL_CATEGORIES: Array<{
     label: 'Switch Symbols',
     slug: 'electrical-switch-symbols',
     description:
-      'One-way, two-way, intermediate, dimmer, key, PIR, pull-cord, timer, emergency stop, isolator and fan-isolator switch symbols to BS EN 60617.',
+      'One-way, two-way, intermediate, dimmer, key, PIR, pull-cord, timer, emergency stop, isolator and fan-isolator switch symbols to IEC 60617.',
   },
   {
     id: 'socket',
@@ -140,7 +140,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'One-Way Switch',
     category: 'switch',
     file: 'switches/1way.svg',
-    altText: 'One-way switch electrical symbol BS EN 60617',
+    altText: 'One-way switch electrical symbol IEC 60617',
     description:
       'A single switch that breaks or makes the live conductor to a load from one position. The most common domestic switch — used for a single lighting circuit controlled from one location.',
     useContext: 'Most lighting circuits, fans, immersion heaters, fixed loads with single control.',
@@ -150,7 +150,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Two-Way Switch',
     category: 'switch',
     file: 'switches/2way.svg',
-    altText: 'Two-way switch electrical symbol BS EN 60617',
+    altText: 'Two-way switch electrical symbol IEC 60617',
     description:
       'A switch with two fixed contacts and one common, allowing control of the same load from two locations. Always used in pairs with a second 2-way switch (e.g. staircase, hall-and-landing).',
     useContext:
@@ -161,7 +161,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Intermediate Switch',
     category: 'switch',
     file: 'switches/intermediate.svg',
-    altText: 'Intermediate switch electrical symbol BS EN 60617',
+    altText: 'Intermediate switch electrical symbol IEC 60617',
     description:
       'A four-terminal switch wired between two 2-way switches to give control from three or more locations. The strappers cross over inside the switch.',
     useContext:
@@ -172,7 +172,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Dimmer Switch',
     category: 'switch',
     file: 'switches/dimmer.svg',
-    altText: 'Dimmer switch electrical symbol BS EN 60617',
+    altText: 'Dimmer switch electrical symbol IEC 60617',
     description:
       'A switch with a variable resistor or electronic dimming module that controls light output. Specify type — leading-edge for incandescent, trailing-edge or LED-rated for modern LED drivers.',
     useContext:
@@ -183,7 +183,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Double Switch (Two-Gang)',
     category: 'switch',
     file: 'switches/double-switch.svg',
-    altText: 'Double two-gang switch electrical symbol BS EN 60617',
+    altText: 'Double two-gang switch electrical symbol IEC 60617',
     description:
       'Two switches in one plate, each controlling a separate circuit. Often shown as a single symbol with two action lines or as two adjacent switch symbols on the drawing.',
     useContext:
@@ -194,7 +194,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Pull-Cord Switch',
     category: 'switch',
     file: 'switches/pull-cord.svg',
-    altText: 'Pull-cord switch electrical symbol BS EN 60617',
+    altText: 'Pull-cord switch electrical symbol IEC 60617',
     description:
       'A ceiling-mounted switch operated by a hanging cord. Required in zone 1 and zone 2 of bathrooms where wall switches inside the room are not permitted under BS 7671 Section 701.',
     useContext:
@@ -205,7 +205,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Fan Isolator (3-Pole)',
     category: 'switch',
     file: 'switches/fan-isolator.svg',
-    altText: 'Fan isolator three-pole switch electrical symbol BS EN 60617',
+    altText: 'Fan isolator three-pole switch electrical symbol IEC 60617',
     description:
       'A 3-pole isolating switch that disconnects live, neutral and switched-live to a bathroom extractor fan. Required for safe maintenance — must be accessible but outside the bathroom zones.',
     useContext:
@@ -216,7 +216,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'PIR Switch (Occupancy Sensor)',
     category: 'switch',
     file: 'switches/pir-switch.svg',
-    altText: 'PIR occupancy sensor switch electrical symbol BS EN 60617',
+    altText: 'PIR occupancy sensor switch electrical symbol IEC 60617',
     description:
       'A switch incorporating a passive infrared movement sensor. Turns the load on when motion is detected and off after a programmed time-out. Often combined with a manual override.',
     useContext:
@@ -227,7 +227,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Timer Switch',
     category: 'switch',
     file: 'switches/timer-switch.svg',
-    altText: 'Timer switch electrical symbol BS EN 60617',
+    altText: 'Timer switch electrical symbol IEC 60617',
     description:
       'A switch that controls load duration — either a momentary push-to-time or a 24-hour/weekly programmable timer. Common for immersion heaters, towel rails, and outdoor lighting.',
     useContext:
@@ -238,7 +238,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Key Switch',
     category: 'switch',
     file: 'switches/key-switch.svg',
-    altText: 'Key-operated switch electrical symbol BS EN 60617',
+    altText: 'Key-operated switch electrical symbol IEC 60617',
     description:
       'A switch operated only with a key — used where unauthorised operation must be prevented. Common in schools, retail, plant rooms and emergency override circuits.',
     useContext:
@@ -249,7 +249,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Emergency Stop (E-Stop)',
     category: 'switch',
     file: 'switches/emergency-stop.svg',
-    altText: 'Emergency stop button electrical symbol BS EN 60617',
+    altText: 'Emergency stop button electrical symbol IEC 60617',
     description:
       'A latching push-button that immediately disconnects supply to dangerous equipment. Mushroom head, red on yellow background. Must be reset deliberately — twist-release or key-reset.',
     useContext:
@@ -260,7 +260,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Isolator (Switch-Disconnector)',
     category: 'switch',
     file: 'switches/isolator.svg',
-    altText: 'Isolator switch-disconnector electrical symbol BS EN 60617',
+    altText: 'Isolator switch-disconnector electrical symbol IEC 60617',
     description:
       'A switching device that fully isolates a circuit or item of equipment for maintenance. Must be lockable in the OFF position per BS 7671 Section 537. Different from a functional switch.',
     useContext:
@@ -271,7 +271,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Heater Switch (45A DP)',
     category: 'switch',
     file: 'switches/heater-switch.svg',
-    altText: 'Heater 45A double-pole switch electrical symbol BS EN 60617',
+    altText: 'Heater 45A double-pole switch electrical symbol IEC 60617',
     description:
       'A 45A double-pole switch with a neon indicator, used for high-load fixed appliances. Switches both live and neutral. Often labelled with the load it controls.',
     useContext:
@@ -284,7 +284,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Single 13A Socket Outlet',
     category: 'socket',
     file: 'sockets/single-13a.svg',
-    altText: 'Single 13A switched socket outlet electrical symbol BS EN 60617',
+    altText: 'Single 13A switched socket outlet electrical symbol IEC 60617',
     description:
       'A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a line indicating switched. UK standard for general-purpose socket circuits.',
     useContext:
@@ -295,7 +295,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Double 13A Socket Outlet',
     category: 'socket',
     file: 'sockets/double-13a.svg',
-    altText: 'Double 13A switched socket outlet electrical symbol BS EN 60617',
+    altText: 'Double 13A switched socket outlet electrical symbol IEC 60617',
     description:
       'A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles back-to-back. Standard outlet for living spaces, bedrooms and offices.',
     useContext:
@@ -306,7 +306,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Fused Spur (Unswitched)',
     category: 'socket',
     file: 'sockets/fused-spur.svg',
-    altText: 'Fused connection unit unswitched electrical symbol BS EN 60617',
+    altText: 'Fused connection unit unswitched electrical symbol IEC 60617',
     description:
       'A Fused Connection Unit (FCU) with internal fuse providing local protection for a fixed appliance. Unswitched version — no front rocker. Used where switching is not needed at the spur.',
     useContext:
@@ -317,7 +317,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Switched Fused Spur',
     category: 'socket',
     file: 'sockets/switched-fused-spur.svg',
-    altText: 'Switched fused connection unit FCU electrical symbol BS EN 60617',
+    altText: 'Switched fused connection unit FCU electrical symbol IEC 60617',
     description:
       'A Fused Connection Unit with a front-panel switch + neon indicator. Allows local isolation of the fixed appliance without resorting to the consumer unit. Most common FCU type.',
     useContext: 'Towel rails, immersion heaters, garden lighting, alarms, garage door operators.',
@@ -327,7 +327,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Unswitched Spur (Non-Fused)',
     category: 'socket',
     file: 'sockets/unswitched-spur.svg',
-    altText: 'Unswitched spur outlet electrical symbol BS EN 60617',
+    altText: 'Unswitched spur outlet electrical symbol IEC 60617',
     description:
       'A connection outlet without integral fuse — relies on the upstream circuit fuse or breaker for protection. Often a flex outlet plate for permanently-wired flex-connected appliances.',
     useContext:
@@ -338,7 +338,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Cooker Outlet (45A)',
     category: 'socket',
     file: 'sockets/cooker-45a.svg',
-    altText: 'Cooker 45A outlet electrical symbol BS EN 60617',
+    altText: 'Cooker 45A outlet electrical symbol IEC 60617',
     description:
       'A 45A cooker connection point — usually a 45A DP switch with optional 13A socket above the worktop, feeding the cooker outlet plate behind the appliance.',
     useContext:
@@ -349,7 +349,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Shaver Socket',
     category: 'socket',
     file: 'sockets/shaver.svg',
-    altText: 'Shaver socket isolating transformer electrical symbol BS EN 60617',
+    altText: 'Shaver socket isolating transformer electrical symbol IEC 60617',
     description:
       'A bathroom-compliant socket with built-in isolating transformer to BS EN 61558-2-5. Permitted in bathroom zone 2 because the transformer galvanically isolates the user from earth.',
     useContext:
@@ -360,7 +360,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'USB Socket',
     category: 'socket',
     file: 'sockets/usb-socket.svg',
-    altText: 'USB charging socket outlet electrical symbol BS EN 60617',
+    altText: 'USB charging socket outlet electrical symbol IEC 60617',
     description:
       'A 13A socket outlet with integrated USB-A or USB-C charging ports. Combines mains and low-voltage charging in one back box. Specify USB-C PD for modern devices.',
     useContext:
@@ -371,7 +371,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Data Socket (RJ45)',
     category: 'socket',
     file: 'sockets/data-socket.svg',
-    altText: 'Data RJ45 ethernet socket electrical symbol BS EN 60617',
+    altText: 'Data RJ45 ethernet socket electrical symbol IEC 60617',
     description:
       'A structured cabling outlet to BS EN 50173. Cat 5e (1 Gb/s), Cat 6 (1 Gb/s longer reach), or Cat 6A (10 Gb/s). Terminated in an RJ45 module.',
     useContext:
@@ -382,7 +382,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Telephone Socket',
     category: 'socket',
     file: 'sockets/telephone.svg',
-    altText: 'Telephone master socket electrical symbol BS EN 60617',
+    altText: 'Telephone master socket electrical symbol IEC 60617',
     description:
       'A telephone master or extension socket. UK master socket has BT engineer test socket; extensions are wired to the master. Increasingly replaced by RJ45 data sockets.',
     useContext: 'Legacy phone wiring, fax machines, alarm phone diallers, FTTC modems.',
@@ -392,7 +392,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'TV Aerial Socket',
     category: 'socket',
     file: 'sockets/tv-aerial.svg',
-    altText: 'TV aerial coaxial socket electrical symbol BS EN 60617',
+    altText: 'TV aerial coaxial socket electrical symbol IEC 60617',
     description:
       'A coaxial outlet for TV aerial, FM/DAB radio or satellite. Multi-output back boxes can combine TV + FM + satellite in one face plate.',
     useContext:
@@ -403,7 +403,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Comms Cabinet Outlet',
     category: 'socket',
     file: 'sockets/comms-cabinet.svg',
-    altText: 'Communications cabinet rack electrical symbol BS EN 60617',
+    altText: 'Communications cabinet rack electrical symbol IEC 60617',
     description:
       'A communications/networking cabinet — typically a 12U or 18U wall-mounted rack housing the patch panel, network switch, router and structured-cabling termination.',
     useContext:
@@ -414,7 +414,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'EV Charger Outlet',
     category: 'socket',
     file: 'sockets/ev-charger.svg',
-    altText: 'EV charger outlet point electrical symbol BS EN 60617',
+    altText: 'EV charger outlet point electrical symbol IEC 60617',
     description:
       'An electric vehicle charge point to BS 7671 Section 722. Typically 7.2 kW single-phase or 22 kW three-phase, with Type 2 (Mennekes) socket or tethered lead.',
     useContext:
@@ -425,7 +425,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Outdoor IP66 Socket',
     category: 'socket',
     file: 'sockets/outdoor-ip66.svg',
-    altText: 'Outdoor weatherproof IP66 socket electrical symbol BS EN 60617',
+    altText: 'Outdoor weatherproof IP66 socket electrical symbol IEC 60617',
     description:
       'A weatherproof socket to IP66 ingress protection. Hinged cover seals against dust and powerful water jets. Must be RCD protected per BS 7671.',
     useContext:
@@ -436,7 +436,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Floor Socket (Floor Box)',
     category: 'socket',
     file: 'sockets/floor-socket.svg',
-    altText: 'Floor socket floor box outlet electrical symbol BS EN 60617',
+    altText: 'Floor socket floor box outlet electrical symbol IEC 60617',
     description:
       'A flush-mounted socket installed in the floor — typically a floor box with two 13A sockets and data outlets. Used in open-plan offices where wall outlets are too distant.',
     useContext: 'Open-plan offices, conference rooms, retail floor displays, exhibition halls.',
@@ -448,7 +448,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Pendant Light',
     category: 'lighting',
     file: 'lighting/pendant.svg',
-    altText: 'Pendant light fitting electrical symbol BS EN 60617',
+    altText: 'Pendant light fitting electrical symbol IEC 60617',
     description:
       'A ceiling-mounted light suspended on a flex or chain from a rose. The most common domestic light fitting — drawn as a circle with a cross.',
     useContext:
@@ -459,7 +459,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Ceiling Light (Flush)',
     category: 'lighting',
     file: 'lighting/ceiling-light.svg',
-    altText: 'Flush ceiling light electrical symbol BS EN 60617',
+    altText: 'Flush ceiling light electrical symbol IEC 60617',
     description:
       'A flush-mounted ceiling light — the fitting sits directly against the ceiling rather than suspended. Common in kitchens, bathrooms and low-ceiling rooms.',
     useContext: 'Kitchens, bathrooms, hallways with low ceilings, loft conversions.',
@@ -469,7 +469,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Downlight (Recessed)',
     category: 'lighting',
     file: 'lighting/downlight.svg',
-    altText: 'Recessed downlight electrical symbol BS EN 60617',
+    altText: 'Recessed downlight electrical symbol IEC 60617',
     description:
       'A recessed downlight set into the ceiling void. Fire-rated downlights are required where they breach a fire-rated ceiling (e.g. flats, loft conversions, above habitable rooms).',
     useContext:
@@ -480,7 +480,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Wall Light',
     category: 'lighting',
     file: 'lighting/wall-light.svg',
-    altText: 'Wall mounted light fitting electrical symbol BS EN 60617',
+    altText: 'Wall mounted light fitting electrical symbol IEC 60617',
     description:
       'A wall-mounted light fitting. Symbol drawn against the wall line of the plan. Often used with dimming or two-way switching for ambience.',
     useContext: 'Bedrooms (bedside), living rooms, hallways, staircases, restaurants.',
@@ -490,7 +490,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Bulkhead Light',
     category: 'lighting',
     file: 'lighting/bulkhead.svg',
-    altText: 'Bulkhead light fitting electrical symbol BS EN 60617',
+    altText: 'Bulkhead light fitting electrical symbol IEC 60617',
     description:
       'A robust enclosed light fitting designed for outdoor or utility use. Typically IP65 with a polycarbonate diffuser. Common with integrated PIR sensor for security.',
     useContext: 'External walls, garages, sheds, plant rooms, communal stairwells.',
@@ -500,7 +500,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Outside Light',
     category: 'lighting',
     file: 'lighting/outside-light.svg',
-    altText: 'Outside light external fitting electrical symbol BS EN 60617',
+    altText: 'Outside light external fitting electrical symbol IEC 60617',
     description:
       'An external light fitting, typically IP44 or higher. Includes wall lights, post lights, ground-mounted spike spots, soffit downlights and porch lights.',
     useContext:
@@ -511,7 +511,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'PIR Sensor (Lighting)',
     category: 'lighting',
     file: 'lighting/pir-sensor.svg',
-    altText: 'PIR motion sensor for lighting control electrical symbol BS EN 60617',
+    altText: 'PIR motion sensor for lighting control electrical symbol IEC 60617',
     description:
       'A passive infrared sensor that detects movement and switches connected lights on. Separate from a PIR switch — the sensor is the input to a relay or control module.',
     useContext:
@@ -522,7 +522,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Emergency Light',
     category: 'lighting',
     file: 'lighting/emergency-light.svg',
-    altText: 'Emergency light non-maintained electrical symbol BS EN 60617',
+    altText: 'Emergency light non-maintained electrical symbol IEC 60617',
     description:
       'A non-maintained emergency light to BS 5266. Off in normal use; switches on automatically when the mains supply fails. Tested monthly and annually per BS 5266-1.',
     useContext: 'Escape routes, stairwells, plant rooms, kitchens, places of assembly.',
@@ -532,7 +532,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Twin Emergency Spot',
     category: 'lighting',
     file: 'lighting/twin-emergency.svg',
-    altText: 'Twin emergency spotlight electrical symbol BS EN 60617',
+    altText: 'Twin emergency spotlight electrical symbol IEC 60617',
     description:
       'A self-contained emergency luminaire with two adjustable spotlights and an internal battery. Provides high-output emergency illumination of escape routes on mains failure.',
     useContext: 'Open-plan offices, retail floors, plant rooms, warehouses, large halls.',
@@ -542,7 +542,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Exit Sign',
     category: 'lighting',
     file: 'lighting/exit-sign.svg',
-    altText: 'Emergency exit sign electrical symbol BS EN 60617',
+    altText: 'Emergency exit sign electrical symbol IEC 60617',
     description:
       'A maintained or non-maintained emergency exit sign to BS EN 1838. Indicates the direction of escape; runs on battery during mains failure for at least 3 hours per BS 5266.',
     useContext: 'Above doors on escape routes, change-of-direction points, top of staircases.',
@@ -552,7 +552,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Fluorescent Fitting (Batten)',
     category: 'lighting',
     file: 'lighting/fluorescent.svg',
-    altText: 'Fluorescent batten light fitting electrical symbol BS EN 60617',
+    altText: 'Fluorescent batten light fitting electrical symbol IEC 60617',
     description:
       'A linear fluorescent or LED-batten fitting. Most modern installations now use LED battens — same symbol applies. Lamp length specified separately (typically 1.2 m or 1.5 m).',
     useContext:
@@ -563,7 +563,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'LED Strip Lighting',
     category: 'lighting',
     file: 'lighting/led-strip.svg',
-    altText: 'LED strip light electrical symbol BS EN 60617',
+    altText: 'LED strip light electrical symbol IEC 60617',
     description:
       'A linear LED tape or strip light. Requires a constant-voltage driver (usually 12 V or 24 V DC). Often dimmable via the driver or via 0-10V / DALI control.',
     useContext:
@@ -574,7 +574,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'High Bay Light',
     category: 'lighting',
     file: 'lighting/high-bay.svg',
-    altText: 'High bay industrial light fitting electrical symbol BS EN 60617',
+    altText: 'High bay industrial light fitting electrical symbol IEC 60617',
     description:
       'A high-output LED or HID light fitting designed for high-ceiling industrial spaces (typically 6-15 m mounting height). Wide-beam or narrow-beam reflectors depending on layout.',
     useContext: 'Warehouses, factories, gymnasiums, indoor sports halls, large retail spaces.',
@@ -586,7 +586,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Consumer Unit',
     category: 'distribution',
     file: 'distribution/consumer-unit.svg',
-    altText: 'Consumer unit fuseboard electrical symbol BS EN 60617',
+    altText: 'Consumer unit fuseboard electrical symbol IEC 60617',
     description:
       'A domestic consumer unit (fuseboard) to BS EN 61439-3. Houses the main switch, RCD/RCBO/MCB protective devices, and (since 2018) SPD and AFDD where required.',
     useContext:
@@ -597,7 +597,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Distribution Board',
     category: 'distribution',
     file: 'distribution/distribution-board.svg',
-    altText: 'Commercial distribution board electrical symbol BS EN 60617',
+    altText: 'Commercial distribution board electrical symbol IEC 60617',
     description:
       'A three-phase or single-phase distribution board to BS EN 61439-3 (commercial). Holds MCBs, RCBOs and MCCBs serving final circuits in commercial and industrial buildings.',
     useContext:
@@ -608,7 +608,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Sub-Main Board',
     category: 'distribution',
     file: 'distribution/sub-main-board.svg',
-    altText: 'Sub-main distribution board electrical symbol BS EN 60617',
+    altText: 'Sub-main distribution board electrical symbol IEC 60617',
     description:
       'A distribution board fed by a sub-main from the main switchboard. Sub-divides the installation into manageable zones; reduces voltage drop on long runs.',
     useContext: 'Large buildings, multi-tenant offices, plant rooms, lift motor rooms, sub-zones.',
@@ -618,7 +618,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'MCB (Miniature Circuit Breaker)',
     category: 'distribution',
     file: 'distribution/mcb.svg',
-    altText: 'MCB miniature circuit breaker electrical symbol BS EN 60617',
+    altText: 'MCB miniature circuit breaker electrical symbol IEC 60617',
     description:
       'A Miniature Circuit Breaker to BS EN 60898. Protects against overload and short-circuit fault current. Types B, C and D differentiate by magnetic trip characteristic.',
     useContext:
@@ -629,7 +629,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'MCCB (Moulded Case CB)',
     category: 'distribution',
     file: 'distribution/mccb.svg',
-    altText: 'MCCB moulded case circuit breaker electrical symbol BS EN 60617',
+    altText: 'MCCB moulded case circuit breaker electrical symbol IEC 60617',
     description:
       'A Moulded Case Circuit Breaker to BS EN 60947-2. Higher current ratings (typically 100-1600 A) and higher breaking capacity than MCBs. Used as main incomers or for large feeders.',
     useContext:
@@ -640,7 +640,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'RCD (Residual Current Device)',
     category: 'distribution',
     file: 'distribution/rcd.svg',
-    altText: 'RCD residual current device electrical symbol BS EN 60617',
+    altText: 'RCD residual current device electrical symbol IEC 60617',
     description:
       'A Residual Current Device to BS EN 61008. Detects imbalance between live and neutral (earth-fault leakage) and trips. 30 mA RCDs provide additional protection against electric shock.',
     useContext:
@@ -651,7 +651,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'RCBO (RCD + MCB Combined)',
     category: 'distribution',
     file: 'distribution/rcbo.svg',
-    altText: 'RCBO residual current breaker with overcurrent electrical symbol BS EN 60617',
+    altText: 'RCBO residual current breaker with overcurrent electrical symbol IEC 60617',
     description:
       'A Residual Current Breaker with Overcurrent protection to BS EN 61009. Combines RCD + MCB in one device. Each circuit has individual earth fault and overload protection.',
     useContext:
@@ -662,7 +662,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'SPD (Surge Protection Device)',
     category: 'distribution',
     file: 'distribution/spd.svg',
-    altText: 'SPD surge protection device electrical symbol BS EN 60617',
+    altText: 'SPD surge protection device electrical symbol IEC 60617',
     description:
       'A Surge Protective Device to BS EN 61643-11. Type 1 (lightning current), Type 2 (transient overvoltage), Type 3 (point of use). BS 7671 443.4 risk assessment usually requires Type 2 at origin.',
     useContext:
@@ -673,7 +673,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Contactor',
     category: 'distribution',
     file: 'distribution/contactor.svg',
-    altText: 'Electrical contactor electrical symbol BS EN 60617',
+    altText: 'Electrical contactor electrical symbol IEC 60617',
     description:
       'An electromagnetically-operated switch for high-current loads. Coil energised = contacts close. Used to control motors, heating, lighting circuits and timed loads remotely.',
     useContext:
@@ -684,7 +684,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Main Switch / Isolator',
     category: 'distribution',
     file: 'distribution/main-isolator.svg',
-    altText: 'Main switch isolator electrical symbol BS EN 60617',
+    altText: 'Main switch isolator electrical symbol IEC 60617',
     description:
       'A main switch-disconnector at the origin of the installation. Disconnects all live conductors (including neutral on TT/IT) and must be lockable in OFF position.',
     useContext:
@@ -695,7 +695,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Electricity Meter',
     category: 'distribution',
     file: 'distribution/meter.svg',
-    altText: 'Electricity meter electrical symbol BS EN 60617',
+    altText: 'Electricity meter electrical symbol IEC 60617',
     description:
       'The utility electricity meter — point of supply, owned by the meter operator. Modern smart meters communicate consumption to the supplier automatically.',
     useContext:
@@ -706,7 +706,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Changeover Switch',
     category: 'distribution',
     file: 'distribution/changeover-switch.svg',
-    altText: 'Changeover switch transfer switch electrical symbol BS EN 60617',
+    altText: 'Changeover switch transfer switch electrical symbol IEC 60617',
     description:
       'A switch that transfers a load between two sources (typically mains and generator). Manual or automatic (ATS). Always break-before-make to prevent backfeeding the grid.',
     useContext: 'Standby generators, UPS bypass, dual-supply critical loads, farms, remote homes.',
@@ -716,7 +716,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Generator Changeover (ATS)',
     category: 'distribution',
     file: 'distribution/generator-changeover.svg',
-    altText: 'Generator automatic transfer switch ATS electrical symbol BS EN 60617',
+    altText: 'Generator automatic transfer switch ATS electrical symbol IEC 60617',
     description:
       'An Automatic Transfer Switch that detects mains failure and switches to a standby generator without manual intervention. Synchronised return-to-mains when supply restored.',
     useContext: 'Hospitals, data centres, telecoms, agricultural sites with standby plant.',
@@ -726,7 +726,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Busbar Chamber',
     category: 'distribution',
     file: 'distribution/busbar-chamber.svg',
-    altText: 'Busbar chamber electrical symbol BS EN 60617',
+    altText: 'Busbar chamber electrical symbol IEC 60617',
     description:
       'A metal enclosure containing busbars to interconnect multiple sub-main cables — typically at the main switchboard. Allows tap-offs to feed distribution boards without joint boxes.',
     useContext: 'Main switchboards, riser shafts, multi-tenant feeder distribution.',
@@ -738,7 +738,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Smoke Detector',
     category: 'safety',
     file: 'safety/smoke-detector.svg',
-    altText: 'Smoke detector electrical symbol BS EN 60617',
+    altText: 'Smoke detector electrical symbol IEC 60617',
     description:
       'An optical or ionisation smoke detector to BS EN 14604 (single-station, domestic) or BS 5839-1 (fire alarm system). Interlinked types signal one another via wire or RF.',
     useContext:
@@ -749,7 +749,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Heat Detector',
     category: 'safety',
     file: 'safety/heat-detector.svg',
-    altText: 'Heat detector electrical symbol BS EN 60617',
+    altText: 'Heat detector electrical symbol IEC 60617',
     description:
       'A fire detector that triggers on a fixed temperature (typically 58°C) or rate-of-rise. Used where smoke detectors would false-alarm (kitchens, garages, dusty areas).',
     useContext:
@@ -760,7 +760,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'CO Detector',
     category: 'safety',
     file: 'safety/co-detector.svg',
-    altText: 'Carbon monoxide CO detector electrical symbol BS EN 60617',
+    altText: 'Carbon monoxide CO detector electrical symbol IEC 60617',
     description:
       'A carbon monoxide detector to BS EN 50291. Required in rooms with combustion appliances under the Smoke and CO Alarm Regs 2022 (England) and similar in Wales/Scotland.',
     useContext:
@@ -771,7 +771,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Fire Alarm Sounder',
     category: 'safety',
     file: 'safety/fire-alarm.svg',
-    altText: 'Fire alarm sounder electrical symbol BS EN 60617',
+    altText: 'Fire alarm sounder electrical symbol IEC 60617',
     description:
       'A fire alarm sounder to BS EN 54-3. Produces minimum 65 dB at the bedhead per BS 5839-1, with the fire-alarm tone defined in BS 5839 Annex E.',
     useContext: 'Commercial premises, HMOs, places of assembly; covered by fire risk assessment.',
@@ -781,7 +781,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Sounder + Beacon',
     category: 'safety',
     file: 'safety/sounder-beacon.svg',
-    altText: 'Combined sounder and beacon fire alarm electrical symbol BS EN 60617',
+    altText: 'Combined sounder and beacon fire alarm electrical symbol IEC 60617',
     description:
       'A combined audible + visual alarm device to BS EN 54-23. The visual indicator is required for the hearing impaired and in high-noise environments where audible signals alone may not be heard.',
     useContext: 'WCs, plant rooms, factories, schools, disabled refuge areas, swimming pools.',
@@ -791,7 +791,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Manual Call Point (Break Glass)',
     category: 'safety',
     file: 'safety/break-glass.svg',
-    altText: 'Manual call point break glass fire alarm electrical symbol BS EN 60617',
+    altText: 'Manual call point break glass fire alarm electrical symbol IEC 60617',
     description:
       'A manual call point to BS EN 54-11. The break-glass/press-glass element used to manually trigger the fire alarm system. Sited near exits and on escape routes.',
     useContext: 'Every fire-alarm system; on escape routes, at exits, at landing levels.',
@@ -801,7 +801,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Emergency Call Point (Disabled WC)',
     category: 'safety',
     file: 'safety/emergency-call-point.svg',
-    altText: 'Emergency call point disabled WC alarm electrical symbol BS EN 60617',
+    altText: 'Emergency call point disabled WC alarm electrical symbol IEC 60617',
     description:
       'A disabled-toilet emergency assistance alarm to BS 8300. Pull-cord activator + reset button + indicator outside the WC. Required under Building Regs Part M.',
     useContext: 'Accessible WCs in commercial buildings, hospitality, public buildings.',
@@ -811,7 +811,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Disabled Refuge Alarm',
     category: 'safety',
     file: 'safety/disabled-alarm.svg',
-    altText: 'Disabled refuge alarm communication point electrical symbol BS EN 60617',
+    altText: 'Disabled refuge alarm communication point electrical symbol IEC 60617',
     description:
       'A two-way emergency voice communication point at a disabled refuge to BS 5839-9. Allows people awaiting evacuation to communicate with the main control room.',
     useContext: 'Stairwells in multi-storey commercial buildings, evacuation lift lobbies.',
@@ -821,7 +821,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Motion Detector (Security)',
     category: 'safety',
     file: 'safety/motion-detector.svg',
-    altText: 'Motion detector intruder alarm electrical symbol BS EN 60617',
+    altText: 'Motion detector intruder alarm electrical symbol IEC 60617',
     description:
       'A PIR or microwave motion detector for an intruder alarm system to BS EN 50131. Typically wall-mounted at 2.0-2.4 m with coverage of 12 m × 12 m for standard PIR.',
     useContext: 'Hallways, large rooms, garages; works with door contacts to form a complete zone.',
@@ -831,7 +831,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'CCTV Camera',
     category: 'safety',
     file: 'safety/cctv.svg',
-    altText: 'CCTV security camera electrical symbol BS EN 60617',
+    altText: 'CCTV security camera electrical symbol IEC 60617',
     description:
       'A CCTV camera — typically IP (PoE-powered, RJ45) or analogue HD. Modern installations are IP cameras over Cat 6 with PoE+ for pan-tilt-zoom models.',
     useContext:
@@ -842,7 +842,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Access Control Reader',
     category: 'safety',
     file: 'safety/access-control.svg',
-    altText: 'Access control card reader electrical symbol BS EN 60617',
+    altText: 'Access control card reader electrical symbol IEC 60617',
     description:
       'A proximity card, fob or biometric reader controlling a maglock or electric strike. Networked to a central controller. Often integrated with the fire alarm for auto-release on alarm.',
     useContext:
@@ -853,7 +853,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Door Entry Panel',
     category: 'safety',
     file: 'safety/door-entry.svg',
-    altText: 'Door entry intercom panel electrical symbol BS EN 60617',
+    altText: 'Door entry intercom panel electrical symbol IEC 60617',
     description:
       'An audio or video door entry panel at a main entrance. Connects to handset stations inside the building. Modern systems are IP-based over Cat 6.',
     useContext: 'Flats, apartments, gated developments, offices with controlled entry.',
@@ -863,7 +863,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Door Release Button',
     category: 'safety',
     file: 'safety/door-release.svg',
-    altText: 'Door release button green exit button electrical symbol BS EN 60617',
+    altText: 'Door release button green exit button electrical symbol IEC 60617',
     description:
       'A green push-button that releases an electrically-locked door from inside (the egress side). Required where access control restricts movement out of a space.',
     useContext: 'Inside doors with maglocks/strikes, server rooms, secure office areas.',
@@ -873,7 +873,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Bell / Door Chime',
     category: 'safety',
     file: 'safety/bell.svg',
-    altText: 'Bell door chime electrical symbol BS EN 60617',
+    altText: 'Bell door chime electrical symbol IEC 60617',
     description:
       'A domestic bell or chime triggered by a push-button at the door. Often supplied via a 12 V transformer in modern wired systems, or battery for wireless.',
     useContext: 'Front door, back door, tradesperson entrance; symbol used on domestic drawings.',
@@ -883,7 +883,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Extractor Fan',
     category: 'safety',
     file: 'safety/extractor-fan.svg',
-    altText: 'Extractor fan electrical symbol BS EN 60617',
+    altText: 'Extractor fan electrical symbol IEC 60617',
     description:
       'A wall- or ceiling-mounted extract fan. Bathroom fans typically interlocked with the light circuit and overrun timer; kitchen fans on a separate switch.',
     useContext:
@@ -894,7 +894,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Thermostat',
     category: 'safety',
     file: 'safety/thermostat.svg',
-    altText: 'Wall thermostat electrical symbol BS EN 60617',
+    altText: 'Wall thermostat electrical symbol IEC 60617',
     description:
       'A room thermostat controlling heating. Mechanical, electronic or smart (Wi-Fi). Wired thermostats need a 230 V supply or a low-voltage transformer.',
     useContext: 'Living room or hallway typically; one zone per heating loop.',
@@ -904,7 +904,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Junction Box',
     category: 'safety',
     file: 'safety/junction-box.svg',
-    altText: 'Junction box wiring electrical symbol BS EN 60617',
+    altText: 'Junction box wiring electrical symbol IEC 60617',
     description:
       'A wiring junction box where cables are joined. Must be accessible per BS 7671 526.3 unless maintenance-free (MF) type. Modern MF boxes use spring terminals.',
     useContext: 'Loft cables, behind sockets, lighting circuits, above accessible ceilings.',
@@ -916,7 +916,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Conduit',
     category: 'containment',
     file: 'containment/conduit.svg',
-    altText: 'Electrical conduit containment symbol BS EN 60617',
+    altText: 'Electrical conduit containment symbol IEC 60617',
     description:
       'A round metal or PVC conduit containing cables. Sizes 16, 20, 25, 32 mm OD per BS EN 61386. Symbol drawn as a single line, often labelled with size and number of cables.',
     useContext:
@@ -927,7 +927,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Trunking',
     category: 'containment',
     file: 'containment/trunking.svg',
-    altText: 'Cable trunking containment symbol BS EN 60617',
+    altText: 'Cable trunking containment symbol IEC 60617',
     description:
       'A rectangular cable enclosure with removable lid. PVC, metal or compartmented. Higher fill capacity than conduit; allows easy cable additions without rewiring.',
     useContext:
@@ -938,7 +938,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Busbar Trunking',
     category: 'containment',
     file: 'containment/busbar-trunking.svg',
-    altText: 'Busbar trunking distribution containment symbol BS EN 60617',
+    altText: 'Busbar trunking distribution containment symbol IEC 60617',
     description:
       'A factory-built busbar system to BS EN 61439-6. Tap-off boxes connect distribution boards or large loads along the run. High current capacity, low impedance.',
     useContext:
@@ -949,7 +949,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Cable Tray',
     category: 'containment',
     file: 'containment/cable-tray.svg',
-    altText: 'Cable tray containment symbol BS EN 60617',
+    altText: 'Cable tray containment symbol IEC 60617',
     description:
       'A perforated metal tray supporting cables along its length. Open-top, allowing heat dissipation. Common sizes 50-600 mm wide.',
     useContext:
@@ -960,7 +960,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Cable Tray Drop',
     category: 'containment',
     file: 'containment/cable-tray-drop.svg',
-    altText: 'Cable tray drop riser containment symbol BS EN 60617',
+    altText: 'Cable tray drop riser containment symbol IEC 60617',
     description:
       'A vertical section of cable tray dropping from a horizontal run to floor level or equipment. Drawn as a tray with directional indication of descent.',
     useContext:
@@ -971,7 +971,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Floor Trunking',
     category: 'containment',
     file: 'containment/floor-trunking.svg',
-    altText: 'Floor trunking surface containment symbol BS EN 60617',
+    altText: 'Floor trunking surface containment symbol IEC 60617',
     description:
       'Trunking installed on the floor surface, typically with a low-profile ramp section. Used where furniture layouts demand power and data at floor level.',
     useContext: 'Open-plan offices with fixed desk grids, exhibition halls, retail floor displays.',
@@ -981,7 +981,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Underfloor Trunking',
     category: 'containment',
     file: 'containment/underfloor-trunking.svg',
-    altText: 'Underfloor trunking buried containment symbol BS EN 60617',
+    altText: 'Underfloor trunking buried containment symbol IEC 60617',
     description:
       'Trunking cast into the floor screed with periodic outlet boxes for floor sockets. Allows discrete power and data delivery without surface-mounted runs.',
     useContext:
@@ -992,7 +992,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Vertical Riser',
     category: 'containment',
     file: 'containment/riser.svg',
-    altText: 'Vertical electrical riser containment symbol BS EN 60617',
+    altText: 'Vertical electrical riser containment symbol IEC 60617',
     description:
       'A vertical shaft containing sub-main cables, busbar trunking, and other services running between floors. Fire-stopped at every floor penetration.',
     useContext: 'Multi-storey commercial buildings, hotels, hospitals, residential blocks.',
@@ -1002,7 +1002,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Floor Box (Multi-Service)',
     category: 'containment',
     file: 'containment/floor-box-multi.svg',
-    altText: 'Floor box multi-service outlet electrical symbol BS EN 60617',
+    altText: 'Floor box multi-service outlet electrical symbol IEC 60617',
     description:
       'A flush-mounted floor outlet housing two 13A sockets, one or two RJ45 data outlets, and optional audio/video connections. Hinged lid keeps the floor flush.',
     useContext:
@@ -1015,7 +1015,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Electric Motor',
     category: 'equipment',
     file: 'equipment/motor.svg',
-    altText: 'Electric motor electrical symbol BS EN 60617',
+    altText: 'Electric motor electrical symbol IEC 60617',
     description:
       'An electric motor — typically three-phase induction. Symbol shows a circle with "M" inside. Specify phase, voltage, kW and starter type (DOL, star-delta, soft starter, VFD).',
     useContext: 'HVAC fans, pumps, lift drives, escalators, industrial machinery.',
@@ -1025,7 +1025,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Transformer',
     category: 'equipment',
     file: 'equipment/transformer.svg',
-    altText: 'Electrical transformer step-down electrical symbol BS EN 60617',
+    altText: 'Electrical transformer step-down electrical symbol IEC 60617',
     description:
       'A two-winding transformer — symbol shows two coupled coils. Step-up or step-down depending on turns ratio. Used for LV-LV (e.g. 230-12V) or HV-LV (e.g. 11kV-415V).',
     useContext:
@@ -1036,7 +1036,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'UPS (Uninterruptible Power Supply)',
     category: 'equipment',
     file: 'equipment/ups.svg',
-    altText: 'UPS uninterruptible power supply electrical symbol BS EN 60617',
+    altText: 'UPS uninterruptible power supply electrical symbol IEC 60617',
     description:
       'An online or line-interactive UPS. Maintains supply to critical loads during mains failure (typically 10-30 minutes) until generator starts or supply restored.',
     useContext: 'Data centres, server rooms, hospital ITU, telephone exchanges, security systems.',
@@ -1046,7 +1046,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Sub-Main',
     category: 'equipment',
     file: 'equipment/sub-main.svg',
-    altText: 'Sub-main supply cable electrical symbol BS EN 60617',
+    altText: 'Sub-main supply cable electrical symbol IEC 60617',
     description:
       'A sub-main supply — a cable feeding a distribution board from a higher-level board. Sized to handle the maximum demand of all downstream final circuits.',
     useContext:
@@ -1057,7 +1057,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Industrial Fan',
     category: 'equipment',
     file: 'equipment/fan.svg',
-    altText: 'Industrial extraction fan electrical symbol BS EN 60617',
+    altText: 'Industrial extraction fan electrical symbol IEC 60617',
     description:
       'A large-volume fan — axial, centrifugal or in-line. Drawn on plans where the electrical supply termination is shown. Often supplied via local isolator.',
     useContext:
@@ -1068,7 +1068,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Pump',
     category: 'equipment',
     file: 'equipment/pump.svg',
-    altText: 'Electrical pump motor electrical symbol BS EN 60617',
+    altText: 'Electrical pump motor electrical symbol IEC 60617',
     description:
       'A pump driven by an electric motor — water, heating circulator, condensate, sewage. Symbol typically shows pump body with electrical termination point.',
     useContext:
@@ -1079,7 +1079,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Air Handling Unit (AHU)',
     category: 'equipment',
     file: 'equipment/ahu.svg',
-    altText: 'Air handling unit AHU electrical symbol BS EN 60617',
+    altText: 'Air handling unit AHU electrical symbol IEC 60617',
     description:
       'An air handling unit containing fans, filters, coils and dampers. Electrically intensive — fan motors, heating/cooling coil pumps, controls all need supply.',
     useContext: 'Plant rooms serving HVAC for commercial buildings, hospitals, retail, hotels.',
@@ -1089,7 +1089,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Lift / Elevator',
     category: 'equipment',
     file: 'equipment/lift.svg',
-    altText: 'Lift elevator electrical symbol BS EN 60617',
+    altText: 'Lift elevator electrical symbol IEC 60617',
     description:
       'A lift drive — supplied from a dedicated three-phase circuit with its own isolation per BS 7671 Section 530. Lift motor rooms require lockable disconnection.',
     useContext:
@@ -1100,7 +1100,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Panel Board (Motor Control Centre)',
     category: 'equipment',
     file: 'equipment/panel-board.svg',
-    altText: 'Motor control centre MCC panel board electrical symbol BS EN 60617',
+    altText: 'Motor control centre MCC panel board electrical symbol IEC 60617',
     description:
       'A motor control centre or control panel housing multiple motor starters, contactors, and overload protection. PLC-controlled in modern installations.',
     useContext:
@@ -1113,7 +1113,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Boiler',
     category: 'mechanical',
     file: 'mechanical/boiler.svg',
-    altText: 'Gas oil boiler electrical supply symbol BS EN 60617',
+    altText: 'Gas oil boiler electrical supply symbol IEC 60617',
     description:
       'A heating boiler — gas, oil, or electric. Even gas/oil boilers need a 230 V supply for pumps, controls, and ignition. Supplied via switched fused spur.',
     useContext:
@@ -1124,7 +1124,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Water Heater (Immersion)',
     category: 'mechanical',
     file: 'mechanical/water-heater.svg',
-    altText: 'Electric water heater immersion electrical symbol BS EN 60617',
+    altText: 'Electric water heater immersion electrical symbol IEC 60617',
     description:
       'An electric water heater — usually a 3 kW immersion in a hot water cylinder, or instantaneous undersink/handwash unit. Supplied from a dedicated radial.',
     useContext:
@@ -1135,7 +1135,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Panel Heater',
     category: 'mechanical',
     file: 'mechanical/panel-heater.svg',
-    altText: 'Electric panel heater wall heater electrical symbol BS EN 60617',
+    altText: 'Electric panel heater wall heater electrical symbol IEC 60617',
     description:
       'A wall-mounted electric panel heater — convection, fan-assisted, or radiant. Sizes typically 0.5-2.5 kW. Often timer/thermostat controlled.',
     useContext:
@@ -1146,7 +1146,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Air Conditioning Unit',
     category: 'mechanical',
     file: 'mechanical/air-conditioning.svg',
-    altText: 'Air conditioning unit split system electrical symbol BS EN 60617',
+    altText: 'Air conditioning unit split system electrical symbol IEC 60617',
     description:
       'An air conditioning unit — split system or VRV/VRF. Indoor unit + outdoor condenser. Electrical supply usually fed to the outdoor unit which powers the indoor head.',
     useContext:
@@ -1157,7 +1157,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Fan Coil Unit (FCU)',
     category: 'mechanical',
     file: 'mechanical/fan-coil-unit.svg',
-    altText: 'Fan coil unit FCU HVAC electrical symbol BS EN 60617',
+    altText: 'Fan coil unit FCU HVAC electrical symbol IEC 60617',
     description:
       'A fan coil unit — local fan + heating/cooling coil supplied from a central plant. Provides zone-level temperature control in commercial HVAC.',
     useContext:
@@ -1168,7 +1168,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Electric Towel Rail',
     category: 'mechanical',
     file: 'mechanical/towel-rail.svg',
-    altText: 'Electric towel rail bathroom electrical symbol BS EN 60617',
+    altText: 'Electric towel rail bathroom electrical symbol IEC 60617',
     description:
       'A heated towel rail with an integral element. Typically 100-600 W. Supplied via switched fused spur outside the bathroom; must be RCD-protected.',
     useContext:
@@ -1179,7 +1179,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Heater (General)',
     category: 'mechanical',
     file: 'mechanical/heater.svg',
-    altText: 'Electric heater electrical symbol BS EN 60617',
+    altText: 'Electric heater electrical symbol IEC 60617',
     description:
       'A general-purpose electric heater symbol — covers radiant, convection, fan and oil-filled portable heaters. Supplied via switched fused spur or socket.',
     useContext: 'Domestic supplementary heating, offices, workshops, garages.',
@@ -1189,7 +1189,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Hand Dryer',
     category: 'mechanical',
     file: 'mechanical/hand-dryer.svg',
-    altText: 'Electric hand dryer electrical symbol BS EN 60617',
+    altText: 'Electric hand dryer electrical symbol IEC 60617',
     description:
       'A commercial hand dryer — typically 1.5-2.5 kW. Supplied via switched fused spur with local isolation. RCD protected per BS 7671 411.3.3.',
     useContext:
@@ -1202,7 +1202,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Solar PV Panel',
     category: 'renewables',
     file: 'renewables/solar-panel.svg',
-    altText: 'Solar photovoltaic PV panel electrical symbol BS EN 60617',
+    altText: 'Solar photovoltaic PV panel electrical symbol IEC 60617',
     description:
       'A solar photovoltaic panel. Typical residential modules 360-450 W. Arrays wired in series strings (matching inverter MPPT voltage window) and parallel to scale capacity.',
     useContext:
@@ -1213,7 +1213,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'PV Inverter',
     category: 'renewables',
     file: 'renewables/inverter.svg',
-    altText: 'Solar PV inverter DC-AC electrical symbol BS EN 60617',
+    altText: 'Solar PV inverter DC-AC electrical symbol IEC 60617',
     description:
       'A solar PV inverter converting DC from the array to AC for grid synchronisation. Single-phase up to ~3.68 kW (G98), three-phase above (G99). Hybrid types include battery interface.',
     useContext: 'Loft, plant room, garage wall; close to consumer unit for short AC tails.',
@@ -1223,7 +1223,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Battery Storage',
     category: 'renewables',
     file: 'renewables/battery.svg',
-    altText: 'Battery energy storage system BESS electrical symbol BS EN 60617',
+    altText: 'Battery energy storage system BESS electrical symbol IEC 60617',
     description:
       'A battery energy storage system (BESS) — typically lithium iron phosphate (LFP). Sizes 5-15 kWh domestic, up to MWh commercial. AC-coupled or DC-coupled to PV.',
     useContext:
@@ -1234,7 +1234,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'EV Distribution Board',
     category: 'renewables',
     file: 'renewables/ev-distribution.svg',
-    altText: 'EV charger distribution board electrical symbol BS EN 60617',
+    altText: 'EV charger distribution board electrical symbol IEC 60617',
     description:
       'A dedicated distribution board for one or more EV chargers — usually with load management, dynamic load balancing, and Type A RCDs or RDC-DD per BS 7671 722.531.',
     useContext:
@@ -1245,7 +1245,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Generator',
     category: 'renewables',
     file: 'renewables/generator.svg',
-    altText: 'Generator backup power electrical symbol BS EN 60617',
+    altText: 'Generator backup power electrical symbol IEC 60617',
     description:
       'An on-site generator — diesel, gas or biogas. Used as standby for grid failure or as primary supply off-grid. Symbol shows a circle with "G".',
     useContext:
@@ -1258,7 +1258,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'BMS Controller',
     category: 'controls',
     file: 'controls/bms-controller.svg',
-    altText: 'Building management system BMS controller electrical symbol BS EN 60617',
+    altText: 'Building management system BMS controller electrical symbol IEC 60617',
     description:
       'A Building Management System (BMS) controller — central or distributed unit that schedules HVAC, lighting and other plant. BACnet, Modbus or proprietary protocols.',
     useContext:
@@ -1269,7 +1269,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Control Panel',
     category: 'controls',
     file: 'controls/control-panel.svg',
-    altText: 'Electrical control panel electrical symbol BS EN 60617',
+    altText: 'Electrical control panel electrical symbol IEC 60617',
     description:
       'A local control panel — typically housing a PLC, contactors, overloads, and HMI for a discrete piece of plant or process line.',
     useContext: 'Industrial plant, water treatment, packaging lines, kitchen extract control.',
@@ -1279,7 +1279,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Lighting Control Module',
     category: 'controls',
     file: 'controls/lighting-control.svg',
-    altText: 'Lighting control module DALI KNX electrical symbol BS EN 60617',
+    altText: 'Lighting control module DALI KNX electrical symbol IEC 60617',
     description:
       'A lighting control module — DALI gateway, KNX dimmer, Lutron QS module, or wireless mesh controller. Schedules, scenes, daylight harvesting and occupancy linkage.',
     useContext:
@@ -1290,7 +1290,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Generic Sensor',
     category: 'controls',
     file: 'controls/sensor.svg',
-    altText: 'BMS sensor occupancy temperature electrical symbol BS EN 60617',
+    altText: 'BMS sensor occupancy temperature electrical symbol IEC 60617',
     description:
       'A generic BMS sensor input — temperature, CO2, occupancy, light level. Wired back to a BMS controller or PLC. 0-10 V, 4-20 mA or digital bus.',
     useContext:
@@ -1301,7 +1301,7 @@ export const SYMBOLS: ElectricalSymbol[] = [
     name: 'Humidity Sensor',
     category: 'controls',
     file: 'controls/humidity-sensor.svg',
-    altText: 'Humidity sensor electrical symbol BS EN 60617',
+    altText: 'Humidity sensor electrical symbol IEC 60617',
     description:
       'A relative humidity sensor — typically 0-100% RH range. Used to control extract fans, HVAC dampers, dehumidifiers; common in bathrooms, swimming pools, archives.',
     useContext: 'Bathroom fan control, indoor air quality monitoring, art gallery + archive HVAC.',

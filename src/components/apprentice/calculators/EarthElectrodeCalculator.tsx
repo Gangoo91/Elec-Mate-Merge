@@ -17,6 +17,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { earthElectrodeContent } from './content/earth-electrode';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -217,381 +218,397 @@ const EarthElectrodeCalculator = () => {
       title="Earth Electrode Calculator"
       description="Calculate earth rod resistance for TT systems per BS 7671 Section 542"
     >
-      {/* Soil Type */}
-      <CalculatorSelect
-        label="Soil Type"
-        value={soilType}
-        onChange={setSoilType}
-        options={soilTypeOptions}
-      />
-
-      {soilType === 'custom' && (
-        <CalculatorInput
-          label="Soil Resistivity"
-          unit="Ωm"
-          type="text"
-          inputMode="decimal"
-          value={customResistivity}
-          onChange={setCustomResistivity}
-          placeholder="e.g., 75"
-          hint="Measure with earth resistivity meter"
-        />
-      )}
-
-      {/* Electrode Details */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Rod Length"
-          unit="m"
-          type="text"
-          inputMode="decimal"
-          value={electrodeLength}
-          onChange={setElectrodeLength}
-          placeholder="2.4"
-        />
-        <CalculatorSelect
-          label="Rod Type"
-          value={electrodeDiameter}
-          onChange={setElectrodeDiameter}
-          options={diameterOptions}
-        />
-      </CalculatorInputGrid>
-
-      {/* Multiple Rods */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Number of Rods"
-          type="text"
-          inputMode="numeric"
-          value={numberOfRods}
-          onChange={setNumberOfRods}
-          placeholder="1"
-        />
-        {parseInt(numberOfRods) > 1 && (
-          <CalculatorInput
-            label="Rod Spacing"
-            unit="m"
-            type="text"
-            inputMode="decimal"
-            value={rodSpacing}
-            onChange={setRodSpacing}
-            placeholder="3"
-            hint="Min 2× rod length"
-          />
-        )}
-      </CalculatorInputGrid>
-
-      {/* Target Resistance */}
-      <CalculatorInput
-        label="Target Resistance"
-        unit="Ω"
-        type="text"
-        inputMode="decimal"
-        value={targetResistance}
-        onChange={setTargetResistance}
-        placeholder="200"
-        hint="TT systems typically need Ra × Ia ≤ 50V"
-      />
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate()}
-        calculateLabel="Calculate Resistance"
-        showReset={!!result}
-      />
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={result.meetsTarget ? 'pass' : 'fail'}
-              label={result.meetsTarget ? 'Meets Target' : 'Exceeds Target'}
+      <CalculatorPanes
+        form={
+          <>
+            {/* Soil Type */}
+            <CalculatorSelect
+              label="Soil Type"
+              value={soilType}
+              onChange={setSoilType}
+              options={soilTypeOptions}
             />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
 
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Total Resistance</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.totalResistance.toFixed(1)} Ω
-            </p>
-            <p className="text-sm text-white mt-2">Target: ≤{result.target} Ω</p>
-          </div>
-
-          {/* Result cards */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Single Rod"
-              value={result.singleRodResistance.toFixed(1)}
-              unit="Ω"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Soil Resistivity"
-              value={result.resistivity.toString()}
-              unit="Ωm"
-              category={CAT}
-              size="sm"
-            />
-            {result.rods > 1 && (
-              <ResultValue
-                label="Rods in Parallel"
-                value={result.rods.toString()}
-                category={CAT}
-                size="sm"
+            {soilType === 'custom' && (
+              <CalculatorInput
+                label="Soil Resistivity"
+                unit="Ωm"
+                type="text"
+                inputMode="decimal"
+                value={customResistivity}
+                onChange={setCustomResistivity}
+                placeholder="e.g., 75"
+                hint="Measure with earth resistivity meter"
               />
             )}
-            {result.requiredLength && (
-              <ResultValue
-                label="Required Length"
-                value={result.requiredLength.toFixed(1)}
+
+            {/* Electrode Details */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Rod Length"
                 unit="m"
-                category={CAT}
-                size="sm"
+                type="text"
+                inputMode="decimal"
+                value={electrodeLength}
+                onChange={setElectrodeLength}
+                placeholder="2.4"
               />
-            )}
-          </ResultsGrid>
+              <CalculatorSelect
+                label="Rod Type"
+                value={electrodeDiameter}
+                onChange={setElectrodeDiameter}
+                options={diameterOptions}
+              />
+            </CalculatorInputGrid>
 
-          {/* Pass/fail comparison */}
-          <div
-            className={cn(
-              'flex items-center justify-between p-3 rounded-lg border text-sm',
-              result.meetsTarget
-                ? 'bg-green-500/5 border-green-500/20'
-                : 'bg-red-500/5 border-red-500/20'
-            )}
-          >
-            <div className="flex items-center gap-2">
-              {result.meetsTarget ? (
-                <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-              ) : (
-                <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
+            {/* Multiple Rods */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Number of Rods"
+                type="text"
+                inputMode="numeric"
+                value={numberOfRods}
+                onChange={setNumberOfRods}
+                placeholder="1"
+              />
+              {parseInt(numberOfRods) > 1 && (
+                <CalculatorInput
+                  label="Rod Spacing"
+                  unit="m"
+                  type="text"
+                  inputMode="decimal"
+                  value={rodSpacing}
+                  onChange={setRodSpacing}
+                  placeholder="3"
+                  hint="Min 2× rod length"
+                />
               )}
-              <span className="text-white font-medium">
-                {result.meetsTarget ? 'Compliant' : 'Action Required'}
-              </span>
-            </div>
-            <span className="text-white shrink-0 ml-2">
-              {result.totalResistance.toFixed(1)} / {result.target} Ω
-            </span>
-          </div>
+            </CalculatorInputGrid>
 
-          {/* Recommendations */}
-          {result.recommendations.length > 0 && (
-            <div className="space-y-1.5">
-              {result.recommendations.map((rec, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-sm text-white">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                    style={{ backgroundColor: config.gradientFrom }}
+            {/* Target Resistance */}
+            <CalculatorInput
+              label="Target Resistance"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={targetResistance}
+              onChange={setTargetResistance}
+              placeholder="200"
+              hint="TT systems typically need Ra × Ia ≤ 50V"
+            />
+
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate()}
+              calculateLabel="Calculate Resistance"
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={result.meetsTarget ? 'pass' : 'fail'}
+                    label={result.meetsTarget ? 'Meets Target' : 'Exceeds Target'}
                   />
-                  {rec}
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
                 </div>
-              ))}
-            </div>
-          )}
 
-          <CalculatorDivider category={CAT} />
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Total Resistance</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.totalResistance.toFixed(1)} Ω
+                  </p>
+                  <p className="text-sm text-white mt-2">Target: ≤{result.target} Ω</p>
+                </div>
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Input values',
-                formula: `ρ = ${result.resistivity} Ωm | L = ${result.length}m | d = ${result.diameter}m | Target ≤ ${result.target} Ω`,
-                description: `Soil resistivity ρ is the key factor — it varies hugely by soil type and moisture content. Your ${soilType === 'custom' ? 'custom' : soilTypes[soilType as keyof typeof soilTypes]?.name || 'selected'} soil has ρ = ${result.resistivity} Ωm.`,
-              },
-              {
-                label: 'Single rod resistance',
-                formula: `R = (ρ / 2πL) × ln(4L/d) = (${result.resistivity} / 2π × ${result.length}) × ln(4 × ${result.length} / ${result.diameter})`,
-                value: `${result.singleRodResistance.toFixed(1)} Ω`,
-                description:
-                  'The formula models how current flows radially outward from the rod into the surrounding soil. Longer rods reach deeper soil (often wetter) and have more surface area, both reducing resistance.',
-              },
-              ...(result.rods > 1
-                ? [
-                    {
-                      label: 'Parallel reduction',
-                      formula: `${result.rods} rods at ${result.spacing}m spacing → parallel factor applied to ${result.singleRodResistance.toFixed(1)} Ω`,
-                      value: `${result.totalResistance.toFixed(1)} Ω`,
-                      description:
-                        result.spacing / result.length >= 2
-                          ? `Rods spaced at ${result.spacing}m (≥ 2× rod length) — near ideal parallel reduction. Each rod has its own resistance zone with minimal overlap.`
-                          : `Rods spaced at ${result.spacing}m (< 2× rod length) — resistance zones overlap, reducing efficiency. Ideal spacing is at least ${(result.length * 2).toFixed(1)}m for these rods.`,
-                    },
-                  ]
-                : []),
-              {
-                label: 'Compare with target',
-                formula: `${result.totalResistance.toFixed(1)} Ω ${result.meetsTarget ? '≤' : '>'} ${result.target} Ω`,
-                value: result.meetsTarget ? 'MEETS TARGET' : 'EXCEEDS TARGET — action required',
-                description: result.meetsTarget
-                  ? `Result is ${((1 - result.totalResistance / result.target) * 100).toFixed(0)}% below your target — good margin for seasonal variation.`
-                  : 'Earth electrode resistance is too high. Consider longer rods, additional parallel rods, or soil treatment to reduce resistance.',
-              },
-            ]}
-          />
+                {/* Result cards */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Single Rod"
+                    value={result.singleRodResistance.toFixed(1)}
+                    unit="Ω"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Soil Resistivity"
+                    value={result.resistivity.toString()}
+                    unit="Ωm"
+                    category={CAT}
+                    size="sm"
+                  />
+                  {result.rods > 1 && (
+                    <ResultValue
+                      label="Rods in Parallel"
+                      value={result.rods.toString()}
+                      category={CAT}
+                      size="sm"
+                    />
+                  )}
+                  {result.requiredLength && (
+                    <ResultValue
+                      label="Required Length"
+                      value={result.requiredLength.toFixed(1)}
+                      unit="m"
+                      category={CAT}
+                      size="sm"
+                    />
+                  )}
+                </ResultsGrid>
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
+                {/* Pass/fail comparison */}
+                <div
+                  className={cn(
+                    'flex items-center justify-between p-3 rounded-lg border text-sm',
+                    result.meetsTarget
+                      ? 'bg-green-500/5 border-green-500/20'
+                      : 'bg-red-500/5 border-red-500/20'
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    {result.meetsTarget ? (
+                      <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                    ) : (
+                      <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
+                    )}
+                    <span className="text-white font-medium">
+                      {result.meetsTarget ? 'Compliant' : 'Action Required'}
+                    </span>
+                  </div>
+                  <span className="text-white shrink-0 ml-2">
+                    {result.totalResistance.toFixed(1)} / {result.target} Ω
+                  </span>
+                </div>
+
+                {/* Recommendations */}
+                {result.recommendations.length > 0 && (
+                  <div className="space-y-1.5">
+                    {result.recommendations.map((rec, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                          style={{ backgroundColor: config.gradientFrom }}
+                        />
+                        {rec}
+                      </div>
+                    ))}
+                  </div>
                 )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-4"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">
-                    Why Earth Electrode Resistance Matters
-                  </p>
-                  <p className="text-sm text-white">
-                    In a TT system, the earth fault return path goes through the general mass of
-                    earth via your electrode. If the electrode resistance is too high, not enough
-                    fault current flows to trip the RCD quickly — leaving dangerous touch voltages
-                    on exposed metalwork.
-                  </p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Touch voltage safety: Ra × Ia must not exceed 50V — if it does, someone
-                      touching exposed metalwork during a fault could receive a dangerous shock
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      RCD operation: High earth resistance means less fault current flows, which can
-                      slow or prevent RCD tripping
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Seasonal variation: Dry summers can double earth resistance — always test in
-                      worst-case conditions or allow a safety margin
-                    </li>
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Maximum Ra with Common RCDs</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      30mA RCD: Ra ≤ 1667Ω (50V ÷ 0.03A) — easy to achieve, covers most domestic
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      100mA RCD: Ra ≤ 500Ω (50V ÷ 0.1A) — achievable with good soil and standard
-                      rods
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      300mA RCD: Ra ≤ 167Ω (50V ÷ 0.3A) — may need multiple rods in poor soil
-                    </li>
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Improving Poor Results</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Longer rods: Each extra metre of depth significantly reduces resistance,
-                      especially in layered soil
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Parallel rods: Space at least 2× the rod length apart for best reduction —
-                      closer rods share the same soil and give diminishing returns
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Soil treatment: Bentonite or marconite backfill around the rod reduces local
-                      resistivity — useful in sandy or rocky ground
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Relocate: If soil is very poor (rock, dry sand), moving the electrode to a
-                      damper location with better soil can be more effective than adding rods
-                    </li>
-                  </ul>
-                </div>
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Input values',
+                      formula: `ρ = ${result.resistivity} Ωm | L = ${result.length}m | d = ${result.diameter}m | Target ≤ ${result.target} Ω`,
+                      description: `Soil resistivity ρ is the key factor — it varies hugely by soil type and moisture content. Your ${soilType === 'custom' ? 'custom' : soilTypes[soilType as keyof typeof soilTypes]?.name || 'selected'} soil has ρ = ${result.resistivity} Ωm.`,
+                    },
+                    {
+                      label: 'Single rod resistance',
+                      formula: `R = (ρ / 2πL) × ln(4L/d) = (${result.resistivity} / 2π × ${result.length}) × ln(4 × ${result.length} / ${result.diameter})`,
+                      value: `${result.singleRodResistance.toFixed(1)} Ω`,
+                      description:
+                        'The formula models how current flows radially outward from the rod into the surrounding soil. Longer rods reach deeper soil (often wetter) and have more surface area, both reducing resistance.',
+                    },
+                    ...(result.rods > 1
+                      ? [
+                          {
+                            label: 'Parallel reduction',
+                            formula: `${result.rods} rods at ${result.spacing}m spacing → parallel factor applied to ${result.singleRodResistance.toFixed(1)} Ω`,
+                            value: `${result.totalResistance.toFixed(1)} Ω`,
+                            description:
+                              result.spacing / result.length >= 2
+                                ? `Rods spaced at ${result.spacing}m (≥ 2× rod length) — near ideal parallel reduction. Each rod has its own resistance zone with minimal overlap.`
+                                : `Rods spaced at ${result.spacing}m (< 2× rod length) — resistance zones overlap, reducing efficiency. Ideal spacing is at least ${(result.length * 2).toFixed(1)}m for these rods.`,
+                          },
+                        ]
+                      : []),
+                    {
+                      label: 'Compare with target',
+                      formula: `${result.totalResistance.toFixed(1)} Ω ${result.meetsTarget ? '≤' : '>'} ${result.target} Ω`,
+                      value: result.meetsTarget
+                        ? 'MEETS TARGET'
+                        : 'EXCEEDS TARGET — action required',
+                      description: result.meetsTarget
+                        ? `Result is ${((1 - result.totalResistance / result.target) * 100).toFixed(0)}% below your target — good margin for seasonal variation.`
+                        : 'Earth electrode resistance is too high. Consider longer rods, additional parallel rods, or soil treatment to reduce resistance.',
+                    },
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-4"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">
+                          Why Earth Electrode Resistance Matters
+                        </p>
+                        <p className="text-sm text-white">
+                          In a TT system, the earth fault return path goes through the general mass
+                          of earth via your electrode. If the electrode resistance is too high, not
+                          enough fault current flows to trip the RCD quickly — leaving dangerous
+                          touch voltages on exposed metalwork.
+                        </p>
+                        <ul className="space-y-1">
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Touch voltage safety: Ra × Ia must not exceed 50V — if it does, someone
+                            touching exposed metalwork during a fault could receive a dangerous
+                            shock
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            RCD operation: High earth resistance means less fault current flows,
+                            which can slow or prevent RCD tripping
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Seasonal variation: Dry summers can double earth resistance — always
+                            test in worst-case conditions or allow a safety margin
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">
+                          Maximum Ra with Common RCDs
+                        </p>
+                        <ul className="space-y-1">
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            30mA RCD: Ra ≤ 1667Ω (50V ÷ 0.03A) — easy to achieve, covers most
+                            domestic
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            100mA RCD: Ra ≤ 500Ω (50V ÷ 0.1A) — achievable with good soil and
+                            standard rods
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            300mA RCD: Ra ≤ 167Ω (50V ÷ 0.3A) — may need multiple rods in poor soil
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Improving Poor Results</p>
+                        <ul className="space-y-1">
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Longer rods: Each extra metre of depth significantly reduces resistance,
+                            especially in layered soil
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Parallel rods: Space at least 2× the rod length apart for best reduction
+                            — closer rods share the same soil and give diminishing returns
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Soil treatment: Bentonite or marconite backfill around the rod reduces
+                            local resistivity — useful in sandy or rocky ground
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Relocate: If soil is very poor (rock, dry sand), moving the electrode to
+                            a damper location with better soil can be more effective than adding
+                            rods
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Grounded standards + worked example */}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+            )}
 
-          {/* Grounded standards + worked example */}
-          <CalculatorEditorial content={earthElectrodeContent} category={CAT} />
-        </div>
-      )}
-
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Earth Electrode Resistance"
-        formula="R = (ρ / 2πL) × ln(4L/d)"
-        variables={[
-          { symbol: 'R', description: 'Earth electrode resistance (Ω)' },
-          { symbol: 'ρ', description: 'Soil resistivity (Ωm)' },
-          { symbol: 'L', description: 'Electrode length (m)' },
-          { symbol: 'd', description: 'Electrode diameter (m)' },
-        ]}
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Earth Electrode Resistance"
+              formula="R = (ρ / 2πL) × ln(4L/d)"
+              variables={[
+                { symbol: 'R', description: 'Earth electrode resistance (Ω)' },
+                { symbol: 'ρ', description: 'Soil resistivity (Ωm)' },
+                { symbol: 'L', description: 'Electrode length (m)' },
+                { symbol: 'd', description: 'Electrode diameter (m)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={earthElectrodeContent} category={CAT} />}
       />
     </CalculatorCard>
   );

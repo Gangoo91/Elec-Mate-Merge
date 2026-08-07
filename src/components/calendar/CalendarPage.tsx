@@ -24,6 +24,8 @@ import CalendarEventDetail from './CalendarEventDetail';
 import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarAgendaStrip from './CalendarAgendaStrip';
 import CalendarSummaryStrip from './CalendarSummaryStrip';
+import StartDateRequestsCard from '@/components/electrician/booking/StartDateRequestsCard';
+import { useStartDateRequests } from '@/hooks/useStartDateRequests';
 import { containerVariants, itemVariants } from './calendarStyles';
 import {
   useCalendarEvents,
@@ -141,6 +143,7 @@ const CalendarPageContent = () => {
   );
 
   const pulse = useCalendarPulse();
+  const { data: startRequests = [], isLoading: requestsLoading } = useStartDateRequests();
 
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
@@ -334,6 +337,15 @@ const CalendarPageContent = () => {
               onGoToDay={handleGoToDay}
               onGoToWeek={handleGoToWeek}
             />
+          </motion.div>
+
+          {/* ELE-1513 — clients asking to start on a given day. They are not
+              events yet, by design: nothing is agreed until it is confirmed.
+              But the diary is where you would think to answer, so the ask
+              belongs here rather than only on the quote. Renders nothing when
+              nobody is waiting. */}
+          <motion.div variants={itemVariants}>
+            <StartDateRequestsCard requests={startRequests} isLoading={requestsLoading} />
           </motion.div>
 
           {/* The grid is ALWAYS rendered. It used to be swapped out for an

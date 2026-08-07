@@ -489,7 +489,7 @@ export default function ElectricianBlackpoolPage() {
       noindex={true}
       localArea="Blackpool"
       title="Electrician in Blackpool | Local Electricians 2026"
-      description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring…"
+      description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

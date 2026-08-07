@@ -24,7 +24,7 @@ import {
   LayoutGrid,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Fire Alarm Certificate App | BS 5839 Compliant | Elec-Mate';
+const PAGE_TITLE = 'Fire Alarm Certificate App | BS 5839 Compliant';
 const PAGE_DESCRIPTION =
   'BS 5839-1 fire alarm certificates on your phone: zone schedules, cause-and-effect, weekly tests, annual service, professional PDF export. Free.';
 

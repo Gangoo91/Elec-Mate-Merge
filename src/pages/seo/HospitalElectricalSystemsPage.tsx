@@ -664,7 +664,7 @@ export default function HospitalElectricalSystemsPage() {
   return (
     <GuideTemplate
       title="Hospital Electrical Systems | HTM 06-01 Guide"
-      description="Complete guide to hospital electrical systems under HTM 06-01 and BS 7671 Section 710. Essential supply categories, medical IT systems (IPS)…"
+      description="Complete guide to hospital electrical systems under HTM 06-01 and BS 7671 Section 710. Essential supply categories, medical IT systems (IPS)."
       datePublished="2025-09-05"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -410,7 +410,7 @@ export default function AICommissioningSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Commissioning Specialist | Electrical Guidance"
-      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance…"
+      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

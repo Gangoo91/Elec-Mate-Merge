@@ -36,8 +36,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'Insulation resistance (IR) testing verifies that the insulation of conductors is intact and is not leaking current to earth or between conductors. BS 7671 Regulation 643.3 sets out the requirements.',
-  'The test voltage applied depends on the circuit nominal voltage: 250V DC for circuits up to 50V (SELV/PELV), 500V DC for circuits up to 500V (most domestic and commercial circuits), and 1000V DC for circuits above 500V.',
-  'The minimum acceptable insulation resistance value depends on circuit type. For SELV and PELV circuits (tested at 250V DC) the minimum is 0.5 MΩ. For circuits up to 500V — including all standard 230V domestic and 400V commercial circuits (tested at 500V DC) — the minimum is 1 MΩ. In practice, values of 200 MΩ or higher are typical on a sound new installation.',
+  'The test voltage applied depends on the circuit nominal voltage: 250V DC for SELV and PELV circuits, 500V DC for circuits up to and including 500V (most domestic and commercial circuits), and 1000V DC for circuits above 500V.',
+  'The minimum acceptable insulation resistance value depends on circuit type. For SELV and PELV circuits (tested at 250V DC) the minimum is 0.5 MΩ. For circuits up to and including 500V — including all standard 230V domestic and 400V commercial circuits (tested at 500V DC) — the minimum is 1 MΩ. Guidance Note 3 goes further for new work: on a new installation, any value below 20 MΩ should be investigated.',
   'For new circuits, IR testing is carried out on the dead circuit before connection to the supply. All luminaires and appliances should be disconnected — many electronic devices are damaged by IR test voltages.',
   'On live circuit EICR work, IR testing requires safe isolation of the circuit under test and disconnection of sensitive electronic equipment before applying the test voltage.',
 ];
@@ -46,22 +46,22 @@ const faqs = [
   {
     question: 'What test voltage do I use for insulation resistance testing?',
     answer:
-      'BS 7671 Regulation 643.3 specifies the test voltages based on the circuit nominal voltage. For SELV and PELV circuits with a nominal voltage up to 50V AC (or 120V DC), the test voltage is 250V DC and the minimum acceptable IR value is 0.5 MΩ. For circuits up to 500V nominal (which covers the vast majority of UK domestic and commercial circuits at 230V single phase and 400V three phase), the test voltage is 500V DC and the minimum acceptable IR is 1 MΩ. For circuits above 500V (high-voltage systems), the test voltage is 1000V DC and the minimum IR is 1 MΩ. In practice, most domestic and commercial IR testing uses 500V DC.',
+      'BS 7671 Table 64, applied by Regulation 643.3.2, sets the test voltages by circuit nominal voltage. For SELV and PELV circuits (extra-low voltage — not exceeding 50V AC or 120V ripple-free DC), the test voltage is 250V DC and the minimum acceptable IR value is 0.5 MΩ. For circuits up to and including 500V, with the exception of SELV and PELV (this covers the vast majority of UK domestic and commercial circuits at 230V single phase and 400V three phase), the test voltage is 500V DC and the minimum acceptable IR is 1 MΩ. For circuits above 500V, the test voltage is 1000V DC and the minimum IR is 1 MΩ — note that these are still low voltage circuits under the BS 7671 Part 2 definition, which runs to 1000V AC. In practice, most domestic and commercial IR testing uses 500V DC.',
   },
   {
     question: 'What is the minimum acceptable insulation resistance value?',
     answer:
-      'Under BS 7671:2018+A4:2026 Regulation 643.3, the minimum acceptable insulation resistance is 1 MΩ for circuits up to 500V (tested at 500V DC). However, 1 MΩ is a pass-fail threshold, not a target. A healthy new installation should produce readings well above 200 MΩ — readings close to 1 MΩ on a new installation warrant further investigation even though they technically pass. On an EICR of an older installation, a reading between 1 MΩ and 2 MΩ may be a C3 (improvement recommended), particularly if there is a downward trend from previous inspection results. A reading below 1 MΩ is a clear failure and must be coded as C2 or C1 depending on the risk.',
+      'Under BS 7671:2018+A4:2026 Table 64 (Regulation 643.3.2), the minimum acceptable insulation resistance is 1 MΩ for circuits up to and including 500V (tested at 500V DC). However, 1 MΩ is a pass-fail threshold, not a target. Guidance Note 3 states that a value as low as 1 MΩ conforms to the Regulations, but that on a new installation any reading below 20 MΩ should be investigated — subdivide the installation and test individual circuits to find the cause. Guidance Note 3 also makes clear that the assessment of a reading depends on the age and type of installation, cable lengths, and environmental conditions: a value that would prompt investigation on new work may be acceptable in context on an older installation. A reading below the Table 64 minimum is a clear failure and is coded on an EICR according to the risk it presents.',
   },
   {
     question: 'How do I carry out an insulation resistance test on a new circuit?',
     answer:
-      'Ensure the circuit is de-energised and that all fuses or MCBs are removed or locked off. Link the line and neutral conductors together at the consumer unit or distribution board so the entire circuit (both conductors plus the CPC) is tested as a group. Disconnect all luminaires, switches, sockets, and appliances from the circuit — many contain electronic components (LED drivers, motor capacitors, SPDs) that will be damaged by the 500V test voltage. Connect the IR tester between the linked L+N conductors and earth, apply the test voltage for at least 1 minute (some instruments recommend a shorter stabilisation period — follow the manufacturer guidance), and record the reading. Also test between L and N with the link in place (or remove the link and test L to N separately) to verify insulation between conductors.',
+      'Ensure the circuit is de-energised and that all fuses or MCBs are removed or locked off. Link the line and neutral conductors together at the consumer unit or distribution board so the entire circuit (both conductors plus the CPC) is tested as a group. Disconnect the current-using equipment — luminaires, appliances, and anything containing electronics (LED drivers, motor capacitors, SPDs) that will be damaged by the 500V test voltage. Regulation 643.3.2 has the circuit wiring itself connected: leave switches in place and closed so the switch wiring is included in the test, and leave the accessories wired. Connect the IR tester between the linked L+N conductors and earth, apply the test voltage for at least 1 minute (some instruments recommend a shorter stabilisation period — follow the manufacturer guidance), and record the reading. Also test between L and N with the link in place (or remove the link and test L to N separately) to verify insulation between conductors.',
   },
   {
     question: 'What electronic equipment is damaged by insulation resistance testing?',
     answer:
-      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), arc fault detection devices (AFDDs — recommended on AC final circuits under Reg 421.1.7 and increasingly fitted on A4:2026-compliant installations), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. AFDDs are equally vulnerable: their internal electronics are designed for 230V operation and will be damaged by 500V DC. Failure to disconnect either gives a spurious low IR reading and may permanently damage the device.',
+      'Many modern electrical components contain electronics that are rated for the circuit voltage (230V or lower) and will be damaged or destroyed by the 500V or 1000V IR test voltage. Items to always disconnect before IR testing include: LED luminaires and LED drivers, fluorescent light fittings with electronic ballasts, variable speed drives (VSDs) and inverters, surge protective devices (SPDs, also called surge protectors), arc fault detection devices (AFDDs — under the A4:2026 redraft of Reg 421.1.7 these are now required on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommended for the same circuits in all other premises), programmable thermostats, occupancy sensors and presence detectors, socket outlets with USB charging ports, and any connected electronic appliances. Note that SPDs are particularly important to disconnect — they contain metal oxide varistors (MOVs) that conduct at voltages above their clamping voltage, which is typically well below the 500V test voltage. AFDDs are equally vulnerable: their internal electronics are designed for 230V operation and will be damaged by 500V DC. Failure to disconnect either gives a spurious low IR reading and may permanently damage the device.',
   },
   {
     question: 'What does a low insulation resistance reading indicate?',
@@ -76,12 +76,12 @@ const faqs = [
   {
     question: 'What does Regulation 643.3 require?',
     answer:
-      'BS 7671:2018+A4:2026 Regulation 643.3 requires that insulation resistance testing is carried out on all new electrical installations and on existing installations during periodic inspection and testing. The regulation sets out the test voltages and minimum acceptable values tabulated in Table 64. Under the A4:2026 redraft, where equipment is connected and is likely to influence the result or be damaged by the standard test voltage, a 250V DC insulation resistance test shall be performed with the equipment connected — not skipped. This is a procedural change from previous practice. Regulation 643.3 also requires that where results approach (but do not fall below) the minimum value, further investigation is recommended to identify the cause of the relatively low reading.',
+      'BS 7671:2018+A4:2026 Regulation Group 643.3 governs insulation resistance testing. Regulation 643.3.1 requires the insulation resistance to be measured between live conductors, and between live conductors and the protective conductor connected to the earthing arrangement — line and neutral may be connected together for the second of these. Regulation 643.3.2 sets the pass criterion: the result is satisfactory where the main switchboard and each distribution circuit, tested separately with all its final circuits connected but with current-using equipment disconnected, is not less than the value in Table 64. Regulation 643.3.3 (redrafted by A4:2026) covers connected equipment that is likely to influence the result or be damaged: the Table 64 test is applied before that equipment is connected, and then, following connection, a 250V DC test is applied between live conductors and the protective conductor, which must read at least 1 MΩ. Note that manufacturer instructions may still recommend disconnecting some equipment for the 250V DC test. There is no threshold in 643.3 for investigating readings that are above the minimum — that guidance comes from Guidance Note 3, which sets 20 MΩ as the investigation point on a new installation.',
   },
   {
     question: 'When do I use IR testing to verify SELV or PELV circuit separation?',
     answer:
-      'BS 7671:2018+A4:2026 Regulations 643.4.1 to 643.4.3 require that the separation of live parts in SELV and PELV systems — and in circuits protected by electrical separation — is confirmed by a measurement of insulation resistance. The resistance values obtained must comply with Table 64. This applies to ELV circuits that are increasingly common in modern buildings: EV pilot/control circuits, fire detection wiring, Category 6 PoE circuits, and ELV lighting systems. The purpose of the test in this context is not just to verify cable insulation health but to confirm that the required degree of electrical separation from other circuits and from earth has been achieved. Use the 250V DC test voltage (minimum 0.5 MΩ for SELV/PELV as per Table 64) and record the result as a verification of the protection measure, not merely as a cable condition check.',
+      'BS 7671:2018+A4:2026 Regulations 643.4.1 to 643.4.3 require that the separation of live parts in SELV and PELV systems — and in circuits protected by electrical separation — is confirmed by a measurement of insulation resistance. The resistance values obtained must comply with Table 64. This applies to ELV circuits that are increasingly common in modern buildings: EV pilot/control circuits, fire detection wiring, Category 6 PoE circuits, and ELV lighting systems. The purpose of the test in this context is not just to verify cable insulation health but to confirm that the required degree of electrical separation from other circuits and from earth has been achieved. Read the acceptance value carefully: Regulation 643.4 states that the values obtained in the tests of Regulations 643.4.1 to 643.4.3 shall be at least that of the circuit with the highest voltage present, in accordance with Table 64. So the bare SELV/PELV figure of 0.5 MΩ at 250V DC only applies where no higher-voltage circuit is involved; where the ELV circuit is separated from a 230V circuit, the 1 MΩ value for the higher-voltage circuit applies. Guidance Note 3 adds that where the ELV conductors are separated from low voltage conductors by insulation alone — for example within a multicore cable shared with LV circuits — the test voltage is increased to 500V DC and the insulation resistance shall be not less than 1 MΩ. Record the result as a verification of the protection measure, not merely as a cable condition check.',
   },
 ];
 
@@ -117,7 +117,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/rcd-testing-procedure',
     title: 'RCD Testing Procedure',
-    description: 'The 50%, 100%, and 5× RCD tests explained with BS 7671 Regulation 643.8.',
+    description:
+      'The single AC test at IΔn required by BS 7671 Regulation 643.8 since A4:2026 deleted Table 3A.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -188,17 +189,19 @@ const sections = [
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">500V DC</h3>
             <p className="text-white text-sm leading-relaxed">
-              Used for circuits up to 500V nominal. This covers all standard UK domestic and
-              commercial circuits (230V single phase, 400V three phase). Minimum IR value: 1 MΩ.
-              This is the most commonly used test voltage for electricians.
+              Used for circuits up to and including 500V nominal, with the exception of SELV and
+              PELV. This covers all standard UK domestic and commercial circuits (230V single
+              phase, 400V three phase). Minimum IR value: 1 MΩ. This is the most commonly used test
+              voltage for electricians.
             </p>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">1000V DC</h3>
             <p className="text-white text-sm leading-relaxed">
-              Used for circuits above 500V nominal (high-voltage systems). Minimum IR value: 1 MΩ.
-              Rarely used in routine domestic or commercial electrical work; more common in
-              industrial high-voltage installations and some specialist EV charging infrastructure.
+              Used for circuits above 500V nominal. Minimum IR value: 1 MΩ. Rarely used in routine
+              domestic or commercial electrical work; more common in industrial installations.
+              Note these are still low voltage circuits — BS 7671 Part 2 defines low voltage as up
+              to 1000V AC, so &ldquo;above 500V&rdquo; here does not mean high voltage.
             </p>
           </div>
         </div>
@@ -252,8 +255,8 @@ const sections = [
             </div>
           </div>
           <p className="text-white/50 text-xs mt-3">
-            Per BS 7671:2018+A4:2026 Table 64, Regulation 643.3. A pass at the minimum is not a target
-            — a sound new installation reads well above 100 MΩ.
+            Per BS 7671:2018+A4:2026 Table 64, Regulation 643.3.2. A pass at the minimum is not a
+            target — Guidance Note 3 says to investigate any new installation reading below 20 MΩ.
           </p>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -261,25 +264,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sound new installation</strong> — IR readings of 200 MΩ or greater are
-                typical. Values above 100 MΩ indicate healthy insulation with substantial service
-                life remaining.
+                <strong>Sound new installation</strong> — Guidance Note 3 treats 20 MΩ as the
+                investigation point on new work: below that, subdivide the installation and test
+                circuits individually to find the cause, even though 1 MΩ would technically conform
+                to the Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Older installation — borderline</strong> — values between 2 MΩ and 10 MΩ on
-                an existing installation may warrant a C3 observation on an EICR, noting that whilst
-                technically compliant, the deterioration trend should be monitored.
+                <strong>Older installation — judge in context</strong> — Guidance Note 3 is explicit
+                that assessing a reading depends on the age and type of installation, the length of
+                cable involved, and the environmental conditions. A value that would prompt
+                investigation on new work can be acceptable in context on an existing installation,
+                but a downward trend across successive inspections should be recorded and monitored.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failure — below 1 MΩ</strong> — the circuit fails the test. This is a C2
-                (potentially dangerous) observation on an EICR if it represents a genuine insulation
-                fault (rather than a connected electronic device that was not disconnected).
+                <strong>Failure — below the Table 64 minimum</strong> — the circuit fails the test.
+                Before coding it on an EICR, confirm the reading is a genuine insulation fault
+                rather than a connected electronic device that was not disconnected.
               </span>
             </li>
           </ul>
@@ -412,10 +418,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Identify and disconnect AFDDs</strong> — arc fault detection devices (AFDDs)
-                are recommended under Reg 421.1.7 on AC final circuits and are increasingly fitted
-                on A4:2026-compliant boards. Their internal electronics are vulnerable to 500V DC
-                test voltages. Check for AFDDs alongside SPDs before applying any test voltage.
+                <strong>Identify and disconnect AFDDs</strong> — under the A4:2026 redraft of Reg
+                421.1.7, arc fault detection devices are now <em>required</em> on single-phase AC
+                final circuits supplying socket-outlets rated up to 32 A in high rise residential
+                buildings, houses in multiple occupation, purpose-built student accommodation and
+                care homes, and <em>recommended</em> for the same circuits in all other premises.
+                Expect to meet them far more often on A4:2026 boards. Their internal electronics are
+                vulnerable to 500V DC test voltages. Check for AFDDs alongside SPDs before applying
+                any test voltage.
               </span>
             </li>
           </ul>
@@ -445,33 +455,39 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Regulation 643.3 is the primary regulation governing insulation
-          resistance testing. It requires that insulation resistance tests are carried out on all
-          new installations before they are energised and on existing installations during periodic
-          inspection and testing.
+          BS 7671:2018+A4:2026 Regulation Group 643.3 is the primary requirement governing
+          insulation resistance testing, and it splits into three parts.
         </p>
         <p>
-          The regulation specifies that the test must be carried out on each circuit with all
-          equipment connected (or in a representative energised state), except for equipment that is
-          liable to be damaged by the test voltage, which must be disconnected. This creates a
-          practical challenge — modern installations have numerous electronic components that are
-          damaged by IR test voltages, requiring them to be disconnected individually.
+          <strong>643.3.1</strong> says what to measure: the insulation resistance shall be measured
+          between live conductors, and between live conductors and the protective conductor
+          connected to the earthing arrangement. During that second measurement, line and neutral
+          may be connected together — which is why the standard site method is to link L and N and
+          test the pair to earth.
         </p>
         <p>
-          A significant procedural change introduced in the A4:2026 redraft addresses situations
-          where sensitive equipment <em>cannot</em> be disconnected. Under the revised Regulation
-          643.3, the correct response is <strong>not</strong> to skip the test or simply record a
-          limitation. Instead, the equipment shall be connected and a <strong>250V DC</strong>{' '}
-          insulation resistance test shall be performed with the equipment in circuit. The lower
-          test voltage avoids damage to the connected electronics whilst still providing a valid
-          verification of the wiring insulation. This replaces the previous informal practice of
-          noting equipment as "not disconnected" and recording a limitation.
+          <strong>643.3.2</strong> sets the pass criterion, and its wording is precise: the result is
+          satisfactory where the main switchboard and each distribution circuit, tested separately{' '}
+          <em>with all its final circuits connected but with current-using equipment disconnected</em>
+          , is not less than the appropriate value in Table 64. The circuit wiring stays connected;
+          the current-using equipment comes off. Note also that BS 5839-1 sets more specific
+          requirements for fire detection and fire alarm system wiring.
         </p>
         <p>
-          The minimum acceptable IR values from Table 64 are the legal minimum under BS 7671.
-          Where the inspector considers that a reading — although above the minimum — represents a
-          deteriorating condition warranting monitoring, a C3 (improvement recommended) observation
-          should be recorded on the{' '}
+          <strong>643.3.3</strong> is the part redrafted by A4:2026, and it deals with connected
+          equipment that is likely to influence the measurement or be damaged by the test. It sets a
+          two-stage sequence, not an either/or. First, the Table 64 test is applied{' '}
+          <em>prior to the connection</em> of that equipment. Then, following connection of the
+          equipment, a <strong>250V DC</strong> test is applied between live conductors and the
+          protective conductor connected to the earthing arrangement — and that reading{' '}
+          <strong>must be at least 1 MΩ</strong>, not the 0.5 MΩ some assume from the 250V row of
+          Table 64. A note to the regulation warns that manufacturer instructions may still
+          recommend disconnecting particular equipment even for the 250V DC test.
+        </p>
+        <p>
+          The Table 64 values are the minimum for compliance with BS 7671. Where the inspector
+          considers that a reading — although above the minimum — represents a deteriorating
+          condition warranting monitoring, that observation should be recorded on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
         </p>
       </>
@@ -493,16 +509,21 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Always Check for SPDs Before Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Surge protective devices (SPDs) are required under BS 7671:2018+A4:2026 Regulation
-                  443.4 where a risk assessment identifies transient overvoltage as a hazard (e.g.
-                  risk to life, public services, commercial activity, or a large number of
-                  occupants). They are increasingly common and easily missed during inspection.
-                  Before applying any IR test voltage, check the consumer unit, distribution board,
-                  and sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit
-                  gives a reading of virtually zero ohms — which can falsely condemn a sound
-                  installation. Also check for arc fault detection devices (AFDDs), now recommended
-                  on AC final circuits under Reg 421.1.7. AFDDs contain electronics that are equally
-                  vulnerable to 500V DC test voltages and must be disconnected before testing.
+                  Surge protective devices (SPDs) are required under the A4:2026 redraft of
+                  Regulation 443.4.1 where the consequence of a transient overvoltage could be
+                  serious injury to or loss of human life, failure of a safety service as defined in
+                  Part 2, or significant financial or data loss. For all other cases, protection
+                  shall be provided <em>unless</em> the owner of the installation declares it is not
+                  required. A4:2026 deleted the old risk assessment method in Regulation 443.5 and
+                  Annex A443 — so on new work the default is that an SPD is fitted, and you will
+                  meet them far more often. Before applying any IR test voltage, check the consumer
+                  unit, distribution board, and sub-boards for SPDs and disconnect them from the
+                  circuit. An SPD left in circuit drags the reading down and can falsely condemn a
+                  sound installation. Also check for arc fault detection devices (AFDDs), which Reg
+                  421.1.7 now requires on socket-outlet final circuits up to 32 A in high rise
+                  residential buildings, HMOs, purpose-built student accommodation and care homes,
+                  and recommends elsewhere. AFDDs contain electronics that are equally vulnerable to
+                  500V DC test voltages and must be disconnected before testing.
                 </p>
               </div>
             </div>
@@ -536,8 +557,8 @@ const sections = [
 export default function InsulationResistanceTestingPage() {
   return (
     <GuideTemplate
-      title="Insulation Resistance Testing BS 7671 | IR Testing Guide UK"
-      description="Complete guide to insulation resistance testing under BS 7671 for UK electricians. Covers test voltages (250V, 500V, 1000V), minimum values (≥1 MΩ)…"
+      title="Minimum Insulation Resistance: 1 MΩ at 500V DC"
+      description="BS 7671 minimum insulation resistance is 1 MΩ for 230V/400V circuits tested at 500V DC; SELV/PELV 0.5 MΩ at 250V DC. Reg 643.3 Table 64 values explained."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

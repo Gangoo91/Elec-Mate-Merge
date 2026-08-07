@@ -548,7 +548,7 @@ export default function ElectricianYorkPage() {
     <GuideTemplate
       localArea="York"
       title="Electrician in York | Local Electrical Guide"
-      description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety…"
+      description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

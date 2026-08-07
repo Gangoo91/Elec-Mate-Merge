@@ -1,31 +1,49 @@
 import { useState } from 'react';
-import { Lightbulb, AlertTriangle, BookOpen, Calculator, ChevronDown, Info } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
-import { CalculatorDivider } from './CalculatorCard';
-import { CALCULATOR_CONFIG, type CalculatorCategory } from './CalculatorConfig';
+import type { CalculatorCategory } from './CalculatorConfig';
 import type { CalculatorContent } from '@/components/apprentice/calculators/content/types';
 
 interface CalculatorEditorialProps {
   /** The grounded content object for this calculator. */
   content: CalculatorContent;
-  /** Category, used for accent colour (matches the calculator's CalculatorCard). */
-  category: CalculatorCategory;
+  /** Kept for call-site compatibility; no longer drives colour. */
+  category?: CalculatorCategory;
 }
 
 /**
  * Shared editorial layer rendered beneath a calculator's result.
  *
- * Renders up to two collapsibles — "Guidance" (why it matters / when to check /
- * common mistakes) and "Standards & Worked Example" — from grounded content.
- * Sections with no content are omitted; the whole block renders nothing when
- * there is nothing to show.
+ * Two collapsibles — "Guidance" and "Standards & worked example" — built from
+ * grounded content. Sections with no content are omitted; the whole block
+ * renders nothing when there is nothing to show.
+ *
+ * ── What this replaces ──────────────────────────────────────────────────
+ *
+ * A BLUE FOCUS RING. `.calculator-collapsible-trigger` set no focus-visible
+ * style, so keyboard focus fell through to the browser's default blue outline —
+ * on a black-and-volt page, on the one control every calculator shows.
+ *
+ * SIX ICONS. A lightbulb on "Guidance", an info circle on "Why it matters", a
+ * second lightbulb on "When to check", an amber triangle on "Common mistakes",
+ * a calculator on "Worked example" and a book on three more. The design system
+ * is explicit that section headings are typography — no icons, no coloured
+ * dots. The words already say what each block is.
+ *
+ * THREE LEVELS OF BOX. A collapsible containing a card containing sub-cards,
+ * each on `bg-white/[0.04] border-white/5` — a fill four points off the page
+ * inside another fill four points off the page. Sections are separated by a
+ * rule and a heading now, which is how the rest of the app does it.
+ *
+ * PER-CATEGORY ACCENT COLOUR. `config.gradientFrom` was piped into inline
+ * styles on eight elements, so an Ohm's Law heading was a different colour from
+ * a Zs heading for no reason a user could act on. Volt throughout.
  *
  * Provenance is framed as the governing standard ("BS 7671", "BS 5266"…). The
  * internal grounding metadata on the content object is never rendered.
  */
-export const CalculatorEditorial = ({ content, category }: CalculatorEditorialProps) => {
-  const config = CALCULATOR_CONFIG[category];
+export const CalculatorEditorial = ({ content }: CalculatorEditorialProps) => {
   const [showGuidance, setShowGuidance] = useState(false);
   const [showStandards, setShowStandards] = useState(false);
 
@@ -42,219 +60,203 @@ export const CalculatorEditorial = ({ content, category }: CalculatorEditorialPr
   if (!hasGuidance && !hasStandardsSection) return null;
 
   return (
-    <>
-      {/* Guidance */}
+    <div className="mt-4 space-y-2.5">
       {hasGuidance && (
-        <>
-          <CalculatorDivider category={category} />
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">Guidance</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-3">
-              <div className="space-y-4">
-                {/* Why it matters */}
-                {content.whyItMatters.length > 0 && (
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                      <span className="font-medium text-white">Why it matters</span>
-                    </div>
-                    <div className="space-y-2">
-                      {content.whyItMatters.map((text, i) => (
-                        <div
-                          key={i}
-                          className="border-l-2 pl-3"
-                          style={{ borderColor: `${config.gradientFrom}40` }}
-                        >
-                          <p className="text-sm text-white">{text}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+        <Disclosure label="Guidance" open={showGuidance} onOpenChange={setShowGuidance}>
+          <Block title="Why it matters">
+            {content.whyItMatters.map((text, i) => (
+              <p key={i} className="text-[13px] leading-relaxed text-white">
+                {text}
+              </p>
+            ))}
+          </Block>
 
-                {/* When to check */}
-                {(content.whenToCheck?.length ?? 0) > 0 && (
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                      <span className="font-medium text-white">When to check</span>
-                    </div>
-                    <ul className="space-y-1 text-sm text-white">
-                      {content.whenToCheck!.map((text, i) => (
-                        <li key={i}>• {text}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+          {(content.whenToCheck?.length ?? 0) > 0 && (
+            <Block title="When to check">
+              <Bullets items={content.whenToCheck!} />
+            </Block>
+          )}
 
-                {/* Common mistakes */}
-                {(content.commonMistakes?.length ?? 0) > 0 && (
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
-                      <span className="font-medium text-white">Common mistakes</span>
-                    </div>
-                    <ul className="space-y-1 text-sm text-white">
-                      {content.commonMistakes!.map((text, i) => (
-                        <li key={i}>• {text}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
+          {(content.commonMistakes?.length ?? 0) > 0 && (
+            <Block title="Common mistakes">
+              <Bullets items={content.commonMistakes!} />
+            </Block>
+          )}
+        </Disclosure>
       )}
 
-      {/* Standards & Worked Example */}
       {hasStandardsSection && (
-        <>
-          <CalculatorDivider category={category} />
-          <Collapsible open={showStandards} onOpenChange={setShowStandards}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  Standards &amp; Worked Example
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showStandards && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-3">
-              <div className="space-y-4">
-                {/* Worked example */}
-                {content.workedExample && (
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                      <span className="font-medium text-white">Worked example</span>
-                    </div>
-                    <p className="text-sm text-white mb-3">{content.workedExample.scenario}</p>
-                    {content.workedExample.inputs.length > 0 && (
-                      <div className="grid grid-cols-2 gap-2 mb-3">
-                        {content.workedExample.inputs.map((input, i) => (
-                          <div
-                            key={i}
-                            className="p-2 rounded-lg bg-white/[0.04] border border-white/5"
-                          >
-                            <p className="text-xs text-white">{input.label}</p>
-                            <p className="text-sm text-white font-medium">{input.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <div className="p-3 rounded-lg bg-black/30 font-mono text-xs space-y-1">
-                      {content.workedExample.steps.map((step, i) => (
-                        <p key={i} className="text-white">
-                          {step}
-                        </p>
-                      ))}
-                    </div>
-                    <p
-                      className="text-sm font-semibold mt-3"
-                      style={{ color: config.gradientFrom }}
-                    >
-                      {content.workedExample.result}
-                    </p>
-                  </div>
-                )}
+        <Disclosure
+          label="Standards & worked example"
+          open={showStandards}
+          onOpenChange={setShowStandards}
+        >
+          {content.workedExample && (
+            <Block title="Worked example">
+              <p className="text-[13px] leading-relaxed text-white">
+                {content.workedExample.scenario}
+              </p>
 
-                {/* Quick reference table */}
-                {content.quickReference && content.quickReference.rows.length > 0 && (
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                      <span className="font-medium text-white">{content.quickReference.title}</span>
+              {content.workedExample.inputs.length > 0 && (
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3">
+                  {content.workedExample.inputs.map((input, i) => (
+                    <div key={i}>
+                      <dt className="text-[11px] leading-tight text-white">{input.label}</dt>
+                      <dd className="mt-0.5 text-[13.5px] font-semibold tabular-nums leading-tight text-white">
+                        {input.value}
+                      </dd>
                     </div>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-white/10">
-                            {content.quickReference.columns.map((col, i) => (
-                              <th
-                                key={i}
-                                className={cn(
-                                  'py-2 text-white',
-                                  i === 0 ? 'text-left' : 'text-center'
-                                )}
-                              >
-                                {col}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody className="text-white text-xs">
-                          {content.quickReference.rows.map((row, ri) => (
-                            <tr key={ri} className="border-b border-white/5 last:border-0">
-                              {row.map((cell, ci) => (
-                                <td
-                                  key={ci}
-                                  className={cn('py-1.5', ci === 0 ? 'text-left' : 'text-center')}
-                                >
-                                  {cell}
-                                </td>
-                              ))}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                    {content.quickReference.footnote && (
-                      <p className="text-xs text-white mt-2">{content.quickReference.footnote}</p>
-                    )}
-                  </div>
-                )}
+                  ))}
+                </dl>
+              )}
 
-                {/* Standards references */}
-                {content.standards.map((citation, i) => (
-                  <div key={i} className="p-4 rounded-xl bg-white/[0.04] border border-white/5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <BookOpen className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                      <span className="font-medium text-white">{citation.citation}</span>
-                    </div>
-                    <p className="text-sm text-white">{citation.clauseText}</p>
-                    {citation.tableRefs && citation.tableRefs.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-3">
-                        {citation.tableRefs.map((ref, ti) => (
-                          <span
-                            key={ti}
-                            className="px-2 py-0.5 rounded-md text-xs text-white"
-                            style={{
-                              background: `${config.gradientFrom}15`,
-                              border: `1px solid ${config.gradientFrom}30`,
-                            }}
-                          >
-                            {ref}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+              {/* The working, as a monospace block — this is the bit an
+                  apprentice copies into a portfolio, so it has to line up. */}
+              <div className="space-y-1 rounded-xl border border-white/[0.12] bg-black/40 p-3 font-mono text-[11.5px] leading-relaxed text-white">
+                {content.workedExample.steps.map((step, i) => (
+                  <p key={i}>{step}</p>
                 ))}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
+
+              <p className="text-[13.5px] font-semibold text-elec-yellow">
+                {content.workedExample.result}
+              </p>
+            </Block>
+          )}
+
+          {content.quickReference && content.quickReference.rows.length > 0 && (
+            <Block title={content.quickReference.title}>
+              {/* Tables scroll inside their own box — the page never scrolls
+                  sideways on a phone. */}
+              <div className="-mx-1 overflow-x-auto px-1">
+                <table className="w-full min-w-[420px] text-[12.5px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.14]">
+                      {content.quickReference.columns.map((col, i) => (
+                        <th
+                          key={i}
+                          scope="col"
+                          className={cn(
+                            'py-2 font-semibold text-white',
+                            i === 0 ? 'text-left' : 'text-center'
+                          )}
+                        >
+                          {col}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {content.quickReference.rows.map((row, ri) => (
+                      <tr key={ri} className="border-b border-white/[0.08] last:border-0">
+                        {row.map((cell, ci) => (
+                          <td
+                            key={ci}
+                            className={cn(
+                              'py-2 tabular-nums text-white',
+                              ci === 0 ? 'text-left' : 'text-center'
+                            )}
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {content.quickReference.footnote && (
+                <p className="text-[11.5px] leading-relaxed text-white">
+                  {content.quickReference.footnote}
+                </p>
+              )}
+            </Block>
+          )}
+
+          {content.standards.map((citation, i) => (
+            <Block key={i} title={citation.citation}>
+              <p className="text-[13px] leading-relaxed text-white">{citation.clauseText}</p>
+              {citation.tableRefs && citation.tableRefs.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {citation.tableRefs.map((ref, ti) => (
+                    <span
+                      key={ti}
+                      className="rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[10.5px] font-semibold text-elec-yellow"
+                    >
+                      {ref}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </Block>
+          ))}
+        </Disclosure>
       )}
-    </>
+    </div>
   );
 };
+
+/**
+ * One collapsible row. 44px, volt focus ring, chevron rotates.
+ *
+ * `focus-visible:ring-elec-yellow` is the fix for the blue default — the shared
+ * `.calculator-collapsible-trigger` utility styled hover but never focus.
+ */
+const Disclosure = ({
+  label,
+  open,
+  onOpenChange,
+  children,
+}: {
+  label: string;
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  children: React.ReactNode;
+}) => (
+  <Collapsible open={open} onOpenChange={onOpenChange}>
+    <CollapsibleTrigger
+      className={cn(
+        'flex h-11 w-full items-center justify-between gap-3 rounded-xl px-3 text-left',
+        'text-[14px] font-semibold text-white transition-colors touch-manipulation',
+        'hover:bg-white/[0.06]',
+        'focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+      )}
+    >
+      <span>{label}</span>
+      <ChevronDown
+        className={cn(
+          'h-4 w-4 shrink-0 text-white transition-transform duration-200',
+          open && 'rotate-180'
+        )}
+        aria-hidden
+      />
+    </CollapsibleTrigger>
+    <CollapsibleContent>
+      <div className="space-y-5 px-3 pb-1 pt-3">{children}</div>
+    </CollapsibleContent>
+  </Collapsible>
+);
+
+/** A titled block. A rule and a heading, not a nested card. */
+const Block = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <section className="space-y-2 border-t border-white/[0.10] pt-3.5 first:border-0 first:pt-0">
+    <h4 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+      {title}
+    </h4>
+    <div className="space-y-2.5">{children}</div>
+  </section>
+);
+
+/** Bulleted list with a real marker rather than a "•" typed into the text. */
+const Bullets = ({ items }: { items: string[] }) => (
+  <ul className="space-y-1.5">
+    {items.map((text, i) => (
+      <li key={i} className="flex gap-2.5 text-[13px] leading-relaxed text-white">
+        <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+        <span>{text}</span>
+      </li>
+    ))}
+  </ul>
+);
 
 export default CalculatorEditorial;

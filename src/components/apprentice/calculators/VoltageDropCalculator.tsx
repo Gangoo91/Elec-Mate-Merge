@@ -20,6 +20,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { voltageDropContent } from './content/voltage-drop';
 
@@ -381,407 +382,424 @@ const VoltageDropCalculator = () => {
       title="Voltage Drop Calculator"
       description="Calculate voltage drop using BS 7671 Appendix 4 tabulated values"
     >
-      {/* Calculator Inputs */}
-      <div className="space-y-4">
-        {/* Cable Selection Header */}
-        <div className="flex items-center gap-2">
-          <Cable className="h-4 w-4" style={{ color: config.gradientFrom }} />
-          <span className="text-sm font-medium text-white">Cable Selection</span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <CalculatorSelect
-            label="Circuit Type"
-            value={circuit}
-            onChange={setCircuit}
-            options={circuitTypeOptions}
-          />
-
-          <CalculatorSelect
-            label="Supply Voltage"
-            value={supplyVoltage}
-            onChange={setSupplyVoltage}
-            options={voltageOptions}
-          />
-        </div>
-
-        <CalculatorSelect
-          label="Supply Type (Table 4Ab)"
-          value={supplyType}
-          onChange={setSupplyType}
-          options={supplyTypeOptions}
-        />
-
-        <CalculatorSelect
-          label="Cable Family"
-          value={family}
-          onChange={(v) => {
-            setFamily(v);
-            setMethod(Object.keys(mvamData[v] || {})[0] || '');
-            setCableSize('');
-          }}
-          options={familyOptions}
-        />
-
-        <CalculatorSelect
-          label="Installation Method (Reference)"
-          value={method}
-          onChange={(v) => {
-            setMethod(v);
-            setCableSize('');
-          }}
-          options={methodOptions}
-        />
-
-        <CalculatorSelect
-          label="Cable Size"
-          value={cableSize}
-          onChange={setCableSize}
-          options={sizeOptions}
-          placeholder="Select cable size"
-        />
-
-        {/* mV/A/m Info */}
-        {selectedMvam && (
-          <div
-            className="p-3 rounded-xl border"
-            style={{
-              background: `${config.gradientFrom}08`,
-              borderColor: `${config.gradientFrom}20`,
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
-              <span className="text-sm text-white">
-                <strong>mV/A/m value:</strong> {selectedMvam} mV/A/m
-              </span>
-            </div>
-            <p className="text-xs text-white mt-1 ml-6">
-              {UNTABULATED_METHOD_ROWS.has(method)
-                ? 'Conservative allowance — not a tabulated Appendix 4 column. Appendix 4 gives one mV/A/m column per multicore cable table, and its only sanctioned correction (Ct, App 4 §6.1) never increases it.'
-                : 'Tabulated single-phase (two-core) value, BS 7671 Appendix 4'}
-            </p>
-            {supplyVoltage === '400' && (
-              <p className="text-xs text-white mt-1 ml-6">
-                Three phase: Appendix 4 §6 states the tabulated mV/A/m relate to the line voltage
-                and assume balanced conditions, and tabulates a separate three/four-core column.
-                This tool applies the two-core value, which over-states the drop — treat the result
-                as conservative, and use the three/four-core figure for a final design.
-              </p>
-            )}
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 gap-3">
-          <CalculatorInput
-            label="Design Current"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={current}
-            onChange={setCurrent}
-            placeholder="e.g., 16"
-            hint="Ib - design current"
-          />
-
-          <CalculatorInput
-            label="Cable Length"
-            unit="m"
-            type="text"
-            inputMode="decimal"
-            value={length}
-            onChange={setLength}
-            placeholder="e.g., 30"
-            hint="One-way route length"
-          />
-        </div>
-
-        {/* App 4 §6.4 limits the drop from the ORIGIN to the load point, so any drop already
-            used upstream of this circuit has to come out of the same budget. */}
-        <CalculatorInput
-          label="Voltage Drop Already Used Upstream"
-          unit="%"
-          type="text"
-          inputMode="decimal"
-          value={upstreamDrop}
-          onChange={setUpstreamDrop}
-          placeholder="e.g., 0.8"
-          hint="Origin → this board (submains). Leave blank if this circuit starts at the origin."
-        />
-
-        {/* Action Buttons */}
-        <div className="flex gap-2 pt-2">
-          <button
-            onClick={calculate}
-            disabled={!isValid}
-            className={cn(
-              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-              isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
-            )}
-            style={
-              isValid
-                ? {
-                    background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }
-                : undefined
-            }
-          >
-            <Calculator className="h-5 w-5" />
-            Calculate
-          </button>
-          <button
-            onClick={reset}
-            className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
-          >
-            <RotateCcw className="h-5 w-5" />
-          </button>
-        </div>
-      </div>
-
-      {/* Results Section */}
-      {result && (
-        <>
-          <CalculatorDivider category="cable" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Status Chip */}
-            <div
-              className={cn(
-                'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
-                result.compliant
-                  ? 'bg-green-500/10 border border-green-500/20'
-                  : 'bg-red-500/10 border border-red-500/20'
-              )}
-            >
-              {result.compliant ? (
-                <CheckCircle className="h-4 w-4 text-green-400" />
-              ) : (
-                <XCircle className="h-4 w-4 text-red-400" />
-              )}
-              <span
-                className={cn(
-                  'text-sm font-semibold',
-                  result.compliant ? 'text-green-400' : 'text-red-400'
-                )}
-              >
-                {result.compliant ? 'VOLTAGE DROP PASS' : 'VOLTAGE DROP FAIL'}
-              </span>
-            </div>
-
-            {/* Main Results */}
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Voltage Drop"
-                value={result.voltageDrop.toFixed(2)}
-                unit="V"
-                category="cable"
-              />
-              <ResultValue
-                label="This Circuit"
-                value={result.percentage.toFixed(2)}
-                unit="%"
-                category="cable"
-              />
-              <ResultValue
-                label="Total From Origin"
-                value={result.totalPercentage.toFixed(2)}
-                unit="%"
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label="Limit From Origin"
-                value={result.installationLimit.toFixed(2)}
-                unit="%"
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label="Voltage at Load"
-                value={result.voltageAtLoad.toFixed(1)}
-                unit="V"
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label={`Max Length @ ${result.atCurrent}A`}
-                value={result.maxLength.toFixed(1)}
-                unit="m"
-                category="cable"
-                size="sm"
-              />
-            </ResultsGrid>
-
-            {/* Reg 433.1.1 — voltage drop is only one of the two sizing checks. This calculator
-                evaluates the App 4 §6.4 limit only; it does not know Iz or the device rating. */}
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-                <div className="text-sm text-white">
-                  <strong>Voltage drop only.</strong> A cable is not proven suitable by this result
-                  alone. Regulation 433.1.1 additionally requires Ib ≤ In ≤ Iz — the conductor&apos;s
-                  current-carrying capacity, derated for ambient temperature, grouping and thermal
-                  insulation, must still be checked against the protective device. Use the cable
-                  sizing / current capacity calculator for that step.
-                </div>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Calculator Inputs */}
+            <div className="space-y-4">
+              {/* Cable Selection Header */}
+              <div className="flex items-center gap-2">
+                <Cable className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="text-sm font-medium text-white">Cable Selection</span>
               </div>
-            </div>
 
-            {result.relaxation > 0 && (
-              <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <p className="text-xs text-white">
-                  Route exceeds 100 m, so the Table 4Ab limit has been increased by{' '}
-                  {result.relaxation.toFixed(2)}% (0.005% per metre beyond 100 m, capped at 0.5%).
-                  Only this circuit&apos;s length is known, so the allowance shown is a lower bound.
-                </p>
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorSelect
+                  label="Circuit Type"
+                  value={circuit}
+                  onChange={setCircuit}
+                  options={circuitTypeOptions}
+                />
+
+                <CalculatorSelect
+                  label="Supply Voltage"
+                  value={supplyVoltage}
+                  onChange={setSupplyVoltage}
+                  options={voltageOptions}
+                />
               </div>
-            )}
 
-            {result.isPrivate && (
-              <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                <p className="text-xs text-white">
-                  Private LV supply: Table 4Ab row (b) allows {result.circuitLimit === 3 ? 6 : 8}%
-                  from the origin, but footnote (*) still holds each final circuit to{' '}
-                  {result.circuitLimit}%. This circuit is at {result.percentage.toFixed(2)}%.
-                </p>
-              </div>
-            )}
-
-            {/* Warning if non-compliant */}
-            {!result.compliant && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
-                  <div className="text-sm text-white">
-                    <strong>Action Required:</strong> Use a larger cable size or reduce cable
-                    length.
-                    {result.alternatives.length > 0 && (
-                      <span>
-                        {' '}
-                        Smallest size that meets the voltage-drop limit:{' '}
-                        {result.alternatives[0].size}mm² ({result.alternatives[0].pct.toFixed(2)}%)
-                        — still to be confirmed against Iz per Reg 433.1.1.
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <CalculatorDivider category="cable" />
-
-          {/* Formula Breakdown */}
-          <Collapsible open={showFormula} onOpenChange={setShowFormula}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  How It Worked Out
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showFormula && 'rotate-180'
-                )}
+              <CalculatorSelect
+                label="Supply Type (Table 4Ab)"
+                value={supplyType}
+                onChange={setSupplyType}
+                options={supplyTypeOptions}
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="space-y-2 font-mono text-xs rounded-lg p-3 border"
-                style={{
-                  background: `${config.gradientFrom}08`,
-                  borderColor: `${config.gradientFrom}20`,
+
+              <CalculatorSelect
+                label="Cable Family"
+                value={family}
+                onChange={(v) => {
+                  setFamily(v);
+                  setMethod(Object.keys(mvamData[v] || {})[0] || '');
+                  setCableSize('');
                 }}
-              >
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Formula:</span> Vd = (mV/A/m × Ib ×
-                  L) ÷ 1000
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Step 1:</span> mV/A/m = {result.mvam}{' '}
-                  (from Appendix 4)
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Step 2:</span> Vd = ({result.mvam} ×{' '}
-                  {result.atCurrent} × {result.atLength}) ÷ 1000
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Step 3:</span> Vd ={' '}
-                  {(result.mvam * result.atCurrent * result.atLength).toFixed(1)} ÷ 1000 ={' '}
-                  <strong>{result.voltageDrop.toFixed(2)} V</strong>
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Step 4:</span> % = (
-                  {result.voltageDrop.toFixed(2)} ÷ {result.atVoltage}) × 100 ={' '}
-                  <strong>{result.percentage.toFixed(2)}%</strong>
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Step 5:</span> total from origin ={' '}
-                  {result.upstreamPct.toFixed(2)}% upstream + {result.percentage.toFixed(2)}% ={' '}
-                  <strong>{result.totalPercentage.toFixed(2)}%</strong>
-                </p>
-                <p className={cn(result.compliant ? 'text-green-400' : 'text-red-400')}>
-                  <span style={{ color: config.gradientFrom }}>Check:</span>{' '}
-                  {result.totalPercentage.toFixed(2)}% {result.compliant ? '≤' : '>'}{' '}
-                  {result.installationLimit.toFixed(2)}% (Table 4Ab
-                  {result.relaxation > 0 ? ', incl. >100 m relaxation' : ''}) →{' '}
-                  {result.compliant ? 'PASS ✓' : 'FAIL ✗'}
-                </p>
-                <p className="text-white">
-                  <span style={{ color: config.gradientFrom }}>Not checked:</span> Iz and Ib ≤ In ≤
-                  Iz (Reg 433.1.1)
-                </p>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                options={familyOptions}
+              />
 
-          {/* Alternative Sizes */}
-          {result.alternatives.length > 0 && (
-            <>
-              <CalculatorDivider category="cable" />
-              <div>
-                {/* Qualified on voltage drop ONLY — Reg 433.1.1 (Ib ≤ In ≤ Iz) is not evaluated
-                    here, so these cannot be labelled "compliant". */}
-                <p className="text-sm text-white mb-1">Sizes Within the Voltage-Drop Limit</p>
-                <p className="text-xs text-white mb-2">
-                  Voltage drop only. Each still has to satisfy Ib ≤ In ≤ Iz (Reg 433.1.1) for the
-                  installation method and derating factors in use.
-                </p>
-                <div className="grid gap-2">
-                  {result.alternatives.map((alt) => (
-                    <div
-                      key={alt.size}
-                      className={cn(
-                        'flex items-center justify-between p-2 rounded-lg',
-                        alt.size === Number(cableSize) ? 'border' : 'bg-white/[0.04]'
-                      )}
-                      style={
-                        alt.size === Number(cableSize)
-                          ? {
-                              background: `${config.gradientFrom}15`,
-                              borderColor: `${config.gradientFrom}40`,
-                            }
-                          : undefined
-                      }
-                    >
-                      <span className="text-white font-medium">
-                        {alt.size}mm²
-                        <span className="text-white text-xs ml-2">({alt.mvam} mV/A/m)</span>
-                      </span>
-                      <span className="text-green-400 font-mono">{alt.pct.toFixed(2)}% ✓</span>
-                    </div>
-                  ))}
+              <CalculatorSelect
+                label="Installation Method (Reference)"
+                value={method}
+                onChange={(v) => {
+                  setMethod(v);
+                  setCableSize('');
+                }}
+                options={methodOptions}
+              />
+
+              <CalculatorSelect
+                label="Cable Size"
+                value={cableSize}
+                onChange={setCableSize}
+                options={sizeOptions}
+                placeholder="Select cable size"
+              />
+
+              {/* mV/A/m Info */}
+              {selectedMvam && (
+                <div
+                  className="p-3 rounded-xl border"
+                  style={{
+                    background: `${config.gradientFrom}08`,
+                    borderColor: `${config.gradientFrom}20`,
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                    <span className="text-sm text-white">
+                      <strong>mV/A/m value:</strong> {selectedMvam} mV/A/m
+                    </span>
+                  </div>
+                  <p className="text-xs text-white mt-1 ml-6">
+                    {UNTABULATED_METHOD_ROWS.has(method)
+                      ? 'Conservative allowance — not a tabulated Appendix 4 column. Appendix 4 gives one mV/A/m column per multicore cable table, and its only sanctioned correction (Ct, App 4 §6.1) never increases it.'
+                      : 'Tabulated single-phase (two-core) value, BS 7671 Appendix 4'}
+                  </p>
+                  {supplyVoltage === '400' && (
+                    <p className="text-xs text-white mt-1 ml-6">
+                      Three phase: Appendix 4 §6 states the tabulated mV/A/m relate to the line
+                      voltage and assume balanced conditions, and tabulates a separate
+                      three/four-core column. This tool applies the two-core value, which
+                      over-states the drop — treat the result as conservative, and use the
+                      three/four-core figure for a final design.
+                    </p>
+                  )}
                 </div>
-              </div>
-            </>
-          )}
-        </>
-      )}
+              )}
 
-      {/* Grounded guidance + standards */}
-      <CalculatorEditorial content={voltageDropContent} category="cable" />
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorInput
+                  label="Design Current"
+                  unit="A"
+                  type="text"
+                  inputMode="decimal"
+                  value={current}
+                  onChange={setCurrent}
+                  placeholder="e.g., 16"
+                  hint="Ib - design current"
+                />
+
+                <CalculatorInput
+                  label="Cable Length"
+                  unit="m"
+                  type="text"
+                  inputMode="decimal"
+                  value={length}
+                  onChange={setLength}
+                  placeholder="e.g., 30"
+                  hint="One-way route length"
+                />
+              </div>
+
+              {/* App 4 §6.4 limits the drop from the ORIGIN to the load point, so any drop already
+              used upstream of this circuit has to come out of the same budget. */}
+              <CalculatorInput
+                label="Voltage Drop Already Used Upstream"
+                unit="%"
+                type="text"
+                inputMode="decimal"
+                value={upstreamDrop}
+                onChange={setUpstreamDrop}
+                placeholder="e.g., 0.8"
+                hint="Origin → this board (submains). Leave blank if this circuit starts at the origin."
+              />
+
+              {/* Action Buttons */}
+              <div className="flex gap-2 pt-2">
+                <button
+                  onClick={calculate}
+                  disabled={!isValid}
+                  className={cn(
+                    'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+                    isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
+                  )}
+                  style={
+                    isValid
+                      ? {
+                          background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                        }
+                      : undefined
+                  }
+                >
+                  <Calculator className="h-5 w-5" />
+                  Calculate
+                </button>
+                <button
+                  onClick={reset}
+                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
+                >
+                  <RotateCcw className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </>
+        }
+        result={
+          <>
+            {/* Results Section */}
+            {result && (
+              <>
+                <CalculatorDivider category="cable" />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Status Chip */}
+                  <div
+                    className={cn(
+                      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
+                      result.compliant
+                        ? 'bg-green-500/10 border border-green-500/20'
+                        : 'bg-red-500/10 border border-red-500/20'
+                    )}
+                  >
+                    {result.compliant ? (
+                      <CheckCircle className="h-4 w-4 text-green-400" />
+                    ) : (
+                      <XCircle className="h-4 w-4 text-red-400" />
+                    )}
+                    <span
+                      className={cn(
+                        'text-sm font-semibold',
+                        result.compliant ? 'text-green-400' : 'text-red-400'
+                      )}
+                    >
+                      {result.compliant ? 'VOLTAGE DROP PASS' : 'VOLTAGE DROP FAIL'}
+                    </span>
+                  </div>
+
+                  {/* Main Results */}
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Voltage Drop"
+                      value={result.voltageDrop.toFixed(2)}
+                      unit="V"
+                      category="cable"
+                    />
+                    <ResultValue
+                      label="This Circuit"
+                      value={result.percentage.toFixed(2)}
+                      unit="%"
+                      category="cable"
+                    />
+                    <ResultValue
+                      label="Total From Origin"
+                      value={result.totalPercentage.toFixed(2)}
+                      unit="%"
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Limit From Origin"
+                      value={result.installationLimit.toFixed(2)}
+                      unit="%"
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Voltage at Load"
+                      value={result.voltageAtLoad.toFixed(1)}
+                      unit="V"
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label={`Max Length @ ${result.atCurrent}A`}
+                      value={result.maxLength.toFixed(1)}
+                      unit="m"
+                      category="cable"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Reg 433.1.1 — voltage drop is only one of the two sizing checks. This calculator
+                  evaluates the App 4 §6.4 limit only; it does not know Iz or the device rating. */}
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                      <div className="text-sm text-white">
+                        <strong>Voltage drop only.</strong> A cable is not proven suitable by this
+                        result alone. Regulation 433.1.1 additionally requires Ib ≤ In ≤ Iz — the
+                        conductor&apos;s current-carrying capacity, derated for ambient temperature,
+                        grouping and thermal insulation, must still be checked against the
+                        protective device. Use the cable sizing / current capacity calculator for
+                        that step.
+                      </div>
+                    </div>
+                  </div>
+
+                  {result.relaxation > 0 && (
+                    <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                      <p className="text-xs text-white">
+                        Route exceeds 100 m, so the Table 4Ab limit has been increased by{' '}
+                        {result.relaxation.toFixed(2)}% (0.005% per metre beyond 100 m, capped at
+                        0.5%). Only this circuit&apos;s length is known, so the allowance shown is a
+                        lower bound.
+                      </p>
+                    </div>
+                  )}
+
+                  {result.isPrivate && (
+                    <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                      <p className="text-xs text-white">
+                        Private LV supply: Table 4Ab row (b) allows{' '}
+                        {result.circuitLimit === 3 ? 6 : 8}% from the origin, but footnote (*) still
+                        holds each final circuit to {result.circuitLimit}%. This circuit is at{' '}
+                        {result.percentage.toFixed(2)}%.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Warning if non-compliant */}
+                  {!result.compliant && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                        <div className="text-sm text-white">
+                          <strong>Action Required:</strong> Use a larger cable size or reduce cable
+                          length.
+                          {result.alternatives.length > 0 && (
+                            <span>
+                              {' '}
+                              Smallest size that meets the voltage-drop limit:{' '}
+                              {result.alternatives[0].size}mm² (
+                              {result.alternatives[0].pct.toFixed(2)}%) — still to be confirmed
+                              against Iz per Reg 433.1.1.
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <CalculatorDivider category="cable" />
+
+                {/* Formula Breakdown */}
+                <Collapsible open={showFormula} onOpenChange={setShowFormula}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        How It Worked Out
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showFormula && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="space-y-2 font-mono text-xs rounded-lg p-3 border"
+                      style={{
+                        background: `${config.gradientFrom}08`,
+                        borderColor: `${config.gradientFrom}20`,
+                      }}
+                    >
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Formula:</span> Vd = (mV/A/m ×
+                        Ib × L) ÷ 1000
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Step 1:</span> mV/A/m ={' '}
+                        {result.mvam} (from Appendix 4)
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Step 2:</span> Vd = (
+                        {result.mvam} × {result.atCurrent} × {result.atLength}) ÷ 1000
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Step 3:</span> Vd ={' '}
+                        {(result.mvam * result.atCurrent * result.atLength).toFixed(1)} ÷ 1000 ={' '}
+                        <strong>{result.voltageDrop.toFixed(2)} V</strong>
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Step 4:</span> % = (
+                        {result.voltageDrop.toFixed(2)} ÷ {result.atVoltage}) × 100 ={' '}
+                        <strong>{result.percentage.toFixed(2)}%</strong>
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Step 5:</span> total from
+                        origin = {result.upstreamPct.toFixed(2)}% upstream +{' '}
+                        {result.percentage.toFixed(2)}% ={' '}
+                        <strong>{result.totalPercentage.toFixed(2)}%</strong>
+                      </p>
+                      <p className={cn(result.compliant ? 'text-green-400' : 'text-red-400')}>
+                        <span style={{ color: config.gradientFrom }}>Check:</span>{' '}
+                        {result.totalPercentage.toFixed(2)}% {result.compliant ? '≤' : '>'}{' '}
+                        {result.installationLimit.toFixed(2)}% (Table 4Ab
+                        {result.relaxation > 0 ? ', incl. >100 m relaxation' : ''}) →{' '}
+                        {result.compliant ? 'PASS ✓' : 'FAIL ✗'}
+                      </p>
+                      <p className="text-white">
+                        <span style={{ color: config.gradientFrom }}>Not checked:</span> Iz and Ib ≤
+                        In ≤ Iz (Reg 433.1.1)
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Alternative Sizes */}
+                {result.alternatives.length > 0 && (
+                  <>
+                    <CalculatorDivider category="cable" />
+                    <div>
+                      {/* Qualified on voltage drop ONLY — Reg 433.1.1 (Ib ≤ In ≤ Iz) is not evaluated
+                      here, so these cannot be labelled "compliant". */}
+                      <p className="text-sm text-white mb-1">Sizes Within the Voltage-Drop Limit</p>
+                      <p className="text-xs text-white mb-2">
+                        Voltage drop only. Each still has to satisfy Ib ≤ In ≤ Iz (Reg 433.1.1) for
+                        the installation method and derating factors in use.
+                      </p>
+                      <div className="grid gap-2">
+                        {result.alternatives.map((alt) => (
+                          <div
+                            key={alt.size}
+                            className={cn(
+                              'flex items-center justify-between p-2 rounded-lg',
+                              alt.size === Number(cableSize) ? 'border' : 'bg-white/[0.04]'
+                            )}
+                            style={
+                              alt.size === Number(cableSize)
+                                ? {
+                                    background: `${config.gradientFrom}15`,
+                                    borderColor: `${config.gradientFrom}40`,
+                                  }
+                                : undefined
+                            }
+                          >
+                            <span className="text-white font-medium">
+                              {alt.size}mm²
+                              <span className="text-white text-xs ml-2">({alt.mvam} mV/A/m)</span>
+                            </span>
+                            <span className="text-green-400 font-mono">
+                              {alt.pct.toFixed(2)}% ✓
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+
+            {/* Grounded guidance + standards */}
+          </>
+        }
+        footer={<CalculatorEditorial content={voltageDropContent} category="cable" />}
+      />
     </CalculatorCard>
   );
 };

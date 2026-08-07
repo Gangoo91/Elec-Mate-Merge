@@ -65,12 +65,12 @@ export const ItemTypePickerSheet = ({
 
           {/* Search — 16px font so iOS never zooms */}
           <div className="relative px-4 pb-3">
-            <Search className="pointer-events-none absolute left-7 top-1/2 h-4 w-4 -translate-y-[60%] text-white/40" />
+            <Search className="pointer-events-none absolute left-7 top-1/2 h-4 w-4 -translate-y-[60%] text-white" />
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search — try “led” or “socket”"
-              className="h-11 touch-manipulation rounded-xl border-white/[0.1] bg-white/[0.05] pl-9 text-base text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.1] bg-white/[0.05] pl-9 text-base text-white placeholder:text-white/25 focus:border-elec-yellow focus:ring-elec-yellow/20"
               autoCapitalize="off"
               autoComplete="off"
               autoCorrect="off"
@@ -81,7 +81,7 @@ export const ItemTypePickerSheet = ({
           {/* Results */}
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
             {filtered.length === 0 && (
-              <p className="py-8 text-center text-sm text-white/55">
+              <p className="py-8 text-center text-sm text-white">
                 Nothing matching “{query}” — try “custom item” for one-offs
               </p>
             )}
@@ -107,7 +107,7 @@ export const ItemTypePickerSheet = ({
                         }`}
                       >
                         <span>{a.label}</span>
-                        <span className="text-[11px] text-white/40">{a.defaultUnit}</span>
+                        <span className="text-[11px] text-white">{a.defaultUnit}</span>
                       </button>
                     ))}
                   </div>

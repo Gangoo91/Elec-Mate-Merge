@@ -26,6 +26,7 @@ import { useMarketplacePriceAlerts } from '@/hooks/useMarketplacePriceAlerts';
 import { cn } from '@/lib/utils';
 import { inputCn } from '@/components/forms/fieldStyles';
 import CableComparison from '@/components/marketplace/CableComparison';
+import PriceMoves from '@/components/marketplace/PriceMoves';
 import { chipOff, chipOn } from '@/components/shared/surfaceStyles';
 
 
@@ -149,7 +150,16 @@ export default function UnifiedMarketplace({
   }, []);
 
   // Price alerts
-  const { alerts, dismissAlert } = useMarketplacePriceAlerts();
+  const { alerts, dismissAlert, watchedProducts, watchProduct, unwatchProduct } =
+    useMarketplacePriceAlerts();
+
+  const handleWatchProduct = useCallback(
+    (product: { id: string; current_price: number }) => {
+      if (watchedProducts.has(product.id)) unwatchProduct(product.id);
+      else watchProduct(product.id, product.current_price);
+    },
+    [watchedProducts, watchProduct, unwatchProduct]
+  );
 
   // Main search query
   const { data, isLoading, isFetching, isError, refetch } = useMarketplaceSearch(
@@ -287,6 +297,39 @@ export default function UnifiedMarketplace({
           animate="visible"
           className="flex-1 min-w-0 px-4 lg:px-0 lg:pl-6 py-4 space-y-5"
         >
+          {/* Brand — the way tools actually get shopped for. Only brands
+              carried by more than one supplier appear, so a filter always
+              leaves something to compare. */}
+          {(data?.facets?.brands?.length ?? 0) > 0 && !query && (
+            <motion.div variants={itemVariants}>
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:px-0">
+                {(data?.facets?.brands ?? []).map((b) => {
+                  const on = (filters.brands ?? []).includes(b.name);
+                  return (
+                    <button
+                      key={b.name}
+                      type="button"
+                      onClick={() => {
+                        const current = filters.brands ?? [];
+                        setFilters({
+                          ...filters,
+                          brands: on
+                            ? current.filter((x) => x !== b.name)
+                            : [...current, b.name],
+                          productType,
+                        });
+                        setPage(1);
+                      }}
+                      className={cn(chipBase, on ? chipOn : chipOff)}
+                    >
+                      {b.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
           {/* ── Product count + refresh ── */}
           <motion.div variants={itemVariants} className="flex items-center justify-between">
             <p className="text-[12px] text-white">
@@ -349,6 +392,15 @@ export default function UnifiedMarketplace({
             </motion.section>
           )}
 
+          {/* What has actually changed price. On BOTH pages — this is what
+              replaces the deals section on Tools, where `is_on_sale` is set on
+              one product in 2,089. */}
+          {!query && (
+            <motion.div variants={itemVariants}>
+              <PriceMoves productType={productType} />
+            </motion.div>
+          )}
+
           {/* The comparison that no supplier's own site can offer. Materials
               only — the parsing is cable-specific. */}
           {productType === 'materials' && !query && (
@@ -373,12 +425,14 @@ export default function UnifiedMarketplace({
                   View All Deals
                 </Button>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                {dealsData.products.slice(0, 4).map((product) => (
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5">
+                {dealsData.products.slice(0, 5).map((product) => (
                   <MarketplaceProductCard
                     key={product.id}
                     product={product}
                     onSave={handleSaveProduct}
+                    onWatch={handleWatchProduct}
+                    isWatched={watchedProducts.has(product.id)}
                   />
                 ))}
               </div>
@@ -484,6 +538,8 @@ export default function UnifiedMarketplace({
               hasMore={hasMore}
               onLoadMore={handleLoadMore}
               onSave={handleSaveProduct}
+              onWatch={handleWatchProduct}
+              isProductWatched={(id) => watchedProducts.has(id)}
             />
           </motion.div>
         </motion.main>

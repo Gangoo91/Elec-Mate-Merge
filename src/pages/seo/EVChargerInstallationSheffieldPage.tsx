@@ -518,7 +518,7 @@ export default function EVChargerInstallationSheffieldPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Sheffield | Home EV Charging"
-      description="EV charger installation costs in Sheffield 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification…"
+      description="EV charger installation costs in Sheffield 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

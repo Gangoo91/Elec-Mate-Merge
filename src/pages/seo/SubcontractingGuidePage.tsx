@@ -691,7 +691,7 @@ export default function SubcontractingGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Subcontracting Guide UK | CIS, Construction Act &amp; Payment Rights"
-      description="How to find main contractors, get CHAS and Constructionline, price to win subcontract work, protect your payment rights under the Construction Act 1996…"
+      description="How to find main contractors, get CHAS and Constructionline, price to win subcontract work, protect your payment rights under the Construction Act 1996."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -678,7 +678,7 @@ export default function RetailInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Retail Electrical Installation | Shop Fit-Out Guide"
-      description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839)…"
+      description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839)."
       datePublished="2025-10-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

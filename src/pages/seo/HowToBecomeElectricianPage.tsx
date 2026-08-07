@@ -797,7 +797,7 @@ export default function HowToBecomeElectricianPage() {
   return (
     <GuideTemplate
       title="How to Become an Electrician UK 2026 | Complete Career Guide"
-      description="Complete guide to becoming a qualified electrician in the UK in 2026. Apprenticeship and adult retraining routes, qualifications needed, AM2 assessment…"
+      description="Complete guide to becoming a qualified electrician in the UK in 2026. Apprenticeship and adult retraining routes, qualifications needed, AM2 assessment."
       datePublished="2024-03-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

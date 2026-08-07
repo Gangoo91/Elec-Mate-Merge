@@ -478,7 +478,7 @@ export default function ElectricianRotherhamPage() {
       noindex={true}
       localArea="Rotherham"
       title="Electrician in Rotherham | Local Electricians 2026"
-      description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
+      description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

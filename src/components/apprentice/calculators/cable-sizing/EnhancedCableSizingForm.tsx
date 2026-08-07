@@ -156,7 +156,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               value={inputs.voltage.toString()}
               onValueChange={(value) => updateInput('voltage', parseFloat(value))}
             >
-              <SelectTrigger className={`${selectTriggerClass} ${errors.voltage ? 'border-red-500' : ''}`}>
+              <SelectTrigger
+                className={`${selectTriggerClass} ${errors.voltage ? 'border-red-500' : ''}`}
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

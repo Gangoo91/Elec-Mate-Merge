@@ -16,7 +16,6 @@ import { useCertLock } from '@/hooks/useCertLock';
 import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
-import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import { useReferralPrompt } from '@/hooks/useReferralPrompt';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -134,7 +133,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
+  const { recordPositiveAction } = useAppReview();
   const {
     recordPositiveAction: recordReferralAction,
     showReferralPrompt,
@@ -1399,11 +1398,6 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         {/* StickyFormSyncBar removed — the shell header already shows save
             state and the certificate number (see EICRFormProvider). */}
         {children}
-        <AppReviewPromptSheet
-          open={showReviewPrompt}
-          onRate={handleRate}
-          onDismiss={handleDismiss}
-        />
         <ReferralShareSheet
           open={showReferralPrompt}
           onOpenChange={(open) => !open && handleReferralClose()}

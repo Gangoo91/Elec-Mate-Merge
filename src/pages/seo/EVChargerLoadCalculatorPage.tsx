@@ -21,7 +21,7 @@ export default function EVChargerLoadCalculatorPage() {
   return (
     <ToolTemplate
       title="EV Charger Load Calculator | Demand Assessment"
-      description="Calculate EV charger electrical load for single and three-phase installations. Assess demand, apply diversity for multiple chargers…"
+      description="Calculate EV charger electrical load for single and three-phase installations. Assess demand, apply diversity for multiple chargers."
       datePublished="2026-01-28"
       dateModified="2026-06-10"
       breadcrumbs={[

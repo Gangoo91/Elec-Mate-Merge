@@ -559,7 +559,7 @@ export default function EICRHullPage() {
   return (
     <GuideTemplate
       title="EICR Certificate Hull | Electrical Installation Condition"
-      description="EICR requirements for Hull landlords and homeowners. Learn about legal obligations under the 2020 Regulations, Hull City Council enforcement…"
+      description="EICR requirements for Hull landlords and homeowners. Learn about legal obligations under the 2020 Regulations, Hull City Council enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

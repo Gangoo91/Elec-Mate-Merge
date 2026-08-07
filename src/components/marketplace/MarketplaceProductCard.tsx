@@ -1,4 +1,4 @@
-import { Bookmark } from 'lucide-react';
+import { Bell, Bookmark } from 'lucide-react';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
 import ProductImage from './ProductImage';
@@ -8,6 +8,10 @@ interface MarketplaceProductCardProps {
   className?: string;
   onSave?: (product: MarketplaceProduct) => void;
   isSaved?: boolean;
+  /** Watch this product's price. The alerts table and its whole hook already
+   *  existed with zero rows — nothing in the UI ever offered it. */
+  onWatch?: (product: MarketplaceProduct) => void;
+  isWatched?: boolean;
 }
 
 const formatPrice = (price: number | null | undefined): string => {
@@ -20,6 +24,8 @@ export function MarketplaceProductCard({
   className,
   onSave,
   isSaved = false,
+  onWatch,
+  isWatched = false,
 }: MarketplaceProductCardProps) {
   const savings =
     product.regular_price && product.current_price && product.regular_price > product.current_price
@@ -57,23 +63,42 @@ export function MarketplaceProductCard({
           </span>
         ) : null}
 
-        {onSave && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onSave(product);
-            }}
-            aria-label={isSaved ? 'Saved to list' : 'Save to list'}
-            className={cn(
-              'absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full transition-colors touch-manipulation',
-              isSaved ? 'bg-elec-yellow text-black' : 'bg-black/50 text-white active:bg-black/70'
-            )}
-          >
-            <Bookmark className={cn('h-4 w-4', isSaved && 'fill-current')} />
-          </button>
-        )}
+        <span className="absolute right-2 top-2 flex flex-col gap-2">
+          {onSave && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onSave(product);
+              }}
+              aria-label={isSaved ? 'Saved to list' : 'Save to list'}
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-full transition-colors touch-manipulation',
+                isSaved ? 'bg-elec-yellow text-black' : 'bg-black/50 text-white active:bg-black/70'
+              )}
+            >
+              <Bookmark className={cn('h-4 w-4', isSaved && 'fill-current')} />
+            </button>
+          )}
+          {onWatch && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onWatch(product);
+              }}
+              aria-label={isWatched ? 'Watching the price' : 'Tell me if the price drops'}
+              className={cn(
+                'flex h-9 w-9 items-center justify-center rounded-full transition-colors touch-manipulation',
+                isWatched ? 'bg-elec-yellow text-black' : 'bg-black/50 text-white active:bg-black/70'
+              )}
+            >
+              <Bell className={cn('h-4 w-4', isWatched && 'fill-current')} />
+            </button>
+          )}
+        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-3 sm:p-3.5">

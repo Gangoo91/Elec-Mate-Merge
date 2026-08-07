@@ -716,7 +716,7 @@ export default function KitchenElectricalRequirementsPage() {
   return (
     <GuideTemplate
       title="Kitchen Electrical Requirements UK | Kitchen Wiring"
-      description="Complete guide to kitchen electrical requirements in the UK. Socket positions (300mm from sink), cooker circuit specification, dishwasher wiring…"
+      description="Complete guide to kitchen electrical requirements in the UK. Socket positions (300mm from sink), cooker circuit specification, dishwasher wiring."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

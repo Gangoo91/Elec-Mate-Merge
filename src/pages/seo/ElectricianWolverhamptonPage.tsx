@@ -477,7 +477,7 @@ export default function ElectricianWolverhamptonPage() {
     <GuideTemplate
       localArea="Wolverhampton"
       title="Electrician in Wolverhampton | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Wolverhampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, NGED connections…"
+      description="Find qualified, registered electricians in Wolverhampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, NGED connections."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -189,38 +189,38 @@ export const FacetDistributionStats = () => {
         {/* Key Metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Total Facets</div>
+            <div className="text-xs text-white mb-1">Total Facets</div>
             <div className="text-lg font-bold text-elec-yellow">
               {stats.totalFacets.toLocaleString()}
             </div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Sources</div>
+            <div className="text-xs text-white mb-1">Sources</div>
             <div className="text-lg font-bold">{stats.totalSources.toLocaleString()}</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Avg/Source</div>
+            <div className="text-xs text-white mb-1">Avg/Source</div>
             <div className="text-lg font-bold">{stats.avgPerSource.toFixed(1)}</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Min → Max</div>
+            <div className="text-xs text-white mb-1">Min → Max</div>
             <div className="text-sm font-bold">
               {stats.minFacets} → {stats.maxFacets}
             </div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Quality</div>
+            <div className="text-xs text-white mb-1">Quality</div>
             <div className="text-lg font-bold text-green-400">{stats.qualityScore.toFixed(1)}%</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">Incomplete</div>
+            <div className="text-xs text-white mb-1">Incomplete</div>
             <div className="text-lg font-bold text-red-400">{stats.ranges[0].count}</div>
           </div>
         </div>
 
         {/* Distribution Chart */}
         <div className="space-y-3">
-          <div className="text-sm font-medium text-muted-foreground">
+          <div className="text-sm font-medium text-white">
             Distribution by Facet Count Ranges
           </div>
           {stats.ranges.map((range) => {
@@ -232,7 +232,7 @@ export const FacetDistributionStats = () => {
               <div key={range.range} className="space-y-1">
                 <div className="flex items-center justify-between text-sm">
                   <span className="font-medium min-w-[80px]">{range.label}</span>
-                  <span className="text-muted-foreground">
+                  <span className="text-white">
                     {range.count.toLocaleString()} ({percentage.toFixed(1)}%)
                   </span>
                 </div>
@@ -252,7 +252,7 @@ export const FacetDistributionStats = () => {
         </div>
 
         {/* Last Updated */}
-        <div className="text-xs text-muted-foreground text-center pt-2 border-t border-elec-yellow/10">
+        <div className="text-xs text-white text-center pt-2 border-t border-elec-yellow/10">
           Last updated: {lastUpdate.toLocaleTimeString()}
         </div>
       </CardContent>

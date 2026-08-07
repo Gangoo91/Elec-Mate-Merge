@@ -21,7 +21,7 @@ export default function VATSchemeComparisonPage() {
   return (
     <BusinessTemplate
       title="VAT Scheme Comparison | Flat Rate vs Standard for"
-      description="Compare VAT schemes for your electrical business. Standard rate, flat rate scheme, limited cost trader rules, cash accounting…"
+      description="Compare VAT schemes for your electrical business. Standard rate, flat rate scheme, limited cost trader rules, cash accounting."
       datePublished="2025-05-20"
       dateModified="2026-05-18"
       breadcrumbs={[
@@ -50,13 +50,13 @@ export default function VATSchemeComparisonPage() {
       heroSubtitle="Choosing the wrong VAT scheme can cost your electrical business thousands of pounds per year. This guide compares standard rate, flat rate, limited cost trader rules, cash accounting, and the domestic reverse charge — with real examples showing which scheme saves the most for different types of electrical work."
       readingTime={12}
       stats={[
-        { value: '£90,000', label: 'VAT registration threshold (2025/26)' },
+        { value: '£90,000', label: 'VAT registration threshold' },
         { value: '£2,000+', label: 'Potential annual saving from the right VAT scheme' },
-        { value: '16.5%', label: 'Flat rate for electrical services' },
+        { value: '9.5% / 14.5%', label: 'Flat rate — materials supplied vs labour-only' },
         { value: '14', label: 'Business calculators in Elec-Mate' },
       ]}
       keyTakeaways={[
-        'You must register for VAT when your taxable turnover exceeds £90,000 in any rolling 12-month period (2025/26 threshold).',
+        'You must register for VAT when your taxable turnover exceeds £90,000 in any rolling 12-month period.',
         'The flat rate scheme can save money if your material costs are low relative to turnover — but the limited cost trader rules may negate the benefit.',
         'Standard rate VAT is usually better for material-heavy work (rewires, new-builds) because you reclaim VAT on all your purchases.',
         'The domestic reverse charge (DRC) applies when you supply CIS-registered businesses and shifts VAT responsibility to the customer.',
@@ -70,7 +70,7 @@ export default function VATSchemeComparisonPage() {
             <>
               <p>
                 You must register for VAT if your taxable turnover exceeds £90,000 in any rolling
-                12-month period (the threshold for 2025/26). You can also register voluntarily below
+                12-month period. You can also register voluntarily below
                 this threshold if it benefits your business. Taxable turnover means the total value
                 of everything you sell that is not VAT-exempt — for electricians, this is
                 essentially all your income from electrical work.
@@ -179,8 +179,9 @@ export default function VATSchemeComparisonPage() {
               <p>
                 <strong className="text-yellow-400">When flat rate can save money:</strong> The flat
                 rate scheme saves money when your reclaimable purchases are low — specifically, when
-                the VAT you would reclaim under standard rate is less than the difference between
-                20% and 16.5% (i.e., 3.5% of your gross turnover). This tends to apply to
+                the VAT you would reclaim under standard rate is less than the difference between the
+                20% you charge and your flat rate — 10.5% of gross turnover at 9.5%, or 5.5% at
+                14.5%. This tends to apply to
                 labour-only work with minimal material purchases: testing and inspection, fault-
                 finding, consulting, and subcontract labour.
               </p>
@@ -209,11 +210,11 @@ export default function VATSchemeComparisonPage() {
                 category.
               </p>
               <p>
-                For electricians, the standard flat rate is already 16.5%, so the limited cost
-                trader rules do not increase your rate. However, they are important to understand
-                because they prevent other trades from benefiting from lower flat rates — and if you
-                diversify into other services (consulting, project management), the rules may apply
-                differently.
+                This matters a great deal for electricians, because it is a rate RISE, not a
+                floor. A labour-only electrician sitting on 14.5% who buys almost no goods is
+                pushed to 16.5%; one on 9.5% who supplies materials will normally pass the goods
+                test comfortably and stay there. Test it every VAT period — the answer can change
+                quarter to quarter as your material mix changes.
               </p>
               <p>
                 <strong className="text-yellow-400">What counts as "goods":</strong> For the limited
@@ -366,7 +367,7 @@ export default function VATSchemeComparisonPage() {
         {
           question: 'Is the flat rate scheme worth it for electricians?',
           answer:
-            "It depends on your material costs. The flat rate for electrical services is 16.5% of gross (VAT-inclusive) turnover. Under standard rate, you pay 20% VAT on your invoices but reclaim VAT on all purchases. If your VAT-reclaimable purchases (materials, fuel, tools) are relatively low compared to your turnover — for example, if you mainly do testing, inspection, or labour-only work — the flat rate can save money because 16.5% of gross turnover is less than 20% minus your small input tax claims. However, for material-heavy work (rewires, new-builds, board changes), standard rate is almost always better because you reclaim significant VAT on materials. Elec-Mate's VAT comparison calculator shows you the exact difference based on your actual figures.",
+            "It depends on your material costs. There is no electrician flat rate sector — HMRC classes you by how much material you supply: 9.5% for general building or construction services, or 14.5% labour-only where materials are under 10% of turnover. Take 1 percentage point off in your first year of VAT registration. Under standard rate, you pay 20% VAT on your invoices but reclaim VAT on all purchases. If your VAT-reclaimable purchases (materials, fuel, tools) are relatively low compared to your turnover — for example, if you mainly do testing, inspection, or labour-only work — the flat rate can save money because your flat percentage of gross turnover is less than 20% minus your small input tax claims. Beware the limited cost business rule: if goods cost under 2% of turnover, or under £1,000 a year, you must use 16.5% instead. However, for material-heavy work (rewires, new-builds, board changes), standard rate is almost always better because you reclaim significant VAT on materials. Elec-Mate's VAT comparison calculator shows you the exact difference based on your actual figures.",
         },
         {
           question: 'What happens if I exceed the VAT threshold?',

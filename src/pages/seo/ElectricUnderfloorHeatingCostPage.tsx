@@ -507,7 +507,7 @@ export default function ElectricUnderfloorHeatingCostPage() {
   return (
     <GuideTemplate
       title="Electric Underfloor Heating Cost UK | Installation, Running"
-      description="Complete guide to electric underfloor heating installation cost in the UK. Mat vs loose element systems, installation costs £800–£2,500 per room…"
+      description="Complete guide to electric underfloor heating installation cost in the UK. Mat vs loose element systems, installation costs £800–£2,500 per room."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

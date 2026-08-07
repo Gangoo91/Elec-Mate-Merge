@@ -18,8 +18,8 @@ import {
 export default function EarthRodResistanceCalculatorPage() {
   return (
     <ToolTemplate
-      title="Earth Electrode Resistance Calculator (TT, Free UK)"
-      description="Free earth rod / electrode resistance calculator for TT installs: checks Ra × IΔn ≤ 50V per BS 7671 Reg 411.5.3. Instant pass/fail for 30mA + 100mA RCDs."
+      title="Earth Rod Resistance Calculator: Ra ≤ 200Ω (TT)"
+      description="Earth rod sizing with R = (ρ/2πL) × ln(4L/d): UK soil resistivity values, parallel-rod correction, and the BS 7671 Ra × IΔn ≤ 50V TT pass/fail check."
       datePublished="2026-01-22"
       dateModified="2026-06-10"
       breadcrumbs={[

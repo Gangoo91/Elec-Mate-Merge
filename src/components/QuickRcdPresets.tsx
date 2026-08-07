@@ -16,11 +16,21 @@ interface RcdPreset {
 
 const rcdPresets: RcdPreset[] = [
   {
+    /*
+     * Type A, not Type AC.
+     *
+     * Reg 531.3.3 confines Type AC to fixed equipment where the load current is
+     * known to contain no DC components, and says explicitly that it does not
+     * cover socket-outlet or portable loads. "Most common household circuits"
+     * is overwhelmingly socket outlets, so offering Type AC under that label
+     * recommended the one thing the regulation rules out — and this preset sits
+     * on the EIC, where it specifies new work rather than records existing.
+     */
     id: 'standard-domestic',
     label: 'Standard Domestic',
     description: 'Most common household circuits',
     bsStandard: 'BS EN 61008',
-    type: 'AC',
+    type: 'A',
     rating: '30',
     ratingA: '40',
   },

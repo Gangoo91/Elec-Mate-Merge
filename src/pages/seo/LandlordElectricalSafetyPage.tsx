@@ -19,7 +19,7 @@ export default function LandlordElectricalSafetyPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety | Complete Guide UK 2026"
-      description="Complete guide to landlord electrical safety requirements in the UK. Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020…"
+      description="Complete guide to landlord electrical safety requirements in the UK. Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020."
       datePublished="2025-01-15"
       dateModified="2026-05-18"
       breadcrumbs={[

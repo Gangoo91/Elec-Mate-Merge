@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import { CARD, LABEL, BTN_PRIMARY, BTN_NEUTRAL } from '@/components/seo/seoSurface';
+import { CARD, CARD_PADDED, LABEL, BTN_PRIMARY, BTN_NEUTRAL } from '@/components/seo/seoSurface';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -14,8 +14,6 @@ import {
   BookOpen,
   Brain,
   Search,
-  Zap,
-  CheckCircle2,
   AlertCircle,
   HelpCircle,
   Info,
@@ -23,34 +21,33 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Observation Codes | C1, C2, C3, FI Explained';
 const PAGE_DESCRIPTION =
-  'Complete guide to EICR observation codes C1, C2, C3, and FI. Real examples, classification criteria, and how to write clear observations. For UK electricians.';
+  'Complete guide to EICR observation codes C1, C2, C3 and FI. Real examples, classification criteria, and which codes actually make a report Unsatisfactory. For UK electricians.';
 
 const faqs = [
   {
-    question: 'Does a single C1, C2, or FI observation make the entire EICR unsatisfactory?',
+    question: 'Which observation codes make an EICR Unsatisfactory?',
     answer:
-      'Yes. If any observation on the EICR is classified as C1 (Danger Present), C2 (Potentially Dangerous), or FI (Further Investigation required without delay), the overall assessment of the installation must be recorded as Unsatisfactory. This is a binary rule — there is no weighting or averaging. Even if the rest of the installation is in excellent condition, a single C1, C2, or FI means the report is Unsatisfactory. FI makes the report Unsatisfactory because the inspector could not fully determine the condition of part of the installation — the installation cannot be confirmed as safe until that investigation is completed. An EICR with only C3 (Improvement Recommended) observations, or with no observations at all, is classified as Satisfactory.',
+      'C1 and C2 only. The notes for the person producing the report in BS 7671:2018+A4:2026 Appendix 6 state that the overall assessment is to be reported as unsatisfactory where any observation is given a code C1 or C2 classification. Section K of the model Condition Report splits observations into two blocks for exactly this reason: the C1 and C2 block is headed "These items affect the overall assessment of the report", and the C3 and FI block is headed "These items do not affect the overall assessment of the report". Section E repeats it: any observation classified as Improvement recommended (C3) or Further investigation (FI) is advisory and does not affect the overall assessment, but should be given due consideration. Note that some scheme providers and older industry guidance have treated FI as making a report Unsatisfactory. Where your scheme rules differ from the model form, follow your scheme.',
   },
   {
     question: 'What is the difference between C2 and C3?',
     answer:
-      'The key difference is the level of risk. A C2 (Potentially Dangerous) observation indicates that there is a risk of injury that requires urgent remedial action — something that may not be immediately dangerous but could become so under foreseeable conditions. A C3 (Improvement Recommended) observation indicates that the installation does not fully comply with the current edition of BS 7671 but is not dangerous. C3 items are typically legacy features that were compliant when installed but do not meet the current standard. The judgement between C2 and C3 requires professional experience and an understanding of the risk in context. When in doubt, it is better to code conservatively (C2 rather than C3) to ensure safety.',
+      'The key difference is the level of risk. A C2 (Potentially dangerous) observation indicates that there is a risk of injury that requires urgent remedial action — something that may not be immediately dangerous but could become so under foreseeable conditions. A C3 (Improvement recommended) observation indicates that the installation does not fully comply with the current edition of BS 7671 but is not dangerous. C3 items are typically legacy features that were compliant when installed but do not meet the current standard. The judgement between C2 and C3 requires professional experience and an understanding of the risk in context. It also carries real weight: a C2 makes the report Unsatisfactory, a C3 does not. Code the risk you actually found, not the outcome you want.',
   },
   {
     question: 'When should I use an FI code instead of a classification code?',
     answer:
-      'FI (Further Investigation) should be used when you cannot fully assess a part of the installation and therefore cannot give it a classification. Common situations include: parts of the installation that are concealed or inaccessible (behind plasterwork, in ceiling voids you cannot reach), components that require specialist testing beyond the scope of the current inspection, unexpected or inconsistent test results that need deeper investigation, or areas where the installation is in use and cannot be safely isolated during the inspection. FI is not a way to avoid making a judgement — you must explain specifically why further investigation is needed and what additional work is required.',
+      'FI is used where the inspection has identified a potential issue for which you cannot determine a classification code until further investigation has taken place. Appendix 6 puts it that way deliberately — FI is recorded where an issue has been identified but the extent and limitations of the inspection prevent you verifying it. Common situations include: parts of the installation that are concealed or inaccessible, components that require specialist testing beyond the scope of the current inspection, unexpected or inconsistent test results that need deeper investigation, or areas in use that could not be safely isolated during the inspection. FI is not a way to avoid making a judgement — you must explain specifically why further investigation is needed and what additional work is required. Once the investigation is done, the issue gets its proper code, and that code may well be a C1 or C2 that flips the assessment.',
   },
   {
-    question: 'How long does a landlord have to fix C1, C2, and FI observations?',
+    question: 'How long does a landlord have to fix C1, C2 and FI observations?',
     answer:
-      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, if an EICR identifies any observations that require urgent remedial action or further investigation (C1, C2, or FI), the landlord must ensure that further investigative or remedial work is carried out within 28 days. If the inspector specifies a shorter period on the report (for example, for a C1 Danger Present observation that requires immediate action), the landlord must comply with that shorter period. The landlord must then obtain written confirmation from a qualified person that the remedial work has been completed to a satisfactory standard. Failure to comply can result in civil penalties of up to 30,000 pounds per breach.',
+      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, where a report indicates that further investigative or remedial work is necessary, the landlord must ensure that work is carried out within 28 days. That duty is triggered by the work being necessary, so it catches FI observations as well as C1 and C2 — even though FI does not affect the BS 7671 overall assessment. If the inspector specifies a shorter period on the report (for example, for a C1 Danger present observation), the landlord must comply with that shorter period. The landlord must then obtain written confirmation from a qualified person that the remedial work has been completed to a satisfactory standard. Failure to comply can result in civil penalties of up to £30,000 per breach.',
   },
   {
-    question:
-      'How do I code the absence of an AFDD or 30 mA RCD on lighting circuits under A4:2026?',
+    question: 'How do I code a missing AFDD or a lighting circuit with no RCD under A4:2026?',
     answer:
-      'BS 7671:2018+A4:2026 introduced two new requirements that inspectors will increasingly encounter on EICRs of legacy installations. Regulation 421.1.7 (new in A4:2026) recommends the installation of arc fault detection devices (AFDDs) on AC final circuits of fixed installations to mitigate the risk of fire from arc fault currents. Because the regulation uses recommendatory rather than mandatory language, absence of an AFDD on an existing installation would typically attract a C3 code — an improvement recommended but not a safety defect. Regulation 411.3.4 (new in A4:2026) is mandatory: it requires that, within domestic (household) premises, AC final circuits supplying luminaires shall be provided with additional protection by a 30 mA RCD. For a new installation or rewire this is a hard requirement. For an existing domestic installation where lighting circuits are not RCD-protected, the absence represents a departure from the current edition; in a low-risk context this is typically coded C3, but where there are aggravating factors (for example, exposed or damaged wiring, high-use circuits, vulnerable occupants) the inspector may judge C2 appropriate. In all cases, document the observation clearly and cite the relevant regulation.',
+      'These are two different requirements with two different strengths, and the difference matters when you code them. Regulation 421.1.7 was redrafted at A4:2026. It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDDs) in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. For all other premises, the regulation recommends AFDDs for single-phase AC final circuits supplying socket-outlets not exceeding 32 A. So the absence of an AFDD is not automatically a C3 — in one of the four named premises types it is the absence of something the standard requires, and you should judge the risk accordingly. Regulation 411.3.4 is introduced by Amendment 2:2022 and is unqualified: within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires. On a new installation or rewire that is a hard requirement. On an existing domestic installation where lighting circuits are not RCD protected, the absence is a departure from the current edition; in a low-risk context this is typically coded C3, but aggravating factors (damaged wiring, cables at risk, vulnerable occupants) may justify C2. In every case, describe what you found and cite the regulation.',
   },
   {
     question: 'Can I change an observation code after the EICR has been issued?',
@@ -60,7 +57,7 @@ const faqs = [
   {
     question: 'What is the most common C2 observation found on domestic EICRs?',
     answer:
-      'The most frequently occurring C2 observation in domestic installations is the absence of RCD protection on final socket-outlet circuits in dwellings. Under BS 7671 Reg 411.3.3 (as revised by A4:2026), socket-outlet circuits rated up to 32 A must be protected by a 30 mA RCD. Many older consumer units contain MCBs without RCD protection for socket circuits, which represents a potentially dangerous condition given the risk of electric shock to occupants using portable appliances. Other commonly encountered C2 observations include: earthing and bonding deficiencies where the main bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where required. Correctly identifying and coding these observations is essential — a C2 that should be a C1 could put a client at serious risk, while over-coding C3 observations as C2 creates unnecessary alarm.',
+      'The absence of RCD protection on final socket-outlet circuits in dwellings. Regulation 411.3.3 was revised at A4:2026 and now applies to socket-outlets with a rated current not exceeding 32 A: additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided. There is a documented risk assessment exception, but it is not available for a dwelling, and it never applies to socket-outlets liable to be used by persons of capability BA1 or by children (BA2), or to mobile equipment up to 32 A used outdoors. Many older consumer units contain MCBs with no RCD protection on socket circuits, which is a potentially dangerous condition given the risk of shock to occupants using portable appliances. Other commonly encountered C2 observations include earthing and bonding deficiencies where main protective bonding conductors are missing or undersized, damaged or deteriorated cable insulation particularly in older rubber-insulated wiring, and absence of supplementary bonding in bathrooms where it is required.',
   },
 ];
 
@@ -81,13 +78,13 @@ const features = [
     icon: FileCheck2,
     title: 'Automatic Overall Assessment',
     description:
-      'As you add observations and assign codes, the app automatically determines whether the overall assessment is Satisfactory or Unsatisfactory.',
+      'As you add observations and assign codes, the app applies the Appendix 6 rule and sets the overall assessment to Satisfactory or Unsatisfactory for you.',
   },
   {
     icon: Search,
     title: 'Regulation Lookup',
     description:
-      'Tap any observation to look up the relevant BS 7671 regulation. The app provides the regulation text and guidance on whether the observation warrants a…',
+      'Tap any observation to look up the relevant BS 7671 regulation, with the regulation text alongside so you can quote it in the description.',
   },
   {
     icon: BookOpen,
@@ -99,7 +96,7 @@ const features = [
     icon: AlertTriangle,
     title: 'Coding Consistency Checks',
     description:
-      'The app flags potential inconsistencies — like similar defects coded differently on the same report — so you can review and ensure consistent coding…',
+      'The app flags potential inconsistencies — like similar defects coded differently on the same report — so you can review before you sign.',
   },
 ];
 
@@ -108,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-01-15',
-  dateModified: '2026-06-10',
+  dateModified: '2026-08-07',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -138,6 +135,9 @@ const faqSchema = {
     },
   })),
 };
+
+const TH =
+  'px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white whitespace-nowrap';
 
 export default function BS7671ObservationCodesPage() {
   useSEO({
@@ -173,31 +173,24 @@ export default function BS7671ObservationCodesPage() {
             EICR observation codes explained
           </h1>
           <p className="mt-5 max-w-[62ch] text-[16px] leading-relaxed text-white sm:text-[17.5px]">
-            A complete guide to C1, C2, C3 and FI observation codes. Real examples, classification
-            criteria, and how to write clear observations that stand up to scrutiny. For UK
-            electricians.
+            C1, C2, C3 and FI — what each code means, which ones make a report Unsatisfactory, and
+            real examples of each. For UK electricians.
           </p>
 
           {/* Quick-reference table — targets the featured snippet for
               'C1 C2 C3 observation codes'. Scrolls inside its own container so
-              four columns never push the page sideways on a phone. */}
+              four columns never push the page sideways on a phone.
+              The "affects assessment" column is the whole reason people land
+              here, so it is in the table rather than four sections down. */}
           <div className={`${CARD} mt-9 overflow-hidden`}>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] text-left text-sm">
+              <table className="w-full min-w-[620px] text-left text-sm">
                 <thead>
                   <tr className="bg-[hsl(0_0%_13%)]">
-                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                      Code
-                    </th>
-                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                      Meaning
-                    </th>
-                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                      Action required
-                    </th>
-                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-                      EICR outcome
-                    </th>
+                    <th className={TH}>Code</th>
+                    <th className={TH}>Meaning</th>
+                    <th className={TH}>Action</th>
+                    <th className={TH}>Affects overall assessment?</th>
                   </tr>
                 </thead>
                 {/* The code colours stay: they carry the real severity meaning
@@ -205,32 +198,38 @@ export default function BS7671ObservationCodesPage() {
                 <tbody className="divide-y divide-white/[0.08]">
                   <tr>
                     <td className="px-4 py-3.5 font-bold text-red-400">C1</td>
-                    <td className="px-4 py-3.5 text-white">Danger present</td>
-                    <td className="px-4 py-3.5 text-white">Immediate</td>
-                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                    <td className="px-4 py-3.5 text-white">Danger present. Risk of injury</td>
+                    <td className="px-4 py-3.5 text-white">Immediate remedial action</td>
+                    <td className="px-4 py-3.5 font-medium text-red-400">Yes — Unsatisfactory</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3.5 font-bold text-orange-400">C2</td>
                     <td className="px-4 py-3.5 text-white">Potentially dangerous</td>
-                    <td className="px-4 py-3.5 text-white">Urgent</td>
-                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                    <td className="px-4 py-3.5 text-white">Urgent remedial action</td>
+                    <td className="px-4 py-3.5 font-medium text-red-400">Yes — Unsatisfactory</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3.5 font-bold text-sky-400">C3</td>
                     <td className="px-4 py-3.5 text-white">Improvement recommended</td>
                     <td className="px-4 py-3.5 text-white">Advisory</td>
-                    <td className="px-4 py-3.5 font-medium text-emerald-400">Satisfactory</td>
+                    <td className="px-4 py-3.5 font-medium text-white">No</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3.5 font-bold text-violet-400">FI</td>
-                    <td className="px-4 py-3.5 text-white">Further investigation</td>
-                    <td className="px-4 py-3.5 text-white">Without delay</td>
-                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                    <td className="px-4 py-3.5 text-white">Further investigation is advised</td>
+                    <td className="px-4 py-3.5 text-white">Investigate, then code it</td>
+                    <td className="px-4 py-3.5 font-medium text-white">No</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
+          <p className="mt-4 max-w-[70ch] text-[15px] leading-relaxed text-white">
+            <strong>The short answer:</strong> a C1 or a C2 makes the report Unsatisfactory. C3 and
+            FI are advisory and do not change the overall assessment — that is the wording printed
+            in the model Condition Report in BS 7671:2018+A4:2026 Appendix 6.
+          </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href="/auth/signup" className={`${BTN_PRIMARY} h-14 w-full sm:w-auto`}>
@@ -255,22 +254,27 @@ export default function BS7671ObservationCodesPage() {
               Condition Report (EICR) to communicate the severity of any defects, departures from
               the standard, or safety issues found during an inspection. Every time an inspector
               identifies something that departs from BS 7671 or represents a defect, they record it
-              as an observation and assign one of four classification codes: C1, C2, C3, or FI.
+              in Section K of the report and assign one of four codes: C1, C2, C3 or FI.
             </p>
             <p>
-              The coding system was introduced to provide a consistent, standardised method for
-              classifying observations across the industry. Before the current system, different
-              inspectors and different scheme providers used different terminology, making it
-              difficult for property owners and other stakeholders to understand the severity of
-              identified issues. The current C1, C2, C3, FI system — as defined in GN3 Table 3.5
-              (IET Guidance Note 3, 9th edition) and required by Regulation 3.11 of that guidance —
-              provides a common language that is understood across the UK electrical industry.
-              Scheme providers including NAPIT, NICEIC and ELECSA audit completed EICRs against the
-              definitions in Table 3.5.
+              The codes are not scheme-provider inventions. They are printed on the model Condition
+              Report in Appendix 6 of BS 7671, together with the notes for the person producing the
+              report — and Regulation 653.1 requires those notes to be taken into account when the
+              report is produced. That is what gives the industry a common language: an EICR
+              produced by any competent person, audited by any scheme, means the same thing by C2.
             </p>
             <p>
-              The observation codes are used during the periodic inspection of existing
-              installations (producing an EICR). They are not used on{' '}
+              Section K of the model report is split into two blocks. The first lists C1 and C2
+              observations under the heading{' '}
+              <em>&ldquo;These items affect the overall assessment of the report&rdquo;</em>. The
+              second lists C3 and FI observations under{' '}
+              <em>&ldquo;These items do not affect the overall assessment of the report&rdquo;</em>.
+              If you remember nothing else about coding, remember that split — it is the difference
+              between a Satisfactory and an Unsatisfactory report.
+            </p>
+            <p>
+              Observation codes are used during the periodic inspection of existing installations
+              (producing an EICR). They are not used on{' '}
               <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificates (EICs)
               </SEOInternalLink>
@@ -279,32 +283,36 @@ export default function BS7671ObservationCodesPage() {
               EICR, by contrast, reports on the condition of an installation as found, which may
               include defects of varying severity. Preparing for your{' '}
               <SEOInternalLink href="/city-guilds2391">
-                C&G 2391-52 inspection and testing qualification
+                C&amp;G 2391-52 inspection and testing qualification
               </SEOInternalLink>{' '}
               gives you the knowledge to code observations consistently and correctly.
             </p>
             <p>
-              Understanding when and how to apply each code is one of the most important skills an
-              inspector can develop. Incorrect coding undermines the credibility of the report, can
-              cause unnecessary alarm to property owners, or — more dangerously — can understate a
-              genuine safety risk. This guide covers each code in detail with real-world examples.
+              Getting the code right is one of the most important skills an inspector can develop.
+              Incorrect coding undermines the credibility of the report, can cause unnecessary alarm
+              to property owners, or — more dangerously — can understate a genuine safety risk. The
+              rest of this guide covers each code with real-world examples.
             </p>
           </div>
         </div>
       </section>
 
-      {/* C1 — Danger Present */}
+      {/* C1 — Danger Present.
+          Was: a colour-washed panel (bg-red-500/10 and friends). A 10% colour
+          over near-black reads as mud, so the surface is now the standard
+          neutral card and the colour goes full-strength on the code itself,
+          where it actually carries meaning. */}
       <section id="observation-codes" className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 sm:p-8">
+          <div className={CARD_PADDED}>
             <div className="flex items-center gap-4 mb-6">
-              <span className="w-14 h-14 rounded-xl bg-red-500/20 flex items-center justify-center font-bold text-2xl text-red-400">
+              <span className="w-14 h-14 shrink-0 rounded-xl bg-[hsl(0_0%_13%)] flex items-center justify-center font-bold text-2xl text-red-400">
                 C1
               </span>
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white">C1 — Danger Present</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">C1 — Danger present</h2>
                 <p className="text-white text-sm">
-                  Risk of injury. Immediate remedial action required.
+                  Risk of injury. Immediate remedial action is necessary.
                 </p>
               </div>
             </div>
@@ -312,18 +320,17 @@ export default function BS7671ObservationCodesPage() {
               <p>
                 A C1 code indicates that there is an immediate danger of injury to persons or
                 livestock. This is the most serious classification and requires immediate action.
-                When a C1 observation is identified, the inspector must advise the person
-                responsible for the installation immediately, and the danger should be removed or
-                made safe before the inspector leaves the premises if at all possible.
+                Appendix 6 is explicit: wherever practicable, items classified as C1 are to be made
+                safe on discovery. Where that is not possible, the owner or user is to be given
+                written notification as a matter of urgency.
               </p>
               <p>
                 C1 observations are relatively rare on well-maintained installations, but when they
-                occur, they represent genuine dangers that could cause electric shock, burns, or
-                fire. The inspector should document the danger clearly, advise the responsible
-                person in writing, and record on the report that the responsible person has been
-                informed.
+                occur, they represent genuine dangers that could cause electric shock, burns or
+                fire. Document the danger clearly, notify the responsible person in writing, and
+                record on the report that they have been informed.
               </p>
-              <h3 className="font-bold text-white text-lg mt-6 mb-3">C1 Examples</h3>
+              <h3 className="font-bold text-white text-lg mt-6 mb-3">C1 examples</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -346,7 +353,7 @@ export default function BS7671ObservationCodesPage() {
                   <span>
                     <strong>Severely damaged distribution board</strong> — a consumer unit with fire
                     damage, melted components, or structural failure that exposes live conductors or
-                    compromises the enclosure rating.
+                    compromises the enclosure.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -354,7 +361,7 @@ export default function BS7671ObservationCodesPage() {
                   <span>
                     <strong>Overloaded circuits with visible damage</strong> — cables showing signs
                     of overheating (discoloured insulation, burnt smell), combined with undersized
-                    protection or missing protection, presenting an immediate fire risk.
+                    or missing protection, presenting an immediate fire risk.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -374,53 +381,50 @@ export default function BS7671ObservationCodesPage() {
       {/* C2 — Potentially Dangerous */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 sm:p-8">
+          <div className={CARD_PADDED}>
             <div className="flex items-center gap-4 mb-6">
-              <span className="w-14 h-14 rounded-xl bg-orange-500/20 flex items-center justify-center font-bold text-2xl text-orange-400">
+              <span className="w-14 h-14 shrink-0 rounded-xl bg-[hsl(0_0%_13%)] flex items-center justify-center font-bold text-2xl text-orange-400">
                 C2
               </span>
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                  C2 — Potentially Dangerous
+                  C2 — Potentially dangerous
                 </h2>
-                <p className="text-white text-sm">
-                  Risk of injury may arise. Urgent remedial action required.
-                </p>
+                <p className="text-white text-sm">Urgent remedial action is necessary.</p>
               </div>
             </div>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
                 A C2 code indicates that whilst there may not be an immediate danger at the time of
-                the inspection, a risk of injury could arise under certain foreseeable conditions.
-                The defect requires urgent remedial action to prevent it from becoming dangerous. C2
-                is the most commonly debated classification code because it requires the inspector
-                to make a professional judgement about the likelihood of danger occurring.
+                the inspection, a risk of injury could arise under foreseeable conditions. The
+                defect requires urgent remedial action to prevent it becoming dangerous. C2 is the
+                most commonly debated code because it turns on a professional judgement about how
+                likely the danger is to materialise.
               </p>
               <p>
                 The distinction between C2 and C1 is immediacy. A C1 is dangerous right now —
                 someone could be injured at this moment. A C2 is not immediately dangerous but could
-                become so. For example, missing RCD protection on a socket circuit is not
-                immediately dangerous (the circuit may be working fine), but if an earth fault
-                occurs and there is no RCD to clear it quickly, injury could result.
+                become so. Missing RCD protection on a socket circuit is the textbook case: the
+                circuit may be working perfectly, but if an earth fault occurs there is no RCD to
+                clear it quickly, and injury could result.
               </p>
-              <h3 className="font-bold text-white text-lg mt-6 mb-3">C2 Examples</h3>
+              <h3 className="font-bold text-white text-lg mt-6 mb-3">C2 examples</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Inadequate bonding</strong> — main bonding conductors to water and gas
-                    services missing, undersized, or not properly connected. Under a fault
-                    condition, this could result in a dangerous potential difference between
-                    services.
+                    <strong>Inadequate main protective bonding</strong> — bonding conductors to
+                    water and gas services missing, undersized, or not connected as near as
+                    practicable to the point of entry (Reg 544.1.2). Under a fault condition this
+                    could result in a dangerous potential difference between services.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Missing RCD protection</strong> — socket outlet circuits accessible to
-                    the public or in locations with increased risk (bathrooms, kitchens, external
-                    areas) without 30mA RCD protection as required by the current edition of BS
-                    7671.
+                    <strong>Missing RCD protection</strong> — socket-outlets with a rated current
+                    not exceeding 32 A without 30 mA RCD protection, where Reg 411.3.3 requires it.
+                    The documented risk assessment exception is not available for a dwelling.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -434,19 +438,20 @@ export default function BS7671ObservationCodesPage() {
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Lack of discrimination</strong> — protective devices configured such
-                    that a fault on one circuit causes a higher-level device to operate,
-                    disconnecting multiple circuits unnecessarily and potentially affecting safety
-                    services.
+                    <strong>Lack of selectivity</strong> — protective devices coordinated such that
+                    a fault on one circuit operates an upstream device, disconnecting circuits that
+                    should have stayed live, including potentially safety services. BS 7671 calls
+                    this selectivity; discrimination is the older term for the same thing (Section
+                    536.4).
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Zs exceeding maximum permitted value</strong> — the measured earth fault
-                    loop impedance for a circuit exceeds the value tabulated in BS 7671 for the
-                    protective device, meaning the device may not disconnect within the required
-                    time during an earth fault.
+                    <strong>Zs exceeding the maximum permitted value</strong> — the measured earth
+                    fault loop impedance exceeds the value tabulated for the protective device in
+                    Tables 41.2 to 41.5, so the device may not disconnect within the time required
+                    by Reg 411.3.2.2 during an earth fault.
                   </span>
                 </li>
               </ul>
@@ -458,17 +463,17 @@ export default function BS7671ObservationCodesPage() {
       {/* C3 — Improvement Recommended */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 sm:p-8">
+          <div className={CARD_PADDED}>
             <div className="flex items-center gap-4 mb-6">
-              <span className="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center font-bold text-2xl text-blue-400">
+              <span className="w-14 h-14 shrink-0 rounded-xl bg-[hsl(0_0%_13%)] flex items-center justify-center font-bold text-2xl text-sky-400">
                 C3
               </span>
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                  C3 — Improvement Recommended
+                  C3 — Improvement recommended
                 </h2>
                 <p className="text-white text-sm">
-                  Does not comply with current standard. Not dangerous. Improvement recommended.
+                  Advisory. Does not affect the overall assessment.
                 </p>
               </div>
             </div>
@@ -477,68 +482,67 @@ export default function BS7671ObservationCodesPage() {
                 A C3 code indicates that a part of the installation does not comply with the current
                 edition of BS 7671 but is not considered dangerous. These are typically features
                 that were acceptable under the regulations in force when the installation was
-                originally carried out, but do not meet the requirements of the current 18th
-                Edition. The inspector recommends improvement but acknowledges that there is no
-                immediate safety risk.
+                carried out, but do not meet BS 7671:2018+A4:2026. The inspector recommends
+                improvement while acknowledging there is no immediate safety risk.
               </p>
               <p>
-                C3 observations do not make the EICR Unsatisfactory. A report with only C3 codes
-                (and no C1, C2, or FI codes) is classified as Satisfactory. This is an important
-                distinction because it means the installation is safe for continued use, even though
-                improvements would bring it closer to the current standard.
+                C3 observations do not make the EICR Unsatisfactory. Appendix 6 states plainly that
+                a C3 recommendation is advisory only and does not affect the overall assessment of
+                the report. A report carrying only C3 observations is Satisfactory: the installation
+                is safe for continued use even though improvements would bring it closer to the
+                current standard.
               </p>
               <p>
-                C3 is sometimes misunderstood by property owners, who may see "Improvement
-                Recommended" and assume the work must be done. It is the inspector's role to explain
-                that C3 items are advisory, not mandatory, and that the installation remains safe.
-                However, the property owner should be encouraged to consider the improvements,
-                particularly if they plan to carry out other electrical work in the future.
+                Property owners often misread &ldquo;improvement recommended&rdquo; as work they are
+                obliged to do. It is the inspector&rsquo;s job to explain that C3 items are
+                advisory, that the installation remains safe, and that the improvements are still
+                worth considering — particularly if other electrical work is planned.
               </p>
-              <h3 className="font-bold text-white text-lg mt-6 mb-3">C3 Examples</h3>
+              <h3 className="font-bold text-white text-lg mt-6 mb-3">C3 examples</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+                  <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>No RCD protection on older installations</strong> — socket circuits
-                    installed before the requirement for RCD protection was introduced. Not required
-                    at the time of installation and not considered dangerous, but RCD protection
-                    would improve safety.
+                    <strong>Domestic lighting circuits with no RCD</strong> — Reg 411.3.4, new at
+                    A4:2026, requires 30 mA RCD protection for AC final circuits supplying
+                    luminaires within domestic premises. On an existing installation with no
+                    aggravating factors this is typically C3, not C2.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+                  <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Label deficiencies</strong> — circuit labels on the distribution board
-                    that are faded, incomplete, or do not match the actual circuit arrangement. Not
-                    dangerous, but clear labelling is important for safe working.
+                    that are faded, incomplete, or do not match the actual circuit arrangement.
+                    Missing &ldquo;Safety Electrical Connection — Do Not Remove&rdquo; notices at
+                    bonding connections fall here too (Reg 514.13.1).
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+                  <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Accessibility issues</strong> — the consumer unit is located in a
-                    position that makes it difficult to access in an emergency, such as behind
-                    stored items or at an awkward height. The current regulations require the means
-                    of switching off to be readily accessible.
+                    <strong>Accessibility issues</strong> — the consumer unit is behind stored items
+                    or at an awkward height. Reg 132.15.201 requires effective means, suitably
+                    placed for ready operation, to cut off all voltage.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+                  <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Older wiring colours</strong> — the installation uses red/black wiring
-                    colours from the previous standard rather than the current brown/blue harmonised
-                    colours. Not dangerous in itself, but re-identification with coloured sleeving
-                    would aid safe working.
+                    <strong>Older wiring colours not re-identified</strong> — red/black conductors
+                    from the previous standard left unmarked where they meet harmonised
+                    brown/blue. Not dangerous in itself, but Reg 514.3.1 requires cores to be
+                    identifiable, and sleeving removes the ambiguity for whoever works on it next.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+                  <Info className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Supplementary bonding no longer required</strong> — supplementary
-                    equipotential bonding in a bathroom that is no longer required under the current
-                    regulations (where all circuits are RCD protected and disconnection times are
-                    met), but is still in place. C3 recommends no action is needed but notes the
-                    observation for the record.
+                    <strong>Absent RCD on a circuit where it is only recommended</strong> — for
+                    example an AFDD omitted on a socket-outlet circuit in premises where Reg 421.1.7
+                    recommends rather than requires one. Where the premises is a Higher Risk
+                    Residential Building, HMO, purpose-built student accommodation or care home, the
+                    same omission is a departure from a requirement and warrants a harder look.
                   </span>
                 </li>
               </ul>
@@ -550,86 +554,87 @@ export default function BS7671ObservationCodesPage() {
       {/* FI — Further Investigation */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-6 sm:p-8">
+          <div className={CARD_PADDED}>
             <div className="flex items-center gap-4 mb-6">
-              <span className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center font-bold text-2xl text-purple-400">
+              <span className="w-14 h-14 shrink-0 rounded-xl bg-[hsl(0_0%_13%)] flex items-center justify-center font-bold text-2xl text-violet-400">
                 FI
               </span>
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                  FI — Further Investigation
+                  FI — Further investigation is advised
                 </h2>
-                <p className="text-white text-sm">Further investigation required without delay.</p>
+                <p className="text-white text-sm">
+                  Advisory. Does not affect the overall assessment.
+                </p>
               </div>
             </div>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                An FI code indicates that the inspector was unable to fully assess a part of the
-                installation during the inspection, and further investigation is needed before a
-                definitive classification can be given. FI is not a classification of severity like
-                C1, C2, or C3 — it is an acknowledgement that more work is required to determine the
-                condition of a specific aspect of the installation.
+                FI is recorded where the inspection and testing has identified a potential issue for
+                which you cannot determine a classification code until further investigation has
+                taken place — usually because of the extent and limitations agreed for the
+                inspection. It is not a severity rating like C1, C2 and C3. It is an honest
+                statement that something needs looking at before it can be coded.
+              </p>
+              <p>
+                Because FI is not a severity rating, it sits in the advisory block of Section K
+                alongside C3 and does not, on its own, make the report Unsatisfactory. That surprises
+                a lot of inspectors, and some scheme providers apply a stricter house rule — check
+                yours. What FI does do is create an obligation to investigate: once the investigation
+                is complete, the issue gets its proper code, and if that turns out to be a C1 or C2
+                the assessment changes. In the private rented sector, an FI also triggers the
+                landlord&rsquo;s 28-day duty to carry out further investigative work.
               </p>
               <p>
                 FI must always be accompanied by a clear explanation of why further investigation is
-                needed and what additional work is required. Simply writing "Further investigation
-                required" without context is poor practice and will likely be challenged by scheme
-                providers or clients. The description should explain what the inspector could not
-                access or test, why they could not do so, and what specific investigation or testing
-                is recommended.
+                needed and what work is required. &ldquo;Further investigation required&rdquo; on
+                its own is poor practice and will be challenged by scheme auditors and clients
+                alike. Say what you could not access or test, why, and what specific investigation
+                you recommend.
               </p>
-              <p>
-                FI is sometimes perceived as a "cop-out" code — a way for inspectors to avoid making
-                a difficult classification decision. This perception is wrong. FI serves a genuine
-                and important purpose: it prevents inspectors from guessing about things they cannot
-                see or verify. Coding something as Satisfactory when you have not actually been able
-                to inspect it is far more dangerous than honestly recording that further
-                investigation is needed.
-              </p>
-              <h3 className="font-bold text-white text-lg mt-6 mb-3">FI Examples</h3>
+              <h3 className="font-bold text-white text-lg mt-6 mb-3">FI examples</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
+                  <HelpCircle className="w-5 h-5 text-violet-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Inaccessible wiring</strong> — cables concealed in walls, floors, or
+                    <strong>Inaccessible wiring</strong> — cables concealed in walls, floors or
                     ceilings that cannot be inspected or tested without invasive work. For example,
-                    the inspector suspects that cables routed through a ceiling void may be in
-                    contact with thermal insulation but cannot access the void to verify.
+                    cables routed through a ceiling void are suspected to be in contact with thermal
+                    insulation (Reg 523.9) but the void cannot be accessed to verify.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
+                  <HelpCircle className="w-5 h-5 text-violet-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Buried cables of unknown route</strong> — cables identified entering or
-                    leaving an accessory plate that disappear into a solid wall or floor and their
-                    route and condition cannot be determined without opening up the structure.
+                    <strong>Buried cables of unknown route</strong> — cables entering or leaving an
+                    accessory plate that disappear into a solid wall or floor, whose route and
+                    condition cannot be determined without opening up the structure.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
+                  <HelpCircle className="w-5 h-5 text-violet-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Suspected issues behind plasterwork</strong> — signs of previous water
-                    ingress or discolouration around an electrical accessory suggesting possible
-                    damage to concealed wiring, but the extent cannot be determined without removing
-                    the plaster.
+                    <strong>Suspected damage behind plasterwork</strong> — signs of previous water
+                    ingress or discolouration around an accessory suggesting possible damage to
+                    concealed wiring, where the extent cannot be established without removing
+                    plaster.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
+                  <HelpCircle className="w-5 h-5 text-violet-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>Inconsistent test results</strong> — test readings that do not match
-                    expected values and the cause cannot be determined during the inspection. For
-                    example, an unusually high R1+R2 value on a circuit that may indicate a loose
-                    connection at a point that cannot be accessed during the current visit.
+                    <strong>Inconsistent test results</strong> — readings that do not match expected
+                    values with no cause identifiable on the day. For example, an unusually high
+                    R1+R2 on a circuit that may indicate a loose connection at a point that could
+                    not be accessed during the visit.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HelpCircle className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
+                  <HelpCircle className="w-5 h-5 text-violet-400 mt-0.5 shrink-0" />
                   <span>
                     <strong>Locked or occupied areas</strong> — parts of the installation in rooms
-                    or areas that were locked or in use during the inspection and could not be
-                    accessed. The FI should specify which areas and what testing is required when
-                    access is available.
+                    that were locked or in use during the inspection. State which areas, and what
+                    testing is required when access is available.
                   </span>
                 </li>
               </ul>
@@ -648,63 +653,61 @@ export default function BS7671ObservationCodesPage() {
             <p>
               The quality of your observation descriptions directly affects the usefulness of the
               EICR. A good observation is specific, actionable, and references the relevant
-              regulation. A poor observation is vague, ambiguous, and leaves the reader unsure of
-              what was found or what needs to be done.
+              regulation. A poor one is vague and leaves the reader unsure of what was found or what
+              needs doing.
             </p>
             <p>
-              Every observation should answer three questions: What was found? Where was it found?
-              Which regulation does it relate to? For example, instead of writing "Bonding
-              inadequate", write "Main protective bonding conductor to incoming water service is
-              absent. Regulation 544.1.2 requires the main protective bonding connection to any
-              extraneous-conductive-part to be made as near as practicable to the point of entry."
-              The second version tells the reader exactly what the problem is, where it is, and
-              which regulation requires it to be addressed.
+              Every observation should answer three questions: what was found, where was it found,
+              and which regulation does it relate to? Instead of &ldquo;bonding inadequate&rdquo;,
+              write &ldquo;Main protective bonding conductor to incoming water service is absent.
+              Regulation 544.1.2 requires the connection to any extraneous-conductive-part to be
+              made as near as practicable to the point of entry of that part into the
+              premises.&rdquo; The second version tells the reader exactly what the problem is,
+              where it is, and which regulation requires it to be addressed.
             </p>
             <p>
               For FI observations, also explain why further investigation is needed and what
-              specific work is recommended. Instead of "Further investigation required to ceiling
-              void", write "Cables entering ceiling void above first-floor landing could not be
-              inspected as no access hatch is present. Recommend access hatch be installed to permit
-              inspection of cable routing and condition, particularly in relation to thermal
-              insulation contact (Regulation 523.9)."
+              specific work you recommend. Instead of &ldquo;further investigation required to
+              ceiling void&rdquo;, write &ldquo;Cables entering ceiling void above first-floor
+              landing could not be inspected as no access hatch is present. Recommend an access
+              hatch be installed to permit inspection of cable routing and condition, particularly
+              in relation to thermal insulation contact (Regulation 523.9).&rdquo;
             </p>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-red-400" />
-                Poor Observations
-              </h3>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-3">Poor observations</h3>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>"Bonding inadequate"</li>
-                <li>"RCD not working properly"</li>
-                <li>"Some circuits need attention"</li>
-                <li>"Old wiring"</li>
-                <li>"Further investigation required"</li>
+                <li>&ldquo;Bonding inadequate&rdquo;</li>
+                <li>&ldquo;RCD not working properly&rdquo;</li>
+                <li>&ldquo;Some circuits need attention&rdquo;</li>
+                <li>&ldquo;Old wiring&rdquo;</li>
+                <li>&ldquo;Further investigation required&rdquo;</li>
               </ul>
             </div>
-            <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-green-400" />
-                Good Observations
-              </h3>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-3">Good observations</h3>
               <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>"Main bonding to water service absent. Reg 544.1.2."</li>
                 <li>
-                  "RCD serving kitchen sockets tripped during test at 22 mA. Rated residual current
-                  30 mA. Replace RCD — device operating below rated tripping threshold."
+                  &ldquo;Main protective bonding to incoming water service absent. Reg
+                  544.1.2.&rdquo;
                 </li>
                 <li>
-                  "Circuit 7 (first-floor ring) — Zs measured 2.15 ohms, max permitted 1.37 ohms for
-                  B32. Reg 411.3.2."
+                  &ldquo;RCD serving kitchen sockets did not disconnect within 300 ms on an AC test
+                  at its rated residual operating current of 30 mA. Reg 643.8 — device to be
+                  replaced.&rdquo;
                 </li>
                 <li>
-                  "Red/black wiring colours present throughout. Not re-identified with
-                  sleeving/markers. C3 — Reg 514 (identification of conductors)."
+                  &ldquo;Circuit 7 (first-floor ring) — Zs measured 2.15 &Omega;, maximum permitted
+                  1.37 &Omega; for a 32 A Type B circuit-breaker (Table 41.3). Reg 411.3.2.2.&rdquo;
                 </li>
                 <li>
-                  "Cables in loft void laid directly on thermal insulation. Access limited — FI to
-                  determine extent. Reg 523.9."
+                  &ldquo;Red/black conductor colours present throughout, not re-identified with
+                  sleeving or markers. C3 — Reg 514.3.1.&rdquo;
+                </li>
+                <li>
+                  &ldquo;Cables in loft void laid directly on thermal insulation. Access limited —
+                  FI to determine extent. Reg 523.9.&rdquo;
                 </li>
               </ul>
             </div>
@@ -720,47 +723,49 @@ export default function BS7671ObservationCodesPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The overall assessment on an EICR is a binary judgement: Satisfactory or
-              Unsatisfactory. The rule is straightforward.
+              The overall assessment recorded in Section E of the EICR is a binary judgement:
+              Satisfactory or Unsatisfactory. There is no weighting and no averaging. The notes for
+              the person producing the report in Appendix 6 give the rule in one sentence — the
+              overall assessment is to be reported as unsatisfactory where any observation is given
+              a code C1 or C2 classification.
             </p>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <CheckCircle2 className="w-6 h-6 text-green-400" />
-                <h3 className="font-bold text-white text-lg">Satisfactory</h3>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white text-lg mb-3">Satisfactory</h3>
               <p className="text-white text-sm leading-relaxed">
-                The installation is safe for continued use. No C1, C2, or FI observations are
-                present. There may be C3 observations (improvement recommended), but no items that
-                represent a current or potential danger and no areas requiring further
-                investigation. The person responsible can continue to use the installation with
-                confidence.
+                No C1 and no C2 observations. The installation is safe for continued use. There may
+                be C3 observations, and there may be FI observations still to be investigated —
+                neither changes the assessment. The person responsible can continue to use the
+                installation, and should act on the advisory items in their own time.
               </p>
             </div>
-            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <AlertCircle className="w-6 h-6 text-red-400" />
-                <h3 className="font-bold text-white text-lg">Unsatisfactory</h3>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white text-lg mb-3">Unsatisfactory</h3>
               <p className="text-white text-sm leading-relaxed">
-                One or more C1, C2, or FI observations are present. The installation is either
-                currently dangerous (C1), potentially dangerous (C2), or could not be fully assessed
-                (FI). Remedial action or further investigation is required. The person responsible
-                must arrange for the identified defects to be corrected or investigated by a
-                competent person, and confirmation of completion should be obtained.
+                One or more C1 or C2 observations. The installation is either currently dangerous
+                (C1) or potentially dangerous (C2). Remedial work is required — immediately for a
+                C1, urgently for a C2 — by a skilled person competent in electrical installation
+                work, and confirmation of completion should be obtained.
               </p>
             </div>
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
-              An important point often overlooked is the treatment of FI observations in relation to
-              the overall assessment. An FI observation makes the report Unsatisfactory. This is
-              because the inspector could not fully determine the condition of part of the
-              installation, and the installation cannot be confirmed as safe until that
-              investigation is completed. FI observations must be actioned without delay so that the
-              area in question can be properly assessed and the appropriate classification (C1, C2,
-              C3, or no defect) can be determined.
+              The point most often got wrong is FI. Because an FI means the inspector could not
+              reach a conclusion, it is tempting to assume it must make the report Unsatisfactory.
+              The model report says otherwise: C3 and FI sit together in the advisory block of
+              Section K and do not affect the overall assessment. What an FI does create is an
+              obligation to investigate. Once that investigation is complete the item receives its
+              proper code — and if the answer turns out to be a C1 or C2, the report has to be
+              revisited.
+            </p>
+            <p>
+              Two practical caveats. First, some competent person scheme providers operate a
+              stricter internal rule and treat FI as Unsatisfactory on audit; where your scheme says
+              so, follow your scheme. Second, in the private rented sector the landlord&rsquo;s duty
+              is triggered by further investigative <em>or</em> remedial work being necessary, so an
+              FI carries the same 28-day clock as a C1 or C2 regardless of the assessment recorded.
             </p>
           </div>
         </div>
@@ -770,132 +775,100 @@ export default function BS7671ObservationCodesPage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            The Landlord's Duty When Observations Are Raised
+            The Landlord&rsquo;s Duty When Observations Are Raised
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Under the Electrical Safety Standards in the Private Rented Sector (England)
               Regulations 2020, landlords have specific legal obligations when an EICR raises
-              observations. Understanding these obligations is important for both inspectors (who
-              need to communicate them to landlords) and landlords (who need to act on them).
+              observations. These sit alongside BS 7671, not inside it — the duty is set by the
+              regulations, not by the observation code.
             </p>
             <p>
-              When the EICR identifies observations requiring urgent action (any C1, C2, or FI
-              code), the landlord must ensure that investigative or remedial work is completed
-              within 28 days of the inspection date, or within any shorter period specified by the
-              inspector on the report. For C1 (Danger Present) observations, inspectors often
-              specify a shorter period — in some cases, immediate action is required before the
-              premises can be safely occupied.
+              Where the report indicates that further investigative or remedial work is necessary —
+              which covers C1, C2 and FI observations — the landlord must ensure that work is
+              carried out within 28 days of the inspection, or within any shorter period specified
+              by the inspector on the report. For C1 observations inspectors often specify a shorter
+              period; in some cases the danger must be removed before the premises can be safely
+              occupied at all.
             </p>
             <p>
-              After the remedial work is completed, the landlord must obtain written confirmation
-              from a qualified person that the work has been done to a satisfactory standard. This
-              confirmation must be provided to the local housing authority within 28 days of the
-              remedial work being completed if requested. The landlord must also supply a copy of
-              the report (and any confirmation of remedial work) to the tenants within 28 days.
+              After the work is completed, the landlord must obtain written confirmation from a
+              qualified person that it has been done to a satisfactory standard, and supply that
+              confirmation together with a copy of the report to the tenants and the local housing
+              authority. A copy of the report itself must reach existing tenants within 28 days of
+              the inspection.
             </p>
             <p>
-              Failure to comply with these requirements can result in local authority enforcement
-              action, including civil penalties of up to 30,000 pounds per breach, remedial action
-              notices requiring specific work to be carried out, and in extreme cases, the local
-              authority may arrange for the work to be done and recover costs from the landlord.
-              These are significant consequences, and inspectors should ensure landlords understand
-              their obligations when handing over an Unsatisfactory EICR.
+              Failure to comply can result in local authority enforcement action, including civil
+              penalties of up to £30,000 per breach and remedial action notices requiring specific
+              work to be carried out. In extreme cases the local authority may arrange the work
+              itself and recover the cost from the landlord. Inspectors should make sure landlords
+              understand these obligations when handing over an Unsatisfactory EICR — or one
+              carrying an FI.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Common Inspector Mistakes */}
+      {/* Common Inspector Mistakes.
+          Was five cards each stamped with the same yellow Zap icon — the same
+          accent repeated five times reads as decoration, not signal, so the
+          headings now carry the hierarchy on their own. */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
             Common Mistakes Inspectors Make When Coding Observations
           </h2>
-          <div className="space-y-4 text-white leading-relaxed mb-6">
-            <p>
-              Even experienced inspectors make coding errors. Recognising these common mistakes
-              helps you avoid them and produce more accurate, defensible reports.
-            </p>
-          </div>
+          <p className="text-white leading-relaxed mb-6">
+            Even experienced inspectors make coding errors. Recognising these helps you produce more
+            accurate, more defensible reports.
+          </p>
           <div className="space-y-4">
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold text-white mb-1">
-                    Over-coding with C2 when C3 is appropriate
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    Some inspectors code everything as C2 "to be safe." This makes every report
-                    Unsatisfactory and devalues the coding system. If a feature was compliant when
-                    installed and does not present a risk, it is C3, not C2. Consider the actual
-                    risk, not just the departure from the current standard.
-                  </p>
-                </div>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-1">
+                Coding C2 where C3 is the honest answer
+              </h3>
+              <p className="text-white text-sm leading-relaxed">
+                Some inspectors code everything C2 &ldquo;to be safe&rdquo;. That makes every report
+                Unsatisfactory and devalues the coding system. If a feature was compliant when
+                installed and presents no risk, it is C3. Consider the actual risk, not just the
+                departure from the current standard.
+              </p>
             </div>
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold text-white mb-1">
-                    Under-coding with C3 when C2 is warranted
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    The opposite mistake: coding a genuine safety issue as C3 to avoid making the
-                    report Unsatisfactory. This is dangerous and can expose the inspector to
-                    liability. If there is a real risk of injury, it must be coded C2 (or C1)
-                    regardless of the consequences for the overall assessment.
-                  </p>
-                </div>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-1">Coding C3 where C2 is warranted</h3>
+              <p className="text-white text-sm leading-relaxed">
+                The opposite mistake: downgrading a genuine safety issue to C3 to avoid an
+                Unsatisfactory report. That is dangerous and exposes the inspector to liability. If
+                there is a real risk of injury it is C2 or C1, whatever that does to the assessment.
+              </p>
             </div>
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold text-white mb-1">
-                    Using FI to avoid difficult decisions
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    FI should only be used when you genuinely cannot assess something, not when you
-                    are unsure about the correct classification. If you can see a defect and assess
-                    its severity, code it. FI is for situations where you cannot physically see or
-                    test the item in question.
-                  </p>
-                </div>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-1">Using FI to dodge a difficult decision</h3>
+              <p className="text-white text-sm leading-relaxed">
+                FI is for things you genuinely could not verify, not things you are unsure how to
+                classify. If you can see the defect and assess its severity, code it. And remember
+                FI does not make the report Unsatisfactory — reaching for it to soften a C2 does not
+                work, it just leaves a real danger unrecorded.
+              </p>
             </div>
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold text-white mb-1">Vague observation descriptions</h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    Writing "bonding inadequate" or "needs attention" without specifying what,
-                    where, and which regulation. Every observation should be specific enough that
-                    another competent person could read it and understand exactly what was found and
-                    what needs to be done.
-                  </p>
-                </div>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-1">Vague observation descriptions</h3>
+              <p className="text-white text-sm leading-relaxed">
+                Writing &ldquo;bonding inadequate&rdquo; or &ldquo;needs attention&rdquo; without
+                saying what, where, and under which regulation. Every observation should be specific
+                enough that another competent person could read it and know exactly what was found
+                and what needs doing.
+              </p>
             </div>
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-bold text-white mb-1">
-                    Inconsistent coding within the same report
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    Coding the same type of defect as C2 on one circuit and C3 on another without a
-                    clear reason. If missing RCD protection on the kitchen circuit is C2, it should
-                    be C2 on the bathroom circuit as well. Consistency demonstrates professional
-                    judgement.
-                  </p>
-                </div>
-              </div>
+            <div className={CARD_PADDED}>
+              <h3 className="font-bold text-white mb-1">Inconsistent coding within one report</h3>
+              <p className="text-white text-sm leading-relaxed">
+                Coding the same defect C2 on one circuit and C3 on another without a stated reason.
+                If missing RCD protection on the kitchen circuit is a C2, it is a C2 on the bathroom
+                circuit too. Consistency is what makes the judgement look like judgement.
+              </p>
             </div>
           </div>
         </div>
@@ -920,7 +893,7 @@ export default function BS7671ObservationCodesPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Produce Professional EICRs with Elec-Mate"
-            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions…"
+            description="Generate compliant EICR certificates with observation coding guidance, AI-written descriptions and an overall assessment that applies the Appendix 6 rule for you."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -939,9 +912,9 @@ export default function BS7671ObservationCodesPage() {
                 key={faq.question}
                 className="group border border-white/10 rounded-xl overflow-hidden"
               >
-                <summary className="flex items-center justify-between p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
+                <summary className="flex items-center justify-between gap-3 p-4 min-h-[44px] touch-manipulation cursor-pointer text-white font-medium">
                   <span>{faq.question}</span>
-                  <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-5 h-5 shrink-0 text-elec-yellow group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
@@ -949,8 +922,6 @@ export default function BS7671ObservationCodesPage() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}

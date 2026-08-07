@@ -64,12 +64,12 @@ const faqs = [
   {
     question: 'How does London weighting work for electricians?',
     answer:
-      'There is no formal London weighting for self-employed electricians — you set your own rates. For employed electricians, London weighting is either built into the headline salary or paid as a separate allowance, typically £2,000 to £5,000 per year on top of the base pay. JIB (Joint Industry Board) graded electricians in London are entitled to London plus rates under the JIB national agreement, which add approximately 20 to 25% above the standard graded rate. Many M&E contractors offer a consolidated London rate rather than a separate allowance.',
+      'There is no formal London weighting for self-employed electricians — you set your own rates. For employed electricians, London weighting is either built into the headline salary or paid as a separate allowance, typically £2,000 to £5,000 per year on top of the base pay. JIB (Joint Industry Board) graded electricians working in the London Zone are paid the separate London rates set out in the JIB National Working Rules (NWR 6.2), which sit about 12% above the National Standard rate for the same grade — for example £20.58 an hour for an Electrician in London against £18.38 nationally (Transport Provided, effective 5 January 2026). Many M&E contractors offer a consolidated London rate rather than a separate allowance.',
   },
   {
     question: 'What is the JIB rate for an electrician in London in 2026?',
     answer:
-      'JIB rates are agreed annually between the Electrical Contractors Association (ECA) and Unite the Union. For 2025–2026, the JIB Approved Electrician rate in London is approximately £23.50 to £24.50 per hour (London plus rate), equating to approximately £45,000 to £47,000 per year for a standard 38-hour week. Electrical Technicians earn more, and craft persons earn slightly less. These are minimum rates under the JIB agreement — many London contractors pay above the JIB rate to attract and retain skilled electricians in a competitive market.',
+      'JIB rates are agreed annually between the Electrical Contractors Association (ECA) and Unite the Union. Under the 2026 determination, effective Monday 5 January 2026, the London Zone rate for an Approved Electrician is £22.48 an hour on Transport Provided (£23.73 Own Transport, £20.83 Shop Employed) — about £44,400 a year on a 38-hour week. An Electrician in London is £20.58 an hour and a Site or Installation Technician £25.47. These are minimum rates under the JIB agreement — many London contractors pay above the JIB rate to attract and retain skilled electricians in a competitive market.',
   },
   {
     question: 'How does the cost of living affect electrician earnings in London?',
@@ -195,7 +195,8 @@ const sections = [
               <span>
                 <strong>Newly qualified electrician (0–2 years post-qualification)</strong> —
                 £38,000 to £44,000 per year. Typically working on residential or light commercial
-                projects for smaller contractors. JIB craft person or approved electrician grade.
+                projects for smaller contractors. JIB Electrician grade, moving to Approved
+                Electrician once graded.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -203,7 +204,7 @@ const sections = [
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £44,000 to £55,000. Working
                 on larger commercial or residential schemes for established M&amp;E contractors. JIB
-                approved electrician or technician grade.
+                Approved Electrician or Site or Installation Technician grade.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -409,8 +410,8 @@ const sections = [
         <p>
           For employed electricians, much of this premium is formalised through the JIB (Joint
           Industry Board) national agreement, which sets graded minimum rates negotiated between the
-          ECA and Unite. London attracts a separate "London plus" rate on top of the standard graded
-          rate:
+          ECA and Unite. The JIB publishes a separate London Zone table alongside the National
+          Standard rates:
         </p>
         <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-6 my-4">
           <div className="overflow-x-auto">
@@ -424,9 +425,12 @@ const sections = [
               </thead>
               <tbody className="divide-y divide-white/10">
                 <tr>
-                  <td className="py-2 pr-4 font-medium">JIB "London plus" graded rate</td>
-                  <td className="py-2 pr-4">~20–25% over standard graded rate</td>
-                  <td className="py-2">Set under the JIB national agreement for ECS-graded operatives.</td>
+                  <td className="py-2 pr-4 font-medium">JIB London Zone graded rate</td>
+                  <td className="py-2 pr-4">~12% over the National Standard rate</td>
+                  <td className="py-2">
+                    A separate London table under JIB National Working Rule 6.2 for ECS-graded
+                    operatives.
+                  </td>
                 </tr>
                 <tr>
                   <td className="py-2 pr-4 font-medium">Separate London allowance</td>
@@ -447,8 +451,10 @@ const sections = [
             </table>
           </div>
           <p className="text-white/70 text-xs mt-3">
-            JIB rates are renegotiated annually; treat the percentages above as indicative market
-            guidance rather than a current published figure.
+            The JIB London Zone figure reflects the 2026 determination effective 5 January 2026
+            (London Electrician £20.58, Approved Electrician £22.48, Site or Installation Technician
+            £25.47 per hour, Transport Provided). The allowance and consolidated-rate rows are
+            indicative market guidance, not JIB rates.
           </p>
         </div>
       </>

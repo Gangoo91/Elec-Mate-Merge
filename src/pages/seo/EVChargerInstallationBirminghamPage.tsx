@@ -495,7 +495,7 @@ export default function EVChargerInstallationBirminghamPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Birmingham 2026 | Costs, DNO Notification and Grants"
-      description="How much does EV charger installation cost in Birmingham in 2026? Local costs, NGED DNO notification, Clean Air Zone impact, property challenges…"
+      description="How much does EV charger installation cost in Birmingham in 2026? Local costs, NGED DNO notification, Clean Air Zone impact, property challenges."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

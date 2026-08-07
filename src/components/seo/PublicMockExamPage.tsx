@@ -41,6 +41,8 @@ interface PublicMockExamPageProps {
   intro: string;
   /** Full question bank — must contain at least `questionsPerExam` entries. */
   questionBank: SEOMockExamQuestion[];
+  /** Ids of the 3 crawlable sample questions — see SEOMockExam. */
+  sampleQuestionIds?: Array<number | string>;
   questionsPerExam?: number;
   timeLimitMinutes?: number;
   passThreshold?: number;
@@ -84,6 +86,7 @@ export function PublicMockExamPage({
   heading,
   intro,
   questionBank,
+  sampleQuestionIds,
   questionsPerExam = 25,
   difficultyMix,
   timeLimitMinutes = 30,
@@ -295,6 +298,7 @@ export function PublicMockExamPage({
               <SEOMockExam
                 examName={heading}
                 questionBank={questionBank}
+                sampleQuestionIds={sampleQuestionIds}
                 questionsPerExam={questionsPerExam}
                 timeLimitMinutes={timeLimitMinutes}
                 passThreshold={passThreshold}

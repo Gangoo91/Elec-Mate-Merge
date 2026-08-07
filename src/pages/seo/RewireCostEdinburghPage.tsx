@@ -594,7 +594,7 @@ export default function RewireCostEdinburghPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Edinburgh 2025 | Rewire Prices Scotland"
-      description="How much does a house rewire cost in Edinburgh in 2025? Real prices for flats, semis, and period properties — Scottish Building Standards explained…"
+      description="How much does a house rewire cost in Edinburgh in 2025? Real prices for flats, semis, and period properties — Scottish Building Standards explained."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

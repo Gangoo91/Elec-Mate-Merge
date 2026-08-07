@@ -9,7 +9,7 @@
  * SYNTHESIS Sub. Walks the apprentice through a complete domestic install
  * drawing pack (Plot 14, "The Hawthorn" — a 3-bed semi) sheet by sheet.
  * Every sheet ties back to a §2 Sub: Sub1 (sources), Sub2 (drawing types),
- * Sub3 (BS EN 60617 symbols), Sub4 (scale).
+ * Sub3 (IEC 60617 symbols), Sub4 (scale).
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -160,7 +160,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'The drawing pack symbol legend is incomplete — there is a symbol on the kitchen layout that is not in the legend, and it does not match anything in BS EN 60617 / IEC 60617. What does Reg 514.9.2 (A4:2026) say about this?',
+      'The drawing pack symbol legend is incomplete — there is a symbol on the kitchen layout that is not in the legend, and it does not match anything in IEC 60617 / IEC 60617. What does Reg 514.9.2 (A4:2026) say about this?',
     options: [
       'Non-standard symbols are acceptable on site provided a legend entry is added to the pack later',
       'The installer may define any missing symbol to mean whatever best fits the rest of the layout',
@@ -270,7 +270,7 @@ export default function Sub5() {
             outcomes={[
               'Recognise the standard contents of a UK domestic drawing pack and the reading order that lets you understand the install in under fifteen minutes.',
               'Identify each drawing type in the pack (block, schematic, wiring, layout, schedule, as-built) and what question each one answers — applied across one project.',
-              'Read BS EN 60617 / IEC 60617 graphical symbols off a real layout drawing — sockets, switches, FCUs, lights, smoke detectors, MET, protective devices.',
+              'Read IEC 60617 / IEC 60617 graphical symbols off a real layout drawing — sockets, switches, FCUs, lights, smoke detectors, MET, protective devices.',
               'Convert measurements off a 1:50 floor plan into real cable run distances using a scale rule, and add the right allowance for routing, drops and slack.',
               'Cross-reference the schedule of accessories, cable schedule and layout drawings to spot discrepancies and raise them as RFIs in writing before starting work.',
               'Apply Reg 514.9.2 (A4:2026 — diagrams shall comply with applicable standards) and Reg 526.1 (manufacturer instructions for terminations) when reviewing a drawing pack for completeness.',
@@ -285,7 +285,7 @@ export default function Sub5() {
               Sub 2.1 mapped the document hierarchy — BS 7671, OSG, GN3, manufacturer instructions,
               spec, RAMS, scheme bulletins, drawings. Sub 2.2 introduced the six drawing types —
               block, schematic, wiring, circuit, layout, as-built — and what each one is for. Sub
-              2.3 gave you the BS EN 60617 / IEC 60617 graphical symbol set, the visual alphabet for
+              2.3 gave you the IEC 60617 / IEC 60617 graphical symbol set, the visual alphabet for
               every UK installation drawing. Sub 2.4 covered scale notation and the conversion
               between paper and real dimensions, with the do-not-scale rule for resized prints.
             </p>
@@ -320,7 +320,7 @@ export default function Sub5() {
               </li>
               <li>
                 <strong>Sheet 02 — Ground-floor layout.</strong> Scale 1:50. Every socket, switch,
-                FCU, light, smoke detector, doorbell, CT clamp marked in BS EN 60617 symbols.
+                FCU, light, smoke detector, doorbell, CT clamp marked in IEC 60617 symbols.
               </li>
               <li>
                 <strong>Sheet 03 — First-floor layout.</strong> Scale 1:50. Same conventions as
@@ -342,7 +342,7 @@ export default function Sub5() {
                 length, route notes.
               </li>
               <li>
-                <strong>Sheet 07 — Symbol legend.</strong> The BS EN 60617 / IEC 60617 subset used
+                <strong>Sheet 07 — Symbol legend.</strong> The IEC 60617 / IEC 60617 subset used
                 across the pack, with each symbol named.
               </li>
               <li>
@@ -454,7 +454,7 @@ export default function Sub5() {
           >
             <p>
               The ground floor shows: front door, hall, downstairs WC, lounge, kitchen-diner,
-              utility, back door. On the layout you can see in BS EN 60617 symbols:
+              utility, back door. On the layout you can see in IEC 60617 symbols:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -594,7 +594,7 @@ export default function Sub5() {
           <ContentEyebrow>The symbol legend — your translation key</ContentEyebrow>
 
           <ConceptBlock
-            title="Sheet 07 — BS EN 60617 / IEC 60617 symbol legend"
+            title="Sheet 07 — IEC 60617 / IEC 60617 symbol legend"
             plainEnglish="The legend names every symbol used across the pack. If a symbol on a layout is not in the legend, raise it — it is a non-conformance under Reg 514.9.2."
             onSite="A complete legend is a sign of a competent design office. An incomplete or home-made-symbols legend is the first warning that the rest of the pack might be unreliable too."
           >
@@ -806,7 +806,7 @@ export default function Sub5() {
             points={[
               'A typical UK domestic drawing pack is 8-12 sheets: front sheet, layouts (1:50), single-line schematic, schedules of accessories and cables, symbol legend, manufacturer data sheets. Read in that order.',
               'Front sheet first — every time. Project name, drawing register, revision history, scale legend, general notes. Skip it and you will work from the wrong revision.',
-              "Schematic gives you the system's logic in one diagram. Layouts give you positions in BS EN 60617 / IEC 60617 symbols. Schedules turn both into ordering lists.",
+              "Schematic gives you the system's logic in one diagram. Layouts give you positions in IEC 60617 / IEC 60617 symbols. Schedules turn both into ordering lists.",
               'Use a scale rule on the matching face — read real metres directly. Multiplying by the scale denominator on top of that is the classic double-conversion mistake.',
               'Discrepancies between any two designer documents are an RFI in writing, not a guess. The cost of asking is an email. The cost of guessing wrong is a strip-out at handover.',
               'Reg 514.9.2 (A4:2026) requires diagrams to comply with applicable standards. Reg 526.1 makes manufacturer terminal instructions a regulation requirement. Both back you up when you raise pack quality issues.',

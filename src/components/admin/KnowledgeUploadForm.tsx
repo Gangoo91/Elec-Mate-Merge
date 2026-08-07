@@ -302,7 +302,7 @@ export default function KnowledgeUploadForm({
           />
         </div>
         {selectedFile && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-white">
             <FileText className="h-4 w-4" />
             <span>
               {selectedFile.name} ({(selectedFile.size / 1024).toFixed(2)} KB)

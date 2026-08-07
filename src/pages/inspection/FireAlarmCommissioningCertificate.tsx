@@ -19,6 +19,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
+import { useAppReview } from '@/hooks/useAppReview';
 import { supabase } from '@/integrations/supabase/client';
 import { fireAlarmTemplateId } from '@/utils/fireAlarmPdfRouting';
 import { trackFeatureUse } from '@/components/ActivityTracker';
@@ -128,6 +129,7 @@ const {
   const tabProps = useFireAlarmG3Tabs(formData);
   const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
   const { companyProfile } = useCompanyProfile();
+  const { recordPositiveAction } = useAppReview();
 
   // inspection_photos stores the reports.id UUID (not the text report_id) —
   // resolve it first, then build resized public URLs so PDFMonkey downloads
@@ -338,6 +340,7 @@ const {
       setPdfFilename(`FA-G3-${formData.certificateNumber || 'cert'}.pdf`);
       toast.success('Commissioning certificate generated');
       maybePromptLogBook(formData, navigate);
+      recordPositiveAction();
     } catch (e: any) {
       setGenerationError(e.message);
       toast.error('PDF generation failed');

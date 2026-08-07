@@ -522,7 +522,7 @@ export default function EarthFaultLoopImpedanceTestingPage() {
   return (
     <GuideTemplate
       title="Earth Fault Loop Impedance Testing | Zs Testing Guide UK"
-      description="Complete guide to earth fault loop impedance (Zs) testing for UK electricians. Covers Ze vs Zs, the Zs testing procedure…"
+      description="Complete guide to earth fault loop impedance (Zs) testing for UK electricians. Covers Ze vs Zs, the Zs testing procedure."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -34,10 +34,7 @@ export const unitConverterContent: CalculatorContent = {
       { label: 'Resistance', value: '2500 mΩ' },
       { label: 'Power', value: '0.75 kW' },
     ],
-    steps: [
-      '2500 mΩ ÷ 1000 = 2.5 Ω',
-      '0.75 kW × 1000 = 750 W',
-    ],
+    steps: ['2500 mΩ ÷ 1000 = 2.5 Ω', '0.75 kW × 1000 = 750 W'],
     result: '2500 mΩ = 2.5 Ω; 0.75 kW = 750 W.',
   },
 

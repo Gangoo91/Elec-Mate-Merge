@@ -596,7 +596,7 @@ export default function ElectricianGlasgowPage() {
     <GuideTemplate
       localArea="Glasgow"
       title="Electrician in Glasgow | Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Glasgow. Scottish Building Standards (not Part P), SELECT trade body, SPEN connections, tenement rewiring…"
+      description="Find qualified, registered electricians in Glasgow. Scottish Building Standards (not Part P), SELECT trade body, SPEN connections, tenement rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

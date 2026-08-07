@@ -535,7 +535,7 @@ export default function OffGridElectricalSystemPage() {
   return (
     <GuideTemplate
       title="Off-Grid Electrical Systems UK | Off-Grid Power Design Guide"
-      description="Complete guide to off-grid electrical systems in the UK. When off-grid makes sense (remote properties, narrowboats), system design (solar, battery…"
+      description="Complete guide to off-grid electrical systems in the UK. When off-grid makes sense (remote properties, narrowboats), system design (solar, battery."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

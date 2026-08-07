@@ -56,7 +56,7 @@ const quickCheckQuestions = [
     question:
       'Which standard governs cable identification and marking in UK electrical installations?',
     options: [
-      'BS EN 60617 (Graphical symbols for diagrams) only',
+      'IEC 60617 (Graphical symbols for diagrams) only',
       'BS EN 62491 (Cable and core identification) together with BS 7671 requirements for conductor identification',
       'BS EN 81346 (Reference designations) on its own',
       'BS 5839 (Fire detection and alarm systems) for all cabling',
@@ -73,7 +73,7 @@ const quizQuestions = [
     question:
       'Which BS EN standard provides the reference designation system for industrial components (replacing the older letter code systems)?',
     options: [
-      'BS EN 60617',
+      'IEC 60617',
       'BS EN 81346',
       'BS EN 62491',
       'BS EN 61082',

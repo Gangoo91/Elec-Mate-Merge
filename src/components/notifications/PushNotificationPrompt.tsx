@@ -69,28 +69,42 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
   }
 
   return (
-    <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 rounded-xl border border-elec-yellow/20 mb-3 animate-in fade-in slide-in-from-top-2 duration-300">
-      <div className="w-9 h-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
-        <BellRing className="w-4.5 h-4.5 text-elec-yellow" />
+    // A dismissible permission prompt should not be the loudest thing on the
+    // page. This was a volt-to-amber gradient with a volt icon tile and a
+    // SOLID volt button, so it outshouted the £6,027 the user actually came to
+    // see — and every one of those volt values was translucent, which goes
+    // muddy brown on this ground (see `card-recipe`), hence the olive cast.
+    //
+    // Now it sits on the same neutral surface as everything else, and "Enable"
+    // is an outline button: solid volt is reserved for the page's primary
+    // action, which here is "New quote".
+    <div className="mb-3 flex items-center gap-3 rounded-xl border border-white/[0.14] bg-white/[0.05] p-3 animate-in fade-in slide-in-from-top-2 duration-300">
+      <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.10] bg-white/[0.06]">
+        <BellRing className="h-4 w-4 text-white" />
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-white">Enable notifications</p>
-        <p className="text-xs text-white mt-0.5">{context}</p>
+      {/* On a 390px screen the title wrapped to two lines and this context
+          line to FOUR, so a dismissible prompt ate ~120px of the fold and was
+          the worst-looking thing on the page. The explanation is the first
+          thing to go when space is tight — the title already says what the
+          button does. */}
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium leading-tight text-white">Enable notifications</p>
+        <p className="mt-0.5 hidden text-xs leading-snug text-white sm:block">{context}</p>
       </div>
       <Button
         size="sm"
         onClick={handleEnable}
         disabled={isLoading}
-        className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-9 px-4 touch-manipulation flex-shrink-0"
+        className="h-11 flex-shrink-0 border border-elec-yellow/40 bg-transparent px-4 font-semibold text-elec-yellow touch-manipulation hover:border-elec-yellow hover:bg-elec-yellow/[0.08]"
       >
-        {isLoading ? 'Enabling...' : 'Enable'}
+        {isLoading ? 'Enabling…' : 'Enable'}
       </Button>
       <button
         onClick={handleDismiss}
-        className="text-white hover:bg-white/10 rounded-lg h-11 w-11 flex items-center justify-center touch-manipulation flex-shrink-0 -mr-1"
+        className="-mr-1 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-white touch-manipulation hover:bg-white/10"
         aria-label="Dismiss"
       >
-        <X className="w-4 h-4" />
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

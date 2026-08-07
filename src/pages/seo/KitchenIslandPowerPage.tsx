@@ -517,7 +517,7 @@ export default function KitchenIslandPowerPage() {
   return (
     <GuideTemplate
       title="Kitchen Island Power Supply | Floor Box & Hob Circuit Guide"
-      description="Complete guide to getting power to a kitchen island in the UK. Floor box vs pillar, induction hob dedicated circuit, socket outlets, first fix planning…"
+      description="Complete guide to getting power to a kitchen island in the UK. Floor box vs pillar, induction hob dedicated circuit, socket outlets, first fix planning."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

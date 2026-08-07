@@ -553,7 +553,7 @@ export default function WorkplaceEVChargingPage() {
   return (
     <GuideTemplate
       title="Workplace EV Charging Installation UK | Business EV Chargers"
-      description="Complete guide to workplace EV charging in the UK. Workplace Charging Scheme grant £350 per socket, planning permission, load balancing for fleets…"
+      description="Complete guide to workplace EV charging in the UK. Workplace Charging Scheme grant £350 per socket, planning permission, load balancing for fleets."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

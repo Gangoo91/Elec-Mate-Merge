@@ -22,7 +22,7 @@ export default function EmployerElectricalPlatformPage() {
   return (
     <ToolTemplate
       title="Employer Platform for Electrical Companies | Dashboard"
-      description="Elec-Mate's employer platform for electrical companies. 5 employer hubs — apprentice tracking, staff management, certificate oversight…"
+      description="Elec-Mate's employer platform for electrical companies. 5 employer hubs — apprentice tracking, staff management, certificate oversight."
       datePublished="2026-01-18"
       dateModified="2026-05-18"
       breadcrumbs={[

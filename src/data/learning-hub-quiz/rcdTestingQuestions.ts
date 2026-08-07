@@ -59,10 +59,10 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'Amendment 4 settled this. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulation 643.7.3.201 now requires a single alternating current test at the rated residual operating current (IΔn) to verify effectiveness, whatever the RCD type. The 5×IΔn test is not part of the required verification — it remains useful for fault-finding, and 40ms at 5×IΔn is still a device characteristic under BS EN 61008/61009, but it is not what BS 7671 asks you to test.',
+      'Amendment 4 settled this. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulation 643.8 now requires a single alternating current test at the rated residual operating current (IΔn) to verify effectiveness, whatever the RCD type. The 5×IΔn test is not part of the required verification — it remains useful for fault-finding, and 40ms at 5×IΔn is still a device characteristic under BS EN 61008/61009, but it is not what BS 7671 asks you to test.',
     category: 'RCD Testing',
     difficulty: 'Advanced',
-    regulation: 'BS 7671:2018+A4:2026 Reg 643.7.3.201',
+    regulation: 'BS 7671:2018+A4:2026 Reg 643.8',
   },
   {
     id: 'rcd-5',
@@ -76,7 +76,7 @@ export const rcdTestingQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      '40ms at 5×IΔn (150mA for a 30mA device) is the product-standard figure in BS EN 61008/61009. It describes the device, not the test BS 7671 requires — Amendment 4 deleted Table 3A and Regulation 643.7.3.201 now verifies effectiveness with a single AC test at IΔn.',
+      '40ms at 5×IΔn (150mA for a 30mA device) is the product-standard figure in BS EN 61008/61009. It describes the device, not the test BS 7671 requires — Amendment 4 deleted Table 3A and Regulation 643.8 now verifies effectiveness with a single AC test at IΔn.',
     category: 'RCD Testing',
     difficulty: 'Intermediate',
     regulation: 'BS EN 61008/61009',

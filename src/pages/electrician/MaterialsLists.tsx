@@ -25,6 +25,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useMaterialsLists, MaterialsList } from '@/hooks/useMaterialsLists';
 import { cn } from '@/lib/utils';
+import { containerVariants, itemVariants } from '@/components/shared/surfaceStyles';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 
 function formatRelativeTime(dateString: string): string {
   const date = new Date(dateString);
@@ -41,16 +43,6 @@ function formatRelativeTime(dateString: string): string {
   if (diffDays < 7) return `${diffDays}d ago`;
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
 
 export default function MaterialsLists() {
   const {
@@ -418,11 +410,10 @@ export default function MaterialsLists() {
 
         {/* Paste Sheet */}
         <Sheet open={pasteSheetOpen} onOpenChange={setPasteSheetOpen}>
-          <SheetContent side="bottom" className="h-auto max-h-[70vh] rounded-t-2xl">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl">
             <SheetHeader>
-              <SheetTitle className="flex items-center gap-2">
-                <ClipboardPaste className="h-5 w-5" />
-                Paste Materials
+              <SheetTitle className="text-[19px] font-semibold tracking-tight text-white">
+                Paste materials
               </SheetTitle>
             </SheetHeader>
             <div className="mt-4 space-y-4 pb-6">
@@ -433,7 +424,7 @@ export default function MaterialsLists() {
                 value={pasteText}
                 onChange={(e) => setPasteText(e.target.value)}
                 placeholder={'10x 2.5mm T&E 100m\n5x double sockets\nMCB 32A Type B\nLED downlights x 6'}
-                className="min-h-[160px] text-base touch-manipulation"
+                className={cn(textareaCn, 'min-h-[160px]')}
               />
               <div className="flex gap-2">
                 <Button
@@ -722,11 +713,10 @@ export default function MaterialsLists() {
 
       {/* New List Sheet */}
       <Sheet open={newListSheetOpen} onOpenChange={setNewListSheetOpen}>
-        <SheetContent side="bottom" className="h-auto rounded-t-2xl">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl">
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              New List
+            <SheetTitle className="text-[19px] font-semibold tracking-tight text-white">
+              New list
             </SheetTitle>
           </SheetHeader>
           <div className="mt-4 space-y-4 pb-6">
@@ -734,7 +724,7 @@ export default function MaterialsLists() {
               value={newListName}
               onChange={(e) => setNewListName(e.target.value)}
               placeholder="e.g. Kitchen rewire, First fix materials..."
-              className="h-11 text-base touch-manipulation"
+              className={inputCn}
               autoFocus
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleCreateList();

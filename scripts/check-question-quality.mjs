@@ -19,6 +19,14 @@
  *   2. "Only ..." tell      — 2+ distractors begin "Only", making them absurd
  *   3. throwaway distractor — "Ignore it", "Do nothing", "None of the above"
  *   4. position bias        — correct answer clustered on one index in a bank
+ *   5. inverse tell         — key visibly the SHORTEST (added 2026-08-06)
+ *   6. grammatical-form     — key is the only option that reads with the stem
+ *   7. recycled distractors — same phrase wrong 4+ times, never right (bank-level)
+ *
+ * 5-7 were all added while fixing 1: each is a way the answer stays findable
+ * without knowing the subject, and closing one can open another. 6 was
+ * introduced BY a rewrite that fixed 1, which is why they are measured
+ * together rather than one at a time.
  *
  * USAGE
  *   node scripts/check-question-quality.mjs              # summary + worst banks
@@ -35,7 +43,14 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LONGEST_BUDGET = 70; // % raw longest — kept for continuity
-const EXPLOITABLE_BUDGET = 12; // % longer by >20 chars — the metric that actually matters
+/**
+ * Ratcheted 12 -> 0.5 on 2026-08-07, after the corpus sweep took the exploitable
+ * tell from 18.0% to 0.0% across 7,727 questions. 0.5% is ~38 questions: tight
+ * enough that a whole bank imported in the old style fails the build, loose
+ * enough that one awkward question does not. Do NOT raise it to make a build
+ * pass — that is the ratchet failing at its only job.
+ */
+const EXPLOITABLE_BUDGET = 0.5; // % longer by >20 chars — the metric that actually matters
 const POSITION_BUDGET = 45; // % on any single index within a bank
 
 const OPT_RE = /'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)"/g;
@@ -91,8 +106,43 @@ function analyse(file) {
       // nobody can exploit. Gap is the honest metric; bare "is longest" is noise.
       gap: opts[ca].length - Math.max(...opts.filter((_, i) => i !== ca).map((o) => o.length)),
       onlyTell: wrong.filter((o) => /^only\b/i.test(o.trim())).length >= 2,
+      // The MIRROR of the longest-answer tell. Trimming a verbose key to kill
+      // the forward tell can overshoot and leave the key visibly the SHORTEST
+      // option — "always pick the shortest" is just as gameable. Measured after
+      // the 2026-08-06 pass so the cure cannot quietly become the disease.
+      inverseTell: opts[ca].length - Math.max(...wrong.map((o) => o.length)) < -20,
       throwaway: wrong.some((o) => THROWAWAY.test(o.trim())),
+      /**
+       * GRAMMATICAL-FORM TELL. Where a stem ends "…you should:" and the key
+       * opens with an imperative ("Allow the capacitors to discharge…") while
+       * every distractor opens with a gerund ("Touching…", "Using…"), the key
+       * is the only option that reads correctly with the stem. The candidate
+       * does not need to know the subject.
+       *
+       * Found 2026-08-07 while spot-checking a distractor rewrite: closing the
+       * LENGTH tell had introduced this one on two questions, because new
+       * distractors were written in a different voice from the key left in
+       * place. Mostly pre-existing elsewhere, but it has to be measured or the
+       * next rewrite reintroduces it.
+       *
+       * Only fires when all three distractors agree and the key differs —
+       * a mixed set is normal English, not a tell.
+       */
+      formTell: (() => {
+        // Not every word ending in -ing is a gerund. "Anything a competent
+        // person…" was flagged as a form mismatch on a question where nothing
+        // was wrong — caught 2026-08-07 when an agent checked the heuristic
+        // against its own pre-edit text rather than taking the flag on trust.
+        const NOT_GERUND = /^(anything|nothing|everything|something|during|nothing)$/i;
+        const form = (s) => {
+          const w = (s.match(/^\s*([A-Za-z-]+)/) || [])[1] ?? '';
+          return /ing$/i.test(w) && !NOT_GERUND.test(w) ? 'ing' : 'other';
+        };
+        const others = wrong.map(form);
+        return others.length >= 2 && new Set(others).size === 1 && form(opts[ca]) !== others[0];
+      })(),
       correct: opts[ca],
+      wrong,
     });
   }
   return rows;
@@ -115,9 +165,35 @@ for (const file of [...discoverBanks()].sort()) {
   all = all.concat(rows);
   const pos = [0, 0, 0, 0];
   rows.forEach((r) => pos[r.ca]++);
+
+  /**
+   * RECYCLED DISTRACTORS — a tell that only shows up across a whole bank.
+   *
+   * If the same substantial option is used as a wrong answer in four or more
+   * questions and is never the correct answer anywhere, a candidate who sits
+   * two papers learns to eliminate it on sight without reading it. In
+   * level3/module4 "An oversized protective device on the circuit" appeared as
+   * a distractor 18 times and was never once right.
+   *
+   * Per-question checks are blind to this by construction, which is why it
+   * survived the whole 2026-08-06 pass. Short options are excluded — "Section 7"
+   * or "30 mA" recurring is normal for a subject, not a tell.
+   */
+  const wrongUses = new Map();
+  const keySet = new Set(rows.map((r) => r.correct));
+  for (const r of rows) {
+    for (const w of r.wrong) {
+      if (w.length <= 25) continue;
+      wrongUses.set(w, (wrongUses.get(w) ?? 0) + 1);
+    }
+  }
+  const recycled = [...wrongUses.entries()].filter(([w, c]) => c >= 4 && !keySet.has(w));
+
   perBank.push({
     name,
     n: rows.length,
+    recycled: recycled.length,
+    recycledWorst: recycled.sort((a, b) => b[1] - a[1])[0],
     longest: (100 * rows.filter((r) => r.longest).length) / rows.length,
     exploitable: (100 * rows.filter((r) => r.gap > 20).length) / rows.length,
     onlyTell: rows.filter((r) => r.onlyTell).length,
@@ -140,7 +216,18 @@ const noticeable = pct((r) => r.gap > 5);
 console.log(`  correct answer is longest option : ${longestPct.toFixed(1)}%   (raw — includes 1-char ties)`);
 console.log(`  ...longer by >5 chars  (noticeable): ${noticeable.toFixed(1)}%`);
 console.log(`  ...longer by >20 chars (EXPLOITABLE): ${exploitable.toFixed(1)}%   <-- the one that matters`);
+console.log(
+  `  ...SHORTER by >20 chars (inverse) : ${pct((r) => r.inverseTell).toFixed(1)}%   <-- "pick the shortest" is gameable too`
+);
 console.log(`  2+ "Only ..." distractors        : ${pct((r) => r.onlyTell).toFixed(1)}%`);
+// Bank-level, so it cannot be expressed as a % of questions.
+const recycledBanks = perBank.filter((b) => b.recycled > 0).sort((a, b) => b.recycled - a.recycled);
+if (recycledBanks.length) {
+  const total = recycledBanks.reduce((s, b) => s + b.recycled, 0);
+  console.log(
+    `  recycled distractors (>=4 uses, never a key): ${total} phrases across ${recycledBanks.length} banks`
+  );
+}
 console.log(`  throwaway distractor             : ${pct((r) => r.throwaway).toFixed(1)}%`);
 
 console.log('\nWorst banks (EXPLOITABLE tell — correct answer >20 chars longer):');

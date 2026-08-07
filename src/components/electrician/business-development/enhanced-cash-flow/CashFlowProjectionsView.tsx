@@ -29,7 +29,7 @@ export const CashFlowProjectionsView = ({
           <div key={index} className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="font-semibold text-white">{month.monthName}</h4>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-elec-yellow">
                 {scenarioName}
               </span>
             </div>

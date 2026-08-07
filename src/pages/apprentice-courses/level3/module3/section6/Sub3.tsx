@@ -205,7 +205,7 @@ export default function Sub3() {
             source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices, A4:2026)"
             clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents."
             meaning={<>Modern semiconductor-driven loads are arc-prone at the connections feeding them — degraded LED driver leads, loose VFD terminals, ageing inverter glands. A4:2026 introduced 421.1.7 to recommend AFDDs in AC final circuits, with mandatory deployment in High-Risk Residential Buildings via the Building Safety Act 2022. AFDD detects the broadband HF arc signature that precedes ignition.</>}
-            cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7 (introduced by Amendment 4:2026)."
+            cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7 (introduced by Amendment 2:2022)."
           />
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 526.1 (Connections)"

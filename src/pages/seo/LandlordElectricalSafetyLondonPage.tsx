@@ -658,7 +658,7 @@ export default function LandlordElectricalSafetyLondonPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety London | EICR Requirements 2026"
-      description="Landlord electrical safety requirements in London. 2020 Regulations explained, London borough enforcement, HMO requirements, penalties up to £30,000…"
+      description="Landlord electrical safety requirements in London. 2020 Regulations explained, London borough enforcement, HMO requirements, penalties up to £30,000."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

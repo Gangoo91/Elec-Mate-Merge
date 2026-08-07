@@ -30,6 +30,7 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
       warnings.push({
         severity: 'info',
         title: 'SWA Armour as CPC',
+        fields: ['cpcSize', 'typeOfWiring'],
         description:
           'Cable armour is being used as CPC. Ensure armour continuity is maintained and properly terminated with glands.',
         regulation: 'BS 7671 Regulation 543.2.1',
@@ -44,9 +45,16 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
       warnings.push({
         severity: 'info',
         title: 'Conduit/Trunking as CPC',
+        fields: ['cpcSize', 'typeOfWiring'],
         description:
           'Metal conduit/trunking is being used as CPC. Ensure electrical continuity is maintained throughout.',
-        regulation: 'BS 7671 Regulation 543.2.6',
+        // 543.2.5, not 543.2.6. 543.2.5 is the clause that names this case:
+        // "the metal covering including the sheath of a cable … trunking and
+        // ducting for electrical purposes and metal conduit, may be used as a
+        // protective conductor". 543.2.6 governs an EXTRANEOUS-conductive-part
+        // — a pipe or structural steel, something not part of the installation
+        // — which is a different thing entirely.
+        regulation: 'BS 7671 Regulation 543.2.5',
         suggestion:
           'Verify all conduit joints are mechanically and electrically sound. Test continuity of conduit path.',
       });
@@ -87,14 +95,44 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
         if (cpcSize >= liveSize) {
           return warnings; // Compliant for ring circuit
         }
-        // For ring circuits with smaller CPC, apply (R1+R2)/4 rule
+        /*
+         * A reduced CPC on a ring is normal, not a finding.
+         *
+         * Flat twin and earth to BS 6004 pairs a smaller CPC with the line
+         * conductor by construction — 2.5/1.5 is the ring final of nearly every
+         * house in the country. Table 54.7 would demand 2.5; the cable is
+         * compliant because 543.1.4 offers the table only as an alternative to
+         * calculating (543.1.3), and the adiabatic result permits the smaller
+         * CPC. Warning on the standard pairings meant flagging almost every
+         * ring ever installed, which teaches an electrician to ignore the
+         * column.
+         *
+         * The previous wording also asked them to "verify (R1+R2) ≤ 1.67Ω".
+         * 1.67 is the r2/r1 RATIO for 2.5/1.5 — the CPC being the smaller
+         * conductor over the same route. It is not a resistance limit: R1+R2 in
+         * ohms depends on the length of the circuit, and no fixed figure can
+         * apply. Whether the loop is low enough is the Zs check's job, and that
+         * runs separately against Tables 41.2–41.4.
+         */
+        const STANDARD_TE_PAIRS: Record<string, number> = {
+          '1': 1, '1.5': 1, '2.5': 1.5, '4': 1.5, '6': 2.5, '10': 4, '16': 6,
+        };
+        const expectedCpc = STANDARD_TE_PAIRS[String(liveSize)];
+        if (expectedCpc !== undefined && cpcSize >= expectedCpc) {
+          return warnings; // standard twin and earth — nothing to say
+        }
+
         warnings.push({
           severity: 'warning',
-          title: 'Ring Circuit CPC Sizing',
-          description: `CPC ${result.cpcSize} is smaller than live conductor ${result.liveSize} in ring circuit. Verify (R1+R2) ≤ 1.67Ω compliance.`,
-          regulation: 'BS 7671 Appendix 15 (informative) — ring and radial final circuits',
+          title: 'Ring CPC Smaller Than Standard Cable',
+          fields: ['cpcSize', 'liveSize'],
+          description:
+            `A ${result.liveSize} ring is normally run in twin and earth with a ${expectedCpc ?? '—'}mm² CPC, ` +
+            `but ${result.cpcSize} is recorded. Table 54.7 would ask for ${liveSize}mm² here; a smaller CPC is ` +
+            `permitted where it has been sized by calculation (543.1.3) rather than from the table.`,
+          regulation: 'BS 7671 Regulation 543.1.4 & Table 54.7',
           suggestion:
-            'For ring circuits with reduced CPC, end-to-end resistance must meet requirements. Check (R1+R2) measurement is acceptable.',
+            'Check the CPC size is recorded correctly. If it is right, the adiabatic calculation is what justifies it — record that.',
         });
         return warnings;
       }
@@ -111,11 +149,25 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
 
       if (cpcSize < minCpcSize) {
         warnings.push({
-          severity: 'critical',
-          title: 'CPC Undersized per Table 54.7',
-          description: `${result.cpcSize} CPC is below Table 54.7 minimum of ${minCpcSize}mm² for ${result.liveSize} live conductor.`,
-          regulation: 'BS 7671 Regulation 543.1.3 & Table 54.7',
-          suggestion: `Minimum CPC: ${minCpcSize}mm² for single-core cables. Consider using standard twin and earth cable or increase CPC size. For very large conductors (>35mm²), adiabatic equation may permit smaller CPC.`,
+          /*
+           * A warning, not a failure — 543.1.4 offers the table as an
+           * ALTERNATIVE, not the only route: "Where it is desired not to
+           * calculate the minimum cross-sectional area in accordance with
+           * Regulation 543.1.3, the cross-sectional area may be determined in
+           * accordance with Table 54.7."
+           *
+           * So a CPC below the table value is not automatically
+           * non-compliant — it may have been sized by the adiabatic equation
+           * in 543.1.3, which legitimately permits smaller. Calling that
+           * "critical" states a failure the standard does not, on a document
+           * an electrician signs. Raise it; let them judge it.
+           */
+          severity: 'warning',
+          title: 'CPC Smaller Than Table 54.7',
+          fields: ['cpcSize', 'liveSize'],
+          description: `${result.cpcSize} CPC is below the Table 54.7 value of ${minCpcSize}mm² for a ${result.liveSize} live conductor. Table 54.7 is one of two permitted routes — a CPC sized by the adiabatic equation (543.1.3) may legitimately be smaller.`,
+          regulation: 'BS 7671 Regulation 543.1.4 & Table 54.7',
+          suggestion: `If the CPC was not sized by calculation, Table 54.7 gives ${minCpcSize}mm² here. If it was, record the adiabatic result so the smaller size is evidenced.`,
         });
       }
     }

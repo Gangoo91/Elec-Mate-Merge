@@ -1912,7 +1912,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'What should be done if a fire alarm system develops a fault?',
     options: [
-      'Ignore until next service',
+      'Silence the panel and continue',
       'Disconnect system',
       'Attempt repair',
       'Report immediately',
@@ -2220,9 +2220,9 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'How often must fire risk assessments be reviewed?',
     options: [
-      'Only once every ten years',
+      'Once every ten years and no more often',
       'Whenever circumstances change that affect fire safety',
-      'Only when the building is sold',
+      'Only when the building is sold to a new owner',
       'Never, once it is first completed',
     ],
     correctAnswer: 1,
@@ -2389,7 +2389,7 @@ export const fireAlarmQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What constitutes 'general fire precautions' under fire safety legislation?",
     options: [
-      'Only the provision of portable extinguishers',
+      'The provision of portable extinguishers alone',
       'Only the structural fire resistance of the building',
       'Solely the fire alarm detection system',
       'Measures for prevention, detection, warning, escape and firefighting',

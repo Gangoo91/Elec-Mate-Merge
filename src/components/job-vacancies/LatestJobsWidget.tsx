@@ -1,17 +1,26 @@
 /**
- * LatestJobsWidget — same hairline-grid DNA as EditorialHubGrid.
+ * LatestJobsWidget — job cards in the shared hub card language.
  *
- * Each job is a cell in a `gap-px bg-white/[0.06] border` grid. Yellow hairline
- * along the top. Cells have `bg-[hsl(0_0%_10%)]` with hover lift to
- * `bg-elec-yellow/[0.04]`. Layout per cell:
- *   index · POSTED-AGO        title (18-22px)
- *   description (company · location · salary)
- *   meta-line: source · Open →
+ * This was the last block on the Electrician Hub still drawn in the old
+ * editorial dialect: a hairline grid of 220–240px cells, each numbered
+ * `01 · JOB`, over text-white/45–60. Once the rest of the page moved to the
+ * hub primitives it was the only thing on screen that looked like a different
+ * product — which is exactly the drift HubPrimitives exists to prevent.
+ *
+ * Now: the same card recipe as every other tool card, intrinsic heights, and
+ * the numbering gone. The index was decoration — job 03 is not more or less
+ * than job 02, and the posted date already orders them.
+ *
+ * Per card: title, company · location, then salary and how long ago it landed.
+ * Salary is the one thing anyone scans a job list for, so it is the figure on
+ * the card rather than a fragment inside a sentence.
  */
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 import { useLatestJobs, LatestJob } from '@/hooks/job-vacancies/useLatestJobs';
 
 // ────────────────────────────────────────────────────────────────────────
@@ -56,12 +65,12 @@ const formatPostedDate = (dateStr: string | undefined): string => {
 };
 
 // ────────────────────────────────────────────────────────────────────────
-// Hairline grid wrapper — same pattern as EditorialHubGrid
+// Grid — identical shape to HubToolGrid so the section lines up with the
+// tool grids above it: two-up on phones, auto-fit from sm.
 // ────────────────────────────────────────────────────────────────────────
 
-const HairlineGrid = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+const JobsGrid = ({ children }: { children: React.ReactNode }) => (
+  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] sm:gap-3">
     {children}
   </div>
 );
@@ -70,7 +79,7 @@ const HairlineGrid = ({ children }: { children: React.ReactNode }) => (
 // Job cell
 // ────────────────────────────────────────────────────────────────────────
 
-const JobCell = ({ job, index }: { job: LatestJob; index: number }) => {
+const JobCell = ({ job }: { job: LatestJob }) => {
   const company = formatCompany(job.company);
   const location = formatLocation(job.location);
   const salary = formatSalary(job.salary);
@@ -81,44 +90,32 @@ const JobCell = ({ job, index }: { job: LatestJob; index: number }) => {
   const isExternal = !!job.external_url;
 
   const Body = (
-    <div className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left flex flex-col h-full cursor-pointer touch-manipulation">
-      <div className="flex items-baseline justify-between gap-2">
-        <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            · Job
-          </span>
-        </div>
-        <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/45 tabular-nums whitespace-nowrap">
-          {posted}
+    <div className={cn(CARD_BASE, CARD_NEUTRAL, 'h-full min-h-[104px] p-3.5 sm:p-4', 'lg:hover:-translate-y-0.5')}>
+      <span className="flex items-start justify-between gap-2">
+        <span className="line-clamp-2 text-[13.5px] font-medium leading-tight text-white transition-colors group-hover:text-elec-yellow">
+          {job.title}
         </span>
-      </div>
-
-      <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors line-clamp-2">
-        {job.title}
-      </h3>
-
-      <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch] line-clamp-2">
-        {company} · {location}
-        {salary ? ` · ` : ''}
-        {salary && (
-          <span className="text-elec-yellow tabular-nums font-medium">{salary}</span>
+        {isExternal && (
+          <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/40" aria-hidden />
         )}
-      </p>
+      </span>
 
-      <div className="flex-grow" />
+      <span className="mt-1.5 line-clamp-1 text-[12px] leading-snug text-white">
+        {company} · {location}
+      </span>
 
-      <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-        <span className="text-[11px] text-white/55 truncate uppercase tracking-[0.14em]">
-          {job.source || 'Trade board'}
-        </span>
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
-          {isExternal ? 'View' : 'Open'}
-          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-        </span>
-      </div>
+      <span className="flex-grow" />
+
+      <span className="mt-2.5 flex items-baseline justify-between gap-2">
+        {salary ? (
+          <span className="text-[17px] font-semibold leading-none tabular-nums tracking-tight text-white">
+            {salary}
+          </span>
+        ) : (
+          <span className="text-[12px] leading-none text-white">Salary not listed</span>
+        )}
+        <span className="shrink-0 text-[11px] tabular-nums text-white">{posted}</span>
+      </span>
     </div>
   );
 
@@ -138,26 +135,21 @@ const JobCell = ({ job, index }: { job: LatestJob; index: number }) => {
 // ────────────────────────────────────────────────────────────────────────
 
 const Skeleton = () => (
-  <HairlineGrid>
-    {[0, 1, 2, 3, 4, 5].map((i) => (
+  <JobsGrid>
+    {[0, 1, 2, 3].map((i) => (
       <motion.div
         key={i}
         animate={{ opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 2, repeat: Infinity, delay: i * 0.12 }}
-        className="bg-[hsl(0_0%_10%)] p-5 sm:p-6 lg:p-7 h-full flex flex-col"
+        className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[104px] p-3.5 sm:p-4')}
       >
-        <div className="flex items-baseline justify-between gap-2">
-          <div className="h-2.5 w-20 rounded-full bg-white/[0.06]" />
-          <div className="h-2.5 w-12 rounded-full bg-white/[0.04]" />
-        </div>
-        <div className="mt-4 h-5 w-3/4 rounded-full bg-white/[0.06]" />
-        <div className="mt-3 space-y-2">
-          <div className="h-3 w-2/3 rounded-full bg-white/[0.04]" />
-          <div className="h-3 w-1/2 rounded-full bg-white/[0.04]" />
-        </div>
+        <div className="h-3 w-3/4 rounded-full bg-white/[0.08]" />
+        <div className="mt-2 h-2.5 w-1/2 rounded-full bg-white/[0.05]" />
+        <div className="flex-grow" />
+        <div className="mt-3 h-4 w-16 rounded-full bg-white/[0.08]" />
       </motion.div>
     ))}
-  </HairlineGrid>
+  </JobsGrid>
 );
 
 // ────────────────────────────────────────────────────────────────────────
@@ -165,17 +157,15 @@ const Skeleton = () => (
 // ────────────────────────────────────────────────────────────────────────
 
 const EmptyState = () => (
-  <div className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl px-6 py-10 text-center overflow-hidden">
-    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-    <p className="text-[13px] text-white/65 leading-relaxed max-w-md mx-auto">
+  <div className={cn(CARD_BASE, CARD_NEUTRAL, 'items-center px-6 py-8 text-center')}>
+    <p className="max-w-md text-[13px] leading-relaxed text-white">
       No electrical jobs in your feed right now. Trade boards refresh daily.
     </p>
     <Link
       to="/electrician/job-vacancies"
-      className="inline-flex items-center gap-1.5 mt-4 text-[12px] font-medium text-elec-yellow hover:text-elec-yellow/85 transition-colors touch-manipulation"
+      className="mt-3 inline-flex h-11 items-center text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
     >
-      Browse all listings
-      <ArrowRight className="h-3.5 w-3.5" />
+      Browse all listings →
     </Link>
   </div>
 );
@@ -185,17 +175,20 @@ const EmptyState = () => (
 // ────────────────────────────────────────────────────────────────────────
 
 export const LatestJobsWidget = () => {
-  const { data: jobs, isLoading, error } = useLatestJobs(6);
+  // Four, not six. The grid is auto-fit at four tracks like every other on the
+  // page, so six wrapped to 4 + 2 and left a hole on the end — the same orphan
+  // the tool groups were regrouped to avoid. "See all" is right there.
+  const { data: jobs, isLoading, error } = useLatestJobs(4);
 
   if (error) return null;
   if (isLoading) return <Skeleton />;
   if (!jobs || jobs.length === 0) return <EmptyState />;
 
   return (
-    <HairlineGrid>
-      {jobs.map((job, index) => (
-        <JobCell key={job.id} job={job} index={index} />
+    <JobsGrid>
+      {jobs.map((job) => (
+        <JobCell key={job.id} job={job} />
       ))}
-    </HairlineGrid>
+    </JobsGrid>
   );
 };

@@ -41,7 +41,7 @@ export const OnSiteGuideProcessor = () => {
           <FileText className="h-6 w-6 text-primary" />
           <div>
             <h3 className="text-lg font-semibold">On-Site Guide RAG Integration</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Process the On-Site Guide and add it to the installation_knowledge RAG database
             </p>
           </div>
@@ -63,7 +63,7 @@ export const OnSiteGuideProcessor = () => {
           </Button>
 
           {isProcessing && (
-            <span className="text-sm text-muted-foreground">This will take 5-10 minutes...</span>
+            <span className="text-sm text-white">This will take 5-10 minutes...</span>
           )}
         </div>
 
@@ -84,7 +84,7 @@ export const OnSiteGuideProcessor = () => {
                   {result.sampleChunks.map((chunk: any, idx: number) => (
                     <div key={idx} className="text-xs p-2 bg-background rounded mb-2">
                       <div className="font-semibold">{chunk.section}</div>
-                      <div className="text-muted-foreground">{chunk.contentPreview}</div>
+                      <div className="text-white">{chunk.contentPreview}</div>
                       <div className="text-xs mt-1">
                         Regs: {chunk.metadata.regulation_refs.join(', ') || 'none'}
                       </div>

@@ -1,8 +1,7 @@
 import React from 'react';
-import { WifiOff, Cloud, AlertCircle } from 'lucide-react';
+import { WifiOff, Cloud } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 
 interface OfflineBannerProps {
   queuedChanges: number;
@@ -11,8 +10,6 @@ interface OfflineBannerProps {
 }
 
 const OfflineBanner: React.FC<OfflineBannerProps> = ({ queuedChanges, isOnline, onRetry }) => {
-  const navigate = useNavigate();
-
   if (queuedChanges === 0) return null;
 
   // Show different messages based on online status
@@ -31,15 +28,27 @@ const OfflineBanner: React.FC<OfflineBannerProps> = ({ queuedChanges, isOnline, 
     );
   }
 
-  // User is online but has queued changes
+  /*
+   * Online, with changes still queued.
+   *
+   * Three things were wrong here. It invited a click — "Click to view details"
+   * — that went nowhere: the banner has no handler, and the `useNavigate` it
+   * imported for the purpose was never called. It pulsed indefinitely, which is
+   * what made a stuck queue read as a blinking bar rather than a status. And it
+   * said "Syncing", which is only true while a request is in flight; a queue
+   * that is not draining is not syncing, and telling the electrician it is
+   * hides the one fact they need.
+   *
+   * Now it states what is true — the work is saved on this device and not yet
+   * on the server — and offers the only action that helps.
+   */
   return (
-    <Alert
-      className="border-blue-500/50 bg-blue-500/10"
-    >
-      <Cloud className="h-4 w-4 text-blue-500 animate-pulse" />
-      <AlertDescription className="text-sm text-blue-500 flex items-center justify-between">
+    <Alert className="border-blue-500/50 bg-blue-500/10">
+      <Cloud className="h-4 w-4 text-blue-500" />
+      <AlertDescription className="text-sm text-blue-500 flex items-center justify-between gap-3">
         <span>
-          Syncing {queuedChanges} change{queuedChanges !== 1 ? 's' : ''}... Click to view details.
+          {queuedChanges} change{queuedChanges !== 1 ? 's' : ''} saved on this device, waiting to
+          reach the server.
         </span>
         {onRetry && (
           <Button

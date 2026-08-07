@@ -680,7 +680,7 @@ export default function CleanroomElectricalPage() {
   return (
     <GuideTemplate
       title="Cleanroom Electrical Installation UK | ISO Cleanroom Wiring"
-      description="Complete guide to cleanroom electrical installation in the UK — ISO 14644 classifications (ISO 5-8), minimising particle generation…"
+      description="Complete guide to cleanroom electrical installation in the UK — ISO 14644 classifications (ISO 5-8), minimising particle generation."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

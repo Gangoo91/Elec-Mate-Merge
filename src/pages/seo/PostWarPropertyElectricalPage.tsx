@@ -574,7 +574,7 @@ export default function PostWarPropertyElectricalPage() {
   return (
     <GuideTemplate
       title="1940s/1950s House Electrical Guide | Post-War Property"
-      description="Complete electrical guide for post-war properties built 1945–1965. Early PVC wiring, rewirable fuse boxes, earthing issues…"
+      description="Complete electrical guide for post-war properties built 1945–1965. Early PVC wiring, rewirable fuse boxes, earthing issues."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

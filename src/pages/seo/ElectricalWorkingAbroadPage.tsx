@@ -20,9 +20,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrician Working Abroad | UK Qualifications Overseas';
+const PAGE_TITLE = 'Electrician Working Abroad: Australia £47k-£68k';
 const PAGE_DESCRIPTION =
-  'UK-qualified electricians working abroad: which countries recognise your quals, visas, top destinations, earnings, mutual recognition, transfers.';
+  'Australia pays the most: £47k-£68k, mining £68k-£110k. Canada £41k-£59k, UAE tax-free £30k-£60k. Yes, UK electricians can work abroad - visas, licensing.';
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides' },
@@ -52,7 +52,7 @@ const keyTakeaways = [
   'UK electrical qualifications (City & Guilds 2365, 2357, 2391, and BS 7671) are well-regarded internationally, but most countries require additional local certification or licensing before you can work independently.',
   'Australia, New Zealand, Canada, and the Middle East are the most popular destinations for UK electricians, each with different recognition pathways and visa options.',
   'Earnings abroad can be significantly higher than the UK, particularly in Australia, Canada, and the Gulf states, but cost of living and tax implications must be factored into any comparison.',
-  'Mutual recognition agreements (MRAs) between the UK and certain countries can simplify the qualification transfer process, though post-Brexit changes have affected some European pathways.',
+  'There is no mutual recognition agreement that lets a UK electrician transfer straight into another country’s licensing system. Australia, New Zealand and Canada each run their own skills assessment, and post-Brexit the EU Professional Qualifications Directive route is closed, so EU states now treat UK qualifications as third-country qualifications.',
   'Elec-Mate helps you build a professional digital portfolio of your certifications, test results, and CPD records that you can present to overseas licensing bodies as evidence of competence.',
 ];
 
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Can I use my UK electrical qualifications to work abroad?',
     answer:
-      "UK electrical qualifications are respected worldwide, but they do not automatically entitle you to work as an electrician in another country. Each country has its own licensing and registration system. In most cases, you will need to apply for recognition of your UK qualifications, potentially sit a local theory or practical assessment covering that country's wiring regulations, and obtain a local licence or registration. Countries like Australia and New Zealand have formal skills assessment processes through bodies such as TRA (Trades Recognition Australia) and the EWRB (Electrical Workers Registration Board). In Canada, each province has its own licensing requirements through bodies like the ITA in British Columbia. The process varies from straightforward paperwork to requiring additional study and examinations. Having a well-documented portfolio of your qualifications, experience, and CPD records significantly strengthens your application.",
+      "UK electrical qualifications are respected worldwide, but they do not automatically entitle you to work as an electrician in another country. Each country has its own licensing and registration system. In most cases, you will need to apply for recognition of your UK qualifications, potentially sit a local theory or practical assessment covering that country's wiring regulations, and obtain a local licence or registration. Countries like Australia and New Zealand have formal skills assessment processes through bodies such as TRA (Trades Recognition Australia) and the EWRB (Electrical Workers Registration Board). In Canada, each province has its own licensing requirements through bodies like SkilledTradesBC in British Columbia. The process varies from straightforward paperwork to requiring additional study and examinations. Having a well-documented portfolio of your qualifications, experience, and CPD records significantly strengthens your application.",
   },
   {
     question: 'Which country pays electricians the most?',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Do I need a visa to work as an electrician abroad?',
     answer:
-      'Yes, you will need a work visa for any country where you are not a citizen. Since Brexit, UK electricians no longer have automatic right to work in EU/EEA countries and must obtain work permits. Australia offers the Skilled Worker visa (subclass 482) and the Skilled Independent visa (subclass 189) for electricians, as the trade is on the Medium and Long-term Strategic Skills List. New Zealand has the Skilled Migrant Category visa and the Accredited Employer Work Visa. Canada offers routes through the Temporary Foreign Worker Program and Express Entry. The Gulf states typically require employer sponsorship. The visa process can take months, so planning well in advance is essential. Most countries require evidence of qualifications, work experience, English language proficiency (even for native English speakers in some cases), police checks, and medical examinations.',
+      'Yes, you will need a work visa for any country where you are not a citizen. Since Brexit, UK electricians no longer have automatic right to work in EU/EEA countries and must obtain work permits. Australia offers the Skills in Demand visa (subclass 482, which replaced the Temporary Skill Shortage visa in December 2024) and the Skilled Independent visa (subclass 189) for electricians; the trade sits on the Core Skills Occupation List used by the 482 and on the Medium and Long-term Strategic Skills List used by the 189. New Zealand has the Skilled Migrant Category visa and the Accredited Employer Work Visa. Canada offers routes through the Temporary Foreign Worker Program and Express Entry. The Gulf states typically require employer sponsorship. The visa process can take months, so planning well in advance is essential. Most countries require evidence of qualifications, work experience, English language proficiency (even for native English speakers in some cases), police checks, and medical examinations.',
   },
   {
     question: 'What happens to my UK registrations while I am abroad?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Is it harder to work abroad since Brexit?',
     answer:
-      'Brexit has made it more difficult to work in EU and EEA countries because UK electricians no longer benefit from the mutual recognition of professional qualifications under EU directives. Before Brexit, a UK-qualified electrician could apply for recognition of their qualifications in any EU member state under the Professional Qualifications Directive. This route is no longer available. Each EU country now treats UK qualifications as third-country qualifications, which typically means a longer and more complex recognition process. However, Brexit has had no impact on working in non-EU countries such as Australia, New Zealand, Canada, the Middle East, or the United States. These countries had their own bilateral arrangements with the UK before Brexit and continue to have them. For electricians looking to work outside Europe, the process is unchanged.',
+      'Brexit has made it more difficult to work in EU and EEA countries because UK electricians no longer benefit from the mutual recognition of professional qualifications under EU directives. Before Brexit, a UK-qualified electrician could apply for recognition of their qualifications in any EU member state under the Professional Qualifications Directive. This route is no longer available. Each EU country now treats UK qualifications as third-country qualifications, which typically means a longer and more complex recognition process. However, Brexit has had no impact on working in non-EU countries such as Australia, New Zealand, Canada, the Middle East, or the United States. These countries have always run their own national skills assessment and licensing systems, which were never governed by EU rules. For electricians looking to work outside Europe, the process is unchanged.',
   },
   {
     question: 'How does Elec-Mate help with working abroad?',
@@ -106,8 +106,8 @@ const sections = [
           Middle East, infrastructure investment in Australia and Canada, and the worldwide push
           towards renewable energy and electric vehicle charging networks all create demand for
           skilled electrical workers. UK training is well-regarded internationally because{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> is one
-          of the most rigorous wiring standards in the world, and the UK apprenticeship system
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> is
+          one of the most rigorous wiring standards in the world, and the UK apprenticeship system
           produces electricians with a strong foundation in both theory and practice.
         </p>
         <p>
@@ -131,9 +131,7 @@ const sections = [
           process varies significantly from country to country.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-4">
-            Recognition at a Glance
-          </h3>
+          <h3 className="font-bold text-white text-lg mb-4">Recognition at a Glance</h3>
           <div className="space-y-3">
             <div className="grid grid-cols-3 gap-2 px-1 pb-1 border-b border-white/10 text-xs font-semibold uppercase tracking-wide text-white/50">
               <span>Country</span>
@@ -142,7 +140,9 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm">
               <span className="text-white font-medium">Australia</span>
-              <span className="text-white/80">Trades Recognition Australia (TRA), then state licensing</span>
+              <span className="text-white/80">
+                Trades Recognition Australia (TRA), then state licensing
+              </span>
               <span className="text-yellow-400">AS/NZS 3000</span>
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
@@ -157,7 +157,9 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm">
               <span className="text-white font-medium">Gulf states</span>
-              <span className="text-white/80">Employer verification (often no formal assessment)</span>
+              <span className="text-white/80">
+                Employer verification (often no formal assessment)
+              </span>
               <span className="text-yellow-400">Local municipality rules (e.g. DEWA)</span>
             </div>
           </div>
@@ -175,14 +177,18 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Australia has a formal skills assessment process through Trades Recognition Australia
               (TRA). You submit your UK qualifications (typically{' '}
-              <SEOInternalLink href="/level3-electrical">
-                Level 3 NVQ/Diploma
-              </SEOInternalLink>
-              , City & Guilds 2365/2357, and BS 7671) along with evidence of work experience. TRA
-              assesses whether your qualifications are equivalent to an Australian Certificate III
-              in Electrotechnology. If successful, you then apply for an electrical licence in the
-              state where you intend to work, which may involve a local assessment on Australian
-              Standards (AS/NZS 3000). Each state has its own licensing body.
+              <SEOInternalLink href="/level3-electrical">Level 3 NVQ/Diploma</SEOInternalLink>, City
+              & Guilds 2365/2357, and BS 7671) along with evidence of work experience. Under the
+              Offshore Skills Assessment Program, TRA assesses your qualifications and experience
+              against the Australian Certificate III in Electrotechnology Electrician and, if
+              successful, issues an Offshore Technical Skills Record (OTSR). The OTSR is not a
+              licence on its own. You use it to apply to the licensing body in the state where you
+              intend to work for a provisional or supervised worker's licence, then complete
+              Australian Context Gap Training at a registered training organisation to gain the
+              Certificate III, sit the state's licensed electrician assessment, and work under
+              supervision (a minimum of 12 months in Victoria, for example) before an unrestricted
+              electrician's licence is issued. Each state has its own licensing body and its own
+              assessment on the Australian wiring rules (AS/NZS 3000).
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -206,12 +212,12 @@ const sections = [
             </div>
             <p className="text-white text-sm leading-relaxed">
               Canada's electrical licensing is managed at the provincial level. Each province has
-              its own apprenticeship and certification body. British Columbia uses the ITA (Industry
-              Training Authority), Ontario uses the Ontario College of Trades (now Skilled Trades
-              Ontario), and Alberta uses AIT (Alberta Apprenticeship and Industry Training). You
-              typically need to apply for a trade equivalency assessment and may need to complete
-              the Red Seal interprovincial examination. The Red Seal endorsement allows you to work
-              in any province without additional certification.
+              its own apprenticeship and certification body. British Columbia uses SkilledTradesBC
+              (formerly the Industry Training Authority), Ontario uses the Ontario College of Trades
+              (now Skilled Trades Ontario), and Alberta uses AIT (Alberta Apprenticeship and
+              Industry Training). You typically need to apply for a trade equivalency assessment and
+              may need to complete the Red Seal interprovincial examination. The Red Seal
+              endorsement allows you to work in any province without additional certification.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -225,8 +231,7 @@ const sections = [
               The Gulf states generally accept UK qualifications without requiring formal
               recognition assessments, particularly for positions with international contractors on
               large projects. Employers typically verify your qualifications directly and may
-              require{' '}
-              <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink>{' '}
+              require <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink>{' '}
               or equivalent inspection and testing qualifications. The JIB grading (approved
               electrician or technician) is well-understood by Middle Eastern employers. Local
               municipality regulations (such as DEWA in Dubai or Kahramaa in Qatar) apply on site
@@ -322,9 +327,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">Australia</strong> — Temporary Skill Shortage
-                visa (subclass 482), Skilled Independent visa (subclass 189), Skilled Nominated visa
-                (subclass 190). Electrician is on the MLTSSL. Points-based system favours younger
+                <strong className="text-yellow-400">Australia</strong> — Skills in Demand visa
+                (subclass 482, which replaced the Temporary Skill Shortage visa in December 2024),
+                Skilled Independent visa (subclass 189), Skilled Nominated visa (subclass 190).
+                Electrician is on the Core Skills Occupation List (CSOL) used by the 482, and on the
+                MLTSSL used by the points-tested 189 and 190. The points test favours younger
                 applicants with good English and relevant experience.
               </span>
             </li>
@@ -342,8 +349,10 @@ const sections = [
               <span>
                 <strong className="text-yellow-400">New Zealand</strong> — Accredited Employer Work
                 Visa (employer must be accredited), Skilled Migrant Category Resident Visa
-                (points-based for permanent residency). Electricians are on the Green List for
-                straight-to-residence pathways.
+                (points-based for permanent residency). Electrician is a Tier 2 Green List role,
+                which is a work-to-residence pathway: you must work in the role in New Zealand for
+                24 months before applying for residence, not straight to residence. EWRB
+                registration is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -603,9 +612,7 @@ const sections = [
             2391 inspection and testing examination
           </SEOInternalLink>
           . Elec-Mate's study tools and{' '}
-          <SEOInternalLink href="/am2-exam-preparation">
-            AM2 preparation resources
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/am2-exam-preparation">AM2 preparation resources</SEOInternalLink>{' '}
           help you get back up to speed quickly.
         </p>
       </>

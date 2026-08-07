@@ -744,7 +744,7 @@ export default function AnnexElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Granny Annex Electrical Installation | Wiring Guide UK"
-      description="Complete guide to granny annex electrical installation in the UK. Separate supply vs extension, consumer unit design, kitchen and bathroom circuits…"
+      description="Complete guide to granny annex electrical installation in the UK. Separate supply vs extension, consumer unit design, kitchen and bathroom circuits."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
@@ -158,7 +158,7 @@ export const CustomerListRow = ({
         selected
           ? 'border-elec-yellow bg-gradient-to-b from-white/[0.16] to-white/[0.08]'
           : isDuplicate
-            ? 'border-amber-500/40 bg-gradient-to-b from-white/[0.12] to-white/[0.06] hover:border-amber-500/60'
+            ? cn('border-amber-500/40 hover:border-amber-500/60', CARD_SURFACE)
             : CARD_NEUTRAL
       )}
     >

@@ -618,7 +618,7 @@ export default function OfficeElectricalFitOutPage() {
   return (
     <GuideTemplate
       title="Office Electrical Fit Out UK | Commercial Office Wiring"
-      description="Complete guide to office electrical fit-out in the UK. Power distribution, data points, office lighting design to CIBSE LG7, emergency lighting…"
+      description="Complete guide to office electrical fit-out in the UK. Power distribution, data points, office lighting design to CIBSE LG7, emergency lighting."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -134,7 +134,7 @@ export const CompletionShareButton = ({ visit }: CompletionShareButtonProps) => 
             <div className="mt-1 text-[15px] font-semibold text-white sm:text-[16px]">
               Send the completion for signature.
             </div>
-            <p className="mt-1 text-[12.5px] text-white/65">
+            <p className="mt-1 text-[12.5px] text-white">
               Generates a secure share link. Client can sign remotely on their own device.
             </p>
           </div>
@@ -172,7 +172,7 @@ export const CompletionShareButton = ({ visit }: CompletionShareButtonProps) => 
           Completion link ready
         </span>
       </div>
-      <p className="mt-2 text-[13px] text-white/75">
+      <p className="mt-2 text-[13px] text-white">
         Share with the client — they can sign on their own device. Link is unique to this job.
       </p>
 

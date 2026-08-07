@@ -571,7 +571,7 @@ export default function NearMissReportingPage() {
   return (
     <GuideTemplate
       title="Near Miss Reporting | Why It Matters for Electricians"
-      description="Complete guide to near miss reporting for UK electricians. What counts as a near miss, the reporting process, learning from near misses…"
+      description="Complete guide to near miss reporting for UK electricians. What counts as a near miss, the reporting process, learning from near misses."
       datePublished="2025-08-05"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

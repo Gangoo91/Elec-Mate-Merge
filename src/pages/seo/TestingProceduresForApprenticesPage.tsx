@@ -644,7 +644,7 @@ export default function TestingProceduresForApprenticesPage() {
   return (
     <GuideTemplate
       title="Testing Procedures for Apprentices | Beginner Guide"
-      description="Beginner guide to electrical testing procedures for apprentices. Testing sequence, multifunction testers, continuity testing, insulation resistance…"
+      description="Beginner guide to electrical testing procedures for apprentices. Testing sequence, multifunction testers, continuity testing, insulation resistance."
       datePublished="2026-01-25"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

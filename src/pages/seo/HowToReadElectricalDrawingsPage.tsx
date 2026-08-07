@@ -30,7 +30,7 @@ const tocItems = [
   { id: 'why-read-drawings', label: 'Why Reading Drawings Matters' },
   { id: 'bs-7671-requirement', label: 'What BS 7671 Requires' },
   { id: 'types-of-drawings', label: 'Types of Electrical Drawings' },
-  { id: 'bs-en-60617-symbols', label: 'BS EN 60617 Symbols' },
+  { id: 'bs-en-60617-symbols', label: 'IEC 60617 Symbols' },
   { id: 'single-line-diagrams', label: 'Single-Line Diagrams' },
   { id: 'wiring-diagrams', label: 'Wiring Diagrams' },
   { id: 'schematic-diagrams', label: 'Schematic Diagrams' },
@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS EN 60617 is the international standard for graphical symbols on electrical drawings — and Regulation 514.9.1 of BS 7671 requires any symbol used on installation diagrams to comply with it, so reading these symbols is a core competency.',
+  'IEC 60617 is the international standard for graphical symbols on electrical drawings — and Regulation 514.9.1 of BS 7671 requires any symbol used on installation diagrams to comply with it, so reading these symbols is a core competency.',
   'Single-line (one-line) diagrams show the overall system layout in simplified form and are the most common drawing type you will encounter on site.',
   'Wiring diagrams show the physical connections between components and are used for installation, while schematic diagrams show the logical circuit operation.',
   'Reading drawings is a mandatory part of the Level 2 and Level 3 electrical qualifications and features heavily in the AM2 practical assessment.',
@@ -51,9 +51,9 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'What is BS EN 60617 and why is it important?',
+    question: 'What is IEC 60617 and why is it important?',
     answer:
-      'BS EN 60617 is the international standard (adopted in the UK as a British Standard) for graphical symbols used on electrical and electronic diagrams. It provides a standardised set of symbols that engineers, designers, and electricians use to communicate circuit designs without ambiguity. Before this standard existed, different manufacturers, contractors, and countries used different symbols for the same components, leading to confusion and errors on site. Today, BS EN 60617 symbols appear on every circuit diagram, control panel schematic, and distribution board layout you will encounter in UK electrical work. Learning these symbols is a fundamental requirement for Level 2 and Level 3 electrical qualifications.',
+      'IEC 60617 is the international standard (adopted in the UK as a British Standard) for graphical symbols used on electrical and electronic diagrams. It provides a standardised set of symbols that engineers, designers, and electricians use to communicate circuit designs without ambiguity. Before this standard existed, different manufacturers, contractors, and countries used different symbols for the same components, leading to confusion and errors on site. Today, IEC 60617 symbols appear on every circuit diagram, control panel schematic, and distribution board layout you will encounter in UK electrical work. Learning these symbols is a fundamental requirement for Level 2 and Level 3 electrical qualifications.',
   },
   {
     question: 'What is the difference between a single-line diagram and a wiring diagram?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What are the most common electrical symbols I need to know?',
     answer:
-      'The most common BS EN 60617 symbols you will encounter in UK domestic and commercial work include: a circle with an X inside for a luminaire (light fitting), two parallel vertical lines for a switch, a zigzag line for a resistor, a rectangle for a fuse, MCB symbols showing the tripping characteristic, RCD symbols with the test button, socket outlet symbols (single and double), distribution board symbols, motor symbols, transformer symbols, earth symbols (three horizontal lines decreasing in size), and cable route designations. Control circuit work adds contactor coils, relay contacts (normally open and normally closed), timer contacts, and sensor symbols. Most electricians memorise the 30 to 50 most common symbols through repeated exposure during training and on site.',
+      'The most common IEC 60617 symbols you will encounter in UK domestic and commercial work include: a circle with an X inside for a luminaire (light fitting), two parallel vertical lines for a switch, a zigzag line for a resistor, a rectangle for a fuse, MCB symbols showing the tripping characteristic, RCD symbols with the test button, socket outlet symbols (single and double), distribution board symbols, motor symbols, transformer symbols, earth symbols (three horizontal lines decreasing in size), and cable route designations. Control circuit work adds contactor coils, relay contacts (normally open and normally closed), timer contacts, and sensor symbols. Most electricians memorise the 30 to 50 most common symbols through repeated exposure during training and on site.',
   },
   {
     question: 'How do I read a distribution board schedule?',
@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'How does Elec-Mate help with understanding electrical drawings?',
     answer:
-      'Elec-Mate includes a BS EN 60617 symbol reference library that you can search on site when you encounter an unfamiliar symbol. The 8 Elec-AI agents can also interpret and explain circuit diagrams — you can describe a circuit or upload a drawing and the AI will explain what the circuit does, identify the components, and highlight any potential issues. For apprentices, the Level 2 and Level 3 courses on the platform include dedicated modules on electrical drawing interpretation, with interactive exercises and practice diagrams. The AI board scanner also creates a digital representation of the consumer unit layout from a photograph, effectively generating a distribution board schedule automatically.',
+      'Elec-Mate includes a IEC 60617 symbol reference library that you can search on site when you encounter an unfamiliar symbol. The 8 Elec-AI agents can also interpret and explain circuit diagrams — you can describe a circuit or upload a drawing and the AI will explain what the circuit does, identify the components, and highlight any potential issues. For apprentices, the Level 2 and Level 3 courses on the platform include dedicated modules on electrical drawing interpretation, with interactive exercises and practice diagrams. The AI board scanner also creates a digital representation of the consumer unit layout from a photograph, effectively generating a distribution board schedule automatically.',
   },
 ];
 
@@ -165,7 +165,7 @@ const sections = [
         </p>
         <p>
           This guide covers the three main types of electrical drawings (single-line, wiring, and
-          schematic), the BS EN 60617 symbol standard, and the most common symbols you will
+          schematic), the IEC 60617 symbol standard, and the most common symbols you will
           encounter in UK domestic and commercial work.
         </p>
       </>
@@ -191,7 +191,7 @@ const sections = [
         <p>
           Crucially, the same regulation requires that{' '}
           <strong className="text-white">any symbol used shall comply with IEC 60617</strong> —
-          adopted in the UK as BS EN 60617. This is the legal hook that makes symbol literacy a
+          adopted in the UK as IEC 60617. This is the legal hook that makes symbol literacy a
           competency rather than a nicety: the drawing in front of you on site is required to use
           these symbols, so being able to read them is required to do the work.
         </p>
@@ -286,11 +286,11 @@ const sections = [
   },
   {
     id: 'bs-en-60617-symbols',
-    heading: 'BS EN 60617: The Symbol Standard',
+    heading: 'IEC 60617: The Symbol Standard',
     content: (
       <>
         <p>
-          BS EN 60617 is the British (and European) adoption of the international standard IEC 60617
+          IEC 60617 is the British (and European) adoption of the international standard IEC 60617
           for graphical symbols used on electrical diagrams. It defines a consistent set of symbols
           that every electrician, engineer, and designer uses to communicate without ambiguity.
         </p>
@@ -461,7 +461,7 @@ const sections = [
     content: (
       <>
         <p>
-          These are the BS EN 60617 symbols you will encounter most often in UK domestic and
+          These are the IEC 60617 symbols you will encounter most often in UK domestic and
           commercial electrical work. Memorising these will allow you to read the majority of
           drawings you see on site.
         </p>
@@ -513,7 +513,7 @@ const sections = [
           </div>
         </div>
         <p>
-          Elec-Mate includes a searchable BS EN 60617 symbol reference library. If you encounter an
+          Elec-Mate includes a searchable IEC 60617 symbol reference library. If you encounter an
           unfamiliar symbol on site, open the app and look it up instantly.
         </p>
       </>
@@ -657,7 +657,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Ask the AI about any electrical symbol or diagram"
-          description="The 8 Elec-AI agents understand BS EN 60617 symbols, circuit diagrams, and control schematics."
+          description="The 8 Elec-AI agents understand IEC 60617 symbols, circuit diagrams, and control schematics."
           icon={Brain}
         />
       </>
@@ -673,7 +673,7 @@ export default function HowToReadElectricalDrawingsPage() {
   return (
     <GuideTemplate
       title="How to Read Electrical Drawings | Symbols Guide UK"
-      description="Learn how to read electrical drawings and diagrams. BS EN 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams…"
+      description="Learn how to read electrical drawings and diagrams. IEC 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -685,11 +685,11 @@ export default function HowToReadElectricalDrawingsPage() {
           How to Read <span className="text-yellow-400">Electrical Drawings</span>
         </>
       }
-      heroSubtitle="Electrical drawings are the language of the trade. This guide covers the three main types of electrical drawing, the BS EN 60617 symbol standard, and a quick reference of the most common symbols you will encounter in UK domestic and commercial work."
+      heroSubtitle="Electrical drawings are the language of the trade. This guide covers the three main types of electrical drawing, the IEC 60617 symbol standard, and a quick reference of the most common symbols you will encounter in UK domestic and commercial work."
       answerBox={{
         question: 'How do you read an electrical drawing?',
         answer:
-          'Start with the title block and legend, then trace the circuit from the incoming supply through the main switch, distribution board and protective devices to the final load. Identify each component by its BS EN 60617 symbol and cross-reference the distribution board schedule for cable sizes, device ratings and circuit descriptions. The three main drawing types are single-line, wiring and schematic diagrams.',
+          'Start with the title block and legend, then trace the circuit from the incoming supply through the main switch, distribution board and protective devices to the final load. Identify each component by its IEC 60617 symbol and cross-reference the distribution board schedule for cable sizes, device ratings and circuit descriptions. The three main drawing types are single-line, wiring and schematic diagrams.',
       }}
       readingTime={15}
       keyTakeaways={keyTakeaways}

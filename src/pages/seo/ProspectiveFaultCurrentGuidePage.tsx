@@ -18,9 +18,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'What Is Prospective Fault Current? PFC, PSCC + Ipf';
+const PAGE_TITLE = 'Ipf & PSCC Meaning: Prospective Fault Current';
 const PAGE_DESCRIPTION =
-  'Prospective fault current (PFC/Ipf/PSCC): what it means, how to measure it on site, typical UK values, and the MCB breaking capacity BS 7671 Reg 434.5 requires.';
+  'Ipf and PSCC mean prospective fault current: the maximum current a fault could draw. Typical UK domestic PFC is 1kA to 6kA; standard MCBs break 6kA.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -42,11 +42,11 @@ const tocItems = [
 
 const keyTakeaways = [
   'Prospective fault current (PFC or Ipf) is the maximum current that would flow under a short-circuit or earth fault condition — every protective device must be capable of safely interrupting this current.',
-  'PFC must be measured, calculated, or determined at the origin of every installation and at every relevant point — defined in GN3 as every point where a protective device is required to operate under fault conditions. The highest value (typically the line-to-neutral short circuit) is the one that matters.',
+  'PFC must be measured, calculated, or determined at the origin and at other relevant points in the installation — defined in GN3 as every point where a protective device is required to operate under fault conditions. The highest value (typically the line-to-neutral short circuit) is the one that matters.',
   'Typical domestic PFC values range from 1kA to 6kA. Standard domestic MCBs to BS EN 60898 have a minimum breaking capacity of 6kA — but installations close to transformers can exceed this.',
   'PFC is directly related to Ze: the lower the Ze (earth fault loop impedance at the origin), the higher the prospective fault current. TN-C-S supplies with low Ze can have high PFC values.',
   "Elec-Mate's PFC calculator and adiabatic calculator verify that protective devices and cables can handle the fault current. Schedule of tests validates PFC values against device ratings automatically.",
-  'Where site measurement is not possible before energisation — for example on a new installation — PFC may be determined by enquiry to the DNO/distributor, who can provide Ze and Ipsc figures for the supply point (OSG Reg 1.2.7).',
+  'Where site measurement is not possible before energisation — for example on a new installation — PFC may be determined by enquiry to the DNO/distributor, who can provide the maximum prospective fault current (Ipf) and typical maximum external earth fault loop impedance (Ze) for the supply terminals (On-Site Guide Section 1.3).',
   'Appendix 14 of BS 7671 covers determination of prospective fault current at relevant points in the installation. The Elec-Mate PFC calculator applies the same methodology.',
 ];
 
@@ -69,17 +69,17 @@ const faqs = [
   {
     question: 'What happens if PFC exceeds the breaking capacity of my MCBs?',
     answer:
-      'If the prospective fault current exceeds the rated breaking capacity of a protective device, the device may not be able to safely interrupt a fault. The possible consequences include: the device contacts may weld together, preventing disconnection; the device may explode due to the energy of the arc exceeding its containment capability; the arc may escape the device enclosure, causing fire or electric shock; or the device may partially interrupt the fault but sustain internal damage that renders it unreliable for future faults. Standard domestic MCBs to BS EN 60898 have a minimum breaking capacity of 6kA (6,000 amperes). This is adequate for the vast majority of domestic installations. However, installations close to the transformer may exceed 6kA, particularly on TN-C-S supplies with very low impedance. In these cases, MCBs with a higher breaking capacity (10kA or 15kA) must be installed. On an EICR, if the measured PFC exceeds the breaking capacity of the installed devices, this is a C1 (danger present) or C2 (potentially dangerous) observation that requires immediate action.',
+      'If the prospective fault current exceeds the rated breaking capacity of a protective device, the device may not be able to safely interrupt a fault. The possible consequences include: the device contacts may weld together, preventing disconnection; the device may explode due to the energy of the arc exceeding its containment capability; the arc may escape the device enclosure, causing fire or electric shock; or the device may partially interrupt the fault but sustain internal damage that renders it unreliable for future faults. Standard domestic MCBs to BS EN 60898 have a minimum breaking capacity of 6kA (6,000 amperes). This is adequate for the vast majority of domestic installations. However, installations close to the transformer may exceed 6kA, particularly on TN-C-S supplies with very low impedance. In these cases, MCBs with a higher breaking capacity (10kA or 15kA) must be installed. On an EICR, if the measured PFC exceeds the breaking capacity of the installed devices, this is a C1 (danger present — immediate remedial action necessary) or C2 (potentially dangerous — urgent remedial action necessary) observation.',
   },
   {
     question: 'Do I need to measure PFC at every distribution board?',
     answer:
-      'BS 7671 Regulation 643.7.3.201 (Part 6 — Inspection and Testing) requires that the prospective fault current is measured, calculated, or determined at the origin and at every other relevant point in the installation. GN3 Reg 2.29 defines a relevant point as every point where a protective device is required to operate under fault conditions. In practice, PFC should be determined at the origin (the main consumer unit or main distribution board) and at every sub-distribution board. The PFC at a sub-distribution board is always lower than at the origin because the impedance of the submain cable adds to the total fault loop impedance, reducing the fault current. However, the protective devices at the sub-board must still have a breaking capacity that exceeds the PFC at that point. For domestic installations with a single consumer unit, PFC is typically measured only at the origin. For commercial installations with multiple distribution boards or switchboards, PFC should be determined at each board — and at each MCCB location on a large switchboard. Appendix 14 of BS 7671 covers determination of prospective fault current, including the approximation methods: in a three-phase installation the fault current between line conductors can be approximated from a line-to-neutral measurement multiplied by √3, and the simultaneous short-circuit between all line conductors from a line-to-neutral measurement multiplied by 2. It also states that other methods of determining prospective fault current are not precluded.',
+      'BS 7671 Regulation 643.7.3.201 (Part 6 — Inspection and Testing) requires that the prospective short-circuit current and prospective earth fault current are measured, calculated, or determined by another method, at the origin and at other relevant points in the installation. GN3 Reg 2.29 defines a relevant point as every point where a protective device is required to operate under fault conditions. In practice, PFC should be determined at the origin (the main consumer unit or main distribution board) and at every sub-distribution board. The PFC at a sub-distribution board is always lower than at the origin because the impedance of the submain cable adds to the total fault loop impedance, reducing the fault current. However, the protective devices at the sub-board must still have a breaking capacity that exceeds the PFC at that point. For domestic installations with a single consumer unit, PFC is typically measured only at the origin. For commercial installations with multiple distribution boards or switchboards, PFC should be determined at each board — and at each MCCB location on a large switchboard. Appendix 14 of BS 7671 covers determination of prospective fault current, including the approximation methods: in a three-phase installation the fault current between line conductors can be approximated from a line-to-neutral measurement multiplied by √3, and the simultaneous short-circuit between all line conductors from a line-to-neutral measurement multiplied by 2. It also states that other methods of determining prospective fault current are not precluded.',
   },
   {
     question: 'What is the difference between PFC and breaking capacity?',
     answer:
-      'Prospective fault current (PFC) is a characteristic of the installation — it is the maximum current that the supply can deliver into a fault at a given point. Breaking capacity (also called rated short-circuit capacity or Ics/Icu) is a characteristic of the protective device — it is the maximum fault current that the device has been tested and certified to safely interrupt. The safety requirement is simple: the breaking capacity must be equal to or greater than the prospective fault current at the point where the device is installed. A standard domestic MCB to BS EN 60898 has a breaking capacity of at least 6kA. Industrial MCBs to BS EN 60947-2 are available with breaking capacities of 10kA, 16kA, 25kA, 36kA, 50kA, and higher. MCCB (moulded case circuit breakers) can have breaking capacities up to 150kA. HRC fuses to BS 88 typically have very high breaking capacities of 80kA or more, which is why they are often used at the origin of commercial and industrial installations where PFC values are high.',
+      'Prospective fault current (PFC) is a characteristic of the installation — it is the maximum current that the supply can deliver into a fault at a given point. Breaking capacity is a characteristic of the protective device — the maximum fault current it has been tested and certified to safely interrupt. For devices to BS EN 60898 and BS EN 61009 the On-Site Guide distinguishes two values: Icn, the rated short-circuit capacity marked on the device (after interrupting Icn the breaker may no longer be usable), and Ics, the service short-circuit capacity it can interrupt without loss of performance. BS EN 60947-2 devices are similarly rated for service and ultimate short-circuit breaking capacity, and Reg 533.3 allows selection on the ultimate value for maximum fault current conditions — though the service value is often preferred for a device at the origin. The safety requirement is simple: the breaking capacity must be equal to or greater than the prospective fault current at the point where the device is installed. A standard domestic MCB to BS EN 60898 has a breaking capacity of at least 6kA. Industrial MCBs to BS EN 60947-2 are available with breaking capacities of 10kA, 16kA, 25kA, 36kA, 50kA, and higher. MCCB (moulded case circuit breakers) can have breaking capacities up to 150kA. HRC fuses to BS 88 typically have very high breaking capacities of 80kA or more, which is why they are often used at the origin of commercial and industrial installations where PFC values are high.',
   },
   {
     question: 'How does Elec-Mate help with PFC verification?',
@@ -157,9 +157,7 @@ const sections = [
         </div>
         <p>
           PFC also matters for cable protection. The{' '}
-          <SEOInternalLink href="/how-to-size-cables">
-            adiabatic equation
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/how-to-size-cables">adiabatic equation</SEOInternalLink>{' '}
           (k&sup2;S&sup2; &ge; I&sup2;t) verifies that the cable conductor can withstand the heating
           effect of the fault current for the duration of the disconnection time. If the PFC is very
           high and the disconnection time is not short enough, the cable can be damaged by the fault
@@ -183,10 +181,12 @@ const sections = [
           Most modern MFTs have a PFC function that measures the supply impedance and calculates the
           maximum fault current automatically. Where site measurement is not yet possible — for
           example on a new installation before energisation — PFC may be determined by enquiry to
-          the DNO/distributor, who can supply Ze and prospective short-circuit current (Ipsc)
-          figures for the supply point. The OSG states that measurement shall be made &lsquo;if not
-          determined by enquiry of the distributor&rsquo;, so the two routes are equally valid under
-          BS 7671.
+          the DNO/distributor. On-Site Guide Section 1.3 requires the installer to establish with
+          the local distributor, before starting work, the maximum prospective fault current (Ipf)
+          at the supply terminals and the typical maximum external earth fault loop impedance (Ze),
+          along with the type and rating of the distributor&rsquo;s cut-out. The OSG states that
+          measurement shall be made &lsquo;if not determined by enquiry of the distributor&rsquo;,
+          so the two routes are equally valid under BS 7671.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <div className="flex items-start gap-3">
@@ -196,16 +196,18 @@ const sections = [
                 Defining &lsquo;every relevant point&rsquo; — GN3 Reg 2.29
               </h3>
               <p className="text-white text-sm leading-relaxed">
-                Reg 643.7.3.201 requires PFC to be determined at the origin and at every other
-                relevant point. GN3 Reg 2.29 defines this precisely:{' '}
+                Reg 643.7.3.201 requires PFC to be determined at the origin and at other relevant
+                points in the installation. GN3 Reg 2.29 defines this precisely:{' '}
                 <em>
                   &ldquo;every relevant point shall mean every point where a protective device is
                   required to operate under fault conditions, and includes the origin of the
                   installation.&rdquo;
                 </em>{' '}
                 For a large commercial switchboard feeding multiple MCCBs, each MCCB location is a
-                relevant point — not only the incoming incomer. Appendix 14 of BS 7671 provides
-                worked examples of Ips determination at such points.
+                relevant point — not only the incoming incomer. Appendix 14 of BS 7671 gives further
+                information on determining Ipf at such points, describing relevant points as the
+                switchgear and protective devices that may have to operate and possibly disconnect a
+                fault current.
               </p>
             </div>
           </div>
@@ -220,7 +222,13 @@ const sections = [
               line-to-neutral impedance and the line-to-earth impedance (Ze), then calculates the
               PFC from each. The higher of the two values is the prospective fault current that must
               be recorded on the certificate. Most instruments display the PFC value directly in kA
-              (kiloamperes).
+              (kiloamperes). Appendix 14 warns that the measurement should always be made on the
+              output terminals of a suitably rated protective device, and never where there is no
+              overcurrent protection between the point of connection and the supply transformer —
+              fused test leads alone do not meet that requirement. Appendix 14 also notes one
+              exception: in domestic (household) premises using a consumer unit to BS EN 61439-3
+              where the distributor declares a maximum prospective fault current of 16 kA, it is not
+              necessary to measure or calculate the PFC at the origin of the supply.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -238,11 +246,11 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-2">Recording on Certificates</h3>
             <p className="text-white text-sm leading-relaxed">
               The measured PFC is recorded in the "Prospective fault current Ipf" field on the EIC
-              or <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>. Record
-              the highest value (typically the line-to-neutral PFC). On the EICR, the PFC at the
-              origin is recorded in the Supply Characteristics section. If the PFC exceeds the
-              breaking capacity of any installed device, this must be recorded as an observation
-              with the appropriate classification code.
+              or <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>. Record the
+              highest value (typically the line-to-neutral PFC). On the EICR, the PFC at the origin
+              is recorded in the Supply Characteristics section. If the PFC exceeds the breaking
+              capacity of any installed device, this must be recorded as an observation with the
+              appropriate classification code.
             </p>
           </div>
         </div>
@@ -414,8 +422,8 @@ const sections = [
           data.
         </p>
         <SEOAppBridge
-          title="APCS Calculator | BS 7671:2018+A4:2026"
-          description="APCS calculator for prospective fault current testing. Verify Ze values and breaking capacities against BS 7671:2018+A4:2026 in seconds. Free tool."
+          title="PFC calculator | BS 7671:2018+A4:2026"
+          description="Prospective fault current calculator. Work Ipf out from Ze or supply impedance and check it against device breaking capacities to BS 7671:2018+A4:2026."
           icon={Gauge}
         />
       </>
@@ -458,10 +466,13 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   An HRC fuse (BS 88) installed upstream of the consumer unit can limit the fault
                   current that reaches the downstream MCBs. BS 88 fuses have very high breaking
-                  capacities (typically 80kA) and can current-limit, reducing the peak fault
-                  current. This "back-up protection" arrangement allows standard 6kA MCBs to be used
-                  downstream of a suitable HRC fuse, provided the let-through energy of the fuse
-                  does not exceed the MCB's capacity.
+                  capacities and can current-limit, reducing the peak fault current. This "back-up
+                  protection" arrangement can allow standard 6kA MCBs to be used downstream of a
+                  suitable HRC fuse — but only where the manufacturer of the downstream device
+                  declares the combination suitable. Reg 536.4.2.1 is explicit that where no
+                  manufacturer information is available, combined short-circuit protection shall not
+                  be used and every device must have the required short-circuit capability at its
+                  own point of installation.
                 </p>
               </div>
             </div>
@@ -506,16 +517,20 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-2">
-              Regs 536.1 (last paragraph) &amp; 536.5 — Back-up Protection
+              Regs 533.3, 536.1 &amp; 536.4.2.1 — Back-up Protection
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Where a protective device has a rated breaking capacity lower than the maximum
-              prospective fault current at its point of installation, Reg 533.2.2 requires
-              compliance with the last paragraph of Reg 536.1 and Reg 536.5. The operative
-              acceptance criterion is that the I&sup2;t let-through energy of the upstream device
-              must not exceed the withstand capability of the downstream device (and the cables it
-              protects). This is the regulatory basis for back-up protection arrangements — for
-              example an HRC BS 88 fuse upstream of standard 6kA MCBs.
+              Where the short-circuit breaking capacity of a device is lower than the maximum
+              prospective short-circuit or earth fault current expected at its point of
+              installation, Reg 533.3 requires compliance with the last paragraph of Reg 536.1 and
+              with Reg 536.5. Reg 536.4.2.1 (combined short-circuit protection of overcurrent
+              protective devices) sets the acceptance route: reference shall be made to the
+              instructions of the manufacturer of the downstream device, and where no manufacturer
+              information is available, combined short-circuit protection shall not be used and each
+              device must have the required short-circuit capability at its point of installation.
+              Reg 536.5 then requires that coordination documentation be added to the design
+              documentation at initial verification. This is the regulatory basis for back-up
+              protection arrangements — for example an HRC BS 88 fuse upstream of standard 6kA MCBs.
             </p>
           </div>
           <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
@@ -525,10 +540,13 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Regulation 643.7.3.201 (Part 6, Chapter 64) requires that the prospective
               short-circuit current and prospective earth fault current are measured, calculated, or
-              determined at the origin of the installation and at every other relevant point as part
-              of initial verification. This is the testing-stage duty. The design-stage obligation
-              to assess supply characteristics — including PFC — is covered by Part 3, Chapter 31,
-              which requires the assessment to be made before design begins and informs protective
+              determined by another method, at the origin and at other relevant points in the
+              installation. This is the testing-stage duty. The design-stage obligation sits in
+              Regulation 313.1, which requires the prospective short-circuit current at the origin
+              of the installation and the external earth fault loop impedance Ze to be determined by
+              calculation, measurement, enquiry or inspection, and in Regulation 434.1, which
+              requires the prospective fault current to be determined at every relevant point of the
+              installation by calculation, measurement or enquiry. Those figures inform protective
               device selection, consumer unit specification, and cable sizing.
             </p>
           </div>
@@ -540,10 +558,7 @@ const sections = [
               Chapter 43 sets out the general principles of protection against overcurrent,
               including short-circuit current. The protective device must disconnect the circuit
               before the short-circuit current causes damage to the cable insulation or connections.
-              The{' '}
-              <SEOInternalLink href="/how-to-size-cables">
-                adiabatic equation
-              </SEOInternalLink>{' '}
+              The <SEOInternalLink href="/how-to-size-cables">adiabatic equation</SEOInternalLink>{' '}
               (k&sup2;S&sup2; &ge; I&sup2;t) is the tool used to verify this requirement.
             </p>
           </div>
@@ -601,7 +616,7 @@ const relatedPages = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to BS 7671:2018 including Regulation 434.5 on prospective fault current.',
+      'Complete guide to BS 7671:2018+A4:2026 including Regulation 434.5 on prospective fault current.',
     icon: ShieldCheck,
     category: 'Guide' as const,
   },

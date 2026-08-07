@@ -553,7 +553,7 @@ export default function ElectricalToolInsurancePage2025Page() {
   return (
     <GuideTemplate
       title="Electrician Tool Insurance UK 2025 | Van & Tool Cover Guide"
-      description="Complete guide to electrician tool insurance in the UK for 2025. What's covered (tools in van, on site, at home), common exclusions (unattended vehicle…"
+      description="Complete guide to electrician tool insurance in the UK for 2025. What's covered (tools in van, on site, at home), common exclusions (unattended vehicle."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

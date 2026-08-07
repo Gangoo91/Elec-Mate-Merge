@@ -888,7 +888,7 @@ const FunctionalSkillsModule1Section2 = () => {
 
             <p>
               <strong className="text-white">Interpreting electrical symbols on drawings</strong>{' '}
-              &mdash; BS EN 60617 defines standard graphical symbols for electrical accessories. You
+              &mdash; IEC 60617 defines standard graphical symbols for electrical accessories. You
               should be able to identify symbols for single sockets, double sockets, switched fused
               spurs, light switches, ceiling roses, distribution boards and more. These symbols
               appear on the architect&apos;s electrical layout drawing and are used to create your

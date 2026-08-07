@@ -543,7 +543,7 @@ export default function InsulationResistanceMinValuesPage() {
   return (
     <GuideTemplate
       title="Insulation Resistance Minimum Values BS 7671 | Complete"
-      description="Complete reference for insulation resistance minimum values under BS 7671 Table 64. Test voltages by circuit type (250V, 500V, 1000V DC)…"
+      description="Complete reference for insulation resistance minimum values under BS 7671 Table 64. Test voltages by circuit type (250V, 500V, 1000V DC)."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

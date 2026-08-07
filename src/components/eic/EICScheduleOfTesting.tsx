@@ -2179,18 +2179,27 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     <div>
       {/* ELE-1475 — duplicate circuit numbers print on the certificate, so
           catch them before it is issued rather than after. */}
+      {/* Neutral surface, accent on one small element.
+          This was `bg-orange-500/10` with `text-orange-200` body copy. Orange
+          at 10% over a near-black ground does not read as orange — it reads
+          as mud, and the tinted body text goes dingy with it. The warning is
+          carried by a solid amber dot at full opacity, which stays clean, and
+          the surface keeps the app's own card recipe. */}
       {duplicateCircuitCount > 0 && (
-        <div className="-mx-4 mb-3 border-y border-orange-500/30 bg-orange-500/10 p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+        <div className="-mx-4 mb-3 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <div className="flex items-start gap-2.5">
+            <span aria-hidden className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+            <div className="min-w-0 flex-1">
           <p className="text-[15px] font-semibold text-white">
             {duplicateCircuitCount === 1
               ? '1 circuit shares its number with another'
               : `${duplicateCircuitCount} circuits share their number with another`}
           </p>
-          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             Circuit numbers must be unique on each board — this prints on the certificate.
           </p>
           {/* ELE-1484 — surfaced here because this is the moment they need it. */}
-          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—) in
             its way box — it then holds no number.
           </p>
@@ -2201,6 +2210,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           >
             Renumber circuits
           </button>
+            </div>
+          </div>
         </div>
       )}
 

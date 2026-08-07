@@ -2,12 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { ChevronLeft, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
-import { CIRCUIT_PRESETS, describePreset } from '@/constants/circuitPresets';
+import {
+  CIRCUIT_PRESETS,
+  PRESET_CATEGORIES,
+  describePreset,
+  type CircuitPreset,
+} from '@/constants/circuitPresets';
 
 interface SmartAutoFillPromptDialogProps {
   open: boolean;
@@ -33,7 +38,6 @@ interface SmartAutoFillPromptDialogProps {
 // Zs at all). Same button, three different circuits.
 const circuitTypes = CIRCUIT_PRESETS;
 
-const categories = ['Lighting', 'Sockets', 'Appliances', 'Modern', 'Commercial', 'Industrial'];
 
 /**
  * The summary is `describePreset` from the preset module, not a local copy.
@@ -60,45 +64,46 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [selectedCircuitType, setSelectedCircuitType] = useState<string>('');
+  const [query, setQuery] = useState('');
 
-  // Reset when the sheet closes
   useEffect(() => {
-    if (!open) {
-      setSelectedCategory('');
-      setSelectedCircuitType('');
-    }
+    if (!open) setQuery('');
   }, [open]);
 
-  const filteredCircuits = useMemo(() => {
-    if (!selectedCategory) return [];
-    return circuitTypes.filter((ct) => ct.category === selectedCategory);
-  }, [selectedCategory]);
+  /**
+   * Every preset on one screen, grouped, with a filter — not a drill-down.
+   *
+   * This used to be category -> preset -> confirm: three interactions to place
+   * a circuit whose details the electrician already knew when they opened the
+   * sheet. On a 23-way board that is roughly ninety taps before a single test
+   * reading is entered.
+   *
+   * Showing everything also answers a question the drill-down could not: "what
+   * can this thing actually do?" A category list hides the answer behind a tap,
+   * which is how five board tools stayed invisible for months.
+   */
+  const groups = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const matches = (c: CircuitPreset) =>
+      !q ||
+      c.type.toLowerCase().includes(q) ||
+      (c.keywords || []).some((k) => k.toLowerCase().includes(q)) ||
+      describePreset(c).toLowerCase().includes(q);
 
-  const selectedConfig = circuitTypes.find((ct) => ct.type === selectedCircuitType);
+    return PRESET_CATEGORIES.map((category) => ({
+      category,
+      options: circuitTypes.filter((c) => c.category === category && matches(c)),
+    })).filter((g) => g.options.length > 0);
+  }, [query]);
 
-  const handlePickCategory = (name: string) => {
-    haptic.selection();
-    setSelectedCategory(name);
-    setSelectedCircuitType('');
-  };
+  const resultCount = groups.reduce((n, g) => n + g.options.length, 0);
 
-  const handleBack = () => {
-    haptic.light();
-    setSelectedCategory('');
-    setSelectedCircuitType('');
-  };
-
-  const handlePickCircuit = (type: string) => {
-    haptic.selection();
-    setSelectedCircuitType(type);
-  };
-
-  const handleAddPreset = () => {
-    if (!selectedConfig) return;
+  /** One tap places the circuit. There is no separate confirm step: the card
+      already shows the device, cable and RCD it will apply, and everything it
+      writes stays editable in the row. */
+  const handlePickCircuit = (preset: CircuitPreset) => {
     haptic.success();
-    onUseAutoFill(selectedConfig.type, selectedConfig.suggestions);
+    onUseAutoFill(preset.type, preset.suggestions);
   };
 
   const handleAddBlank = () => {
@@ -109,39 +114,21 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   const body = (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="flex items-center gap-2 border-b border-white/[0.1] px-4 py-3">
-        {selectedCategory && (
-          <button
-            type="button"
-            onClick={handleBack}
-            aria-label="Back to categories"
-            className={cn(
-              'flex h-11 w-11 -ml-2 items-center justify-center rounded-xl text-white touch-manipulation active:scale-95',
-              noFocusRing
-            )}
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-        )}
+      <div className="flex items-start gap-2 border-b border-white/[0.1] px-4 py-3">
         <div className="min-w-0 flex-1">
           <h2 className="truncate text-[15px] font-semibold tracking-tight text-white">
-            {selectedCategory
-              ? `${selectedCategory} — Way ${circuitNumber}`
-              : `Add circuit — Way ${circuitNumber}`}
+            Add circuit — Way {circuitNumber}
           </h2>
-          {!selectedCategory && (
-            <p className="mt-0.5 text-xs text-white/80">
-              Start from a preset — device, rating and cable sizes prefilled. Everything stays
-              editable.
-            </p>
-          )}
+          <p className="mt-0.5 text-xs text-white">
+            One tap fills the device, rating, cable and RCD. Everything stays editable.
+          </p>
         </div>
         <button
           type="button"
           onClick={() => onOpenChange(false)}
           aria-label="Close"
           className={cn(
-            'flex h-11 w-11 -mr-2 items-center justify-center rounded-xl text-white touch-manipulation active:scale-95',
+            'flex h-11 w-11 -mr-2 shrink-0 items-center justify-center rounded-xl text-white touch-manipulation active:scale-95',
             noFocusRing
           )}
         >
@@ -149,89 +136,75 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
         </button>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4">
-        {!selectedCategory ? (
-          <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
-            {categories.map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => handlePickCategory(name)}
-                className={cn(
-                  'h-12 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-sm font-medium text-white transition-colors touch-manipulation active:scale-[0.98]',
-                  noFocusRing
-                )}
-              >
-                {name}
-              </button>
-            ))}
-          </div>
+      {/* Filter — typing narrows every group at once, so a known circuit is
+          reachable without hunting for which category it lives in. */}
+      <div className="border-b border-white/[0.1] px-4 py-2.5">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search — kitchen, ring, cooker, shower…"
+          aria-label="Search circuit presets"
+          className={cn(
+            'h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-[14px] font-medium text-white placeholder:text-white/40 caret-elec-yellow',
+            'focus:border-elec-yellow focus:outline-none touch-manipulation'
+          )}
+        />
+      </div>
+
+      {/* Gallery */}
+      <div className="flex-1 overflow-y-auto px-4 py-3">
+        {resultCount === 0 ? (
+          <p className="py-8 text-center text-sm font-medium text-white">
+            Nothing matches “{query.trim()}”. Add a blank way and type the circuit yourself.
+          </p>
         ) : (
-          <div className="space-y-2">
-            {filteredCircuits.map((circuit) => {
-              const isSelected = selectedCircuitType === circuit.type;
-              return (
-                <button
-                  key={circuit.type}
-                  type="button"
-                  onClick={() => handlePickCircuit(circuit.type)}
-                  className={cn(
-                    'w-full rounded-xl border p-3 text-left transition-colors touch-manipulation active:scale-[0.99]',
-                    noFocusRing,
-                    isSelected
-                      ? 'border-elec-yellow bg-elec-yellow'
-                      : 'border-white/[0.12] bg-white/[0.06]'
-                  )}
-                >
-                  <span
-                    className={cn(
-                      'block text-sm font-semibold',
-                      isSelected ? 'text-black' : 'text-white'
-                    )}
-                  >
-                    {circuit.type}
-                  </span>
-                  <span
-                    className={cn(
-                      'mt-0.5 block font-mono text-[11px] tabular-nums',
-                      isSelected ? 'text-black' : 'text-white/80'
-                    )}
-                  >
-                    {describePreset(circuit)}
-                  </span>
-                </button>
-              );
-            })}
+          <div className="space-y-5">
+            {groups.map((group) => (
+              <section key={group.category}>
+                <h3 className="mb-2 text-[11px] font-bold uppercase tracking-wider text-white">
+                  {group.category}
+                </h3>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.options.map((preset) => (
+                    <button
+                      key={preset.type}
+                      type="button"
+                      onClick={() => handlePickCircuit(preset)}
+                      className={cn(
+                        'rounded-xl border border-white/[0.12] bg-white/[0.06] p-3 text-left',
+                        'transition-colors duration-150 ease-out hover:border-elec-yellow/50 hover:bg-white/[0.1]',
+                        'touch-manipulation active:scale-[0.99]',
+                        noFocusRing
+                      )}
+                    >
+                      <span className="block text-sm font-semibold text-white">{preset.type}</span>
+                      {/* The spec, in the electrician's own shorthand. Shown on
+                          the card because a preset you cannot inspect is a
+                          preset you have to undo. */}
+                      <span className="mt-1 block font-mono text-[11px] leading-snug text-white/85">
+                        {describePreset(preset)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="flex gap-3 border-t border-white/[0.1] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+      {/* Footer — a blank way is the escape hatch for the circuits no list
+          will ever hold, and stays available whatever the filter shows. */}
+      <div className="border-t border-white/[0.1] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <button
           type="button"
           onClick={handleAddBlank}
           className={cn(
-            'h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white touch-manipulation active:scale-[0.98]',
+            'h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-semibold text-white touch-manipulation active:scale-[0.98]',
             noFocusRing
           )}
         >
           Add blank way
-        </button>
-        <button
-          type="button"
-          onClick={handleAddPreset}
-          disabled={!selectedConfig}
-          className={cn(
-            'h-12 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.98] disabled:active:scale-100',
-            noFocusRing,
-            selectedConfig
-              ? 'bg-elec-yellow text-black'
-              : 'border border-white/[0.12] bg-white/[0.06] text-white opacity-50'
-          )}
-        >
-          Add circuit
         </button>
       </div>
     </div>

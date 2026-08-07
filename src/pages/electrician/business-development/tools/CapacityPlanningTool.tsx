@@ -16,7 +16,6 @@ import {
   Calendar,
   Briefcase,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -24,6 +23,7 @@ import {
   CalculatorInput,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -34,6 +34,7 @@ import {
   JIB_WEEKLY_HOURS,
   STATUTORY_HOLIDAY_WEEKS,
 } from '@/utils/business-planning-maths';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 const DEFAULT_INPUTS: CapacityInputs = {
   totalElectricians: 1,
@@ -55,8 +56,14 @@ const CapacityPlanningTool = () => {
   const config = CALCULATOR_CONFIG['business'];
 
   const [inputs, setInputs] = useState<CapacityInputs>(DEFAULT_INPUTS);
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
 
@@ -65,7 +72,6 @@ const CapacityPlanningTool = () => {
       ...prev,
       [field]: parseFloat(value) || 0,
     }));
-    setCalculated(false);
   };
 
   const calculateCapacity = () => {
@@ -74,7 +80,6 @@ const CapacityPlanningTool = () => {
 
   const resetTool = () => {
     setInputs(DEFAULT_INPUTS);
-    setCalculated(false);
   };
 
   const loadExample = () => {
@@ -92,7 +97,6 @@ const CapacityPlanningTool = () => {
       plannedMaintenancePercentage: 35,
       growthTargetPercentage: 30,
     });
-    setCalculated(false);
   };
 
   const metrics = calculateCapacityMetrics(inputs);
@@ -145,44 +149,26 @@ const CapacityPlanningTool = () => {
         <title>Capacity Planning Tool for UK Electricians</title>
         <meta
           name="description"
-          content="Plan workforce capacity and analyze utilization to optimize productivity."
+          content="Plan workforce capacity and analyse utilisation to optimise productivity."
         />
         <link rel="canonical" href="/electrician/business-development/tools/capacity-planning" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Users className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Capacity Planning Tool
-              </h1>
-              <p className="text-sm text-white">Plan workforce capacity & utilisation</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Capacity Planning Tool"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
           title="Capacity Planning Tool"
-          description="Plan workforce capacity and analyze utilization to optimize productivity"
+          description="Plan workforce capacity and analyse utilisation to optimise productivity"
           badge="Business"
         >
           {/* Team Structure */}
-          <div className="flex items-center gap-2 mb-3">
-            <Users className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Team Structure</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Team Structure</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -229,10 +215,7 @@ const CapacityPlanningTool = () => {
           </div>
 
           {/* Time Allocation */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Time Allocation</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">Time Allocation</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -259,10 +242,7 @@ const CapacityPlanningTool = () => {
           </div>
 
           {/* Time Off */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Calendar className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Time Off (Days/Year)</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">Time Off (Days/Year)</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <CalculatorInput
@@ -297,10 +277,7 @@ const CapacityPlanningTool = () => {
           </div>
 
           {/* Work Profile */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Briefcase className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Work Profile</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">Work Profile</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -388,7 +365,7 @@ const CapacityPlanningTool = () => {
         {/* Results Section */}
         {calculated && isValid && (
           <div className="space-y-4 animate-fade-in">
-            {/* Utilization Status */}
+            {/* Utilisation Status */}
             <div className={cn('flex items-center gap-2 p-3 rounded-xl border', capacityStatus.bg)}>
               {metrics.billableRatio >= 65 && metrics.billableRatio < 85 ? (
                 <CheckCircle className={cn('h-5 w-5', capacityStatus.color)} />
@@ -412,25 +389,12 @@ const CapacityPlanningTool = () => {
             )}
 
             <CalculatorResult category="business">
-              <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white mb-1">Annual Billable Hours</p>
-                <div
-                  className="text-4xl font-bold"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {metrics.billableHours.toFixed(0)}
-                </div>
-                <p className="text-xs text-white mt-2">
-                  {metrics.workingDaysPerHead.toFixed(0)} working days per electrician after leave,
-                  sickness and training, at {inputs.workingHoursPerDay}h/day. Chargeable hours only
-                  &mdash; not hours sold.
-                </p>
-              </div>
+              <ResultHeadline
+                label="Billable hours you actually have"
+                value={`${metrics.billableHours.toFixed(0)}h`}
+                aside="a year"
+                caption={`${metrics.workingDaysPerHead.toFixed(0)} working days per electrician after leave, sickness and training, at ${inputs.workingHoursPerDay}h/day. Chargeable hours only — not hours sold.`}
+              />
 
               <ResultsGrid columns={2}>
                 <ResultValue
@@ -461,14 +425,9 @@ const CapacityPlanningTool = () => {
             </CalculatorResult>
 
             {/* Time Breakdown */}
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
               <div className="p-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <Clock className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-medium text-blue-300">
-                    Time Allocation Analysis
-                  </span>
-                </div>
+                <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Time Allocation Analysis</h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div className="space-y-2">
@@ -497,7 +456,7 @@ const CapacityPlanningTool = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-white">Maintenance:</span>
-                      <span className="text-blue-300">
+                      <span className="text-elec-yellow">
                         {metrics.maintenanceCapacity.toFixed(0)} hrs
                       </span>
                     </div>
@@ -515,7 +474,7 @@ const CapacityPlanningTool = () => {
             {/* Planning Insights */}
             <div className={cn('p-4 rounded-xl border', capacityStatus.bg)}>
               <div className="flex items-start gap-3">
-                <Lightbulb className="h-5 w-5 text-blue-400 mt-0.5" />
+                <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
                 <div>
                   <h4 className="text-white font-medium mb-2">Planning Insight</h4>
                   <p className="text-sm text-white">
@@ -533,11 +492,11 @@ const CapacityPlanningTool = () => {
 
             {/* What This Means */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       What This Means
                     </span>
                   </div>
@@ -550,27 +509,27 @@ const CapacityPlanningTool = () => {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
-                  <ul className="space-y-2 text-sm text-blue-200/80">
+                  <ul className="space-y-2 text-sm text-elec-yellow/80">
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Billable ratio:</strong> the share of paid
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Billable ratio:</strong> the share of paid
                       hours you can charge for. It is 100% less admin and travel - it does not
                       measure whether those hours were sold.
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">65-75% is normal</strong> for a field trade.
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">65-75% is normal</strong> for a field trade.
                       Above 85% usually means quoting or certification time is uncounted.
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Assumptions:</strong> 37.5-hour JIB week
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Assumptions:</strong> 37.5-hour JIB week
                       over 52 calendar weeks, less 5.6 weeks statutory holiday, sickness and
                       training. Overtime and on-call are not modelled.
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Staff for growth:</strong> the shortfall
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Staff for growth:</strong> the shortfall
                       divided by the billable hours one electrician delivers, rounded up.
                     </li>
                   </ul>
@@ -622,7 +581,7 @@ const CapacityPlanningTool = () => {
                   <p className="text-amber-300 font-medium">Efficiency</p>
                   <p className="text-amber-200/70">Monitor travel time</p>
                   <p className="text-amber-200/70">Reduce admin burden</p>
-                  <p className="text-amber-200/70">Optimize scheduling</p>
+                  <p className="text-amber-200/70">Optimise scheduling</p>
                 </div>
               </div>
             </CollapsibleContent>

@@ -677,7 +677,7 @@ export default function CISForElectriciansPage() {
   return (
     <GuideTemplate
       title="CIS for Electricians | Construction Industry Scheme Guide"
-      description="Complete guide to CIS for UK electricians. Covers registration, gross payment status, 20% and 30% deduction rates, monthly returns…"
+      description="Complete guide to CIS for UK electricians. Covers registration, gross payment status, 20% and 30% deduction rates, monthly returns."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

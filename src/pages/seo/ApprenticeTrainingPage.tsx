@@ -141,7 +141,7 @@ export default function ApprenticeTrainingPage() {
   useSEO({
     title: 'Electrical Apprentice Training Online | Level 2, 3 & AM2',
     description:
-      'Complete electrical apprentice training platform. Level 2 & 3 courses, AM2 preparation, EPA simulator with AI grading, portfolio tracking…',
+      'Complete electrical apprentice training platform. Level 2 & 3 courses, AM2 preparation, EPA simulator with AI grading, portfolio tracking.',
     schema: {
       '@type': 'Course',
       name: 'Electrical Apprentice Training Online',

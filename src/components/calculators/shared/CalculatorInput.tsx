@@ -45,8 +45,29 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
     const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className="space-y-1.5">
-        <Label htmlFor={inputId} className="text-sm font-medium text-white">
+      // These inputs sit in 2-up grids, and on a phone one label routinely
+      // wraps while its neighbour does not ("Sick Days (allowance)" beside
+      // "Training/CPD Days"), which left the two fields on different baselines
+      // and made the row look broken.
+      //
+      // The label reserves two lines BELOW lg, so the field starts at the same
+      // height whether the label wraps or not. Above lg the columns are wide
+      // enough that labels do not wrap, and the reserved line is just ~20px of
+      // dead space above every field — so it is dropped there. `items-end` keeps the text against the
+      // field: with `items-start` a single-line label left ~40px of dead space
+      // between itself and its input, which looked worse than the problem it
+      // fixed. The slack now falls above the label, where it reads as spacing. Anchoring the field to the bottom
+      // instead (`mt-auto`) does not work: the hint sits BELOW the field, so a
+      // longer hint simply pushes the field back up and the misalignment moves
+      // rather than goes away. Hints are free to differ in length below.
+      //
+      // `gap`, not `space-y`: `space-y-*` compiles to `& > * ~ *` (specificity
+      // 0,2,0) and quietly outranks single-class utilities on the children.
+      <div className="flex h-full flex-col gap-1.5">
+        <Label
+          htmlFor={inputId}
+          className="flex min-h-[2.5rem] items-end text-sm lg:min-h-0 font-medium leading-5 text-white"
+        >
           {label}
         </Label>
         <div className="relative">
@@ -109,18 +130,19 @@ export const CalculatorSelect = ({
   const selectId = label.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <div className="space-y-1.5">
-      <Label htmlFor={selectId} className="text-sm font-medium text-white">
+    // Same two-line label reservation as CalculatorInput, so a select sitting
+    // beside a text field in a 2-up row shares its baseline.
+    <div className="flex h-full flex-col gap-1.5">
+      <Label
+        htmlFor={selectId}
+        className="flex min-h-[2.5rem] items-end text-sm lg:min-h-0 font-medium leading-5 text-white"
+      >
         {label}
       </Label>
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger
           id={selectId}
-          className={cn(
-            FIELD,
-            error && 'border-b-red-500/60',
-            className
-          )}
+          className={cn(FIELD, error && 'border-b-red-500/60', className)}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -201,8 +223,11 @@ export const CalculatorNumberInput = ({
   };
 
   return (
-    <div className="space-y-1.5">
-      <Label htmlFor={inputId} className="text-sm font-medium text-white">
+    <div className="flex h-full flex-col gap-1.5">
+      <Label
+        htmlFor={inputId}
+        className="flex min-h-[2.5rem] items-end text-sm lg:min-h-0 font-medium leading-5 text-white"
+      >
         {label}
       </Label>
       <div className="relative">

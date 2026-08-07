@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What should an O&M manual contain?',
     answer:
-      'An Operation and Maintenance manual for an electrical installation should contain: a description of the installation and its main components, circuit schedules and distribution board layouts, operating instructions for each system (lighting controls, emergency lighting, fire alarm, EV charger, solar PV), routine maintenance requirements and frequencies (for example, monthly emergency lighting function tests, annual RCD tests), emergency procedures (what to do in a power failure, how to isolate circuits, fire alarm operation), contact details for the installing contractor, product data sheets for all major components (consumer units, RCDs, AFDDs, SPDs, light fittings, EV chargers), warranty information and registration details, and test certificates and commissioning records. The manual should be written in plain language that a non-technical building user can understand.',
+      'An Operation and Maintenance manual for an electrical installation should contain: a description of the installation and its main components, circuit schedules and distribution board layouts, operating instructions for each system (lighting controls, emergency lighting, fire alarm, EV charger, solar PV), routine maintenance requirements and frequencies (for example, monthly emergency lighting function tests, six-monthly RCD test-button checks per the Reg 514.12.2 notice), emergency procedures (what to do in a power failure, how to isolate circuits, fire alarm operation), contact details for the installing contractor, product data sheets for all major components (consumer units, RCDs, AFDDs, SPDs, light fittings, EV chargers), warranty information and registration details, and test certificates and commissioning records. The manual should be written in plain language that a non-technical building user can understand.',
   },
   {
     question: 'Do I need as-built drawings for domestic work?',
@@ -222,25 +222,29 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-2">
-            What changed in the 18th Edition A4 amendment
+            Two current requirements that shape the schedule of inspections
           </h4>
           <p className="text-white text-sm leading-relaxed mb-2">
-            BS 7671:2018+A4:2026 introduced two requirements that directly affect the schedule of
+            BS 7671:2018+A4:2026 contains two requirements that directly affect the schedule of
             inspections you issue at handover:
           </p>
           <ul className="text-white text-sm space-y-2 list-disc list-inside">
             <li>
-              <strong>Reg 411.3.4 -- RCD protection for domestic lighting circuits:</strong> AC
-              final circuits supplying luminaires in domestic (household) premises shall now be
-              provided with additional protection by an RCD with a rated residual operating current
-              not exceeding 30 mA. The schedule of inspections must confirm this protection is
+              <strong>Reg 411.3.4 -- RCD protection for domestic lighting circuits:</strong> within
+              domestic (household) premises, additional protection by an RCD with a rated residual
+              operating current not exceeding 30 mA shall be provided for AC final circuits
+              supplying luminaires. The schedule of inspections must confirm this protection is
               present for every domestic lighting circuit.
             </li>
             <li>
-              <strong>Reg 421.1.7 -- AFDD recommendation:</strong> The installation of arc fault
-              detection devices (AFDDs) is recommended for AC final circuits of a fixed installation
-              to mitigate the risk of fire from arc fault currents. The updated model EIC form
-              includes a field to record AFDD presence; complete this for every installation.
+              <strong>Reg 421.1.7 -- AFDDs:</strong> arc fault detection devices conforming to BS EN
+              62606 <em>shall</em> be provided for single-phase AC final circuits supplying
+              socket-outlets rated at not more than 32 A in high rise residential buildings, houses
+              in multiple occupation, purpose-built student accommodation, and care homes. For all
+              other premises, AFDDs are <em>recommended</em> for single-phase AC final circuits
+              supplying socket-outlets not exceeding 32 A. Where used, the AFDD must be placed at
+              the origin of the circuit it protects, and the model forms in Appendix 6 include
+              fields to record AFDD details.
             </li>
           </ul>
         </div>
@@ -293,16 +297,20 @@ const sections = [
               <span>
                 <strong>RCD operation</strong> -- trip time measured at rated residual operating
                 current (IΔn, typically 30 mA) for every RCD and RCBO. Under BS 7671:2018+A4:2026
-                Reg 643.3, verification uses a single AC test at IΔn (100% rated current); the
-                previous Table 3A multi-step sequence has been deleted. Record the measured trip
-                time against the device manufacturer&apos;s declared operating time.
+                Reg 643.8, verification of RCDs used for additional protection uses a single
+                alternating current test at IΔn (100% rated current) regardless of RCD Type; the
+                Table 3A time/current performance criteria previously in Appendix 3 have been
+                deleted. Effectiveness is deemed verified where a general non-delay type RCD
+                disconnects within 300 ms at IΔn.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prospective fault current (PSCC)</strong> -- measured at the origin of the
-                installation. Both line-to-neutral and line-to-earth values should be recorded.
+                <strong>Prospective fault current</strong> -- Reg 643.7.3.201 requires the
+                prospective short-circuit current and the prospective earth fault current to be
+                measured, calculated or determined by another method, at the origin and at other
+                relevant points in the installation.
               </span>
             </li>
           </ul>
@@ -317,7 +325,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong>Zs temperature correction (GN3 Appendix A3):</strong> Measured earth fault loop
+            <strong>Zs temperature correction (GN3 Appendix A):</strong> Measured earth fault loop
             impedance values are taken at ambient temperature, which is typically lower than the
             conductor&apos;s operating temperature. Before certifying compliance, measured Zs must
             be compared against the maximum permissible values in GN3 Appendix A after applying the
@@ -328,11 +336,13 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong>A4:2026 update -- AFDD and SPD recording:</strong> The updated BS
-            7671:2018+A4:2026 model EIC form (Appendix 6) includes columns to record whether arc
-            fault detection devices (AFDDs, Reg 421.1.7) and surge protective devices (SPDs) are
-            present in the installation. Ensure the EIC schedule of inspections captures AFDD and
-            SPD details for all installations completed under the A4 amendment. See also the{' '}
+            <strong>AFDD and SPD recording:</strong> The model forms in Appendix 6 of BS
+            7671:2018+A4:2026 include fields for recording the details of arc fault detection
+            devices (AFDDs, Reg 421.1.7) and surge protective devices (SPDs). The schedule of
+            inspections carries the corresponding items -- confirmation of indication that the
+            AFDD(s) are operational (Regs 421.1.7, 532.6 and 651.2(e)) and confirmation of
+            indication that the SPD is functional (Reg 651.4). Complete both on every installation
+            where those devices are fitted. See also the{' '}
             <SEOInternalLink href="/guides/consumer-unit-change">
               consumer unit change guide
             </SEOInternalLink>
@@ -381,7 +391,8 @@ const sections = [
                 <SEOInternalLink href="/emergency-lighting-certificate">
                   emergency lighting
                 </SEOInternalLink>{' '}
-                function tests, quarterly RCD tests, keeping ventilation clear around distribution
+                function tests, six-monthly RCD test-button checks -- the interval stated in the
+                Reg 514.12.2 instruction notice -- keeping ventilation clear around distribution
                 boards) and what requires a qualified electrician.
               </span>
             </li>
@@ -724,10 +735,10 @@ const sections = [
 export default function ElectricalHandoverDocumentationPage() {
   return (
     <GuideTemplate
-      title="Electrical Handover Documentation | What to Provide"
-      description="Complete guide to electrical handover documentation. EIC, test results, O&M manual, as-built drawings, cable schedules, warranty info…"
+      title="Electrical Handover Documents: EIC, Tests, O&M"
+      description="Hand over: EIC or Minor Works certificate, schedule of test results, schedule of inspections, circuit chart, Building Regs certificate and O&M manual."
       datePublished="2026-01-18"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

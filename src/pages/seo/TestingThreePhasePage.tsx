@@ -18,9 +18,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Testing a Three Phase Installation | Procedure Guide';
+const PAGE_TITLE = '3 Phase Testing Sequence: 400V L-L, 230V L-N';
 const PAGE_DESCRIPTION =
-  'Testing three-phase electrical installations: phase rotation, voltage, PFC on all phases, loop impedance, RCDs, N-E voltage. BS 7671 procedure.';
+  'Full 3 phase testing procedure: rotation L1-L2-L3, 400V line-to-line, 230V line-to-neutral, N-E under 5V, then Zs and PFC measured on each phase.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Can I test RCDs on a three-phase system the same way as single-phase?',
     answer:
-      'Under BS 7671:2018+A4:2026 (Reg 643.8), Appendix 3 Table 3A has been deleted. The pre-A4:2026 three-multiplier protocol (1× / 2× / 5× IΔn) no longer applies. Verification now requires a single alternating-current test at the rated residual operating current (IΔn): non-Type S devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system, for a four-pole RCD routinely test on at least L1; repeat on L2 and L3 if results are inconsistent or device authenticity is in doubt. If each phase has its own RCBO, test each device individually. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
+      'Under BS 7671:2018+A4:2026, Table 3A of Appendix 3 has been deleted, and RCD verification is now dealt with by Regs 643.7.1 (fault protection) and 643.8 (additional protection). The pre-A4:2026 multi-step protocol (½× IΔn no-trip check, then 1× and 5× IΔn) no longer applies. Verification now requires a single alternating-current test at the rated residual operating current (IΔn), regardless of RCD Type: non-Type S devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system, for a four-pole RCD routinely test on at least L1; repeat on L2 and L3 if results are inconsistent or device authenticity is in doubt. If each phase has its own RCBO, test each device individually. For three-phase RCDs with a common neutral, ensure the neutral is properly connected before testing — a disconnected neutral can prevent the RCD from detecting faults correctly.',
   },
   {
     question: 'What should the line-to-line and line-to-neutral voltages be?',
@@ -271,9 +271,12 @@ const sections = [
         <p>
           Polarity is a separate required dead test — distinct from phase rotation. Polarity
           confirms each conductor is correctly connected to its intended terminal at every accessory
-          and outlet. Per Reg 442.1.2, both polarity results (single-phase circuits) and phase
-          rotation (three-phase installations) must be recorded on the Generic Schedule of Test
-          Results (Appendix 6) before the installation is energised.
+          and outlet. Polarity is verified under Reg 643.6 — one of the tests that Reg 643.1
+          requires to be carried out in order (643.2 to 643.6) before the installation is energised.
+          Phase sequence is a separate check under Reg 643.9, which requires the sequence to be
+          maintained at all relevant points throughout a polyphase installation. Both results are
+          recorded on the schedules of test results, which Reg 644.3 requires to be based on the
+          model forms in Appendix 6.
         </p>
       </>
     ),
@@ -296,13 +299,17 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong className="text-blue-300">A4:2026 note (Reg 643.3):</strong> Where equipment
-            cannot safely be disconnected — for example, interlocked VSD panels or equipment whose
-            disconnection would affect other circuits — connect the equipment and perform the
-            insulation resistance test at 250 V DC instead of 500 V DC. This lower test voltage
-            avoids damaging sensitive electronics whilst still verifying insulation integrity. This
-            is the most practically significant A4:2026 change for three-phase industrial
-            installations.
+            <strong className="text-blue-300">A4:2026 note (Reg 643.3.3):</strong> Where connected
+            equipment is likely to influence the measurement or result of the test, or be damaged —
+            VSD panels, control electronics and the like — the test shall be applied{' '}
+            <em>prior to</em> the connection of that equipment, in accordance with Table 64 (500 V
+            DC, 1.0 MΩ minimum for a 400 V installation). Following connection of the equipment, a
+            further test at 250 V DC shall then be applied between live conductors and the
+            protective conductor connected to the earthing arrangement, and the insulation
+            resistance shall be at least 1 MΩ. The 250 V DC test is an additional post-connection
+            check, not a substitute for the 500 V DC test. Note that manufacturers&apos;
+            instructions may still recommend disconnecting some equipment even for the 250 V DC
+            test, as it can influence the result.
           </p>
         </div>
         <p>
@@ -349,14 +356,20 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4">
           <p className="text-white text-sm leading-relaxed">
-            <strong className="text-yellow-400">Temperature correction (GN3 Reg 1.08):</strong>{' '}
-            R1+R2 is measured at ambient (cold) temperature, but Tables 41.2–41.4 assume conductors
-            at operating temperature. Before comparing against the permitted Zs, apply the GN3
-            correction factor: multiply the measured R1+R2 by{' '}
-            <span className="font-mono">(1 + 0.004 × (T − 20))</span> where T is the conductor
-            operating temperature in °C. On a cold installation this factor is significant — for 70
-            °C PVC cable the multiplier is 1.20, meaning a site-measured result that appears to pass
-            may actually fail at operating temperature if the correction is omitted.
+            <strong className="text-yellow-400">Temperature correction (GN3 Appendix A):</strong> You
+            measure Zs on a cold installation, but the maximum Zs values in BS 7671 Tables 41.2–41.4
+            are design figures based on the line conductor at its maximum permitted operating
+            temperature. The two are not directly comparable. GN3 publishes maximum{' '}
+            <em>measured</em> earth fault loop impedance values at ambient temperature (Tables A1 to
+            A6, referenced to 10 °C); where the ambient is other than 10 °C, apply the Table A8
+            correction factor{' '}
+            <span className="font-mono">
+              {'{1 + 0.004 (ambient − 20)} / {1 + 0.004 (10 − 20)}'}
+            </span>
+            , 0.004 per °C being the simplified resistance coefficient at 20 °C from BS EN 60228 for
+            both copper and aluminium. Where a rule of thumb is used instead, GN3 applies a factor of
+            0.8 to the tabulated BS 7671 value. Skip the correction and a site result that looks like
+            a pass may not be one.
           </p>
         </div>
       </>
@@ -369,9 +382,10 @@ const sections = [
       <>
         <p>
           Prospective fault current (PFC) — comprising both prospective short-circuit current (PSCC)
-          and prospective earth fault current (PEFC) — must be measured or calculated at the origin
-          of the installation. On a three-phase system, PFC should be checked on each phase because
-          the fault current available may differ between phases.
+          and prospective earth fault current (PEFC) — must be measured, calculated or determined by
+          another method at the origin and at other relevant points in the installation (Reg
+          643.7.3.201). On a three-phase system, PFC should be checked on each phase because the
+          fault current available may differ between phases.
         </p>
         <p>
           The highest PFC across all phases and all fault types (line-neutral, line-earth, and
@@ -401,12 +415,13 @@ const sections = [
       <>
         <p>
           RCD testing on three-phase systems follows the same principles as single-phase. Under BS
-          7671:2018+A4:2026 (Reg 643.8), Appendix 3 Table 3A has been deleted; verification now
-          requires a single alternating-current test at the rated residual operating current (IΔn) —
-          the pre-A4:2026 three-multiplier protocol (1× / 2× / 5× In) no longer applies. Non-Type S
-          devices must operate in less than 300 ms; Type S devices between 130 ms and 500 ms (OSG
-          Reg 11.3). On a three-phase system you must also consider which type of RCD is protecting
-          the circuit and test accordingly.
+          7671:2018+A4:2026, Table 3A of Appendix 3 has been deleted, and RCD verification is dealt
+          with by Regs 643.7.1 (fault protection) and 643.8 (additional protection); verification
+          now requires a single alternating-current test at the rated residual operating current
+          (IΔn), regardless of RCD Type — the pre-A4:2026 multi-step protocol (½× IΔn no-trip check,
+          then 1× and 5× IΔn) no longer applies. Non-Type S devices must operate in less than 300
+          ms; Type S devices between 130 ms and 500 ms (OSG Reg 11.3). On a three-phase system you
+          must also consider which type of RCD is protecting the circuit and test accordingly.
         </p>
         <div className="space-y-4 mt-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -442,10 +457,13 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Type B RCDs for VSD/inverter circuits</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Circuits feeding variable speed drives (VSDs) and inverters may produce DC
-                  components in the residual current. Standard Type A RCDs may not detect these
-                  correctly. BS 7671 requires Type B RCDs for circuits where DC fault currents may
-                  occur. Test Type B RCDs using a suitable instrument that can test DC residual
-                  current sensitivity.
+                  components in the residual current. Reg 531.3.3 permits a Type AC RCD only where
+                  it is known that the load current contains no DC components, so Type A, F or B
+                  must be selected as appropriate. A Type B is the type that responds to residual{' '}
+                  <em>smooth</em> direct currents, whether suddenly applied or slowly increased and
+                  independent of polarity (Reg 534.4.7), so it is the one to use where a static
+                  converter can produce smooth DC residual current. Test Type B RCDs using a
+                  suitable instrument that can test DC residual current sensitivity.
                 </p>
               </div>
             </div>

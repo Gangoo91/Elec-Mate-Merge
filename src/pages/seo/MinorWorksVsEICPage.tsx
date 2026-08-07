@@ -620,8 +620,8 @@ const sections = [
 export default function MinorWorksVsEICPage() {
   return (
     <GuideTemplate
-      title="Minor Works vs EIC | Which Certificate Do I Need?"
-      description="When to use a Minor Works certificate and when a full EIC is required. Practical examples, Part P requirements, common mistakes, and edge cases."
+      title="Minor Works or EIC? New Circuit Needs a Full EIC"
+      description="New circuit or consumer unit replacement? Full EIC. Adding a socket or spur to an existing circuit? Minor Works certificate. Examples, Part P, grey areas."
       datePublished="2025-05-08"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

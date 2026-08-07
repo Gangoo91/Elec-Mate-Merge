@@ -20,7 +20,7 @@ const tocItems = [
 const sections = [
   {
     id: 'the-symbol',
-    heading: 'Switched Fused Spur — BS EN 60617 Symbol',
+    heading: 'Switched Fused Spur — IEC 60617 Symbol',
     content: (
       <>
         <SymbolGallery
@@ -63,7 +63,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Drop this symbol into a circuit drawing"
-          description="The Elec-Mate Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
+          description="The Elec-Mate Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -96,7 +96,7 @@ const relatedPages = [
   },
   {
     href: '/guides/electrical-symbols-chart',
-    title: 'BS EN 60617 Master Symbol Library',
+    title: 'IEC 60617 Master Symbol Library',
     description: 'All 114 UK electrical symbols across 11 categories — the master reference.',
     icon: 'BookOpen',
     category: 'Reference',
@@ -104,7 +104,7 @@ const relatedPages = [
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'FileCheck2',
     category: 'Guide',
   },
@@ -121,7 +121,7 @@ export default function SwitchedFusedSpurSymbolPage() {
   return (
     <GuideTemplate
       title="Switched Fused Spur Symbol | FCU Reference"
-      description="Switched Fused Spur BS EN 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
+      description="Switched Fused Spur IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -130,15 +130,15 @@ export default function SwitchedFusedSpurSymbolPage() {
       badgeIcon={PenTool}
       heroTitle={
         <>
-          Switched Fused Spur Symbol <span className="text-yellow-400">BS EN 60617 reference</span>
+          Switched Fused Spur Symbol <span className="text-yellow-400">IEC 60617 reference</span>
         </>
       }
-      heroSubtitle="Switched fused connection unit FCU electrical symbol BS EN 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
+      heroSubtitle="Switched fused connection unit FCU electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
         'A Fused Connection Unit with a front-panel switch + neon indicator. Allows local isolation of the fixed appliance without resorting to the consumer unit. Most common FCU type.',
         'Towel rails, immersion heaters, garden lighting, alarms, garage door operators.',
-        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to BS EN 60617.',
+        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
       sections={sections}
       faqs={[
@@ -155,7 +155,7 @@ export default function SwitchedFusedSpurSymbolPage() {
       faqHeading="FAQ — Switched Fused Spur Symbol"
       relatedPages={relatedPages}
       ctaHeading="Use this symbol in real drawings"
-      ctaSubheading="Drag and drop BS EN 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
+      ctaSubheading="Drag and drop IEC 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
     />
   );
 }

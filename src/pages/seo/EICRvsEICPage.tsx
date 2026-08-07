@@ -518,7 +518,7 @@ const sections = [
 export default function EICRvsEICPage() {
   return (
     <GuideTemplate
-      title="EICR vs EIC | What Is the Difference? | Elec-Mate"
+      title="EICR vs EIC | What Is the Difference?"
       description="Clear comparison of EICR vs EIC certificates. When each is required, who signs them, what sections differ, and common confusion points."
       datePublished="2025-03-10"
       dateModified="2026-05-18"

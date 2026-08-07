@@ -19,6 +19,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { maximumDemandContent } from './content/maximum-demand';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -276,497 +277,520 @@ const MaximumDemandCalculator = () => {
       title="Maximum Demand Calculator"
       description="Calculate maximum demand with IET On-Site Guide diversity allowances"
     >
-      {/* Configuration — stacked on mobile, row on desktop */}
-      <CalculatorSelect
-        label="Installation Type"
-        value={location}
-        onChange={(v) => setLocation(v as 'domestic' | 'commercial' | 'industrial')}
-        options={locationOptions}
-      />
-      <div className="grid grid-cols-2 gap-3">
-        <CalculatorSelect
-          label="Supply Type"
-          value={supplyType}
-          onChange={handleSupplyTypeChange}
-          options={supplyTypeOptions}
-        />
-        <CalculatorSelect
-          label="Voltage"
-          value={supplyVoltage}
-          onChange={setSupplyVoltage}
-          options={voltageOptions}
-        />
-      </div>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Configuration — stacked on mobile, row on desktop */}
+            <CalculatorSelect
+              label="Installation Type"
+              value={location}
+              onChange={(v) => setLocation(v as 'domestic' | 'commercial' | 'industrial')}
+              options={locationOptions}
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <CalculatorSelect
+                label="Supply Type"
+                value={supplyType}
+                onChange={handleSupplyTypeChange}
+                options={supplyTypeOptions}
+              />
+              <CalculatorSelect
+                label="Voltage"
+                value={supplyVoltage}
+                onChange={setSupplyVoltage}
+                options={voltageOptions}
+              />
+            </div>
 
-      <CalculatorDivider category="power" />
+            <CalculatorDivider category="power" />
 
-      {/* Loads header + add button */}
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-white flex items-center gap-2">
-          <Zap className="h-4 w-4 text-amber-400" />
-          Loads
-          <span
-            className="text-xs font-medium px-2 py-0.5 rounded-full"
-            style={{ background: `${config.gradientFrom}20`, color: config.gradientFrom }}
-          >
-            {loads.length}
-          </span>
-        </h3>
-        <CalculatorSelect
-          label=""
-          value=""
-          onChange={(v) => {
-            if (v) addLoad(v);
-          }}
-          options={LOAD_TYPE_OPTIONS}
-          placeholder="+ Add load..."
-          className="w-40"
-        />
-      </div>
-
-      {/* Load rows — flat, no nested boxes */}
-      <div className="space-y-2">
-        {loads.map((load) => (
-          <div
-            key={load.id}
-            className={cn(
-              'rounded-xl transition-colors',
-              errors[load.id] ? 'border border-red-500/50 bg-red-500/5 p-3' : ''
-            )}
-          >
-            {/* Main row: type label + power input + delete */}
-            <div className="flex items-end gap-2">
-              <div className="flex-1 min-w-0">
-                <CalculatorSelect
-                  label="Load Type"
-                  value={load.loadType}
-                  onChange={(value) => updateLoad(load.id, 'loadType', value)}
-                  options={LOAD_TYPE_OPTIONS}
-                />
-              </div>
-              <div className="w-28 shrink-0">
-                <CalculatorInput
-                  label="Power"
-                  unit="kW"
-                  type="text"
-                  inputMode="decimal"
-                  value={load.power}
-                  onChange={(value) => updateLoad(load.id, 'power', value)}
-                  placeholder="kW"
-                  error={errors[load.id]}
-                />
-              </div>
-              {loads.length > 1 && (
-                <button
-                  onClick={() => removeLoad(load.id)}
-                  className="h-12 w-10 shrink-0 flex items-center justify-center rounded-xl hover:bg-red-500/10 text-white hover:text-red-400 transition-colors touch-manipulation"
-                  aria-label="Remove load"
+            {/* Loads header + add button */}
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-white flex items-center gap-2">
+                <Zap className="h-4 w-4 text-amber-400" />
+                Loads
+                <span
+                  className="text-xs font-medium px-2 py-0.5 rounded-full"
+                  style={{ background: `${config.gradientFrom}20`, color: config.gradientFrom }}
                 >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Conditional extra options — inline, no extra card */}
-            {load.loadType === 'cooking' && (
-              <label className="flex items-center gap-3 mt-2 pl-1 touch-manipulation cursor-pointer min-h-[44px]">
-                <Checkbox
-                  checked={load.hasCookerSocket}
-                  onCheckedChange={(checked) => updateLoad(load.id, 'hasCookerSocket', !!checked)}
-                  className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
-                />
-                <span className="text-sm text-white">Cooker unit has socket outlet? (+5A)</span>
-              </label>
-            )}
-            {load.loadType === 'space-heating' && (
-              <label className="flex items-center gap-3 mt-2 pl-1 touch-manipulation cursor-pointer min-h-[44px]">
-                <Checkbox
-                  checked={load.thermostaticallyControlled}
-                  onCheckedChange={(checked) =>
-                    updateLoad(load.id, 'thermostaticallyControlled', !!checked)
-                  }
-                  className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
-                />
-                <span className="text-sm text-white">Thermostatically controlled?</span>
-              </label>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Quick add buttons for common loads */}
-      <div className="flex flex-wrap gap-2">
-        {['shower', 'ev-charging', 'cooking', 'immersion'].map((type) => {
-          const option = LOAD_TYPE_OPTIONS.find((o) => o.value === type);
-          return (
-            <button
-              key={type}
-              onClick={() => addLoad(type)}
-              className="h-9 px-3 text-xs font-medium rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation flex items-center gap-1.5"
-            >
-              <Plus className="h-3 w-3" />
-              {option?.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Calculate */}
-      <CalculatorActions
-        category="power"
-        onCalculate={validateAndCalculate}
-        onReset={reset}
-        isDisabled={!loadsWithPower.length}
-      />
-
-      {/* Results */}
-      {result && (
-        <>
-          <CalculatorDivider category="power" />
-
-          <div className="space-y-4 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-              <CheckCircle2 className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-semibold text-green-300">
-                Maximum Demand Calculated
-              </span>
-            </div>
-
-            {/* Hero */}
-            <div className="rounded-xl p-4 bg-white/[0.04]">
-              <p className="text-sm text-white mb-1">Maximum Demand</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  {loads.length}
+                </span>
+              </h3>
+              <CalculatorSelect
+                label=""
+                value=""
+                onChange={(v) => {
+                  if (v) addLoad(v);
                 }}
-              >
-                {result.diversifiedLoad.toFixed(2)} kW
-              </div>
-              <p className="text-sm text-white mt-1">
-                {result.diversifiedCurrent.toFixed(1)}A at {supplyVoltage}V{' '}
-                {supplyType === 'three-phase' ? '3-phase' : '1-phase'}
-              </p>
+                options={LOAD_TYPE_OPTIONS}
+                placeholder="+ Add load..."
+                className="w-40"
+              />
             </div>
 
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Connected Load"
-                value={result.totalInstalledLoad.toFixed(2)}
-                unit="kW"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Load Reduction"
-                value={(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)}
-                unit="kW"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Diversified Current"
-                value={result.diversifiedCurrent.toFixed(1)}
-                unit="A"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Overall Diversity"
-                value={(result.overallDiversityFactor * 100).toFixed(0)}
-                unit="%"
-                category="power"
-                size="sm"
-              />
-            </ResultsGrid>
-
-            {/* Load schedule table */}
-            {result.breakdownByType.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-white">Load Schedule</p>
-                <div className="rounded-xl overflow-hidden border border-white/10">
-                  <div className="grid grid-cols-4 gap-px bg-white/5 text-xs font-medium text-white p-2">
-                    <span>Type</span>
-                    <span className="text-right">Installed</span>
-                    <span className="text-right">Diversified</span>
-                    <span className="text-right">% of MD</span>
-                  </div>
-                  {result.breakdownByType.map((b, i) => {
-                    const pctOfTotal =
-                      result.diversifiedLoad > 0
-                        ? (b.diversifiedLoad / result.diversifiedLoad) * 100
-                        : 0;
-                    return (
-                      <div
-                        key={i}
-                        className="grid grid-cols-4 gap-px text-xs text-white p-2 border-t border-white/5"
+            {/* Load rows — flat, no nested boxes */}
+            <div className="space-y-2">
+              {loads.map((load) => (
+                <div
+                  key={load.id}
+                  className={cn(
+                    'rounded-xl transition-colors',
+                    errors[load.id] ? 'border border-red-500/50 bg-red-500/5 p-3' : ''
+                  )}
+                >
+                  {/* Main row: type label + power input + delete */}
+                  <div className="flex items-end gap-2">
+                    <div className="flex-1 min-w-0">
+                      <CalculatorSelect
+                        label="Load Type"
+                        value={load.loadType}
+                        onChange={(value) => updateLoad(load.id, 'loadType', value)}
+                        options={LOAD_TYPE_OPTIONS}
+                      />
+                    </div>
+                    <div className="w-28 shrink-0">
+                      <CalculatorInput
+                        label="Power"
+                        unit="kW"
+                        type="text"
+                        inputMode="decimal"
+                        value={load.power}
+                        onChange={(value) => updateLoad(load.id, 'power', value)}
+                        placeholder="kW"
+                        error={errors[load.id]}
+                      />
+                    </div>
+                    {loads.length > 1 && (
+                      <button
+                        onClick={() => removeLoad(load.id)}
+                        className="h-12 w-10 shrink-0 flex items-center justify-center rounded-xl hover:bg-red-500/10 text-white hover:text-red-400 transition-colors touch-manipulation"
+                        aria-label="Remove load"
                       >
-                        <span className="text-white font-medium truncate">{b.displayName}</span>
-                        <span className="text-right">{b.installedLoad.toFixed(1)} kW</span>
-                        <span className="text-right font-medium">
-                          {b.diversifiedLoad.toFixed(1)} kW
-                        </span>
-                        <span className="text-right">{pctOfTotal.toFixed(0)}%</span>
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Conditional extra options — inline, no extra card */}
+                  {load.loadType === 'cooking' && (
+                    <label className="flex items-center gap-3 mt-2 pl-1 touch-manipulation cursor-pointer min-h-[44px]">
+                      <Checkbox
+                        checked={load.hasCookerSocket}
+                        onCheckedChange={(checked) =>
+                          updateLoad(load.id, 'hasCookerSocket', !!checked)
+                        }
+                        className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+                      />
+                      <span className="text-sm text-white">
+                        Cooker unit has socket outlet? (+5A)
+                      </span>
+                    </label>
+                  )}
+                  {load.loadType === 'space-heating' && (
+                    <label className="flex items-center gap-3 mt-2 pl-1 touch-manipulation cursor-pointer min-h-[44px]">
+                      <Checkbox
+                        checked={load.thermostaticallyControlled}
+                        onCheckedChange={(checked) =>
+                          updateLoad(load.id, 'thermostaticallyControlled', !!checked)
+                        }
+                        className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+                      />
+                      <span className="text-sm text-white">Thermostatically controlled?</span>
+                    </label>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Quick add buttons for common loads */}
+            <div className="flex flex-wrap gap-2">
+              {['shower', 'ev-charging', 'cooking', 'immersion'].map((type) => {
+                const option = LOAD_TYPE_OPTIONS.find((o) => o.value === type);
+                return (
+                  <button
+                    key={type}
+                    onClick={() => addLoad(type)}
+                    className="h-9 px-3 text-xs font-medium rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation flex items-center gap-1.5"
+                  >
+                    <Plus className="h-3 w-3" />
+                    {option?.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Calculate */}
+            <CalculatorActions
+              category="power"
+              onCalculate={validateAndCalculate}
+              onReset={reset}
+              isDisabled={!loadsWithPower.length}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* Results */}
+            {result && (
+              <>
+                <CalculatorDivider category="power" />
+
+                <div className="space-y-4 animate-fade-in">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
+                    <CheckCircle2 className="h-4 w-4 text-green-400" />
+                    <span className="text-sm font-semibold text-green-300">
+                      Maximum Demand Calculated
+                    </span>
+                  </div>
+
+                  {/* Hero */}
+                  <div className="rounded-xl p-4 bg-white/[0.04]">
+                    <p className="text-sm text-white mb-1">Maximum Demand</p>
+                    <div
+                      className="text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {result.diversifiedLoad.toFixed(2)} kW
+                    </div>
+                    <p className="text-sm text-white mt-1">
+                      {result.diversifiedCurrent.toFixed(1)}A at {supplyVoltage}V{' '}
+                      {supplyType === 'three-phase' ? '3-phase' : '1-phase'}
+                    </p>
+                  </div>
+
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Connected Load"
+                      value={result.totalInstalledLoad.toFixed(2)}
+                      unit="kW"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Load Reduction"
+                      value={(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)}
+                      unit="kW"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Diversified Current"
+                      value={result.diversifiedCurrent.toFixed(1)}
+                      unit="A"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Overall Diversity"
+                      value={(result.overallDiversityFactor * 100).toFixed(0)}
+                      unit="%"
+                      category="power"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Load schedule table */}
+                  {result.breakdownByType.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-white">Load Schedule</p>
+                      <div className="rounded-xl overflow-hidden border border-white/10">
+                        <div className="grid grid-cols-4 gap-px bg-white/5 text-xs font-medium text-white p-2">
+                          <span>Type</span>
+                          <span className="text-right">Installed</span>
+                          <span className="text-right">Diversified</span>
+                          <span className="text-right">% of MD</span>
+                        </div>
+                        {result.breakdownByType.map((b, i) => {
+                          const pctOfTotal =
+                            result.diversifiedLoad > 0
+                              ? (b.diversifiedLoad / result.diversifiedLoad) * 100
+                              : 0;
+                          return (
+                            <div
+                              key={i}
+                              className="grid grid-cols-4 gap-px text-xs text-white p-2 border-t border-white/5"
+                            >
+                              <span className="text-white font-medium truncate">
+                                {b.displayName}
+                              </span>
+                              <span className="text-right">{b.installedLoad.toFixed(1)} kW</span>
+                              <span className="text-right font-medium">
+                                {b.diversifiedLoad.toFixed(1)} kW
+                              </span>
+                              <span className="text-right">{pctOfTotal.toFixed(0)}%</span>
+                            </div>
+                          );
+                        })}
+                        <div className="grid grid-cols-4 gap-px text-xs font-semibold text-white p-2 border-t border-white/10 bg-white/[0.04]">
+                          <span>Total</span>
+                          <span className="text-right">
+                            {result.totalInstalledLoad.toFixed(1)} kW
+                          </span>
+                          <span className="text-right">{result.diversifiedLoad.toFixed(1)} kW</span>
+                          <span className="text-right">100%</span>
+                        </div>
                       </div>
-                    );
-                  })}
-                  <div className="grid grid-cols-4 gap-px text-xs font-semibold text-white p-2 border-t border-white/10 bg-white/[0.04]">
-                    <span>Total</span>
-                    <span className="text-right">{result.totalInstalledLoad.toFixed(1)} kW</span>
-                    <span className="text-right">{result.diversifiedLoad.toFixed(1)} kW</span>
-                    <span className="text-right">100%</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <CalculatorDivider category="power" />
-
-          {/* Supply Assessment */}
-          {(() => {
-            const supplyInfo = calculateSupplyRequirements(result.diversifiedLoad);
-            return (
-              <div className="space-y-3">
-                <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-                  <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                  Supply Assessment
-                </h4>
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm text-white">{supplyInfo.supplyAdequacy}</p>
-                </div>
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div className="flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-emerald-400" />
-                    <p className="text-sm text-white font-medium">
-                      {supplyInfo.mainSwitchRecommendation}
-                    </p>
-                  </div>
-                </div>
-                {/*
-                  Reg 536.4.202 (new in A4:2026). The main switch suggestion
-                  above is sized from the DIVERSIFIED current only, which the
-                  regulation does not accept on its own: "Diversity shall not be
-                  used as a means of load curtailment, load control or overload
-                  protection." Stated explicitly so the figure is not read as an
-                  assembly rating.
-                */}
-                <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-                  <p className="text-sm text-white">
-                    <strong>Reg 536.4.202 — the assembly rating is a separate check.</strong> The
-                    device protecting a consumer unit or distribution board against overload must
-                    satisfy one of: (a) In ≤ Ina and Inc, (b) documented load curtailment, or (c)
-                    the total connected load <em>without</em> diversity (
-                    {result.totalDesignCurrent.toFixed(1)} A here) not exceeding Ina and Inc.
-                    Diversity shall not be used as a means of load curtailment, load control or
-                    overload protection.
-                  </p>
-                </div>
-                {supplyInfo.estimatedCurrent > 60 && (
-                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-                    <p className="text-xs text-white">
-                      <strong>Note:</strong> For loads exceeding 60A per phase, notify the DNO
-                      before installation.
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })()}
-
-          <CalculatorDivider category="power" />
-
-          {/* How It Worked Out */}
-          <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Calculator className="h-4 w-4 text-purple-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  How It Worked Out
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showWorkings && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="text-sm font-mono text-white space-y-4 p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                <div>
-                  <p className="text-xs text-purple-400 mb-2">Step 1: Installed loads</p>
-                  {result.breakdownByType.map((b, i) => (
-                    <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-1">
-                      {b.displayName}: {b.installedLoad.toFixed(2)} kW (
-                      {b.installedCurrent.toFixed(1)}A)
                     </div>
-                  ))}
+                  )}
                 </div>
-                <div className="pt-2 border-t border-purple-500/20">
-                  <p className="text-xs text-purple-400 mb-2">Step 2: Apply IET diversity</p>
-                  {result.breakdownByType.map((b, i) => (
-                    <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-2">
-                      <p className="font-semibold text-white">{b.displayName}:</p>
-                      {b.steps.map((step, si) => (
-                        <p key={si} className="text-white text-xs ml-2">
-                          {step}
+
+                <CalculatorDivider category="power" />
+
+                {/* Supply Assessment */}
+                {(() => {
+                  const supplyInfo = calculateSupplyRequirements(result.diversifiedLoad);
+                  return (
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+                        <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                        Supply Assessment
+                      </h4>
+                      <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.12]">
+                        <p className="text-sm text-white">{supplyInfo.supplyAdequacy}</p>
+                      </div>
+                      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                        <div className="flex items-center gap-2">
+                          <Zap className="h-4 w-4 text-emerald-400" />
+                          <p className="text-sm text-white font-medium">
+                            {supplyInfo.mainSwitchRecommendation}
+                          </p>
+                        </div>
+                      </div>
+                      {/*
+                    Reg 536.4.202 (new in A4:2026). The main switch suggestion
+                    above is sized from the DIVERSIFIED current only, which the
+                    regulation does not accept on its own: "Diversity shall not be
+                    used as a means of load curtailment, load control or overload
+                    protection." Stated explicitly so the figure is not read as an
+                    assembly rating.
+                  */}
+                      <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                        <p className="text-sm text-white">
+                          <strong>Reg 536.4.202 — the assembly rating is a separate check.</strong>{' '}
+                          The device protecting a consumer unit or distribution board against
+                          overload must satisfy one of: (a) In ≤ Ina and Inc, (b) documented load
+                          curtailment, or (c) the total connected load <em>without</em> diversity (
+                          {result.totalDesignCurrent.toFixed(1)} A here) not exceeding Ina and Inc.
+                          Diversity shall not be used as a means of load curtailment, load control
+                          or overload protection.
                         </p>
-                      ))}
+                      </div>
+                      {supplyInfo.estimatedCurrent > 60 && (
+                        <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                          <p className="text-xs text-white">
+                            <strong>Note:</strong> For loads exceeding 60A per phase, notify the DNO
+                            before installation.
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-                <div className="pt-2 border-t border-purple-500/20">
-                  <p className="text-xs text-purple-400 mb-1">Step 3: Sum</p>
-                  <p>
-                    MD ={' '}
-                    {result.breakdownByType.map((b) => b.diversifiedLoad.toFixed(2)).join(' + ')}
-                  </p>
-                  <p>
-                    MD = <span className="font-bold">{result.diversifiedLoad.toFixed(2)} kW</span>
-                  </p>
-                </div>
-                {/* The engine now sums the per-type diversified line currents
-                    instead of re-deriving current from kW, so this step
-                    describes what actually happens. */}
-                <div className="pt-2 border-t border-purple-500/20">
-                  <p className="text-xs text-purple-400 mb-1">
-                    Step 4: Line current ({supplyType === 'three-phase' ? '3-phase' : '1-phase'} at{' '}
-                    {supplyVoltage}V)
-                  </p>
-                  <p>
-                    I = sum of the diversified line currents ={' '}
-                    <span className="font-bold">{result.diversifiedCurrent.toFixed(1)}A</span>
-                  </p>
-                  <p className="text-xs">
-                    Per load, Ib = P / ({supplyType === 'three-phase' ? '√3 × ' : ''}
-                    {supplyVoltage})
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                  );
+                })()}
 
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Maximum Demand:</strong> The calculated peak load after applying IET
-                    On-Site Guide diversity allowances based on realistic usage patterns.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    {/* FIX: there is no "Table 1B" and no diversity "Table H2"
-                        in the On-Site Guide. Appendix A holds Table A1 (typical
-                        current demands) and Table A2 (allowances for
-                        diversity); Appendix H is standard circuit
-                        arrangements. */}
-                    <strong>Diversity Allowances:</strong> Published in the IET On-Site Guide,
-                    Appendix A, Table A2 — not in BS 7671 directly.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Supply Assessment:</strong> Helps determine if your electrical supply is
-                    adequate for the calculated demand.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                <CalculatorDivider category="power" />
 
-          {/* IET Guidance */}
-          <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  IET Guidance Reference
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showBsRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                {/*
-                  FIX: Reg 311.1 was quoted as making diversity mandatory. The
-                  printed text is: "For economic and reliable design of an
-                  installation within thermal limits and admissible voltage
-                  drop, the maximum demand shall be determined. In determining
-                  the maximum demand of an installation or part thereof,
-                  diversity MAY be taken into account." The "shall" attaches to
-                  determining maximum demand; applying diversity is permissive.
-                  "Table H2" was also cited as the commercial/industrial
-                  diversity table — no such table exists.
-                */}
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Reg 311.1:</strong> The maximum demand shall be determined. In
-                    determining maximum demand, diversity <em>may</em> be taken into account.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>On-Site Guide Appendix A:</strong> Table A1 gives typical current
-                    demands; Table A2 gives the allowances for diversity.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Scope of Appendix A:</strong> household and similar premises. Blocks of
-                    dwellings, large hotels, industrial and large commercial premises are excluded
-                    and must be assessed case by case by the designer.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Reg 536.4.202:</strong> Diversity shall not be used as a means of load
-                    curtailment, load control or overload protection.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Note:</strong> Diversity allowances are in the IET On-Site Guide, not BS
-                    7671 directly
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      )}
+                {/* How It Worked Out */}
+                <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Calculator className="h-4 w-4 text-purple-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        How It Worked Out
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showWorkings && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="text-sm font-mono text-white space-y-4 p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                      <div>
+                        <p className="text-xs text-purple-400 mb-2">Step 1: Installed loads</p>
+                        {result.breakdownByType.map((b, i) => (
+                          <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-1">
+                            {b.displayName}: {b.installedLoad.toFixed(2)} kW (
+                            {b.installedCurrent.toFixed(1)}A)
+                          </div>
+                        ))}
+                      </div>
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <p className="text-xs text-purple-400 mb-2">Step 2: Apply IET diversity</p>
+                        {result.breakdownByType.map((b, i) => (
+                          <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-2">
+                            <p className="font-semibold text-white">{b.displayName}:</p>
+                            {b.steps.map((step, si) => (
+                              <p key={si} className="text-white text-xs ml-2">
+                                {step}
+                              </p>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <p className="text-xs text-purple-400 mb-1">Step 3: Sum</p>
+                        <p>
+                          MD ={' '}
+                          {result.breakdownByType
+                            .map((b) => b.diversifiedLoad.toFixed(2))
+                            .join(' + ')}
+                        </p>
+                        <p>
+                          MD ={' '}
+                          <span className="font-bold">{result.diversifiedLoad.toFixed(2)} kW</span>
+                        </p>
+                      </div>
+                      {/* The engine now sums the per-type diversified line currents
+                      instead of re-deriving current from kW, so this step
+                      describes what actually happens. */}
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <p className="text-xs text-purple-400 mb-1">
+                          Step 4: Line current (
+                          {supplyType === 'three-phase' ? '3-phase' : '1-phase'} at {supplyVoltage}
+                          V)
+                        </p>
+                        <p>
+                          I = sum of the diversified line currents ={' '}
+                          <span className="font-bold">{result.diversifiedCurrent.toFixed(1)}A</span>
+                        </p>
+                        <p className="text-xs">
+                          Per load, Ib = P / ({supplyType === 'three-phase' ? '√3 × ' : ''}
+                          {supplyVoltage})
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white">
-            <strong>MD</strong> = Sum of diversified loads per IET On-Site Guide Appendix A, Table
-            A2. Ib = P / V single-phase, P / (√3 × UL) three-phase.
-          </p>
-        </div>
-      </div>
-      <CalculatorEditorial content={maximumDemandContent} category="power" />
+                {/* What This Means */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Maximum Demand:</strong> The calculated peak load after applying
+                          IET On-Site Guide diversity allowances based on realistic usage patterns.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          {/* FIX: there is no "Table 1B" and no diversity "Table H2"
+                          in the On-Site Guide. Appendix A holds Table A1 (typical
+                          current demands) and Table A2 (allowances for
+                          diversity); Appendix H is standard circuit
+                          arrangements. */}
+                          <strong>Diversity Allowances:</strong> Published in the IET On-Site Guide,
+                          Appendix A, Table A2 — not in BS 7671 directly.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Supply Assessment:</strong> Helps determine if your electrical
+                          supply is adequate for the calculated demand.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* IET Guidance */}
+                <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <BookOpen className="h-4 w-4 text-amber-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        IET Guidance Reference
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showBsRegs && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      {/*
+                    FIX: Reg 311.1 was quoted as making diversity mandatory. The
+                    printed text is: "For economic and reliable design of an
+                    installation within thermal limits and admissible voltage
+                    drop, the maximum demand shall be determined. In determining
+                    the maximum demand of an installation or part thereof,
+                    diversity MAY be taken into account." The "shall" attaches to
+                    determining maximum demand; applying diversity is permissive.
+                    "Table H2" was also cited as the commercial/industrial
+                    diversity table — no such table exists.
+                  */}
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Reg 311.1:</strong> The maximum demand shall be determined. In
+                          determining maximum demand, diversity <em>may</em> be taken into account.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong>On-Site Guide Appendix A:</strong> Table A1 gives typical current
+                          demands; Table A2 gives the allowances for diversity.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Scope of Appendix A:</strong> household and similar premises.
+                          Blocks of dwellings, large hotels, industrial and large commercial
+                          premises are excluded and must be assessed case by case by the designer.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Reg 536.4.202:</strong> Diversity shall not be used as a means of
+                          load curtailment, load control or overload protection.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Note:</strong> Diversity allowances are in the IET On-Site Guide,
+                          not BS 7671 directly
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            )}
+
+            {/* Formula Reference */}
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.12]">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-white mt-0.5 shrink-0" />
+                <p className="text-sm text-white">
+                  <strong>MD</strong> = Sum of diversified loads per IET On-Site Guide Appendix A,
+                  Table A2. Ib = P / V single-phase, P / (√3 × UL) three-phase.
+                </p>
+              </div>
+            </div>
+          </>
+        }
+        footer={<CalculatorEditorial content={maximumDemandContent} category="power" />}
+      />
     </CalculatorCard>
   );
 };

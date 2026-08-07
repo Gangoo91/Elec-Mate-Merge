@@ -631,7 +631,7 @@ export default function NewBuildStandardsPage() {
   return (
     <GuideTemplate
       title="New Build Electrical Standards | Building Regs Guide"
-      description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection…"
+      description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

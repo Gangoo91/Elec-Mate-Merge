@@ -13,7 +13,9 @@ import {
 import { TestResult } from '@/types/testResult';
 import { validateTestResult } from '@/utils/testValidation';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
-import { checkRegulationCompliance } from '@/utils/autoRegChecker';
+import { checkRegulationCompliance, type ZsBasis } from '@/utils/autoRegChecker';
+import { buildCellWarnings } from '@/utils/cellWarnings';
+import { isRealCircuit } from '@/utils/validation/applicability';
 import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 import { isSpareCircuit } from '@/utils/spareWays';
 
@@ -55,6 +57,18 @@ interface EnhancedTestResultDesktopTableRowProps {
    */
   isSelected?: boolean;
   onToggleSelect?: (id: string, shiftKey: boolean) => void;
+  /**
+   * Opens the Validate sheet on this circuit, from a flagged cell.
+   *
+   * The sheet already renders the finding with its numbers, its provenance and
+   * the C1/C2/C3/FI picker that raises an observation — so the cell does not
+   * need its own popover. It needs to be a way in.
+   */
+  onOpenWarning?: (circuitId: string) => void;
+  /** Which maximum a measured Zs is judged against — see `ZsBasis`. */
+  zsBasis?: ZsBasis;
+  /** When false the row carries no compliance marking. Findings are unaffected. */
+  showChecks?: boolean;
 }
 
 const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({
@@ -72,6 +86,9 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   earthingArrangement,
   isSelected = false,
   onToggleSelect,
+  onOpenWarning,
+  zsBasis,
+  showChecks = true,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
 
@@ -98,8 +115,27 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // a TT circuit is judged against the TN tables, so a perfectly normal
   // electrode reading of 60–100 Ω reads as a critical fault-protection failure.
   const regulationCompliance = useMemo(
-    () => checkRegulationCompliance(result, earthingArrangement),
-    [result, earthingArrangement]
+    () => checkRegulationCompliance(result, earthingArrangement, zsBasis),
+    [result, earthingArrangement, zsBasis]
+  );
+
+  /**
+   * Which of this row's cells a BS 7671 finding names.
+   *
+   * Built once per row from the warnings already computed above — the cells
+   * read the result rather than each re-running the engine, which on a 23-way
+   * board would mean validating ~780 times per render.
+   *
+   * Spare ways and device rows are left unmarked. The Validate sheet skips them
+   * (`isRealCircuit`), so a flag on one would open a sheet that does not list
+   * the circuit it came from — a dead end, and the flag exists to be a way in.
+   */
+  const cellWarnings = useMemo(
+    () =>
+      showChecks && isRealCircuit(result)
+        ? buildCellWarnings(regulationCompliance.warnings)
+        : {},
+    [regulationCompliance, result, showChecks]
   );
 
   // Memoized row background class - prevents expensive recalculation on every render
@@ -107,11 +143,15 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // validation tints are dedicated classes so index.css can keep them flat on
   // hover too (founder call: pointing at a row must not shift colours).
   const rowBgClass = useMemo(() => {
+    // Checks off means the grid stops marking — the row tint is marking, so it
+    // goes too. Leaving it while the cell flags disappeared would be the worst
+    // of both: a row that says something is wrong with nothing to point at.
+    if (!showChecks) return '';
     const overallCompliance = getOverallCompliance(validation);
     if (overallCompliance === 'error') return 'sot-row-error';
     if (overallCompliance === 'warning') return 'sot-row-warning';
     return '';
-  }, [validation]);
+  }, [validation, showChecks]);
 
   // Get regulation status icon
   const getRegulationStatusIcon = () => {
@@ -293,8 +333,18 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TypeOfWiringCell result={result} onUpdate={onUpdate} />
-            <RefMethodCell result={result} onUpdate={onUpdate} />
+            <TypeOfWiringCell
+              result={result}
+              onUpdate={onUpdate}
+              cellWarnings={cellWarnings}
+              onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined}
+            />
+            <RefMethodCell
+              result={result}
+              onUpdate={onUpdate}
+              cellWarnings={cellWarnings}
+              onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined}
+            />
             <PointsServedCell result={result} onUpdate={onUpdate} />
           </>
         )}
@@ -305,36 +355,36 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {isGroupCollapsed('circuit') && <TableCell className="h-8 p-0" />}
 
         {/* Conductor Details */}
-        {!isGroupCollapsed('conductor') && <ConductorCells result={result} onUpdate={onUpdate} />}
+        {!isGroupCollapsed('conductor') && <ConductorCells result={result} onUpdate={onUpdate} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />}
         {isGroupCollapsed('conductor') && <TableCell className="h-8 p-0" />}
 
         {/* Protective Device */}
         {!isGroupCollapsed('protection') && (
-          <ProtectiveDeviceCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
+          <ProtectiveDeviceCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />
         )}
         {isGroupCollapsed('protection') && <TableCell className="h-8 p-0" />}
 
         {/* RCD Details */}
         {!isGroupCollapsed('rcdDetails') && (
-          <RcdDetailsCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
+          <RcdDetailsCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />
         )}
         {isGroupCollapsed('rcdDetails') && <TableCell className="h-8 p-0" />}
 
         {/* Continuity Tests */}
         {!isGroupCollapsed('continuity') && (
-          <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} />
+          <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />
         )}
         {isGroupCollapsed('continuity') && <TableCell className="h-8 p-0" />}
 
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
-          <InsulationCells result={result} onUpdate={onUpdate} validation={validation} />
+          <InsulationCells result={result} onUpdate={onUpdate} validation={validation} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />
         )}
         {isGroupCollapsed('insulation') && <TableCell className="h-8 p-0" />}
 
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
-          <ZsCells result={result} onUpdate={onUpdate} validation={validation} />
+          <ZsCells result={result} onUpdate={onUpdate} validation={validation} cellWarnings={cellWarnings} onOpenWarning={onOpenWarning ? () => onOpenWarning(result.id) : undefined} />
         )}
         {isGroupCollapsed('zs') && <TableCell className="h-8 p-0" />}
 
@@ -393,6 +443,7 @@ const arePropsEqual = (
   // silently ignored: the row keeps its old render and the tick does not
   // appear, with nothing failing anywhere to say why.
   if (prev.isSelected !== next.isSelected) return false;
+  if (prev.onOpenWarning !== next.onOpenWarning) return false;
   if (prev.onToggleSelect !== next.onToggleSelect) return false;
   if (prev.collapsedGroups.size !== next.collapsedGroups.size) return false;
   for (const key of prev.collapsedGroups) {

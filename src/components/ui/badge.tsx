@@ -14,6 +14,16 @@ const badgeVariants = cva(
         destructive:
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
         outline: 'text-foreground',
+        // `yellow` and `success` were already being passed by the cash-flow
+        // screens but did not exist here, so those badges silently fell back to
+        // `default` and rendered grey where the code intended volt or green —
+        // five type errors that had been sitting on HEAD.
+        //
+        // Volt is solid with black text. Never a translucent volt wash: every
+        // partial-opacity value goes muddy brown on this ground (see
+        // `card-recipe`).
+        yellow: 'border-transparent bg-elec-yellow text-black hover:bg-elec-yellow/90',
+        success: 'border-emerald-400/30 bg-emerald-500/15 text-emerald-300',
       },
     },
     defaultVariants: {

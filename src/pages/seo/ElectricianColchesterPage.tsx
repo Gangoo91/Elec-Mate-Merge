@@ -454,7 +454,7 @@ export default function ElectricianColchesterPage() {
       noindex={true}
       localArea="Colchester"
       title="Electrician in Colchester | Local Electricians 2026"
-      description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance…"
+      description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

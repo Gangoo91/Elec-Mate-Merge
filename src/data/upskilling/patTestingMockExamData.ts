@@ -107,7 +107,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'Only portable appliances',
       'Portable and moveable appliances',
       'All electrical equipment',
-      'Only appliances with plugs',
+      'Any appliance fitted with a 13A plug',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,9 +206,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'What does the law say about how frequently PAT testing must be carried out?',
     options: [
-      'Equipment must be tested at least annually',
-      'Equipment must be tested every two years',
-      'High-risk equipment must be tested monthly',
+      'All equipment must be tested at least once every year',
+      'All equipment must be tested once every two years',
+      'High-risk equipment must be tested every single month',
       'No fixed frequency is set; intervals are based on risk assessment',
     ],
     correctAnswer: 3,
@@ -376,7 +376,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'When should a risk assessment for electrical equipment be reviewed?',
     options: [
-      'Only at the end of each financial year',
+      'At the end of each financial year, without exception',
       'When circumstances change or after an incident',
       'Only when the HSE specifically requests it',
       'It never needs reviewing once first completed',
@@ -670,7 +670,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'No, the case must always be plastic',
       'Only if the metal case is bonded to earth',
       'Yes, provided live parts are double or reinforced insulated',
-      'Only if it carries a separate functional earth',
+      'It may, provided a separate functional earth is fitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -926,7 +926,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Only temporarily',
       'No, never',
-      'Only if done professionally',
+      'Yes, if PVC tape used',
       'Yes, if tape is good',
     ],
     correctAnswer: 1,
@@ -1009,10 +1009,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'When should equipment safety labels and markings be checked?',
     options: [
-      'Only when the appliance is first purchased',
+      'When the appliance is first purchased',
       'Only if the user reports a problem',
       'During every visual inspection',
-      'Only at the annual combined test',
+      'At the annual combined test only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1046,7 +1046,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'It should be inspected more frequently',
       'It should be inspected less frequently',
       'It should be exempt from inspection',
-      'It should be inspected at the same interval as office equipment',
+      'It should follow the office equipment interval',
     ],
     correctAnswer: 0,
     explanation:
@@ -1114,7 +1114,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'No, testing also required',
       'Yes, always',
       'Only for simple equipment',
-      'Only for new equipment',
+      'Yes, if the user is trained',
     ],
     correctAnswer: 0,
     explanation:
@@ -1216,7 +1216,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'No, personal responsibility',
       'Only expensive items',
       'Yes, if used at work',
-      'Only if requested',
+      'Not if the owner objects',
     ],
     correctAnswer: 2,
     explanation:
@@ -1250,7 +1250,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'Yes, because internal faults may not be visible',
       'No, a good visual inspection guarantees a pass',
       'Only for Class II equipment',
-      'Only if the appliance is over five years old',
+      'No, unless the appliance is over five years old',
     ],
     correctAnswer: 0,
     explanation:
@@ -1436,9 +1436,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'When is a substitute (alternative) leakage test typically used?',
     options: [
-      'When the appliance has no earth pin',
-      'When the earth continuity reading is exactly zero',
-      'When the appliance is supplied at extra-low voltage',
+      'When the appliance has no earth pin and cannot be earth tested',
+      'When the earth continuity reading is exactly zero on first attempt',
+      'When the appliance is supplied at extra-low voltage via a transformer',
       'When insulation resistance is borderline or the appliance has sensitive electronics',
     ],
     correctAnswer: 3,
@@ -1710,7 +1710,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should an equipment register contain?',
     options: [
       'Only the appliances that have previously failed',
-      'Only the appliances purchased in the current year',
+      'Appliances purchased during the current financial year',
       'A list of test instruments and their calibration dates',
       'Equipment details, location and test history',
     ],
@@ -1778,7 +1778,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Only by competent persons',
       'No, must be printed',
-      'Only in emergencies',
+      'No, unless countersigned',
       'Yes, if legible',
     ],
     correctAnswer: 3,
@@ -1827,10 +1827,10 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'Which documents together underpin a formal PAT testing programme?',
     options: [
-      'Test records on their own',
+      'Test records held on their own with no other paperwork',
       'A maintenance policy, risk assessment, procedures and test records',
-      'Manufacturer warranties for each appliance',
-      'A single annual summary report only',
+      'Manufacturer warranties and receipts for each appliance',
+      'A single annual summary report issued to management',
     ],
     correctAnswer: 1,
     explanation:
@@ -1864,7 +1864,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
       'Apply new label',
       'Test equipment again',
       'Remove from service',
-      'Ignore if recently tested',
+      'Cover it with clear tape',
     ],
     correctAnswer: 0,
     explanation:
@@ -1931,8 +1931,8 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Only the most significant changes to the records',
       'All additions and amendments made to the records',
-      'Only the final pass or fail result',
-      'Only records that relate to failed equipment',
+      'The final pass or fail result for each item tested',
+      'Records relating to failed equipment alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -1999,8 +1999,8 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Courses completed and competency assessed for the task',
       'Only the date the tester was first employed',
-      'Only attendance at a general induction session',
-      "Only the tester's academic qualifications",
+      'Attendance at a general site induction session',
+      'The tester\'s academic qualifications alone',
     ],
     correctAnswer: 0,
     explanation:
@@ -2049,9 +2049,9 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should an annual PAT testing report bring together?',
     options: [
       'Only the total number of appliances tested',
-      'Only the list of appliances that passed',
+      'A list of the appliances that passed the test',
       'Statistics, failure trends and recommendations',
-      'Only the test instrument calibration certificate',
+      'The test instrument calibration certificate',
     ],
     correctAnswer: 2,
     explanation:

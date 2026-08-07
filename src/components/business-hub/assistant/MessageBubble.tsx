@@ -59,7 +59,7 @@ export function MessageBubble({
             ) : (
               // No tokens yet — show a subtle shimmer placeholder so the bubble
               // doesn't look empty/broken while the model warms up.
-              <span className="inline-flex items-center gap-1.5 text-white/45">
+              <span className="inline-flex items-center gap-1.5 text-white">
                 <span
                   className="inline-block w-2 h-2 rounded-full bg-elec-yellow/70 animate-bounce"
                   style={{ animationDelay: '0ms' }}

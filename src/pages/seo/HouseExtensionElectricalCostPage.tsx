@@ -492,7 +492,7 @@ export default function HouseExtensionElectricalCostPage() {
   return (
     <GuideTemplate
       title="House Extension Electrical Cost UK 2025 | Extension Wiring"
-      description="House extension electrical installation costs in the UK for 2025. Single-storey extension £800–£2,500, double-storey £1,500–£4,000…"
+      description="House extension electrical installation costs in the UK for 2025. Single-storey extension £800–£2,500, double-storey £1,500–£4,000."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

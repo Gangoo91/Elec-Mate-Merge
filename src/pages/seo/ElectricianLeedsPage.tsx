@@ -567,7 +567,7 @@ export default function ElectricianLeedsPage() {
     <GuideTemplate
       localArea="Leeds"
       title="Electrician in Leeds | Local Electricians 2026"
-      description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring…"
+      description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

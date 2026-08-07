@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Solar PV Certificate Requirements', href: '/solar-pv-certificate-requirements' },
+  { label: 'Solar PV Certificate Requirements', href: '/guides/solar-pv-certificate-requirements' },
 ];
 
 const tocItems = [
@@ -53,7 +53,7 @@ const keyTakeaways = [
   'Handover documentation must include system design details, commissioning test results, inverter settings, and manufacturer warranty information.',
   'DC-side cables and equipment remain energised whenever panels are exposed to light — even when the AC supply and inverter are fully disconnected (BS 7671 Reg 712.410.101). The EIC isolation notes and safe-working method must reflect this.',
   'A permanent warning notice is mandatory at every DC access point (combiner boxes, DC distribution boards) and fixed to every inverter per BS 7671 Regs 712.514.102 and 712.514.103. Absence of these labels is a frequent MCS audit non-conformance.',
-  'DC connectors must be selected to BS EN 62852:2015+A1:2020 per Reg 712.526.101. Where accessible to non-skilled persons, they must require a key or tool to disconnect.',
+  'DC connectors must be selected to BS EN 62852:2015+A1:2020 per Reg 712.526.101. Where they are in a location accessible to persons other than skilled or instructed persons, they must either only be disconnectable by a key or tool, or sit inside an enclosure that only a key or tool can open.',
   'Elec-Mate provides digital solar PV certificate templates covering the EIC, commissioning record, and handover pack with professional PDF export.',
 ];
 
@@ -91,7 +91,7 @@ const faqs = [
   {
     question: 'What commissioning tests are required for solar PV?',
     answer:
-      'Commissioning tests for a solar PV installation include both DC-side and AC-side tests. DC-side tests include open-circuit voltage (Voc) and short-circuit current (Isc) measurements for each string, insulation resistance testing of DC cables (at 500V minimum, ideally 1000V), and polarity verification. Before carrying out any DC-side test work, note that Reg 712.410.101 requires DC cables and equipment to be treated as live at all times — even when the AC supply and inverter are disconnected — because the PV array continues to generate voltage in daylight. AC-side tests include the standard BS 7671 tests — continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD operation. The EIC must also record the DC-side protective measure applied: either double/reinforced insulation (Section 412) or SELV/PELV (Section 414) as required by Reg 712.410.102. The inverter commissioning checks include verifying the grid protection settings (voltage and frequency trip limits), confirming the anti-islanding function operates correctly, and recording the inverter serial number and firmware version. All results must be recorded on the EIC and commissioning record.',
+      'Commissioning tests for a solar PV installation include both DC-side and AC-side tests. DC-side tests include open-circuit voltage (Voc) and short-circuit current (Isc) measurements for each string, insulation resistance testing of DC cables (the test voltage is set by BS 7671 Table 64 — 500V DC for circuits up to and including 500V, and 1000V DC where the circuit voltage exceeds 500V, with a minimum acceptable value of 1.0 megohm in both cases), and polarity verification. Before carrying out any DC-side test work, note that Reg 712.410.101 requires DC cables and equipment to be treated as live at all times — even when the AC supply and inverter are disconnected — because the PV array continues to generate voltage in daylight. AC-side tests include the standard BS 7671 tests — continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, and RCD operation. The EIC must also record the DC-side protective measure applied: either double/reinforced insulation (Section 412) or SELV/PELV (Section 414) as required by Reg 712.410.102. The inverter commissioning checks include verifying the grid protection settings (voltage and frequency trip limits), confirming the anti-islanding function operates correctly, and recording the inverter serial number and firmware version. All results must be recorded on the EIC and commissioning record.',
   },
 ];
 
@@ -246,8 +246,10 @@ const sections = [
               <span>
                 DC wiring — string cables from panels to inverter, DC isolator, cable type and size,
                 and cable routing. DC connectors must be selected to BS EN 62852:2015+A1:2020 per
-                Reg 712.526.101. Where accessible to non-skilled persons, connectors must require a
-                key or tool to disconnect (Reg 712.526.101).
+                Reg 712.526.101. Where they are in a location accessible to persons other than
+                skilled or instructed persons, connectors must either only be disconnectable by a
+                key or tool, or be installed in an enclosure that only a key or tool can open (Reg
+                712.526.101).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,8 +301,8 @@ const sections = [
             DC cables and equipment on the solar PV side remain energised whenever the panels are
             exposed to light — even when the AC supply has been isolated and the inverter has been
             disconnected. BS 7671 Reg 712.410.101 is explicit: electrical equipment on the DC side
-            shall be considered to be energised even when the AC side is disconnected from the grid
-            and even when the inverter is disconnected from the DC side. The EIC isolation notes and
+            shall be considered to be energised, even when the AC side is disconnected from the grid
+            or when the inverter is disconnected from the DC side. The EIC isolation notes and
             any safe-working method statement must reflect this: DC circuits cannot be treated as
             dead by AC isolation alone.
           </p>
@@ -322,8 +324,8 @@ const sections = [
               <tr>
                 <td className="px-4 py-3 font-mono text-yellow-300 align-top">712.410.101</td>
                 <td className="px-4 py-3">
-                  DC-side equipment shall be considered energised even when the AC side is
-                  disconnected from the grid and the inverter is disconnected from the DC side.
+                  DC-side equipment shall be considered energised, even when the AC side is
+                  disconnected from the grid or when the inverter is disconnected from the DC side.
                 </td>
               </tr>
               <tr>
@@ -814,8 +816,10 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing DC insulation resistance test</strong> — the DC cables must be
-                tested for insulation resistance at a minimum test voltage of 500V (1000V
-                preferred). This is a separate test from the AC insulation resistance.
+                tested for insulation resistance at the test voltage given in BS 7671 Table 64: 500V
+                DC for circuits up to and including 500V, and 1000V DC where the circuit voltage
+                exceeds 500V, which many PV strings do. The minimum acceptable value is 1.0 megohm.
+                This is a separate test from the AC insulation resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -866,8 +870,9 @@ const sections = [
               <span>
                 <strong>Wrong DC connector type (Reg 712.526.101)</strong> — DC connectors must be
                 selected to BS EN 62852:2015+A1:2020. Generic or non-compliant connectors fail this
-                requirement. Where connectors are accessible to non-skilled persons, they must
-                require a key or tool to disconnect.
+                requirement. Where connectors are in a location accessible to persons other than
+                skilled or instructed persons, they must either only be disconnectable by a key or
+                tool, or be installed in an enclosure that only a key or tool can open.
               </span>
             </li>
           </ul>
@@ -891,7 +896,7 @@ export default function SolarPVCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="Solar PV Certificate Requirements | MCS UK"
-      description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation…"
+      description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation."
       datePublished="2026-02-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -21,6 +21,57 @@ interface RailSource {
   excerpt: string;
 }
 
+/**
+ * Turn a stored `full_text` blob into an excerpt that is actually about the
+ * regulation it is filed under.
+ *
+ * The source rows are PDF extractions and they are rough in two ways that both
+ * reached the screen:
+ *
+ * 1. Words are broken onto their own lines ("Ferrous\nmetal,\nfor\nexample,"),
+ *    so the old `.slice(0, 180)` produced a ragged fragment.
+ * 2. A row frequently runs on past its own regulation into the next one. The
+ *    stored text for 710.560.11 continues into 710.560.9 and 710.560.9.101, so
+ *    the rail was attributing two other regulations' words to the one cited —
+ *    directly under a line claiming every citation is machine-checked.
+ *
+ * So: collapse the whitespace, drop the leading reg number, and cut at the
+ * first reg number that is NOT the one requested. If what remains opens
+ * mid-sentence — a lower-case first letter means the chunk began part-way
+ * through a clause — show nothing rather than a fragment that misleads.
+ */
+function buildExcerpt(
+  fullText: string | null | undefined,
+  regNumber: string,
+  title: string | null
+): string {
+  if (!fullText) return '';
+
+  let t = fullText.replace(/\s+/g, ' ').trim();
+
+  // Leading reg number, with or without a trailing dot, plus table pipes.
+  t = t.replace(new RegExp(`^${regNumber.replace(/\./g, '\\.')}\\.?\\s*`), '');
+  t = t.replace(/^[|\s.]+/, '');
+
+  if (title && t.toLowerCase().startsWith(title.toLowerCase())) {
+    t = t.slice(title.length).replace(/^[\s—:-]+/, '');
+  }
+
+  // Stop at the next regulation number so the excerpt cannot borrow from a
+  // neighbour. Requires a following capital or digit to avoid cutting on a
+  // decimal inside a sentence.
+  const next = t.search(/\b\d{3}(?:\.\d+){1,3}\b(?=\s+[A-Z0-9])/);
+  if (next > 0) t = t.slice(0, next).trim();
+
+  t = t.replace(/^[|\s.]+/, '').trim();
+  if (!t) return '';
+
+  // A lower-case opening means the stored chunk started mid-clause.
+  if (/^[a-z]/.test(t)) return '';
+
+  return t.length > 180 ? `${t.slice(0, 180).trimEnd()}…` : t;
+}
+
 interface SourcesRailProps {
   /** Cited reg numbers from the latest assistant answer. */
   regNumbers: string[];
@@ -80,7 +131,7 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
       {/* Sticky wrapper owns its OWN scroll — a sticky element can't ride the
           page scroll past the viewport, so without this the tail sources were
           simply unreachable. */}
-      <div className="sticky top-2 flex max-h-[calc(100vh-140px)] supports-[height:100dvh]:max-h-[calc(100dvh-140px)] flex-col pl-4 xl:pl-6 border-l border-white/[0.06]">
+      <div className="sticky top-2 flex max-h-[calc(100vh-140px)] supports-[height:100dvh]:max-h-[calc(100dvh-140px)] flex-col pl-4 xl:pl-6 border-l border-white/[0.14]">
         <div className="flex items-baseline justify-between pb-3">
           <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Sources
@@ -91,19 +142,18 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
         </div>
 
         <div
-          className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain pr-1
-            [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.12)_transparent]
-            [mask-image:linear-gradient(to_bottom,black_calc(100%-24px),transparent)]"
+          className="min-h-0 flex-1 space-y-2 overflow-y-auto overscroll-contain pr-1
+            [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]"
         >
           {sources.map((s) => (
             <button
               key={s.reg_number}
               type="button"
               onClick={() => onOpenReg(s.reg_number)}
-              className="group block w-full rounded-lg px-2 py-2.5 -ml-2 text-left touch-manipulation transition-colors hover:bg-white/[0.04]"
+              className="group block w-full rounded-lg border border-white/[0.10] bg-white/[0.05] px-3 py-2.5 text-left touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-white/[0.09]"
             >
               <div className="text-[12.5px] leading-snug">
-                <span className="font-semibold text-white">Reg {s.reg_number}</span>
+                <span className="font-semibold text-elec-yellow">Reg {s.reg_number}</span>
                 {s.title && (
                   <span className="font-medium text-white"> — {s.title}</span>
                 )}
@@ -117,7 +167,7 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
           ))}
         </div>
 
-        <div className="pt-3 mt-1 border-t border-white/[0.06] text-[10.5px] leading-relaxed text-white">
+        <div className="pt-3 mt-1 border-t border-white/[0.14] text-[10.5px] leading-relaxed text-white">
           BS 7671:2018+A4:2026 · every citation machine-checked
         </div>
       </div>

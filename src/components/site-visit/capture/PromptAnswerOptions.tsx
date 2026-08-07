@@ -29,7 +29,7 @@ export const PromptAnswerOptions = ({ options, value, onSelect }: PromptAnswerOp
               'h-11 flex-1 rounded-xl border text-sm font-medium transition-colors touch-manipulation active:scale-[0.98]',
               value === opt
                 ? 'border-elec-yellow/60 bg-elec-yellow/[0.14] text-elec-yellow'
-                : 'border-white/10 bg-white/[0.04] text-white/80 hover:bg-white/[0.08]'
+                : 'border-white/10 bg-white/[0.04] text-white hover:bg-white/[0.08]'
             )}
           >
             {opt}
@@ -53,7 +53,7 @@ export const PromptAnswerOptions = ({ options, value, onSelect }: PromptAnswerOp
               i > 0 && 'border-t border-white/[0.05]',
               active
                 ? 'bg-elec-yellow/[0.12] font-medium text-elec-yellow'
-                : 'bg-white/[0.02] text-white/85'
+                : 'bg-white/[0.02] text-white'
             )}
           >
             <span>{opt}</span>

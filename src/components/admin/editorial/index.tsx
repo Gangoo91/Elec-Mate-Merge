@@ -229,9 +229,24 @@ export function PageHero({
           )}
         />
       )}
-      <div className="pt-4 sm:pt-6 lg:pt-8 pb-3 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-6">
+      {/*
+        A page title, not a billboard.
+
+        The heading ran at 32/44/56px with an eyebrow above and a description
+        below — roughly 350px of masthead before an admin reached a single
+        number, on 34 pages whose sticky header already names them. The title
+        is now sized like a title, and the eyebrow sits inline with it rather
+        than on its own line, since "OVERVIEW / Admin" spent two rows saying
+        one thing.
+
+        The props are untouched, so no call site changes.
+      */}
+      <div className="flex flex-col gap-3 pb-3 pt-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pt-4">
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h1 className="text-[22px] font-semibold leading-tight tracking-tight text-white sm:text-[26px]">
+              {title}
+            </h1>
             {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
             {live && (
               <span className="inline-flex items-center gap-1.5">
@@ -242,17 +257,12 @@ export function PageHero({
               </span>
             )}
           </div>
-          <h1 className="mt-2 text-[32px] sm:text-[44px] lg:text-[56px] font-semibold text-white tracking-[-0.02em] leading-[1.02]">
-            {title}
-          </h1>
           {description && (
-            <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-              {description}
-            </p>
+            <p className="mt-1.5 max-w-2xl text-[13px] leading-snug text-white">{description}</p>
           )}
-          {meta && <div className="mt-3">{meta}</div>}
+          {meta && <div className="mt-2.5">{meta}</div>}
         </div>
-        {actions && <div className="shrink-0 flex items-center gap-2 flex-wrap">{actions}</div>}
+        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
     </motion.div>
   );
@@ -285,9 +295,9 @@ export function SectionHeader({ eyebrow, title, meta, action, onAction }: Sectio
       {action && onAction && (
         <button
           onClick={onAction}
-          className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+          className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow transition-opacity hover:opacity-80 touch-manipulation"
         >
-          {action} →
+          {action}
         </button>
       )}
     </div>
@@ -330,7 +340,7 @@ export function HeroNumber({
           toneAccent[tone]
         )}
       />
-      <div className="relative p-5 sm:p-7 lg:p-8">
+      <div className="relative p-4 sm:p-5 lg:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2.5 min-w-0">
             {live && <PulseDot tone="green" />}
@@ -339,20 +349,34 @@ export function HeroNumber({
           {actions && <div className="shrink-0 -mt-1">{actions}</div>}
         </div>
         <div className="mt-5">
-          <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
+          <div className="text-[34px] sm:text-[44px] lg:text-[52px] font-semibold text-white tracking-tight leading-none tabular-nums">
             {value}
           </div>
           {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
         </div>
         {columns && columns.length > 0 && (
+          /*
+            Reflows on a phone.
+
+            This was a fixed `repeat(N, 1fr)` at every width, so a four-column
+            hero — AdminRevenue passes four — gave each cell about 88px on a
+            375px screen to hold a 28px figure and a label under it. Four wraps
+            to two rows of two; three still fit across.
+          */
           <div
-            className="mt-6 sm:mt-8 grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden"
-            style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
+            className={cn(
+              'mt-5 grid gap-px overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.06]',
+              columns.length >= 4
+                ? 'grid-cols-2 sm:grid-cols-4'
+                : columns.length === 3
+                  ? 'grid-cols-3'
+                  : 'grid-cols-2'
+            )}
           >
             {columns.map((col, i) => (
               <div
                 key={`${col.label}-${i}`}
-                className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:py-5 text-center"
+                className="bg-[hsl(0_0%_10%)] px-4 py-3.5 text-center"
               >
                 <div
                   className={cn(
@@ -439,10 +463,16 @@ interface StatStripProps {
 
 export function StatStrip({ stats, columns = 4, numbered = false, className }: StatStripProps) {
   const colClass =
+    /*
+     * Three stats went into a two-column grid below `md`, which left a fourth
+     * cell empty — visible as a hole beside "MRR £943" on the mobile
+     * subscribers card. An odd count gets its own column count instead of
+     * being forced into pairs.
+     */
     columns === 5
       ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
       : columns === 3
-        ? 'grid-cols-2 md:grid-cols-3'
+        ? 'grid-cols-3'
         : columns === 2
           ? 'grid-cols-2'
           : 'grid-cols-2 md:grid-cols-4';
@@ -473,13 +503,13 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
             <span
               className={cn(
                 'mt-3 sm:mt-4 font-semibold tabular-nums tracking-[-0.02em] leading-none',
-                'text-[30px] sm:text-4xl lg:text-[48px]',
+                'text-[24px] sm:text-[28px]',
                 valueClass
               )}
             >
               {stat.value}
             </span>
-            {stat.sub && <span className="mt-2.5 text-[11px] text-white">{stat.sub}</span>}
+            {stat.sub && <span className="mt-1.5 text-[11px] text-white">{stat.sub}</span>}
             {stat.onClick && (
               <span className="mt-2 text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
                 Open →
@@ -489,7 +519,7 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
         );
 
         const baseClass =
-          'group relative flex flex-col items-start bg-[hsl(0_0%_12%)] transition-colors px-4 py-5 sm:px-5 sm:py-6 lg:px-6 lg:py-7 text-left overflow-hidden';
+          'group relative flex flex-col items-start overflow-hidden bg-white/[0.03] px-4 py-3.5 text-left transition-colors sm:px-5 sm:py-4';
 
         return stat.onClick ? (
           <motion.button
@@ -577,7 +607,7 @@ export function ListCard({ className, children }: { className?: string; children
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden',
+        '-mx-4 overflow-hidden rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x',
         className
       )}
     >
@@ -609,17 +639,19 @@ export function ListCardHeader({
           )}
         />
       )}
-      <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-3.5 sm:py-4">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="text-[13px] font-semibold text-white truncate">{title}</div>
+      {/* Title and meta wrap together rather than the meta being shoved into
+          the title's truncation on a narrow card. */}
+      <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-3.5">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+          <div className="truncate text-[15px] font-semibold tracking-tight text-white">{title}</div>
           {meta}
         </div>
         {action && onAction && (
           <button
             onClick={onAction}
-            className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+            className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow transition-opacity hover:opacity-80 touch-manipulation"
           >
-            {action} →
+            {action}
           </button>
         )}
       </div>
@@ -688,24 +720,36 @@ export function ListRow({
         <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
-      <div className="flex-1 min-w-0">
-        <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && (
-          <div
-            className={cn(
-              'mt-0.5 text-[11.5px] text-white',
-              subtitleWrap ? 'min-w-0' : 'truncate'
-            )}
-          >
-            {subtitle}
-          </div>
+
+      {/*
+        Trailing content drops below the name on a phone.
+
+        It used to be `shrink-0` on the same row: an avatar, a plan pill, a
+        timestamp and an arrow claimed roughly 282px of a 375px screen, leaving
+        about 90px for the name and email. Every address on the signups list
+        truncated to "leeduck…" — the row's whole purpose, squeezed out by its
+        own metadata. From `sm` up there is room for one line and it goes back
+        beside the title.
+      */}
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-[14px] font-medium text-white">{title}</div>
+          {subtitle && (
+            <div
+              className={cn('mt-0.5 text-[12px] text-white', subtitleWrap ? 'min-w-0' : 'truncate')}
+            >
+              {subtitle}
+            </div>
+          )}
+        </div>
+        {trailing && (
+          <div className="flex shrink-0 flex-wrap items-center gap-2">{trailing}</div>
         )}
       </div>
-      {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
         <span
           aria-hidden
-          className="shrink-0 -mr-1 text-white/0 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all text-[14px]"
+          className="shrink-0 -mr-1 text-white group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all text-[14px]"
         >
           →
         </span>
@@ -715,7 +759,7 @@ export function ListRow({
 
   const base =
     cn(
-      'group w-full flex gap-3 sm:gap-3.5 px-3 sm:px-5 py-3 sm:py-4 text-left touch-manipulation',
+      'group flex w-full gap-3 px-4 py-3 text-left touch-manipulation sm:px-5',
       // Multi-line rows top-align so the avatar sits beside the name rather than
       // floating in the middle of a tall card; single-line rows stay centred.
       subtitleWrap ? 'items-start' : 'items-center'
@@ -966,7 +1010,7 @@ export function EmptyState({
           onClick={onAction}
           className="mt-5 inline-flex text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
         >
-          {action} →
+          {action}
         </button>
       )}
     </div>
@@ -1060,7 +1104,15 @@ export function PageFrame({ children, className }: { children: ReactNode; classN
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn('mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24', className)}
+      className={cn(
+        /*
+          56px between every section on desktop (`lg:space-y-14`) left a
+          single narrow column of cards floating in gaps taller than some of
+          the cards themselves. Sections are grouped content, not chapters.
+        */
+        'mx-auto max-w-[1600px] space-y-5 pb-24 sm:space-y-6',
+        className
+      )}
     >
       {children}
     </motion.div>
@@ -1158,7 +1210,7 @@ export function FilterBar({
               value={search ?? ''}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="h-11 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
+              className="h-11 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/25 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
             />
             <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">/</Kbd>
           </div>

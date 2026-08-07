@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { getDefaultAssumptions } from '@/utils/defaultAssumptions';
 import type { SiteVisit } from '@/types/siteVisit';
+import { textareaCn } from '@/components/forms/fieldStyles';
 
 interface ScopeOfWorksEditorProps {
   visit: SiteVisit;
@@ -13,7 +14,7 @@ interface ScopeOfWorksEditorProps {
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
       {children}
     </div>
   );
@@ -28,7 +29,7 @@ function Row({ label, value, first }: { label: string; value: React.ReactNode; f
         !first && 'border-t border-white/[0.05]'
       )}
     >
-      <span className="text-[12px] text-white/55">{label}</span>
+      <span className="text-[12px] text-white">{label}</span>
       <span className="text-right text-[12.5px] font-medium text-white">{value}</span>
     </div>
   );
@@ -50,7 +51,7 @@ export const ScopeOfWorksEditor = ({
     <div className="space-y-5">
       <div>
         <Eyebrow>SCOPE OF WORKS</Eyebrow>
-        <p className="mt-1 text-[12px] text-white/55">
+        <p className="mt-1 text-[12px] text-white">
           Built from the walk-round — review before it goes to the client
         </p>
       </div>
@@ -112,13 +113,13 @@ export const ScopeOfWorksEditor = ({
                   </div>
                 ))
               ) : (
-                <p className="px-3.5 py-2 text-[12px] italic text-white/45">No items specified</p>
+                <p className="px-3.5 py-2 text-[12px] italic text-white">No items specified</p>
               )}
               {roomPrompts.map((p) => (
                 <Row key={p.id} label={p.promptQuestion} value={p.response} />
               ))}
               {room.notes && (
-                <p className="border-t border-white/[0.05] px-3.5 py-2 text-[12px] text-white/65">
+                <p className="border-t border-white/[0.05] px-3.5 py-2 text-[12px] text-white">
                   {room.notes}
                 </p>
               )}
@@ -133,7 +134,7 @@ export const ScopeOfWorksEditor = ({
           <Eyebrow>ASSUMPTIONS &amp; EXCLUSIONS</Eyebrow>
           <button
             onClick={() => onAssumptionsChange(getDefaultAssumptions(visit.propertyType, visit))}
-            className="flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[12px] font-medium text-white/55 transition-colors touch-manipulation hover:text-white active:bg-white/[0.06]"
+            className="flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[12px] font-medium text-white transition-colors touch-manipulation hover:text-white active:bg-white/[0.06]"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Reset defaults
@@ -143,7 +144,7 @@ export const ScopeOfWorksEditor = ({
           value={assumptions}
           onChange={(e) => onAssumptionsChange(e.target.value)}
           placeholder="Tap 'Reset defaults' to pre-fill smart assumptions"
-          className="min-h-[180px] touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          className={cn(textareaCn, 'min-h-[180px]')}
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"

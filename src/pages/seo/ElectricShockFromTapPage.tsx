@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Missing or disconnected main protective bonding to water and gas pipes is a major contributor to shock risk on metalwork.',
   'In properties with PME (TN-C-S) earthing, a broken PEN conductor (combined neutral and earth) on the DNO supply can put dangerous voltage on all bonded metalwork.',
   'Elec-Mate AI fault diagnosis helps electricians quickly identify whether the cause is an appliance fault, bonding issue, or supply-side problem.',
-  'A4:2026 (Reg 411.3.4) now mandates 30mA RCD protection on all domestic AC lighting circuits — a change that strengthens protection against fault currents reaching metalwork via luminaire wiring.',
+  'BS 7671 Regulation 411.3.4 requires 30mA RCD protection on AC final circuits supplying luminaires in domestic premises — protection against fault currents reaching metalwork via luminaire wiring.',
 ];
 
 const faqs = [
@@ -217,15 +217,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The RCD should trip.</strong> Under BS 7671, socket-outlet circuits (Reg
-                411.3.3) and, since A4:2026, domestic lighting circuits (Reg 411.3.4) require 30mA
-                RCD protection. Many immersion heater circuits are also RCD-protected as part of a
-                fully RCD-protected consumer unit. When the element fails, current flows from the
-                live conductor through the water to earth via the pipework and bonding — this earth
-                leakage should cause the RCD to operate, interrupting the supply. For a
-                general-purpose non-delay 30mA RCD, the product standard (BS EN 61008/61009)
-                requires operation within 300ms at rated residual current IΔn and within 40ms at
-                5×IΔn (150mA); these are product standard limits, not BS 7671 values.
+                <strong>The RCD should trip.</strong> Under BS 7671, socket-outlet circuits rated up
+                to 32A (Reg 411.3.3) and AC final circuits supplying luminaires in domestic premises
+                (Reg 411.3.4) require 30mA RCD protection. Many immersion heater circuits are also
+                RCD-protected as part of a fully RCD-protected consumer unit. When the element
+                fails, current flows from the live conductor through the water to earth via the
+                pipework and bonding — this earth leakage should cause the RCD to operate,
+                interrupting the supply. Regulation 643.8 verifies that operation with a single
+                alternating current test at the rated residual operating current (IΔn): for a
+                general non-delay type RCD the device must disconnect within 300ms maximum.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -289,8 +289,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Incoming gas pipe</strong> — bonded within 600mm of the gas meter on the
-                consumer's side, after the meter and any insulating fitting.
+                <strong>Incoming gas pipe</strong> — bonded to the consumer's hard metal pipework
+                after the meter and before any branch pipework; where practicable within 600mm of
+                the meter outlet union, or at the point of entry to the building where the meter is
+                external.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,8 +312,9 @@ const sections = [
           copper depending on the supply. Where PME does not apply (TN-S or TT), the conductor shall
           be not less than half the CSA of the earthing conductor for the installation, with a
           minimum of 6mm² copper. The bonding must be continuous, securely fixed, and connected with
-          BS EN 61238-1 compliant clamps (typically labelled "Safety Electrical Connection — Do Not
-          Remove").
+          clamps to BS 951 (Electrical earthing — clamps for earthing and bonding), carrying the
+          warning notice "Safety Electrical Connection — Do Not Remove" required by Regulation
+          514.13.1.
         </p>
         <p>
           Common bonding failures include: clamps that have been removed during plumbing work and
@@ -474,9 +477,12 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   With the supply isolated, test the continuity of the main protective bonding
                   conductors. Measure from the MET to the bonding clamp on the water pipe, gas pipe,
-                  and any other bonded services. The reading should be very low (typically less than
-                  0.05 ohm for a short bonding conductor). If the bond is open-circuit or
-                  high-resistance, this is a C1 defect.
+                  and any other bonded services. Guidance Note 3 advises that readings across bonds
+                  made by earth clamps should approach 0.05 ohm, allowing for instrument resolution,
+                  accuracy at low values and contact resistance; where the expected resistance is
+                  below the instrument's resolution, the guideline is a reading not exceeding 0.1
+                  ohm. An open-circuit or high-resistance bond is a defect requiring immediate
+                  remedy.
                 </p>
               </div>
             </div>
@@ -538,10 +544,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ensure all circuits have 30mA RCD protection.</strong> Under BS 7671, all
-                circuits in domestic installations should have RCD protection. This is the primary
-                defence against electric shock — the RCD will trip before a dangerous current can
-                flow through a person.
+                <strong>Ensure the circuits BS 7671 requires to be RCD-protected actually are.</strong>{' '}
+                30mA additional protection is required for socket-outlets rated up to 32A (Reg
+                411.3.3), AC final circuits supplying luminaires in domestic premises (Reg 411.3.4),
+                cables concealed in walls and partitions (Reg 522.6.202 and Table 52.1), and all low
+                voltage circuits serving a location containing a bath or shower (Reg 701.411.3.3).
+                In practice a modern fully RCD-protected consumer unit covers all of these. The RCD
+                is the primary defence against electric shock — it trips before a dangerous current
+                can flow through a person for long enough to cause harm.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -556,23 +566,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>
-                  Ensure domestic lighting circuits have 30mA RCD protection (A4:2026).
-                </strong>{' '}
-                BS 7671 A4:2026 Regulation 411.3.4 now requires that, within domestic premises, all
-                AC final circuits supplying luminaires shall have additional protection by an RCD
-                with a rated residual operating current not exceeding 30mA. This directly reduces
-                the risk of fault currents from luminaire wiring reaching metalwork and causing a
-                shock — the same mechanism described on this page.
+                <strong>Ensure domestic lighting circuits have 30mA RCD protection.</strong> BS 7671
+                Regulation 411.3.4 requires that, within domestic (household) premises, AC final
+                circuits supplying luminaires shall have additional protection by an RCD with a
+                rated residual operating current not exceeding 30mA. This has applied since the 18th
+                Edition (BS 7671:2018) and is unchanged in A4:2026, so older installations
+                predating it are commonly found without it. It directly reduces the risk of fault
+                currents from luminaire wiring reaching metalwork and causing a shock — the same
+                mechanism described on this page.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check supplementary bonding in bathrooms.</strong> BS 7671 Regulation
-                701.415.2 requires supplementary bonding in bathrooms where the conditions of
-                Regulation 415.2 are not met — connecting all extraneous-conductive-parts and
-                exposed-conductive-parts within the location.
+                701.415.2 requires supplementary bonding in a room containing a bath or shower —
+                connecting the protective conductor terminals of every circuit supplying Class I and
+                Class II equipment to the accessible extraneous-conductive-parts. It may be omitted
+                only where the building has protective equipotential bonding to Regulation 411.3.1.2
+                and all three omission conditions are met: every final circuit of the location
+                complies with automatic disconnection (Reg 411.3.2), every final circuit has 30mA
+                RCD additional protection (Reg 415.1.1), and all extraneous-conductive-parts of the
+                location are effectively connected to the main protective bonding.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -612,10 +627,10 @@ const sections = [
 export default function ElectricShockFromTapPage() {
   return (
     <GuideTemplate
-      title="Electric Shock From a Tap? Causes + Urgent Safety Steps"
-      description="Tingle from a tap means an earthing fault. Immersion heater leakage, lost PEN, broken main bond — what to check, what to do right now, when to call an electrician."
+      title="Electric Shock from Tap: Causes & How to Fix"
+      description="Usually a failed immersion heater element energising the pipework. Switch off the consumer unit first, then check main bonding and a broken PEN (TN-C-S)."
       datePublished="2025-04-20"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -645,7 +645,7 @@ export default function TroubleshootingElectricalProblemsPage() {
   return (
     <GuideTemplate
       title="Troubleshooting Electrical Problems | Homeowner Guide"
-      description="Step-by-step guide to troubleshooting common electrical problems at home. Tripped MCBs, flickering lights, dead sockets, burning smells…"
+      description="Step-by-step guide to troubleshooting common electrical problems at home. Tripped MCBs, flickering lights, dead sockets, burning smells."
       datePublished="2026-01-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -34,12 +34,9 @@ export const starDeltaContent: CalculatorContent = {
       { label: 'Line voltage', value: '400 V' },
       { label: 'Connection', value: 'Star (Y)' },
     ],
-    steps: [
-      'Phase voltage = line voltage ÷ √3',
-      'V_phase = 400 ÷ 1.732',
-      'V_phase ≈ 231 V',
-    ],
-    result: 'Each phase sees ≈ 231 V (the familiar 230 V) in star; line current equals phase current.',
+    steps: ['Phase voltage = line voltage ÷ √3', 'V_phase = 400 ÷ 1.732', 'V_phase ≈ 231 V'],
+    result:
+      'Each phase sees ≈ 231 V (the familiar 230 V) in star; line current equals phase current.',
   },
 
   standards: [],

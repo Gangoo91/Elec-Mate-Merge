@@ -513,7 +513,7 @@ export default function ElectricianHuddersfieldPage() {
       noindex={true}
       localArea="Huddersfield"
       title="Electrician Huddersfield | Local Electricians Huddersfield"
-      description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement…"
+      description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

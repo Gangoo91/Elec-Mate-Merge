@@ -456,7 +456,7 @@ const sections = [
               active insulation degradation is the cause.
             </li>
             <li>
-              <strong>RCD operating time (Reg 643.7.3.201)</strong> — a general non-delay 30 mA RCD
+              <strong>RCD operating time (Reg 643.8)</strong> — a general non-delay 30 mA RCD
               must operate within a maximum of 300 ms when tested at its rated residual operating
               current (I&Delta;n). Testing is carried out with suitable equipment to BS EN 61557-6.
             </li>
@@ -742,7 +742,7 @@ export default function PubLicensedPremisesEICRPage() {
   return (
     <GuideTemplate
       title="EICR for Pubs & Licensed Premises UK | Licensing"
-      description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency…"
+      description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

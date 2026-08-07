@@ -1,5 +1,5 @@
 /**
- * Module 3 · Section 2 · Sub 3 — BS EN 60617 graphical symbols
+ * Module 3 · Section 2 · Sub 3 — IEC 60617 graphical symbols
  * Maps to City & Guilds 2365-02 / Unit 203 / LO2 / AC 2.3
  *   AC 2.3 — "Recognise symbols used in drawings"
  *
@@ -8,7 +8,7 @@
  *   - Forward to §3 (wiring systems — once you know the symbols you can read
  *     the wiring decisions)
  *
- * Note on the standard: BS EN 60617 was the canonical reference for UK
+ * Note on the standard: IEC 60617 was the canonical reference for UK
  * graphical symbols and is what every UK syllabus, including C&G 2365-02,
  * still names. The standard itself has been formally withdrawn and
  * superseded by the IEC 60617 online database — the symbols are unchanged
@@ -48,9 +48,9 @@ import {
 } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'BS EN 60617 drawing symbols | Level 2 Module 3.2.3 | Elec-Mate';
+const TITLE = 'IEC 60617 drawing symbols | Level 2 Module 3.2.3 | Elec-Mate';
 const DESCRIPTION =
-  'The BS EN 60617 graphical symbol library — switches, sockets, lights, protective devices and accessories — the visual shorthand on every UK installation drawing.';
+  'The IEC 60617 graphical symbol library — switches, sockets, lights, protective devices and accessories — the visual shorthand on every UK installation drawing.';
 
 /* ── Inline checks (wired into streaks/stats) ─────────────────────── */
 
@@ -198,7 +198,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — symbols per IEC 60617 (the modern continuation of BS EN 60617), notices per BS EN 60073 / 60446. Home-made symbols don't comply.",
+      "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — symbols per IEC 60617 (the modern continuation of IEC 60617), notices per BS EN 60073 / 60446. Home-made symbols don't comply.",
   },
   {
     id: 8,
@@ -225,19 +225,19 @@ const faqs = [
       "The common 30 or so, yes — switches, sockets, lights, MCB/RCD/RCBO/AFDD, FCU, MET, junction box, simple cable types. You'll see those daily. The rarer ones (specific motor types, instrumentation, specialist sensors) you can look up when they appear. Build a deck of flashcards in your first few months — it pays dividends on every drawing pack you ever read.",
   },
   {
-    question: "BS EN 60617 vs IEC 60617 — which name is right?",
+    question: "IEC 60617 vs IEC 60617 — which name is right?",
     answer:
       "Both are still in use on UK sites. BS EN 60617 was the formal British/European publication of the symbols and is what the C&G syllabus, OSG and most printed material reference. BS EN 60617 has been withdrawn as a printed standard; the symbols are now maintained centrally as the IEC 60617 online database, which BSI references — same symbols, different home. Use whichever your training material uses; the symbols are the same.",
   },
   {
     question: "Are symbols different on US drawings?",
     answer:
-      "Yes — significantly. The US uses ANSI/IEEE Y32 and NEMA-style symbols which look quite different (different switch and socket symbols especially). Stick with BS EN 60617 / IEC 60617 for any UK or European job. If you ever work from US drawings, get a US symbol key alongside.",
+      "Yes — significantly. The US uses ANSI/IEEE Y32 and NEMA-style symbols which look quite different (different switch and socket symbols especially). Stick with IEC 60617 / IEC 60617 for any UK or European job. If you ever work from US drawings, get a US symbol key alongside.",
   },
   {
     question: "Why do some drawings combine multiple symbol conventions?",
     answer:
-      "Old drawings sometimes mix BS 3939 (the predecessor) with BS EN 60617. Manufacturer drawings sometimes use their own style. Treat any drawing with mixed conventions as suspect — confirm what each symbol means against a key, ideally before you wire from it.",
+      "Old drawings sometimes mix BS 3939 (the predecessor) with IEC 60617. Manufacturer drawings sometimes use their own style. Treat any drawing with mixed conventions as suspect — confirm what each symbol means against a key, ideally before you wire from it.",
   },
   {
     question: "What's an MET? I saw it in a board schedule.",
@@ -268,7 +268,7 @@ export default function Sub3() {
 
           <PageHero
             eyebrow="Module 3 · Section 2 · Subsection 3"
-            title="BS EN 60617 graphical symbols"
+            title="IEC 60617 graphical symbols"
             description="The standard symbol library you read on every UK installation drawing — switches, sockets, lights, protective devices, accessories. Memorise the common ones. You'll see them daily."
             tone="emerald"
           />
@@ -283,7 +283,7 @@ export default function Sub3() {
 
           <LearningOutcomes
             outcomes={[
-              'Recognise the BS EN 60617 / IEC 60617 graphical symbols for power sources, conductors, switches, sockets, luminaires and protective devices.',
+              'Recognise the IEC 60617 / IEC 60617 graphical symbols for power sources, conductors, switches, sockets, luminaires and protective devices.',
               'Identify common circuit components: resistors, capacitors, inductors, diodes, LEDs, contactors and relays.',
               'Read switch symbols correctly — 1-way, 2-way, intermediate, 2-pole, 2-gang variants.',
               'Identify protective device symbols (MCB, RCD, RCBO, AFDD, MCCB, fuse) and the markings that distinguish them.',
@@ -301,7 +301,7 @@ export default function Sub3() {
             onSite="The supervisor expects you to read a layout drawing as fluently as you'd read a road sign. Pause to ask 'what does that symbol mean?' on every job and you'll quickly lose your supervisor's confidence."
           >
             <p>
-              BS EN 60617 (now maintained in the IEC 60617 online database) defines the standard
+              IEC 60617 (now maintained in the IEC 60617 online database) defines the standard
               graphical symbols used on electrical drawings across the UK and Europe. Every
               installation drawing — domestic, commercial, industrial — should use this set. It's
               the alphabet that makes drawings universally readable: a UK electrician can pick up a
@@ -323,7 +323,7 @@ export default function Sub3() {
               <>
                 The regulatory backbone for using a standard symbol set. The 'applicable standard'
                 for graphical symbols on UK electrical drawings is the IEC 60617 online database
-                (the modern continuation of BS EN 60617). Drawings that mix standards or invent
+                (the modern continuation of IEC 60617). Drawings that mix standards or invent
                 symbols don't comply with this regulation, and an inspector can flag them as a
                 non-conformance.
               </>
@@ -736,7 +736,7 @@ export default function Sub3() {
             situation={
               <>
                 You're at a small commercial fit-out. The drawing pack is from a low-cost design
-                outfit and several symbols don't match anything in the BS EN 60617 / IEC 60617 set
+                outfit and several symbols don't match anything in the IEC 60617 / IEC 60617 set
                 — there's a blob with 'X' on the kitchen layout that nobody can identify, and the
                 symbol legend at the bottom of the drawing is incomplete.
               </>
@@ -778,7 +778,7 @@ export default function Sub3() {
             ]}
           />
 
-          <Quiz title="BS EN 60617 symbols — knowledge check" questions={quizQuestions} />
+          <Quiz title="IEC 60617 symbols — knowledge check" questions={quizQuestions} />
 
           {/* ── Prev / next nav ─────────────────────────────────── */}
           <div className="grid grid-cols-2 gap-3 pt-2">

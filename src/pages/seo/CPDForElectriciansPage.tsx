@@ -535,8 +535,8 @@ const sections = [
 export default function CPDForElectriciansPage() {
   return (
     <GuideTemplate
-      title="CPD for UK Electricians 2026: Hours, NICEIC, NAPIT"
-      description="CPD for UK electricians 2026: required hours by scheme, what counts, popular courses, NICEIC + NAPIT requirements, free CPD options. Stay registered."
+      title="NICEIC & NAPIT CPD: 30 Hours a Year + Records"
+      description="NICEIC and NAPIT both require 30 CPD hours a year — about 35 minutes a week. What counts, which courses matter in 2026, and how to record it."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

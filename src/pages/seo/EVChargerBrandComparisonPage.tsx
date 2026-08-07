@@ -550,7 +550,7 @@ export default function EVChargerBrandComparisonPage() {
   return (
     <GuideTemplate
       title="Best EV Charger UK 2025 | Ohme vs Zappi vs Pod Point vs"
-      description="Compare the best EV chargers in the UK for 2025. Zappi vs Pod Point vs Ohme vs Easee vs Wallbox — solar integration, smart tariffs…"
+      description="Compare the best EV chargers in the UK for 2025. Zappi vs Pod Point vs Ohme vs Easee vs Wallbox — solar integration, smart tariffs."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

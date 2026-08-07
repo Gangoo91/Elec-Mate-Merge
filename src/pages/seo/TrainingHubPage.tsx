@@ -258,7 +258,7 @@ export default function TrainingHubPage() {
           <p className="text-base text-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
             All 18th Edition content on Elec-Mate is aligned to BS 7671:2018+A4:2026 — the current
             edition of the wiring regulations — including arc fault detection devices under
-            Regulation 421.1.7 and the expanded RCD requirements introduced by Amendment 4.
+            Regulation 421.1.7 and the expanded RCD requirements introduced by Amendment 2:2022.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a

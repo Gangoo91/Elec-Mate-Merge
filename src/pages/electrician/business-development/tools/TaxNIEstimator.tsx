@@ -15,7 +15,6 @@ import {
   Percent,
   Receipt,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -23,6 +22,7 @@ import {
   CalculatorInput,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -34,6 +34,7 @@ import {
   TAX_YEAR_KEYS,
   isRateTableStale,
 } from '@/data/uk-tax-rates';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface TaxInputs {
   annualIncome: number;
@@ -53,9 +54,15 @@ const TaxNIEstimator = () => {
   const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
 
+  // Seeded with a realistic sole-trader year rather than zeros. Now that
+  // results are live, an all-zero form opened on "£0.00" set at 42px — a
+  // calculator confidently answering a question nobody asked. Every other tool
+  // in the suite seeds itself and is immediately legible; this one showed a
+  // blank. Figures are illustrative, not advice, and the first field is the
+  // one the user overwrites anyway.
   const [inputs, setInputs] = useState<TaxInputs>({
-    annualIncome: 0,
-    businessExpenses: 0,
+    annualIncome: 55000,
+    businessExpenses: 11000,
     capitalAllowances: 0,
     pensionContributions: 0,
     charitableDonations: 0,
@@ -65,8 +72,14 @@ const TaxNIEstimator = () => {
     vatTurnover: 0,
     vatPurchases: 0,
   });
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
   const [taxYear, setTaxYear] = useState<string>(CURRENT_TAX_YEAR);
   const rateTableStale = isRateTableStale();
 
@@ -80,7 +93,6 @@ const TaxNIEstimator = () => {
       ...prev,
       [field]: value,
     }));
-    setCalculated(false);
   };
 
   const calculateTax = () => {
@@ -105,7 +117,6 @@ const TaxNIEstimator = () => {
       vatTurnover: 0,
       vatPurchases: 0,
     });
-    setCalculated(false);
     toast({
       title: 'Calculator Reset',
       description: 'All fields have been cleared.',
@@ -126,7 +137,6 @@ const TaxNIEstimator = () => {
       vatTurnover: 65000,
       vatPurchases: 18000,
     });
-    setCalculated(false);
   };
 
   // Rates and the maths both come from the single source of truth in
@@ -254,31 +264,13 @@ const TaxNIEstimator = () => {
         />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <PoundSterling
-                className="h-6 w-6 sm:h-7 sm:w-7"
-                style={{ color: config.gradientFrom }}
-              />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Tax & NI Estimator
-              </h1>
-              <p className="text-sm text-white">Estimate your UK tax liabilities</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+        <HubMasthead
+          section="Business"
+          title="Tax & NI Estimator"
+          backTo="/electrician/business-development/tools"
+        />
 
         {/* Rate table has fallen behind the live tax year */}
         {rateTableStale && (
@@ -321,10 +313,7 @@ const TaxNIEstimator = () => {
           badge="UK Tax"
         >
           {/* Tax Year Selection */}
-          <div className="flex items-center gap-2 mb-3">
-            <Calendar className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Tax Year</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Tax Year</h3>
 
           <div className="flex gap-2 mb-4">
             {TAX_YEAR_KEYS.map((year) => (
@@ -332,7 +321,6 @@ const TaxNIEstimator = () => {
                 key={year}
                 onClick={() => {
                   setTaxYear(year);
-                  setCalculated(false);
                 }}
                 className={cn(
                   'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
@@ -352,10 +340,7 @@ const TaxNIEstimator = () => {
           </div>
 
           {/* Business Income */}
-          <div className="flex items-center gap-2 mb-3">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Business Income</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Business Income</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -433,10 +418,7 @@ const TaxNIEstimator = () => {
               </div>
 
               <div className="pt-3 border-t border-white/10">
-                <div className="flex items-center gap-2 mb-3">
-                  <Percent className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-medium text-white">VAT Configuration</span>
-                </div>
+                <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">VAT Configuration</h3>
 
                 <div className="flex gap-2 mb-3">
                   <button
@@ -444,7 +426,7 @@ const TaxNIEstimator = () => {
                     className={cn(
                       'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
                       inputs.vatRegistered
-                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300'
+                        ? 'bg-white/[0.04] border border-white/[0.10] text-elec-yellow'
                         : 'bg-white/5 border border-white/10 text-white'
                     )}
                   >
@@ -455,7 +437,7 @@ const TaxNIEstimator = () => {
                     className={cn(
                       'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
                       !inputs.vatRegistered
-                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300'
+                        ? 'bg-white/[0.04] border border-white/[0.10] text-elec-yellow'
                         : 'bg-white/5 border border-white/10 text-white'
                     )}
                   >
@@ -506,7 +488,7 @@ const TaxNIEstimator = () => {
                       updateInput('receivesMarriageAllowance', e.target.checked);
                       if (e.target.checked) updateInput('transfersMarriageAllowance', false);
                     }}
-                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
+                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-elec-yellow focus:ring-elec-yellow/60"
                   />
                   <div>
                     <span className="text-sm text-white">Receiving from my spouse</span>
@@ -524,7 +506,7 @@ const TaxNIEstimator = () => {
                       updateInput('transfersMarriageAllowance', e.target.checked);
                       if (e.target.checked) updateInput('receivesMarriageAllowance', false);
                     }}
-                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
+                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-elec-yellow focus:ring-elec-yellow/60"
                   />
                   <div>
                     <span className="text-sm text-white">Transferring to my spouse</span>
@@ -596,18 +578,14 @@ const TaxNIEstimator = () => {
             )}
 
             <CalculatorResult category="business">
-              <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white mb-1">Total Tax & NI</p>
-                <div
-                  className="text-4xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {formatCurrency(estimates.totalTaxNI)}
-                </div>
-                <p className="text-sm text-white mt-1">per year</p>
-              </div>
+              {/* The answer a sole trader comes for is what to set aside, not a
+                  breakdown. Total first, monthly beside it, take-home stated. */}
+              <ResultHeadline
+                label={`Set aside for tax & NI · ${taxYear}`}
+                value={formatCurrency(estimates.totalTaxNI)}
+                aside={`${formatCurrency(estimates.monthlyTaxNI)} a month`}
+                caption={`Leaves you ${formatCurrency(estimates.netIncome)} from ${formatCurrency(estimates.grossProfit)} profit — an effective rate of ${estimates.effectiveRate.toFixed(1)}%.`}
+              />
 
               <ResultsGrid columns={2}>
                 <ResultValue
@@ -641,7 +619,7 @@ const TaxNIEstimator = () => {
                 <p className="text-xs text-white mb-3">Payment Schedule</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                   <div>
-                    <div className="text-xs text-blue-400 mb-1">Monthly Reserve</div>
+                    <div className="text-xs text-elec-yellow mb-1">Monthly Reserve</div>
                     <div className="text-white font-medium">
                       {formatCurrency(estimates.monthlyTaxNI)}
                     </div>
@@ -673,19 +651,19 @@ const TaxNIEstimator = () => {
                   </p>
                   <div className="grid grid-cols-3 gap-3 text-center">
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">Output VAT charged</div>
+                      <div className="text-xs text-white mb-1">Output VAT charged</div>
                       <div className="text-white font-medium">
                         {formatCurrency(estimates.outputVat)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">Input VAT reclaimed</div>
+                      <div className="text-xs text-white mb-1">Input VAT reclaimed</div>
                       <div className="text-white font-medium">
                         -{formatCurrency(estimates.inputVat)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">
+                      <div className="text-xs text-white mb-1">
                         {estimates.netVat < 0 ? 'Net reclaim from HMRC' : 'Net VAT payable'}
                       </div>
                       <div className="text-white font-medium">
@@ -717,11 +695,11 @@ const TaxNIEstimator = () => {
 
             {/* Income Breakdown */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Income Breakdown
                     </span>
                   </div>
@@ -753,7 +731,7 @@ const TaxNIEstimator = () => {
                     </div>
                     <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
                       <span className="text-white">Gross Profit:</span>
-                      <span className="text-blue-400">{formatCurrency(estimates.grossProfit)}</span>
+                      <span className="text-elec-yellow">{formatCurrency(estimates.grossProfit)}</span>
                     </div>
                     <div className="flex justify-between text-white">
                       <span>Personal Allowance:</span>
@@ -763,7 +741,7 @@ const TaxNIEstimator = () => {
                     </div>
                     <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
                       <span className="text-white">Taxable Income:</span>
-                      <span className="text-blue-400">
+                      <span className="text-elec-yellow">
                         {formatCurrency(estimates.taxableIncome)}
                       </span>
                     </div>
@@ -792,7 +770,7 @@ const TaxNIEstimator = () => {
                     </div>
                     <div className="flex justify-between text-white">
                       <span>Marginal rate on the next £1:</span>
-                      <span className="text-blue-400">
+                      <span className="text-elec-yellow">
                         {estimates.marginalRate.toFixed(0)}%
                       </span>
                     </div>
@@ -885,10 +863,7 @@ const TaxNIEstimator = () => {
 
         {/* Tax Tips */}
         <div className="calculator-card p-4" style={{ borderColor: '#22c55e20' }}>
-          <div className="flex items-center gap-2 mb-3">
-            <Lightbulb className="h-5 w-5 text-green-400" />
-            <span className="text-sm font-medium text-green-300">Tax Planning Tips</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Tax Planning Tips</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-green-200/70">
             <div>
               <p className="text-green-300 font-medium mb-1">Expenses</p>

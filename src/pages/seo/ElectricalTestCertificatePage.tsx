@@ -18,7 +18,7 @@ export default function ElectricalTestCertificatePage() {
   return (
     <GuideTemplate
       title="Electrical Test Certificate | What It Is & When You Need One"
-      description="Understand the different types of electrical test certificate in the UK. Learn when you need an EIC, EICR, or Minor Works Certificate, what each covers…"
+      description="Understand the different types of electrical test certificate in the UK. Learn when you need an EIC, EICR, or Minor Works Certificate, what each covers."
       datePublished="2025-06-01"
       dateModified="2026-05-18"
       breadcrumbs={[

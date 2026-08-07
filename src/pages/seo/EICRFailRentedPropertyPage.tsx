@@ -816,7 +816,7 @@ export default function EICRFailRentedPropertyPage() {
   return (
     <GuideTemplate
       title="EICR Fail on Rented Property | Landlord Guide"
-      description="What happens when an EICR fails on a rented property. Landlord obligations under the 2020 Regulations, 28-day remedial deadline, C1 vs C2 defects…"
+      description="What happens when an EICR fails on a rented property. Landlord obligations under the 2020 Regulations, 28-day remedial deadline, C1 vs C2 defects."
       datePublished="2025-07-10"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

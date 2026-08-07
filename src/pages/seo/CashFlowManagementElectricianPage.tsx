@@ -482,7 +482,7 @@ export default function CashFlowManagementElectricianPage() {
   return (
     <GuideTemplate
       title="Cash Flow Management for Electricians UK 2026 | Business"
-      description="Cash flow guide for self-employed electricians. Invoicing terms, deposit strategy, staged payments, chasing late payments, tax planning…"
+      description="Cash flow guide for self-employed electricians. Invoicing terms, deposit strategy, staged payments, chasing late payments, tax planning."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

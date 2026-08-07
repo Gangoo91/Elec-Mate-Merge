@@ -522,7 +522,7 @@ export default function SupervisingApprenticesPage() {
   return (
     <GuideTemplate
       title="Supervising Electrical Apprentices UK | Employer"
-      description="Complete guide for UK electrical employers supervising apprentices. Supervision ratios, live conductor rules, JIB apprenticeship wage rates 2026…"
+      description="Complete guide for UK electrical employers supervising apprentices. Supervision ratios, live conductor rules, JIB apprenticeship wage rates 2026."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -17,7 +17,7 @@ import {
 export default function AIComponentIdentificationPage() {
   return (
     <ToolTemplate
-      title="AI Component ID | Photo Scanner Tool | Elec-Mate"
+      title="AI Component ID | Photo Scanner Tool"
       description="Point your phone camera at any electrical component and Elec-Mate's AI identifies it instantly. UK-spec accessories, MCBs, RCDs, conduit, more."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
@@ -180,7 +180,7 @@ export default function AIComponentIdentificationPage() {
                   <span className="font-semibold text-white">
                     Arc Fault Detection Devices (AFDDs)
                   </span>{' '}
-                  — A device category introduced by BS 7671:2018+A4:2026, Reg 421.1.7, which
+                  — A device category introduced by Amendment 2:2022, Reg 421.1.7, which
                   recommends AFDD installation on AC final circuits to mitigate fire risk from arc
                   fault currents. AFDDs are now appearing in upgraded and new consumer units from
                   manufacturers including Hager, Schneider, and Eaton. The AI identifies them by

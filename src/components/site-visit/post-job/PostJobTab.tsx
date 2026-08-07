@@ -15,6 +15,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { SiteVisit, SiteVisitPhoto } from '@/types/siteVisit';
 import { Eyebrow, Dot } from '@/components/college/primitives';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 interface PostJobTabProps {
   visit: SiteVisit;
@@ -283,14 +284,14 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
   return (
     <div className="space-y-5">
       {/* Section 01 — After photos capture */}
-      <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+      <section className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
             <Eyebrow>01 · AFTER PHOTOS</Eyebrow>
             <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
               Capture the finished work
             </h3>
-            <p className="mt-1 text-[12.5px] text-white/65">
+            <p className="mt-1 text-[12.5px] text-white">
               Match the same areas as the before-photos — handover pack pairs them automatically.
             </p>
           </div>
@@ -338,7 +339,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
 
       {/* Section 02 — Before / after gallery */}
       {beforePhotos.length > 0 && (
-        <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+        <section className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
           <Eyebrow>
             02 · BEFORE {canCompare ? '& AFTER' : ''} · {beforePhotos.length} photo
             {beforePhotos.length !== 1 ? 's' : ''}
@@ -351,7 +352,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
             <>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Before
                   </span>
                   <div className="aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]">
@@ -381,10 +382,10 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
                     <button
                       key={i}
                       onClick={() => setCompareIndex(i)}
-                      className={`h-8 w-8 touch-manipulation rounded-full text-[12px] font-semibold transition-colors ${
+                      className={`h-11 w-11 touch-manipulation rounded-full text-[12px] font-semibold transition-colors ${
                         i === compareIndex
                           ? 'bg-elec-yellow text-black'
-                          : 'border border-white/[0.08] bg-white/[0.04] text-white/65 hover:bg-white/[0.08]'
+                          : 'border border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]'
                       }`}
                     >
                       {i + 1}
@@ -424,19 +425,19 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
             <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
               Hand over the device to sign
             </h3>
-            <p className="mt-1 text-[12.5px] text-white/65">
+            <p className="mt-1 text-[12.5px] text-white">
               Client name + signature locks in the completion record.
             </p>
           </div>
 
           <div className="mt-4 space-y-3">
             <div className="space-y-1.5">
-              <label className="text-[11.5px] font-medium text-white/65">Client name</label>
+              <label className="text-[11.5px] font-medium text-white">Client name</label>
               <Input
                 value={completionClientName}
                 onChange={(e) => setCompletionClientName(e.target.value)}
                 placeholder="Enter client name"
-                className="h-11 rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 touch-manipulation"
+                className={inputCn}
               />
             </div>
 
@@ -502,14 +503,14 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
 
       {/* Section 04 — Completion certificate */}
       {(isCompletionSent || completionSigned) && (
-        <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+        <section className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <Eyebrow>04 · COMPLETION PDF</Eyebrow>
               <h3 className="mt-1.5 text-[16px] font-semibold tracking-tight text-white sm:text-[17px]">
                 Hand the customer their copy
               </h3>
-              <p className="mt-1 text-[12.5px] text-white/65">
+              <p className="mt-1 text-[12.5px] text-white">
                 Before/after photos, signatures, scope summary — all in one PDF.
               </p>
             </div>
@@ -547,7 +548,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
               <h3 className="mt-1.5 text-[16px] font-semibold tracking-tight text-white sm:text-[17px]">
                 Raise the invoice
               </h3>
-              <p className="mt-1 text-[12.5px] text-white/65">
+              <p className="mt-1 text-[12.5px] text-white">
                 Creates an invoice from the accepted quote. Stripe link included.
               </p>
             </div>

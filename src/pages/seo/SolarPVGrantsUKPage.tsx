@@ -491,7 +491,7 @@ export default function SolarPVGrantsUKPage() {
   return (
     <GuideTemplate
       title="Solar Panel Grants UK 2025 | Funding & Incentives Guide"
-      description="Complete guide to solar panel grants and incentives in the UK. Smart Export Guarantee (SEG), 0% VAT until 2027, ECO4, LA Flex schemes…"
+      description="Complete guide to solar panel grants and incentives in the UK. Smart Export Guarantee (SEG), 0% VAT until 2027, ECO4, LA Flex schemes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

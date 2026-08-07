@@ -56,14 +56,14 @@ const relatedPages = [
   {
     href: '/guides/electrical-symbols-chart',
     title: 'Electrical Symbols Chart (Full Library)',
-    description: 'All 114 BS EN 60617 symbols grouped by category — the master reference.',
+    description: 'All 114 IEC 60617 symbols grouped by category — the master reference.',
     icon: 'PenTool',
     category: 'Reference',
   },
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'BookOpen',
     category: 'Guide',
   },
@@ -78,7 +78,7 @@ const relatedPages = [
   {
     href: '/ai-diagram-builder',
     title: 'AI Diagram Builder',
-    description: 'Drag-and-drop BS EN 60617 symbols into a working circuit drawing.',
+    description: 'Drag-and-drop IEC 60617 symbols into a working circuit drawing.',
     icon: 'ShieldCheck',
     category: 'Tool',
   },
@@ -106,11 +106,11 @@ const sections = [
     content: (
       <>
         <p>
-          Every BMS, lighting control and sensor symbol — drawn to BS EN 60617 with BS EN 62386
+          Every BMS, lighting control and sensor symbol — drawn to IEC 60617 with BS EN 62386
           (DALI), KNX and Lutron protocol cross-references.
         </p>
         <p>
-          Each symbol is drawn to <strong>BS EN 60617</strong> — the UK adoption of the
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
           international IEC 60617 standard for graphical symbols on electrical diagrams. The same
           symbols appear on{' '}
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
@@ -119,14 +119,14 @@ const sections = [
         <p>
           Looking for symbols in a different category? See the full{' '}
           <SEOInternalLink href="/guides/electrical-symbols-chart">
-            BS EN 60617 symbol library
+            IEC 60617 symbol library
           </SEOInternalLink>{' '}
           covering switches, sockets, lighting, distribution, safety, containment, equipment,
           mechanical, renewables, controls and architectural symbols.
         </p>
         <SEOAppBridge
           title="Use these symbols in real drawings"
-          description="The Elec-Mate AI Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
+          description="The Elec-Mate AI Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -139,7 +139,7 @@ export default function ElectricalControlsSymbolsPage() {
   return (
     <GuideTemplate
       title="Controls + BMS Symbols | DALI, KNX, Sensor Reference"
-      description="BMS controller, control panel, lighting control, sensor and humidity sensor symbols to BS EN 60617 for UK building management and smart lighting…"
+      description="BMS controller, control panel, lighting control, sensor and humidity sensor symbols to IEC 60617 for UK building management and smart lighting."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -152,14 +152,14 @@ export default function ElectricalControlsSymbolsPage() {
           <span className="text-yellow-400">Building management + smart lighting references</span>
         </>
       }
-      heroSubtitle="Every BMS, lighting control and sensor symbol — drawn to BS EN 60617 with BS EN 62386 (DALI), KNX and Lutron protocol cross-references."
+      heroSubtitle="Every BMS, lighting control and sensor symbol — drawn to IEC 60617 with BS EN 62386 (DALI), KNX and Lutron protocol cross-references."
       readingTime={6}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       faqHeading="FAQ — Controls + BMS Symbols"
       relatedPages={relatedPages}
-      ctaHeading="Use BS EN 60617 symbols in working drawings"
+      ctaHeading="Use IEC 60617 symbols in working drawings"
       ctaSubheading="Drag-and-drop circuit diagrams. EICR + EIC schedules with correct symbols. Built for UK electricians. 7-day free trial."
     />
   );

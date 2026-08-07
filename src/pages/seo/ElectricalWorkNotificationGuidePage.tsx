@@ -594,7 +594,7 @@ export default function ElectricalWorkNotificationGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Work Notification Part P | What Must Be Notified"
-      description="Detailed guide to electrical work notification under Part P Building Regulations. What work is specifically notifiable, how to notify building control…"
+      description="Detailed guide to electrical work notification under Part P Building Regulations. What work is specifically notifiable, how to notify building control."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

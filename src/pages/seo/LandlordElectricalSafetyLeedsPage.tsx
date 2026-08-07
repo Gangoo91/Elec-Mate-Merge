@@ -467,7 +467,7 @@ export default function LandlordElectricalSafetyLeedsPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Leeds | EICR Requirements 2026"
-      description="Landlord electrical safety requirements in Leeds. 2020 Regulations, council enforcement, selective licensing, HMO requirements, penalties up to £30,000…"
+      description="Landlord electrical safety requirements in Leeds. 2020 Regulations, council enforcement, selective licensing, HMO requirements, penalties up to £30,000."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

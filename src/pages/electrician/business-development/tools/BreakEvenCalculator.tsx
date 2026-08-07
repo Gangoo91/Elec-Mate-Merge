@@ -15,7 +15,6 @@ import {
   RotateCcw,
   Scale,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -23,11 +22,14 @@ import {
   CalculatorInput,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 const BreakEvenCalculator: React.FC = () => {
   const config = CALCULATOR_CONFIG['business'];
@@ -96,7 +98,7 @@ const BreakEvenCalculator: React.FC = () => {
         bg: 'bg-green-500/10 border-green-500/30',
       };
     if (marginNum >= 15)
-      return { label: 'Good', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/30' };
+      return { label: 'Good', color: 'text-elec-yellow', bg: 'bg-white/[0.04] border-white/[0.10]' };
     if (marginNum >= 10)
       return { label: 'Fair', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/30' };
     return { label: 'Low', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/30' };
@@ -110,7 +112,7 @@ const BreakEvenCalculator: React.FC = () => {
         bg: 'bg-green-500/10 border-green-500/30',
       };
     if (utilisationRate >= 50)
-      return { label: 'Good', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/30' };
+      return { label: 'Good', color: 'text-elec-yellow', bg: 'bg-white/[0.04] border-white/[0.10]' };
     if (utilisationRate >= 40)
       return { label: 'Fair', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/30' };
     return { label: 'Low', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/30' };
@@ -124,7 +126,7 @@ const BreakEvenCalculator: React.FC = () => {
         bg: 'bg-green-500/10 border-green-500/30',
       };
     if (markupNum >= 18)
-      return { label: 'Good', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/30' };
+      return { label: 'Good', color: 'text-elec-yellow', bg: 'bg-white/[0.04] border-white/[0.10]' };
     if (markupNum >= 10)
       return { label: 'Fair', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/30' };
     return { label: 'Low', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/30' };
@@ -159,89 +161,19 @@ const BreakEvenCalculator: React.FC = () => {
         />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Scale className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Break-Even Calculator
-              </h1>
-              <p className="text-sm text-white">Calculate your minimum profitable rate</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+        <HubMasthead
+          section="Business"
+          title="Break-Even Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
-        {/* Business Health Snapshot */}
-        <div className="calculator-card p-4" style={{ borderColor: '#60a5fa20' }}>
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="h-5 w-5 text-blue-400" />
-            <span className="text-sm font-medium text-white">Business Health Snapshot</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {/* Margin Health */}
-            <div className={cn('p-3 rounded-xl border', marginHealth.bg)}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white">Target Margin</span>
-                <span className={cn('text-xs font-medium', marginHealth.color)}>
-                  {marginHealth.label}
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-white">{marginNum}%</div>
-              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-blue-400 transition-all"
-                  style={{ width: `${Math.min(marginNum * 4, 100)}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Utilisation */}
-            <div className={cn('p-3 rounded-xl border', utilisationHealth.bg)}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white">Utilisation</span>
-                <span className={cn('text-xs font-medium', utilisationHealth.color)}>
-                  {utilisationHealth.label}
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-white">{utilisationRate.toFixed(0)}%</div>
-              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-blue-400 transition-all"
-                  style={{ width: `${Math.min(utilisationRate, 100)}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Material Markup */}
-            <div className={cn('p-3 rounded-xl border', markupHealth.bg)}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white">Mat. Markup</span>
-                <span className={cn('text-xs font-medium', markupHealth.color)}>
-                  {markupHealth.label}
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-white">{markupNum}%</div>
-              <div className="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-blue-400 transition-all"
-                  style={{ width: `${Math.min(markupNum * 3, 100)}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* The "Business Health Snapshot" that stood here rendered Target
+            Margin, Utilisation and Materials Markup as three large stat cards —
+            every one of them a value the user types into the form directly
+            below. It was the page reading its own inputs back before letting
+            anyone reach the answer. */}
 
         <CalculatorCard
           category="business"
@@ -250,10 +182,7 @@ const BreakEvenCalculator: React.FC = () => {
           badge="Finance"
         >
           {/* Business Settings */}
-          <div className="flex items-center gap-2 mb-3">
-            <TrendingUp className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Business Settings</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Business Settings</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -280,10 +209,7 @@ const BreakEvenCalculator: React.FC = () => {
 
           {/* Labour & Materials */}
           <div className="pt-4 border-t border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <Wrench className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Labour & Materials</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Labour & Materials</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <CalculatorInput
@@ -330,10 +256,7 @@ const BreakEvenCalculator: React.FC = () => {
 
           {/* Margin & VAT */}
           <div className="pt-4 border-t border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <PoundSterling className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Margin & VAT</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Margin & VAT</h3>
 
             <div className="grid grid-cols-2 gap-3">
               <CalculatorInput
@@ -422,53 +345,45 @@ const BreakEvenCalculator: React.FC = () => {
                 <span className="text-sm font-medium text-white">Your Break-Even Rates</span>
               </div>
 
-              <ResultsGrid columns={3}>
+              {/* One answer, stated once and large. The break-even rate used to
+                  be a 24px gradient-clipped number sandwiched between two
+                  equally-weighted stat boxes, so the figure the whole page
+                  exists to produce was the hardest of the three to find. */}
+              <ResultHeadline
+                label="Break-even rate"
+                value={`${currency(breakEvenHr)}/hr`}
+                aside={`${currency(breakEvenDay)} a day`}
+                caption={`Anything below this loses money. At a ${marginNum}% margin you need ${currency(targetHourlyRate)}/hr.`}
+              />
+
+              <ResultsGrid columns={2}>
                 <ResultValue
                   label="Overhead/Hour"
                   value={currency(overheadPerHour)}
                   category="business"
                   size="sm"
                 />
-                <div className="text-center">
-                  <p className="text-xs text-white mb-1">Break-Even/Hour</p>
-                  <div
-                    className="text-2xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {currency(breakEvenHr)}
-                  </div>
-                </div>
                 <ResultValue
-                  label="Break-Even Day (8h)"
-                  value={currency(breakEvenDay)}
+                  label="Labour Cost/Hour"
+                  value={currency(labourNum)}
                   category="business"
                   size="sm"
                 />
               </ResultsGrid>
 
-              <div className="mt-4 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
-                <div className="flex items-start gap-2 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span className="text-green-200/80">
-                    Any quote below {currency(breakEvenHr)}/hour will lose money. Add your{' '}
-                    {marginNum}% margin to hit{' '}
-                    <strong className="text-green-400">
-                      {currency(targetHourlyRate)}/hour
-                    </strong>
-                  </span>
-                </div>
-              </div>
+              {/* The green "any quote below X will lose money / add your margin to hit Y"
+                  banner said exactly what the ResultHeadline caption above now says,
+                  word for word and number for number. Stating it twice made neither
+                  statement carry weight. */}
             </CalculatorResult>
 
             {/* Example Job Calculator */}
             <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Clock className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Clock className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Example Job Pricing
                     </span>
                   </div>
@@ -506,7 +421,7 @@ const BreakEvenCalculator: React.FC = () => {
                   {/* Price Breakdown */}
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
                     <div className="flex items-center gap-2 mb-2">
-                      <Info className="h-4 w-4 text-blue-400" />
+                      <Info className="h-4 w-4 text-elec-yellow" />
                       <span className="text-sm font-medium text-white">Price Breakdown</span>
                     </div>
                     <div className="space-y-1 text-sm">
@@ -575,11 +490,11 @@ const BreakEvenCalculator: React.FC = () => {
 
             {/* What This Means */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       What This Means
                     </span>
                   </div>
@@ -592,32 +507,32 @@ const BreakEvenCalculator: React.FC = () => {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
-                  <ul className="space-y-2 text-sm text-blue-200/80">
+                  <ul className="space-y-2 text-sm text-elec-yellow/80">
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Break-even rate:</strong> The minimum you
+                        <strong className="text-elec-yellow">Break-even rate:</strong> The minimum you
                         must charge per hour just to cover your costs with zero profit
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Overhead/hour:</strong> Your fixed costs
+                        <strong className="text-elec-yellow">Overhead/hour:</strong> Your fixed costs
                         (van, insurance, tools) spread across billable hours
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Utilisation:</strong> Percentage of
+                        <strong className="text-elec-yellow">Utilisation:</strong> Percentage of
                         working time you can actually bill (target 50-60%)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Target margin:</strong> Your profit buffer
+                        <strong className="text-elec-yellow">Target margin:</strong> Your profit buffer
                         for growth, emergencies, and investment
                       </span>
                     </li>

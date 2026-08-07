@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
+import type { CellWarning } from '@/utils/cellWarnings';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { TestValidationResults } from '@/utils/testValidation';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
@@ -16,6 +17,10 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { getIrMaxForVoltage, isBlankReading } from '@/utils/irDefaults';
 
 interface InsulationCellsProps {
+  /** BS 7671 findings that name a cell in this group, keyed by field. */
+  cellWarnings?: Partial<Record<keyof TestResult, CellWarning>>;
+  /** Opens the finding in the Validate sheet. */
+  onOpenWarning?: () => void;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   validation: TestValidationResults;
@@ -44,6 +49,8 @@ const FillMaxButton: React.FC<{ value: string; onFill: () => void }> = ({ value,
 const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
   result,
   onUpdate,
+  cellWarnings,
+  onOpenWarning,
   validation,
   allResults,
   onBulkUpdate,
@@ -95,6 +102,8 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[104px] max-w-[104px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.insulationLiveNeutral}
+          onOpenWarning={onOpenWarning}
             value={liveLiveValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveNeutral', value)}
             className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
@@ -118,6 +127,8 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[104px] max-w-[104px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.insulationLiveEarth}
+          onOpenWarning={onOpenWarning}
             value={liveEarthValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveEarth', value)}
             className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"

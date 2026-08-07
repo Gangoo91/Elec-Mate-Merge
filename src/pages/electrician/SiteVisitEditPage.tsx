@@ -241,7 +241,7 @@ const SiteVisitEditPage = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate('/electrician/site-visits')}
-            className="-ml-2 h-9 w-9 touch-manipulation hover:bg-white/5 active:scale-95"
+            className="-ml-2 h-11 w-11 touch-manipulation hover:bg-white/5 active:scale-95"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -266,7 +266,7 @@ const SiteVisitEditPage = () => {
       >
         {/* Hero */}
         <motion.div variants={itemVariants}>
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-5 sm:p-7">
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5 sm:p-7">
             <div
               aria-hidden
               className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 opacity-80"
@@ -281,7 +281,7 @@ const SiteVisitEditPage = () => {
               {visit.propertyAddress || 'Untitled visit'}
             </h2>
             {visit.customerName && (
-              <p className="mt-2 text-[13px] text-white/65 sm:text-[14px]">
+              <p className="mt-2 text-[13px] text-white sm:text-[14px]">
                 Customer: <span className="text-white">{visit.customerName}</span>
                 {visit.propertyType && (
                   <>
@@ -296,7 +296,7 @@ const SiteVisitEditPage = () => {
 
         {/* Status horizontal stepper */}
         <motion.div variants={itemVariants}>
-          <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5">
+          <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
             <Eyebrow className="mb-3">STATUS</Eyebrow>
             <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
               {STATUS_STEPS.map((step, i) => {
@@ -317,7 +317,7 @@ const SiteVisitEditPage = () => {
                           ? 'border-elec-yellow bg-elec-yellow text-black'
                           : isPast
                             ? 'border-emerald-500 bg-emerald-500 text-black'
-                            : 'border-white/[0.15] bg-white/[0.04] text-white/45'
+                            : 'border-white/[0.15] bg-white/[0.04] text-white'
                       )}
                     >
                       {isPast ? '✓' : i + 1}
@@ -325,7 +325,7 @@ const SiteVisitEditPage = () => {
                     <span
                       className={cn(
                         'text-[11.5px] font-medium',
-                        isCurrent ? 'text-white' : isPast ? 'text-emerald-400' : 'text-white/45'
+                        isCurrent ? 'text-white' : isPast ? 'text-emerald-400' : 'text-white'
                       )}
                     >
                       {step.label}
@@ -358,7 +358,7 @@ const SiteVisitEditPage = () => {
                   <div className="mt-1 text-[14px] font-semibold text-white sm:text-[15px]">
                     {nextAction.title}
                   </div>
-                  <div className="mt-0.5 text-[12.5px] text-white/65">{nextAction.sub}</div>
+                  <div className="mt-0.5 text-[12.5px] text-white">{nextAction.sub}</div>
                 </div>
               </div>
               <button
@@ -398,14 +398,14 @@ const SiteVisitEditPage = () => {
         {/* Linked quote panel — only when there's a quote */}
         {visit.quoteId && (
           <motion.div variants={itemVariants}>
-            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5">
+            <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <Eyebrow>LINKED QUOTE</Eyebrow>
                   <div className="mt-1.5 text-[15px] font-semibold text-white">
                     Quote #{visit.quoteId.slice(0, 8)}
                   </div>
-                  <div className="mt-0.5 text-[12px] text-white/65">
+                  <div className="mt-0.5 text-[12px] text-white">
                     Status:{' '}
                     <span className="text-white capitalize">{quoteStatusValue || 'pending'}</span>
                     {quoteTotal !== null && (
@@ -436,7 +436,7 @@ const SiteVisitEditPage = () => {
                   key={t.key}
                   onClick={() => setActiveTab(t.key)}
                   className={cn(
-                    'h-9 shrink-0 rounded-full px-4 text-[12.5px] font-medium transition-colors touch-manipulation',
+                    'h-11 shrink-0 rounded-full px-4 text-[12.5px] font-medium transition-colors touch-manipulation',
                     activeTab === t.key
                       ? 'bg-elec-yellow text-black'
                       : 'text-white hover:bg-white/[0.04]'
@@ -464,7 +464,7 @@ const SiteVisitEditPage = () => {
                 <h3 className="mt-1.5 text-[20px] font-semibold tracking-tight text-white sm:text-[22px]">
                   Document the finished work
                 </h3>
-                <p className="mt-1 text-[13px] text-white/65">
+                <p className="mt-1 text-[13px] text-white">
                   Capture the same areas as the before-photos — handover pack pairs them
                   automatically.
                 </p>

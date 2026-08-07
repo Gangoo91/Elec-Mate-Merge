@@ -4,18 +4,32 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   FileText,
-  AlertTriangle,
   ShieldCheck,
-  ClipboardCheck,
   Shield,
   FileCheck2,
   GraduationCap,
   Building,
   Wrench,
-  HardHat,
-  ListChecks,
-  CheckCircle,
 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared presentation classes
+// -------------------------------------------------------------------
+
+// Cards run edge-to-edge on phones (the article column is px-5) and inset from sm: up.
+const cardCn =
+  '-mx-5 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-5 sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const listCn = 'divide-y divide-white/[0.1] text-white';
+const listItemCn = 'py-3.5 first:pt-0 last:pb-0';
+
+// Tables scroll inside their own container so the page body never scrolls sideways.
+const tableWrapCn =
+  '-mx-5 my-5 overflow-x-auto border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border';
+const tableCn = 'w-full border-collapse text-left text-[13.5px] leading-relaxed text-white';
+const thCn = 'whitespace-nowrap px-4 py-3 align-top font-semibold text-white';
+const tdCn = 'px-4 py-3 align-top text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -27,7 +41,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'what-is-rams', label: 'What Is RAMS?' },
+  { id: 'what-is-rams', label: 'What Goes in a RAMS' },
   { id: 'risk-assessment', label: 'Risk Assessment Structure' },
   { id: 'method-statement', label: 'Method Statement Sections' },
   { id: 'cdm-requirements', label: 'CDM 2015 Requirements' },
@@ -41,10 +55,10 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'RAMS (Risk Assessment and Method Statement) is the standard safety document required for electrical work on commercial, industrial, and CDM-notifiable projects.',
-  'A risk assessment identifies hazards, evaluates the risk, and sets out control measures. A method statement describes the safe system of work step by step.',
-  'The Electricity at Work Regulations 1989 (EAWR) are the primary statutory duty-holder legislation for electrical safety at work. Regulation 16 requires that persons working on or near live electrical equipment are competent to prevent danger — your RAMS must demonstrate this competence.',
-  'Under CDM 2015, principal contractors must ensure that RAMS are produced for all high-risk activities — including electrical work — and that they are communicated to all workers on site.',
+  'A RAMS has two halves: a risk assessment (hazards, who is at risk, controls, risk rating) and a method statement (the safe system of work, step by step). The risk assessment is written first — you cannot describe a safe method until you know the risks.',
+  'The Management of Health and Safety at Work Regulations 1999 require the assessment to be suitable and sufficient, and employers with five or more employees to record the significant findings. BS 7671 Appendix 2 adds that, for its purposes, a risk assessment should involve an appropriate electrically skilled person.',
+  'The Electricity at Work Regulations 1989 (EAWR) impose the direct electrical duties. Regulation 16 requires anyone doing work where technical knowledge or experience is needed to prevent danger to possess it, or to be supervised to a degree appropriate to the work — BS 7671 restates this in its definition of "person" and points to HSE guidance HSR25.',
+  'Under CDM 2015 a construction phase plan is required on every project, not only notifiable ones. The principal contractor plans, manages and monitors the construction phase, and reviews subcontractor RAMS before work starts.',
   'Generic RAMS that are not tailored to the specific job, site, and installation are not compliant. Every RAMS must be site-specific and task-specific.',
   'A permit to work (PTW) is required in addition to RAMS for high-risk activities such as isolation of high-voltage equipment, work in confined spaces, and hot work. Proceeding without a completed permit is one of the most common and serious RAMS failings identified during site inspections.',
   'Elec-Mate AI Health and Safety Agent can generate site-specific RAMS for electrical activities in minutes — tailored to your job description, with proper hazard identification and control measures.',
@@ -69,7 +83,7 @@ const faqs = [
   {
     question: 'What format should a RAMS follow?',
     answer:
-      'There is no single legally mandated format for RAMS. However, most principal contractors and clients expect a standard structure. The risk assessment section should include: the task being assessed, the hazards identified, the people at risk, the existing control measures, the risk rating (likelihood x severity), and any additional control measures. The method statement section should include: a description of the work, the sequence of operations, the equipment and materials to be used, the personnel and competencies required, the PPE required, emergency procedures, and any permits to work or isolations needed. Many contractors use a 5x5 risk matrix for scoring risks. The document should be dated, signed by the assessor, and reviewed by the responsible person before work begins.',
+      'There is no single legally mandated format for RAMS. However, most principal contractors and clients expect a standard structure. The risk assessment section should include: the task being assessed, the hazards identified, the people at risk, the existing control measures, the risk rating (likelihood x severity), and any additional control measures. The method statement section should include: a description of the work, the sequence of operations, the equipment and materials to be used, the personnel and competencies required, the PPE required, emergency procedures, and any permits to work or isolations needed. Many contractors score risks on a 5 x 5 matrix, though the banding varies from contractor to contractor. The document should be dated, signed by the assessor, and reviewed by the responsible person before work begins.',
   },
   {
     question: 'How often should RAMS be reviewed?',
@@ -140,7 +154,7 @@ const howToSteps = [
   },
   {
     name: 'Evaluate the risk',
-    text: 'Score each hazard using a 5x5 risk matrix: likelihood (1–5) multiplied by severity (1–5). Scores of 1–6 are low, 8–12 medium, 15–25 high.',
+    text: 'Score each hazard on your organisation’s matrix. On a common 5 x 5 matrix the score is likelihood (1 to 5) multiplied by severity (1 to 5), banded low, medium and high.',
   },
   {
     name: 'Set out control measures',
@@ -159,14 +173,53 @@ const howToSteps = [
 const sections = [
   {
     id: 'what-is-rams',
-    heading: 'What Is RAMS and Why Every Electrician Needs It',
+    heading: 'What Goes in a RAMS',
     content: (
       <>
         <p>
-          RAMS stands for Risk Assessment and Method Statement. It is a combined document that
-          identifies the hazards associated with a specific task, evaluates the risks, sets out
-          control measures, and describes the safe step-by-step process for carrying out the work.
+          RAMS stands for Risk Assessment and Method Statement. It is one document with two halves:
+          the risk assessment says what could go wrong and how you will stop it, and the method
+          statement says how the job will actually be done. This is what a principal contractor
+          expects to see when they ask for your RAMS.
         </p>
+
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>Part</th>
+                <th className={thCn}>What it must contain</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.1]">
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Risk assessment</td>
+                <td className={tdCn}>
+                  The task being assessed · the hazards, described specifically · who might be harmed
+                  · the controls already in place · a risk rating (likelihood x severity) · any
+                  further controls needed
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Method statement</td>
+                <td className={tdCn}>
+                  Site and project details · scope of work · sequence of operations · plant, tools
+                  and test instruments · personnel and their competence · PPE · permits and
+                  isolations · emergency procedures
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Sign-off</td>
+                <td className={tdCn}>
+                  Name, signature and date of the competent person who wrote it · principal
+                  contractor review and approval · a record of the briefing given to everyone doing
+                  the work
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <p>
           For electricians, RAMS are required on virtually every commercial, industrial, and
           CDM-notifiable project. Principal contractors will not allow you on site without them.
@@ -196,60 +249,112 @@ const sections = [
           identify, evaluate, and control risks. Here is the standard structure used across the UK
           construction industry.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ListChecks className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Step 1: Identify the hazards.</strong> What could cause harm? For electrical
-                work, hazards include electric shock, arc flash, burns, fire, falls from height
-                (when accessing distribution boards at height), manual handling (lifting heavy
-                distribution boards or cable drums), and asbestos (in older buildings).
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Step 1 — Identify the hazards.</strong> What could cause harm? For electrical
+              work, hazards include electric shock, arc flash, burns, fire, falls from height (when
+              accessing distribution boards at height), manual handling (lifting heavy distribution
+              boards or cable drums), and asbestos (in older buildings).
             </li>
-            <li className="flex items-start gap-3">
-              <ListChecks className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Step 2: Identify who might be harmed.</strong> The electrician carrying out
-                the work, other trades working nearby, building occupants, and members of the public
-                if the work is in an accessible area.
-              </span>
+            <li className={listItemCn}>
+              <strong>Step 2 — Identify who might be harmed.</strong> The electrician carrying out
+              the work, other trades working nearby, building occupants, and members of the public
+              if the work is in an accessible area.
             </li>
-            <li className="flex items-start gap-3">
-              <ListChecks className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Step 3: Evaluate the risk.</strong> Use a risk matrix to score each hazard
-                based on likelihood (1 to 5) and severity (1 to 5). The risk score = likelihood x
-                severity. Scores of 1 to 6 are low risk, 8 to 12 are medium risk, and 15 to 25 are
-                high risk.
-              </span>
+            <li className={listItemCn}>
+              <strong>Step 3 — Evaluate the risk.</strong> Score each hazard on likelihood and
+              severity so that the highest risks get the most attention. See the matrix below.
             </li>
-            <li className="flex items-start gap-3">
-              <ListChecks className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Step 4: Set out control measures.</strong> For each hazard, describe the
-                specific measures that will reduce the risk. Follow the hierarchy of control:
-                eliminate, substitute, engineering controls, administrative controls, PPE.
-              </span>
+            <li className={listItemCn}>
+              <strong>Step 4 — Set out control measures.</strong> For each hazard, describe the
+              specific measures that will reduce the risk. Follow the hierarchy of control:
+              eliminate, substitute, engineering controls, administrative controls, PPE.
             </li>
-            <li className="flex items-start gap-3">
-              <ListChecks className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Step 5: Record and communicate.</strong> Document the assessment, share it
-                with all workers involved, and ensure everyone understands the control measures
-                before work begins.
-              </span>
+            <li className={listItemCn}>
+              <strong>Step 5 — Record and communicate.</strong> Document the assessment, share it
+              with all workers involved, and ensure everyone understands the control measures before
+              work begins.
             </li>
           </ul>
         </div>
+
+        <h3 className="mt-8 text-[15px] font-semibold tracking-tight text-white">
+          Scoring the risk on a 5 x 5 matrix
+        </h3>
         <p>
-          The risk assessment must be specific to the job. "Electrical work" is not a hazard —
-          "contact with live conductors during{' '}
+          There is no legally mandated scoring system. Most UK contractors use a 5 x 5 matrix where
+          the score is likelihood multiplied by severity, and the bands below are the ones most
+          commonly applied — but check your client&apos;s own matrix before you submit, because the
+          banding is not standardised.
+        </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>Severity &darr; / Likelihood &rarr;</th>
+                <th className={thCn}>1</th>
+                <th className={thCn}>2</th>
+                <th className={thCn}>3</th>
+                <th className={thCn}>4</th>
+                <th className={thCn}>5</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.1]">
+              {[
+                [5, [5, 10, 15, 20, 25]],
+                [4, [4, 8, 12, 16, 20]],
+                [3, [3, 6, 9, 12, 15]],
+                [2, [2, 4, 6, 8, 10]],
+                [1, [1, 2, 3, 4, 5]],
+              ].map(([severity, row]) => (
+                <tr key={severity as number}>
+                  <td className={`${tdCn} font-semibold`}>{severity as number}</td>
+                  {(row as number[]).map((score, i) => (
+                    <td key={i} className={`${tdCn} tabular-nums`}>
+                      {score}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>1 to 6</strong> is normally treated as low risk, <strong>8 to 12</strong> as
+          medium, and <strong>15 to 25</strong> as high. A high score does not mean the job cannot
+          go ahead — it means the controls must bring the residual risk down, and the RAMS must show
+          that they do.
+        </p>
+
+        <div className={cardCn}>
+          <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+            What the law actually requires of the assessment
+          </h3>
+          <p className="text-white">
+            The Management of Health and Safety at Work Regulations 1999 require employers and
+            self-employed persons to assess the risks to workers and to anyone else affected by
+            their work, so that they can identify the measures needed to comply with the law.
+            Regulation 3 requires that assessment to be <strong>suitable and sufficient</strong>,
+            and employers with five or more employees must record the significant findings. HSE
+            guidance INDG163 covers these regulations.
+          </p>
+          <p className="mt-3 text-white">
+            BS 7671:2018+A4:2026 adds a point that matters on electrical jobs: for the purposes of
+            BS 7671, a risk assessment should involve an appropriate electrically skilled person
+            (Appendix 2, item 11). A RAMS for electrical work written by someone with no electrical
+            competence will not stand up.
+          </p>
+        </div>
+
+        <p>
+          The risk assessment must be specific to the job. &ldquo;Electrical work&rdquo; is not a
+          hazard — &ldquo;contact with live conductors during{' '}
           <SEOInternalLink href="/guides/safe-isolation-procedure">
             isolation of the main distribution board
           </SEOInternalLink>
-          " is a hazard. The more specific the assessment, the more useful it is and the more
-          compliant it is with the Management of Health and Safety at Work Regulations 1999.
+          &rdquo; is a hazard. The more specific the assessment, the more useful it is and the more
+          defensible it is.
         </p>
       </>
     ),
@@ -264,58 +369,42 @@ const sections = [
           them into a step-by-step description of how the work will be carried out safely. It should
           be detailed enough that a competent person could follow it and carry out the work safely.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Project details:</strong> Site address, client name, project reference,
-                date, and the name of the competent person producing the method statement.
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Project details.</strong> Site address, client name, project reference, date,
+              and the name of the competent person producing the method statement.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Scope of work:</strong> A clear description of what work is being carried
-                out — for example, "replacement of consumer unit and associated testing" or
-                "periodic inspection and testing of the fixed electrical installation."
-              </span>
+            <li className={listItemCn}>
+              <strong>Scope of work.</strong> A clear description of what work is being carried out
+              — for example, &ldquo;replacement of consumer unit and associated testing&rdquo; or
+              &ldquo;periodic inspection and testing of the fixed electrical installation&rdquo;.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Sequence of operations:</strong> The step-by-step process, including
-                preparation, safe isolation, the work itself, testing, commissioning, and
-                reinstatement.
-              </span>
+            <li className={listItemCn}>
+              <strong>Sequence of operations.</strong> The step-by-step process, including
+              preparation, safe isolation, the work itself, testing, commissioning, and
+              reinstatement.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Equipment and materials:</strong> What tools, test instruments, materials,
-                and access equipment will be used?
-              </span>
+            <li className={listItemCn}>
+              <strong>Equipment and materials.</strong> What tools, test instruments, materials, and
+              access equipment will be used.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Personnel and competencies:</strong> Who will carry out the work and what
-                qualifications and experience do they have?
-              </span>
+            <li className={listItemCn}>
+              <strong>Personnel and competencies.</strong> Who will carry out the work and what
+              qualifications and experience they hold. BS 7671 uses the terms{' '}
+              <em>skilled person (electrically)</em> — one with adequate education, training and
+              practical skills for the work, able to perceive risks and avoid hazards — and{' '}
+              <em>instructed person (electrically)</em>, who is adequately advised or supervised by
+              a skilled person. Naming which of your team is which is the clearest way to
+              demonstrate competence.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>PPE requirements:</strong> The specific PPE required for the task —
-                insulated gloves, safety glasses, arc-rated clothing if working near live equipment.
-              </span>
+            <li className={listItemCn}>
+              <strong>PPE requirements.</strong> The specific PPE required for the task — insulated
+              gloves, safety glasses, arc-rated clothing if working near live equipment.
             </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency procedures:</strong> What to do if something goes wrong — electric
-                shock first aid, fire evacuation, reporting procedures.
-              </span>
+            <li className={listItemCn}>
+              <strong>Emergency procedures.</strong> What to do if something goes wrong — electric
+              shock first aid, fire evacuation, reporting procedures.
             </li>
           </ul>
         </div>
@@ -335,52 +424,58 @@ const sections = [
         <p>
           The Construction (Design and Management) Regulations 2015 (CDM 2015) apply to all
           construction work in Great Britain, including electrical installation, maintenance, and
-          testing. Under CDM 2015, several duty holders have responsibilities related to RAMS.
+          testing. HSE publication L153 is the supporting guidance. Under CDM 2015, several duty
+          holders have responsibilities that your RAMS has to fit into.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Principal contractor:</strong> Must plan, manage, and monitor the
-                construction phase. This includes ensuring that RAMS are produced for all high-risk
-                activities, are site-specific, and are communicated to all workers. The principal
-                contractor reviews and approves subcontractor RAMS before work starts.
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Principal contractor.</strong> Must plan, manage, and monitor the construction
+              phase. In practice this means ensuring RAMS are produced for all high-risk activities,
+              are site-specific, and are communicated to all workers. The principal contractor
+              reviews and approves subcontractor RAMS before work starts.
             </li>
-            <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Contractors (including electrical subcontractors):</strong> Must plan,
-                manage, and monitor their own work to ensure it is carried out safely. This includes
-                producing RAMS for their activities, ensuring their workers are competent, and
-                cooperating with the principal contractor.
-              </span>
+            <li className={listItemCn}>
+              <strong>Contractors, including electrical subcontractors.</strong> Must plan, manage,
+              and monitor their own work to ensure it is carried out safely — producing RAMS for
+              their activities, ensuring their workers are competent, and cooperating with the
+              principal contractor.
             </li>
-            <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Designers:</strong> Must consider how the design affects health and safety
-                during construction and in the finished building. Electrical designers should
-                identify hazards that will affect the installation team and communicate them through
-                the pre-construction information.
-              </span>
+            <li className={listItemCn}>
+              <strong>Designers.</strong> Must consider how the design affects health and safety
+              during construction and in the finished building. Electrical designers should identify
+              hazards that will affect the installation team and communicate them through the
+              pre-construction information.
             </li>
-            <li className="flex items-start gap-3">
-              <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Workers:</strong> Must cooperate with the contractor and principal
-                contractor, follow the safe system of work described in the RAMS, and report any
-                problems or concerns.
-              </span>
+            <li className={listItemCn}>
+              <strong>Workers.</strong> Must cooperate with the contractor and principal contractor,
+              follow the safe system of work described in the RAMS, and report any problems or
+              concerns.
             </li>
           </ul>
         </div>
+        <h3 className="mt-8 text-[15px] font-semibold tracking-tight text-white">
+          Notifiable projects and the construction phase plan
+        </h3>
         <p>
-          For projects that are CDM-notifiable (lasting more than 30 working days with more than 20
-          workers simultaneously, or exceeding 500 person-days), the RAMS process is more formal.
-          The construction phase plan must include the RAMS for all high-risk activities, and the
-          HSE notification must be displayed on site.
+          A project is notifiable if the construction work is scheduled to last longer than 30
+          working days with more than 20 workers working simultaneously at any point, or to exceed
+          500 person-days. Where a project is notifiable it is the <strong>client</strong> — not the
+          principal contractor — who must notify the HSE in writing before the construction phase
+          begins, and ensure a copy of that notice is displayed on site where workers can read it.
+        </p>
+        <p>
+          A common misconception is that the construction phase plan is only needed on notifiable
+          projects. It is not: a construction phase plan is required on <em>every</em> project
+          covered by CDM 2015. The plan sets out the health and safety arrangements, the site rules,
+          and the specific measures for work involving the particular risks listed in Schedule 3 to
+          the Regulations — which is where your RAMS for high-risk electrical activities belong.
+        </p>
+        <p>
+          CDM also reaches past handover. BS 7671 notes on the Electrical Installation Certificate
+          that, for a project covered by those Regulations, a copy of the certificate together with
+          its schedules must be included in the project health and safety documentation. Plan for
+          that at RAMS stage rather than chasing paperwork at the end.
         </p>
       </>
     ),
@@ -395,84 +490,122 @@ const sections = [
           <strong>Electricity at Work Regulations 1989 (EAWR)</strong> are the primary legislation
           imposing direct duties on anyone who carries out electrical work. Every electrician&apos;s
           RAMS must demonstrate compliance with EAWR — not just CDM — because it is EAWR that HSE
-          inspectors will cite if something goes wrong on an electrical job.
+          inspectors will cite if something goes wrong on an electrical job. HSE publication HSR25
+          is the guidance on these Regulations, and BS 7671 points readers to it.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 4 — Systems, work activities and protective equipment:</strong>{' '}
-                All electrical systems shall be of such construction and maintained as to prevent
-                danger, so far as reasonably practicable. Your RAMS must describe how the
-                installation or system being worked on meets this duty.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 13 — Precautions for work on equipment made dead:</strong> Where
-                it is possible that electrical equipment may become live again unexpectedly,
-                suitable precautions must be taken (lock-off, warning notices, proving dead). Your
-                method statement must detail these steps explicitly.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 14 — Work on or near live conductors:</strong> No person shall
-                work on live conductors unless it is unreasonable for the equipment to be made dead,
-                the work is justified, and suitable precautions are taken. Live working must be
-                explicitly risk-assessed and justified in the RAMS — it cannot be the default.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Regulation 16 — Competence to prevent danger or injury:</strong> No person
-                shall engage in electrical work unless they are competent to do so, or are under
-                close supervision by a competent person. GN3 (9th ed, A4:2026) explicitly references
-                Reg 16 as the legal basis for restricting live diagnostic and testing work to
-                suitably competent persons. Your RAMS must identify the competence of each person
-                carrying out the work — qualifications, trade body registration, and relevant
-                experience.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>Regulation</th>
+                <th className={thCn}>What it requires</th>
+                <th className={thCn}>What your RAMS must show</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.1]">
+              <tr>
+                <td className={`${tdCn} font-semibold`}>
+                  4
+                  <span className="block font-normal">
+                    Systems, work activities and protective equipment
+                  </span>
+                </td>
+                <td className={tdCn}>
+                  Systems shall be constructed and maintained so as to prevent danger, and every
+                  work activity carried out so as not to give rise to danger — in each case so far
+                  as is reasonably practicable.
+                </td>
+                <td className={tdCn}>
+                  The condition of the system being worked on, and how the work activity itself is
+                  kept safe.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>
+                  13
+                  <span className="block font-normal">
+                    Precautions for work on equipment made dead
+                  </span>
+                </td>
+                <td className={tdCn}>
+                  Adequate precautions must be taken to prevent equipment that has been made dead
+                  from becoming charged again while work is carried out on or near it.
+                </td>
+                <td className={tdCn}>
+                  The isolation point, lock-off arrangement, warning notices, and the proving-dead
+                  step — named explicitly, not implied.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>
+                  14
+                  <span className="block font-normal">Work on or near live conductors</span>
+                </td>
+                <td className={tdCn}>
+                  No work on or near a live conductor unless it is unreasonable for it to be dead,
+                  it is reasonable to work on it live, and suitable precautions are taken to prevent
+                  injury.
+                </td>
+                <td className={tdCn}>
+                  A written justification for any live working, the precautions, and who authorised
+                  it. Live working is never the default.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>
+                  16
+                  <span className="block font-normal">
+                    Persons to be competent to prevent danger and injury
+                  </span>
+                </td>
+                <td className={tdCn}>
+                  No one may do work where technical knowledge or experience is needed to prevent
+                  danger unless they possess it, or are supervised to a degree appropriate to the
+                  nature of the work.
+                </td>
+                <td className={tdCn}>
+                  Each person named, with their qualifications, registration and relevant
+                  experience, and who supervises anyone working under supervision.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/30 p-5 my-4">
-          <p className="text-sm font-semibold text-yellow-300 mb-1">
-            HSE HSG85 — Electricity at Work: Safe Working Practices
-          </p>
-          <p className="text-sm text-white/80">
-            The HSE publication{' '}
-            <strong>HSG85 &apos;Electricity at Work: Safe Working Practices&apos;</strong> is the
-            authoritative guidance document underpinning every safe isolation procedure described in
-            this guide. The On-Site Guide (OSG, Reg 12.5) states: &ldquo;UK requirements for working
-            safely on electrical systems can be found in HSG85.&rdquo; GN3 (Reg 1.1) recommends that
-            before commencing electrical work, a system of rules and procedures for the site is
-            established as recommended by HSG85. HSE inspectors expect to see HSG85 referenced or
-            followed in RAMS for any work on or near live electrical systems. HSG85 is a free
-            download from the HSE website.
+        <p>
+          Regulation 16 is the one that most often decides whether a RAMS is accepted. BS 7671
+          restates it in its definition of &ldquo;person&rdquo;: Regulation 16 of the Electricity at
+          Work Regulations 1989 requires persons to be competent to prevent danger and injury, with
+          HSE publication HSR25 giving guidance on that competence requirement. Naming people and
+          their competence is not box-ticking — it is the statutory duty.
+        </p>
+        <div className="-mx-5 my-5 rounded-none border-y border-elec-yellow/30 bg-elec-yellow/10 p-5 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+            HSG85 — Electricity at work: Safe working practices
+          </h3>
+          <p className="text-white">
+            HSG85 is the HSE guidance on safe working practices for electrical work, and it sits
+            behind the safe isolation procedure described in this guide: establishing site rules and
+            procedures before work starts, deciding whether work can be done dead, and the
+            precautions where it cannot. Inspectors expect to see it reflected in RAMS for any work
+            on or near live electrical systems. It is a free download from the HSE website.
           </p>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <p className="text-sm font-semibold text-red-300 mb-1">
-            Permit to Work (PTW) — When RAMS Alone Is Not Sufficient
+        <div className="-mx-5 my-5 rounded-none border-y border-orange-500/30 bg-orange-500/10 p-5 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <h3 className="mb-2 text-[15px] font-semibold tracking-tight text-white">
+            Permit to work: when RAMS alone is not enough
+          </h3>
+          <p className="text-white">
+            A RAMS describes the planned safe system of work. A <strong>permit to work (PTW)</strong>{' '}
+            is a formal, signed authorisation that a specific isolation has been completed and that
+            work may safely proceed. A PTW is required in addition to RAMS for:
           </p>
-          <p className="text-sm text-white/80">
-            A RAMS describes the planned safe system of work. A{' '}
-            <strong>permit to work (PTW)</strong> is a formal, signed authorisation that a specific
-            isolation has been completed and work may safely proceed. PTW is required in addition to
-            RAMS for:
-          </p>
-          <ul className="mt-2 space-y-1 text-sm text-white/80 list-disc list-inside">
+          <ul className="mt-3 list-inside list-disc space-y-1 text-white">
             <li>Isolation of high-voltage equipment or busbar trunking feeders</li>
-            <li>Work in confined spaces (e.g. cable ducts, plant rooms)</li>
+            <li>Work in confined spaces such as cable ducts and plant rooms</li>
             <li>Hot work near cable routes or electrical panels</li>
-            <li>Any isolation where a lock-off/tag procedure alone is insufficient</li>
+            <li>Any isolation where a lock-off and tag procedure alone is insufficient</li>
           </ul>
-          <p className="mt-2 text-sm text-white/80">
+          <p className="mt-3 text-white">
             Proceeding without a completed PTW where one is required is one of the most serious
             failings identified during electrical site inspections. Your RAMS should state
             explicitly whether a PTW will be required for each activity, and who is authorised to
@@ -492,62 +625,79 @@ const sections = [
     content: (
       <>
         <p>
-          When writing RAMS for electrical work, these are the hazards you should always consider
-          and address. This is not an exhaustive list — every job will have site-specific hazards
-          that must be identified during the planning stage.
+          These are the hazards to consider on almost every electrical job. It is not an exhaustive
+          list — every job will have site-specific hazards that must be identified at the planning
+          stage.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Electric shock:</strong> Contact with live conductors. Control measures:
-                safe isolation procedure, lock-off, proving dead, GS38-compliant test equipment,
-                insulated tools, warning notices.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Arc flash:</strong> Short-circuit or arcing fault at high fault levels.
-                Control measures: arc-rated PPE, risk assessment of fault levels, working on
-                de-energised equipment wherever possible.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fire:</strong> Overloaded circuits, loose connections, damaged cables.
-                Control measures: fire extinguisher on site, hot work permit if required, thermal
-                inspection before re-energising.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Working at height:</strong> Accessing distribution boards, cable trays, or
-                lighting at height. Control measures: step-up platforms, tower scaffolds, MEWP as
-                appropriate; fall prevention measures.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Manual handling:</strong> Lifting heavy distribution boards, cable drums,
-                transformers. Control measures: mechanical lifting aids, two-person lift, manual
-                handling assessment.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Asbestos:</strong> Older buildings may contain asbestos in cable routes,
-                behind distribution boards, or in ceiling voids. Control measures: check the
-                asbestos register before starting work, do not disturb suspect materials, stop work
-                and report if asbestos is suspected.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th className={thCn}>Hazard</th>
+                <th className={thCn}>Typical control measures</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.1]">
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Electric shock</td>
+                <td className={tdCn}>
+                  Safe isolation procedure, lock-off, prove dead, GS38-compliant test equipment,
+                  insulated tools, warning notices. BS 7671 Regulation 462.3 requires isolation
+                  devices to be installed so as to prevent unintentional or inadvertent closure —
+                  by a lockable space or enclosure, padlocking, or siting the device next to the
+                  equipment.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Arc flash</td>
+                <td className={tdCn}>
+                  Work de-energised wherever possible, assess the prospective fault level, arc-rated
+                  PPE, restrict access to the working area.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Second supply or stored energy</td>
+                <td className={tdCn}>
+                  Where an installation, item of equipment or enclosure contains live parts fed from
+                  more than one supply, BS 7671 Regulation 537.1.2 requires a durable warning notice
+                  so that anyone gaining access is warned to isolate all of them. Where residual
+                  energy may be present, Regulation 462.4 requires a means of discharge and, where
+                  relevant, a label stating the discharge time before the enclosure can be opened
+                  safely. Cover PV, battery storage, UPS and standby generation explicitly.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Fire</td>
+                <td className={tdCn}>
+                  Extinguisher on site, hot work permit where required, thermal inspection before
+                  re-energising, housekeeping around cable routes.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Working at height</td>
+                <td className={tdCn}>
+                  Step-up platforms, tower scaffolds or a MEWP as appropriate; fall prevention
+                  before fall arrest; trained operators. The Work at Height Regulations 2005 apply.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Manual handling</td>
+                <td className={tdCn}>
+                  Mechanical lifting aids, two-person lifts, a manual handling assessment for
+                  distribution boards, cable drums and transformers. The Manual Handling Operations
+                  Regulations 1992 apply.
+                </td>
+              </tr>
+              <tr>
+                <td className={`${tdCn} font-semibold`}>Asbestos</td>
+                <td className={tdCn}>
+                  Check the asbestos register before starting. Do not disturb suspect materials —
+                  flash pads behind older boards, cable routes, ceiling voids. Stop work and report
+                  if asbestos is suspected.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
@@ -562,49 +712,34 @@ const sections = [
           down to specificity and accuracy. Here are practical tips for writing RAMS that actually
           work.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Be specific.</strong> "Install consumer unit in kitchen" is better than
-                "electrical installation work." "Isolate supply at main switch, lock off with
-                personal padlock, prove dead at each outgoing way using GS38-compliant voltage
-                indicator" is better than "safe isolation."
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Be specific.</strong> &ldquo;Install consumer unit in kitchen&rdquo; beats
+              &ldquo;electrical installation work&rdquo;. &ldquo;Isolate supply at main switch, lock
+              off with personal padlock, prove dead at each outgoing way using a GS38-compliant
+              voltage indicator&rdquo; beats &ldquo;safe isolation&rdquo;.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Match the method to the risk assessment.</strong> Every significant hazard
-                in the risk assessment should have a corresponding control measure in the method
-                statement. If the risk assessment identifies "working at height to access cable
-                tray," the method statement should specify the access equipment and precautions.
-              </span>
+            <li className={listItemCn}>
+              <strong>Match the method to the risk assessment.</strong> Every significant hazard in
+              the risk assessment should have a corresponding control measure in the method
+              statement. If the risk assessment identifies working at height to access cable tray,
+              the method statement should specify the access equipment and precautions.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Use plain language.</strong> RAMS should be understandable to everyone who
-                needs to follow them. Avoid jargon where possible and be clear about what needs to
-                happen at each step.
-              </span>
+            <li className={listItemCn}>
+              <strong>Use plain language.</strong> RAMS should be understandable to everyone who
+              needs to follow them. Avoid jargon where possible and be clear about what needs to
+              happen at each step.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Include emergency procedures.</strong> What happens if someone receives an
-                electric shock? Where is the nearest first aid kit? Who is the first aider on site?
-                What is the emergency evacuation procedure?
-              </span>
+            <li className={listItemCn}>
+              <strong>Include emergency procedures.</strong> What happens if someone receives an
+              electric shock? Where is the nearest first aid kit? Who is the first aider on site?
+              What is the emergency evacuation procedure?
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Review and sign.</strong> The RAMS should be signed by the person producing
-                it, reviewed and approved by the responsible person (or principal contractor), and
-                briefed to all workers before work begins. Keep a record of the briefing.
-              </span>
+            <li className={listItemCn}>
+              <strong>Review and sign.</strong> The RAMS should be signed by the person producing
+              it, reviewed and approved by the responsible person or principal contractor, and
+              briefed to all workers before work begins. Keep a record of the briefing.
             </li>
           </ul>
         </div>
@@ -620,38 +755,26 @@ const sections = [
           RAMS are not a write-once document. They go through a review and approval process that
           ensures they are accurate, complete, and understood by everyone involved.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Internal review:</strong> Before submitting to the principal contractor,
-                review the RAMS internally. Check that all hazards are identified, control measures
-                are adequate, and the method is accurate and complete.
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Internal review.</strong> Before submitting to the principal contractor,
+              review the RAMS internally. Check that all hazards are identified, control measures
+              are adequate, and the method is accurate and complete.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Principal contractor review:</strong> The principal contractor will review
-                your RAMS against the construction phase plan. They may request changes, additional
-                detail, or confirmation of specific control measures.
-              </span>
+            <li className={listItemCn}>
+              <strong>Principal contractor review.</strong> The principal contractor will review
+              your RAMS against the construction phase plan. They may request changes, additional
+              detail, or confirmation of specific control measures.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Toolbox talk / briefing:</strong> Before work starts, brief all workers on
-                the RAMS. Ensure everyone understands the hazards, the control measures, the safe
-                method, and the emergency procedures. Record attendance.
-              </span>
+            <li className={listItemCn}>
+              <strong>Toolbox talk and briefing.</strong> Before work starts, brief all workers on
+              the RAMS. Ensure everyone understands the hazards, the control measures, the safe
+              method, and the emergency procedures. Record attendance.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Ongoing review:</strong> If conditions change during the job — new hazards,
-                different access, scope changes — update the RAMS and re-brief the team.
-              </span>
+            <li className={listItemCn}>
+              <strong>Ongoing review.</strong> If conditions change during the job — new hazards,
+              different access, scope changes — update the RAMS and re-brief the team.
             </li>
           </ul>
         </div>
@@ -665,43 +788,30 @@ const sections = [
       <>
         <p>
           Writing RAMS from scratch for every job takes time — time that most electricians would
-          rather spend doing the actual work. This is where AI tools can help. Elec-Mate's AI Health
-          and Safety Agent is purpose-built for generating site-specific RAMS for electrical
-          activities.
+          rather spend doing the actual work. Elec-Mate&apos;s AI Health and Safety Agent is
+          purpose-built for generating site-specific RAMS for electrical activities.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Describe the job:</strong> Tell the AI what work you are doing, where, and
-                what the installation involves. For example: "Consumer unit replacement in a
-                3-bedroom semi-detached house. Existing TN-C-S supply. Asbestos flash pad behind
-                existing board."
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li className={listItemCn}>
+              <strong>Describe the job.</strong> Tell the AI what work you are doing, where, and
+              what the installation involves. For example: &ldquo;Consumer unit replacement in a
+              three-bedroom semi-detached house. Existing TN-C-S supply. Asbestos flash pad behind
+              existing board.&rdquo;
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>AI generates the RAMS:</strong> The AI produces a tailored risk assessment
-                with proper hazard identification, risk ratings, and control measures, plus a
-                step-by-step method statement incorporating the control measures.
-              </span>
+            <li className={listItemCn}>
+              <strong>The AI generates the RAMS.</strong> A tailored risk assessment with hazard
+              identification, risk ratings and control measures, plus a step-by-step method
+              statement that carries those control measures through.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Review and customise:</strong> Check the output, add any site-specific
-                details the AI could not know (access restrictions, client requirements, specific
-                equipment), and sign off.
-              </span>
+            <li className={listItemCn}>
+              <strong>Review and customise.</strong> Check the output, add the site-specific details
+              the AI could not know — access restrictions, client requirements, specific equipment —
+              and sign off.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Export as PDF:</strong> Send the finished RAMS to the principal contractor
-                or client as a professional PDF document.
-              </span>
+            <li className={listItemCn}>
+              <strong>Export as PDF.</strong> Send the finished RAMS to the principal contractor or
+              client as a professional PDF document.
             </li>
           </ul>
         </div>
@@ -728,9 +838,9 @@ export default function RAMSTemplateGuidePage() {
   return (
     <GuideTemplate
       title="RAMS Template for Electricians | Free Guide"
-      description="Complete guide to writing RAMS (Risk Assessment and Method Statement) for electrical work. Risk assessment structure, method statement sections…"
+      description="Complete guide to writing RAMS (Risk Assessment and Method Statement) for electrical work. Risk assessment structure, method statement sections."
       datePublished="2025-03-18"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"
@@ -752,7 +862,7 @@ export default function RAMSTemplateGuidePage() {
       faqHeading="Frequently Asked Questions About RAMS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Professional RAMS in Minutes"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety Agent to create site-specific RAMS, digital certificates, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's AI Health and Safety Agent creates site-specific RAMS alongside your digital certificates and job documentation. 7-day free trial, cancel anytime."
     />
   );
 }

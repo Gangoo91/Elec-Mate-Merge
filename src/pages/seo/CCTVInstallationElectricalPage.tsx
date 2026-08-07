@@ -591,7 +591,7 @@ export default function CCTVInstallationElectricalPage() {
   return (
     <GuideTemplate
       title="CCTV Installation Electrical Requirements UK | Camera"
-      description="CCTV installation electrical requirements for the UK. PoE vs local power, CAT6 vs coaxial cable, power consumption calculations…"
+      description="CCTV installation electrical requirements for the UK. PoE vs local power, CAT6 vs coaxial cable, power consumption calculations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -1,269 +1,123 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calculator } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import CalculatorSelector from '@/components/apprentice/calculators/CalculatorSelector';
-import OhmsLawCalculator from '@/components/apprentice/calculators/OhmsLawCalculator';
-import VoltageDropCalculator from '@/components/apprentice/calculators/VoltageDropCalculator';
-import PowerFactorCalculator from '@/components/apprentice/calculators/PowerFactorCalculator';
-import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
-import LoadCalculator from '@/components/apprentice/calculators/LoadCalculator';
-import AdiabaticCalculator from '@/components/apprentice/calculators/AdiabaticCalculator';
-import ZsValuesCalculator from '@/components/apprentice/calculators/ZsValuesCalculator';
-import ThreePhasePowerCalculator from '@/components/apprentice/calculators/ThreePhasePowerCalculator';
-import ConduitFillCalculator from '@/components/apprentice/calculators/ConduitFillCalculator';
-import ConduitBendingCalculator from '@/components/apprentice/calculators/ConduitBendingCalculator';
-import StarDeltaCalculator from '@/components/apprentice/calculators/StarDeltaCalculator';
-import PowerFactorCorrectionCalculator from '@/components/apprentice/calculators/PowerFactorCorrectionCalculator';
-import EarthElectrodeCalculator from '@/components/apprentice/calculators/EarthElectrodeCalculator';
-import GeneratorSizingCalculator from '@/components/apprentice/calculators/GeneratorSizingCalculator';
-import EnergyCostCalculator from '@/components/apprentice/calculators/EnergyCostCalculator';
+/**
+ * Electrical calculations — one page, both routes.
+ *
+ * This existed twice: `/electrician/calculations` (a 269-line page with 64
+ * EAGER imports and its own switch) and the apprentice `OnJobCalculations`
+ * (400 lines, lazy imports, its own switch). Same 63 calculators, two shells,
+ * two registries, two bundle profiles. They had already drifted.
+ *
+ * Now: `src/data/calculators.ts` is the registry, `calculatorComponents.ts` is
+ * the lazy switch, and this is the only shell. A check script asserts the two
+ * stay in step.
+ *
+ * What went from the header:
+ *
+ *   THE BACK BUTTON ON THE RIGHT. Every other page in the app puts `← Back`
+ *   top-left in the masthead; this one had "Back to Hub" as an outlined button
+ *   on the far right, which on a phone is the corner your thumb reaches last.
+ *
+ *   THE BLUE ICON TILE. `bg-blue-500/10` with a `text-blue-400` calculator
+ *   glyph — blue, in an app whose accent is volt, next to a 30px headline and a
+ *   "BS 7671 compliant professional tools" strapline. That is a marketing
+ *   header on a tool you opened deliberately.
+ *
+ *   THE 63-ITEM DROPDOWN. See CalculatorPicker.
+ *
+ * The chosen calculator lives in the URL (`?calc=`), so a volt-drop result is
+ * linkable, survives a refresh, and the browser Back button steps through the
+ * calculators you used rather than leaving the page.
+ */
+import { Suspense, useCallback, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { CalculatorPicker } from '@/components/calculators/shared/CalculatorPicker';
+import { CALCULATOR_COMPONENTS } from '@/components/calculators/shared/calculatorComponents';
+import { CALCULATOR_BY_SLUG, CALCULATORS } from '@/data/calculators';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { cn } from '@/lib/utils';
 
-// Import all other calculator components
-import ACPowerCalculator from '@/components/apprentice/calculators/ACPowerCalculator';
-import BasicACCircuitCalculator from '@/components/apprentice/calculators/BasicACCircuitCalculator';
-import CableCurrentCapacityCalculator from '@/components/apprentice/calculators/CableCurrentCapacityCalculator';
-import CableDeratingCalculator from '@/components/apprentice/calculators/CableDeratingCalculator';
-import DiversityFactorCalculator from '@/components/apprentice/calculators/DiversityFactorCalculator';
-import MaximumDemandCalculator from '@/components/apprentice/calculators/MaximumDemandCalculator';
-import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
-import R1R2Calculator from '@/components/apprentice/calculators/R1R2Calculator';
-import RingCircuitCalculator from '@/components/apprentice/calculators/RingCircuitCalculator';
-import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
-import PhaseRotationCalculator from '@/components/apprentice/calculators/PhaseRotationCalculator';
-import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
-import RCDTripTimeCalculator from '@/components/apprentice/calculators/RCDTripTimeCalculator';
-import RCDDiscriminationCalculator from '@/components/apprentice/calculators/RCDDiscriminationCalculator';
-import LumenCalculator from '@/components/apprentice/calculators/LumenCalculator';
-import LEDDriverCalculator from '@/components/apprentice/calculators/LEDDriverCalculator';
-import MotorStartingCurrentCalculator from '@/components/apprentice/calculators/MotorStartingCurrentCalculator';
-import TransformerCalculator from '@/components/apprentice/calculators/TransformerCalculator';
-import BatteryBackupCalculator from '@/components/apprentice/calculators/BatteryBackupCalculator';
-import SolarPVCalculator from '@/components/apprentice/calculators/SolarPVCalculator';
-import BatteryStorageCalculator from '@/components/apprentice/calculators/BatteryStorageCalculator';
-import HeatPumpCalculator from '@/components/apprentice/calculators/HeatPumpCalculator';
-import EVChargingCalculator from '@/components/apprentice/calculators/EVChargingCalculator';
-// New Renewable Energy Calculators
-import SolarArrayCalculator from '@/components/apprentice/calculators/SolarArrayCalculator';
-import WindPowerCalculator from '@/components/apprentice/calculators/WindPowerCalculator';
-import GridTieInverterCalculator from '@/components/apprentice/calculators/GridTieInverterCalculator';
-import MicroHydroCalculator from '@/components/apprentice/calculators/MicroHydroCalculator';
-import OffGridSystemCalculator from '@/components/apprentice/calculators/OffGridSystemCalculator';
-import FeedInTariffCalculator from '@/components/apprentice/calculators/FeedInTariffCalculator';
-import DataCentreCalculator from '@/components/apprentice/calculators/DataCentreCalculator';
-import ResistorColourCodeCalculator from '@/components/apprentice/calculators/ResistorColourCodeCalculator';
-import WireGaugeCalculator from '@/components/apprentice/calculators/WireGaugeCalculator';
-import InstrumentationCalculator from '@/components/apprentice/calculators/InstrumentationCalculator';
-import UnitConverterCalculator from '@/components/apprentice/calculators/UnitConverterCalculator';
-import MarineElectricalCalculator from '@/components/apprentice/calculators/MarineElectricalCalculator';
-import ComingSoonCalculator from '@/components/apprentice/calculators/ComingSoonCalculator';
-import ArcFlashCalculator from '@/components/apprentice/calculators/ArcFlashCalculator';
-import EVSELoadCalculator from '@/components/apprentice/calculators/EVSELoadCalculator';
-import PowerQualityCalculator from '@/components/apprentice/calculators/PowerQualityCalculator';
-import EmergencyLightingCalculator from '@/components/apprentice/calculators/EmergencyLightingCalculator';
-import SwimmingPoolCalculator from '@/components/apprentice/calculators/SwimmingPoolCalculator';
-import SelectivityCalculator from '@/components/apprentice/calculators/SelectivityCalculator';
-import FaultLevelCalculator from '@/components/apprentice/calculators/FaultLevelCalculator';
-import TouchStepVoltageCalculator from '@/components/apprentice/calculators/TouchStepVoltageCalculator';
-import LightningProtectionCalculator from '@/components/apprentice/calculators/LightningProtectionCalculator';
-import IPRatingCalculator from '@/components/apprentice/calculators/IPRatingCalculator';
-import TimeMaterialsCalculator from '@/components/apprentice/calculators/TimeMaterialsCalculator';
-import CircuitBreakerSelectorCalculator from '@/components/apprentice/calculators/CircuitBreakerSelectorCalculator';
-import TrunkingSizeCalculator from '@/components/apprentice/calculators/TrunkingSizeCalculator';
+const DEFAULT_SLUG = 'ohms-law';
 
-const Calculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>('ohms-law');
+interface Props {
+  /** Where `← Back` returns to. Differs per route, nothing else does. */
+  backTo?: string;
+  title?: string;
+  section?: string;
+}
 
-  const renderCalculator = () => {
-    switch (calculatorType) {
-      // Fundamental Electrical Calculations
-      case 'ohms-law':
-        return <OhmsLawCalculator />;
-      case 'ac-power':
-        return <ACPowerCalculator />;
-      case 'basic-ac-circuit':
-        return <BasicACCircuitCalculator />;
-      case 'power-factor':
-        return <PowerFactorCalculator />;
-      case 'three-phase-power':
-        return <ThreePhasePowerCalculator />;
-      case 'star-delta':
-        return <StarDeltaCalculator />;
+const Calculations = ({
+  backTo = '/electrician',
+  title = 'Calculations',
+  section = 'Electrician',
+}: Props) => {
+  const [params, setParams] = useSearchParams();
 
-      // Design & Installation
-      case 'voltage-drop':
-        return <VoltageDropCalculator />;
-      case 'cable-size':
-        return <CableSizingCalculator />;
-      case 'load':
-        return <LoadCalculator />;
-      case 'cable-current-capacity':
-        return <CableCurrentCapacityCalculator />;
-      case 'cable-derating':
-        return <CableDeratingCalculator />;
-      case 'conduit-fill':
-        return <ConduitFillCalculator />;
-      case 'conduit-bending':
-        return <ConduitBendingCalculator />;
-      case 'diversity-factor':
-        return <DiversityFactorCalculator />;
-      case 'maximum-demand':
-        return <MaximumDemandCalculator />;
-      case 'power-factor-correction':
-        return <PowerFactorCorrectionCalculator />;
+  const slug = params.get('calc') ?? DEFAULT_SLUG;
+  const entry = CALCULATOR_BY_SLUG.get(slug) ?? CALCULATOR_BY_SLUG.get(DEFAULT_SLUG)!;
+  const Active = CALCULATOR_COMPONENTS[entry.value] ?? CALCULATOR_COMPONENTS[DEFAULT_SLUG];
 
-      // Testing & Inspection
-      case 'zs-values':
-        return <ZsValuesCalculator />;
-      case 'bs7671-zs-lookup':
-        return <BS7671ZsLookupCalculator />;
-      case 'r1r2':
-        return <R1R2Calculator />;
-      case 'ring-circuit':
-        return <RingCircuitCalculator />;
-      case 'earth-fault-loop':
-        return <EarthFaultLoopCalculator />;
-      case 'phase-rotation':
-        return <PhaseRotationCalculator />;
+  useSEO({
+    // No " | Elec-Mate" here — useSEO appends it, and passing it gave
+    // "… | BS 7671 | Elec-Mate | Elec-Mate" in the tab and the search snippet.
+    title: `${entry.label} Calculator | BS 7671`,
+    description: `${entry.label} calculator for UK electricians — BS 7671:2018+A4:2026. Part of ${CALCULATORS.length} electrical calculators.`,
+  });
 
-      // Protection & Safety
-      case 'adiabatic':
-        return <AdiabaticCalculator />;
-      case 'pfc':
-        return <PFCCalculator />;
-      case 'rcd-trip-time':
-        return <RCDTripTimeCalculator />;
-      case 'rcd-discrimination':
-        return <RCDDiscriminationCalculator />;
-      case 'earth-electrode':
-        return <EarthElectrodeCalculator />;
+  const choose = useCallback(
+    (next: string) => {
+      // `replace: false` so Back walks the calculators you opened.
+      setParams((p) => {
+        const n = new URLSearchParams(p);
+        n.set('calc', next);
+        return n;
+      });
+    },
+    [setParams]
+  );
 
-      // Lighting & Power Systems
-      case 'lumen':
-        return <LumenCalculator />;
-      case 'led-driver':
-        return <LEDDriverCalculator />;
-      case 'motor-starting-current':
-        return <MotorStartingCurrentCalculator />;
-      case 'transformer-calculator':
-        return <TransformerCalculator />;
-      case 'battery-backup':
-        return <BatteryBackupCalculator />;
-
-      // Renewable Energy
-      case 'solar-pv':
-        return <SolarPVCalculator />;
-      case 'solar-array':
-        return <SolarArrayCalculator />;
-      case 'battery-storage':
-        return <BatteryStorageCalculator />;
-      case 'wind-power':
-        return <WindPowerCalculator />;
-      case 'grid-tie-inverter':
-        return <GridTieInverterCalculator />;
-      case 'micro-hydro':
-        return <MicroHydroCalculator />;
-      case 'off-grid-system':
-        return <OffGridSystemCalculator />;
-      case 'feed-in-tariff':
-        return <FeedInTariffCalculator />;
-      case 'heat-pump':
-        return <HeatPumpCalculator />;
-      case 'ev-charging':
-        return <EVChargingCalculator />;
-      case 'evse-load':
-        return <EVSELoadCalculator />;
-
-      // Tools & Components
-      case 'resistor-colour-code':
-        return <ResistorColourCodeCalculator />;
-      case 'wire-gauge':
-        return <WireGaugeCalculator />;
-      case 'instrumentation':
-        return <InstrumentationCalculator />;
-      case 'ip-rating':
-        return <IPRatingCalculator />;
-
-      // Utilities & Cost Analysis
-      case 'energy-cost':
-        return <EnergyCostCalculator />;
-      case 'unit-converter':
-        return <UnitConverterCalculator />;
-      case 'arc-flash':
-        return <ArcFlashCalculator />;
-      case 'power-quality':
-        return <PowerQualityCalculator />;
-      case 'emergency-lighting':
-        return <EmergencyLightingCalculator />;
-      case 'selectivity':
-        return <SelectivityCalculator />;
-      case 'fault-level':
-        return <FaultLevelCalculator />;
-      case 'touch-step-voltage':
-        return <TouchStepVoltageCalculator />;
-      case 'lightning-protection':
-        return <LightningProtectionCalculator />;
-
-      // Specialised Applications
-      case 'data-centre':
-        return <DataCentreCalculator />;
-      case 'generator-sizing':
-        return <GeneratorSizingCalculator />;
-
-      // Specialist Locations
-      case 'marine-electrical':
-        return <MarineElectricalCalculator />;
-      case 'swimming-pool':
-        return <SwimmingPoolCalculator />;
-
-      // New Calculators
-      case 'time-materials':
-        return <TimeMaterialsCalculator />;
-      case 'circuit-breaker-selector':
-        return <CircuitBreakerSelectorCalculator />;
-      case 'trunking-size':
-        return <TrunkingSizeCalculator />;
-
-      default:
-        return <OhmsLawCalculator />;
-    }
-  };
+  // Keyed on the slug so switching calculators remounts rather than trying to
+  // reconcile two different forms — stale values bleeding between calculators
+  // is worse than a frame of skeleton.
+  const body = useMemo(
+    () => (
+      <Suspense key={entry.value} fallback={<CalculatorSkeleton />}>
+        <Active />
+      </Suspense>
+    ),
+    [Active, entry.value]
+  );
 
   return (
-    <div className="bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark ">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 ">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <Calculator className="h-6 w-6 sm:h-7 sm:w-7 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Electrical Calculations
-              </h1>
-              <p className="text-sm text-white">BS 7671 compliant professional tools</p>
-            </div>
-          </div>
-          <Link to="/electrician">
-            <Button
-              variant="outline"
-              className="h-11 px-4 border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              Back to Hub
-            </Button>
-          </Link>
-        </header>
-
-        {/* Calculator Selector */}
-        <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
-
-        {/* Dynamic Calculator */}
-        <div className="w-full">{renderCalculator()}</div>
-      </main>
-    </div>
+    <HubPage>
+      <HubMasthead section={section} title={title} backTo={backTo} />
+      <HubBody>
+        <CalculatorPicker value={entry.value} onChange={choose} />
+        {body}
+      </HubBody>
+    </HubPage>
   );
 };
+
+/** Matches the calculator card's box so the swap doesn't jump the page. */
+const CalculatorSkeleton = () => (
+  <div
+    className={cn(
+      'min-h-[420px] animate-pulse rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
+      CARD_SURFACE
+    )}
+  >
+    <div className="h-4 w-40 rounded-full bg-white/[0.10]" />
+    <div className="mt-2 h-3 w-64 rounded-full bg-white/[0.06]" />
+    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i}>
+          <div className="h-3 w-20 rounded-full bg-white/[0.08]" />
+          <div className="mt-2 h-9 w-full rounded-lg bg-white/[0.05]" />
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 export default Calculations;

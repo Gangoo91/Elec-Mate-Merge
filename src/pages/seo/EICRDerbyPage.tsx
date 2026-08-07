@@ -620,7 +620,7 @@ export default function EICRDerbyPage() {
   return (
     <GuideTemplate
       title="EICR Derby | Electrical Installation Condition Report Derby"
-      description="EICR requirements for Derby landlords and homeowners. Legal obligations under the 2020 Regulations, Derby City Council enforcement, costs £150–300…"
+      description="EICR requirements for Derby landlords and homeowners. Legal obligations under the 2020 Regulations, Derby City Council enforcement, costs £150–300."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

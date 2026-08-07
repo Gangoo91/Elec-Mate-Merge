@@ -716,8 +716,8 @@ const sections = [
 export default function BestElectricalBooksPage() {
   return (
     <GuideTemplate
-      title="Best Electrical Books 2026 | Top Reads for Electricians"
-      description="The best electrical books for UK electricians in 2026. BS 7671 Brown Book, On-Site Guide, Guidance Note 3, Brian Scaddan textbooks…"
+      title="Best Electrician Books UK: BS 7671, OSG, GN3"
+      description="The four essentials: BS 7671 Brown Book £90-£100, On-Site Guide £30-£35, Guidance Note 3 £35-£40, plus a Brian Scaddan textbook. Full UK reading list."
       datePublished="2025-11-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

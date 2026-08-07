@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import MaximumDemandCalculator from '@/components/apprentice/calculators/MaximumDemandCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -17,6 +19,7 @@ const tocItems = [
   { id: 'what-is-max-demand', label: 'What Is Max Demand?' },
   { id: 'why-it-matters', label: 'Why Max Demand Matters' },
   { id: 'diversity-factors', label: 'Diversity Factors by Circuit Type' },
+  { id: 'calculator', label: 'Max Demand Calculator' },
   { id: 'what-is-admd', label: 'What Is ADMD?' },
   { id: 'worked-example-domestic', label: 'Worked Example: Domestic' },
   { id: 'worked-example-commercial', label: 'Worked Example: Commercial' },
@@ -33,7 +36,7 @@ const keyTakeaways = [
   'Getting max demand wrong leads to undersized cables and protective devices (if too low) or unnecessary cost from oversized equipment (if too high).',
   'Domestic installations typically have a max demand of 60 to 100 A on a single-phase supply, depending on whether electric heating, showers, or EV chargers are installed.',
   'Elec-Mate includes a max demand calculator that applies the correct diversity factors automatically, plus 50+ other calculators including cable sizing, voltage drop, Zs, and PFC.',
-  'The max demand figure passed to the inspector and tester must be expressed in amps, kW or kVA after diversity has been taken into account — GN3 Regulation 2.3 (IET Guidance Note 3) places this obligation on whoever commissions the design.',
+  'The max demand figure passed to the inspector and tester must be expressed in amps, kW or kVA after diversity has been taken into account — IET Guidance Note 3 section 2.3 requires this information to be made available to the person or persons carrying out the inspection and testing (it may come from the designer, supplier, distributor or duty holder).',
 ];
 
 const faqs = [
@@ -50,7 +53,7 @@ const faqs = [
   {
     question: 'Where do I find the diversity factors in BS 7671?',
     answer:
-      'The diversity allowances for domestic and small commercial installations are set out in the IET On-Site Guide (OSG) Appendix A, specifically Table A2 (Allowances for Diversity). Table A1 in the same appendix gives typical current demands per point of utilisation. BS 7671 Regulation 311.1 requires diversity to be applied, but the numeric percentage table is in the OSG Appendix A, not in BS 7671 directly. These tables break down diversity by circuit type: lighting, heating and power, cooking appliances, motors, socket outlets, water heaters, and so on. Each circuit type has a different percentage reduction. For larger commercial and industrial installations, diversity factors are typically agreed with the Distribution Network Operator (DNO) based on the specific load profile and historical data rather than applying the standard domestic table.',
+      'The diversity allowances for domestic and small commercial installations are set out in the IET On-Site Guide (OSG) Appendix A, specifically Table A2 (Allowances for Diversity). Table A1 in the same appendix gives typical current demands per point of utilisation. BS 7671 Regulation 311.1 requires the maximum demand to be determined and permits diversity to be taken into account, but the numeric percentage table is in the OSG Appendix A, not in BS 7671 directly. The On-Site Guide itself notes that the Table A2 recommendations have not been updated for some time and do not necessarily align with modern loads, and that the designer may increase or decrease them. These tables break down diversity by circuit type: lighting, heating and power, cooking appliances, motors, socket outlets, water heaters, and so on. Each circuit type has a different percentage reduction. For larger commercial and industrial installations, diversity factors are typically agreed with the Distribution Network Operator (DNO) based on the specific load profile and historical data rather than applying the standard domestic table.',
   },
   {
     question: 'Do I need to calculate max demand for every job?',
@@ -140,6 +143,12 @@ const sections = [
     heading: 'What Is Max Demand?',
     content: (
       <>
+        <a
+          href="#calculator"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+        >
+          Work out your max demand — free calculator
+        </a>
         <p>
           Max demand (sometimes written as maximum demand) is the greatest electrical load, measured
           in amperes or kilowatts, that an installation is expected to draw from the supply at any
@@ -148,11 +157,13 @@ const sections = [
           be at full capacity at the same moment.
         </p>
         <p>
-          BS 7671:2018+A4:2026 requires the designer of an electrical installation to assess the
-          maximum demand as part of the general characteristics assessment under Part 3,
-          specifically Regulation 311.1 and the guidance in Appendix A. This assessment directly
-          affects the sizing of the incoming supply cable, the main protective device, the
-          distribution board, and every downstream cable and device.
+          BS 7671:2018+A4:2026 requires the maximum demand of an installation to be determined as
+          part of the general characteristics assessment under Part 3, specifically Regulation
+          311.1, which states that in determining the maximum demand of an installation or part
+          thereof, diversity may be taken into account. BS 7671 itself does not tabulate diversity
+          allowances — the numeric figures are published in the IET On-Site Guide Appendix A. This
+          assessment directly affects the sizing of the incoming supply cable, the main protective
+          device, the distribution board, and every downstream cable and device.
         </p>
         <p>
           The concept is straightforward: a typical domestic property might have a 10 kW electric
@@ -248,7 +259,8 @@ const sections = [
               <tr>
                 <td className="py-3 pr-4 flex items-center gap-2">Cooking appliances</td>
                 <td className="py-3 pr-4">
-                  10 A + 30% of remainder + 5 A for socket in cooker control
+                  10 A + 30% of the appliance full-load current in excess of 10 A + 5 A if a socket
+                  outlet is incorporated in the control unit
                 </td>
               </tr>
               <tr>
@@ -285,6 +297,30 @@ const sections = [
           profiles, power monitoring data, or industry-specific guidance. The IET Guidance Note 1
           (Selection and Erection) provides further commentary on applying diversity in practice.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Work Out Max Demand for Your Installation',
+    content: (
+      <>
+        <p className="text-white">
+          Free to use, no sign-up and no email required. Set the installation type and supply, add
+          each load in kW against its circuit type, and the calculator applies the diversity
+          allowance for that type and returns the total max demand in amperes.
+        </p>
+        <p className="text-white">
+          It handles the awkward parts of the table for you: the cooker formula (10 A, plus 30% of
+          the full-load current above 10 A, plus 5 A where the control unit incorporates a socket
+          outlet), the largest circuit plus 40% of the rest on socket outlets, and the two-largest
+          rule on instantaneous water heaters. The result shows the connected load, the reduction
+          diversity accounts for and the diversified current, so the working is there to copy into
+          your design records.
+        </p>
+        <CalculatorSurface>
+          <MaximumDemandCalculator />
+        </CalculatorSurface>
       </>
     ),
   },
@@ -353,13 +389,17 @@ const sections = [
           <ul className="space-y-2 text-white text-sm">
             <li>Lighting: 2 circuits at 5 A each = 10 A total</li>
             <li>Ring final circuits: 2 x 32 A = 64 A total</li>
-            <li>Cooker circuit: 32 A (13 kW cooker + socket outlet)</li>
+            <li>
+              Cooker: 13 kW at 230 V = 56.5 A full load (control unit with socket outlet). The
+              diversity formula is applied to the appliance full-load current, not to the 32 A
+              protective device already sized for it
+            </li>
             <li>Electric shower: 40 A (9.5 kW)</li>
             <li>Immersion heater: 16 A (3 kW)</li>
             <li>EV charger: 32 A (7.4 kW)</li>
           </ul>
           <p className="text-white text-sm mt-3">
-            <strong>Total connected load: 194 A</strong>
+            <strong>Total connected load: 218.5 A</strong>
           </p>
         </div>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
@@ -372,8 +412,8 @@ const sections = [
               Socket outlets: 100% of 32 A + 40% of 32 A = 32 + 12.8 = <strong>44.8 A</strong>
             </li>
             <li>
-              Cooker: 10 A + 30% of (32 - 10) A + 5 A socket = 10 + 6.6 + 5 ={' '}
-              <strong>21.6 A</strong>
+              Cooker: 10 A + 30% of (56.5 - 10) A + 5 A socket = 10 + 14.0 + 5 ={' '}
+              <strong>29.0 A</strong>
             </li>
             <li>
               Electric shower: 100% of 40 A = <strong>40 A</strong>
@@ -386,7 +426,7 @@ const sections = [
             </li>
           </ul>
           <p className="text-white text-sm mt-3">
-            <strong>Total max demand: 161 A</strong> — down from 194 A connected load
+            <strong>Total max demand: 168.4 A</strong> — down from 218.5 A connected load
           </p>
           <p className="text-white text-sm mt-2">
             This exceeds a standard 100 A single-phase supply. The designer would need to consider
@@ -625,7 +665,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Max demand is just one of over 70+ calculators on Elec-Mate. Others include{' '}
+                  Max demand is just one of 50+ calculators on Elec-Mate. Others include{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
@@ -668,10 +708,10 @@ const sections = [
 export default function MaxDemandGuidePage() {
   return (
     <GuideTemplate
-      title="How to Calculate Maximum Demand (UK): Diversity + Examples"
-      description="How to calculate max demand for UK installations: BS 7671 diversity factors, ADMD method, worked examples for domestic, commercial + three-phase. Free guide."
+      title="How to Calculate Maximum Demand: Diversity Table"
+      description="Maximum demand diversity table: lighting 66%, sockets 100% of largest + 40% of the rest, cooker 10 A + 30% + 5 A. Worked domestic + commercial examples."
       datePublished="2025-03-15"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

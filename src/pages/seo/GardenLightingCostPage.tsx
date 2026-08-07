@@ -721,8 +721,8 @@ const sections = [
 export default function GardenLightingCostPage() {
   return (
     <GuideTemplate
-      title="Garden Lighting Installation Cost UK 2026 | Pricing Guide"
-      description="How much does garden lighting installation cost in the UK in 2026? Complete pricing guide covering LED path lights, deck lights, uplights…"
+      title="Garden Lighting Installation Cost: £500–£5,000"
+      description="Garden lighting installation costs £500–£1,000 for a simple 4–6 light path scheme, £1,200–£2,500 mid-range and £3,000–£5,000+ for a full landscape scheme."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

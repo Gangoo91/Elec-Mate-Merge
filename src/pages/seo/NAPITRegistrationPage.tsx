@@ -709,7 +709,7 @@ export default function NAPITRegistrationPage() {
   return (
     <GuideTemplate
       title="NAPIT Registration Guide | How to Join & What It Costs"
-      description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits…"
+      description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits."
       datePublished="2024-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

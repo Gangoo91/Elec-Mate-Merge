@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A faint hum from the consumer unit is often normal — protective devices contain electromagnetic components (coils and contacts) that vibrate at mains frequency (50Hz) under load.',
   'A loud, persistent, or new buzzing sound is not normal and may indicate loose busbar connections, an overloaded circuit, or a protective device under stress.',
   'Loose connections inside a consumer unit are extremely dangerous. They cause localised heating that can melt busbars, damage devices, and in the worst case cause a fire.',
-  'BS 7671 Section 421 establishes fundamental protection objectives including limiting thermal effects through appropriate protective device selection.',
+  'BS 7671 Chapter 42 covers protection against thermal effects. Within it, Reg 421.1.201 requires consumer units in domestic premises to comply with BS EN 61439-3 and either have a non-combustible enclosure or be enclosed in a non-combustible cabinet.',
   'If the humming is accompanied by a burning smell, warmth on the consumer unit enclosure, or visible discolouration, isolate the main switch and call an electrician immediately.',
   'Regular inspection under an EICR regime catches developing connection issues before they become dangerous.',
 ];
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'How often should a consumer unit be inspected?',
     answer:
-      'For domestic properties, BS 7671 recommends inspection and testing (EICR) every 10 years for owner-occupied homes and every 5 years for rented properties. For landlords, a 5-yearly EICR is a legal requirement under the Electrical Safety Standards in the Private Rented Sector Regulations 2020. However, if you notice any unusual sounds, smells, or visual changes at the consumer unit, do not wait for the scheduled inspection — arrange a check immediately. An electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or similar) can carry out the inspection and issue the EICR.',
+      'BS 7671 does not set fixed inspection intervals. Reg 652.1 requires the frequency of periodic inspection and testing to be determined having regard to the type of installation and equipment, its use and operation, the frequency and quality of maintenance, and the external influences it is subject to — taking account of the results and recommendations of previous certificates and condition reports. In practice, IET guidance points to 10 years for owner-occupied domestic properties and 5 years for rented domestic accommodation, and Guidance Note 3 also flags a change of occupancy as a trigger for inspection, especially in rented homes. For landlords, a 5-yearly EICR is a legal requirement under the Electrical Safety Standards in the Private Rented Sector Regulations 2020. However, if you notice any unusual sounds, smells, or visual changes at the consumer unit, do not wait for the scheduled inspection — arrange a check immediately. An electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or similar) can carry out the inspection and issue the EICR.',
   },
 ];
 
@@ -243,10 +243,10 @@ const sections = [
           replaced.
         </p>
         <p>
-          Section 421 of BS 7671 establishes fundamental protection objectives including limiting
-          thermal effects through appropriate protective device selection and ensuring
-          discrimination between devices. Correctly rated and properly installed protective devices
-          should operate quietly under normal conditions.
+          Chapter 42 of BS 7671 covers protection against thermal effects; within it, Section 421
+          deals with protection against fire caused by electrical equipment. (Selectivity between
+          protective devices is a separate subject, covered by Section 536.) Correctly rated and
+          properly installed protective devices should operate quietly under normal conditions.
         </p>
       </>
     ),
@@ -320,11 +320,12 @@ const sections = [
           The cables heat up, potentially affecting the insulation.
         </p>
         <p>
-          BS 7671 requires that overload and short-circuit currents are determined at every point
-          where a protective device is installed, covering all possible configurations of the
-          installation, to ensure correct device selection (Reg 826.1.2.1). If circuits have been
-          added or loads increased since the original installation, the protective devices may no
-          longer be correctly rated for the actual load.
+          BS 7671 requires the overload protective device to be coordinated with the conductor it
+          protects: the rated current of the device (In) must be at least the design current of the
+          circuit (Ib), and must not exceed the lowest current-carrying capacity (Iz) of any
+          conductor in that circuit — Ib &le; In &le; Iz (Reg 433.1.1). If circuits have been added
+          or loads increased since the original installation, the protective devices may no longer
+          be correctly rated for the actual load.
         </p>
         <p>Common signs of an overloaded circuit include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -386,9 +387,11 @@ const sections = [
           dissipate from the devices and connections.
         </p>
         <p>
-          Modern consumer units are required to have their enclosure manufactured from
-          non-combustible material — or be enclosed in a cabinet of non-combustible material — in
-          domestic premises (Reg 421.1.201, BS 7671:2018). Steel is the most common example. This
+          Within domestic premises, consumer units and similar switchgear assemblies must comply
+          with BS EN 61439-3 and either have their enclosure manufactured from non-combustible
+          material, or be enclosed in a cabinet or enclosure constructed of non-combustible material
+          (Reg 421.1.201, BS 7671:2018+A4:2026). Ferrous metal such as steel is the example the
+          regulation gives of a non-combustible material. This
           requirement has been in effect since the 2015 amendments to BS 7671 (effective January
           2016) and pre-dates the current A4:2026 edition. The non-combustible enclosure provides
           fire containment — if a fault causes overheating inside the consumer unit, the metal box
@@ -615,20 +618,23 @@ const sections = [
               <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
-                  5. A4:2026 Compliance When Recommending an Upgrade
+                  5. Current Standard Compliance When Recommending an Upgrade
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Where investigation reveals that a consumer unit replacement is warranted, any new
-                  unit must comply with BS 7671:2018+A4:2026. Two A4:2026 requirements are
-                  particularly relevant:
+                  unit must comply with BS 7671:2018+A4:2026, the current edition. Two requirements
+                  are particularly relevant:
                 </p>
                 <ul className="mt-2 space-y-1 text-white text-sm leading-relaxed list-disc list-inside">
                   <li>
-                    <strong>Reg 421.1.7 — AFDD recommendation:</strong> BS 7671 now recommends
-                    installation of arc fault detection devices (AFDDs) on AC final circuits of a
-                    fixed installation to mitigate the risk of fire due to arc fault currents. When
-                    specifying a replacement consumer unit, discuss AFDD provision with the
-                    customer.
+                    <strong>Reg 421.1.7 — AFDDs:</strong> arc fault detection devices conforming to
+                    BS EN 62606 shall be provided for single-phase AC final circuits supplying
+                    socket-outlets with a rated current not exceeding 32&nbsp;A in high rise
+                    residential buildings, houses in multiple occupation, purpose-built student
+                    accommodation and care homes. For all other premises — including an ordinary
+                    dwelling — AFDDs on those same circuits are recommended, not required. Where
+                    used, an AFDD shall be placed at the origin of the circuit it protects. Discuss
+                    AFDD provision with the customer when specifying a replacement unit.
                   </li>
                   <li>
                     <strong>Reg 411.3.4 — RCD protection for domestic lighting circuits:</strong>{' '}
@@ -660,10 +666,10 @@ const sections = [
 export default function HummingNoiseFromConsumerUnitPage() {
   return (
     <GuideTemplate
-      title="Humming Noise From Consumer Unit | What It Means"
-      description="Why is your consumer unit humming? Learn the difference between normal MCB buzz and dangerous loose connections, what thermal effects look like…"
+      title="Consumer Unit Buzzing: Faint 50Hz Hum Is Normal"
+      description="A faint 50Hz hum from MCBs and RCDs is normal. Loud or new buzzing means a loose busbar connection — a fire risk. Burning smell: isolate the main switch."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

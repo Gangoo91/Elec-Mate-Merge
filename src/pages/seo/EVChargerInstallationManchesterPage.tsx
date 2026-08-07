@@ -483,7 +483,7 @@ export default function EVChargerInstallationManchesterPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Manchester 2026 | Costs, DNO, and"
-      description="How much does EV charger installation cost in Manchester in 2026? Local costs, Electricity North West DNO notification, Manchester grants…"
+      description="How much does EV charger installation cost in Manchester in 2026? Local costs, Electricity North West DNO notification, Manchester grants."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

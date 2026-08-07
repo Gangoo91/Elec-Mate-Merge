@@ -4,20 +4,40 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   FileCheck2,
-  AlertTriangle,
-  EyeOff,
-  Scan,
-  Flame,
-  Plug,
   Search,
   ClipboardCheck,
   PoundSterling,
   Scale,
   GraduationCap,
-  Brain,
-  ShieldCheck,
-  HelpCircle,
 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared classes
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const plainCardCn =
+  '-mx-4 rounded-none border-y border-white/10 bg-white/[0.04] p-4 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const warnCardCn =
+  '-mx-4 rounded-none border-y border-orange-500/30 bg-orange-500/10 p-4 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const goodCardCn =
+  '-mx-4 rounded-none border-y border-green-500/25 bg-green-500/10 p-4 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const tableWrapCn =
+  '-mx-4 my-5 overflow-x-auto border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const thCn = 'px-4 py-3 text-left text-[13px] font-semibold text-white whitespace-nowrap';
+const tdCn = 'px-4 py-3 align-top text-sm text-white';
+const cardTitleCn = 'text-[15px] font-semibold tracking-tight text-white';
+const listCn = 'mt-3 space-y-2.5 text-sm leading-relaxed text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -29,7 +49,9 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'what-limitations-means', label: 'What "Limitations" Means' },
+  { id: 'section-d', label: 'Section D at a Glance' },
+  { id: 'agreed-vs-operational', label: 'Agreed vs Operational Limitations' },
+  { id: 'default-exclusions', label: 'Limitations Already Printed on the Form' },
   { id: 'extent-of-inspection', label: 'Extent of the Inspection' },
   { id: 'sampling', label: 'Sampling: Why Not Every Circuit Is Tested' },
   { id: 'concealed-wiring', label: 'Concealed Wiring' },
@@ -42,44 +64,50 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Every EICR must include a clear statement of the extent and limitations of the inspection — this is a BS 7671 requirement, not an optional addition.',
-  'The EICR covers the fixed electrical installation only. It does not cover gas installations, water systems, structural issues, portable appliances, or equipment beyond the landlord meter.',
-  'Sampling is standard practice on larger installations. GN3 requires the sampling approach to be justified by a formal risk assessment and documented in the Schedule of Inspections and Schedule of Test Results — not simply a matter of agreeing a percentage.',
-  'Concealed wiring behind walls, under floors, or above ceilings is not inspected during a standard EICR unless there is reason to suspect a fault or the client specifically requests invasive inspection.',
-  'Recording limitations accurately protects both the electrician (from liability for issues outside the inspection scope) and the client (by making clear what further work may be needed).',
-  'BS 7671:2018+A4:2026 introduced new inspection checkpoints: domestic lighting circuits must have ≤30 mA RCD additional protection (Reg 411.3.4), and HMOs, Higher Risk Residential Buildings, purpose-built student accommodation, and care homes now require AFDDs on socket circuits ≤32 A (Reg 421.1.7). Absence of either must be recorded as an observation.',
+  'Limitations go in Section D of the Electrical Installation Condition Report — "Extent and limitations of inspection and testing". Regulation 653.2 requires the report to state both (a) details of those parts of the installation that have been inspected and tested and (b) any limitations of the inspection and testing.',
+  'There are two kinds. Agreed limitations are scope exclusions confirmed with the person ordering the report (and other interested parties) before the inspection. Operational limitations are the things that stopped you on the day — no access to part of the installation or to an item of equipment.',
+  'The model form already carries its own default exclusions: unless specifically agreed beforehand, cables concealed in conduit and trunking, under floors, in roof spaces, generally within the building fabric or underground have not been inspected, and no checks are made for safety alerts, corrective actions or product recalls.',
+  'Regulation 651.2 sets the method: periodic inspection is carried out without dismantling, or with partial dismantling as required, supplemented by appropriate tests from Chapter 64. Lifting floors and opening up concealed areas is extra work that has to be agreed.',
+  'Intake equipment is not excluded — it is inspected visually only. Service cable, service head, earthing arrangement, meter tails and metering equipment get a visual check, and an outcome against that section (other than access to live parts) does not determine the overall satisfactory/unsatisfactory result.',
+  'Sampling is a GN3 obligation, not a negotiation. GN3 Chapter 8 Reg 8.2 requires the sampling plan to be justified by risk assessment and documented in the Schedule of Inspections and Schedule of Test Results.',
+  'A4:2026 changed how a limitation-driven FI lands. The summary of changes for Appendix 6 states that the code FI no longer needs to be marked as unsatisfactory — an observation coded C3 or FI does not affect the overall assessment, which turns on C1 and C2.',
 ];
 
 const faqs = [
   {
     question: 'Why does the EICR have a "limitations" section?',
     answer:
-      'The limitations section exists because no periodic inspection can examine every part of an electrical installation. Some wiring is buried in walls, hidden above ceilings, or concealed under floors. Some parts of the installation may be inaccessible — for example, behind heavy furniture that the occupant has not moved, in locked rooms, or in areas that are physically unsafe to access. The limitations section formally records what could not be inspected and tested, so that the client and any future reader of the report understands the scope of the inspection. Without this section, a reader might assume that every part of the installation has been examined and found satisfactory, when in reality certain areas were not assessed. BS 7671 Appendix 6 and Guidance Note 3 (GN3) both require the inspector to record the extent and limitations of the inspection on the EICR.',
+      'Because no periodic inspection can examine every part of an electrical installation. Regulation 651.2 states that periodic inspection is carried out without dismantling, or with partial dismantling as required, supplemented by appropriate tests and measurements from Chapter 64. Some wiring is buried in walls, above ceilings or under floors; some areas are behind furniture, locked, or unsafe to reach. Regulation 653.2 requires the report to include both details of those parts of the installation that have been inspected and tested and any limitations of the inspection and testing. Those entries go in Section D of the model Electrical Installation Condition Report in Appendix 6. Without them, a reader could assume the whole installation was examined and found satisfactory when parts of it were never assessed.',
+  },
+  {
+    question: 'What is the difference between agreed and operational limitations?',
+    answer:
+      'An agreed limitation is a scope exclusion settled before the inspection starts. The notes for the person producing the report state that any agreed limitations, including the reasons for them, that have been confirmed with the person ordering the report and other interested parties are to be recorded in Section D. Guidance for recipients names typical interested parties as a licensing authority, insurance company, mortgage provider and the like. An operational limitation is something encountered on the day: the same notes give the example of inability to gain access to parts of the installation or an item of equipment. Both go in Section D, in their own boxes, each with its reason.',
   },
   {
     question: 'Does a limitation mean the EICR is incomplete?',
     answer:
-      'No. Limitations are a normal and expected part of every EICR. A well-recorded set of limitations shows that the inspector has been thorough in documenting what they could and could not assess. An EICR with no limitations recorded is more concerning — it might suggest the inspector has not considered the scope carefully. The EICR is complete when the inspector has inspected and tested everything within the agreed scope and has clearly recorded anything that falls outside that scope. However, if a limitation is significant — for example, the inspector could not access the main consumer unit — the client should understand that the report may not give a full picture of the installation condition, and further investigation may be needed.',
+      'No. Limitations are a normal and expected part of every EICR — the model form prints a set of default ones before you write anything. A well-recorded set of limitations shows the inspector has documented what they could and could not assess. An EICR with nothing at all in Section D is more concerning. The report is complete when everything within the agreed extent has been inspected and tested and anything outside it is clearly recorded. That said, if a limitation is significant — the main consumer unit could not be accessed, for example — the client should understand that the report may not give a full picture and further work may be needed.',
   },
   {
     question: 'Can I ask the electrician to lift floorboards and check concealed wiring?',
     answer:
-      'Yes, but this would be an invasive inspection and should be agreed in advance. A standard EICR is a non-invasive or limited invasive inspection — the inspector tests at accessible points (sockets, switches, distribution boards, junction boxes) and uses test results to infer the condition of the wiring in between. If you want the inspector to lift floorboards, remove ceiling panels, or open up trunking to physically inspect concealed wiring, this is additional work that takes more time and may involve making good afterwards. It should be priced and agreed separately. Invasive inspection is typically only warranted if the property has very old wiring (pre-1970s rubber or lead-sheathed cables), if test results suggest a concealed fault, or if a previous EICR has recommended further investigation of concealed areas.',
+      'Yes, but it has to be agreed in advance. Regulation 651.2 sets periodic inspection as being carried out without dismantling, or with partial dismantling as required — the inspector tests at accessible points (sockets, switches, distribution boards, junction boxes) and uses the results to infer the condition of the wiring between them. The model form makes this explicit: unless specifically agreed between the client and the inspector beforehand, cables concealed within trunking and conduit, under floors, in roof spaces and generally within the fabric of the building or underground have not been inspected. Lifting floors, removing ceiling panels or opening up trunking is additional work that takes longer and may involve making good, so it should be priced and agreed separately. It is normally warranted where the wiring is very old, where test results suggest a concealed fault, or where a previous report recommended it.',
   },
   {
     question: 'Does the EICR cover the supply authority equipment?',
     answer:
-      'No. The EICR covers the fixed electrical installation from the customer side of the meter onwards. It does not cover the electricity supply cable, the service head (cutout), the meter, or the meter tails between the meter and the consumer unit — these belong to the Distribution Network Operator (DNO) or the meter operator. If the inspector identifies a fault or concern with the supply authority equipment — for example, damaged tails, a faulty main fuse, or a corroded service head — they should record it as an observation on the EICR and recommend that the client contacts their DNO. The inspector must not work on or modify supply authority equipment.',
+      'Partly — and the distinction matters. The Schedule of Inspections for a Condition Report includes a section headed "Intake equipment (visual inspection only)" covering the service cable, service head, earthing arrangement, meter tails and metering equipment. So these items are looked at, but not tested and not worked on. That section carries its own rule: an outcome against an item in it, other than access to live parts, should not be used to determine the overall outcome of the report. Where an inadequacy in the intake equipment might result in a dangerous or potentially dangerous situation, the person ordering the inspection and testing and/or the dutyholder must be informed, and it is strongly recommended that they inform the appropriate authority. Note also that the consumer\'s means of isolation and the consumer\'s meter tails are listed separately as part of the installation, so they are not covered by the intake-equipment carve-out.',
   },
   {
     question: 'Is PAT testing part of the EICR?',
     answer:
-      'No. The EICR covers the fixed electrical installation — wiring, consumer unit, sockets, switches, light fittings, and permanently connected equipment (cookers, immersion heaters, shower units). It does not cover portable or moveable equipment that plugs into the sockets. Portable Appliance Testing (PAT) is a completely separate process with its own documentation. Electricians sometimes offer PAT testing as an add-on service when conducting an EICR, which is convenient for landlords, but the two processes are distinct and have different documentation requirements. If you need both an EICR and PAT testing, make sure you request both and that you receive separate documentation for each.',
+      'No. The EICR covers the fixed electrical installation — wiring, consumer unit, sockets, switches, light fittings, and permanently connected equipment such as cookers, immersion heaters and shower units. It does not cover portable or moveable equipment that plugs into the sockets. In-service inspection and testing of electrical equipment is a separate exercise with its own documentation. Electricians often offer it alongside an EICR, which is convenient for landlords, but they are distinct processes — if you need both, request both and expect separate paperwork for each.',
   },
   {
-    question: 'What should I do if the EICR records an FI (Further Investigation) code?',
+    question: 'What does an FI code actually mean under A4:2026?',
     answer:
-      'An FI (Further Investigation) code means the inspector could not fully assess a particular aspect of the installation and further investigation is required without delay — the OSG definition (Ch 7 Reg 7.28) is explicit: FI is applied where conditions observed may present danger. This is different from a C1, C2, or C3 code — an FI is not a defect classification but an acknowledgement that more investigation is needed before a definitive classification can be given, and the area observed may carry a risk. Common reasons for an FI include: suspected concealed wiring fault that requires lifting floorboards to verify; an inaccessible junction box that needs to be opened; or an unusual test result that needs investigation with the supply disconnected. Do not treat FI as a minor administrative note. The further investigation should be arranged without delay; it may clear the FI (no defect found) or may result in a C1, C2, or C3 classification once the area has been fully examined.',
+      'In BS 7671:2018+A4:2026 the code reads "FI — Further investigation is advised". It is used where the inspection and testing has identified a potential issue for which the inspector is unable to determine a classification code until further investigation has taken place. The notes for the person producing the report tie it directly to this page\'s subject: where further investigation is advised because the inspection has identified an issue the inspector is unable to verify due to the extent and limitations, it is to be recorded in Section K as FI. This is where A4:2026 made a real change. The summary of changes for Appendix 6 states that the notes for the person producing the condition report have been redrafted and that the code FI no longer needs to be marked as unsatisfactory. The model form now states that observations classified C3 or FI do not affect the overall assessment, and the installation is reported as unsatisfactory where an observation is given a C1 or C2 classification. So an FI is not a finding of danger — it is an open question, and the guidance recommends that further investigations are carried out to obtain the information the inspector needs to reach a conclusion on the appropriate classification code.',
   },
 ];
 
@@ -135,29 +163,209 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
-    id: 'what-limitations-means',
-    heading: 'What "Extent and Limitations" Means on an EICR',
+    id: 'section-d',
+    heading: 'Section D at a Glance: The Four Boxes You Have to Fill',
     content: (
       <>
         <p>
-          Every EICR includes a section titled "Extent and Limitations of the Inspection." This is
-          not boilerplate text to be copied and pasted — it is a critical part of the report that
-          defines exactly what was inspected, what was tested, and what was excluded.
+          Limitations are not free text bolted onto the end of an EICR. They live in a named part of
+          the model form: <strong>Section D — Extent and limitations of inspection and testing</strong>
+          , which the form itself cross-references to Regulation 651. Section D has four entries, and
+          each one wants something different.
         </p>
+        <div className={tableWrapCn}>
+          <table className="w-full border-collapse text-left">
+            <thead className="bg-white/[0.06]">
+              <tr>
+                <th className={thCn}>Section D entry</th>
+                <th className={thCn}>What belongs in it</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className={tdCn}>
+                  Details of those parts of the installation that have been inspected and tested
+                </td>
+                <td className={tdCn}>
+                  The extent. Which distribution boards, which circuits, which parts of the premises,
+                  and whether the whole installation or only part of it is covered.
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Agreed limitations including the reasons</td>
+                <td className={tdCn}>
+                  Scope the client chose to exclude, settled before the inspection began — plus why.
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Agreed with</td>
+                <td className={tdCn}>
+                  Who signed off those exclusions. Not optional, and not you.
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Operational limitations including the reasons</td>
+                <td className={tdCn}>
+                  What stopped you on the day: no access to a part of the installation or to an item
+                  of equipment — plus why.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
-          The purpose is transparency. An EICR is a snapshot of the installation's condition at the
-          time of inspection, based on what the inspector could reasonably access and test. It is
-          not a guarantee that every part of the installation is safe — because not every part of
-          the installation can be examined during a standard periodic inspection.
-        </p>
-        <p>
+          The requirement behind the form is Regulation 653.2. It states that the Report shall
+          include (a) details of those parts of the installation that have been inspected and tested
+          and (b) any limitations of the inspection and testing. Regulation 653.1 requires the report
+          to be based on the model given in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Appendix 6 and Guidance Note 3 (GN3) require the inspector to record both the extent (what
-          was inspected and tested) and the limitations (what was not inspected or tested, and why).
-          This protects both parties: the client understands the scope of the report, and the
-          inspector has a clear record of what fell outside the agreed inspection.
+          Appendix 6, taking account of the notes for the person producing the report. Section D is
+          not housekeeping — it is what the declaration in Section G is qualified by, because the
+          inspector declares the report to be an accurate assessment of the installation{' '}
+          <em>taking into account the stated extent and limitations in Section D</em>.
+        </p>
+        <div className={plainCardCn}>
+          <h3 className={cardTitleCn}>What A4:2026 changed here</h3>
+          <ul className={listCn}>
+            <li>
+              Regulation 653.1 now requires the notes for the person producing the report, provided
+              in Appendix 6, to be taken into account on the Condition Report.
+            </li>
+            <li>
+              Regulation 653.2 now requires the report to include guidance for the recipient(s) based
+              on the model in Appendix 6, and a note has been added that photographic and/or
+              thermographic images can be appended to the report — useful evidence where a limitation
+              stopped you getting closer.
+            </li>
+            <li>
+              The Appendix 6 notes for the person producing the condition report have been redrafted
+              and items rearranged, and{' '}
+              <strong>the code FI no longer needs to be marked as unsatisfactory</strong>.
+            </li>
+          </ul>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'agreed-vs-operational',
+    heading: 'Agreed vs Operational Limitations',
+    content: (
+      <>
+        <p>
+          The two boxes are not interchangeable, and putting an entry in the wrong one weakens it.
+          The difference is <strong>when it was settled and who agreed it</strong>.
+        </p>
+        <div className={tableWrapCn}>
+          <table className="w-full border-collapse text-left">
+            <thead className="bg-white/[0.06]">
+              <tr>
+                <th className={thCn}></th>
+                <th className={thCn}>Agreed limitation</th>
+                <th className={thCn}>Operational limitation</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className={thCn}>Settled</td>
+                <td className={tdCn}>Before the inspection is carried out</td>
+                <td className={tdCn}>Encountered during the inspection</td>
+              </tr>
+              <tr>
+                <td className={thCn}>Confirmed with</td>
+                <td className={tdCn}>
+                  The person ordering the report and other interested parties — a licensing
+                  authority, insurance company, mortgage provider and the like
+                </td>
+                <td className={tdCn}>
+                  Nobody in advance. The inspector records it and the reason for it
+                </td>
+              </tr>
+              <tr>
+                <td className={thCn}>Typical entry</td>
+                <td className={tdCn}>
+                  "Inspection limited to the landlord&apos;s communal installation; tenant demises
+                  excluded at client&apos;s instruction."
+                </td>
+                <td className={tdCn}>
+                  "Garage sub-board not tested — garage locked, key not available at the time of
+                  inspection."
+                </td>
+              </tr>
+              <tr>
+                <td className={thCn}>Common mistake</td>
+                <td className={tdCn}>Left blank, or filled in after the event</td>
+                <td className={tdCn}>Written without the reason, which is what makes it useful</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The extent of the installation covered by the report is also to be agreed before the
+          inspection and testing is undertaken — not decided afterwards to match what you managed to
+          reach.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'default-exclusions',
+    heading: 'The Limitations Already Printed on the Form',
+    content: (
+      <>
+        <p>
+          Before you write anything, the model Condition Report already excludes certain things. The
+          agreed-limitations box carries pre-printed wording that applies{' '}
+          <strong>unless specifically agreed between the client and inspector prior to the
+          inspection</strong>:
+        </p>
+        <div className={cardCn}>
+          <h3 className={cardTitleCn}>Printed default exclusions</h3>
+          <ul className={listCn}>
+            <li>
+              Cables concealed within trunking and conduits, under floors, in roof spaces, and
+              generally within the fabric of the building or underground, have not been inspected.
+            </li>
+            <li>
+              No checks for safety alerts, corrective actions or product recalls for electrical
+              equipment forming part of the installation have been made.
+            </li>
+            <li>
+              An inspection should be made of other electrical equipment housed within an accessible
+              roof space.
+            </li>
+          </ul>
+        </div>
+        <p>
+          This is why repeating "concealed wiring not inspected" in your own words adds nothing — it
+          is already there. What earns its place in Section D is anything{' '}
+          <em>beyond</em> the printed defaults, or anything that narrows them further.
+        </p>
+        <h3 className={cardTitleCn}>The Schedule of Inspections points back at Section D</h3>
+        <p>
+          Two items on the Condition Report Schedule of Inspections explicitly refer the reader to
+          Section D, because they cannot be answered without knowing what you could see:
+        </p>
+        <div className={plainCardCn}>
+          <ul className={listCn}>
+            <li>
+              <strong>Concealed cables installed in prescribed zones</strong> (see Section D, Extent
+              and limitations) — Regulation 522.6.202.
+            </li>
+            <li>
+              <strong>
+                Cables concealed under floors, above ceilings or in walls/partitions, adequately
+                protected against damage
+              </strong>{' '}
+              (see Section D, Extent and limitations) — Regulation 522.6.204.
+            </li>
+          </ul>
+        </div>
+        <p>
+          If Section D says the concealed cabling was not inspected, those two items cannot honestly
+          be marked as verified. The two documents have to agree with each other.
         </p>
       </>
     ),
@@ -168,113 +376,117 @@ const sections = [
     content: (
       <>
         <p>
-          A standard EICR covers the fixed electrical installation from the origin (the customer
-          side of the meter) to the final circuits and accessories. This includes:
+          A standard EICR covers the fixed electrical installation from the origin to the final
+          circuits and accessories. Regulation 651.2 sets the method: periodic inspection is carried
+          out <strong>without dismantling, or with partial dismantling as required</strong>,
+          supplemented by appropriate tests and measurements from Chapter 64.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Consumer unit / distribution board:</strong> condition, labelling,
-                protective devices (MCBs, RCDs, RCBOs), main switch, connections. Under BS
-                7671:2018+A4:2026 Reg 411.3.4, domestic AC lighting circuits must have additional
-                protection by an RCD rated ≤30 mA — absence of this protection on a domestic
-                lighting circuit must be recorded as an observation.
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li>
+              <strong>Consumer unit / distribution board.</strong> Condition, labelling, protective
+              devices (MCBs, RCDs, RCBOs), main switch, connections.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Earthing and bonding:</strong> main earth terminal, earthing conductor, main
-                equipotential bonding conductors, supplementary bonding where applicable.
-              </span>
+            <li>
+              <strong>Earthing and bonding.</strong> Main earth terminal, earthing conductor, main
+              protective bonding conductors, supplementary bonding where applicable.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Final circuits:</strong> wiring to socket outlets, lighting circuits, cooker
-                circuits, shower circuits, and any other final circuits.
-              </span>
+            <li>
+              <strong>Final circuits.</strong> Wiring to socket-outlets, lighting circuits, cooker
+              circuits, shower circuits, and any other final circuits.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Accessories:</strong> socket outlets, switches, light fittings, connection
-                units, and other fixed electrical equipment.
-              </span>
+            <li>
+              <strong>Accessories.</strong> Socket-outlets, switches, light fittings, connection
+              units, and other fixed electrical equipment.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Permanently connected equipment:</strong> cookers, immersion heaters,
-                electric showers, towel rails, and other fixed appliances.
-              </span>
+            <li>
+              <strong>Permanently connected equipment.</strong> Cookers, immersion heaters, electric
+              showers, towel rails and other fixed appliances.
+            </li>
+            <li>
+              <strong>Consumer&apos;s means of isolation and consumer&apos;s meter tails.</strong>{' '}
+              Listed as installation items on the Schedule of Inspections, separately from the
+              distributor&apos;s intake equipment.
             </li>
           </ul>
         </div>
+        <h3 className={cardTitleCn}>Two checkpoints that catch people out</h3>
         <p>
-          The extent section should specify which circuits were tested, the number of distribution
-          boards inspected, and whether the inspection covered the entire installation or a specific
-          part of it.
+          Regulation 411.3.4 — introduced with BS 7671:2018 itself, not by a later amendment —
+          requires that within domestic (household) premises, additional protection by an RCD with a
+          rated residual operating current not exceeding 30 mA shall be provided for AC final
+          circuits supplying luminaires. Regulation 421.1.7 covers arc fault detection devices, and
+          the Schedule of Inspections carries a matching item: confirmation of indication that
+          AFDD(s) are operational (421.1.7; 532.6; 651.2(e)).
+        </p>
+        <div className={warnCardCn}>
+          <h3 className={cardTitleCn}>
+            An older installation is not automatically unsatisfactory
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-white">
+            The notes for the person producing the report are explicit: an installation which was
+            designed to an earlier version of BS 7671 or the IEE Wiring Regulations, and which does
+            not fully comply with the current version, is not necessarily unsafe for continued use or
+            in need of upgrading. What is to be recorded is damage, deterioration, defects, dangerous
+            conditions and non-compliances which might give rise to danger. So a pre-A4 lighting
+            circuit without 30 mA RCD protection is an observation to be classified on its risk — not
+            an automatic fail.
+          </p>
+        </div>
+        <p>
+          The extent entry should specify which circuits were tested, how many distribution boards
+          were inspected, and whether the inspection covered the whole installation or a defined part
+          of it.
         </p>
       </>
     ),
   },
   {
     id: 'sampling',
-    heading: 'Sampling: Why Not Every Point Is Tested',
+    heading: 'Sampling: Why Not Every Circuit Is Tested',
     content: (
       <>
         <p>
-          On larger installations — particularly commercial properties with many circuits — it is
-          not always practical to test every single circuit and accessory. In these cases, the
-          inspector uses a sampling approach, testing a representative proportion of the
-          installation and recording the sampling rate on the EICR.
+          On larger installations — particularly commercial premises with many circuits — testing
+          every circuit and accessory is not always practical. The inspector then uses a sampling
+          approach, tests a representative proportion, and records what was sampled.
         </p>
         <p>
-          Guidance Note 3 (GN3) Chapter 8 Reg 8.2 defines sampling as the procedure where, for
-          groups of similar circuits, not all circuits are tested provided an appropriate sampling
-          plan is justified. Crucially, GN3 requires that sampling must be justified by a formal
-          risk assessment, and the details of that justification must be documented in the Schedule
-          of Inspections and Schedule of Test Results. Sampling is not simply a matter of agreeing a
-          percentage with a client — the risk-assessment basis is a GN3 obligation.
+          Guidance Note 3 Chapter 8 Reg 8.2 describes sampling as the procedure where, for groups of
+          similar circuits, not all are tested if an appropriate sampling plan is justified. The
+          conditions attached to it are the part people skip: sampling{' '}
+          <strong>shall be documented, justified by risk assessment</strong>, and the details
+          included in the Schedule of Inspections and Schedule of Test Results. It is not a
+          percentage you negotiate over the phone.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <div className="flex items-start gap-4">
-            <Scan className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-            <div>
-              <h4 className="font-bold text-white mb-2">Sampling best practice</h4>
-              <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>
-                  Justify any sampling approach by a risk assessment before starting. Document the
-                  justification in the Schedule of Inspections and Schedule of Test Results (GN3 Ch
-                  8 Reg 8.2).
-                </li>
-                <li>
-                  For commercial properties: agree the sampling approach with the client before
-                  starting. Record it clearly on the EICR.
-                </li>
-                <li>
-                  Select samples that are representative — include circuits of different types,
-                  ages, and locations.
-                </li>
-                <li>
-                  If any sampled circuit shows a defect, increase the sample size for that circuit
-                  type to determine whether the issue is widespread.
-                </li>
-                <li>
-                  Record which circuits were tested and which were not. The report must make this
-                  clear.
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div className={cardCn}>
+          <h3 className={cardTitleCn}>Sampling that will stand up</h3>
+          <ul className={listCn}>
+            <li>
+              Do the risk assessment first and document the justification in the Schedule of
+              Inspections and Schedule of Test Results (GN3 Ch 8 Reg 8.2).
+            </li>
+            <li>
+              Agree the approach with the client before starting, and record it in Section D as an
+              agreed limitation.
+            </li>
+            <li>
+              Choose a representative sample — different circuit types, ages and locations, not the
+              four easiest ways to reach.
+            </li>
+            <li>
+              If a sampled circuit shows a defect, increase the sample for that circuit type to
+              establish whether the issue is widespread.
+            </li>
+            <li>
+              Record which circuits were tested and which were not. GN3 also asks for the extent and
+              location of sampling of cable terminations to be stated in Section D.
+            </li>
+          </ul>
         </div>
         <p>
-          A limitation recorded as "10% sample of lighting circuits tested" is informative and
-          appropriate. A limitation recorded simply as "sampling applied" is vague and unhelpful. Be
-          specific.
+          "10% sample of lighting circuits tested — circuits 4, 7 and 11 of 30" is informative.
+          "Sampling applied" is not a limitation, it is a shrug.
         </p>
       </>
     ),
@@ -286,59 +498,62 @@ const sections = [
       <>
         <p>
           The most significant limitation on any EICR is concealed wiring. In most properties, the
-          majority of the electrical cabling is hidden — buried in walls, run under floorboards,
-          routed through ceiling voids, or enclosed in trunking. During a standard EICR, the
-          inspector cannot see this wiring.
+          majority of the cabling is hidden — buried in walls, run under floorboards, routed through
+          ceiling voids, or enclosed in trunking. During a standard EICR the inspector cannot see it,
+          and the model form says so before you do.
         </p>
         <p>
-          Instead, the inspector uses test results to infer the condition of concealed wiring.
-          Insulation resistance testing at 500 V DC can detect degraded insulation. Continuity
-          testing can detect broken or high-resistance conductors. Earth fault loop impedance
-          testing can reveal issues with the protective conductor. But none of these tests can
-          detect physical damage to cable sheathing, incorrect installation methods, or mechanical
-          damage that has not yet affected the electrical properties.
+          Instead, the inspector infers condition from test results. Insulation resistance testing at
+          500 V DC (Table 64, minimum 1.0 MΩ for circuits up to and including 500 V) can reveal
+          degraded insulation. Continuity testing can find broken or high-resistance conductors.
+          Earth fault loop impedance testing can expose problems with the protective conductor. None
+          of these detects physical damage to cable sheathing, a non-compliant cable route, or
+          mechanical damage that has not yet changed the electrical properties.
         </p>
-        <p>
-          An important testing limitation applies where sensitive equipment — electronic controls,
-          dimmer modules, data equipment, or similar — is connected on the circuit. Under BS
-          7671:2018+A4:2026 Reg 643.3, where connected equipment is likely to be influenced by or
-          damaged by the standard test voltage, a 250 V DC insulation resistance test shall be used
-          with the equipment connected. This reduced test voltage produces a lower minimum
-          acceptable resistance reading and is a relevant limitation that should be recorded on the
-          EICR (for example: "IR test conducted at 250 V DC — sensitive equipment connected on
-          lighting circuit 3").
-        </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <div className="flex items-start gap-4">
-            <EyeOff className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
-            <div>
-              <h4 className="font-bold text-white mb-2">What concealed wiring limitations mean</h4>
-              <ul className="space-y-2 text-white text-sm leading-relaxed">
-                <li>
-                  The inspector has not visually inspected the wiring behind walls, under floors, or
-                  above ceilings.
-                </li>
-                <li>
-                  Test results for concealed circuits are based on measurements taken at accessible
-                  points (sockets, switches, distribution boards).
-                </li>
-                <li>
-                  Physical damage, incorrect installation methods, or non-compliant cable routes may
-                  exist but cannot be identified without invasive inspection.
-                </li>
-                <li>
-                  If test results suggest a concealed fault, the inspector should record an FI
-                  (Further Investigation) code recommending that the concealed area be opened up for
-                  examination.
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div className={cardCn}>
+          <h3 className={cardTitleCn}>What a concealed-wiring limitation actually means</h3>
+          <ul className={listCn}>
+            <li>
+              The wiring behind walls, under floors and above ceilings has not been visually
+              inspected.
+            </li>
+            <li>
+              Results for concealed circuits come from measurements taken at accessible points —
+              sockets, switches, distribution boards.
+            </li>
+            <li>
+              Physical damage, incorrect installation methods or non-compliant cable routes may exist
+              and cannot be identified without opening up.
+            </li>
+            <li>
+              Where test results suggest a concealed fault the inspector cannot classify, that is
+              exactly the case for an FI — further investigation is advised.
+            </li>
+          </ul>
         </div>
+        <h3 className={cardTitleCn}>Insulation resistance where equipment cannot be disconnected</h3>
         <p>
-          For most properties, accepting this limitation is reasonable. For properties with very old
-          wiring (pre-1970s), a history of electrical problems, or previous reports of overheating,
-          the client may wish to commission an invasive inspection of specific areas.
+          Regulation Group 643.3 was redrafted at A2:2022 and the requirement is a two-stage test,
+          not a reduced one. Under Regulation 643.3.3, where connected equipment is likely to
+          influence the measurement or result of the test, or be damaged, the test shall be applied{' '}
+          <strong>prior to the connection of such equipment</strong>, in accordance with Table 64.
+          Following connection of the equipment, a test at <strong>250 V DC</strong> shall be applied
+          between live conductors and the protective conductor connected to the earthing arrangement,
+          and the insulation resistance shall be at least <strong>1 MΩ</strong>.
+        </p>
+        <p>
+          So the 250 V test does not replace the Table 64 test, and its acceptance threshold is not
+          lower than the 1.0 MΩ that Table 64 sets for low voltage circuits. Where you could only
+          perform the second stage — because the equipment was already connected and could not be
+          taken out — that is a limitation and belongs in Section D, for example: "IR at 250 V DC
+          with equipment connected; sensitive electronics on lighting circuit 3 could not be
+          disconnected."
+        </p>
+        <p>
+          For most properties, accepting the concealed-wiring limitation is reasonable. Where the
+          wiring is very old, where there is a history of electrical problems, or where a previous
+          report reported overheating, the client may want to commission invasive inspection of
+          specific areas.
         </p>
       </>
     ),
@@ -349,72 +564,91 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding what falls outside the scope of an EICR is as important as understanding
-          what it covers. The EICR does not assess:
+          Knowing what falls outside the scope matters as much as knowing what is inside it — and one
+          of these is more nuanced than the usual shorthand suggests.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Plug className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Portable appliances.</strong> Anything that plugs into a socket is not
-                covered. Fridges, washing machines, kettles, lamps — these require separate{' '}
-                <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink>.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Gas installations.</strong> The EICR does not cover gas boilers, gas fires,
-                gas cookers, or gas pipework. These require a Gas Safe registered engineer and a
-                separate gas safety certificate (CP12).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Supply authority equipment.</strong> The meter, service head (cutout),
-                supply cable, and meter tails belong to the DNO/meter operator. The EICR starts at
-                the customer side of the meter.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Telephone, data, and TV cabling.</strong> Low-voltage communication cabling
-                is not part of the electrical installation covered by BS 7671 (except where it
-                interfaces with the mains supply, such as a powered TV amplifier).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fire alarm systems (specialist).</strong> While the EICR may note the
-                presence of a fire alarm system, a full assessment of fire detection and alarm
-                systems requires inspection to BS 5839 by a fire alarm competent person.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting (specialist).</strong> Similar to fire alarms, emergency
-                lighting requires inspection to BS 5266. The EICR may note its presence but does not
-                constitute a full emergency lighting test.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <HelpCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Structural issues.</strong> Water ingress, dampness, thermal insulation, and
-                building fabric issues that may affect the electrical installation are noted as
-                observations but are not within the electrician's scope to assess fully.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className="w-full border-collapse text-left">
+            <thead className="bg-white/[0.06]">
+              <tr>
+                <th className={thCn}>Item</th>
+                <th className={thCn}>EICR position</th>
+                <th className={thCn}>What is needed instead</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              <tr>
+                <td className={tdCn}>Portable and moveable appliances</td>
+                <td className={tdCn}>
+                  Out of scope. Anything that plugs into a socket is not part of the fixed
+                  installation
+                </td>
+                <td className={tdCn}>
+                  Separate{' '}
+                  <SEOInternalLink href="/guides/pat-testing-guide-uk">
+                    in-service inspection and testing
+                  </SEOInternalLink>
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Gas installations</td>
+                <td className={tdCn}>Out of scope entirely</td>
+                <td className={tdCn}>
+                  A Gas Safe registered engineer and a separate gas safety record
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>
+                  Distributor&apos;s intake equipment — service cable, service head, earthing
+                  arrangement, meter tails, metering equipment
+                </td>
+                <td className={tdCn}>
+                  <strong>Visual inspection only.</strong> An outcome against this section, other
+                  than access to live parts, does not determine the overall outcome of the report
+                </td>
+                <td className={tdCn}>
+                  Report inadequacies to the person ordering the work and/or dutyholder; they are
+                  strongly advised to inform the appropriate authority
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Telephone, data and TV cabling</td>
+                <td className={tdCn}>
+                  Out of scope. These are extra-low voltage (Band I) circuits, not the low voltage
+                  (Band II) installation BS 7671 is inspecting here
+                </td>
+                <td className={tdCn}>
+                  Only the mains-powered part — a powered amplifier or PoE source, for example — is
+                  in scope
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Fire detection and alarm systems</td>
+                <td className={tdCn}>
+                  Presence may be noted; the EICR is not a system assessment
+                </td>
+                <td className={tdCn}>Inspection to BS 5839-1 by a competent person</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Emergency lighting</td>
+                <td className={tdCn}>Presence may be noted; not an emergency lighting test</td>
+                <td className={tdCn}>Inspection and testing to BS 5266</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Structural and building fabric issues</td>
+                <td className={tdCn}>
+                  Water ingress, damp and insulation are noted where they affect the installation
+                </td>
+                <td className={tdCn}>A building surveyor for a full assessment</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          If you are a landlord or property manager, make sure you commission the right inspections
-          for each system. An EICR alone does not cover everything.
+          If you are a landlord or property manager, commission the right inspection for each system.
+          An EICR alone does not cover everything, and the intake-equipment line is the one most
+          often misread in both directions — it is inspected, but it is not tested and it does not
+          drive the overall result.
         </p>
       </>
     ),
@@ -425,42 +659,47 @@ const sections = [
     content: (
       <>
         <p>
-          Recording limitations is a professional skill. Vague, generic statements do not serve the
-          purpose. The limitations section should be specific, factual, and actionable.
+          Recording limitations is a professional skill. Generic statements do not serve the purpose.
+          Every entry should name the thing, name the place, and give the reason.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Poor Examples</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>"Limited inspection."</li>
-              <li>"Some areas not accessed."</li>
-              <li>"Concealed wiring not inspected."</li>
-              <li>"As per standard limitations."</li>
+        <div className="my-5 grid gap-4 sm:grid-cols-2">
+          <div className={warnCardCn}>
+            <h3 className={cardTitleCn}>Poor entries</h3>
+            <ul className={listCn}>
+              <li>&quot;Limited inspection.&quot;</li>
+              <li>&quot;Some areas not accessed.&quot;</li>
+              <li>&quot;Non-invasive inspection only.&quot;</li>
+              <li>&quot;As per standard limitations.&quot;</li>
+              <li>&quot;Concealed wiring not inspected&quot; — already pre-printed on the form.</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Good Examples</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>"Loft space not accessed — hatch obstructed by fitted wardrobe in bedroom 2."</li>
+          <div className={goodCardCn}>
+            <h3 className={cardTitleCn}>Entries that do the job</h3>
+            <ul className={listCn}>
               <li>
-                "Under-floor wiring in ground floor not visually inspected — solid floor, no
-                access."
+                &quot;Loft space not accessed — hatch obstructed by fitted wardrobe in bedroom
+                2.&quot;
               </li>
               <li>
-                "Garage sub-board not tested — garage locked, key not available at time of
-                inspection."
+                &quot;Ground floor under-floor wiring not visually inspected — solid floor, no
+                access.&quot;
               </li>
               <li>
-                "Consumer unit labelling only — internal connections not inspected due to plastic
-                housing (non-removable cover)."
+                &quot;Garage sub-board not tested — garage locked, key not available at time of
+                inspection.&quot;
+              </li>
+              <li>
+                &quot;Distribution board 2 inspected externally only — cover secured by tamper-proof
+                fixings, no key on site.&quot;
               </li>
             </ul>
           </div>
         </div>
         <p>
-          The good examples tell the reader exactly what was excluded and why. This is essential for
-          accountability — if a fault later develops in an area that was listed as a limitation, the
-          EICR clearly records that the area was not within the inspection scope.
+          The second column tells the reader exactly what was excluded and why. That matters for
+          accountability: if a fault later develops in an area recorded as a limitation, Section D
+          shows it was outside the inspection, and the Section G declaration is expressly qualified
+          by it.
         </p>
         <SEOAppBridge
           title="Get the limitations section right first time"
@@ -472,75 +711,76 @@ const sections = [
   },
   {
     id: 'common-limitations',
-    heading: 'Common Limitation Examples for Different Property Types',
+    heading: 'Common Limitation Examples by Property Type',
     content: (
       <>
-        <p>The limitations you encounter vary by property type. Here are common examples:</p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h4 className="font-bold text-white mb-3">Domestic Properties</h4>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
+        <p>The limitations you meet vary by property type. Common ones:</p>
+        <div className="my-5 space-y-4">
+          <div className={plainCardCn}>
+            <h3 className={cardTitleCn}>Domestic properties</h3>
+            <ul className={listCn}>
               <li>
-                Furniture not moved — sockets behind heavy wardrobes, beds, or kitchen units not
+                Furniture not moved — sockets behind heavy wardrobes, beds or kitchen units not
                 accessed.
               </li>
               <li>
-                Loft wiring not visually inspected — insufficient boarding or insulation covering
+                Loft wiring not visually inspected — insufficient boarding, or insulation covering
                 cables.
               </li>
               <li>
-                Under-floor wiring not inspected — solid floors or fully carpeted timber floors.
+                Under-floor wiring not inspected — solid floors, or fully carpeted timber floors.
               </li>
-              <li>Outbuildings not included — separate supply, not part of main installation.</li>
+              <li>Outbuildings not included — separate supply, not part of this installation.</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h4 className="font-bold text-white mb-3">Commercial Properties</h4>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
+          <div className={plainCardCn}>
+            <h3 className={cardTitleCn}>Commercial properties</h3>
+            <ul className={listCn}>
               <li>Sampling applied — 20% of lighting circuits, 100% of socket circuits tested.</li>
               <li>
                 Ceiling void wiring not visually inspected — suspended ceiling tiles not removed.
               </li>
-              <li>
-                Server room circuits not tested — could not be isolated during business hours.
-              </li>
+              <li>Server room circuits not tested — could not be isolated during business hours.</li>
               <li>
                 Three-phase distribution not tested — main isolator could not be operated during
                 trading hours.
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h4 className="font-bold text-white mb-3">HMOs</h4>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
+          <div className={plainCardCn}>
+            <h3 className={cardTitleCn}>Houses in multiple occupation</h3>
+            <ul className={listCn}>
               <li>
                 Tenant rooms 3 and 5 not accessed — tenants not available at time of inspection.
               </li>
-              <li>Communal area under-stair cupboard locked — key not provided.</li>
+              <li>Communal under-stair cupboard locked — key not provided.</li>
               <li>
                 External lighting circuit to rear not tested — area inaccessible due to overgrown
                 vegetation.
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-2">
-                  A4:2026 AFDD requirement — HMOs and Higher Risk Buildings
-                </h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Under BS 7671:2018+A4:2026 Reg 421.1.7, arc fault detection devices (AFDDs) are
-                  mandatory on final circuits supplying socket-outlets rated ≤32 A in Houses in
-                  Multiple Occupation (HMOs), Higher Risk Residential Buildings, purpose-built
-                  student accommodation, and care homes. When inspecting these premises, the absence
-                  of AFDDs on qualifying socket circuits must be recorded as an observation. This is
-                  one of the significant A4:2026 changes directly affecting EICR compliance checks
-                  on HMO properties.
-                </p>
-              </div>
-            </div>
+          <div className={warnCardCn}>
+            <h3 className={cardTitleCn}>AFDDs — what Regulation 421.1.7 actually says</h3>
+            <p className="mt-2 text-sm leading-relaxed text-white">
+              Arc fault detection devices conforming to BS EN 62606 shall be provided for{' '}
+              <strong>single-phase AC</strong> final circuits supplying socket-outlets with a rated
+              current not exceeding 32 A in four categories of premises: high rise residential
+              buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built student
+              accommodation, and care homes. A note assumes HRRBs to be residential buildings over 18
+              m in height or in excess of six storeys, whichever is met first. For all other premises
+              the use of AFDDs is <strong>recommended</strong>, not required. Where used, AFDDs shall
+              be placed at the origin of the circuit to be protected. The requirement in those four
+              premises dates from A2:2022; A4:2026 changed sub-item (a) to read &quot;high rise
+              residential buildings&quot;, so a report or template still saying &quot;higher risk
+              residential buildings&quot; is using superseded wording.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-white">
+              On an EICR of an existing installation in one of the four categories, absence of AFDDs
+              is a non-compliance with the current version of BS 7671 to be classified on the danger
+              it presents — read alongside the note that an installation designed to an earlier
+              version is not necessarily unsafe for continued use.
+            </p>
           </div>
         </div>
       </>
@@ -552,51 +792,40 @@ const sections = [
     content: (
       <>
         <p>
-          Recording the extent and limitations properly is one of the hallmarks of a competent
-          inspector. It demonstrates that you have thought carefully about the scope of your
-          inspection and have been transparent about what you could and could not assess.
+          Recording extent and limitations properly is one of the clearest markers of a competent
+          inspector. It shows you thought about scope and were straight about what you could and
+          could not assess.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Agree the scope beforehand.</strong> Before starting the inspection, discuss
-                with the client what will be included. Is it the whole installation or just specific
-                areas? Are there known access restrictions? Will the occupier be present to move
-                furniture or provide keys?
-              </span>
+        <div className={cardCn}>
+          <ul className={listCn}>
+            <li>
+              <strong>Agree the extent before you start.</strong> The extent of the installation
+              covered by the report is to be agreed prior to the inspection and testing being
+              undertaken. Whole installation or defined part? Known access restrictions? Will someone
+              be there to move furniture and provide keys?
             </li>
-            <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Record limitations as you go.</strong> Do not try to remember them all at
-                the end. When you encounter an area you cannot access or a circuit you cannot test,
-                record it immediately on the EICR.
-              </span>
+            <li>
+              <strong>Record limitations as you go.</strong> Do not try to reconstruct them at the
+              van. Log each one at the moment you hit it, with the reason.
             </li>
-            <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Be specific and factual.</strong> State what was not inspected, where it is,
-                and why. Avoid vague statements.
-              </span>
+            <li>
+              <strong>Put each entry in the right box.</strong> Agreed limitations were confirmed
+              beforehand and need a name in &quot;Agreed with&quot;. Operational limitations were
+              encountered on the day.
             </li>
-            <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Use FI codes where appropriate.</strong> If a limitation means you cannot
-                determine the safety of a particular part of the installation, consider whether an
-                FI (Further Investigation) observation code is warranted.
-              </span>
+            <li>
+              <strong>Keep Section D and the Schedule of Inspections consistent.</strong> The
+              concealed-cable items on the schedule refer back to Section D — they cannot say
+              &quot;verified&quot; if Section D says you never saw them.
             </li>
-            <li className="flex items-start gap-3">
-              <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Discuss limitations with the client.</strong> When you hand over the report,
-                explain what the limitations mean in practical terms. If further investigation is
-                needed, explain why and what it would involve.
-              </span>
+            <li>
+              <strong>Use FI where the limitation blocks a classification.</strong> FI is for a
+              potential issue where you cannot determine a code until further investigation has taken
+              place — which is precisely what a limitation produces.
+            </li>
+            <li>
+              <strong>Talk the client through it.</strong> Explain what each limitation means in
+              practice at handover, and what further investigation would involve.
             </li>
           </ul>
         </div>
@@ -617,10 +846,10 @@ const sections = [
 export default function EICRLimitationsPage() {
   return (
     <GuideTemplate
-      title="EICR Limitations | What the EICR Does Not Cover"
-      description="Understanding EICR extent and limitations. What the EICR covers, what it does not, sampling, concealed wiring, and how to record limitations correctly."
+      title="EICR Limitations: Operational vs Agreed Examples"
+      description="Operational limitations are what couldn't be switched off or accessed; agreed limitations are the scope the client chose. Section D wording, sampling and examples."
       datePublished="2025-03-20"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"
@@ -631,12 +860,12 @@ export default function EICRLimitationsPage() {
           <span className="text-yellow-400">What the Report Does and Does Not Cover</span>
         </>
       }
-      heroSubtitle="Every EICR has an extent and limitations section. Understanding what falls inside and outside the scope of the inspection is essential — for electricians writing the report and for clients reading it. This guide explains what the EICR covers, what it does not, and how to record limitations correctly."
-      readingTime={10}
+      heroSubtitle="Every EICR has a Section D — extent and limitations of inspection and testing. This guide sets out what goes in each of its four boxes, the difference between agreed and operational limitations, the exclusions already printed on the model form, and how to word an entry that will stand up."
+      readingTime={12}
       answerBox={{
         question: 'What are limitations on an EICR?',
         answer:
-          'Limitations on an EICR are the parts of the installation the inspector did not or could not inspect and test, agreed with the client before work starts and recorded in the extent-and-limitations section (in line with IET Guidance Note 3). They fall into two types: operational limitations (e.g. equipment that cannot be switched off, occupied or inaccessible areas) and agreed limitations (a scope the client has chosen). Inspection and testing is carried out on a representative sample, so clearly recording what was and was not covered is essential for the report to be valid and meaningful.',
+          'Limitations are the parts of the installation the inspector did not or could not inspect and test, recorded in Section D of the Electrical Installation Condition Report — "Extent and limitations of inspection and testing". Regulation 653.2 requires the report to include both details of those parts that have been inspected and tested and any limitations of the inspection and testing. There are two kinds: agreed limitations, which are scope exclusions confirmed with the person ordering the report before the inspection, and operational limitations, such as an inability to gain access to parts of the installation or an item of equipment on the day. Both must be recorded with the reason.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

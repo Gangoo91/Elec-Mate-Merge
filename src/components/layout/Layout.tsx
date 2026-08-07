@@ -52,8 +52,15 @@ const Layout = () => {
     }
   }, [isMobile, sidebarOpen]);
 
+  // `overflow-x-clip`, not `overflow-x-hidden`.
+  // `hidden` on one axis forces the other to `auto`, which makes this div a
+  // scroll container — and a sticky child anchors to its nearest scrolling
+  // ancestor. So the sidebar's `lg:sticky top-0` was anchored to a box that
+  // never scrolls (the document scrolls instead), and it slid away with the
+  // page. `clip` stops horizontal overflow without establishing a scroll
+  // container, so sticky resolves against the viewport as intended.
   return (
-    <div className="flex min-h-screen bg-elec-dark text-slate-50 overflow-x-hidden">
+    <div className="flex min-h-screen overflow-x-clip bg-elec-dark text-slate-50">
       {/* Global achievement checker — listens for activity events */}
       <AchievementListener />
 
@@ -82,8 +89,11 @@ const Layout = () => {
             {/* Announcements Banner */}
             <AnnouncementBanner />
 
-            {/* Push notification prompt — inline banner, shows once */}
-            <PushNotificationPrompt context="Get notified about quotes, invoices, tasks and messages" />
+            {/* The push prompt used to sit HERE, above <Outlet />, which put it
+                above every page's own sticky masthead — so the first thing on
+                the page was a dismissible permission request rather than the
+                page itself. It now renders inside HubBody, below the masthead.
+                See `HubPrimitives`. */}
 
             <div className={cn('min-w-0')}>
               <PageTransition key={location.pathname}>

@@ -512,7 +512,7 @@ export default function ElectricianMentalHealthSupportPage() {
     <GuideTemplate
       localArea="Mental Health Support"
       title="Electrician Mental Health Support UK | Construction"
-      description="Mental health support for UK electricians and trades workers — Construction Industry Helpline (0345 605 1956), Lighthouse Club, Mates in Mind, CALM…"
+      description="Mental health support for UK electricians and trades workers — Construction Industry Helpline (0345 605 1956), Lighthouse Club, Mates in Mind, CALM."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

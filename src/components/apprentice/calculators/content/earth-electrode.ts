@@ -34,11 +34,7 @@ export const earthElectrodeContent: CalculatorContent = {
       { label: 'Electrode resistance RA', value: '~21 Ω' },
       { label: 'RCD rating IΔn', value: '100 mA' },
     ],
-    steps: [
-      'Check RA × IΔn ≤ 50 V',
-      'RA × IΔn = 21 × 0.1 = 2.1 V',
-      '2.1 V ≤ 50 V ✓',
-    ],
+    steps: ['Check RA × IΔn ≤ 50 V', 'RA × IΔn = 21 × 0.1 = 2.1 V', '2.1 V ≤ 50 V ✓'],
     result: 'RA × IΔn = 2.1 V — well within the 50 V limit; the RCD will disconnect safely.',
   },
 

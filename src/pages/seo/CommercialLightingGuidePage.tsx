@@ -623,7 +623,7 @@ export default function CommercialLightingGuidePage() {
   return (
     <GuideTemplate
       title="Commercial Lighting Installation | Design & Compliance"
-      description="Complete guide to commercial lighting installation for UK electricians. CIBSE LG7 lux levels, emergency lighting BS 5266, LED retrofit projects…"
+      description="Complete guide to commercial lighting installation for UK electricians. CIBSE LG7 lux levels, emergency lighting BS 5266, LED retrofit projects."
       datePublished="2025-09-05"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

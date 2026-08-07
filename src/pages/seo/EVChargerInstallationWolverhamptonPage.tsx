@@ -616,7 +616,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Wolverhampton | Home EV Charging"
-      description="EV charger installation in Wolverhampton. OZEV grants up to £350, installation costs £750–£1,050 for 7kW, West Midlands Clean Air Zone context…"
+      description="EV charger installation in Wolverhampton. OZEV grants up to £350, installation costs £750–£1,050 for 7kW, West Midlands Clean Air Zone context."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

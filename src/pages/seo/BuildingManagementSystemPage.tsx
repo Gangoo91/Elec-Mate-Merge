@@ -638,7 +638,7 @@ export default function BuildingManagementSystemPage() {
   return (
     <GuideTemplate
       title="Building Management Systems (BMS) UK | Electrical"
-      description="Building Management Systems guide for UK electricians and building managers. What a BMS does, HVAC integration, energy metering, lighting control…"
+      description="Building Management Systems guide for UK electricians and building managers. What a BMS does, HVAC integration, energy metering, lighting control."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

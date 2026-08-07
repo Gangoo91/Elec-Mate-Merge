@@ -1,0 +1,55 @@
+# Correctness checks
+#
+# The repo already had eight `check:*:ci` scripts and no job that ran any of
+# them, so every guard was advisory — it caught a problem only if someone
+# happened to run it. That is how the R2 column, the NaN in a user-facing
+# warning, and seven silently-discarded gate warnings all shipped and survived
+# for months.
+#
+# Everything that passes today is enforced. Only key-integrity is advisory, and
+# only because it is currently red (see its step). Promote it the moment it is
+# green — a permanently-yellow step is one nobody reads.
+name: Correctness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    name: Certificate & content checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Enforced. Every assertion here corresponds to a defect that reached
+      # production — see the header of the script.
+      - name: EICR correctness
+        run: npm run check:eicr:ci
+
+      # Green as of 7 Aug 2026, so enforced from the start.
+      - name: Certificate field mapping
+        run: npm run check:cert-mapping:ci
+
+      - name: Question quality
+        run: npm run check:question-quality:ci
+
+      # Advisory ONLY because it is currently red: four general-upskilling mock
+      # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
+      # PASMA). Those banks are graded against their keys, so this needs a
+      # deliberate look rather than a rubber stamp. Drop continue-on-error the
+      # moment it passes.
+      - name: Key integrity
+        run: npm run check:key-integrity
+        continue-on-error: true

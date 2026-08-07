@@ -604,7 +604,7 @@ export default function AppendixFourTablesGuidePage() {
   return (
     <GuideTemplate
       title="Appendix 4 Tables BS 7671 | How to Use Them"
-      description="Complete guide to using the Appendix 4 current-carrying capacity tables in BS 7671. Table-by-table overview, reference methods…"
+      description="Complete guide to using the Appendix 4 current-carrying capacity tables in BS 7671. Table-by-table overview, reference methods."
       datePublished="2025-04-10"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -466,7 +466,7 @@ export default function Sub6() {
                 AFDD is the right protective response.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7 (introduced by Amendment 4:2026)."
+            cite="Source: BS 7671:2018+A4:2026, Regulation 421.1.7 (introduced by Amendment 2:2022)."
           />
 
           <ConceptBlock

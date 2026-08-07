@@ -11,6 +11,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { loadContent } from './content/load';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -76,12 +77,19 @@ export const LoadCalculator = () => {
   const [voltage, setVoltage] = useState<string>('230');
   const [calculated, setCalculated] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showBsRegs, setShowBsRegs] = useState(false);
-  const [newAppliance, setNewAppliance] = useState({
+  // `type: 'other' as const` narrowed the state to the LITERAL 'other', so
+  // picking Lighting/Socket/Heating/Motor from the select was a type error and
+  // the field could never change. Widened to the union it is meant to hold.
+  const [newAppliance, setNewAppliance] = useState<{
+    name: string;
+    power: string;
+    quantity: string;
+    type: Appliance['type'];
+  }>({
     name: '',
     power: '',
     quantity: '1',
-    type: 'other' as const,
+    type: 'other',
   });
 
   const config = CALCULATOR_CONFIG['power'];
@@ -211,382 +219,357 @@ export const LoadCalculator = () => {
       title="Load Calculator"
       description="Calculate maximum demand with diversity factors for electrical installations"
     >
-      {/* Add Appliance Section */}
-      <div
-        className="space-y-4 p-4 rounded-xl border"
-        style={{
-          borderColor: `${config.gradientFrom}30`,
-          background: `${config.gradientFrom}08`,
-        }}
-      >
-        <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-          <Plus className="h-4 w-4" style={{ color: config.gradientFrom }} />
-          Add Appliance
-        </h4>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Add Appliance Section */}
+            <div
+              className="space-y-4 p-4 rounded-xl border"
+              style={{
+                borderColor: `${config.gradientFrom}30`,
+                background: `${config.gradientFrom}08`,
+              }}
+            >
+              <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+                <Plus className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                Add Appliance
+              </h4>
 
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Appliance Name"
-            type="text"
-            value={newAppliance.name}
-            onChange={(value) => setNewAppliance((prev) => ({ ...prev, name: value }))}
-            placeholder="e.g. Immersion Heater"
-          />
-          <CalculatorInput
-            label="Power"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={newAppliance.power}
-            onChange={(value) => setNewAppliance((prev) => ({ ...prev, power: value }))}
-            placeholder="e.g. 3000"
-          />
-          <CalculatorInput
-            label="Quantity"
-            type="text"
-            inputMode="numeric"
-            value={newAppliance.quantity}
-            onChange={(value) => setNewAppliance((prev) => ({ ...prev, quantity: value }))}
-            placeholder="1"
-          />
-          <CalculatorSelect
-            label="Load Type"
-            value={newAppliance.type}
-            onChange={(value) =>
-              setNewAppliance((prev) => ({ ...prev, type: value as Appliance['type'] }))
-            }
-            options={typeOptions}
-          />
-        </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Appliance Name"
+                  type="text"
+                  value={newAppliance.name}
+                  onChange={(value) => setNewAppliance((prev) => ({ ...prev, name: value }))}
+                  placeholder="e.g. Immersion Heater"
+                />
+                <CalculatorInput
+                  label="Power"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={newAppliance.power}
+                  onChange={(value) => setNewAppliance((prev) => ({ ...prev, power: value }))}
+                  placeholder="e.g. 3000"
+                />
+                <CalculatorInput
+                  label="Quantity"
+                  type="text"
+                  inputMode="numeric"
+                  value={newAppliance.quantity}
+                  onChange={(value) => setNewAppliance((prev) => ({ ...prev, quantity: value }))}
+                  placeholder="1"
+                />
+                <CalculatorSelect
+                  label="Load Type"
+                  value={newAppliance.type}
+                  onChange={(value) =>
+                    setNewAppliance((prev) => ({ ...prev, type: value as Appliance['type'] }))
+                  }
+                  options={typeOptions}
+                />
+              </CalculatorInputGrid>
 
-        <button
-          onClick={addAppliance}
-          disabled={!newAppliance.name || !newAppliance.power}
-          className={cn(
-            'w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all touch-manipulation active:scale-[0.98]',
-            newAppliance.name && newAppliance.power
-              ? 'bg-gradient-to-r text-white shadow-lg'
-              : 'bg-white/10 text-white cursor-not-allowed'
-          )}
-          style={
-            newAppliance.name && newAppliance.power
-              ? {
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              <button
+                onClick={addAppliance}
+                disabled={!newAppliance.name || !newAppliance.power}
+                className={cn(
+                  'w-full h-12 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all touch-manipulation active:scale-[0.98]',
+                  newAppliance.name && newAppliance.power
+                    ? 'bg-gradient-to-r text-white shadow-lg'
+                    : 'bg-white/10 text-white cursor-not-allowed'
+                )}
+                style={
+                  newAppliance.name && newAppliance.power
+                    ? {
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
                 }
-              : undefined
-          }
-        >
-          <Plus className="h-4 w-4" />
-          Add Appliance
-        </button>
-      </div>
-
-      {/* Supply Voltage */}
-      <CalculatorSelect
-        label="Supply Voltage"
-        value={voltage}
-        onChange={setVoltage}
-        options={voltageOptions}
-      />
-
-      {/* Appliance List */}
-      {appliances.length > 0 && (
-        <div className="space-y-3">
-          <h4 className="font-medium text-white text-sm flex items-center gap-2">
-            <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
-            Added Appliances ({appliances.length})
-          </h4>
-          <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
-            {appliances.map((appliance) => (
-              <div
-                key={appliance.id}
-                className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                  <span className="font-medium text-white text-sm">{appliance.name}</span>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border capitalize"
-                      style={{
-                        borderColor: `${config.gradientFrom}40`,
-                        color: config.gradientFrom,
-                      }}
-                    >
-                      {appliance.type}
-                    </span>
-                    <span className="text-xs text-white">
-                      {appliance.power}W × {appliance.quantity} ={' '}
-                      {(appliance.power * appliance.quantity).toLocaleString()}W
-                    </span>
-                  </div>
-                </div>
-                <button
-                  onClick={() => removeAppliance(appliance.id)}
-                  className="p-2 rounded-lg hover:bg-white/10 text-white hover:text-red-400 transition-colors touch-manipulation"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Calculate Actions */}
-      <CalculatorActions
-        category="power"
-        onCalculate={handleCalculate}
-        onReset={resetCalculator}
-        isDisabled={appliances.length === 0}
-      />
-
-      {/* Results */}
-      {calculated && appliances.length > 0 && (
-        <>
-          <CalculatorDivider category="power" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Status Chip */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
-              <span className="text-xs font-semibold text-amber-300">Maximum Demand</span>
-              <span
-                className="text-sm font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {results.totalMaximumDemand.toFixed(2)} kW
-              </span>
+                <Plus className="h-4 w-4" />
+                Add Appliance
+              </button>
             </div>
 
-            {/* Hero Value */}
-            <div className="rounded-xl p-4 bg-white/[0.04]">
-              <p className="text-sm text-white mb-1">Maximum Demand</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {results.totalMaximumDemand.toFixed(2)} kW
-              </div>
-              <p className="text-sm text-white mt-1">
-                {results.diversityApplied.toFixed(0)}% diversity applied
-              </p>
-            </div>
+            {/* Supply Voltage */}
+            <CalculatorSelect
+              label="Supply Voltage"
+              value={voltage}
+              onChange={setVoltage}
+              options={voltageOptions}
+            />
 
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Connected Load"
-                value={results.totalConnectedLoad.toFixed(2)}
-                unit="kW"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Design Current"
-                value={results.designCurrent.toFixed(1)}
-                unit="A"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Load Current"
-                value={results.current.toFixed(1)}
-                unit="A"
-                category="power"
-                size="sm"
-              />
-              <ResultValue
-                label="Voltage Drop (20m)"
-                value={`${results.voltageDrop.toFixed(2)}V (${results.voltageDropPercent.toFixed(1)}%)`}
-                category="power"
-                size="sm"
-              />
-            </ResultsGrid>
-          </div>
-
-          <CalculatorDivider category="power" />
-
-          {/* Recommendations */}
-          <div className="space-y-3">
-            <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-              <Zap className="h-4 w-4 text-emerald-400" />
-              Recommendations
-            </h4>
-
-            <ResultsGrid columns={2}>
-              <div
-                className="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-center"
-                style={{ borderLeftWidth: '3px', borderLeftColor: '#34d399' }}
-              >
-                <p className="text-xs text-white mb-1">Cable Size</p>
-                <p className="text-2xl font-bold text-emerald-400">
-                  {results.recommendedCable.size}
-                </p>
-                <p className="text-xs text-white">Capacity: {results.recommendedCable.current}A</p>
-              </div>
-              <div
-                className="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-center"
-                style={{ borderLeftWidth: '3px', borderLeftColor: '#34d399' }}
-              >
-                <p className="text-xs text-white mb-1">MCB Rating</p>
-                <p className="text-2xl font-bold text-emerald-400">{results.recommendedMCB}A</p>
-                <p className="text-xs text-white">Type B/C</p>
-              </div>
-            </ResultsGrid>
-
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <p className="text-xs text-white">
-                <strong>Note:</strong> Based on Method C installation. Consider derating factors for
-                final design.
-              </p>
-            </div>
-          </div>
-
-          {/* Load Breakdown */}
-          {Object.keys(results.breakdownByType).length > 0 && (
-            <>
-              <CalculatorDivider category="power" />
+            {/* Appliance List */}
+            {appliances.length > 0 && (
               <div className="space-y-3">
-                <h4 className="font-medium text-white mb-3 text-sm">Load Breakdown by Type</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {Object.entries(results.breakdownByType).map(([type, data]) => (
+                <h4 className="font-medium text-white text-sm flex items-center gap-2">
+                  <Lightbulb className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                  Added Appliances ({appliances.length})
+                </h4>
+                <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
+                  {appliances.map((appliance) => (
                     <div
-                      key={type}
-                      className="p-3 rounded-xl bg-white/[0.04] border border-white/5"
+                      key={appliance.id}
+                      className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10"
                     >
-                      <div className="font-medium capitalize text-white mb-2 text-sm">{type}</div>
-                      <div className="text-xs space-y-1 text-white">
-                        <div className="flex justify-between">
-                          <span>Connected:</span>
-                          <span className="text-white">
-                            {(data.connected / 1000).toFixed(2)} kW
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                        <span className="font-medium text-white text-sm">{appliance.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border capitalize"
+                            style={{
+                              borderColor: `${config.gradientFrom}40`,
+                              color: config.gradientFrom,
+                            }}
+                          >
+                            {appliance.type}
                           </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>After Diversity:</span>
-                          <span style={{ color: config.gradientFrom }}>
-                            {(data.demand / 1000).toFixed(2)} kW
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-white">
-                          <span>Diversity Factor:</span>
-                          <span>
-                            {A2_TEXT[A2_ROW_FOR_TYPE[type] ?? 'heatingAndPower'].household}
+                          <span className="text-xs text-white">
+                            {appliance.power}W × {appliance.quantity} ={' '}
+                            {(appliance.power * appliance.quantity).toLocaleString()}W
                           </span>
                         </div>
                       </div>
+                      <button
+                        onClick={() => removeAppliance(appliance.id)}
+                        className="p-2 rounded-lg hover:bg-white/10 text-white hover:text-red-400 transition-colors touch-manipulation"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                     </div>
                   ))}
                 </div>
               </div>
-            </>
-          )}
+            )}
 
-          <CalculatorDivider category="power" />
+            {/* Calculate Actions */}
+            <CalculatorActions
+              category="power"
+              onCalculate={handleCalculate}
+              onReset={resetCalculator}
+              isDisabled={appliances.length === 0}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* Results */}
+            {calculated && appliances.length > 0 && (
+              <>
+                <CalculatorDivider category="power" />
 
-          {/* What This Means - Collapsible */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
+                <div className="space-y-4 animate-fade-in">
+                  {/* Status Chip */}
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
+                    <span className="text-xs font-semibold text-amber-300">Maximum Demand</span>
+                    <span
+                      className="text-sm font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {results.totalMaximumDemand.toFixed(2)} kW
+                    </span>
+                  </div>
+
+                  {/* Hero Value */}
+                  <div className="rounded-xl p-4 bg-white/[0.04]">
+                    <p className="text-sm text-white mb-1">Maximum Demand</p>
+                    <div
+                      className="text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {results.totalMaximumDemand.toFixed(2)} kW
+                    </div>
+                    <p className="text-sm text-white mt-1">
+                      {results.diversityApplied.toFixed(0)}% diversity applied
+                    </p>
+                  </div>
+
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Connected Load"
+                      value={results.totalConnectedLoad.toFixed(2)}
+                      unit="kW"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Design Current"
+                      value={results.designCurrent.toFixed(1)}
+                      unit="A"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Load Current"
+                      value={results.current.toFixed(1)}
+                      unit="A"
+                      category="power"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Voltage Drop (20m)"
+                      value={`${results.voltageDrop.toFixed(2)}V (${results.voltageDropPercent.toFixed(1)}%)`}
+                      category="power"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+                </div>
+
+                <CalculatorDivider category="power" />
+
+                {/* Recommendations */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+                    <Zap className="h-4 w-4 text-emerald-400" />
+                    Recommendations
+                  </h4>
+
+                  <ResultsGrid columns={2}>
+                    <div
+                      className="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-center"
+                      style={{ borderLeftWidth: '3px', borderLeftColor: '#34d399' }}
+                    >
+                      <p className="text-xs text-white mb-1">Cable Size</p>
+                      <p className="text-2xl font-bold text-emerald-400">
+                        {results.recommendedCable.size}
+                      </p>
+                      <p className="text-xs text-white">
+                        Capacity: {results.recommendedCable.current}A
+                      </p>
+                    </div>
+                    <div
+                      className="p-3 rounded-xl bg-white/[0.04] border border-white/5 text-center"
+                      style={{ borderLeftWidth: '3px', borderLeftColor: '#34d399' }}
+                    >
+                      <p className="text-xs text-white mb-1">MCB Rating</p>
+                      <p className="text-2xl font-bold text-emerald-400">
+                        {results.recommendedMCB}A
+                      </p>
+                      <p className="text-xs text-white">Type B/C</p>
+                    </div>
+                  </ResultsGrid>
+
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                    <p className="text-xs text-white">
+                      <strong>Note:</strong> Based on Method C installation. Consider derating
+                      factors for final design.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Load Breakdown */}
+                {Object.keys(results.breakdownByType).length > 0 && (
+                  <>
+                    <CalculatorDivider category="power" />
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-white mb-3 text-sm">
+                        Load Breakdown by Type
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {Object.entries(results.breakdownByType).map(([type, data]) => (
+                          <div
+                            key={type}
+                            className="p-3 rounded-xl bg-white/[0.04] border border-white/5"
+                          >
+                            <div className="font-medium capitalize text-white mb-2 text-sm">
+                              {type}
+                            </div>
+                            <div className="text-xs space-y-1 text-white">
+                              <div className="flex justify-between">
+                                <span>Connected:</span>
+                                <span className="text-white">
+                                  {(data.connected / 1000).toFixed(2)} kW
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>After Diversity:</span>
+                                <span style={{ color: config.gradientFrom }}>
+                                  {(data.demand / 1000).toFixed(2)} kW
+                                </span>
+                              </div>
+                              <div className="flex justify-between text-white">
+                                <span>Diversity Factor:</span>
+                                <span>
+                                  {A2_TEXT[A2_ROW_FOR_TYPE[type] ?? 'heatingAndPower'].household}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
                 )}
-              />
-            </CollapsibleTrigger>
 
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Maximum Demand:</strong> The estimated peak load
-                    after applying diversity factors. This accounts for the fact that not all loads
-                    operate simultaneously at full capacity.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Design Current:</strong> The maximum demand
-                    current plus a 25% safety margin for future expansion and unexpected loads.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Diversity Factors:</strong> Heating loads
-                    typically run at full capacity (100%), while socket outlets have lower diversity
-                    (40%) as they're rarely all used simultaneously.
-                  </p>
-                </div>
+                <CalculatorDivider category="power" />
+
+                {/* What This Means - Collapsible */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Maximum Demand:</strong> The estimated peak
+                          load after applying diversity factors. This accounts for the fact that not
+                          all loads operate simultaneously at full capacity.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Design Current:</strong> The maximum demand
+                          current plus a 25% safety margin for future expansion and unexpected
+                          loads.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Diversity Factors:</strong> Heating loads
+                          typically run at full capacity (100%), while socket outlets have lower
+                          diversity (40%) as they're rarely all used simultaneously.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* BS 7671 Guidance - Collapsible */}
+              </>
+            )}
+
+            {/* Formula Reference */}
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.12]">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-white mt-0.5 shrink-0" />
+                <p className="text-sm text-white">
+                  <strong>Maximum Demand</strong> = Σ(Connected Load × Diversity Factor). Design
+                  Current = Max Demand Current × 1.25
+                </p>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* BS 7671 Guidance - Collapsible */}
-          <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Regs at a Glance
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showBsRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">311.1:</strong> Assessment of maximum demand
-                    shall account for diversity
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">433.1:</strong> Protective devices shall be
-                    selected for design current (Ib ≤ In ≤ Iz)
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">525:</strong> Voltage drop limits: 3% lighting,
-                    5% other uses from origin
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Appendix 4:</strong> Current-carrying capacities
-                    and cable sizing tables
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      )}
-
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white">
-            <strong>Maximum Demand</strong> = Σ(Connected Load × Diversity Factor). Design Current =
-            Max Demand Current × 1.25
-          </p>
-        </div>
-      </div>
-      <CalculatorEditorial content={loadContent} category="power" />
+            </div>
+          </>
+        }
+        footer={<CalculatorEditorial content={loadContent} category="power" />}
+      />
     </CalculatorCard>
   );
 };

@@ -24,6 +24,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { cableCurrentCapacityContent } from './content/cable-current-capacity';
 import {
@@ -486,321 +487,332 @@ const CableCurrentCapacityCalculator = () => {
       title="Cable Current Capacity Calculator"
       description="Calculate current carrying capacity with BS 7671 compliance verification"
     >
-      {/* Circuit Design Section */}
-      <div className="space-y-3">
-        <h4 className="font-medium text-white text-sm sm:text-base">Circuit Design</h4>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Design Current Ib (A)"
-            type="text"
-            inputMode="decimal"
-            value={designCurrent}
-            onChange={setDesignCurrent}
-            placeholder="Enter design current"
-          />
-          <CalculatorSelect
-            label="Device Rating In (A)"
-            value={deviceRating}
-            onChange={setDeviceRating}
-            options={deviceRatings}
-          />
-        </CalculatorInputGrid>
-      </div>
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Cable Type"
-          value={cableType}
-          onChange={(v) => setCableType(v as CableTypeKey)}
-          options={cableTypes}
-        />
-        <CalculatorSelect
-          label="Phase"
-          value={phase}
-          onChange={(v) => setPhase(v as PhaseKey)}
-          options={phaseOptions}
-        />
-      </CalculatorInputGrid>
-
-      {phase === 'threePhase' && cableType === 'twin-earth' && (
-        <p className="text-xs text-amber-400 px-1">
-          Flat twin &amp; earth is a single-phase cable — Table 4D5 has no three-phase ratings.
-          Choose a multicore or SWA type for three-phase circuits.
-        </p>
-      )}
-
-      <CalculatorSelect
-        label="Cable Size (mm²)"
-        value={cableSize}
-        onChange={setCableSize}
-        options={cableSizeOptions}
-      />
-
-      <CalculatorSelect
-        label="Installation Method"
-        value={installationMethod}
-        onChange={setInstallationMethod}
-        options={getAvailableInstallationMethods()}
-      />
-
-      <CalculatorSelect
-        label="Ambient Temp (°C)"
-        value={ambientTemp}
-        onChange={setAmbientTemp}
-        options={ambientTemperatures}
-      />
-
-      {/* Grouping per Table 4C1 — ask for circuits + arrangement, derive the factor */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Grouped Circuits"
-          value={numberOfCircuits}
-          onChange={setNumberOfCircuits}
-          options={circuitCountOptions}
-        />
-        <CalculatorSelect
-          label="Arrangement"
-          value={arrangement}
-          onChange={(v) => setArrangement(v as GroupingArrangement)}
-          options={arrangementOptions}
-        />
-      </CalculatorInputGrid>
-      {parseInt(numberOfCircuits, 10) > 1 && (
-        <p className="text-xs text-white px-1">
-          Grouping factor Cg = {groupingFactor.toFixed(2)} (Table 4C1). Circuits loaded at 30% or
-          less of their grouped rating may be ignored when counting.
-        </p>
-      )}
-
-      {/* Soil Thermal Resistivity - only for buried cables (Table 4B3) */}
-      {(installationMethod === 'method-d1' || installationMethod === 'method-d2') && (
-        <CalculatorSelect
-          label="Soil Thermal Resistivity (K·m/W)"
-          value={soilThermalResistivity}
-          onChange={setSoilThermalResistivity}
-          options={soilResistivityOptions}
-        />
-      )}
-
-      <CalculatorActions
-        category="cable"
-        onCalculate={calculateCapacity}
-        onReset={reset}
-        isDisabled={!isValidForCalculation()}
-        calculateLabel="Calculate"
-      />
-
-      {!isValidForCalculation() && !result && (
-        <p className="text-xs text-white text-center px-2">
-          Please enter design current, device rating, and select cable details to calculate
-        </p>
-      )}
-
-      {/* Results */}
-      {result && (
-        <>
-          <CalculatorDivider category="cable" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Hero: Final Capacity */}
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
-              <p className="text-sm text-white mb-1">Final Capacity (Iz)</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.finalCapacity.toFixed(1)}A
-              </div>
-              <p className="text-sm text-white mt-1">Base: {result.baseCapacity}A</p>
-            </div>
-
-            {/* Correction Factors */}
-            <ResultsGrid columns={3}>
-              <ResultValue
-                label="Temp Factor"
-                value={result.tempCorrectionFactor.toFixed(3)}
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label="Group Factor"
-                value={result.groupingCorrectionFactor.toFixed(2)}
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label="Soil Factor"
-                value={result.soilCorrectionFactor.toFixed(3)}
-                category="cable"
-                size="sm"
-              />
-            </ResultsGrid>
-
-            {/* Formula */}
-            <div className="text-xs text-white p-3 rounded-xl bg-white/[0.04] border border-white/5 font-mono">
-              Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} ×{' '}
-              {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} ={' '}
-              {result.finalCapacity.toFixed(1)}A
-            </div>
-
-            {/* Compliance Status */}
-            {result.compliance && (
-              <div
-                className={`p-4 rounded-xl border ${
-                  result.compliance.overallCompliant
-                    ? 'bg-green-500/10 border-green-500/20'
-                    : 'bg-red-500/10 border-red-500/20'
-                }`}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  {result.compliance.overallCompliant ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
-                  ) : (
-                    <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
-                  )}
-                  <span className="font-medium text-sm text-white">
-                    {result.compliance.overallCompliant
-                      ? 'Ib ≤ In ≤ Iz: COMPLIANT'
-                      : 'Ib ≤ In ≤ Iz: NON-COMPLIANT'}
-                  </span>
-                </div>
-                <div className="text-sm grid grid-cols-3 gap-2 mb-2 text-white">
-                  <div>Ib = {result.compliance.Ib}A</div>
-                  <div>In = {result.compliance.In}A</div>
-                  <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-white">
-                    {result.compliance.overallCompliant ? 'Safety margin:' : 'Status:'}
-                  </span>
-                  {getSafetyChip(
-                    result.compliance.safetyMargin,
-                    result.compliance.overallCompliant
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Actionable Guidance */}
-            {result.actionableGuidance && (
-              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <ArrowRight className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                  <span className="font-medium text-sm text-white">What to do next:</span>
-                </div>
-                <p className="text-xs text-white mb-2">{result.actionableGuidance.failureMode}</p>
-                <ul className="text-xs space-y-1">
-                  {result.actionableGuidance.suggestions.map((suggestion, i) => (
-                    <li key={i} className="flex items-start gap-2 text-white">
-                      <span className="text-blue-400 mt-0.5 flex-shrink-0">•</span>
-                      <span className="flex-1">{suggestion}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Warnings */}
-            {result.warnings.length > 0 && (
-              <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
-                <div className="flex items-center gap-2 mb-1">
-                  <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
-                  <span className="font-medium text-sm text-white">Warnings</span>
-                </div>
-                <ul className="text-xs space-y-1">
-                  {result.warnings.map((warning, i) => (
-                    <li key={i} className="flex items-start gap-2 text-white">
-                      <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
-                      <span className="flex-1">{warning}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Why This Matters */}
-          <Collapsible open={showWhyMatters} onOpenChange={setShowWhyMatters}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  Why This Matters
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showWhyMatters && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-2">
-              <div className="space-y-2">
-                {[
-                  'The Ib ≤ In ≤ Iz principle ensures protection from overloads whilst preventing nuisance trips',
-                  'Derating factors account for real installation conditions - heat buildup and circuit grouping reduce capacity',
-                  'Adequate safety margin helps accommodate real-world variability and future load growth',
-                  'Proper cable sizing prevents overheating, fire risk, and voltage drop issues',
-                ].map((point, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
-                    style={{ borderLeftColor: config.gradientFrom }}
-                  >
-                    {point}
-                  </div>
-                ))}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Grounded standards + worked example */}
-          <CalculatorEditorial content={cableCurrentCapacityContent} category="cable" />
-
-          {/* Practical Guidance */}
-          {result.actionableGuidance && (
-            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                  <span className="text-sm sm:text-base font-medium text-white">
-                    Practical Guidance
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
+      <CalculatorPanes
+        form={
+          <>
+            {/* Circuit Design Section */}
+            <div className="space-y-3">
+              <h4 className="font-medium text-white text-sm sm:text-base">Circuit Design</h4>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Design Current Ib (A)"
+                  type="text"
+                  inputMode="decimal"
+                  value={designCurrent}
+                  onChange={setDesignCurrent}
+                  placeholder="Enter design current"
                 />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-2">
-                <div className="space-y-2">
-                  {[
-                    result.compliance?.overallCompliant
-                      ? 'Installation meets BS 7671 requirements - proceed with confidence'
-                      : 'Non-compliance detected - follow the suggestions above before installation',
-                    'Always verify device characteristics and Zs comply for the selected protective device',
-                    'Consider future load expansion when selecting cable sizes',
-                    'Document all calculations and assumptions for inspection and compliance records',
-                  ].map((item, idx) => (
+                <CalculatorSelect
+                  label="Device Rating In (A)"
+                  value={deviceRating}
+                  onChange={setDeviceRating}
+                  options={deviceRatings}
+                />
+              </CalculatorInputGrid>
+            </div>
+
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Cable Type"
+                value={cableType}
+                onChange={(v) => setCableType(v as CableTypeKey)}
+                options={cableTypes}
+              />
+              <CalculatorSelect
+                label="Phase"
+                value={phase}
+                onChange={(v) => setPhase(v as PhaseKey)}
+                options={phaseOptions}
+              />
+            </CalculatorInputGrid>
+
+            {phase === 'threePhase' && cableType === 'twin-earth' && (
+              <p className="text-xs text-amber-400 px-1">
+                Flat twin &amp; earth is a single-phase cable — Table 4D5 has no three-phase
+                ratings. Choose a multicore or SWA type for three-phase circuits.
+              </p>
+            )}
+
+            <CalculatorSelect
+              label="Cable Size (mm²)"
+              value={cableSize}
+              onChange={setCableSize}
+              options={cableSizeOptions}
+            />
+
+            <CalculatorSelect
+              label="Installation Method"
+              value={installationMethod}
+              onChange={setInstallationMethod}
+              options={getAvailableInstallationMethods()}
+            />
+
+            <CalculatorSelect
+              label="Ambient Temp (°C)"
+              value={ambientTemp}
+              onChange={setAmbientTemp}
+              options={ambientTemperatures}
+            />
+
+            {/* Grouping per Table 4C1 — ask for circuits + arrangement, derive the factor */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Grouped Circuits"
+                value={numberOfCircuits}
+                onChange={setNumberOfCircuits}
+                options={circuitCountOptions}
+              />
+              <CalculatorSelect
+                label="Arrangement"
+                value={arrangement}
+                onChange={(v) => setArrangement(v as GroupingArrangement)}
+                options={arrangementOptions}
+              />
+            </CalculatorInputGrid>
+            {parseInt(numberOfCircuits, 10) > 1 && (
+              <p className="text-xs text-white px-1">
+                Grouping factor Cg = {groupingFactor.toFixed(2)} (Table 4C1). Circuits loaded at 30%
+                or less of their grouped rating may be ignored when counting.
+              </p>
+            )}
+
+            {/* Soil Thermal Resistivity - only for buried cables (Table 4B3) */}
+            {(installationMethod === 'method-d1' || installationMethod === 'method-d2') && (
+              <CalculatorSelect
+                label="Soil Thermal Resistivity (K·m/W)"
+                value={soilThermalResistivity}
+                onChange={setSoilThermalResistivity}
+                options={soilResistivityOptions}
+              />
+            )}
+
+            <CalculatorActions
+              category="cable"
+              onCalculate={calculateCapacity}
+              onReset={reset}
+              isDisabled={!isValidForCalculation()}
+              calculateLabel="Calculate"
+            />
+          </>
+        }
+        result={
+          <>
+            {!isValidForCalculation() && !result && (
+              <p className="text-xs text-white text-center px-2">
+                Please enter design current, device rating, and select cable details to calculate
+              </p>
+            )}
+
+            {/* Results */}
+            {result && (
+              <>
+                <CalculatorDivider category="cable" />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Hero: Final Capacity */}
+                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
+                    <p className="text-sm text-white mb-1">Final Capacity (Iz)</p>
                     <div
-                      key={idx}
-                      className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
-                      style={{ borderLeftColor: config.gradientFrom }}
+                      className="text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
                     >
-                      {item}
+                      {result.finalCapacity.toFixed(1)}A
                     </div>
-                  ))}
+                    <p className="text-sm text-white mt-1">Base: {result.baseCapacity}A</p>
+                  </div>
+
+                  {/* Correction Factors */}
+                  <ResultsGrid columns={3}>
+                    <ResultValue
+                      label="Temp Factor"
+                      value={result.tempCorrectionFactor.toFixed(3)}
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Group Factor"
+                      value={result.groupingCorrectionFactor.toFixed(2)}
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Soil Factor"
+                      value={result.soilCorrectionFactor.toFixed(3)}
+                      category="cable"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Formula */}
+                  <div className="text-xs text-white p-3 rounded-xl bg-white/[0.04] border border-white/5 font-mono">
+                    Iz = {result.baseCapacity} × {result.tempCorrectionFactor.toFixed(3)} ×{' '}
+                    {result.groupingCorrectionFactor} × {result.soilCorrectionFactor.toFixed(3)} ={' '}
+                    {result.finalCapacity.toFixed(1)}A
+                  </div>
+
+                  {/* Compliance Status */}
+                  {result.compliance && (
+                    <div
+                      className={`p-4 rounded-xl border ${
+                        result.compliance.overallCompliant
+                          ? 'bg-green-500/10 border-green-500/20'
+                          : 'bg-red-500/10 border-red-500/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        {result.compliance.overallCompliant ? (
+                          <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+                        ) : (
+                          <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
+                        )}
+                        <span className="font-medium text-sm text-white">
+                          {result.compliance.overallCompliant
+                            ? 'Ib ≤ In ≤ Iz: COMPLIANT'
+                            : 'Ib ≤ In ≤ Iz: NON-COMPLIANT'}
+                        </span>
+                      </div>
+                      <div className="text-sm grid grid-cols-3 gap-2 mb-2 text-white">
+                        <div>Ib = {result.compliance.Ib}A</div>
+                        <div>In = {result.compliance.In}A</div>
+                        <div>Iz = {result.compliance.Iz.toFixed(1)}A</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-white">
+                          {result.compliance.overallCompliant ? 'Safety margin:' : 'Status:'}
+                        </span>
+                        {getSafetyChip(
+                          result.compliance.safetyMargin,
+                          result.compliance.overallCompliant
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Actionable Guidance */}
+                  {result.actionableGuidance && (
+                    <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.12]">
+                      <div className="flex items-center gap-2 mb-2">
+                        <ArrowRight className="h-4 w-4 text-white flex-shrink-0" />
+                        <span className="font-medium text-sm text-white">What to do next:</span>
+                      </div>
+                      <p className="text-xs text-white mb-2">
+                        {result.actionableGuidance.failureMode}
+                      </p>
+                      <ul className="text-xs space-y-1">
+                        {result.actionableGuidance.suggestions.map((suggestion, i) => (
+                          <li key={i} className="flex items-start gap-2 text-white">
+                            <span className="text-white mt-0.5 flex-shrink-0">•</span>
+                            <span className="flex-1">{suggestion}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Warnings */}
+                  {result.warnings.length > 0 && (
+                    <div className="p-4 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                      <div className="flex items-center gap-2 mb-1">
+                        <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
+                        <span className="font-medium text-sm text-white">Warnings</span>
+                      </div>
+                      <ul className="text-xs space-y-1">
+                        {result.warnings.map((warning, i) => (
+                          <li key={i} className="flex items-start gap-2 text-white">
+                            <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
+                            <span className="flex-1">{warning}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-              </CollapsibleContent>
-            </Collapsible>
-          )}
-        </>
-      )}
+
+                {/* Why This Matters */}
+                <Collapsible open={showWhyMatters} onOpenChange={setShowWhyMatters}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        Why This Matters
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showWhyMatters && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="p-4 pt-2">
+                    <div className="space-y-2">
+                      {[
+                        'The Ib ≤ In ≤ Iz principle ensures protection from overloads whilst preventing nuisance trips',
+                        'Derating factors account for real installation conditions - heat buildup and circuit grouping reduce capacity',
+                        'Adequate safety margin helps accommodate real-world variability and future load growth',
+                        'Proper cable sizing prevents overheating, fire risk, and voltage drop issues',
+                      ].map((point, idx) => (
+                        <div
+                          key={idx}
+                          className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
+                          style={{ borderLeftColor: config.gradientFrom }}
+                        >
+                          {point}
+                        </div>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Grounded standards + worked example */}
+
+                {/* Practical Guidance */}
+                {result.actionableGuidance && (
+                  <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                    <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                      <div className="flex items-center gap-3">
+                        <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                        <span className="text-sm sm:text-base font-medium text-white">
+                          Practical Guidance
+                        </span>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform duration-200',
+                          showGuidance && 'rotate-180'
+                        )}
+                      />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="p-4 pt-2">
+                      <div className="space-y-2">
+                        {[
+                          result.compliance?.overallCompliant
+                            ? 'Installation meets BS 7671 requirements - proceed with confidence'
+                            : 'Non-compliance detected - follow the suggestions above before installation',
+                          'Always verify device characteristics and Zs comply for the selected protective device',
+                          'Consider future load expansion when selecting cable sizes',
+                          'Document all calculations and assumptions for inspection and compliance records',
+                        ].map((item, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3 rounded-lg bg-white/[0.04] border-l-2 text-sm text-white"
+                            style={{ borderLeftColor: config.gradientFrom }}
+                          >
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                )}
+              </>
+            )}
+          </>
+        }
+        footer={<CalculatorEditorial content={cableCurrentCapacityContent} category="cable" />}
+      />
     </CalculatorCard>
   );
 };

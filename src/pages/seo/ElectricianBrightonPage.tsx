@@ -615,7 +615,7 @@ export default function ElectricianBrightonPage() {
     <GuideTemplate
       localArea="Brighton"
       title="Electrician in Brighton | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Brighton. Realistic 2026 pricing, UKPN DNO connections, Regency listed building electrical work…"
+      description="Find qualified, registered electricians in Brighton. Realistic 2026 pricing, UKPN DNO connections, Regency listed building electrical work."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

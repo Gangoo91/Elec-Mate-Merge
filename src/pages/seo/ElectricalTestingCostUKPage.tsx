@@ -593,7 +593,7 @@ export default function ElectricalTestingCostUKPage() {
   return (
     <GuideTemplate
       title="Electrical Testing Cost UK 2026 | EICR & PAT Prices"
-      description="Complete guide to electrical testing costs in the UK for 2026. EICR pricing by property size, PAT testing rates, initial verification fees…"
+      description="Complete guide to electrical testing costs in the UK for 2026. EICR pricing by property size, PAT testing rates, initial verification fees."
       datePublished="2025-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

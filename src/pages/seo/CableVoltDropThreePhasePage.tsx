@@ -2,7 +2,24 @@ import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
+import VoltageDropCalculator from '@/components/apprentice/calculators/VoltageDropCalculator';
 import { Calculator, Cable, BarChart3, Shield, BookOpen, Activity, Ruler } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared styles
+// -------------------------------------------------------------------
+
+/** Cards go edge-to-edge on phones, inset and rounded from sm: up. */
+const cardCn =
+  '-mx-4 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-5 sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const noteCn =
+  '-mx-4 my-5 rounded-none border-y border-orange-500/30 bg-orange-500/10 p-5 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const thCn = 'text-left font-bold text-white p-3 border border-white/10';
+const tdCn = 'p-3 border border-white/10 text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -14,11 +31,12 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'three-phase-volt-drop', label: 'Three-Phase Voltage Drop' },
-  { id: 'root-three-factor', label: 'The Root 3 Factor' },
+  { id: 'calculator', label: 'Three-Phase Volt Drop Calculator' },
   { id: 'formula', label: 'The Formula' },
-  { id: 'balanced-vs-unbalanced', label: 'Balanced vs Unbalanced' },
   { id: 'bs7671-limits', label: 'BS 7671 Limits' },
+  { id: 'root-three-factor', label: 'The Root 3 Factor' },
+  { id: 'three-phase-volt-drop', label: 'What Is Three-Phase Voltage Drop?' },
+  { id: 'balanced-vs-unbalanced', label: 'Balanced vs Unbalanced' },
   { id: 'worked-examples', label: 'Worked Examples' },
   { id: 'common-cables', label: 'Common Cable Values' },
   { id: 'how-to', label: 'Step-by-Step Method' },
@@ -28,48 +46,48 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Three-phase voltage drop uses the same formula as single-phase — VD = mV/A/m x Ib x L / 1000 — but you must use the three-phase mV/A/m column from the BS 7671 Appendix 4 tables, not the single-phase column.',
-  'The acceptable limit for three-phase power circuits is 5% of 400 V = 20 V. For three-phase lighting circuits, it is 3% of 400 V = 12 V. These limits are defined in BS 7671 Table 4Ab.',
-  'The root 3 factor (1.732) is already built into the three-phase mV/A/m values in the BS 7671 tables, so you do not need to multiply by root 3 separately when using tabulated values.',
-  'For balanced three-phase loads (equal current on all three phases), a single voltage drop calculation covers the entire circuit. For unbalanced loads, check each phase individually using the single-phase mV/A/m values.',
-  "Elec-Mate's three-phase voltage drop calculator has all BS 7671 Appendix 4 tables built in, handles both balanced and unbalanced loads, and gives an instant pass/fail result against the correct limit.",
+  'The formula is VD = mV/A/m x Ib x L / 1000 — the same structure as single-phase, but you must read the three-phase column of the BS 7671 Appendix 4 tables, not the single-phase column.',
+  'On a 400 V three-phase supply taken from the public distribution network the limit is 5% = 20 V for power and 3% = 12 V for lighting. The figures are in Appendix 4, Section 6.4 (Table 4Ab); Regulation 525.202 is what makes meeting them deem the requirement satisfied.',
+  'The root 3 factor is already inside the tabulated three-phase mV/A/m values — Appendix 4, Section 6 states that for three-phase circuits the tabulated values relate to the line voltage and balanced conditions are assumed. Never multiply by 1.732 again.',
+  'For a balanced load one calculation covers the circuit. For an unbalanced load, work phase by phase using the single-phase mV/A/m values, and assess the neutral separately where third harmonic content is significant.',
+  "Elec-Mate's three-phase voltage drop calculator has the Appendix 4 tables built in, handles balanced and unbalanced loads, and gives an instant pass/fail against the correct limit.",
 ];
 
 const faqs = [
   {
     question: 'What is the maximum voltage drop allowed on a three-phase circuit under BS 7671?',
     answer:
-      'BS 7671 Table 4Ab sets the maximum voltage drop for installations supplied from a public low-voltage distribution system. For three-phase power circuits, the limit is 5% of the nominal line-to-line voltage: 5% of 400 V = 20 V. For three-phase lighting circuits, the limit is 3% of 400 V = 12 V. For installations supplied from a private supply (generator or transformer), Regulation 125.8 permits higher limits: 8% for power (32 V) and 6% for lighting (24 V). The voltage drop is measured from the origin of the installation to the most distant point of the circuit, including any sub-main cables in the path.',
+      'The figures are in BS 7671 Appendix 4, Section 6.4 (Table 4Ab), and Regulation 525.202 makes meeting them deem the requirement satisfied. For a low voltage installation supplied directly from a public low voltage distribution system the limit is 5% of the nominal voltage for "other uses" (power) and 3% for lighting. On a 400 V three-phase supply that is 20 V and 12 V respectively. For an installation supplied from a private low voltage supply, such as a standby generator or a private transformer, Table 4Ab allows 8% and 6% — but the table carries a footnote that the voltage drop within each final circuit should still not exceed the 3% and 5% values. The drop is measured from the origin of the installation, usually the supply terminals, to the socket-outlet or the terminals of the fixed current-using equipment, so any sub-main in the path counts towards the total.',
   },
   {
     question: 'Why is the root 3 factor used in three-phase voltage drop calculations?',
     answer:
-      'The root 3 factor (1.732) arises from the 120-degree phase displacement between the three phases in a three-phase system. In a star-connected system, the line voltage (between any two phases) is root 3 times the phase voltage (between a phase and neutral). This means 230 V x 1.732 = 400 V. When calculating voltage drop using the BS 7671 tabulated mV/A/m values, the root 3 factor is already incorporated into the three-phase column values. The three-phase mV/A/m values in the tables are lower than the single-phase values because the voltage drop per phase is effectively shared across two conductors in a line-to-line measurement. You do not need to multiply by root 3 separately — just use the correct column from the table.',
+      'The root 3 factor (1.732) comes from the 120-degree displacement between the three phases. In a star-connected system the line voltage is root 3 times the phase voltage, which is why 230 V x 1.732 = 400 V. You do not apply it yourself when using the BS 7671 tables. Appendix 4, Section 6 states that for three-phase circuits the tabulated mV/A/m values relate to the line voltage and that balanced conditions are assumed, so the factor is already inside the number you look up. The three-phase column is lower than the single-phase column because a single-phase circuit drops volts in two conductors (out and return), giving 2 x I x R x L, whereas a balanced three-phase circuit carries no neutral current and the line-to-line drop is root 3 x I x R x L. The three-phase value is therefore about 0.866 of the single-phase value, not one third or one root-three of it.',
   },
   {
     question: 'How do I calculate voltage drop for an unbalanced three-phase circuit?',
     answer:
-      'When a three-phase load is unbalanced (different currents on each phase), you cannot use the balanced three-phase formula directly. Instead, calculate the voltage drop on each phase individually. For each phase, use the single-phase mV/A/m value and the current on that specific phase: VD per phase = single-phase mV/A/m x Iphase x L / 1000. Check each phase voltage drop against the single-phase limit (5% of 230 V = 11.5 V for power, 3% of 230 V = 6.9 V for lighting). Additionally, consider the neutral current — in an unbalanced system, the neutral carries the vector sum of the three phase currents, which can be significant. The neutral conductor must be sized to handle this current without excessive voltage drop.',
+      'The tabulated three-phase values assume balanced conditions, so when the phases carry different currents you cannot use them directly. Work phase by phase instead: for each phase use the single-phase mV/A/m value and the current in that phase, VD = single-phase mV/A/m x Iphase x L / 1000. Compare each result against the limit as a percentage of the nominal voltage for that circuit, which for a phase-to-neutral final circuit on a 400/230 V system is 230 V — 11.5 V for power and 6.9 V for lighting. Then look at the neutral. In an unbalanced system it carries the vector sum of the three phase currents, and where there is significant third harmonic content the harmonic components add rather than cancel, so the neutral can carry more current than any line conductor. Appendix 4, Sections 5.5 and 5.6 cover the rating factors for this.',
   },
   {
     question: 'What three-phase mV/A/m values should I use for SWA cable?',
     answer:
-      'Steel wire armoured (SWA) cable mV/A/m values are found in the BS 7671 Appendix 4 tables for armoured cables: Table 4E2B for multicore thermoplastic (PVC) insulated SWA, and Table 4E4B for multicore thermosetting (XLPE) insulated SWA. Use the three-phase column (labelled "3-core or 4-core cable, three-phase a.c."). For example, 25 mm² 4-core copper XLPE SWA has a three-phase mV/A/m of approximately 1.50. For 16 mm² 4-core copper PVC SWA, the value is approximately 2.4. Always verify the exact value from the current edition of BS 7671 (2018+A4:2026) as values vary by cable construction, conductor material, and installation method.',
+      'Steel wire armoured cable is covered by the multicore armoured tables in BS 7671 Appendix 4. For 70 degrees C thermoplastic (PVC) insulated multicore armoured cable with copper conductors that is Table 4D4B, and for 90 degrees C thermosetting (XLPE) insulated multicore armoured cable it is Table 4E4B. Take the column headed for three-phase a.c., not the two-core single-phase column. Do not confuse these with Tables 4E2B and 4D2B, which are the multicore NON-armoured tables. For aluminium conductors the equivalents are Tables 4H4B and 4J4B. Above 16 mm2 the tables give an impedance value together with separate resistive and reactive components, so check which figure you have picked up. Always read the value from the printed table for your exact cable construction and conductor material rather than relying on a summary.',
   },
   {
     question: 'Does voltage drop on a sub-main count towards the final circuit limit?',
     answer:
-      'Yes. BS 7671 Regulation 125.8 and Table 4Ab require the voltage drop from the origin of the installation to the most distant point of every final circuit to be within the permitted limits. This means the voltage drop across any sub-main cables in the path must be added to the voltage drop in the final circuit. For example, if a three-phase sub-main has a voltage drop of 8 V and the final circuit has a voltage drop of 10 V, the total is 18 V — which is within the 20 V (5%) limit for three-phase power circuits. When designing large installations with multiple distribution boards, it is good practice to allocate a voltage drop budget: for example, allow 2% for the sub-main and 3% for the final circuit, totalling 5%.',
+      'Yes. Regulation 525.202 sets the drop between the origin of the installation, usually the supply terminals, and the socket-outlet or the terminals of the fixed current-using equipment. That is the whole path, so the drop across every sub-main in the chain adds to the drop in the final circuit. If a three-phase sub-main drops 8 V and the final circuit drops 10 V, the total of 18 V is what you check against the 20 V limit. On installations with several distribution boards it is worth allocating a budget up front — for example 2% to the sub-main and 3% to the final circuit. Note also that Table 4Ab allows the percentages to be increased by 0.005% per metre of wiring system beyond 100 m, capped at an extra 0.5%, which can help on a long industrial run.',
   },
   {
     question: 'How does cable temperature affect three-phase voltage drop?',
     answer:
-      'The mV/A/m values in the BS 7671 tables are calculated at the conductor operating temperature under full load conditions. When a cable carries less than its full rated current, it runs cooler and its resistance is lower, meaning the actual voltage drop will be less than the tabulated figure. BS 7671 Appendix 4 provides a correction formula to account for this. The corrected voltage drop = tabulated VD x [(230 + tp - (Ca² x Cg² x Ci² x Cc² x (tp - 30))) / (230 + tp)], where tp is the maximum permitted conductor operating temperature. For thermoplastic (PVC) cables, tp = 70°C; for thermosetting (XLPE), tp = 90°C. This correction is particularly useful on long three-phase sub-main runs where voltage drop is marginal.',
+      'The tabulated mV/A/m values assume the conductors are at their maximum permitted normal operating temperature. A cable carrying well under its rated current runs cooler, its resistance is lower, and the real voltage drop is less than the tabulated figure. Appendix 4, Section 6.1 gives a factor Ct for this. Two conditions attach to it: the overcurrent protective device must be something other than a BS 3036 semi-enclosed fuse, and the actual ambient temperature must be at or above 30 degrees C. The scope also depends on conductor size. At 16 mm2 or less you multiply the tabulated mV/A/m by Ct directly. Above 16 mm2 only the resistive part of the drop is affected, so Ct is applied to the tabulated resistive component alone and the design impedance is the vector sum of Ct x the resistive component and the unchanged reactive component. For very large conductors where the reactance dominates, x/r greater than 3, Section 6.1 says the factor need not be considered at all. Because three-phase sub-mains are usually well above 16 mm2, the simple "multiply by Ct" version rarely applies to them.',
   },
   {
     question: 'Can I use the Elec-Mate calculator for three-phase motor circuits?',
     answer:
-      'Yes. The Elec-Mate three-phase voltage drop calculator handles motor circuits including the consideration of starting current. Motor starting current is typically 6 to 8 times the full load current for direct-on-line (DOL) starting. While voltage drop during starting is transient and does not need to meet the steady-state limits in Table 4Ab, excessive voltage drop during starting can cause problems: the motor may fail to start, contactors may drop out, and other equipment on the same supply may be affected by the voltage dip. The calculator lets you enter both the running current and the starting current to assess both the steady-state voltage drop (which must comply with BS 7671) and the transient starting voltage drop.',
+      'Yes. The calculator takes both the running current and the starting current so you can look at the steady-state drop and the transient dip separately. BS 7671 recognises the distinction: Regulation 525.203 allows a greater voltage drop than Appendix 4, Section 6.4 during motor starting periods and for other equipment with high inrush currents, provided it is verified that the voltage variations stay within the limits in the relevant product standard, or the manufacturer\'s recommendations where there is no product standard. Table 4Ab carries the same allowance as a note. That proviso matters — the starting drop is not simply exempt. Excessive drop during starting can stop the motor getting away, drop out contactors, and disturb other equipment on the same supply, so it is worth checking even where the steady-state figure passes comfortably.',
   },
 ];
 
@@ -129,7 +147,7 @@ const features = [
     icon: Calculator,
     title: 'Three-Phase mV/A/m Lookup',
     description:
-      'All BS 7671 Appendix 4 three-phase voltage drop tables built in. Select your cable type and the correct three-phase mV/A/m value is applied automatically.',
+      'The BS 7671 Appendix 4 voltage drop tables are built in. Select your cable type and the correct three-phase value is applied automatically.',
   },
   {
     icon: Activity,
@@ -141,52 +159,52 @@ const features = [
     icon: Cable,
     title: 'All UK Cable Types',
     description:
-      'Supports SWA, singles in trunking/conduit, XLPE, multicore, and MI cables. Copper and aluminium conductors. Three-core and four-core configurations.',
+      'Supports SWA, singles in trunking and conduit, XLPE, multicore, and MI cables. Copper and aluminium conductors. Three-core and four-core configurations.',
   },
   {
     icon: BarChart3,
     title: 'Pass/Fail Indication',
     description:
-      'Instant colour-coded pass/fail result against the correct BS 7671 limit — 20 V (5%) for power or 12 V (3%) for lighting on 400 V three-phase circuits.',
+      'Instant colour-coded pass/fail against the correct limit — 20 V (5%) for power or 12 V (3%) for lighting on a 400 V three-phase public supply.',
   },
   {
     icon: Ruler,
     title: 'Maximum Cable Length',
     description:
-      'Automatically calculates the maximum permissible cable run length for your chosen cable size and load before exceeding the BS 7671 voltage drop limit.',
+      'Works out the longest permissible run for your chosen cable size and load before the voltage drop limit is exceeded.',
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A4:2026 Compliant',
+    title: 'BS 7671:2018+A4:2026',
     description:
-      'All calculations follow the current 18th Edition wiring regulations including Amendment 4. Values verified against the published Appendix 4 tables.',
+      'Calculations follow the current edition of the wiring regulations, including Amendment 4. Values taken from the published Appendix 4 tables.',
   },
 ];
 
 const howToSteps = [
   {
     name: 'Identify the circuit parameters',
-    text: 'Determine the design current (Ib) per phase in amperes, the cable run length (L) in metres from the distribution board to the furthest point, whether the load is balanced or unbalanced, and the circuit type (lighting or power).',
+    text: 'Determine the design current (Ib) per phase in amperes, the run length (L) in metres from the distribution board to the furthest point, whether the load is balanced or unbalanced, and the circuit type (lighting or power).',
   },
   {
     name: 'Select the cable type and confirm it is three-phase',
-    text: 'Identify the cable construction (SWA, singles in conduit, multicore, etc.), conductor material (copper or aluminium), insulation type (PVC or XLPE), and the number of cores (3-core or 4-core for three-phase).',
+    text: 'Identify the cable construction (armoured, singles in conduit, multicore), conductor material (copper or aluminium), insulation type (70 degrees C thermoplastic or 90 degrees C thermosetting), and the number of cores — 3-core or 4-core for three-phase.',
   },
   {
     name: 'Look up the three-phase mV/A/m value',
-    text: 'Open the correct BS 7671 Appendix 4 voltage drop table (Tables 4D1B through 4J4B). Find the row for your cable cross-sectional area and read the value from the three-phase column ("3-core or 4-core cable, three-phase a.c."), not the single-phase column.',
+    text: 'Open the correct Appendix 4 voltage drop table. The B-suffix tables from 4D1B to 4J4B carry the voltage drop figures. Find the row for your cross-sectional area and read the three-phase a.c. column, not the single-phase column. Above 16 mm2 the table gives an impedance value plus separate resistive and reactive components.',
   },
   {
     name: 'Apply the voltage drop formula',
-    text: 'Calculate: VD = mV/A/m (three-phase) x Ib x L / 1000. The result is the line-to-line voltage drop in volts. For a balanced load, Ib is the current per phase.',
+    text: 'Calculate VD = mV/A/m (three-phase) x Ib x L / 1000. The result is the line-to-line voltage drop in volts, because the tabulated three-phase values relate to the line voltage. For a balanced load, Ib is the current per phase.',
   },
   {
-    name: 'Check against the BS 7671 three-phase limit',
-    text: 'Compare the calculated voltage drop against 20 V (5% of 400 V) for power circuits or 12 V (3% of 400 V) for lighting circuits. If the sub-main feeds a downstream distribution board, add the sub-main voltage drop to the final circuit voltage drop and check the total.',
+    name: 'Check against the Table 4Ab limit',
+    text: 'On a public low voltage supply, compare against 20 V (5% of 400 V) for power or 12 V (3% of 400 V) for lighting. If a sub-main feeds the board, add its drop to the final circuit drop — Regulation 525.202 covers the whole path from the origin.',
   },
   {
-    name: 'Consider correction for lightly loaded cables',
-    text: 'If the voltage drop is marginal, apply the conductor temperature correction from BS 7671 Appendix 4. When the cable is not fully loaded, it runs cooler and the actual voltage drop is lower than the tabulated value. This can sometimes allow a smaller cable to be used.',
+    name: 'Refine the figure only if it is marginal',
+    text: 'Appendix 4, Sections 6.1 and 6.2 allow correction for operating temperature and load power factor. The temperature factor Ct applies only where the protective device is not a BS 3036 fuse and the ambient temperature is at least 30 degrees C, and above 16 mm2 it is applied to the resistive component alone.',
   },
 ];
 
@@ -196,230 +214,94 @@ const howToSteps = [
 
 const sections = [
   {
-    id: 'three-phase-volt-drop',
-    heading: 'What Is Three-Phase Voltage Drop?',
-    content: (
-      <>
-        <p>
-          Voltage drop in a three-phase circuit is the reduction in electrical potential along the
-          cable conductors as current flows from the supply to the load. Every cable has resistance
-          (and at larger sizes, reactance), and when current passes through this impedance, some of
-          the supply voltage is consumed by the cable itself rather than delivered to the load.
-        </p>
-        <p>
-          In a three-phase system, three line conductors each carry current with a 120-degree phase
-          displacement. This phase relationship means the voltage drop behaviour differs from
-          single-phase circuits. The line-to-line voltage in the UK is 400 V (compared to 230 V
-          phase-to-neutral), and the voltage drop limits are applied against this higher voltage. A
-          three-phase power circuit is permitted up to 20 V of voltage drop (5% of 400 V), whereas a
-          single-phase power circuit is limited to 11.5 V (5% of 230 V).
-        </p>
-        <p>
-          Three-phase voltage drop is a critical design consideration for{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> on
-          commercial and industrial installations. Sub-main cables feeding distribution boards,
-          motor circuits, three-phase EV chargers, and large power supplies all require accurate
-          voltage drop calculations to ensure compliance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A4:2026
-          </SEOInternalLink>
-          .
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'root-three-factor',
-    heading: 'The Root 3 Factor Explained',
-    content: (
-      <>
-        <p>
-          The square root of 3 (approximately 1.732) appears throughout three-phase electrical
-          calculations. It arises from the geometric relationship between three sinusoidal waveforms
-          displaced by 120 degrees. In a star-connected system, the line voltage is root 3 times the
-          phase voltage: 230 V x 1.732 = 400 V.
-        </p>
-        <p>
-          A common question is whether you need to multiply by root 3 when calculating three-phase
-          voltage drop using the BS 7671 tables. The answer is no — because the three-phase mV/A/m
-          values in the Appendix 4 tables already incorporate the root 3 factor. The tabulated
-          three-phase values give the line-to-line voltage drop directly when you apply the standard
-          formula.
-        </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <div className="flex items-start gap-3">
-            <div>
-              <h4 className="font-bold text-white mb-1">Common Mistake</h4>
-              <p className="text-white text-sm leading-relaxed">
-                Do not multiply the three-phase voltage drop result by root 3. The three-phase
-                mV/A/m values in the BS 7671 tables already account for this. If you also multiply
-                by 1.732, your calculated voltage drop will be 73% too high, potentially leading you
-                to oversize the cable unnecessarily.
-              </p>
-            </div>
-          </div>
-        </div>
-        <p>
-          The relationship between the single-phase and three-phase mV/A/m values in the tables is:
-          the three-phase value is approximately equal to the single-phase value divided by root 3
-          (for purely resistive cables) or calculated from the combined resistive and reactive
-          components (for larger cables where reactance is significant).
-        </p>
-      </>
-    ),
-  },
-  {
     id: 'formula',
     heading: 'The Three-Phase Voltage Drop Formula',
     content: (
       <>
-        <p>
-          The standard formula for calculating three-phase voltage drop using BS 7671 tabulated
-          values is identical in structure to the single-phase formula:
+        <p className="mb-2">
+          <a
+            href="#calculator"
+            className="inline-flex h-11 touch-manipulation items-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90"
+          >
+            Jump to the free three-phase volt drop calculator
+          </a>
         </p>
-        <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
-          <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
-            VD = (mV/A/m<sub>3ph</sub> x I<sub>b</sub> x L) / 1000
+        <div className={`${cardCn} text-center`}>
+          <p className="font-mono text-xl font-bold text-elec-yellow sm:text-2xl">
+            VD = (mV/A/m<sub>3ph</sub> &times; I<sub>b</sub> &times; L) / 1000
           </p>
-          <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
+          <div className="mx-auto mt-4 max-w-md space-y-1 text-left text-sm text-white">
             <p>
-              <strong className="text-yellow-400">VD</strong> = line-to-line voltage drop in volts
+              <strong>VD</strong> = line-to-line voltage drop in volts
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong>
                 mV/A/m<sub>3ph</sub>
               </strong>{' '}
-              = three-phase millivolts per ampere per metre (from BS 7671 tables)
+              = three-phase millivolts per ampere per metre, from the BS 7671 Appendix 4 tables
             </p>
             <p>
-              <strong className="text-yellow-400">
+              <strong>
                 I<sub>b</sub>
               </strong>{' '}
               = design current per phase in amperes
             </p>
             <p>
-              <strong className="text-yellow-400">L</strong> = cable run length in metres
+              <strong>L</strong> = run length in metres
             </p>
           </div>
         </div>
         <p>
-          The critical difference from single-phase calculations is that you must use the
-          three-phase column from the mV/A/m tables, and the result is compared against the
-          three-phase voltage limits (percentage of 400 V, not 230 V).
+          Two things separate this from the single-phase calculation. You must read the three-phase
+          column of the table rather than the single-phase column, and the answer is compared
+          against a percentage of 400 V rather than 230 V.
         </p>
         <p>
-          For larger cables (typically 25 mm² and above), the BS 7671 tables split the mV/A/m value
-          into separate resistive (r) and reactive (x) components. In this case, the combined
-          voltage drop is calculated as: VD = (mV/A/m<sub>r</sub> x cos phi + mV/A/m<sub>x</sub> x
-          sin phi) x I<sub>b</sub> x L / 1000, where cos phi is the power factor of the load. This
-          is important for{' '}
+          Appendix 4, Section 6 is explicit about what the tabulated number already contains: for
+          three-phase circuits the tabulated mV/A/m values relate to the line voltage, and balanced
+          conditions have been assumed. The root 3 is inside the figure. Multiply the length by the
+          design current, divide by 1000, and you have the line-to-line drop in volts.
+        </p>
+
+        <h3 className="mb-2 mt-6 text-base font-semibold text-white">
+          Cables above 16 mm&sup2;: resistance and reactance
+        </h3>
+        <p>
+          For conductors of 16 mm&sup2; or less, Appendix 4, Section 6 says the inductance can be
+          ignored and only a single mV/A/m value is tabulated. Above 16 mm&sup2; the table gives an
+          impedance value (mV/A/m)<sub>z</sub> together with a resistive component (mV/A/m)
+          <sub>r</sub> and a reactive component (mV/A/m)<sub>x</sub>. Using the impedance value on
+          its own is safe but pessimistic.
+        </p>
+        <p>
+          Where the load power factor is worth taking into account, Section 6.2 gives the design
+          value as cos&nbsp;&phi;&nbsp;&times;&nbsp;(mV/A/m)<sub>r</sub> +
+          sin&nbsp;&phi;&nbsp;&times;&nbsp;(mV/A/m)<sub>x</sub>. This is the same relationship as the
+          first-principles form &radic;3&nbsp;&times;&nbsp;I&nbsp;&times;&nbsp;L&nbsp;&times;&nbsp;(R
+          cos&nbsp;&phi; + X sin&nbsp;&phi;), with the &radic;3 and the per-metre resistance folded
+          into the tabulated values. It matters most on{' '}
           <SEOInternalLink href="/tools/three-phase-power-calculator">
             three-phase motor circuits
-          </SEOInternalLink>{' '}
-          where the power factor can be significantly less than unity.
+          </SEOInternalLink>
+          , where the power factor can be well below unity.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <div className="flex items-start gap-3">
-            <div>
-              <h4 className="font-bold text-white mb-1">Frequency Limitation (Reg 125.8)</h4>
-              <p className="text-white text-sm leading-relaxed">
-                The BS 7671 mV/A/m table values are valid for AC operation at frequencies in the
-                range 49 to 61 Hz only. For cables operating at higher frequencies — such as
-                motor-drive output cables on variable-frequency drive (VFD) circuits — the voltage
-                drop may be substantially greater and shall be recalculated outside the standard
-                tables. Always use the tabulated values only for supply-frequency circuits.
-              </p>
-            </div>
-          </div>
+
+        <div className={cardCn}>
+          <h4 className="mb-1 font-bold text-white">
+            Frequency range (BS 7671 Appendix 4, Section 6)
+          </h4>
+          <p className="text-sm leading-relaxed text-white">
+            The tabulated voltage drop values apply, for a.c. operation, to frequencies in the range
+            49 to 61 Hz. Appendix 4 warns that the voltage drop for cables operating at higher
+            frequencies may be substantially greater. On the output side of a variable-frequency
+            drive, the tabulated values are not the right tool.
+          </p>
         </div>
         <SEOAppBridge
           title="Three-Phase Volt Drop Calculator (BS 7671)"
-          description="Free three-phase voltage drop calculator to BS 7671: enter cable size, current and length to check volt drop against the 3% and 5% limits."
+          description="Enter cable size, current and length to check volt drop against the 3% and 5% limits."
           icon={Calculator}
         />
-      </>
-    ),
-  },
-  {
-    id: 'balanced-vs-unbalanced',
-    heading: 'Balanced vs Unbalanced Three-Phase Loads',
-    content: (
-      <>
-        <p>
-          A balanced three-phase load draws equal current on all three phases at the same power
-          factor. Examples include three-phase motors, three-phase heaters with equal elements, and
-          22 kW EV chargers. For balanced loads, a single voltage drop calculation using the
-          three-phase mV/A/m value and the per-phase current gives the complete answer.
-        </p>
-        <p>
-          An unbalanced three-phase load draws different currents on each phase. This is the typical
-          situation in a three-phase distribution board feeding single-phase final circuits — it is
-          almost impossible to achieve perfect balance across all three phases. The degree of
-          imbalance depends on how the circuits are distributed across the phases.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h4 className="font-bold text-white text-lg mb-3">Balanced Load</h4>
-            <ul className="space-y-2 text-white text-sm">
-              <li className="flex items-start gap-2">
-                <span>Equal current on L1, L2, L3</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Zero neutral current</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Use three-phase mV/A/m values</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Compare against 5% of 400 V</span>
-              </li>
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
-            <h4 className="font-bold text-white text-lg mb-3">Unbalanced Load</h4>
-            <ul className="space-y-2 text-white text-sm">
-              <li className="flex items-start gap-2">
-                <span>Different current on each phase</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Neutral carries imbalance current</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Check each phase individually</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span>Compare against 5% of 230 V per phase</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <p>
-          For sub-main cables feeding three-phase distribution boards, design for the worst-case
-          phase current. If the board is new and the circuit loading is known, check voltage drop
-          using the highest individual phase current with the single-phase mV/A/m values. If the
-          loading is assumed to be approximately balanced, the three-phase calculation is
-          acceptable.
-        </p>
-        <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
-          <div className="flex items-start gap-3">
-            <div>
-              <h4 className="font-bold text-white mb-1">
-                Third Harmonic and Neutral Current (Reg 125.8)
-              </h4>
-              <p className="text-white text-sm leading-relaxed">
-                On three-phase circuits supplying high proportions of switched-mode power supplies
-                or LED drivers, third harmonic currents from each phase add rather than cancel in
-                the neutral conductor. BS 7671 Regulation 125.8 (Section 5.5) explicitly addresses
-                this: rating factors take account of the heating effect of the third harmonic in the
-                neutral as well as in each line conductor. Where third harmonic content is
-                significant, the neutral can carry more current than each phase conductor — which
-                affects both conductor sizing and voltage drop on the neutral. The standard
-                balanced/unbalanced framing does not capture this effect; the neutral conductor must
-                be assessed separately for such loads.
-              </p>
-            </div>
-          </div>
-        </div>
       </>
     ),
   },
@@ -432,42 +314,217 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Regulation 125.8 and Table 4Ab define the maximum permitted voltage drop for all
-          installations. The limits for three-phase circuits on a public LV supply are:
+          Regulation 525.202 states that the voltage drop between the origin of the installation
+          (usually the supply terminals) and a socket-outlet or the terminals of fixed current-using
+          equipment shall not exceed the values in Appendix 4, Section 6.4. Those values are Table
+          4Ab, and they are expressed as a percentage of the nominal voltage of the installation.
         </p>
-        <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <div className="flex items-center gap-2 mb-2">
-              <h4 className="font-bold text-white text-lg">Power Circuits</h4>
-            </div>
-            <p className="text-3xl font-bold text-yellow-400 mb-1">5%</p>
-            <p className="text-white text-sm">of 400 V = 20 V maximum</p>
+        <div className="-mx-4 overflow-x-auto sm:mx-0">
+          <table className="w-full min-w-[560px] border-collapse text-sm">
+            <thead>
+              <tr className="bg-white/[0.06]">
+                <th className={thCn}>Supply</th>
+                <th className={thCn}>Lighting</th>
+                <th className={thCn}>Other uses</th>
+                <th className={thCn}>On a 400 V three-phase supply</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+                <td className={tdCn}>
+                  (a) Low voltage installations supplied directly from a public low voltage
+                  distribution system
+                </td>
+                <td className={`${tdCn} font-bold text-elec-yellow`}>3%</td>
+                <td className={`${tdCn} font-bold text-elec-yellow`}>5%</td>
+                <td className={tdCn}>12 V lighting, 20 V other uses</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className={tdCn}>
+                  (b) Low voltage installation supplied from a private LV supply
+                </td>
+                <td className={`${tdCn} font-bold text-elec-yellow`}>6%</td>
+                <td className={`${tdCn} font-bold text-elec-yellow`}>8%</td>
+                <td className={tdCn}>24 V lighting, 32 V other uses</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm leading-relaxed text-white">
+          Source: BS 7671:2018+A4:2026, Appendix 4, Section 6.4, Table 4Ab. Volt figures are the
+          percentages applied to a 400 V nominal line voltage.
+        </p>
+
+        <div className={noteCn}>
+          <h4 className="mb-1 font-bold text-white">
+            The 6% and 8% figures do not release the final circuit
+          </h4>
+          <p className="text-sm leading-relaxed text-white">
+            Table 4Ab attaches a footnote to row (b): the voltage drop within each final circuit
+            should not exceed the values given in row (a). A generator-fed or transformer-fed
+            installation therefore gets more headroom across the distribution path as a whole, but
+            each individual final circuit is still held to 3% and 5%.
+          </p>
+        </div>
+
+        <h3 className="mb-2 mt-6 text-base font-semibold text-white">
+          Three allowances worth knowing
+        </h3>
+        <p>
+          <strong>Long wiring systems.</strong> Table 4Ab permits the percentages above to be
+          increased by 0.005% per metre of wiring system beyond 100 m, provided the increase is not
+          greater than 0.5%. The cap is reached at 200 m, where the 5% power limit becomes 5.5%.
+          Beyond that length the allowance does not grow any further.
+        </p>
+        <p>
+          <strong>Motor starting.</strong> Regulation 525.203 accepts a greater voltage drop during
+          motor starting periods and for other equipment with high inrush currents — but only where
+          it is verified that the voltage variations stay within the limits in the relevant product
+          standard, or the manufacturer&rsquo;s recommendations where no product standard exists.
+        </p>
+        <p>
+          <strong>Harmonics.</strong> Appendix 4, Section 6.4 states that the calculated voltage drop
+          should include any effects due to harmonic currents. On a board full of switched-mode
+          supplies that is not a formality.
+        </p>
+        <p>
+          The limit applies across the whole path, so where sub-mains sit between the origin and the
+          load their voltage drops are added together and the total is what must comply.
+        </p>
+        <SEOAppBridge
+          title="Instant pass/fail against the Table 4Ab limits"
+          description="Elec-Mate applies the right limit for the circuit type and supply arrangement automatically."
+          icon={Shield}
+        />
+      </>
+    ),
+  },
+  {
+    id: 'root-three-factor',
+    heading: 'The Root 3 Factor Explained',
+    content: (
+      <>
+        <p>
+          The square root of 3, about 1.732, runs through three-phase calculations. It comes from the
+          geometry of three sinusoids displaced by 120 degrees: in a star-connected system the line
+          voltage is root 3 times the phase voltage, which is where 230 V &times; 1.732 = 400 V comes
+          from.
+        </p>
+        <p>
+          The question that brings most people to this page is whether they need to apply it
+          themselves. They do not. Appendix 4, Section 6 states that for three-phase circuits the
+          tabulated mV/A/m values relate to the line voltage and balanced conditions are assumed, so
+          the factor is baked into the number in the table.
+        </p>
+        <div className={noteCn}>
+          <h4 className="mb-1 font-bold text-white">Common mistake</h4>
+          <p className="text-sm leading-relaxed text-white">
+            Do not multiply the result by root 3 as well. If you do, your answer comes out 73% high
+            and you will oversize the cable for no reason.
+          </p>
+        </div>
+
+        <h3 className="mb-2 mt-6 text-base font-semibold text-white">
+          Why the three-phase column is lower
+        </h3>
+        <p>
+          It helps to see where the difference comes from. A single-phase circuit drops voltage in
+          two conductors, the line and the return, so the drop is 2 &times; I &times; R &times; L. A
+          balanced three-phase circuit carries no neutral current, and the line-to-line drop works
+          out at &radic;3 &times; I &times; R &times; L.
+        </p>
+        <p>
+          The ratio between them is therefore &radic;3 / 2, or about 0.866. A tabulated three-phase
+          value is roughly 87% of the single-phase value for the same cable — not a third of it, and
+          not the single-phase value divided by root 3. Above 16 mm&sup2;, where reactance is
+          tabulated separately, the relationship is no longer a simple ratio.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'three-phase-volt-drop',
+    heading: 'What Is Three-Phase Voltage Drop?',
+    content: (
+      <>
+        <p>
+          Voltage drop in a three-phase circuit is the loss of potential along the conductors as
+          current flows from the supply to the load. Every cable has resistance, and at larger sizes
+          reactance too. When current passes through that impedance, part of the supply voltage is
+          consumed by the cable rather than delivered to the equipment.
+        </p>
+        <p>
+          Three line conductors each carry current displaced by 120 degrees, and the reference
+          voltage is the line-to-line value of 400 V rather than the 230 V phase-to-neutral value.
+          That is why the same 5% limit gives 20 V on a three-phase power circuit but only 11.5 V on
+          a single-phase one.
+        </p>
+        <p>
+          Getting it right matters most on the jobs where the runs are long:{' '}
+          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> for
+          sub-mains feeding distribution boards, motor circuits, three-phase EV chargers and large
+          power supplies on commercial and industrial installations.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'balanced-vs-unbalanced',
+    heading: 'Balanced vs Unbalanced Three-Phase Loads',
+    content: (
+      <>
+        <p>
+          A balanced load draws equal current on all three phases at the same power factor —
+          three-phase motors, three-phase heaters with equal elements, 22 kW EV chargers. Because the
+          tabulated three-phase values assume exactly this, one calculation covers the circuit.
+        </p>
+        <p>
+          An unbalanced load draws different currents on each phase. That is the normal state of a
+          three-phase board feeding single-phase final circuits; perfect balance is close to
+          impossible in practice.
+        </p>
+        <div className="my-5 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-5">
+            <h4 className="mb-3 text-lg font-bold text-white">Balanced load</h4>
+            <ul className="space-y-2 text-sm text-white">
+              <li>Equal current on L1, L2, L3</li>
+              <li>Zero neutral current</li>
+              <li>Use the three-phase mV/A/m column</li>
+              <li>Compare against a percentage of 400 V</li>
+            </ul>
           </div>
-          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
-            <div className="flex items-center gap-2 mb-2">
-              <h4 className="font-bold text-white text-lg">Lighting Circuits</h4>
-            </div>
-            <p className="text-3xl font-bold text-yellow-400 mb-1">3%</p>
-            <p className="text-white text-sm">of 400 V = 12 V maximum</p>
+          <div className="rounded-2xl border border-orange-500/20 bg-orange-500/10 p-5">
+            <h4 className="mb-3 text-lg font-bold text-white">Unbalanced load</h4>
+            <ul className="space-y-2 text-sm text-white">
+              <li>Different current on each phase</li>
+              <li>Neutral carries the out-of-balance current</li>
+              <li>Use the single-phase mV/A/m column, phase by phase</li>
+              <li>Compare against a percentage of 230 V</li>
+            </ul>
           </div>
         </div>
         <p>
-          For installations supplied from a private LV supply (such as a standby generator or
-          private transformer), Regulation 125.8 permits higher limits: 8% (32 V) for power and 6%
-          (24 V) for lighting. These higher limits recognise that the electrician typically has more
-          control over the supply characteristics in a private installation.
+          For a sub-main feeding a three-phase board, design for the worst-case phase. Where the
+          circuit loading is known, check the highest individual phase current against the
+          single-phase values. Where the loading is genuinely expected to be near balanced, the
+          three-phase calculation is the right one.
         </p>
-        <p>
-          Remember that the voltage drop limit applies from the origin of the installation (the
-          meter or main incoming supply terminals) to the most remote point of the final circuit. If
-          there are sub-main cables in the path, the voltage drop across each section of cable must
-          be added together. The total must remain within the limit.
-        </p>
-        <SEOAppBridge
-          title="Instant pass/fail against BS 7671 limits"
-          description="Elec-Mate automatically selects the correct limit — 20 V for three-phase power…"
-          icon={Shield}
-        />
+        <div className={noteCn}>
+          <h4 className="mb-1 font-bold text-white">
+            Third harmonic and neutral current (Appendix 4, Sections 5.5 and 5.6)
+          </h4>
+          <p className="text-sm leading-relaxed text-white">
+            Where a three-phase circuit supplies a high proportion of switched-mode power supplies or
+            LED drivers, the third harmonic currents from each phase add in the neutral instead of
+            cancelling. Appendix 4, Section 5.6 notes that the rating factors in Section 5.5 take
+            account of the heating effect of the third harmonic in the neutral as well as in each
+            line conductor. The neutral can end up carrying more current than any line conductor,
+            which affects conductor sizing and the drop along the neutral, and the balanced /
+            unbalanced framing above does not capture it. Where third harmonic content is high enough
+            that the neutral becomes the basis of sizing, Regulation 431.2.3 also requires overcurrent
+            detection for the neutral conductor.
+          </p>
+        </div>
       </>
     ),
   },
@@ -476,94 +533,98 @@ const sections = [
     heading: 'Worked Examples: Three-Phase Voltage Drop',
     content: (
       <>
-        <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-            <h4 className="font-bold text-yellow-400 text-lg mb-3">
-              Example 1: Three-Phase Sub-Main (SWA)
+        <p>
+          Each example uses the three-phase a.c. column and checks the result against the Table 4Ab
+          limit for a public low voltage supply. Confirm the mV/A/m figure against the printed table
+          for your own cable before relying on it.
+        </p>
+        <div className="space-y-5">
+          <div className={cardCn}>
+            <h4 className="mb-3 text-lg font-bold text-white">
+              Example 1 &mdash; three-phase sub-main, XLPE SWA
             </h4>
-            <div className="space-y-2 text-white leading-relaxed text-sm">
+            <div className="space-y-2 text-sm leading-relaxed text-white">
               <p>
-                A 4-core 25 mm² copper XLPE SWA cable runs 55 metres from the main switchboard to a
-                sub-distribution board. The balanced design current is 75 A per phase. The
-                three-phase mV/A/m from Table 4E4B is 1.50.
+                A 4-core 25 mm&sup2; copper XLPE SWA cable runs 55 metres from the main switchboard
+                to a sub-distribution board. The balanced design current is 75 A per phase. The
+                three-phase value taken from Table 4E4B is 1.50 mV/A/m. At 25 mm&sup2; this is an
+                impedance value, so the answer is on the pessimistic side.
               </p>
               <p className="font-mono text-white">
-                VD = 1.50 x 75 x 55 / 1000 = <strong className="text-yellow-400">6.19 V</strong>{' '}
-                (1.55% of 400 V)
+                VD = 1.50 &times; 75 &times; 55 / 1000 ={' '}
+                <strong className="text-elec-yellow">6.19 V</strong> (1.55% of 400 V)
               </p>
               <p>
-                Result: <strong className="text-green-400">PASS</strong> — 6.19 V is well within the
-                20 V (5%) limit. This leaves 13.81 V of voltage drop budget for the final circuits
-                downstream.
+                <strong className="text-green-400">Pass</strong> &mdash; well inside the 20 V limit,
+                leaving 13.81 V of budget for the final circuits downstream.
               </p>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-            <h4 className="font-bold text-yellow-400 text-lg mb-3">
-              Example 2: Long Run to a Motor
+          <div className={cardCn}>
+            <h4 className="mb-3 text-lg font-bold text-white">
+              Example 2 &mdash; long run to a motor
             </h4>
-            <div className="space-y-2 text-white leading-relaxed text-sm">
+            <div className="space-y-2 text-sm leading-relaxed text-white">
               <p>
-                A three-phase motor draws 42 A at full load. It is supplied by a 10 mm² 4-core
-                copper PVC SWA cable (Table 4D4B, three-phase mV/A/m = 3.8) over a cable run of 80
-                metres.
+                A three-phase motor draws 42 A at full load, supplied by a 10 mm&sup2; 4-core copper
+                PVC SWA cable over 80 metres. Table 4D4B gives a three-phase value of 3.8 mV/A/m.
               </p>
               <p className="font-mono text-white">
-                VD = 3.8 x 42 x 80 / 1000 = <strong className="text-yellow-400">12.77 V</strong>{' '}
-                (3.19% of 400 V)
+                VD = 3.8 &times; 42 &times; 80 / 1000 ={' '}
+                <strong className="text-elec-yellow">12.77 V</strong> (3.19% of 400 V)
               </p>
               <p>
-                Result: <strong className="text-green-400">PASS</strong> — 12.77 V is within the 20
-                V limit. However, if this motor is downstream of a sub-main with its own voltage
-                drop, the total must be checked.
+                <strong className="text-green-400">Pass</strong> against the 20 V steady-state limit.
+                If this motor sits downstream of a sub-main, add that drop too. The starting dip is a
+                separate check under Regulation 525.203.
               </p>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-            <h4 className="font-bold text-yellow-400 text-lg mb-3">
-              Example 3: Three-Phase Lighting in a Warehouse
+          <div className={cardCn}>
+            <h4 className="mb-3 text-lg font-bold text-white">
+              Example 3 &mdash; three-phase warehouse lighting
             </h4>
-            <div className="space-y-2 text-white leading-relaxed text-sm">
+            <div className="space-y-2 text-sm leading-relaxed text-white">
               <p>
-                A three-phase lighting circuit serves a warehouse. The balanced design current is 14
-                A per phase. The cable is 4 mm² 4-core copper PVC (Table 4D2B, three-phase mV/A/m =
-                9.5). Cable run length is 65 metres.
+                A three-phase lighting circuit serves a warehouse at a balanced 14 A per phase over
+                65 metres, wired in 4 mm&sup2; 4-core copper PVC. Table 4D2B gives a three-phase
+                value of 9.5 mV/A/m.
               </p>
               <p className="font-mono text-white">
-                VD = 9.5 x 14 x 65 / 1000 = <strong className="text-yellow-400">8.65 V</strong>{' '}
-                (2.16% of 400 V)
+                VD = 9.5 &times; 14 &times; 65 / 1000 ={' '}
+                <strong className="text-elec-yellow">8.65 V</strong> (2.16% of 400 V)
               </p>
               <p>
-                Result: <strong className="text-green-400">PASS</strong> — 8.65 V is within the 12 V
-                (3%) lighting limit. If the cable run were 90 metres: 9.5 x 14 x 90 / 1000 = 11.97 V
-                (2.99%) — still just within the limit.
+                <strong className="text-green-400">Pass</strong> against the 12 V lighting limit. At
+                90 metres the same circuit gives 11.97 V, or 2.99% &mdash; still inside 3%, but with
+                nothing left over.
               </p>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-            <h4 className="font-bold text-yellow-400 text-lg mb-3">
-              Example 4: Sub-Main Plus Final Circuit (Cumulative)
+          <div className={cardCn}>
+            <h4 className="mb-3 text-lg font-bold text-white">
+              Example 4 &mdash; sub-main plus final circuit
             </h4>
-            <div className="space-y-2 text-white leading-relaxed text-sm">
+            <div className="space-y-2 text-sm leading-relaxed text-white">
               <p>
-                A three-phase sub-main (35 mm² SWA, 40 m, 100 A, mV/A/m = 1.05) feeds a distribution
-                board. A final circuit from that board (6 mm² singles in trunking, 25 m, 28 A,
-                three-phase mV/A/m = 6.4) serves a three-phase heater.
+                A three-phase sub-main of 35 mm&sup2; SWA runs 40 m at 100 A with a three-phase value
+                of 1.05 mV/A/m. A final circuit from that board &mdash; 6 mm&sup2; singles in
+                trunking, 25 m, 28 A, three-phase value 6.4 mV/A/m &mdash; serves a three-phase
+                heater.
               </p>
-              <p className="font-mono text-white">Sub-main VD = 1.05 x 100 x 40 / 1000 = 4.20 V</p>
+              <p className="font-mono text-white">Sub-main: 1.05 &times; 100 &times; 40 / 1000 = 4.20 V</p>
               <p className="font-mono text-white">
-                Final circuit VD = 6.4 x 28 x 25 / 1000 = 4.48 V
+                Final circuit: 6.4 &times; 28 &times; 25 / 1000 = 4.48 V
               </p>
               <p className="font-mono text-white">
-                Total VD = 4.20 + 4.48 = <strong className="text-yellow-400">8.68 V</strong> (2.17%
-                of 400 V)
+                Total = <strong className="text-elec-yellow">8.68 V</strong> (2.17% of 400 V)
               </p>
               <p>
-                Result: <strong className="text-green-400">PASS</strong> — the cumulative voltage
-                drop of 8.68 V is well within the 20 V limit.
+                <strong className="text-green-400">Pass</strong> &mdash; and the total is what
+                Regulation 525.202 asks for, since it measures from the origin of the installation.
               </p>
             </div>
           </div>
@@ -573,61 +634,70 @@ const sections = [
   },
   {
     id: 'common-cables',
-    heading: 'Common Three-Phase Cable mV/A/m Values',
+    heading: 'Common Three-Phase mV/A/m Values',
     content: (
       <>
         <p>
-          Below are commonly referenced three-phase mV/A/m values from BS 7671 Appendix 4. These are
-          approximate and for reference — always verify against the current edition of BS 7671 for
-          your specific cable type and installation method.
+          Indicative three-phase values for copper conductors, for orientation only. Voltage drop
+          figures live in the B-suffix Appendix 4 tables, and the right table depends on insulation
+          and construction: 4D2B multicore non-armoured 70 &deg;C thermoplastic, 4D4B multicore
+          armoured 70 &deg;C thermoplastic, 4E4B multicore armoured 90 &deg;C thermosetting.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="grid grid-cols-3 gap-px bg-white/10">
-            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Cable Size</div>
-            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
-              mV/A/m (3-phase)
-            </div>
-            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Cable Type</div>
-          </div>
-          {[
-            { size: '4 mm²', mvam: '9.5', type: '4-core PVC' },
-            { size: '6 mm²', mvam: '6.4', type: '4-core PVC' },
-            { size: '10 mm²', mvam: '3.8', type: '4-core PVC' },
-            { size: '16 mm²', mvam: '2.4', type: '4-core PVC SWA' },
-            { size: '25 mm²', mvam: '1.50', type: '4-core XLPE SWA' },
-            { size: '35 mm²', mvam: '1.05', type: '4-core XLPE SWA' },
-            { size: '50 mm²', mvam: '0.78', type: '4-core XLPE SWA' },
-            { size: '70 mm²', mvam: '0.55', type: '4-core XLPE SWA' },
-            { size: '95 mm²', mvam: '0.41', type: '4-core XLPE SWA' },
-          ].map((row) => (
-            <div key={row.size} className="grid grid-cols-3 gap-px bg-white/5">
-              <div className="p-4 bg-[#0a0a0a] text-white text-sm font-medium">{row.size}</div>
-              <div className="p-4 bg-[#0a0a0a] text-white text-sm">{row.mvam}</div>
-              <div className="p-4 bg-[#0a0a0a] text-white text-sm">{row.type}</div>
-            </div>
-          ))}
+        <div className="-mx-4 overflow-x-auto sm:mx-0">
+          <table className="w-full min-w-[520px] border-collapse text-sm">
+            <thead>
+              <tr className="bg-white/[0.06]">
+                <th className={thCn}>Size</th>
+                <th className={thCn}>mV/A/m (three-phase)</th>
+                <th className={thCn}>Cable</th>
+                <th className={thCn}>Table</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { size: '4 mm²', mvam: '9.5', type: '4-core PVC, non-armoured', table: '4D2B' },
+                { size: '6 mm²', mvam: '6.4', type: '4-core PVC, non-armoured', table: '4D2B' },
+                { size: '10 mm²', mvam: '3.8', type: '4-core PVC, non-armoured', table: '4D2B' },
+                { size: '16 mm²', mvam: '2.4', type: '4-core PVC SWA', table: '4D4B' },
+                { size: '25 mm²', mvam: '1.50', type: '4-core XLPE SWA', table: '4E4B' },
+                { size: '35 mm²', mvam: '1.05', type: '4-core XLPE SWA', table: '4E4B' },
+                { size: '50 mm²', mvam: '0.78', type: '4-core XLPE SWA', table: '4E4B' },
+                { size: '70 mm²', mvam: '0.55', type: '4-core XLPE SWA', table: '4E4B' },
+                { size: '95 mm²', mvam: '0.41', type: '4-core XLPE SWA', table: '4E4B' },
+              ].map((row, i) => (
+                <tr
+                  key={row.size}
+                  className={
+                    i % 2 === 0 ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]' : 'bg-white/[0.02]'
+                  }
+                >
+                  <td className={`${tdCn} font-medium`}>{row.size}</td>
+                  <td className={`${tdCn} font-bold text-elec-yellow`}>{row.mvam}</td>
+                  <td className={tdCn}>{row.type}</td>
+                  <td className={tdCn}>{row.table}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          Values extracted from BS 7671:2018+A4:2026, Tables 4D2B and 4E4B. Three-phase column
-          (3-core or 4-core cable, three-phase a.c.). Copper conductors. Always verify against the
-          current edition for your specific installation method.
+        <p className="text-sm leading-relaxed text-white">
+          Read the figure for your own job from the printed BS 7671:2018+A4:2026 table. The value
+          changes with insulation type, conductor material and construction, and from 25 mm&sup2;
+          upwards the table gives an impedance value alongside separate resistive and reactive
+          components rather than a single number.
         </p>
-        <div className="rounded-2xl bg-orange-500/5 border border-orange-500/20 p-5 my-4">
-          <div className="flex items-start gap-3">
-            <div>
-              <h4 className="font-bold text-white mb-1">Single-Core Armoured Cable Caveat</h4>
-              <p className="text-white text-sm leading-relaxed">
-                Per Regulation 125.8, the tabulated mV/A/m voltage drop values for single-core
-                armoured cables apply only where the armour is bonded to earth at both ends. If the
-                armour is not bonded at both ends, the tabulated values do not apply and voltage
-                drop must be reassessed. Multicore SWA (3-core and 4-core) is not affected by this
-                restriction.
-              </p>
-            </div>
-          </div>
+
+        <div className={noteCn}>
+          <h4 className="mb-1 font-bold text-white">Single-core armoured cable caveat</h4>
+          <p className="text-sm leading-relaxed text-white">
+            Appendix 4, Section 6 states that for single-core armoured cables the tabulated voltage
+            drop values apply where the armour is bonded to earth at both ends. Bond at one end only
+            and the tabulated values no longer hold. Multicore SWA, 3-core and 4-core, is not
+            affected by this.
+          </p>
         </div>
         <SEOInternalLink href="/guides/correction-factors-bs-7671">
-          See also: Correction Factors Guide for derating and grouping factors
+          Correction factors guide: derating and grouping
         </SEOInternalLink>
       </>
     ),
@@ -641,10 +711,10 @@ const sections = [
 export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
-      title="3-Phase Voltage Drop Calculator: Instant BS 7671 Pass/Fail"
-      description="Three-phase voltage drop done for you — the √3 and every BS 7671 mV/A/m value are built in. Enter load and length, get an instant pass/fail against the 3% and 5% limits. Free calculator."
+      title="3-Phase Voltage Drop Formula: mV/A/m×Ib×L/1000"
+      description="VD = mV/A/m (3-phase) × Ib × L ÷ 1000. The √3 is already inside the BS 7671 mV/A/m values, so never multiply again. Free calculator, 20 V / 12 V limits."
       datePublished="2025-06-15"
-      dateModified="2026-07-02"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Compliant"
@@ -652,16 +722,33 @@ export default function CableVoltDropThreePhasePage() {
       heroTitle={
         <>
           Three Phase Voltage Drop Calculator{' '}
-          <span className="text-yellow-400">BS 7671 Compliant</span>
+          <span className="text-elec-yellow">BS 7671 Compliant</span>
         </>
       }
-      heroSubtitle="Calculate voltage drop for three-phase circuits using BS 7671 Appendix 4 tables. Handles balanced and unbalanced loads, SWA and multicore cables, with instant pass/fail against the 5% power and 3% lighting limits on 400 V supplies."
+      heroSubtitle="VD = mV/A/m (three-phase) × Ib × L ÷ 1000, using the BS 7671 Appendix 4 tables. The √3 is already inside the tabulated value. Handles balanced and unbalanced loads, SWA and multicore cables, with instant pass/fail against the 20 V and 12 V limits on a 400 V supply."
       heroFeaturePills={[
         { icon: Activity, label: 'Three-Phase' },
         { icon: Cable, label: 'All Cable Types' },
         { icon: Shield, label: 'BS 7671:2018+A4:2026' },
       ]}
       readingTime={10}
+      calculator={<VoltageDropCalculator />}
+      calculatorLabel="Work out your three-phase volt drop"
+      calculatorFooter={
+        <p className="mt-4 text-sm leading-relaxed text-white">
+          Set the supply to 400 V (three phase) and the result is checked against the Table 4Ab
+          limits &mdash; 12 V for lighting, 20 V for other uses. The tool applies the two-core
+          mV/A/m value, which over-states the drop by roughly 15%, so a pass here is a genuine
+          pass. For a final design, take the three-phase figure from the{' '}
+          <a
+            href="#common-cables"
+            className="touch-manipulation text-yellow-400 underline decoration-yellow-400/40 underline-offset-2 transition-colors hover:text-yellow-300"
+          >
+            three-phase mV/A/m table below
+          </a>
+          .
+        </p>
+      }
       keyTakeaways={keyTakeaways}
       sections={sections}
       features={features}
@@ -669,7 +756,7 @@ export default function CableVoltDropThreePhasePage() {
       featuresSubheading="Purpose-built for UK electricians working on three-phase commercial and industrial installations. Faster and more accurate than manual table look-ups."
       howToSteps={howToSteps}
       howToHeading="How to Calculate Three-Phase Voltage Drop — Step by Step"
-      howToDescription="Follow this six-step process to calculate three-phase voltage drop using BS 7671 Appendix 4 tables."
+      howToDescription="Six steps to a compliant three-phase voltage drop figure using the BS 7671 Appendix 4 tables."
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Three-Phase Voltage Drop"
       relatedPages={relatedPages}

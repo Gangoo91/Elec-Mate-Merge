@@ -491,7 +491,7 @@ export default function ElectricianWarringtonPage() {
       noindex={true}
       localArea="Warrington"
       title="Electrician in Warrington | Local Electricians 2026"
-      description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work…"
+      description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -501,7 +501,7 @@ const sections = [
         <p>
           Live tests are performed with the supply energised. They sit later in the same Chapter 64
           test sequence — earth fault loop impedance (643.7.3), prospective fault current
-          (643.7.3.201), additional protection including RCD operation (643.8), phase sequence
+          (643.8), additional protection including RCD operation (643.8), phase sequence
           (643.9) and functional testing (643.10) — and must only be carried out after the dead
           tests have been completed satisfactorily.
         </p>
@@ -773,7 +773,7 @@ export default function DeadVsLiveTestingPage() {
   return (
     <GuideTemplate
       title="Dead Testing vs Live Testing | What's the Difference?"
-      description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671…"
+      description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

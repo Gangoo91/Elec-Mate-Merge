@@ -25,7 +25,7 @@ const tocItems = [
   { id: 'what-is-continuity-testing', label: 'What Is Continuity Testing?' },
   { id: 'ring-final-test-1', label: 'Ring Final: End-to-End Test' },
   { id: 'ring-final-test-2', label: 'Ring Final: Cross-Connected Test' },
-  { id: 'r1-rn-r2-values', label: 'r1, rn, and r2 Values Explained' },
+  { id: 'r1-rn-r2-values', label: 'r1, rn, r2 and R1+R2 Explained' },
   { id: 'cpc-continuity', label: 'CPC Continuity Testing' },
   { id: 'bonding-conductors', label: 'Bonding Conductor Continuity' },
   { id: 'test-method', label: 'Test Method and Instrument Use' },
@@ -37,9 +37,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Continuity testing verifies that all conductors are connected end-to-end with no open circuits, and that protective conductors (CPCs) provide an unbroken path back to the main earthing terminal.',
-  'Ring final circuit testing requires two stages: an end-to-end resistance test of each conductor leg, followed by a cross-connected test to derive r1+rn (or r1+r2) at each socket outlet.',
-  'For a ring final circuit, the maximum r1+rn value at any outlet should not exceed 0.05Ω more than the value at the consumer unit end. A higher value indicates a spur rather than a ring, or an incorrect connection.',
-  'CPC continuity must be tested on every circuit. The measured r2 value (resistance of the CPC from the consumer unit to the furthest point) is used to derive Zs (total earth loop impedance) without applying live voltage.',
+  'Ring final circuit testing requires two stages: an end-to-end resistance test of each conductor loop (r1, rn, r2), followed by a cross-connected test to derive R1+Rn (or R1+R2) at each socket outlet.',
+  'For a ring final circuit, GN3 states the cross-connected readings taken at every socket outlet on the ring should be substantially the same, at approximately one quarter of the sum of the end-to-end values — R1+Rn ≈ (r1+rn)/4. A noticeably higher reading indicates a spur rather than a point on the ring, or an incorrect connection.',
+  'CPC continuity must be tested on every circuit. The R1+R2 value measured at the furthest point — or, on a ring final circuit, the highest reading found around the circuit — is added to Ze to give Zs (total earth fault loop impedance) without applying live voltage.',
   'Bonding conductor continuity testing (main and supplementary bonding) requires the bonding conductor to be temporarily disconnected from the earthed metalwork at one end to avoid the instrument current flowing through the general mass of earth.',
 ];
 
@@ -52,22 +52,22 @@ const faqs = [
   {
     question: 'How do you test a ring final circuit for continuity?',
     answer:
-      'Ring final circuit continuity requires two tests. First, the end-to-end test: disconnect the ring at the consumer unit and measure the resistance of the complete loop of each conductor — line, neutral, and CPC. Both ends of each conductor are measured with the meter connected end-to-end. Second, the cross-connected test: reconnect the ring at the consumer unit but transpose the connections (cross the line of one leg with the neutral of the other, and vice versa). Then measure resistance from the line to neutral at each outlet. This gives the r1+rn value at each point. For a true ring, the resistance at each outlet should be approximately one quarter of the total ring resistance and should be similar at all outlets.',
+      'Ring final circuit continuity requires two tests. First, the end-to-end test: disconnect the ring at the consumer unit and measure the resistance of the complete loop of each conductor — line, neutral, and CPC. These end-to-end readings are recorded as r1, rn and r2. Second, the cross-connected test: reconnect the ring at the consumer unit but transpose the connections (cross the line of one leg with the neutral of the other, and vice versa). Then measure resistance from the line to neutral at each outlet. This gives the R1+Rn value at each point. For a true ring, the reading at each outlet should be approximately one quarter of the sum of the end-to-end line and neutral readings — (r1+rn)/4 — and GN3 states the readings at each socket outlet should be substantially the same.',
   },
   {
     question: 'What are r1, rn, and r2 values?',
     answer:
-      'r1 is the resistance of the line conductor from the consumer unit to the furthest point on the circuit. rn is the resistance of the neutral conductor over the same route. r2 is the resistance of the CPC (circuit protective conductor) from the consumer unit to the furthest point. These values are measured during the cross-connected ring final test and recorded on the schedule of test results. The r1+r2 value at the furthest point is used to calculate Zs (total earth loop impedance) without live testing: Zs = Ze + (r1+r2), where Ze is the external earth loop impedance.',
+      'In the GN3 ring final circuit procedure the lowercase values are the end-to-end (open loop) readings taken at step 1: r1 is the resistance of the complete line conductor loop, rn the complete neutral loop, and r2 the complete CPC loop, each measured with the ring disconnected at the consumer unit. The uppercase values are what the cross-connected test gives you at each outlet: R1+Rn between line and neutral, and R1+R2 between line and earth. R1+R2 is the value recorded on the schedule of test results, and it is used to calculate Zs (total earth fault loop impedance) without live testing: Zs = Ze + (R1+R2), where Ze is the external earth fault loop impedance.',
   },
   {
     question: 'How do you test CPC continuity?',
     answer:
-      'CPC continuity is tested by disconnecting one end of the CPC from the main earthing terminal (or the earth bar at the consumer unit) and connecting the instrument between the disconnected end and the other end of the CPC at the furthest point of the circuit. For a ring final circuit, the cross-connected test gives the r2 value directly. For a radial circuit, measure the resistance from the consumer unit earth bar to the earth terminal of the furthest accessory on the circuit. The value obtained (r2) must not be so high that Zs would exceed the maximum permitted value for the protective device.',
+      'CPC continuity is tested by disconnecting one end of the CPC from the main earthing terminal (or the earth bar at the consumer unit) and connecting the instrument between the disconnected end and the other end of the CPC at the furthest point of the circuit. For a ring final circuit, the cross-connected test gives R1+R2 directly at each outlet. For a radial circuit, measure the resistance from the consumer unit earth bar to the earth terminal of the furthest accessory on the circuit. The value obtained (R2) must not be so high that Zs would exceed the maximum permitted value for the protective device.',
   },
   {
     question: 'What resistance value should continuity tests give?',
     answer:
-      'Continuity testing does not have a single prescribed pass/fail resistance value. The result must be low enough that the CPC will permit sufficient fault current to flow to operate the protective device within the required disconnection time. The r2 value combined with Ze must give a Zs value within the maximum permitted for the protective device (per BS 7671 Appendix 3). For main and supplementary bonding conductors, the resistance should be very low — typically below 0.05Ω for main equipotential bonding conductors.',
+      'Continuity testing does not have a single prescribed pass/fail resistance value. Regulation 643.2.1 requires the measurement but states no numeric maximum. The result must be low enough that the CPC will permit sufficient fault current to flow to operate the protective device within the required disconnection time. The R1+R2 value combined with Ze must give a Zs value within the maximum permitted for the protective device — the maximum earth fault loop impedance tables are BS 7671 Tables 41.2 to 41.5. For main and supplementary bonding conductors, the resistance should be very low — a working figure of 0.05Ω or less is commonly used in the trade for main protective bonding, though BS 7671 itself does not prescribe one.',
   },
   {
     question: 'Why must bonding conductors be disconnected at one end before testing?',
@@ -108,7 +108,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
-    description: 'Half-rated, rated, and 5× current RCD test procedures.',
+    description:
+      'The current RCD test procedure to BS 7671 and the maximum operating times that apply.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -217,15 +218,15 @@ const sections = [
               leg A to one end of leg B (link the two line conductor ends together at the consumer
               unit). Connect the instrument between the remaining free ends of the line conductor
               loop. The reading is the total resistance of the line conductor around the full ring.
-              Record this as R1 (line total).
+              Record this as r1 (line end-to-end).
             </li>
             <li>
               <strong>Measure end-to-end resistance of the neutral conductor</strong>: Repeat the
-              same process with the neutral conductors. Record as Rn (neutral total).
+              same process with the neutral conductors. Record as rn (neutral end-to-end).
             </li>
             <li>
               <strong>Measure end-to-end resistance of the CPC</strong>: Repeat with the CPCs.
-              Record as R2 (CPC total).
+              Record as r2 (CPC end-to-end).
             </li>
           </ol>
         </div>
@@ -233,10 +234,12 @@ const sections = [
           <div className="flex items-start gap-3">
             <span className="text-white">
               <strong>Expected values</strong>: For a 2.5mm² line and neutral conductor (typical for
-              a 32A ring final circuit in flat twin-and-earth cable), expect approximately 7.41Ω per
-              km (at 20°C) for copper conductor resistance. A 30-metre ring (60m of cable length
-              total) would give a loop resistance of approximately 0.44Ω for the line conductor.
-              Values significantly higher than expected for the cable run length indicate a fault.
+              a 32A ring final circuit in flat twin-and-earth cable), copper conductor resistance is
+              7.41 mΩ/m — 7.41Ω per km — at 20°C (GN3 Appendix B). A ring with 60m of cable in the
+              loop would give an end-to-end r1 of approximately 0.44Ω. Values significantly higher
+              than expected for the cable run length indicate a high-resistance joint; a reading
+              significantly <em>lower</em> than expected suggests the circuit is not a true ring —
+              see the figure-of-eight note below.
             </span>
           </div>
         </div>
@@ -249,7 +252,7 @@ const sections = [
     content: (
       <>
         <p>
-          The cross-connected test is the definitive ring final circuit check. It derives the r1+rn
+          The cross-connected test is the definitive ring final circuit check. It derives the R1+Rn
           value at every socket outlet on the ring, confirming that every outlet is genuinely on the
           ring and not a spur, and that connections are correct throughout.
         </p>
@@ -263,39 +266,51 @@ const sections = [
               series with the neutral of the other.
             </li>
             <li>
-              <strong>Do the same for the CPC if testing r1+r2</strong>: Cross-connect the two CPC
-              ends together at the consumer unit (join leg A CPC end to leg B CPC end). This gives
-              r1+r2 at each outlet when testing between line and earth.
+              <strong>Do the same for the CPC if testing R1+R2</strong>: Cross-connect the line and
+              CPC ends of opposite legs at the consumer unit. This gives R1+R2 at each outlet when
+              testing between line and earth.
             </li>
             <li>
               <strong>Test at each outlet</strong>: At every socket outlet on the ring, connect the
               instrument between line and neutral terminals. Record the resistance. This is the
-              r1+rn value at that outlet.
+              R1+Rn value at that outlet.
             </li>
             <li>
-              <strong>Test r1+r2 at each outlet</strong>: Connect the instrument between line and
-              earth at each outlet. This gives r1+r2, which combined with Ze gives Zs.
+              <strong>Test R1+R2 at each outlet</strong>: Connect the instrument between line and
+              earth at each outlet. This gives R1+R2, which combined with Ze gives Zs. GN3 requires
+              the highest R1+R2 found on the circuit — usually at a socket wired as a spur — to be
+              the value recorded on the schedule of test results and used for the Zs calculation.
             </li>
           </ol>
         </div>
         <p>
-          For a correctly wired ring, the r1+rn value at every outlet should be approximately equal
-          to one quarter of the sum of R1 and Rn (the end-to-end totals from Test 1). Outlets
-          directly connected as spurs will show a higher reading. Outlets at opposite ends of the
-          ring will show a reading close to R1+Rn divided by 4; outlets near the consumer unit will
-          show a lower reading.
+          For a correctly wired ring, the R1+Rn value at every outlet should be approximately equal
+          to one quarter of the sum of r1 and rn (the end-to-end totals from Test 1) — R1+Rn ≈
+          (r1+rn)/4 — and GN3 states the readings taken at each socket outlet on the ring should be
+          substantially the same. That consistency is the point of the test: a reading that climbs
+          towards the middle of the ring and falls away again indicates the line and neutral have
+          not been cross-connected to opposite legs. Outlets connected as spurs will show a higher
+          reading than the rest of the ring.
+        </p>
+        <p>
+          The line-to-earth readings behave slightly differently. Where the CPC is a smaller
+          cross-sectional area than the line conductor — as in standard flat twin-and-earth — the
+          R1+R2 readings will not be identical around the ring, and GN3 tabulates the expected
+          spread between the lowest and highest reading for common conductor pairings.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <span className="text-white">
               <strong>Figure-of-eight fault</strong>: GN3 identifies this as a specific diagnostic
-              outcome of the three-step ring test. A figure-of-eight occurs when conductors are
-              cross-connected at an intermediate junction — the ring appears to have end-to-end
-              continuity in Test 1 but the conductors are actually looped back on themselves. The
-              result is that r1+rn readings at outlets vary unexpectedly, or outlets near the
-              cross-connection point show unusually low readings. If the end-to-end values from Test
-              1 appear correct but cross-connected readings are inconsistent across the ring,
-              investigate for a figure-of-eight wiring error.
+              outcome of the three-step ring test. A figure-of-eight occurs when the ring cable is
+              cut and rejoined incorrectly at an intermediate point, so the circuit appears
+              continuous but the conductors are actually looped back on themselves. It shows up
+              first in Test 1: the end-to-end reading comes out <em>lower</em> than the value you
+              would expect from the cable length and cross-sectional area, because the measurement
+              is no longer following the full route. GN3 then directs you to confirm the suspicion
+              with the cross-connected line-to-neutral measurement and by visually inspecting the
+              wiring for misconnections. This is also why line, neutral and CPC must be measured
+              separately in Test 1 — measuring them together can mask the fault.
             </span>
           </div>
         </div>
@@ -304,44 +319,57 @@ const sections = [
   },
   {
     id: 'r1-rn-r2-values',
-    heading: 'r1, rn, and r2 Values Explained',
+    heading: 'r1, rn, r2 and R1+R2 Explained',
     content: (
       <>
         <p>
-          The lowercase notation (r1, rn, r2) refers to the resistance of the relevant conductor
-          from the origin of the circuit to the point being tested — not the full loop resistance.
-          These are the values recorded on the schedule of test results.
+          The case of the letter matters, and getting it the wrong way round is a common source of
+          confusion. In the GN3 ring final circuit procedure, the <strong>lowercase</strong> values
+          are the end-to-end (open loop) readings taken at step 1, with the ring split at the
+          consumer unit. The <strong>uppercase</strong> values are the circuit values the
+          cross-connected test produces at each outlet, and R1+R2 is what goes on the schedule of
+          test results.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>r1</strong>: Resistance of the line conductor from the consumer unit to the
-                furthest point on the circuit. For a ring, derived from the cross-connected test (r1
-                = measured r1+rn value ÷ 2 if line and neutral have equal resistance). For a radial,
-                measured directly.
+                <strong>r1</strong>: End-to-end resistance of the complete line conductor loop of
+                the ring, measured in Test 1 with both ends free at the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>rn</strong>: Resistance of the neutral conductor from the consumer unit to
-                the furthest point. Derived from the cross-connected test. For standard flat
-                twin-and-earth cable where line and neutral are the same size, r1 and rn are equal.
+                <strong>rn</strong>: End-to-end resistance of the complete neutral loop. For
+                standard flat twin-and-earth cable, where line and neutral are the same size, r1 and
+                rn should come out substantially equal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>r2</strong>: Resistance of the CPC from the consumer unit to the furthest
-                point. This is the most critical value. Combined with Ze, it gives Zs without
-                applying live voltage: Zs = Ze + (r1 + r2) — see our{' '}
+                <strong>r2</strong>: End-to-end resistance of the complete CPC loop. In flat
+                twin-and-earth the CPC is a smaller size than the line and neutral, so r2 is
+                correspondingly higher.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>
+                <strong>R1+Rn</strong>: The line-to-neutral reading at each socket outlet during the
+                cross-connected test. For a correctly wired ring it is approximately (r1+rn)/4 and
+                is substantially the same at every outlet.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>
+                <strong>R1+R2</strong>: The line-to-earth reading at each socket outlet, and the
+                most important value on the test sheet. Combined with Ze it gives Zs without
+                applying live voltage: Zs = Ze + (R1 + R2) — see our{' '}
                 <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
                   earth fault loop impedance calculation guide
                 </SEOInternalLink>{' '}
                 for the full method. This calculated Zs must not exceed the maximum Zs for the
-                protective device. GN3 (Reg 2.15) uses the notation{' '}
-                <strong>Rz</strong> for the same value — the resistance of the CPC measured from the
-                distribution board to each utilisation point — and records it on the Schedule of
-                Test Results as Rz. The two notations refer to the same measurement.
+                protective device. GN3 requires the highest R1+R2 found on the circuit to be the one
+                recorded and used.
               </span>
             </li>
           </ul>
@@ -351,9 +379,10 @@ const sections = [
             <span className="text-white">
               <strong>Note on CPC size</strong>: In flat twin-and-earth cable, the CPC is typically
               smaller than the line and neutral conductors (1.0mm² CPC in 1.5mm² T&E, 1.5mm² CPC in
-              2.5mm² T&E). This means r2 is higher than r1 and rn, and the r1+r2 value will be
-              higher than the r1+rn value at the same point on the ring. This is normal and
-              expected.
+              2.5mm² T&E). This means r2 is higher than r1 and rn, and the R1+R2 value will be
+              higher than the R1+Rn value at the same point on the ring. This is normal and
+              expected. GN3 also notes that with an unequal CPC the R1+R2 readings will not be
+              identical at every outlet, and tabulates the expected spread around the ring.
             </span>
           </div>
         </div>
@@ -377,8 +406,9 @@ const sections = [
                 <strong>Radial circuit method</strong>: Disconnect the CPC at the consumer unit
                 earth bar. Use a long wander lead to connect from the disconnected CPC end at the
                 consumer unit to the test instrument's one terminal. Connect the other terminal to
-                the earth terminal at the furthest accessory on the circuit. The reading is r2 for
-                that circuit.
+                the earth terminal at the furthest accessory on the circuit. The reading is R2 for
+                that circuit. GN3 requires the measurement to be repeated at each utilisation point,
+                switch and termination, not taken once.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -454,10 +484,12 @@ const sections = [
     content: (
       <>
         <p>
-          Continuity testing requires a low-resistance ohmmeter capable of passing a test current of
-          at least 200mA (as specified in BS EN 61557-4). This distinguishes a proper continuity
-          test from a simple resistance measurement — the higher current helps identify
-          high-resistance joints that may pass at low test currents but fail under load.
+          Continuity testing is carried out with a low-resistance ohmmeter. GN3 recommends a test
+          source with a no-load voltage between 4V and 24V and a short-circuit current of not less
+          than 200mA, and states that an instrument conforming to BS EN IEC 61557-4 will meet those
+          requirements. This distinguishes a proper continuity test from a simple resistance
+          measurement — the higher current helps identify high-resistance joints that may pass at
+          low test currents but fail under load.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -508,21 +540,22 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>r1+rn (Ω)</strong>: The measured r1+rn resistance at the furthest point of
-                the circuit, in ohms. For ring final circuits, this is the value at the furthest
-                outlet derived from the cross-connected test.
+                <strong>R1+Rn (Ω)</strong>: The measured line-to-neutral resistance from the
+                cross-connected test, in ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>r1+r2 (Ω)</strong>: The measured r1+r2 resistance at the furthest point of
-                the circuit. This is used to calculate Zs without live testing.
+                <strong>R1+R2 (Ω)</strong>: The measured line-to-earth resistance. Record the
+                highest value found on the circuit — on a radial that is normally the furthest
+                point, and on a ring it is usually a socket wired as a spur. This is the value used
+                to calculate Zs without live testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
                 <strong>Ring final continuity</strong>: For ring final circuits, record the
-                end-to-end values (R1, Rn, R2) from Test 1, and the r1+rn and r1+r2 values from the
+                end-to-end values (r1, rn, r2) from Test 1, and the R1+Rn and R1+R2 values from the
                 cross-connected test.
               </span>
             </li>
@@ -574,7 +607,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Derive Zs Without Live Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Recording accurate r1+r2 values during the continuity test means you can calculate
+                  Recording accurate R1+R2 values during the continuity test means you can calculate
                   Zs for every circuit without applying a live loop impedance test. Particularly
                   useful where live testing is not practical or where RCDs prevent accurate live
                   loop impedance measurement.
@@ -595,8 +628,8 @@ const sections = [
 export default function ContinuityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Continuity of CPC Test (R1+R2): Method + Expected Readings"
-      description="How to test continuity of the CPC: step-by-step R1+R2 method, expected readings, ring final end-to-end + cross-connect checks, and pass criteria to BS 7671."
+      title="R1+R2 & CPC Continuity: Ring R1+Rn = (r1+rn)/4"
+      description="Acceptable R1+R2: no single pass value — Zs (Ze+R1+R2) must stay under the BS 7671 Table 41.2–41.5 maximum. Ring R1+Rn ≈ (r1+rn)/4 at every outlet."
       datePublished="2026-03-27"
       dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
@@ -609,12 +642,12 @@ export default function ContinuityTestingGuidePage() {
           <span className="text-yellow-400">Ring Final Circuit & CPC Testing</span>
         </>
       }
-      heroSubtitle="The complete UK electrician's guide to continuity testing — ring final circuit end-to-end and cross-connected tests, r1+rn, r2, and r1+r2 values, CPC continuity, bonding conductor testing, and recording results on the schedule of test results."
+      heroSubtitle="The complete UK electrician's guide to continuity testing — ring final circuit end-to-end and cross-connected tests, r1, rn and r2, R1+Rn and R1+R2 values, CPC continuity, bonding conductor testing, and recording results on the schedule of test results."
       readingTime={13}
       answerBox={{
         question: 'What is an acceptable R1+R2 reading?',
         answer:
-          'There is no single pass or fail figure for R1+R2 — the measured value must be low enough that Zs (Ze + R1+R2) stays within the maximum for the protective device in BS 7671 Tables 41.2 to 41.4. Compare your reading against the expected R1+R2 for the cable type and length; a much higher value points to a loose or high-resistance connection.',
+          'There is no single pass or fail figure for R1+R2 — the measured value must be low enough that Zs (Ze + R1+R2) stays within the maximum for the protective device in BS 7671 Tables 41.2 to 41.5. Compare your reading against the expected R1+R2 for the cable type and length; a much higher value points to a loose or high-resistance connection.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

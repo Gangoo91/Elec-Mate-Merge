@@ -481,7 +481,7 @@ export default function RCDTypesComparisonPage() {
   return (
     <GuideTemplate
       title="RCD Types AC, A, F, B Explained | UK Electrician Guide"
-      description="Complete guide to RCD types for UK electricians. Type AC, A, F, and B differences, when each is required, cost comparison…"
+      description="Complete guide to RCD types for UK electricians. Type AC, A, F, and B differences, when each is required, cost comparison."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

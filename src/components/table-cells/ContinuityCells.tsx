@@ -4,11 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calculator } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
+import type { CellWarning } from '@/utils/cellWarnings';
 import { TestValidationResults } from '@/utils/testValidation';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import R1R2Calculator from '@/components/R1R2Calculator';
 
 interface ContinuityCellsProps {
+  /** BS 7671 findings that name a cell in this group, keyed by field. */
+  cellWarnings?: Partial<Record<keyof TestResult, CellWarning>>;
+  /** Opens the finding in the Validate sheet. */
+  onOpenWarning?: () => void;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   validation: TestValidationResults;
@@ -18,12 +23,16 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
   result,
   onUpdate,
   validation,
+  cellWarnings,
+  onOpenWarning,
 }) => {
   return (
     <>
       {/* Column 16: r₁ (line) */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.ringR1}
+          onOpenWarning={onOpenWarning}
           value={result.ringR1 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR1', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
@@ -34,6 +43,8 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
       {/* Column 17: rₙ (neutral) */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.ringRn}
+          onOpenWarning={onOpenWarning}
           value={result.ringRn || ''}
           onChange={(value) => onUpdate(result.id, 'ringRn', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
@@ -44,6 +55,8 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
       {/* Column 18: r₂ (cpc) */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.ringR2}
+          onOpenWarning={onOpenWarning}
           value={result.ringR2 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR2', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
@@ -55,6 +68,8 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
       <TableCell className="p-0 h-8 align-middle w-32 min-w-[132px] max-w-[132px]">
         <div className="flex items-center h-8 pl-0.5">
           <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.r1r2}
+          onOpenWarning={onOpenWarning}
             value={result.r1r2 || ''}
             onChange={(value) => onUpdate(result.id, 'r1r2', value)}
             validation={validation?.r1r2}
@@ -88,6 +103,8 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
       {/* Column 20: R₂ - Using ringContinuityLive as temporary field */}
       <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.ringContinuityLive}
+          onOpenWarning={onOpenWarning}
           value={result.ringContinuityLive || ''}
           onChange={(value) => onUpdate(result.id, 'ringContinuityLive', value)}
           validation={validation?.ringContinuityLive}

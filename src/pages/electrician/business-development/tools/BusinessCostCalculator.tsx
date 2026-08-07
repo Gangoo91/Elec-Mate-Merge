@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { useToast } from '@/hooks/use-toast';
 import { Calculator, Building, Download, Lightbulb, TrendingUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
@@ -16,7 +15,8 @@ import InteractiveInputs from '@/components/business-calculator/InteractiveInput
 import BusinessAnalytics from '@/components/business-calculator/BusinessAnalytics';
 import ScenarioComparison from '@/components/business-calculator/ScenarioComparison';
 import ProgressIndicator from '@/components/business-calculator/ProgressIndicator';
-import MobileOptimizedLayout from '@/components/business-calculator/MobileOptimizedLayout';
+import MobileOptimisedLayout from '@/components/business-calculator/MobileOptimisedLayout';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface StartupInputs extends Record<string, number> {
   tools: number;
@@ -65,8 +65,14 @@ const BusinessCostCalculator = () => {
     rent: 0,
     utilities: 0,
   });
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
 
   const STORAGE_KEY = 'business_cost_scenarios';
 
@@ -84,12 +90,10 @@ const BusinessCostCalculator = () => {
 
   const updateStartupInput = (field: string, value: number) => {
     setStartupInputs((prev) => ({ ...prev, [field]: value }));
-    setCalculated(false);
   };
 
   const updateMonthlyInput = (field: string, value: number) => {
     setMonthlyInputs((prev) => ({ ...prev, [field]: value }));
-    setCalculated(false);
   };
 
   const calculateCosts = () => {
@@ -198,21 +202,12 @@ const BusinessCostCalculator = () => {
 
   return (
     <div className="bg-gradient-to-b from-background via-background to-background">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl border bg-gradient-to-br from-elec-yellow/20 to-amber-600/20 border-elec-yellow/30">
-              <Building className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Business Cost Calculator
-              </h1>
-              <p className="text-sm text-white">Plan your contracting business costs</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Business Cost Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <WhyThisMatters
           points={[
@@ -233,7 +228,7 @@ const BusinessCostCalculator = () => {
           completedSteps={completedSteps}
         />
 
-        <MobileOptimizedLayout
+        <MobileOptimisedLayout
           sections={sections}
           currentSectionIndex={currentSection}
           onSectionChange={setCurrentSection}

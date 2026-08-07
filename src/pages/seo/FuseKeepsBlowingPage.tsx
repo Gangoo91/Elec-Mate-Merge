@@ -614,7 +614,7 @@ export default function FuseKeepsBlowingPage() {
   return (
     <GuideTemplate
       title="Fuse Keeps Blowing | Causes & What to Do"
-      description="Why does your fuse keep blowing? Learn the common causes — overloaded circuits, short circuits, faulty appliances — what to do step by step…"
+      description="Why does your fuse keep blowing? Learn the common causes — overloaded circuits, short circuits, faulty appliances — what to do step by step."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

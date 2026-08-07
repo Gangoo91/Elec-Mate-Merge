@@ -469,7 +469,7 @@ export default function DataCentreElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Data Centre Electrical Installation UK | Tier I–IV, UPS, BS"
-      description="Complete guide to data centre electrical installation for UK electricians and engineers. Uptime Institute Tier I–IV classification, UPS, generators, ATS…"
+      description="Complete guide to data centre electrical installation for UK electricians and engineers. Uptime Institute Tier I–IV classification, UPS, generators, ATS."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

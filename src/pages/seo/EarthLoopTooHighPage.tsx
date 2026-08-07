@@ -597,7 +597,7 @@ export default function EarthLoopTooHighPage() {
   return (
     <GuideTemplate
       title="Earth Loop Impedance Too High | How to Fix It"
-      description="Complete guide to diagnosing and fixing high earth fault loop impedance (Zs). Covers BS 7671 maximum values, loose connections, long cable runs…"
+      description="Complete guide to diagnosing and fixing high earth fault loop impedance (Zs). Covers BS 7671 maximum values, loose connections, long cable runs."
       datePublished="2025-06-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -10,15 +10,12 @@
  * Single accent: elec-yellow on the right-arrow. That's it.
  */
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSharedDashboardData, type DashboardData } from '@/hooks/useDashboardData';
 import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
-import { cn } from '@/lib/utils';
+import { HubToolGrid, type HubTool } from '@/components/hub/HubPrimitives';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 
 interface HubDef {
@@ -108,16 +105,27 @@ const HUBS: HubDef[] = [
 ];
 
 interface EditorialHubGridProps {
-  number?: string;
   label?: string;
 }
 
-export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: EditorialHubGridProps) {
+/**
+ * The hub grid, on the shared hub card language.
+ *
+ * It drew its own hairline grid of 168–260px cells, each stamped `01 · TOOLS`,
+ * `02 · REFER` — inside a section that was itself numbered `03 · YOUR HUBS`.
+ * Two numbering systems on one block, neither meaning anything, and a 30px
+ * headline per card so two hubs filled a screen.
+ *
+ * The role filtering, the Settings → Preferences visibility toggles and the
+ * referral sheet all stay exactly as they were; only the presentation moved to
+ * HubToolGrid, so a hub card here is the same object as a tool card anywhere
+ * else in the app.
+ */
+export function EditorialHubGrid({ label = 'Your hubs' }: EditorialHubGridProps) {
   const navigate = useNavigate();
   const { profile } = useAuth();
   const data = useSharedDashboardData();
   const [shareSheetOpen, setShareSheetOpen] = useState(false);
-
   const { isHubVisible } = useDashboardPreferences();
 
   const role = profile?.role || 'electrician';
@@ -134,6 +142,13 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
     if (hub.path) navigate(hub.path);
   };
 
+  const cards: HubTool[] = visible.map((hub) => ({
+    id: hub.id,
+    title: hub.title,
+    description: hub.description,
+    onClick: () => handleHubClick(hub),
+  }));
+
   return (
     <>
       <ReferralShareSheet
@@ -143,85 +158,22 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
         subline="Free month for them. Free month for you."
         context="dashboard_hub_card"
       />
-      <motion.section
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-4"
-      >
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-          <Eyebrow>
-            {number} · {label}
-          </Eyebrow>
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] text-white/50 tabular-nums">
-              {visible.length} {visible.length === 1 ? 'hub' : 'hubs'}
-            </span>
-            <button
-              type="button"
-              onClick={() => navigate('/settings?tab=preferences')}
-              className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow transition-colors touch-manipulation"
-            >
-              Customise →
-            </button>
-          </div>
-        </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className={cn(
-            'relative grid gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-            visible.length >= 4
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-              : visible.length === 3
-                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-                : 'grid-cols-1 sm:grid-cols-2'
-          )}
-        >
-          {/* Single yellow hairline along the top of the whole grid */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-          {visible.map((hub, i) => (
-            <button
-              key={hub.id}
-              onClick={() => handleHubClick(hub)}
-              className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[168px] sm:min-h-[260px]"
-            >
-              <div className="flex items-baseline justify-between gap-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                    · {hub.eyebrow}
-                  </span>
-                </div>
-                {hub.comingSoon && (
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded">
-                    Soon
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-3 sm:mt-5 text-[20px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
-                {hub.title}
-              </h3>
-              <p className="mt-2 text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 max-w-[34ch]">
-                {hub.description}
-              </p>
-              <div className="flex-grow" />
-              <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/[0.05]">
-                <span className="text-[11.5px] text-white/65 truncate tabular-nums">
-                  {hub.meta(data)}
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow shrink-0">
-                  {hub.ctaLabel ?? (hub.comingSoon ? 'Notify me' : 'Open')}
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </div>
-            </button>
-          ))}
-        </motion.div>
-      </motion.section>
+      <div className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">{label}</h2>
+          {/* h-11 + negative margin — this was an 11px bare text link, which is
+              a 13px tap target on a phone. */}
+          <button
+            type="button"
+            onClick={() => navigate('/settings?tab=preferences')}
+            className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            Customise →
+          </button>
+        </div>
+        <HubToolGrid label="" cards={cards} columns="four" />
+      </div>
     </>
   );
 }

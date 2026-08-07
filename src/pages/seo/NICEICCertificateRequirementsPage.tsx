@@ -818,7 +818,7 @@ export default function NICEICCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="NICEIC Certificate Requirements 2026 | Guide"
-      description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards…"
+      description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards."
       datePublished="2025-04-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

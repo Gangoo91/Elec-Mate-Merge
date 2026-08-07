@@ -12,6 +12,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { conduitBendingContent } from './content/conduit-bending';
 import { cn } from '@/lib/utils';
@@ -425,308 +426,317 @@ const ConduitBendingCalculator = () => {
       title="Conduit Bending Calculator"
       description="Calculate bend marks, shrink, and spacing for conduit bending"
     >
-      <div className="space-y-4 sm:space-y-5">
-        {/* Bend Type Selection */}
-        <CalculatorSelect
-          label="Bend Type"
-          value={bendType}
-          onChange={(val) => {
-            setBendType(val);
-            setResult(null);
-          }}
-          options={BEND_TYPES}
-          placeholder="Select bend type"
-        />
-
-        {/* Conduit Size */}
-        <CalculatorSelect
-          label="Conduit Size"
-          value={conduitSize}
-          onChange={setConduitSize}
-          options={CONDUIT_SIZES}
-          placeholder="Select size"
-        />
-
-        {/* Dynamic Inputs Based on Bend Type */}
-        {renderInputs()}
-
-        {/* Actions */}
-        <CalculatorActions
-          category="cable"
-          onCalculate={calculate}
-          onReset={reset}
-          isDisabled={isCalculateDisabled}
-        />
-      </div>
-
-      {/* Results */}
-      {result && (
-        <>
-          <CalculatorDivider category="cable" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Compliance Status Chip */}
-            <div
-              className={cn(
-                'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
-                result.isCompliant
-                  ? 'bg-green-500/10 border border-green-500/20'
-                  : 'bg-red-500/10 border border-red-500/20'
-              )}
-            >
-              {result.isCompliant ? (
-                <CheckCircle className="w-4 h-4 text-green-400" />
-              ) : (
-                <AlertTriangle className="w-4 h-4 text-red-400" />
-              )}
-              <span
-                className={cn(
-                  'text-sm font-semibold',
-                  result.isCompliant ? 'text-green-300' : 'text-red-300'
-                )}
-              >
-                {result.isCompliant ? 'BS 7671 Compliant' : 'Check Bend Radius'}
-              </span>
-            </div>
-
-            {/* Hero Value */}
-            <div className="rounded-xl p-4 bg-white/[0.04]">
-              <p className="text-sm text-white mb-1">{result.bendType}</p>
-              <div
-                className="text-3xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+      <CalculatorPanes
+        form={
+          <>
+            <div className="space-y-4 sm:space-y-5">
+              {/* Bend Type Selection */}
+              <CalculatorSelect
+                label="Bend Type"
+                value={bendType}
+                onChange={(val) => {
+                  setBendType(val);
+                  setResult(null);
                 }}
-              >
-                First Mark: {result.firstBendMark.toFixed(1)} mm
-              </div>
-              <p className="text-sm text-white mt-1">
-                Min. bend radius for {conduitSize}mm conduit: {result.minBendRadius}mm
-              </p>
-            </div>
+                options={BEND_TYPES}
+                placeholder="Select bend type"
+              />
 
-            <ResultsGrid columns={2}>
-              {result.secondBendMark > 0 && (
-                <ResultValue
-                  label="Second Bend Mark"
-                  value={result.secondBendMark.toFixed(1)}
-                  unit="mm"
-                  category="cable"
-                  size="sm"
-                />
-              )}
-              {result.thirdBendMark && (
-                <ResultValue
-                  label="Third Bend Mark"
-                  value={result.thirdBendMark.toFixed(1)}
-                  unit="mm"
-                  category="cable"
-                  size="sm"
-                />
-              )}
-              {result.fourthBendMark && (
-                <ResultValue
-                  label="Fourth Bend Mark"
-                  value={result.fourthBendMark.toFixed(1)}
-                  unit="mm"
-                  category="cable"
-                  size="sm"
-                />
-              )}
-              {result.shrinkAmount > 0 && (
-                <ResultValue
-                  label="Shrink Amount"
-                  value={result.shrinkAmount.toFixed(1)}
-                  unit="mm"
-                  category="cable"
-                  size="sm"
-                />
-              )}
-              {result.distanceBetweenBends > 0 && (
-                <ResultValue
-                  label="Distance Between Bends"
-                  value={result.distanceBetweenBends.toFixed(1)}
-                  unit="mm"
-                  category="cable"
-                  size="sm"
-                />
-              )}
-              <ResultValue
-                label="Take-Up (90°)"
-                value={result.takeUp}
-                unit="mm"
+              {/* Conduit Size */}
+              <CalculatorSelect
+                label="Conduit Size"
+                value={conduitSize}
+                onChange={setConduitSize}
+                options={CONDUIT_SIZES}
+                placeholder="Select size"
+              />
+
+              {/* Dynamic Inputs Based on Bend Type */}
+              {renderInputs()}
+
+              {/* Actions */}
+              <CalculatorActions
                 category="cable"
-                size="sm"
+                onCalculate={calculate}
+                onReset={reset}
+                isDisabled={isCalculateDisabled}
               />
-            </ResultsGrid>
-
-            {/* Notes */}
-            {result.notes.length > 0 && (
-              <div className="p-3 bg-white/[0.04] border border-blue-500/20 rounded-xl">
-                <h4 className="text-sm font-medium text-blue-400 mb-2">Bending Notes</h4>
-                <ul className="text-xs text-white space-y-1">
-                  {result.notes.map((note, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-blue-400">•</span>
-                      {note}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Visual Diagram */}
-            <div className="p-4 bg-white/[0.04] border border-white/5 rounded-xl">
-              <h4 className="text-sm font-medium text-white mb-3">Marking Guide</h4>
-              <div className="relative h-16 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full overflow-hidden">
-                <div className="absolute inset-y-2 left-4 right-4 bg-gray-500 rounded-full flex items-center">
-                  <div
-                    className="absolute w-0.5 h-full bg-yellow-400"
-                    style={{
-                      left: `${Math.min(90, Math.max(10, (result.firstBendMark / 1000) * 100))}%`,
-                    }}
-                  />
-                  {result.secondBendMark > 0 && (
-                    <div
-                      className="absolute w-0.5 h-full bg-blue-400"
-                      style={{
-                        left: `${Math.min(90, Math.max(20, (result.secondBendMark / 1000) * 100))}%`,
-                      }}
-                    />
-                  )}
-                  {result.thirdBendMark && (
-                    <div
-                      className="absolute w-0.5 h-full bg-green-400"
-                      style={{
-                        left: `${Math.min(90, Math.max(30, (result.thirdBendMark / 1000) * 100))}%`,
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="flex justify-between text-xs text-white mt-2 px-4">
-                <span>End</span>
-                <span>Bend marks</span>
-                <span>→</span>
-              </div>
             </div>
-          </div>
+          </>
+        }
+        result={
+          <>
+            {/* Results */}
+            {result && (
+              <>
+                <CalculatorDivider category="cable" />
 
-          <CalculatorDivider category="cable" />
+                <div className="space-y-4 animate-fade-in">
+                  {/* Compliance Status Chip */}
+                  <div
+                    className={cn(
+                      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
+                      result.isCompliant
+                        ? 'bg-green-500/10 border border-green-500/20'
+                        : 'bg-red-500/10 border border-red-500/20'
+                    )}
+                  >
+                    {result.isCompliant ? (
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                    ) : (
+                      <AlertTriangle className="w-4 h-4 text-red-400" />
+                    )}
+                    <span
+                      className={cn(
+                        'text-sm font-semibold',
+                        result.isCompliant ? 'text-green-300' : 'text-red-300'
+                      )}
+                    >
+                      {result.isCompliant ? 'BS 7671 Compliant' : 'Check Bend Radius'}
+                    </span>
+                  </div>
 
-          {/* Guidance Section */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="w-4 h-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  Bending Reference Guide
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-4 text-sm">
-                <div>
-                  <h4 className="font-medium text-white mb-2">Offset Bend Multipliers</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                    <div className="p-2 bg-white/[0.04] rounded-lg">
-                      <span className="text-yellow-400">10°:</span>{' '}
-                      <span className="text-white">×6.0 distance</span>
+                  {/* Hero Value */}
+                  <div className="rounded-xl p-4 bg-white/[0.04]">
+                    <p className="text-sm text-white mb-1">{result.bendType}</p>
+                    <div
+                      className="text-3xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      First Mark: {result.firstBendMark.toFixed(1)} mm
                     </div>
-                    <div className="p-2 bg-white/[0.04] rounded-lg">
-                      <span className="text-yellow-400">22.5°:</span>{' '}
-                      <span className="text-white">×2.6 distance</span>
+                    <p className="text-sm text-white mt-1">
+                      Min. bend radius for {conduitSize}mm conduit: {result.minBendRadius}mm
+                    </p>
+                  </div>
+
+                  <ResultsGrid columns={2}>
+                    {result.secondBendMark > 0 && (
+                      <ResultValue
+                        label="Second Bend Mark"
+                        value={result.secondBendMark.toFixed(1)}
+                        unit="mm"
+                        category="cable"
+                        size="sm"
+                      />
+                    )}
+                    {result.thirdBendMark && (
+                      <ResultValue
+                        label="Third Bend Mark"
+                        value={result.thirdBendMark.toFixed(1)}
+                        unit="mm"
+                        category="cable"
+                        size="sm"
+                      />
+                    )}
+                    {result.fourthBendMark && (
+                      <ResultValue
+                        label="Fourth Bend Mark"
+                        value={result.fourthBendMark.toFixed(1)}
+                        unit="mm"
+                        category="cable"
+                        size="sm"
+                      />
+                    )}
+                    {result.shrinkAmount > 0 && (
+                      <ResultValue
+                        label="Shrink Amount"
+                        value={result.shrinkAmount.toFixed(1)}
+                        unit="mm"
+                        category="cable"
+                        size="sm"
+                      />
+                    )}
+                    {result.distanceBetweenBends > 0 && (
+                      <ResultValue
+                        label="Distance Between Bends"
+                        value={result.distanceBetweenBends.toFixed(1)}
+                        unit="mm"
+                        category="cable"
+                        size="sm"
+                      />
+                    )}
+                    <ResultValue
+                      label="Take-Up (90°)"
+                      value={result.takeUp}
+                      unit="mm"
+                      category="cable"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Notes */}
+                  {result.notes.length > 0 && (
+                    <div className="p-3 bg-white/[0.04] border border-white/[0.12] rounded-xl">
+                      <h4 className="text-sm font-medium text-white mb-2">Bending Notes</h4>
+                      <ul className="text-xs text-white space-y-1">
+                        {result.notes.map((note, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-white">•</span>
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className="p-2 bg-white/[0.04] rounded-lg">
-                      <span className="text-yellow-400">30°:</span>{' '}
-                      <span className="text-white">×2.0 distance</span>
+                  )}
+
+                  {/* Visual Diagram */}
+                  <div className="p-4 bg-white/[0.04] border border-white/5 rounded-xl">
+                    <h4 className="text-sm font-medium text-white mb-3">Marking Guide</h4>
+                    <div className="relative h-16 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full overflow-hidden">
+                      <div className="absolute inset-y-2 left-4 right-4 bg-gray-500 rounded-full flex items-center">
+                        <div
+                          className="absolute w-0.5 h-full bg-yellow-400"
+                          style={{
+                            left: `${Math.min(90, Math.max(10, (result.firstBendMark / 1000) * 100))}%`,
+                          }}
+                        />
+                        {result.secondBendMark > 0 && (
+                          <div
+                            className="absolute w-0.5 h-full bg-elec-yellow"
+                            style={{
+                              left: `${Math.min(90, Math.max(20, (result.secondBendMark / 1000) * 100))}%`,
+                            }}
+                          />
+                        )}
+                        {result.thirdBendMark && (
+                          <div
+                            className="absolute w-0.5 h-full bg-green-400"
+                            style={{
+                              left: `${Math.min(90, Math.max(30, (result.thirdBendMark / 1000) * 100))}%`,
+                            }}
+                          />
+                        )}
+                      </div>
                     </div>
-                    <div className="p-2 bg-white/[0.04] rounded-lg">
-                      <span className="text-yellow-400">45°:</span>{' '}
-                      <span className="text-white">×1.414 distance</span>
-                    </div>
-                    <div className="p-2 bg-white/[0.04] rounded-lg">
-                      <span className="text-yellow-400">60°:</span>{' '}
-                      <span className="text-white">×1.155 distance</span>
+                    <div className="flex justify-between text-xs text-white mt-2 px-4">
+                      <span>End</span>
+                      <span>Bend marks</span>
+                      <span>→</span>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-medium text-white mb-2">Take-Up Values (Typical)</h4>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
-                      20mm: 100mm
-                    </span>
-                    <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
-                      25mm: 125mm
-                    </span>
-                    <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
-                      32mm: 150mm
-                    </span>
-                    <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
-                      40mm: 200mm
-                    </span>
-                    <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
-                      50mm: 250mm
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                <CalculatorDivider category="cable" />
 
-          {/* BS 7671 Reference Section */}
-          <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="w-4 h-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Reference
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showBS7671 && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <h4 className="font-medium text-amber-400 mb-2 text-sm">
-                  Table 4F1 - Minimum Internal Bend Radii
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-white">20mm:</span>{' '}
-                    <span className="text-white">100mm min</span>
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-white">25mm:</span>{' '}
-                    <span className="text-white">125mm min</span>
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-white">32mm:</span>{' '}
-                    <span className="text-white">160mm min</span>
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-white">40mm:</span>{' '}
-                    <span className="text-white">200mm min</span>
-                  </div>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      )}
-      <CalculatorEditorial content={conduitBendingContent} category="cable" />
+                {/* Guidance Section */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="w-4 h-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        Bending Reference Guide
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-4 text-sm">
+                      <div>
+                        <h4 className="font-medium text-white mb-2">Offset Bend Multipliers</h4>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                          <div className="p-2 bg-white/[0.04] rounded-lg">
+                            <span className="text-yellow-400">10°:</span>{' '}
+                            <span className="text-white">×6.0 distance</span>
+                          </div>
+                          <div className="p-2 bg-white/[0.04] rounded-lg">
+                            <span className="text-yellow-400">22.5°:</span>{' '}
+                            <span className="text-white">×2.6 distance</span>
+                          </div>
+                          <div className="p-2 bg-white/[0.04] rounded-lg">
+                            <span className="text-yellow-400">30°:</span>{' '}
+                            <span className="text-white">×2.0 distance</span>
+                          </div>
+                          <div className="p-2 bg-white/[0.04] rounded-lg">
+                            <span className="text-yellow-400">45°:</span>{' '}
+                            <span className="text-white">×1.414 distance</span>
+                          </div>
+                          <div className="p-2 bg-white/[0.04] rounded-lg">
+                            <span className="text-yellow-400">60°:</span>{' '}
+                            <span className="text-white">×1.155 distance</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="font-medium text-white mb-2">Take-Up Values (Typical)</h4>
+                        <div className="flex flex-wrap gap-2 text-xs">
+                          <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
+                            20mm: 100mm
+                          </span>
+                          <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
+                            25mm: 125mm
+                          </span>
+                          <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
+                            32mm: 150mm
+                          </span>
+                          <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
+                            40mm: 200mm
+                          </span>
+                          <span className="px-2 py-1 bg-white/[0.04] rounded-lg text-white">
+                            50mm: 250mm
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* BS 7671 Reference Section */}
+                <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        BS 7671 Reference
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showBS7671 && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <h4 className="font-medium text-amber-400 mb-2 text-sm">
+                        Table 4F1 - Minimum Internal Bend Radii
+                      </h4>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                          <span className="text-white">20mm:</span>{' '}
+                          <span className="text-white">100mm min</span>
+                        </div>
+                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                          <span className="text-white">25mm:</span>{' '}
+                          <span className="text-white">125mm min</span>
+                        </div>
+                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                          <span className="text-white">32mm:</span>{' '}
+                          <span className="text-white">160mm min</span>
+                        </div>
+                        <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
+                          <span className="text-white">40mm:</span>{' '}
+                          <span className="text-white">200mm min</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            )}
+          </>
+        }
+        footer={<CalculatorEditorial content={conduitBendingContent} category="cable" />}
+      />
     </CalculatorCard>
   );
 };

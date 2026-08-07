@@ -509,7 +509,7 @@ export default function FloodDamagedElectricsPage() {
   return (
     <GuideTemplate
       title="Flood Damaged Electrics | Safety and Recovery Guide UK"
-      description="What to do when a property has been flooded. Do not enter flooded buildings, isolation procedures, drying out, mandatory rewire assessment…"
+      description="What to do when a property has been flooded. Do not enter flooded buildings, isolation procedures, drying out, mandatory rewire assessment."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

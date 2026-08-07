@@ -657,7 +657,7 @@ export default function ElectricianBusinessInsurancePage() {
     <GuideTemplate
       localArea="Business Insurance"
       title="Electrician Business Insurance UK 2026 | What You Need"
-      description="Complete guide to business insurance for UK electricians. Public liability, professional indemnity, employers liability, tool cover, personal accident…"
+      description="Complete guide to business insurance for UK electricians. Public liability, professional indemnity, employers liability, tool cover, personal accident."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -31,7 +31,7 @@ export const CashFlowTabs = ({ activeTab, onTabChange, className }: CashFlowTabs
               className={cn(
                 'flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 touch-manipulation min-h-[44px]',
                 isActive
-                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                  ? 'bg-white/[0.04] text-elec-yellow border border-white/[0.10]'
                   : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:text-white active:scale-[0.98]'
               )}
             >

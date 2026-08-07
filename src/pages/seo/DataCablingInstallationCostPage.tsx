@@ -616,7 +616,7 @@ export default function DataCablingInstallationCostPage() {
   return (
     <GuideTemplate
       title="Data Cabling Installation Cost UK 2026 | Cat6 Pricing"
-      description="How much does data cabling installation cost in the UK in 2026? Complete guide covering Cat6 and Cat6a per-point pricing, comms cabinets, patch panels…"
+      description="How much does data cabling installation cost in the UK in 2026? Complete guide covering Cat6 and Cat6a per-point pricing, comms cabinets, patch panels."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

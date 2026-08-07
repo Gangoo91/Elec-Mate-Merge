@@ -635,7 +635,7 @@ export default function InitialVerificationGuidePage() {
   return (
     <GuideTemplate
       title="Initial Verification Guide | BS 7671 Chapter 64"
-      description="Complete guide to initial verification of electrical installations under BS 7671. When required, the full test sequence, inspection schedule…"
+      description="Complete guide to initial verification of electrical installations under BS 7671. When required, the full test sequence, inspection schedule."
       datePublished="2025-09-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -531,7 +531,7 @@ export default function ElectricianChesterPage() {
       noindex={true}
       localArea="Chester"
       title="Electrician in Chester | Local Electricians 2026"
-      description="Find qualified electricians in Chester. Part P compliance, NICEIC registered, listed building electrical work, EICR for landlords…"
+      description="Find qualified electricians in Chester. Part P compliance, NICEIC registered, listed building electrical work, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -552,7 +552,7 @@ export default function SolarPanelInstallationNewcastlePage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Newcastle 2025 | Solar PV"
-      description="Solar panel installation in Newcastle 2025. Northeast irradiance data, real cost examples £5,500–£8,500 for 4kW system, Smart Export Guarantee payments…"
+      description="Solar panel installation in Newcastle 2025. Northeast irradiance data, real cost examples £5,500–£8,500 for 4kW system, Smart Export Guarantee payments."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

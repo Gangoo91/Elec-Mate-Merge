@@ -14,6 +14,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { unitConverterContent } from './content/unit-converter';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -237,208 +238,218 @@ const UnitConverterCalculator = () => {
       title="Unit Converter"
       description="Convert between electrical units: power, voltage, current, resistance, energy"
     >
-      {/* Category */}
-      <CalculatorSelect
-        label="Category"
-        value={category}
-        onChange={handleCategoryChange}
-        options={categoryOptions}
-      />
-
-      {/* Convert From */}
-      <CalculatorSection title="Convert From">
-        <CalculatorSelect
-          label="Unit"
-          value={fromUnit}
-          onChange={setFromUnit}
-          options={unitOptions}
-        />
-        <CalculatorInput
-          label="Value"
-          type="text"
-          inputMode="decimal"
-          value={inputValue}
-          onChange={setInputValue}
-          placeholder="Enter value"
-          error={!isInputValid && inputValue ? 'Enter a valid number' : undefined}
-          onKeyDown={handleKeyPress}
-        />
-      </CalculatorSection>
-
-      {/* Swap button */}
-      <div className="flex justify-center">
-        <button
-          onClick={swapUnits}
-          className="h-11 w-11 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
-          title="Swap units"
-        >
-          <ArrowUpDown className="h-5 w-5" />
-        </button>
-      </div>
-
-      {/* Convert To */}
-      <CalculatorSection title="Convert To">
-        <CalculatorSelect
-          label="Unit"
-          value={toUnit}
-          onChange={setToUnit}
-          options={unitOptions}
-        />
-      </CalculatorSection>
-
-      {/* Actions */}
-      <CalculatorActions
-        category={CAT}
-        onCalculate={convert}
-        onReset={reset}
-        isDisabled={!isInputValid}
-        calculateLabel="Convert"
-        showReset={inputValue !== '' || result !== null}
-      />
-
-      {/* ── Results ── */}
-      {result !== null && (
-        <>
-          <CalculatorDivider category={CAT} />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Hero value */}
-            <div className="text-center py-3">
-              <p
-                className="text-4xl font-bold font-mono bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {formatValue(result)}
-              </p>
-              <p className="text-sm text-white mt-1">
-                {conversionCategories[category].units[toUnit].name}
-              </p>
-            </div>
-
-            {/* Conversion formula */}
-            <CalculatorFormula
-              category={CAT}
-              steps={formulaSteps}
-              title="Conversion"
-              defaultOpen
+      <CalculatorPanes
+        form={
+          <>
+            {/* Category */}
+            <CalculatorSelect
+              label="Category"
+              value={category}
+              onChange={handleCategoryChange}
+              options={categoryOptions}
             />
 
-            {/* Also Equals */}
-            <CalculatorSection title="Also Equals">
-              <ResultsGrid columns={2}>
-                {getEquivalentUnits(
-                  parseFloat(inputValue) * conversionCategories[category].units[fromUnit].factor
-                ).map(({ unit, name, value }) => (
-                  <ResultValue
-                    key={unit}
-                    label={name}
-                    value={formatValue(value)}
-                    unit={unit}
-                    category={CAT}
-                    size="sm"
-                  />
-                ))}
-              </ResultsGrid>
+            {/* Convert From */}
+            <CalculatorSection title="Convert From">
+              <CalculatorSelect
+                label="Unit"
+                value={fromUnit}
+                onChange={setFromUnit}
+                options={unitOptions}
+              />
+              <CalculatorInput
+                label="Value"
+                type="text"
+                inputMode="decimal"
+                value={inputValue}
+                onChange={setInputValue}
+                placeholder="Enter value"
+                error={!isInputValid && inputValue ? 'Enter a valid number' : undefined}
+                onKeyDown={handleKeyPress}
+              />
             </CalculatorSection>
 
-            <CalculatorDivider category={CAT} />
+            {/* Swap button */}
+            <div className="flex justify-center">
+              <button
+                onClick={swapUnits}
+                className="h-11 w-11 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
+                title="Swap units"
+              >
+                <ArrowUpDown className="h-5 w-5" />
+              </button>
+            </div>
 
-            {/* Why This Matters */}
-            <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-                <span>Why This Matters</span>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white transition-transform duration-200',
-                    showGuidance && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-2">
-                <div
-                  className="p-3 rounded-xl border space-y-2"
-                  style={{
-                    borderColor: `${config.gradientFrom}15`,
-                    background: `${config.gradientFrom}05`,
-                  }}
-                >
-                  <ul className="space-y-2">
-                    {getWhyThisMatters(category).map((point, idx) => (
-                      <li key={idx} className="text-sm text-white flex items-start gap-2">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
+            {/* Convert To */}
+            <CalculatorSection title="Convert To">
+              <CalculatorSelect
+                label="Unit"
+                value={toUnit}
+                onChange={setToUnit}
+                options={unitOptions}
+              />
+            </CalculatorSection>
 
-            {/* Common Conversions */}
-            <Collapsible open={showReference} onOpenChange={setShowReference}>
-              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-                <span>Common Conversions</span>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white transition-transform duration-200',
-                    showReference && 'rotate-180'
-                  )}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-2">
-                <div
-                  className="p-3 rounded-xl border"
-                  style={{
-                    borderColor: `${config.gradientFrom}15`,
-                    background: `${config.gradientFrom}05`,
-                  }}
-                >
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="space-y-1">
-                      <p className="text-white font-medium">Power</p>
-                      <p className="text-white">1 kW = 1000 W</p>
-                      <p className="text-white">1 hp ≈ 746 W</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-white font-medium">Voltage</p>
-                      <p className="text-white">1 kV = 1000 V</p>
-                      <p className="text-white">1 V = 1000 mV</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-white font-medium">Energy</p>
-                      <p className="text-white">1 kWh = 3.6 MJ</p>
-                      <p className="text-white">1 Wh = 3600 J</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-white font-medium">Resistance</p>
-                      <p className="text-white">1 MΩ = 1000 kΩ</p>
-                      <p className="text-white">1 kΩ = 1000 Ω</p>
-                    </div>
+            {/* Actions */}
+            <CalculatorActions
+              category={CAT}
+              onCalculate={convert}
+              onReset={reset}
+              isDisabled={!isInputValid}
+              calculateLabel="Convert"
+              showReset={inputValue !== '' || result !== null}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result !== null && (
+              <>
+                <CalculatorDivider category={CAT} />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Hero value */}
+                  <div className="text-center py-3">
+                    <p
+                      className="text-4xl font-bold font-mono bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {formatValue(result)}
+                    </p>
+                    <p className="text-sm text-white mt-1">
+                      {conversionCategories[category].units[toUnit].name}
+                    </p>
                   </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-        </>
-      )}
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Unit Conversion"
-        formula="Result = Value × (From Factor ÷ To Factor)"
-        variables={[
-          { symbol: 'Value', description: 'The number you entered' },
-          { symbol: 'From Factor', description: 'Base unit multiplier for the source unit' },
-          { symbol: 'To Factor', description: 'Base unit multiplier for the target unit' },
-        ]}
+                  {/* Conversion formula */}
+                  <CalculatorFormula
+                    category={CAT}
+                    steps={formulaSteps}
+                    title="Conversion"
+                    defaultOpen
+                  />
+
+                  {/* Also Equals */}
+                  <CalculatorSection title="Also Equals">
+                    <ResultsGrid columns={2}>
+                      {getEquivalentUnits(
+                        parseFloat(inputValue) *
+                          conversionCategories[category].units[fromUnit].factor
+                      ).map(({ unit, name, value }) => (
+                        <ResultValue
+                          key={unit}
+                          label={name}
+                          value={formatValue(value)}
+                          unit={unit}
+                          category={CAT}
+                          size="sm"
+                        />
+                      ))}
+                    </ResultsGrid>
+                  </CalculatorSection>
+
+                  <CalculatorDivider category={CAT} />
+
+                  {/* Why This Matters */}
+                  <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                    <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                      <span>Why This Matters</span>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform duration-200',
+                          showGuidance && 'rotate-180'
+                        )}
+                      />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pt-2">
+                      <div
+                        className="p-3 rounded-xl border space-y-2"
+                        style={{
+                          borderColor: `${config.gradientFrom}15`,
+                          background: `${config.gradientFrom}05`,
+                        }}
+                      >
+                        <ul className="space-y-2">
+                          {getWhyThisMatters(category).map((point, idx) => (
+                            <li key={idx} className="text-sm text-white flex items-start gap-2">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {point}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+
+                  {/* Common Conversions */}
+                  <Collapsible open={showReference} onOpenChange={setShowReference}>
+                    <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                      <span>Common Conversions</span>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform duration-200',
+                          showReference && 'rotate-180'
+                        )}
+                      />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pt-2">
+                      <div
+                        className="p-3 rounded-xl border"
+                        style={{
+                          borderColor: `${config.gradientFrom}15`,
+                          background: `${config.gradientFrom}05`,
+                        }}
+                      >
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="space-y-1">
+                            <p className="text-white font-medium">Power</p>
+                            <p className="text-white">1 kW = 1000 W</p>
+                            <p className="text-white">1 hp ≈ 746 W</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-white font-medium">Voltage</p>
+                            <p className="text-white">1 kV = 1000 V</p>
+                            <p className="text-white">1 V = 1000 mV</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-white font-medium">Energy</p>
+                            <p className="text-white">1 kWh = 3.6 MJ</p>
+                            <p className="text-white">1 Wh = 3600 J</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-white font-medium">Resistance</p>
+                            <p className="text-white">1 MΩ = 1000 kΩ</p>
+                            <p className="text-white">1 kΩ = 1000 Ω</p>
+                          </div>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </div>
+              </>
+            )}
+
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Unit Conversion"
+              formula="Result = Value × (From Factor ÷ To Factor)"
+              variables={[
+                { symbol: 'Value', description: 'The number you entered' },
+                { symbol: 'From Factor', description: 'Base unit multiplier for the source unit' },
+                { symbol: 'To Factor', description: 'Base unit multiplier for the target unit' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={unitConverterContent} category={CAT} />}
       />
-      <CalculatorEditorial content={unitConverterContent} category={CAT} />
     </CalculatorCard>
   );
 };

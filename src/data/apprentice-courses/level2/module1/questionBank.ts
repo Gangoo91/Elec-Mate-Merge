@@ -109,9 +109,9 @@ export const module1Questions: Question[] = [
     question: 'When do CDM Regulations apply?',
     options: [
       'All construction projects',
-      'Only to large construction projects',
-      'Only commercial projects',
-      'Only domestic projects',
+      'Projects lasting more than 30 working days',
+      'Commercial and industrial projects only',
+      'Projects using more than one contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,9 +162,9 @@ export const module1Questions: Question[] = [
     question: 'What must contractors do before starting work on a notifiable project?',
     options: [
       'Provide a construction phase plan',
-      'Apply for planning permission from the local authority',
-      'Obtain written consent from every nearby resident',
-      'Submit a method statement directly to the HSE',
+      'Apply for planning permission from the council',
+      'Obtain written consent from nearby residents',
+      'Submit a method statement to the HSE',
     ],
     correctAnswer: 0,
     explanation:
@@ -174,10 +174,10 @@ export const module1Questions: Question[] = [
     id: 13,
     question: 'What information must be provided in the health and safety file?',
     options: [
-      'A daily record of who was present on site each shift',
+      'A daily record of who was present on site each shift, signed by the contractor',
       'Information about the structure needed for future construction work, maintenance, and demolition',
-      'The commercial tender prices submitted by each contractor',
-      'Copies of every operative qualification and CSCS card',
+      'The commercial tender prices submitted by each contractor and the accepted sum',
+      'Copies of every operative qualification and CSCS card held during the works',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,9 +200,9 @@ export const module1Questions: Question[] = [
     id: 15,
     question: "What does 'competent person' mean under EAWR?",
     options: [
-      'Anyone holding a current ECS or CSCS registration card',
-      'A person directly employed by the network operator',
-      'Any qualified electrician over the age of 18',
+      'Anyone holding a current ECS card and a site induction certificate',
+      'A person directly employed by the distribution network operator',
+      'Any qualified electrician over the age of 18 working under supervision',
       'Person with sufficient training, experience and knowledge to prevent danger',
     ],
     correctAnswer: 3,
@@ -239,10 +239,10 @@ export const module1Questions: Question[] = [
     id: 18,
     question: 'Which accidents must be reported under RIDDOR?',
     options: [
-      'Only fatalities and injuries needing hospital admission',
-      'Any first-aid treatment given in the workplace',
+      'Fatalities and any injury requiring admission to hospital for treatment',
+      'Any first-aid treatment given at work and recorded in the accident book',
       'Deaths, specified injuries, over-7-day injuries, diseases, dangerous occurrences',
-      'All accidents involving any cut, bruise or sprain',
+      'All accidents causing any cut, bruise or sprain to a person at work',
     ],
     correctAnswer: 2,
     explanation:
@@ -291,10 +291,10 @@ export const module1Questions: Question[] = [
     id: 22,
     question: 'What powers do safety representatives have?',
     options: [
-      'To dismiss workers who repeatedly breach safety rules',
-      'To issue improvement and prohibition notices to the employer',
+      'To dismiss workers who repeatedly breach the company safety rules',
+      'To issue improvement and prohibition notices to the employer directly',
       'To investigate accidents, inspect the workplace, receive information, be consulted',
-      'To prosecute the employer directly in the magistrates court',
+      'To prosecute the employer in the magistrates court on behalf of members',
     ],
     correctAnswer: 2,
     explanation:
@@ -304,9 +304,9 @@ export const module1Questions: Question[] = [
     id: 23,
     question: 'What is an improvement notice?',
     options: [
-      'A notice requiring immediate stoppage of dangerous work',
-      'An internal memo from a supervisor about poor housekeeping',
-      'A voluntary code of good practice issued by a trade body',
+      'A notice requiring the immediate stoppage of a dangerous work activity',
+      'An internal memo from a supervisor about poor site housekeeping standards',
+      'A voluntary code of good practice issued by a recognised trade body',
       'A legal notice requiring improvement to health and safety within a specified time',
     ],
     correctAnswer: 3,
@@ -318,9 +318,9 @@ export const module1Questions: Question[] = [
     question: 'What is a prohibition notice?',
     options: [
       'A legal notice requiring immediate cessation of activities that pose imminent danger',
-      'A notice giving a set period to correct a safety failing',
-      'A written warning that more training is needed for staff',
-      'A notice requiring the workplace to be permanently closed',
+      'A notice giving a set period of time in which to correct a safety failing',
+      'A written warning that further training is needed before work restarts',
+      'A notice requiring the whole workplace to be permanently closed down',
     ],
     correctAnswer: 0,
     explanation:
@@ -330,10 +330,10 @@ export const module1Questions: Question[] = [
     id: 25,
     question: 'Can improvement and prohibition notices be appealed?',
     options: [
-      'No, they are final',
+      'No, HSE notices are final once served',
       'Yes, to an employment tribunal',
-      'Only improvement notices',
-      'Only prohibition notices',
+      'Yes, but only by written appeal to the HSE',
+      'Yes, by judicial review in the High Court',
     ],
     correctAnswer: 1,
     explanation:
@@ -343,10 +343,10 @@ export const module1Questions: Question[] = [
     id: 26,
     question: 'What is the purpose of health and safety policy?',
     options: [
-      "To record every accident and near miss that occurs at work",
-      "To list the names and contact details of all first-aiders",
-      "To demonstrate employer's commitment to health and safety and provide framework for action",
-      "To set out the disciplinary procedure for safety breaches",
+      'To record every accident and near miss that occurs at work in one place',
+      'To list the names and contact details of all trained first-aiders on site',
+      'To demonstrate employer\'s commitment to health and safety and provide framework for action',
+      'To set out the disciplinary procedure to be applied after a safety breach',
     ],
     correctAnswer: 2,
     explanation:
@@ -356,9 +356,9 @@ export const module1Questions: Question[] = [
     id: 27,
     question: 'When must an employer have a written health and safety policy?',
     options: [
-      'Only if they carry out any construction work',
-      'Only if they employ any apprentices or young workers',
-      'In every case, regardless of how many they employ',
+      'If they carry out any construction work',
+      'If they employ 10 or more people',
+      'In every case, whatever the headcount',
       'If they employ 5 or more people',
     ],
     correctAnswer: 3,
@@ -446,10 +446,10 @@ export const module1Questions: Question[] = [
     id: 34,
     question: 'What information must employers provide to employees?',
     options: [
-      'The commercial value of each contract being undertaken',
-      'A weekly summary of each worker individual productivity',
+      'The commercial value of each contract being undertaken on site',
+      'A weekly summary of each worker individual productivity figures',
       'Health and safety information, risks, preventive measures, emergency procedures',
-      'Personal medical records of every other employee on site',
+      'Personal medical records of every other employee working on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -784,9 +784,9 @@ export const module1Questions: Question[] = [
     question: 'How should electrical burns be treated?',
     options: [
       'Cool with water for 20+ minutes, cover with sterile dressing, seek medical help',
-      'Apply butter or cream then bandage the area tightly',
-      'Burst any blisters and rub the burn with antiseptic',
-      'Leave the burn open to the air and apply ice directly',
+      'Apply butter or cream to the burn then bandage the area tightly',
+      'Burst any blisters that form and rub the burn with antiseptic cream',
+      'Leave the burn open to the air and apply ice directly to the skin',
     ],
     correctAnswer: 0,
     explanation:
@@ -1017,10 +1017,10 @@ export const module1Questions: Question[] = [
     id: 78,
     question: 'What is the treatment for ventricular fibrillation?',
     options: [
-      'Place the casualty in the recovery position',
+      'Place in the recovery position',
       'Give the casualty a sugary drink',
       'Defibrillation and CPR',
-      'Apply firm pressure to the chest wound',
+      'Apply firm pressure to the chest',
     ],
     correctAnswer: 2,
     explanation:
@@ -1096,9 +1096,9 @@ export const module1Questions: Question[] = [
     question: 'What makes someone more susceptible to electric shock?',
     options: [
       'Wet skin, medical conditions, fatigue, contact area',
-      'Wearing insulated footwear and gloves',
-      'Working on a dry insulating mat',
-      'Using battery-powered rather than mains tools',
+      'Insulated footwear and rubber gloves worn on site',
+      'A dry insulating mat under the person working',
+      'Battery tools used in place of mains-powered ones',
     ],
     correctAnswer: 0,
     explanation:
@@ -1123,10 +1123,10 @@ export const module1Questions: Question[] = [
     id: 86,
     question: 'What are the five steps of risk assessment?',
     options: [
-      'Plan, do, check, act, report',
-      'Eliminate, substitute, isolate, control, protect',
+      'Plan, do, check, act, then report the findings to the enforcing authority',
+      'Eliminate, substitute, isolate, control, protect, then review annually',
       'Identify hazards, decide who might be harmed, evaluate risks, record findings, review',
-      'Assess, approve, authorise, audit, archive',
+      'Assess, approve, authorise, audit, archive the completed paperwork',
     ],
     correctAnswer: 2,
     explanation:
@@ -1150,9 +1150,9 @@ export const module1Questions: Question[] = [
     question: 'What is risk?',
     options: [
       'The likelihood that a hazard will cause harm and the severity of that harm',
-      'Anything with the potential to cause harm',
-      'The control measure used to remove a hazard',
-      'The number of people present in a work area',
+      'Anything present in the workplace with the potential to cause harm',
+      'The control measure used to remove a hazard from the workplace',
+      'The number of people present in a work area at any one time',
     ],
     correctAnswer: 0,
     explanation:
@@ -1162,10 +1162,10 @@ export const module1Questions: Question[] = [
     id: 89,
     question: 'What is the hierarchy of control measures?',
     options: [
-      'PPE, training, procedures, engineering, elimination',
+      'PPE, training, procedures, engineering controls, then elimination',
       'Elimination, substitution, engineering controls, administrative controls, PPE',
-      'Planning, implementing, monitoring, reviewing',
-      'Identification, evaluation, control, monitoring',
+      'Planning, implementing, monitoring, reviewing and auditing controls',
+      'Identification, evaluation, control, monitoring and record keeping',
     ],
     correctAnswer: 1,
     explanation:
@@ -1188,9 +1188,9 @@ export const module1Questions: Question[] = [
     id: 91,
     question: 'When should risk assessments be reviewed?',
     options: [
-      'Only once, when the work first begins',
-      'Only if the HSE requests a copy',
-      'Only at the end of the project',
+      'Once only, at the point the work first begins',
+      'When the HSE or an insurer asks to see a copy',
+      'At the end of each project, before handover',
       'Regularly, after incidents, when changes occur',
     ],
     correctAnswer: 3,
@@ -1240,9 +1240,9 @@ export const module1Questions: Question[] = [
     id: 95,
     question: 'What should a method statement include?',
     options: [
-      'Only the names of the workers carrying out the job',
-      'Only the start and finish dates of the work',
-      'Only the cost breakdown for the client',
+      'The names and trade qualifications of the workers carrying out the job',
+      'The start and finish dates of the work and the agreed programme',
+      'The cost breakdown and priced schedule of works for the client',
       'Work sequence, hazards, control measures, emergency procedures, supervision',
     ],
     correctAnswer: 3,
@@ -1266,10 +1266,10 @@ export const module1Questions: Question[] = [
     id: 97,
     question: 'When are method statements typically required?',
     options: [
-      'For every task however small or routine',
+      'For every task on site, however small or routine it is',
       'For high-risk activities, complex work, CDM projects',
-      'Only after an accident has occurred on site',
-      'Only when the client specifically asks for one',
+      'After an accident has occurred, as part of the investigation',
+      'Whenever the client asks for one in the contract documents',
     ],
     correctAnswer: 1,
     explanation:
@@ -1292,9 +1292,9 @@ export const module1Questions: Question[] = [
     id: 99,
     question: 'What factors should be considered when assessing who might be harmed?',
     options: [
-      'Only the directly employed workforce',
-      'Only the person carrying out the task',
-      'Only those who have signed the risk assessment',
+      'The directly employed workforce named on the timesheet',
+      'The person carrying out the task and their supervisor',
+      'Anyone who has signed the risk assessment record',
       'Workers, visitors, contractors, public, special groups',
     ],
     correctAnswer: 3,
@@ -1331,10 +1331,10 @@ export const module1Questions: Question[] = [
     id: 102,
     question: "What is meant by 'reasonably foreseeable'?",
     options: [
-      'Only events that have already happened before',
-      'Any event no matter how unlikely or far-fetched',
+      'Events that have already happened on a previous project',
+      'Any event at all, however unlikely or far-fetched it may be',
       'Events that are likely to happen or could reasonably be expected',
-      'Only events listed in the manufacturer instructions',
+      'Events specifically listed in the manufacturer instructions',
     ],
     correctAnswer: 2,
     explanation:
@@ -1384,7 +1384,7 @@ export const module1Questions: Question[] = [
     question: 'What is dynamic risk assessment?',
     options: [
       'A risk assessment completed only at the planning stage',
-      'A generic assessment reused across all sites',
+      'Reusing one generic assessment across all of the firm sites',
       'Ongoing assessment of changing conditions during work',
       'An assessment carried out only by senior management',
     ],
@@ -1398,7 +1398,7 @@ export const module1Questions: Question[] = [
     options: [
       'Carry on working and deal with it later',
       'Try to fix the hazard themselves immediately',
-      'Ignore it if it is outside their own task',
+      'Note it in the site diary at the end of the shift',
       'Stop work and report to supervisor',
     ],
     correctAnswer: 3,
@@ -1487,10 +1487,10 @@ export const module1Questions: Question[] = [
     id: 114,
     question: 'What factors affect the acceptability of risk?',
     options: [
-      'The personal preference of the worker involved',
-      'The time of day the work is carried out',
+      'The personal preference of the worker carrying out the task',
+      'The time of day and the weather in which the work is carried out',
       'Benefits, costs, public perception, legal requirements, available alternatives',
-      'The size of the company carrying out the work',
+      'The size and annual turnover of the company carrying out the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -1500,9 +1500,9 @@ export const module1Questions: Question[] = [
     id: 115,
     question: 'What is tolerable risk?',
     options: [
-      'Risk that must always be eliminated whatever the cost',
-      'Risk that no longer needs any monitoring',
-      'Risk that only the employer is allowed to accept',
+      'Risk that must always be eliminated whatever the cost involved',
+      'Risk that no longer needs to be monitored or reviewed at all',
+      'Risk that only the employer, not the worker, is allowed to accept',
       'Risk that can be accepted in current circumstances based on benefits gained',
     ],
     correctAnswer: 3,
@@ -1514,9 +1514,9 @@ export const module1Questions: Question[] = [
     question: 'What should be included in risk assessment training?',
     options: [
       'Hazard identification, risk evaluation, control measures, review processes',
-      'Company financial planning and budgeting',
-      'Customer service and complaint handling',
-      'Marketing and tendering for new contracts',
+      'Accident reporting procedures, first-aid duties and fire marshal roles',
+      'Manual handling techniques, kinetic lifting and load weight limits',
+      'COSHH labelling, safety data sheets and chemical storage arrangements',
     ],
     correctAnswer: 0,
     explanation:
@@ -1526,10 +1526,10 @@ export const module1Questions: Question[] = [
     id: 117,
     question: 'How often should method statements be reviewed?',
     options: [
-      'Only once, before the work starts',
+      'Once only, before the work starts on site',
       'When conditions change, after incidents, regularly',
-      'Only when the client requests a copy',
-      'Only at the very end of the project',
+      'At the request of the client or main contractor',
+      'At the very end of the project, before handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -1578,10 +1578,10 @@ export const module1Questions: Question[] = [
     id: 121,
     question: 'When might permit to work systems be used?',
     options: [
-      'For all routine low-risk maintenance tasks',
+      'For all routine low-risk maintenance tasks carried out on site',
       'For high-risk work like confined spaces, hot work, electrical isolation',
-      'For ordering materials and tools for a job',
-      'For recording attendance at site inductions',
+      'For any work carried out by a subcontractor rather than direct labour',
+      'For recording attendance at site inductions and toolbox talks',
     ],
     correctAnswer: 1,
     explanation:
@@ -1591,10 +1591,10 @@ export const module1Questions: Question[] = [
     id: 122,
     question: 'What should be monitored during risk assessment implementation?',
     options: [
-      'Only the cost of the control measures used',
-      'Only the number of workers present each day',
+      'The cost of the control measures against the original budget',
+      'The number of workers present on site each day of the works',
       'Effectiveness of control measures, changing conditions, worker compliance',
-      'Only the weather forecast for the week ahead',
+      'Accident book entries and lost-time figures recorded since work began',
     ],
     correctAnswer: 2,
     explanation:
@@ -1630,10 +1630,10 @@ export const module1Questions: Question[] = [
     id: 125,
     question: 'What factors contribute to human error?',
     options: [
-      'Only the personality of the individual worker',
+      'The personality and attitude of the individual worker alone',
       'Personal factors, job factors, organisational factors, environmental factors',
-      'Only the age and experience of the worker',
-      'Only the weather conditions on the day',
+      'The age and length of experience of the worker concerned',
+      'The weather conditions and temperature on the day of the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -1673,8 +1673,8 @@ export const module1Questions: Question[] = [
     options: [
       'As a last resort when other control measures are not sufficient',
       'As the first and preferred control measure for any hazard',
-      'Only when the worker personally requests it',
-      'Only when an HSE inspector is on site',
+      'Whenever a worker personally requests it from the storeman',
+      'During any HSE inspection or client safety audit of the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -1697,10 +1697,10 @@ export const module1Questions: Question[] = [
     id: 130,
     question: 'When should safety helmets be worn?',
     options: [
-      'Only when working at height above two metres',
-      'Only when the client specifically requests it',
+      'When working at height above two metres from ground level',
+      'When the client specifically requests it in the contract',
       'Where there is risk of head injury from falling objects or impact',
-      'Only when carrying out hot work on site',
+      'When carrying out hot work or using power tools on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -1723,10 +1723,10 @@ export const module1Questions: Question[] = [
     id: 132,
     question: 'When should eye protection be worn?',
     options: [
-      "When there's risk from flying particles, chemicals, radiation, or bright light",
-      "Only when working outdoors in bright sunlight",
-      "Only when the task lasts longer than one hour",
-      "Only when working at height on a scaffold",
+      'When there\'s risk from flying particles, chemicals, radiation, or bright light',
+      'When working outdoors in bright sunlight or reflected glare',
+      'Whenever a task is expected to last longer than one working hour',
+      'When working at height on a scaffold or a mobile tower platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -1762,9 +1762,9 @@ export const module1Questions: Question[] = [
     id: 135,
     question: 'What types of respiratory protection are available?',
     options: [
-      'Safety glasses, goggles, face shields and welding screens',
-      'Ear plugs, ear muffs and semi-insert protectors',
-      'Hard hats, bump caps and high-visibility vests',
+      'Safety glasses, goggles, face shields and welding screens for arc work',
+      'Ear plugs, ear muffs, semi-insert protectors and acoustic booths',
+      'Hard hats, bump caps, high-visibility vests and fall-arrest harnesses',
       'Filtering facepieces, half/full face masks, powered respirators, breathing apparatus',
     ],
     correctAnswer: 3,
@@ -1775,10 +1775,10 @@ export const module1Questions: Question[] = [
     id: 136,
     question: 'When is respiratory protection needed?',
     options: [
-      "When there's risk from dust, fumes, gases, vapours, or oxygen deficiency",
-      "Only when working outdoors in cold weather",
-      "Only when working near loud machinery",
-      "Only when there is a risk of falling objects",
+      'When there\'s risk from dust, fumes, gases, vapours, or oxygen deficiency',
+      'When working outdoors in cold or wet weather conditions',
+      'When working close to loud machinery or percussive power tools',
+      'When there is a risk of objects falling from scaffolds above',
     ],
     correctAnswer: 0,
     explanation:
@@ -1788,10 +1788,10 @@ export const module1Questions: Question[] = [
     id: 137,
     question: 'What are the main types of hand protection?',
     options: [
-      'Safety glasses, goggles, face shields and welding screens',
+      'Safety glasses, goggles, face shields and welding screens for arc work',
       'Cut-resistant gloves, chemical-resistant gloves, thermal gloves, electrical gloves',
-      'Ear plugs, ear muffs and semi-insert protectors',
-      'Filtering facepieces, masks and powered respirators',
+      'Ear plugs, ear muffs, semi-insert protectors and acoustic booths',
+      'Filtering facepieces, half masks, powered respirators and airline sets',
     ],
     correctAnswer: 1,
     explanation:
@@ -1801,10 +1801,10 @@ export const module1Questions: Question[] = [
     id: 138,
     question: 'When should hand protection be worn?',
     options: [
-      "Only when handling heavy loads by hand",
-      "Only when the task lasts more than an hour",
-      "When there's risk of cuts, chemical contact, burns, or electrical shock",
-      "Only when working in cold outdoor conditions",
+      'When handling heavy loads by hand or lifting awkward items',
+      'When the task is expected to last more than one working hour',
+      'When there\'s risk of cuts, chemical contact, burns, or electrical shock',
+      'When working in cold outdoor conditions during winter months',
     ],
     correctAnswer: 2,
     explanation:
@@ -1814,9 +1814,9 @@ export const module1Questions: Question[] = [
     id: 139,
     question: 'What types of foot protection are available?',
     options: [
-      'Cut-resistant gloves and thermal gloves',
-      'Filtering facepieces and powered respirators',
-      'Hard hats, bump caps and hair nets',
+      'Cut-resistant gloves, thermal gloves and chemical-resistant gauntlets',
+      'Filtering facepieces, powered respirators and airline breathing sets',
+      'Hard hats, bump caps, hair nets and chin straps for work at height',
       'Safety shoes/boots with toe protection, puncture resistance, electrical insulation',
     ],
     correctAnswer: 3,
@@ -1827,10 +1827,10 @@ export const module1Questions: Question[] = [
     id: 140,
     question: 'When should safety footwear be worn?',
     options: [
-      "Where there's risk of falling objects, puncture wounds, slips, electrical hazards",
-      "Only when working in wet or muddy conditions",
-      "Only when the worker is over a certain age",
-      "Only when carrying loads up and down ladders",
+      'Where there\'s risk of falling objects, puncture wounds, slips, electrical hazards',
+      'Where the ground underfoot is wet or muddy and footing may be lost',
+      'Where site rules require it, but not when working in a domestic property',
+      'When carrying loads up and down ladders or unfinished stair flights',
     ],
     correctAnswer: 0,
     explanation:
@@ -1853,10 +1853,10 @@ export const module1Questions: Question[] = [
     id: 142,
     question: 'What does the CE marking on PPE indicate?',
     options: [
-      'It was manufactured within the United Kingdom',
-      'It has been tested by the Health and Safety Executive',
+      'Manufactured within the United Kingdom',
+      'Tested by the Health and Safety Executive',
       'Meets European safety standards',
-      'It is suitable for use only on construction sites',
+      'Suitable for use on construction sites',
     ],
     correctAnswer: 2,
     explanation:
@@ -1891,10 +1891,10 @@ export const module1Questions: Question[] = [
     id: 145,
     question: 'What factors should be considered when selecting PPE?',
     options: [
-      'The cheapest option available from the supplier',
+      'The cheapest option available from the merchant that day',
       'Nature of hazard, compatibility, comfort, fit, maintenance requirements',
-      'The colour and appearance preferred by the worker',
-      'The brand most widely advertised in the trade',
+      'The colour and general appearance preferred by the worker',
+      'The brand most widely advertised in the trade press and catalogues',
     ],
     correctAnswer: 1,
     explanation:
@@ -1917,9 +1917,9 @@ export const module1Questions: Question[] = [
     id: 147,
     question: 'What training should be provided for PPE use?',
     options: [
-      'Only how to put the PPE on and take it off',
-      'Only the cost and purchase details of the PPE',
-      'Only the British Standard the PPE complies with',
+      'How to put the PPE on and take it off correctly',
+      'The cost of the PPE and how to order replacements',
+      'The British Standard each item of PPE complies with',
       'How to use, maintain, store PPE and recognise defects',
     ],
     correctAnswer: 3,
@@ -1969,9 +1969,9 @@ export const module1Questions: Question[] = [
     id: 151,
     question: 'Why should workers be involved in PPE selection?',
     options: [
-      'It removes the employer legal duty to provide PPE',
-      'It transfers the cost of PPE onto the workers',
-      'It speeds up the purchasing process for the firm',
+      'It removes the employer legal duty to provide suitable PPE',
+      'It transfers the cost of the PPE onto the workers themselves',
+      'It speeds up the purchasing process and reduces paperwork',
       'Workers know the practical requirements and comfort needed for effective use',
     ],
     correctAnswer: 3,
@@ -1983,9 +1983,9 @@ export const module1Questions: Question[] = [
     question: 'What are the limitations of PPE?',
     options: [
       'Only protects the individual, can fail, may give false sense of security',
-      'It removes the hazard at its source completely',
-      'It protects everyone in the work area at once',
-      'It never needs maintenance or replacement',
+      'It removes the hazard at its source completely and permanently',
+      'It protects everyone working in the immediate area at the same time',
+      'It needs no maintenance, inspection or replacement once issued',
     ],
     correctAnswer: 0,
     explanation:
@@ -2008,10 +2008,10 @@ export const module1Questions: Question[] = [
     id: 154,
     question: 'How often should PPE be inspected?',
     options: [
-      'Only once when first issued to the worker',
-      'Only at the annual safety audit',
+      'Once, when it is first issued to the worker',
+      'At the annual safety audit carried out by the firm',
       'Before each use and regularly during use',
-      'Only after it has already failed',
+      'After it has failed or been visibly damaged',
     ],
     correctAnswer: 2,
     explanation:
@@ -2021,9 +2021,9 @@ export const module1Questions: Question[] = [
     id: 155,
     question: 'What documentation should be kept for PPE?',
     options: [
-      'Only the purchase receipt for the equipment',
-      'Only the British Standard number of each item',
-      'Only the name of the manufacturer',
+      'The purchase receipt and delivery note for the equipment',
+      'The British Standard number and conformity mark of each item',
+      'The name of the manufacturer and the country of origin',
       'Issue records, training records, inspection records, maintenance records',
     ],
     correctAnswer: 3,
@@ -2047,10 +2047,10 @@ export const module1Questions: Question[] = [
     id: 157,
     question: 'When should PPE be replaced?',
     options: [
-      "Only at the end of every calendar year",
-      "When damaged, worn out, or manufacturer's expiry date reached",
-      "Only when a new worker joins the team",
-      "Only when an HSE inspector requires it",
+      'At the end of every calendar year as part of the stock check',
+      'When damaged, worn out, or manufacturer\'s expiry date reached',
+      'When it is reissued to a different worker on the same site',
+      'When an HSE inspector or client auditor requires replacement',
     ],
     correctAnswer: 1,
     explanation:
@@ -2060,10 +2060,10 @@ export const module1Questions: Question[] = [
     id: 158,
     question: 'What factors affect PPE effectiveness?',
     options: [
-      'Only the brand and price of the equipment',
-      'Only the colour and appearance of the PPE',
+      'The brand, purchase price and warranty of the equipment',
+      'The colour coding used to identify each trade on site',
       'Correct selection, proper use, good maintenance, adequate training',
-      'Only how recently the PPE was purchased',
+      'How recently the PPE was purchased from the supplier',
     ],
     correctAnswer: 2,
     explanation:
@@ -2073,9 +2073,9 @@ export const module1Questions: Question[] = [
     id: 159,
     question: 'What is the role of supervisors in PPE management?',
     options: [
-      'To purchase all PPE personally for the workers',
-      'To wear PPE on behalf of the workers',
-      'To manufacture the PPE used on site',
+      'To purchase all PPE personally on behalf of the workers',
+      'To carry out the annual PPE stock-take and reorder supplies',
+      'To sign the PPE issue register on the worker behalf',
       'Ensure PPE is worn correctly, monitor condition, enforce compliance',
     ],
     correctAnswer: 3,
@@ -2087,9 +2087,9 @@ export const module1Questions: Question[] = [
     question: 'How should contaminated PPE be handled?',
     options: [
       'Decontaminate safely or dispose of according to specific procedures',
-      'Wash it with the worker ordinary work clothes',
-      'Reissue it directly to the next worker',
-      'Leave it on site for general use by anyone',
+      'Wash it together with the worker ordinary work clothes',
+      'Reissue it directly to the next worker on the same job',
+      'Leave it on site in the stores for general use by anyone',
     ],
     correctAnswer: 0,
     explanation:
@@ -2099,10 +2099,10 @@ export const module1Questions: Question[] = [
     id: 161,
     question: 'What are the categories of PPE?',
     options: [
-      'Class A, Class B, Class C, and Class D',
+      'Class A, Class B, Class C and Class D by protection level',
       'Category I (simple), Category II (intermediate), Category III (complex)',
-      'Type 1, Type 2, and Type 3 only',
-      'Light duty, medium duty, and heavy duty',
+      'Type 1, Type 2 and Type 3 according to the hazard faced',
+      'Light duty, medium duty and heavy duty by work intensity',
     ],
     correctAnswer: 1,
     explanation:
@@ -2139,9 +2139,9 @@ export const module1Questions: Question[] = [
     question: 'When should electrical insulating gloves be tested?',
     options: [
       'Before issue, periodically during use, after suspected damage',
-      'Only once, at the time of manufacture',
-      'Only when they show visible signs of wear',
-      'Only at the end of their service life',
+      'Once, at the time of manufacture and before dispatch',
+      'When they show visible signs of wear or discolouration',
+      'At the end of their stated service life before disposal',
     ],
     correctAnswer: 0,
     explanation:
@@ -2151,10 +2151,10 @@ export const module1Questions: Question[] = [
     id: 165,
     question: 'What is the purpose of PPE marking and labelling?',
     options: [
-      'Show the price and supplier of the equipment',
+      'Show the purchase price and the supplier of the equipment',
       'Identify PPE type, performance standards, limitations, expiry dates',
-      'Show which worker the PPE is allocated to',
-      'Display the company logo and contact details',
+      'Show which worker the item has been allocated to and when',
+      'Display the company logo and the site contact details',
     ],
     correctAnswer: 1,
     explanation:
@@ -2164,10 +2164,10 @@ export const module1Questions: Question[] = [
     id: 166,
     question: 'How should PPE information be communicated to workers?',
     options: [
-      'By a single notice on the staff noticeboard',
-      'By word of mouth between workers only',
+      'A single notice pinned to the site noticeboard at the gate',
+      'Word of mouth passed between workers as they start work',
       'Training, written instructions, demonstrations, ongoing reinforcement',
-      'By the supplier delivery note alone',
+      'The supplier delivery note and printed data sheet alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -2191,9 +2191,9 @@ export const module1Questions: Question[] = [
     question: 'What should be included in a PPE programme?',
     options: [
       'Assessment, selection, training, maintenance, monitoring, review',
-      'Only the purchase and issue of equipment',
-      'Only the disposal of worn-out equipment',
-      'Only an annual stock-take of equipment held',
+      'Purchasing and issuing the equipment to each worker on site',
+      'Safe disposal of worn-out equipment and used filters',
+      'An annual stock-take of the equipment held in the stores',
     ],
     correctAnswer: 0,
     explanation:
@@ -2218,10 +2218,10 @@ export const module1Questions: Question[] = [
     id: 170,
     question: 'What information should be covered in a site induction?',
     options: [
-      'Only the location of the site canteen',
-      'Only the names of the management team',
+      'The location of the site canteen, toilets and drying room',
+      'The names of the management team and the site telephone list',
       'Site layout, hazards, emergency procedures, site rules, welfare facilities',
-      'Only the working hours and break times',
+      'The working hours, break times and overtime arrangements',
     ],
     correctAnswer: 2,
     explanation:
@@ -2231,9 +2231,9 @@ export const module1Questions: Question[] = [
     id: 171,
     question: 'What is a construction phase plan?',
     options: [
-      'A schedule of when each trade will be on site',
-      'A breakdown of the project costs and budget',
-      'A list of materials to be delivered to site',
+      'A schedule showing when each trade will be working on site',
+      'A breakdown of the project costs, budget and monthly cash flow',
+      'A list of the materials to be delivered to site each week',
       'Document setting out health and safety arrangements for construction phase',
     ],
     correctAnswer: 3,
@@ -2257,10 +2257,10 @@ export const module1Questions: Question[] = [
     id: 173,
     question: 'What should be included in site welfare facilities?',
     options: [
-      'Tool stores, material racks and waste skips',
+      'Tool stores, material racks, waste skips and secure lock-ups',
       'Toilets, washing facilities, drinking water, rest areas, changing rooms',
-      'Fire extinguishers, alarms and emergency lighting',
-      'Site office, drawing store and meeting room',
+      'Fire extinguishers, alarms, emergency lighting and escape routes',
+      'Site office, drawing store, meeting room and visitor parking',
     ],
     correctAnswer: 1,
     explanation:
@@ -2270,10 +2270,10 @@ export const module1Questions: Question[] = [
     id: 174,
     question: 'What is the purpose of site security?',
     options: [
-      'To monitor worker productivity and attendance',
-      'To control the cost of materials on site',
+      'To monitor worker productivity and record attendance times',
+      'To control the cost of materials held on site each week',
       'Prevent unauthorised access, protect workers and public, secure materials',
-      'To record deliveries arriving at the gate',
+      'To record deliveries arriving at the gate and check invoices',
     ],
     correctAnswer: 2,
     explanation:
@@ -2283,9 +2283,9 @@ export const module1Questions: Question[] = [
     id: 175,
     question: 'What housekeeping practices improve site safety?',
     options: [
-      'Leaving tools out for quick access',
-      'Stacking materials in walkways for convenience',
-      'Cleaning only at the end of the project',
+      'Tools left out on the floor for quick access',
+      'Materials stacked in the walkways for convenience',
+      'A single clean-up carried out at the end of the project',
       'Clear walkways, proper storage, regular cleaning, waste removal',
     ],
     correctAnswer: 3,
@@ -2309,10 +2309,10 @@ export const module1Questions: Question[] = [
     id: 177,
     question: 'What are the main causes of slips, trips and falls on construction sites?',
     options: [
-      'Working at height without a harness',
+      'Working at height without a harness or edge protection fitted',
       'Poor housekeeping, uneven surfaces, inadequate lighting, unsuitable footwear',
-      'Exposure to loud noise and vibration',
-      'Contact with hazardous chemical substances',
+      'Exposure to loud noise and to hand-arm vibration from power tools',
+      'Contact with hazardous chemical substances and wet cement',
     ],
     correctAnswer: 1,
     explanation:
@@ -2322,10 +2322,10 @@ export const module1Questions: Question[] = [
     id: 178,
     question: 'How can slips, trips and falls be prevented?',
     options: [
-      'Wearing high-visibility clothing at all times',
-      'Issuing every worker with a safety harness',
+      'High-visibility clothing and gloves worn by everyone at all times',
+      'A safety harness and lanyard issued to every worker on the site',
       'Good housekeeping, proper lighting, suitable surfaces, appropriate footwear',
-      'Posting warning signs at the site entrance',
+      'Warning signs posted at the site entrance and the welfare unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2335,9 +2335,9 @@ export const module1Questions: Question[] = [
     id: 179,
     question: 'What is the purpose of site signage?',
     options: [
-      'To advertise the company carrying out the work',
-      'To record the names of everyone on site',
-      'To display the project programme and deadlines',
+      'To advertise the company carrying out the work to passing traffic',
+      'To record the names of everyone who has signed in to the site',
+      'To display the project programme, deadlines and progress charts',
       'Communicate hazards, restrictions, mandatory requirements, emergency information',
     ],
     correctAnswer: 3,
@@ -2401,7 +2401,7 @@ export const module1Questions: Question[] = [
     options: [
       'Report immediately to supervisor and make area safe if possible',
       'Carry on working and report it at the end of the day',
-      'Ignore it if it does not affect your own task',
+      'Note it in the site diary for the next weekly inspection',
       'Try to repair the problem yourself without telling anyone',
     ],
     correctAnswer: 0,
@@ -2425,10 +2425,10 @@ export const module1Questions: Question[] = [
     id: 186,
     question: 'How often should toolbox talks be held?',
     options: [
-      'Only once at the start of a project',
-      'Only after an accident has occurred',
+      'Once at the start of a project, during the site induction',
+      'After an accident has occurred, as part of the follow-up',
       'Regularly, often weekly or before specific high-risk activities',
-      'Only when the HSE inspector visits',
+      'When the HSE inspector or client auditor visits the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2438,9 +2438,9 @@ export const module1Questions: Question[] = [
     id: 187,
     question: 'What is the purpose of site inspections?',
     options: [
-      'To record material deliveries to site',
-      'To measure worker productivity each day',
-      'To check the quality of completed work',
+      'To record material deliveries arriving at the site gate',
+      'To measure worker productivity and output each day',
+      'To check the quality of completed work before handover',
       'Identify hazards, check compliance, monitor safety standards',
     ],
     correctAnswer: 3,
@@ -2452,9 +2452,9 @@ export const module1Questions: Question[] = [
     question: 'Who should carry out site inspections?',
     options: [
       'Competent persons including supervisors, safety representatives, managers',
-      'Any new apprentice on their first day',
-      'The client and their professional advisers only',
-      'Members of the public passing the site',
+      'Any apprentice, as part of their first-day site induction',
+      'The client and their professional advisers, but no one else',
+      'The HSE inspector alone, during an unannounced routine visit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2490,9 +2490,9 @@ export const module1Questions: Question[] = [
     id: 191,
     question: 'What powers do safety representatives have on site?',
     options: [
-      'Dismiss workers who breach safety rules',
-      'Issue improvement and prohibition notices',
-      'Prosecute the employer in the courts',
+      'Dismiss workers who repeatedly breach the site safety rules',
+      'Issue improvement and prohibition notices to the employer',
+      'Prosecute the employer in the magistrates court directly',
       'Investigate accidents, inspect workplace, be consulted on safety matters',
     ],
     correctAnswer: 3,
@@ -2504,9 +2504,9 @@ export const module1Questions: Question[] = [
     question: 'What is the importance of communication on construction sites?',
     options: [
       'Essential for coordination, safety information, emergency response',
-      'Only needed when the supervisor is off site',
-      'Only important for the management team',
-      'Only required during the site induction',
+      'Needed mainly when the supervisor is away from the site',
+      'Important for the management team rather than operatives',
+      'Required during the site induction and nowhere else',
     ],
     correctAnswer: 0,
     explanation:
@@ -2516,10 +2516,10 @@ export const module1Questions: Question[] = [
     id: 193,
     question: 'How should hazardous substances be stored on site?',
     options: [
-      'In any convenient corner of the site',
+      'Anywhere on site provided the containers are kept closed',
       'Secure, ventilated areas with appropriate containment and labelling',
-      'In the same store as food and drinking water',
-      'Loose in the back of an open vehicle',
+      'In the same lockable store as food and drinking water',
+      'Loose in the back of an open van between site visits',
     ],
     correctAnswer: 1,
     explanation:
@@ -2529,10 +2529,10 @@ export const module1Questions: Question[] = [
     id: 194,
     question: 'What information should be available for hazardous substances?',
     options: [
-      'The purchase receipt and supplier details',
-      'The quantity remaining in each container',
+      'The purchase receipt, order number and supplier details',
+      'The quantity remaining in each container on the shelf',
       'Safety data sheets with hazard information and control measures',
-      'A photograph of the container label',
+      'A photograph of the container label kept in the office',
     ],
     correctAnswer: 2,
     explanation:
@@ -2568,10 +2568,10 @@ export const module1Questions: Question[] = [
     id: 197,
     question: 'What are the main routes of entry for chemicals into the body?',
     options: [
-      'Only through breathing them in',
+      'Breathing in vapours and dusts while working',
       'Inhalation, ingestion, skin/eye contact, injection',
-      'Only through swallowing them',
-      'Only through contact with the skin',
+      'Swallowing after handling food with dirty hands',
+      'Contact with unprotected skin and the eyes',
     ],
     correctAnswer: 1,
     explanation:
@@ -2581,10 +2581,10 @@ export const module1Questions: Question[] = [
     id: 198,
     question: 'What environmental hazards might be found on construction sites?',
     options: [
-      'Only the risk of electric shock from cables',
-      'Only the risk of falling from height',
+      'Electric shock from buried cables and overhead lines',
+      'Falls from height from scaffolds, ladders and openings',
       'Noise, dust, vibration, weather conditions, contaminated ground',
-      'Only the risk of slips, trips and falls',
+      'Slips, trips and falls on the same level around the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2594,9 +2594,9 @@ export const module1Questions: Question[] = [
     id: 199,
     question: 'How should environmental hazards be managed?',
     options: [
-      'By ignoring them as they are outside the work',
-      'By dealing with them only after an incident',
-      'By transferring all responsibility to the client',
+      'By recording them in the site diary and reviewing annually',
+      'By dealing with them once an incident has been reported',
+      'By transferring all responsibility to the principal designer',
       'Identify, assess, control through appropriate measures, monitor conditions',
     ],
     correctAnswer: 3,
@@ -2633,10 +2633,10 @@ export const module1Questions: Question[] = [
     id: 202,
     question: 'What is the importance of site planning for safety?',
     options: [
-      'It removes the need for risk assessments',
-      'It guarantees the project finishes on time',
+      'It removes the need to carry out separate risk assessments',
+      'It guarantees the project will finish on time and to budget',
       'Reduces conflicts between activities, controls access, manages hazards',
-      'It reduces the cost of materials needed',
+      'It reduces the cost of the materials needed for the works',
     ],
     correctAnswer: 2,
     explanation:
@@ -2646,9 +2646,9 @@ export const module1Questions: Question[] = [
     id: 203,
     question: 'How should deliveries be managed safely on site?',
     options: [
-      'Deliver to any free space whenever convenient',
-      'Allow drivers to reverse without any guidance',
-      'Mix deliveries with pedestrian walkways',
+      'Deliver to any free space on site whenever convenient',
+      'Allow drivers to reverse without guidance from a banksman',
+      'Route deliveries along the same paths as pedestrians',
       'Designated areas, trained banksmen, separation from other activities',
     ],
     correctAnswer: 3,
@@ -2672,10 +2672,10 @@ export const module1Questions: Question[] = [
     id: 205,
     question: 'What training should banksmen receive?',
     options: [
-      'First aid and emergency casualty care',
+      'First aid, emergency casualty care and resuscitation',
       'Vehicle movements, hand signals, hazard awareness, communication',
-      'Electrical inspection and testing',
-      'Manual handling of heavy loads',
+      'Electrical inspection, testing and certification',
+      'Manual handling and the lifting of heavy loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -2712,9 +2712,9 @@ export const module1Questions: Question[] = [
     question: 'What weather conditions affect construction site safety?',
     options: [
       'High winds, ice, heavy rain, extreme temperatures, lightning',
-      'Only heavy rain affects site safety',
-      'Only high temperatures affect site safety',
-      'Weather conditions have no effect on safety',
+      'Heavy rain and standing water, but no other conditions',
+      'High temperatures and direct sunlight during summer months',
+      'Weather has no real effect once site rules are followed',
     ],
     correctAnswer: 0,
     explanation:
@@ -2737,10 +2737,10 @@ export const module1Questions: Question[] = [
     id: 210,
     question: 'What is the importance of coordination between different trades on site?',
     options: [
-      'It reduces the overall cost of the project',
-      'It allows trades to work without supervision',
+      'It reduces the overall cost and the duration of the project',
+      'It allows each trade to work without any direct supervision',
       'Prevents conflicts, ensures compatible working methods, manages shared risks',
-      'It removes the need for individual risk assessments',
+      'It removes the need for individual trade risk assessments',
     ],
     correctAnswer: 2,
     explanation:
@@ -2922,9 +2922,9 @@ export const module1Questions: Question[] = [
     question: 'What information should be given to the fire brigade?',
     options: [
       'Location, type of fire, people involved, hazardous materials present',
-      'The estimated cost of the fire damage',
-      'The names of all the contractors on site',
-      'The project programme and completion date',
+      'The estimated cost of the fire damage to the building',
+      'The names of all the contractors working on the site',
+      'The project programme and the planned completion date',
     ],
     correctAnswer: 0,
     explanation:
@@ -2934,10 +2934,10 @@ export const module1Questions: Question[] = [
     id: 225,
     question: 'What is a fire risk assessment?',
     options: [
-      'A record of fires that have occurred on site',
+      'A record of all fires and near misses that have occurred on site',
       'Systematic evaluation of fire hazards and risks to implement control measures',
-      'A list of fire extinguishers held on site',
-      'A schedule of fire drills to be carried out',
+      'A list of the fire extinguishers held, their type and service dates',
+      'A schedule setting out the fire drills to be carried out each year',
     ],
     correctAnswer: 1,
     explanation:
@@ -2947,10 +2947,10 @@ export const module1Questions: Question[] = [
     id: 226,
     question: 'What should a fire risk assessment identify?',
     options: [
-      'Only the location of the fire extinguishers',
-      'Only the number of people on site',
+      'The location of the fire extinguishers and hose reels',
+      'The number of people present on site at any one time',
       'Fire hazards, people at risk, control measures needed',
-      'Only the nearest fire station address',
+      'The nearest fire station and its response time',
     ],
     correctAnswer: 2,
     explanation:
@@ -2960,9 +2960,9 @@ export const module1Questions: Question[] = [
     id: 227,
     question: 'How often should fire drills be conducted?',
     options: [
-      'Only once when the building first opens',
-      'Only after a real fire has occurred',
-      'Only when an HSE inspector requests one',
+      'Once, when the building is first brought into use',
+      'After a real fire or false alarm has occurred',
+      'When the HSE inspector or insurer requests one',
       'Regularly, typically every 6 months or as required',
     ],
     correctAnswer: 3,
@@ -2974,9 +2974,9 @@ export const module1Questions: Question[] = [
     question: 'What should be checked during fire drill evaluation?',
     options: [
       'Evacuation time, route effectiveness, alarm audibility, assembly procedures',
-      'The cost of holding the drill',
-      'How many workers enjoyed the drill',
-      'The weather conditions during the drill',
+      'The cost of holding the drill and time lost to production',
+      'How many workers took part and how they rated the drill overall',
+      'The weather conditions and the temperature during the drill',
     ],
     correctAnswer: 0,
     explanation:
@@ -2999,10 +2999,10 @@ export const module1Questions: Question[] = [
     id: 230,
     question: 'What is the role of fire wardens?',
     options: [
-      'To fight all fires personally before evacuating',
-      'To carry out the annual fire risk assessment',
+      'To fight all fires personally before evacuating anyone',
+      'To carry out the annual fire risk assessment for the site',
       'Assist with evacuation, check areas are clear, liaise with fire brigade',
-      'To install and maintain the fire alarm system',
+      'To install and maintain the fire alarm and detection system',
     ],
     correctAnswer: 2,
     explanation:
@@ -3012,9 +3012,9 @@ export const module1Questions: Question[] = [
     id: 231,
     question: 'What training should fire wardens receive?',
     options: [
-      'Manual handling and lifting techniques',
-      'Electrical inspection and testing',
-      'First aid and casualty resuscitation only',
+      'Manual handling, kinetic lifting and load-carrying techniques',
+      'Electrical inspection, testing and certification of equipment',
+      'First aid, casualty resuscitation and defibrillator use',
       'Fire procedures, evacuation routes, equipment use, emergency communication',
     ],
     correctAnswer: 3,
@@ -3064,9 +3064,9 @@ export const module1Questions: Question[] = [
     id: 235,
     question: 'What emergency equipment should be available on construction sites?',
     options: [
-      'Only a single first-aid kit in the site office',
-      'Only a telephone in the site manager office',
-      'Only a fire extinguisher at the entrance',
+      'A single first-aid kit kept in the site office and nothing more',
+      'A telephone in the site manager office for calling the emergency services',
+      'A fire extinguisher at the entrance and a nominated fire warden',
       'Fire extinguishers, first aid kits, emergency communication, evacuation equipment',
     ],
     correctAnswer: 3,
@@ -3078,9 +3078,9 @@ export const module1Questions: Question[] = [
     question: 'What is a fire safety management system?',
     options: [
       'Comprehensive approach including prevention, detection, suppression, evacuation',
-      'A single fire extinguisher placed at the exit',
-      'A list of emergency telephone numbers only',
-      'An annual visit from the fire brigade only',
+      'A single fire extinguisher placed at each exit from the building',
+      'A list of emergency telephone numbers displayed in the office',
+      'An annual inspection visit carried out by the local fire and rescue service',
     ],
     correctAnswer: 0,
     explanation:
@@ -3142,10 +3142,10 @@ export const module1Questions: Question[] = [
     id: 241,
     question: 'What information should be immediately available in emergencies?',
     options: [
-      'The project cost breakdown and budget',
+      'The project cost breakdown, budget and valuation dates',
       'Emergency contacts, site plans, hazard information, evacuation procedures',
-      'The names of every worker on the project',
-      'The delivery schedule for materials',
+      'The names and job titles of every worker on the project',
+      'The delivery schedule for materials and plant hire dates',
     ],
     correctAnswer: 1,
     explanation:
@@ -3155,10 +3155,10 @@ export const module1Questions: Question[] = [
     id: 242,
     question: 'How should emergency procedures be communicated?',
     options: [
-      'By word of mouth on the first day only',
-      'By a single email to all staff',
+      'Word of mouth on the first day of work only',
+      'A single email circulated to all of the staff',
       'Training, written procedures, drills, signs, induction',
-      'By a notice in the site canteen only',
+      'A notice displayed in the site canteen only',
     ],
     correctAnswer: 2,
     explanation:
@@ -3182,9 +3182,9 @@ export const module1Questions: Question[] = [
     question: 'How often should emergency lighting be tested?',
     options: [
       'Monthly brief tests and annual full duration tests',
-      'Only once when first installed',
-      'Only after a power failure has occurred',
-      'Every five years by an external contractor',
+      'Once, when the system is first installed and commissioned',
+      'After a mains power failure has occurred on site',
+      'Every five years by an external specialist contractor',
     ],
     correctAnswer: 0,
     explanation:
@@ -3194,10 +3194,10 @@ export const module1Questions: Question[] = [
     id: 245,
     question: 'What should be included in emergency evacuation plans?',
     options: [
-      'Only the location of the nearest fire station',
+      'The location of the nearest fire station and its phone number',
       'Routes, assembly points, responsibilities, special needs, communication methods',
-      'Only the contact number for the site manager',
-      'Only a list of the fire extinguishers held',
+      'The contact numbers for the site manager and the client agent',
+      'A list of the fire extinguishers held and their service dates',
     ],
     correctAnswer: 1,
     explanation:
@@ -3220,9 +3220,9 @@ export const module1Questions: Question[] = [
     id: 247,
     question: 'What should be done after an emergency evacuation?',
     options: [
-      'Return to work immediately to make up lost time',
-      'Re-enter the building before the all-clear is given',
-      'Leave the site without telling anyone',
+      'Return to work immediately to make up the lost production time',
+      'Re-enter the building to collect tools before the all-clear',
+      'Leave the site for home without telling the site manager',
       'Account for all personnel, investigate cause, debrief, improve procedures',
     ],
     correctAnswer: 3,
@@ -3246,10 +3246,10 @@ export const module1Questions: Question[] = [
     id: 249,
     question: 'What should be included in emergency training?',
     options: [
-      'Only the location of the first-aid kit',
+      'The location of the first-aid kit and the names of the site first-aiders',
       'Alarm procedures, evacuation routes, assembly points, equipment use, site-specific risks',
-      'Only the contact number for the fire brigade',
-      'Only how to use a fire extinguisher',
+      'The contact number for the fire and rescue service and the site postcode',
+      'How to select and use a fire extinguisher on each different class of fire',
     ],
     correctAnswer: 1,
     explanation:
@@ -3259,10 +3259,10 @@ export const module1Questions: Question[] = [
     id: 250,
     question: 'How often should emergency procedures be reviewed and updated?',
     options: [
-      'Only once, when the procedures are first written',
-      'Only when a new worker joins the team',
+      'Once, at the point the procedures are first written',
+      'Whenever a new worker joins the team and is inducted',
       'Regularly, after incidents, when changes occur to site or operations',
-      'Only when the HSE carries out an inspection',
+      'When the HSE carries out an inspection of the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3296,7 +3296,7 @@ export const module1Questions: Question[] = [
     options: [
       'Flammable — the substance, vapour or gas can ignite easily',
       'Corrosive — the substance will burn skin or attack metal',
-      'Oxidising — the substance can intensify a fire or cause one in contact with fuel',
+      'Oxidising — the substance can intensify a fire or start one',
       'Toxic — the substance is fatal or toxic in small amounts',
     ],
     correctAnswer: 0,
@@ -3308,10 +3308,10 @@ export const module1Questions: Question[] = [
     question:
       'Who is the "duty holder" for managing asbestos in a non-domestic premises under CAR 2012 Regulation 4?',
     options: [
-      'The HSE-licensed asbestos contractor appointed to survey the building',
+      'The HSE-licensed asbestos removal contractor appointed to survey the building and remove the material',
       'Whoever is responsible for the maintenance and repair of the premises (often the owner or, via the lease, the occupier)',
-      'The principal contractor named on the construction phase plan',
-      'The Environment Agency, as the regulator for hazardous waste',
+      'The principal contractor named in the construction phase plan, who carries the duty for the whole life of the building',
+      'The Environment Agency, as the regulator responsible for hazardous waste and for contaminated land in England',
     ],
     correctAnswer: 1,
     explanation:
@@ -3322,10 +3322,10 @@ export const module1Questions: Question[] = [
     question:
       'Under the GB CLP Regulation, which warning pictogram indicates a substance is corrosive (will burn skin or attack metal)?',
     options: [
-      'A diamond with a black flame above a horizontal line',
-      'A diamond with a black skull and crossbones',
+      'A diamond showing a black flame burning above a solid horizontal line',
+      'A diamond showing a black skull and crossbones on a white background',
       'A diamond with a black image of a hand and a surface being eaten away by liquid drops',
-      'A diamond with a black exclamation mark',
+      'A diamond showing a bold black exclamation mark on a white background',
     ],
     correctAnswer: 2,
     explanation:
@@ -3352,10 +3352,10 @@ export const module1Questions: Question[] = [
     question:
       "You're an apprentice and you've spotted what looks like an asbestos insulating board (AIB) ceiling tile above where you're about to drill. The supervisor isn't on site. What's the right call?",
     options: [
-      "Stop, don't disturb the tile, isolate the area, ring the supervisor and ask the duty holder for the asbestos register",
-      "Drill carefully through the tile but wear a dust mask and dampen the area first",
-      "Lift the tile gently to check what is above it before deciding whether to continue",
-      "Carry on drilling — ceiling tiles are too thin to contain a dangerous amount of asbestos",
+      'Stop, don\'t disturb the tile, isolate the area, ring the supervisor and ask the duty holder for the asbestos register',
+      'Drill carefully through the tile but wear a dust mask and dampen the area first to keep the fibres down',
+      'Lift the tile gently and check what is above it before deciding whether it is safe to carry on drilling',
+      'Carry on drilling — ceiling tiles are too thin to release a dangerous quantity of asbestos fibres into the air',
     ],
     correctAnswer: 0,
     explanation:
@@ -3366,10 +3366,10 @@ export const module1Questions: Question[] = [
     question:
       "Under HASAWA section 7 and MHSWR Regulation 14, you've raised a safety concern with your supervisor and they've told you to drop it. What should you do next?",
     options: [
-      "Drop it as instructed — the supervisor carries the legal responsibility, not you",
-      "Escalate above the supervisor (your own employer, the principal contractor, your scheme provider) and record the conversation in writing",
-      "Report it straight to the HSE before giving your own firm any chance to act",
-      "Carry on with the work but refuse to sign the risk assessment afterwards",
+      'Drop it as instructed — the supervisor carries the legal responsibility for site safety, and an apprentice has no duty',
+      'Escalate above the supervisor (your own employer, the principal contractor, your scheme provider) and record the conversation in writing',
+      'Report it straight to the HSE and to the client, before giving your own employer any opportunity to put it right themselves',
+      'Carry on with the work as instructed, but refuse to sign the risk assessment or the permit to work when it is presented',
     ],
     correctAnswer: 1,
     explanation:
@@ -3380,10 +3380,10 @@ export const module1Questions: Question[] = [
     question:
       "You're working in a roof void and discover a live conductor that wasn't on the drawings or in the RAMS. What's the correct first action?",
     options: [
-      'Cut the conductor quickly while it is still live to remove the hazard',
-      'Carry on working but keep clear of the conductor until the job is finished',
+      'Cut the conductor quickly while it is still live so that the hazard is removed straight away and the work can continue',
+      'Carry on working but keep well clear of the conductor and mention it on the certificate at the end of the job',
       'Stop work, isolate yourself from the area, notify your supervisor and update the risk assessment before continuing',
-      'Test the conductor by hand to confirm whether it is actually live',
+      'Test the conductor with a neon screwdriver to confirm whether it is live before deciding what to do next',
     ],
     correctAnswer: 2,
     explanation:
@@ -3394,10 +3394,10 @@ export const module1Questions: Question[] = [
     question:
       'You arrive at a 1970s commercial building and the duty holder cannot produce an asbestos register for the area you are about to drill. What is the correct procedure?',
     options: [
-      "Take your own sample of the material and send it to a lab before continuing",
-      "Carry on drilling — a missing register means the building has already been cleared",
-      "Drill only a single hole to check whether any fibres are released before continuing",
-      "Stop work, treat the material as 'presumed asbestos' until a sample has been analysed by an accredited lab or the duty holder produces a clean survey",
+      'Take your own sample of the material and send it to a laboratory yourself, carrying on with other work while you wait for the result',
+      'Carry on drilling — a missing register means the building has already been surveyed and cleared of asbestos by the duty holder',
+      'Drill only a single small hole and check whether any fibres are released before deciding whether it is safe to continue with the work',
+      'Stop work, treat the material as \'presumed asbestos\' until a sample has been analysed by an accredited lab or the duty holder produces a clean survey',
     ],
     correctAnswer: 3,
     explanation:
@@ -3409,9 +3409,9 @@ export const module1Questions: Question[] = [
       'What does "exceeds your level of responsibility" mean in practice for a Level 2 apprentice?',
     options: [
       'Anything you have not been trained or signed off to do — including live LV work, suspected asbestos, or work outside the scope of the RAMS',
-      'Only tasks that involve working at height above two metres on the site',
-      'Only work that the client has specifically asked the apprentice not to do',
-      'Anything that takes longer than a single working day to complete',
+      'Tasks that involve working at height above two metres, since those always need a separate permit and additional supervision',
+      'Work the client has specifically asked the apprentice not to carry out, whatever the apprentice has been trained to do',
+      'Any task that takes longer than a single working day to complete without your supervisor being present on site at the time',
     ],
     correctAnswer: 0,
     explanation:
@@ -3424,10 +3424,10 @@ export const module1Questions: Question[] = [
     question:
       'Under the GB CLP Regulation, what does the exclamation mark warning pictogram on a red-bordered diamond indicate?',
     options: [
-      'Serious long-term health hazards: carcinogen, mutagen, or respiratory sensitiser',
+      'Serious long-term health hazards: carcinogen, mutagen, reproductive toxicity or respiratory sensitiser',
       'Less severe health hazards: skin/eye irritation, skin sensitiser, respiratory irritation or harmful if swallowed/inhaled',
-      'Acute toxicity: the substance is fatal or toxic by inhalation, ingestion or skin contact',
-      'Corrosive: the substance will cause severe skin burns and eye damage',
+      'Acute toxicity: the substance is fatal or toxic in small amounts by inhalation, ingestion or skin contact',
+      'Corrosive: the substance will cause severe skin burns and serious eye damage, and will attack metals as well',
     ],
     correctAnswer: 1,
     explanation:
@@ -3438,10 +3438,10 @@ export const module1Questions: Question[] = [
     question:
       'Under the GB CLP Regulation, what does the warning pictogram of a dead tree and a dead fish (red-bordered diamond) indicate?',
     options: [
-      'Biohazard — the substance contains harmful micro-organisms or biological agents',
-      'Compressed gas — the container is under pressure and may explode if heated',
+      'Biohazard — the substance contains harmful micro-organisms or other biological agents',
+      'Compressed gas — the container is under pressure and may explode if it is heated or damaged',
       'Hazardous to the aquatic environment — the substance is toxic to aquatic life with long-lasting effects',
-      'Flammable — the substance can ignite easily near a source of heat',
+      'Flammable — the substance, its vapour or its gas can ignite easily near a source of heat',
     ],
     correctAnswer: 2,
     explanation:
@@ -3452,9 +3452,9 @@ export const module1Questions: Question[] = [
     question:
       'Which of the following is a typical place an electrician might encounter asbestos in a pre-2000 commercial building?',
     options: [
-      'The plastic insulation on modern twin-and-earth cable runs',
-      'The copper busbars inside a recently installed consumer unit',
-      'The PVC trunking and conduit fitted during a recent refurbishment',
+      'The plastic insulation and sheath on the modern twin-and-earth cable runs installed during the most recent rewire of the whole building',
+      'The copper busbars, neutral bars and earth bars inside a recently installed metal-clad consumer unit and its main switch assembly',
+      'The PVC trunking, conduit and cable basket fitted during the recent refurbishment of the office suite and its corridors on this floor',
       'Asbestos insulating board (AIB) ceiling tiles, pipe lagging, textured coatings (Artex), and electrical insulation backing boards behind old fuseboards',
     ],
     correctAnswer: 3,
@@ -3467,9 +3467,9 @@ export const module1Questions: Question[] = [
       'Which of the three asbestos types was used most heavily in the UK and is the type most commonly encountered in pre-2000 building fabric?',
     options: [
       'Chrysotile (white) — the workhorse, used in cement sheets, textured coatings, gaskets, vinyl floor tiles and some electrical insulation; banned only in 1999',
-      'Crocidolite (blue) — the most dangerous type, used mainly in sprayed coatings and pipe lagging; banned in 1985',
-      'Amosite (brown) — used in insulating boards and ceiling tiles; banned in 1985',
-      'Actinolite (grey) — a rare contaminant rarely used deliberately in building products',
+      'Crocidolite (blue) — the most dangerous type, used mainly in sprayed coatings, pipe lagging and insulating board; banned in 1985 along with amosite',
+      'Amosite (brown) — used in insulating boards, ceiling tiles and thermal insulation; banned in 1985 alongside the blue type, and still common in plant rooms',
+      'Actinolite (grey) — a rare contaminant rarely used deliberately in building products, found mainly as an impurity in other minerals and in some talc',
     ],
     correctAnswer: 0,
     explanation:
@@ -3480,10 +3480,10 @@ export const module1Questions: Question[] = [
     question:
       'On suspicion of disturbing an asbestos-containing material, which of these is the WRONG action?',
     options: [
-      'Stop work immediately and avoid disturbing the material any further',
+      'Stop work immediately and avoid disturbing the material any further until it has been properly identified by a competent person',
       'Sweep up the dust and bag it for disposal yourself — sweeping releases more fibres into the air, and a domestic vacuum disperses them further',
-      'Isolate the area and prevent others from entering until it has been assessed',
-      'Notify your supervisor and request the asbestos register for the premises',
+      'Isolate the area with barriers and warning signs and prevent anyone else from entering until the material has been assessed by a competent person',
+      'Notify your supervisor and request the asbestos register for the premises from the duty holder before doing any further work',
     ],
     correctAnswer: 1,
     explanation:
@@ -3525,9 +3525,9 @@ export const module1Questions: Question[] = [
       'Which environmental impact is most associated with operating a petrol breaker or stihl saw in a residential street?',
     options: [
       'Noise nuisance and dust — both can lead to abatement notices from the local authority under the Environmental Protection Act 1990',
-      'Water pollution from the petrol entering a nearby surface water drain',
-      'Hazardous waste from the spent cutting discs being sent to landfill',
-      'Soil contamination from the equipment leaking hydraulic oil onto the road',
+      'Water pollution from petrol or two-stroke oil entering a nearby surface water drain and reaching a watercourse downstream',
+      'Hazardous waste arising from the spent cutting discs and their packaging being sent to landfill untreated by the contractor',
+      'Soil and verge contamination from the breaker leaking hydraulic oil and fuel onto the road surface and kerb, then washing away',
     ],
     correctAnswer: 0,
     explanation:
@@ -3538,10 +3538,10 @@ export const module1Questions: Question[] = [
     question:
       'Cutting old PVC ducting and installing new conduit on a refurb generates plastic offcuts and copper waste. What is the BEST environmental practice?',
     options: [
-      'Put all the offcuts and waste into one general skip to save sorting time',
+      'Put all the offcuts and waste into one general skip to save the time spent sorting them on site',
       'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
-      'Burn the plastic offcuts on site to reduce the volume going to the skip',
-      'Bury the inert offcuts on site rather than paying for them to be removed',
+      'Burn the plastic offcuts on site at the end of the day to reduce the volume going into the skip',
+      'Bury the inert offcuts in the trench on site rather than paying a carrier to remove them',
     ],
     correctAnswer: 1,
     explanation:
@@ -3568,9 +3568,9 @@ export const module1Questions: Question[] = [
     question:
       'Old fluorescent tubes removed during a re-lamp are classed as:',
     options: [
-      'Inert waste — they may be put in the general rubble skip with broken brick',
-      'General mixed waste — they can go in any skip provided the glass is broken first',
-      'Recyclable glass — they may be placed loose in the site glass recycling bin',
+      'Inert waste — they may be put into the general rubble skip along with broken brick and hardcore once cooled',
+      'General mixed waste — they can go in any skip provided the glass is broken down first to save space',
+      'Recyclable glass — they may be placed loose in the site glass recycling bin with bottles, jars and cullet',
       'Hazardous waste (mercury content) — segregate, store upright in a labelled container and consign to a permitted carrier',
     ],
     correctAnswer: 3,
@@ -3583,9 +3583,9 @@ export const module1Questions: Question[] = [
       'Waste electrical and electronic equipment (WEEE) such as old consumer units and luminaires must be:',
     options: [
       'Segregated and sent to an authorised treatment facility (AATF) under the WEEE Regulations 2013',
-      'Placed in the general waste skip as long as the cables are removed first',
-      'Buried on site as inert waste once the casing has been broken up',
-      'Sent straight to landfill, since electrical items cannot be recycled',
+      'Placed in the general waste skip as long as the cables and lamps are removed first',
+      'Buried on site as inert waste once the casing has been broken up into small pieces',
+      'Sent straight to landfill, since electrical items cannot be economically recycled',
     ],
     correctAnswer: 0,
     explanation:
@@ -3610,10 +3610,10 @@ export const module1Questions: Question[] = [
     question:
       "What's the correct on-site practice for storing scrap copper cable awaiting collection?",
     options: [
-      'Left loose by the site gate so the scrap merchant can collect it at any time',
-      'Stripped of insulation by burning it off before storage to increase its value',
+      'Left loose beside the site gate so the scrap merchant can collect it at any time without waiting for site staff',
+      'Stripped of its insulation by burning it off before storage, so that it fetches a higher price when it is weighed in',
       'Segregated, secured against theft, in a labelled and dry container — transferred only to an authorised metal carrier with a transfer note',
-      'Mixed in with the general waste skip since copper has little resale value',
+      'Mixed in with the general waste skip, since the resale value of copper does not cover the cost of separating it on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -3624,9 +3624,9 @@ export const module1Questions: Question[] = [
     question:
       'Inert waste (clean rubble, broken brick) on site should be:',
     options: [
-      'Consigned as hazardous waste with a consignment note kept for three years',
-      'Mixed with the general waste skip since rubble cannot be recycled',
-      'Sent to an authorised treatment facility under the WEEE Regulations',
+      'Consigned as hazardous waste with a consignment note that must be kept on file for three years by the producer',
+      'Mixed in with the general waste skip, since clean rubble cannot be recycled or reused on site afterwards',
+      'Sent to an authorised treatment facility under the WEEE Regulations 2013 like other site waste',
       'Segregated into its own skip — the disposal cost is much lower and it can often be reused or recycled as aggregate',
     ],
     correctAnswer: 3,
@@ -3641,9 +3641,9 @@ export const module1Questions: Question[] = [
       'Why is it important to report a fuel spill to your supervisor immediately rather than just mopping it up yourself?',
     options: [
       'Spills above certain thresholds must be reported to the Environment Agency, and the firm needs to investigate the cause to prevent a repeat',
-      'Mopping it up yourself is illegal — only the fire brigade may deal with a fuel spill',
-      'Reporting transfers the legal responsibility for the spill onto the supervisor',
-      'The supervisor must personally clean every spill, so you should never touch it',
+      'Mopping it up yourself is unlawful — only a licensed waste contractor may deal with spilt fuel on a construction site under the regulations',
+      'Reporting it transfers the legal responsibility for the spill from you onto the supervisor and the firm that employs you',
+      'The supervisor must personally clean up every spill, so an operative should never touch the absorbent granules kept on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3654,10 +3654,10 @@ export const module1Questions: Question[] = [
     question:
       'You see another contractor pouring waste solvent down a surface water drain. What is the right action?',
     options: [
-      'Ignore it — it is another contractor and therefore none of your concern',
+      'Say nothing on site but mention it to the Environment Agency yourself once the job has been finished',
       'Stop them if safe, report immediately to your supervisor and the principal contractor; record what you saw',
-      'Help them flush the drain with water to dilute the solvent quickly',
-      'Wait until the next toolbox talk to mention it to the whole site team',
+      'Help them flush the drain through with clean water so that the solvent is diluted quickly',
+      'Wait until the next toolbox talk and raise it then with the whole site team present',
     ],
     correctAnswer: 1,
     explanation:
@@ -3682,9 +3682,9 @@ export const module1Questions: Question[] = [
     question:
       'Why should near-miss environmental incidents (e.g. a drum that nearly tipped, a leak that nearly reached a drain) be reported even if no harm occurred?',
     options: [
-      'Near-misses do not need reporting because no harm was actually caused',
-      'Reporting near-misses is only required for injuries to people, not the environment',
-      'Near-misses should be recorded privately and never shared with the firm',
+      'Near-misses do not need reporting because no actual harm was caused and nothing reached the drain or the watercourse',
+      'Reporting near-misses is only required for injuries to people under RIDDOR, not for environmental incidents of this kind',
+      'Near-misses should be recorded privately by the operative and never shared with the firm or the client, in case of blame',
       'Near-misses identify weaknesses before they cause real incidents — the same control failure will eventually cause an actual pollution event',
     ],
     correctAnswer: 3,
@@ -3712,10 +3712,10 @@ export const module1Questions: Question[] = [
     question:
       'Under the Health and Safety (First-Aid) Regulations 1981, what is the minimum requirement for first-aid provision on every workplace?',
     options: [
-      'At least one fully qualified first-aider must be present on every site',
+      'At least one fully qualified first-aider must be present on every site at all times of the working day',
       'Adequate, suitable and sufficient first-aid equipment, facilities and personnel based on a needs assessment',
-      'A staffed medical room must be provided at every workplace',
-      'A defibrillator must be installed at every workplace by law',
+      'A staffed medical room must be provided at every workplace where more than five people are at work',
+      'A defibrillator must be installed at every workplace by law and checked each month by a competent person',
     ],
     correctAnswer: 1,
     explanation:
@@ -3726,10 +3726,10 @@ export const module1Questions: Question[] = [
     question:
       'What is the role of an "appointed person" under the Health and Safety (First-Aid) Regulations 1981?',
     options: [
-      'A fully trained first-aider who can give emergency treatment to casualties',
-      'The HSE inspector who checks first-aid provision during a site visit',
+      'A fully trained first-aider who has completed the approved three-day course and can give emergency treatment to casualties, including CPR',
+      'The HSE inspector who checks the adequacy of first-aid provision during a routine site visit and records in writing any shortfall found',
       'A person appointed to take charge of first-aid arrangements (calling emergency services, looking after kit) when no first-aider is required by the assessment',
-      'The site manager who appoints all the first-aiders for the project',
+      'The site manager, who appoints all of the first-aiders for the project and arranges and pays for their initial and refresher training courses',
     ],
     correctAnswer: 2,
     explanation:
@@ -3754,10 +3754,10 @@ export const module1Questions: Question[] = [
     question:
       'Where should first-aid equipment be kept on a construction site?',
     options: [
-      "In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site's emergency information",
-      "Locked in the site manager's office so that the contents cannot be misused",
-      "In each worker's personal toolbox so it is always close to hand",
-      "In a remote store away from the work area to keep it clean and dry",
+      'In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site\'s emergency information',
+      'Locked in the site manager\'s office so that the contents cannot be misused or taken home at the end of a shift',
+      'In each worker\'s personal toolbox so that it is always close to hand wherever they happen to be working that day',
+      'In a remote store well away from the work area, so that the contents are kept clean, dry and free from site dust and damp',
     ],
     correctAnswer: 0,
     explanation:
@@ -3768,10 +3768,10 @@ export const module1Questions: Question[] = [
     question:
       'For sites with electrical risks, what additional equipment may the first-aid needs assessment recommend?',
     options: [
-      'A spare set of insulated gloves for the first-aider to wear',
+      'A spare set of insulated gloves for the first-aider to wear before approaching an electric shock casualty',
       'An automated external defibrillator (AED) — useful where the casualty may suffer ventricular fibrillation from electric shock',
-      'An extra supply of burn dressings stored off site',
-      'A second first-aid kit kept locked in the site office',
+      'An extra supply of burn dressings and cling film stored in the site office rather than in the main kit itself',
+      'A second first-aid kit kept locked in the site office in case the main kit is emptied during an incident',
     ],
     correctAnswer: 1,
     explanation:
@@ -3784,10 +3784,10 @@ export const module1Questions: Question[] = [
     question:
       "Why is it important not to use first-aid supplies for non-emergency purposes (e.g. taking plasters home, using the eye-wash to clean glasses)?",
     options: [
-      'Using the kit casually invalidates the employer first-aid insurance cover',
-      'First-aid items lose their sterility the moment the kit box is opened',
+      'Using the kit casually invalidates the employer first-aid insurance cover for the whole site',
+      'First-aid items lose their sterility the moment the box is opened, whatever they are used for',
       'Supplies may be missing or inadequate when a real injury occurs, leaving the casualty without treatment',
-      'Only a qualified first-aider is legally allowed to open the first-aid kit',
+      'Only a qualified first-aider is legally allowed to open a workplace first-aid kit at any time',
     ],
     correctAnswer: 2,
     explanation:
@@ -3798,9 +3798,9 @@ export const module1Questions: Question[] = [
     question:
       'After using items from a first-aid kit, who is responsible for ensuring they are replaced?',
     options: [
-      'The casualty who was treated, as they used up the supplies',
-      'The HSE inspector, who restocks kits during routine site visits',
-      'Whoever happens to notice the kit is low, with no record kept',
+      'The casualty who was treated, since they were the person who used up the supplies taken from the kit that day',
+      'The HSE inspector, who checks and restocks workplace first-aid kits during routine unannounced site visits each year',
+      'Whoever happens to notice that the kit is running low, with no record kept of what was used, when, or by whom',
       'The first-aider, appointed person, or the named responsible person in the workplace — replacement should be prompt and recorded',
     ],
     correctAnswer: 3,
@@ -3813,9 +3813,9 @@ export const module1Questions: Question[] = [
       'How often should first-aid kits be checked to ensure contents are complete and in date?',
     options: [
       'Regularly (typically monthly) — and after every use; sterile items have expiry dates and must be replaced',
-      'Only once a year, during the annual workplace safety audit',
-      'Only when an item is actually needed to treat a casualty',
-      'Every five years, in line with the periodic inspection cycle',
+      'Once a year, during the annual workplace health and safety audit carried out by the firm',
+      'When an item is actually needed to treat a casualty, and at no other time during the year',
+      'Every five years, in line with the periodic inspection cycle used for the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -3826,10 +3826,10 @@ export const module1Questions: Question[] = [
     question:
       'You used the last triangular bandage from the site first-aid kit treating a colleague. What should you do next?',
     options: [
-      'Nothing — it is not your responsibility to manage the kit',
+      'Nothing — restocking the first-aid kit is the site manager\'s job, not the responsibility of the user who used it',
       'Tell the appointed person or first-aider so the kit is restocked, and note it in the accident book if the use was for an injury',
-      'Buy a replacement yourself and claim it back later',
-      'Improvise a substitute from materials on site and say nothing',
+      'Buy a replacement bandage yourself from a chemist and claim the cost back on your expenses at the end of that month',
+      'Improvise a substitute from clean materials found on site and say nothing to anyone about the shortage afterwards',
     ],
     correctAnswer: 1,
     explanation:
@@ -3856,9 +3856,9 @@ export const module1Questions: Question[] = [
     question:
       'What is the correct sequence for safe isolation of a single-phase final circuit?',
     options: [
-      'Switch off, test the circuit dead, then begin work straight away',
-      'Test the circuit dead, switch off, lock off, then prove the indicator',
-      'Lock off, switch off, prove the indicator dead, then start work',
+      'Switch off at the consumer unit, test the circuit dead with an approved voltage indicator, then begin work without locking the device off',
+      'Test the circuit dead first, then switch off, lock off, and finally prove the voltage indicator on a known supply or proving unit afterwards',
+      'Lock off the device first, switch off, prove the voltage indicator dead against the circuit, then start work at once without a caution notice',
       'Switch off, lock off, place caution notice, prove voltage indicator on a known supply, test the circuit dead at all relevant points, prove the indicator again',
     ],
     correctAnswer: 3,
@@ -3871,9 +3871,9 @@ export const module1Questions: Question[] = [
       'What test instrument is recommended by HSE Guidance Note GS38 for proving a circuit dead?',
     options: [
       'A two-pole voltage indicator (fused or current-limited) compliant with GS38, used with a proving unit',
-      'A mains-testing neon screwdriver that lights when the conductor is live',
-      'A non-contact voltage detector pen used as the sole means of proving',
-      'A multimeter set to its highest AC voltage range with standard leads',
+      'A mains-testing neon screwdriver that lights up when the conductor under test is live',
+      'A non-contact voltage detector pen used on its own as the sole means of proving dead',
+      'A multimeter set to its highest AC voltage range with standard unfused test leads fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -3884,10 +3884,10 @@ export const module1Questions: Question[] = [
     question:
       'Why is it essential to "prove the prover" before AND after testing a circuit dead?',
     options: [
-      'To calibrate the voltage indicator to the exact supply voltage being tested',
+      'To calibrate the voltage indicator against the exact supply voltage being tested, so that the reading obtained is accurate and traceable',
       'To confirm the test instrument was working correctly both before AND after the dead test — a fault that develops mid-test could give a false dead reading',
-      'To discharge any stored charge in the indicator before touching the circuit',
-      'To warm up the indicator batteries so the display reads accurately',
+      'To discharge any stored charge held in the indicator before it is used safely on the conductors of the circuit being worked on',
+      'To warm up the indicator\'s batteries so that the display reads accurately in the cold conditions found on site during winter working',
     ],
     correctAnswer: 1,
     explanation:
@@ -3898,10 +3898,10 @@ export const module1Questions: Question[] = [
     question:
       'When isolating a three-phase circuit, you must test for voltage between:',
     options: [
-      'Each phase to neutral only — phase-to-phase tests are not required',
-      'Neutral to earth only, since the phases share a common supply',
+      'Each phase to neutral only — phase-to-phase tests are not required on a TN-S supply',
+      'Neutral to earth only, since the three phases all share a common supply transformer',
       'Each phase to neutral, each phase to earth, AND between each pair of phases (L1-L2, L2-L3, L1-L3)',
-      'Only between L1 and earth, as the other phases follow automatically',
+      'Between L1 and earth only, as the other two phases will follow automatically from that',
     ],
     correctAnswer: 2,
     explanation:
@@ -3912,9 +3912,9 @@ export const module1Questions: Question[] = [
     question:
       'Once a circuit has been isolated and proved dead, what additional precaution prevents someone else re-energising it while you work?',
     options: [
-      'Leave the breaker in the off position and tell the other workers verbally',
-      'Place a strip of insulating tape over the breaker so it cannot be moved',
-      'Stand a colleague by the consumer unit to stop anyone switching it on',
+      'Leave the breaker in the off position and tell the other workers on site verbally at the start of the shift',
+      'Place a strip of insulating tape across the breaker so that it cannot easily be switched back on by anyone else',
+      'Stand a colleague by the consumer unit for the whole job to stop anyone switching the circuit back on by mistake',
       'Apply a personal padlock to the lock-off device, retain the only key, and display a caution notice giving your name and contact',
     ],
     correctAnswer: 3,
@@ -3929,9 +3929,9 @@ export const module1Questions: Question[] = [
       'What is the most likely consequence of failing to carry out safe isolation before working on a circuit?',
     options: [
       'Electric shock, arc flash burns, potential fatality — and personal liability under EAWR 1989 Reg 14',
-      'A minor tingling sensation that quickly passes with no lasting harm',
-      'Nuisance tripping of the RCD, which simply needs resetting',
-      'A small voltage drop on the circuit that affects nearby equipment',
+      'A minor tingling sensation that passes quickly and leaves no lasting harm behind',
+      'Nuisance tripping of the RCD, which simply needs resetting at the consumer unit',
+      'A small voltage drop on the circuit that affects nearby equipment and lighting only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3942,10 +3942,10 @@ export const module1Questions: Question[] = [
     question:
       'Under EAWR 1989 Regulation 14, live working is only permitted when:',
     options: [
-      "The worker holds a valid ECS card and feels confident working live",
-      "It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met",
-      "The circuit is protected by a 30mA RCD that will trip on contact",
-      "The supervisor has given verbal permission for the work to proceed live",
+      'The worker holds a valid ECS card, feels confident working live, and has been shown the circuit and its supply arrangement by the supervisor beforehand',
+      'It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met',
+      'The circuit is protected by a 30mA RCD that will trip on contact, and insulated tools rated to 1000V are being used throughout, so the risk is controlled',
+      'The supervisor has given verbal permission for the work to proceed live, and a second person is standing by to isolate the supply at the board if needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3956,10 +3956,10 @@ export const module1Questions: Question[] = [
     question:
       'What is the correct action if you discover, after starting work, that the circuit you isolated is actually still live?',
     options: [
-      'Carry on carefully, taking extra care not to touch the live conductor',
-      'Quickly finish the task before the circuit can cause any harm',
+      'Carry on carefully with the work, taking extra care not to touch the live conductor or anything bonded to earth nearby at the time',
+      'Quickly finish off the task before the circuit has any chance to cause harm, then report the fault to the supervisor afterwards that day',
       'Stop immediately, withdraw to a safe position, re-establish isolation correctly, and investigate why the original isolation failed before resuming',
-      'Switch off the nearest socket and continue, as the main supply must be faulty',
+      'Switch off at the nearest socket-outlet and carry on, since the main supply arrangement must itself be faulty somewhere upstream',
     ],
     correctAnswer: 2,
     explanation:
@@ -3970,9 +3970,9 @@ export const module1Questions: Question[] = [
     question:
       'Why is locking off and labelling more reliable than just switching off and putting the breaker in the off position?',
     options: [
-      'A locked-off breaker disconnects the supply faster than simply switching it off',
-      'Locking off reduces the voltage on the circuit to a safe touch level',
-      'A padlock proves the circuit is dead without needing a voltage indicator',
+      'A locked-off breaker disconnects the supply faster and more completely than simply switching it off at the board, so the circuit is safer',
+      'Locking off reduces the voltage remaining on the circuit to a safe touch level for anyone working downstream of the isolating device at the board',
+      'A padlock and a caution label together prove the circuit is dead, so there is no need to use a voltage indicator at the point of work afterwards',
       'Anyone can switch a breaker back on by mistake or routine; a personal padlock with the only key retained, plus a caution notice, prevents inadvertent re-energisation',
     ],
     correctAnswer: 3,
@@ -3985,9 +3985,9 @@ export const module1Questions: Question[] = [
       'Beyond personal injury, what other implications follow from failing to carry out safe isolation?',
     options: [
       'Damage to equipment, fire, RIDDOR-reportable dangerous occurrence, criminal prosecution under EAWR/HASAWA, dismissal, and loss of competent person status',
-      'A small fine of no more than £200 payable to the local authority',
-      'A requirement to re-sit the safe isolation module before working again',
-      'Nuisance tripping of the RCD that simply needs to be reset',
+      'A small fine of no more than £200 payable to the local authority, with no further action taken against the firm or the operative involved',
+      'A requirement to re-sit the safe isolation module and be reassessed by the training provider before being allowed to work on site again',
+      'Nuisance tripping of the RCD protecting the circuit, which simply needs to be reset at the board before the work continues as normal afterwards',
     ],
     correctAnswer: 0,
     explanation:

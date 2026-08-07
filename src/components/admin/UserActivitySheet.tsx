@@ -196,7 +196,7 @@ export default function UserActivitySheet({
                     <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20">
                       <Clock className="h-5 w-5 text-green-400" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Session Time</p>
+                        <p className="text-xs text-white">Session Time</p>
                         <p className="font-semibold text-green-400">
                           {presence?.session_started_at ? formatDuration(sessionDuration) : 'N/A'}
                         </p>
@@ -211,7 +211,7 @@ export default function UserActivitySheet({
                         <Monitor className="h-5 w-5 text-blue-400" />
                       )}
                       <div>
-                        <p className="text-xs text-muted-foreground">Device</p>
+                        <p className="text-xs text-white">Device</p>
                         <p className="font-semibold text-blue-400">
                           {isMobile ? 'Mobile' : 'Desktop'}
                         </p>
@@ -222,7 +222,7 @@ export default function UserActivitySheet({
                     <div className="col-span-2 flex items-center gap-3 p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
                       <MapPin className="h-5 w-5 text-yellow-400" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs text-muted-foreground">Current Page</p>
+                        <p className="text-xs text-white">Current Page</p>
                         <p className="font-semibold text-yellow-400 truncate">
                           {presence?.current_page || 'Unknown'}
                         </p>
@@ -231,9 +231,9 @@ export default function UserActivitySheet({
 
                     {/* Last Seen */}
                     <div className="col-span-2 flex items-center gap-3 p-3 rounded-xl bg-muted/50 border border-border/50">
-                      <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                      <TrendingUp className="h-5 w-5 text-white" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Last Activity</p>
+                        <p className="text-xs text-white">Last Activity</p>
                         <p className="font-medium">
                           {presence?.last_seen
                             ? formatDistanceToNow(new Date(presence.last_seen), { addSuffix: true })
@@ -260,21 +260,21 @@ export default function UserActivitySheet({
                     <div className="text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
                       <Calculator className="h-6 w-6 text-amber-400 mx-auto mb-1" />
                       <p className="text-lg font-bold text-amber-400">{totalCostJobs}</p>
-                      <p className="text-[10px] text-muted-foreground">Cost Engineer</p>
+                      <p className="text-[10px] text-white">Cost Engineer</p>
                     </div>
 
                     {/* RAMS */}
                     <div className="text-center p-3 rounded-xl bg-red-500/10 border border-red-500/20">
                       <Shield className="h-6 w-6 text-red-400 mx-auto mb-1" />
                       <p className="text-lg font-bold text-red-400">{totalRamsJobs}</p>
-                      <p className="text-[10px] text-muted-foreground">RAMS</p>
+                      <p className="text-[10px] text-white">RAMS</p>
                     </div>
 
                     {/* Circuit Design */}
                     <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                       <FileText className="h-6 w-6 text-blue-400 mx-auto mb-1" />
                       <p className="text-lg font-bold text-blue-400">{totalCircuitJobs}</p>
-                      <p className="text-[10px] text-muted-foreground">Circuit Design</p>
+                      <p className="text-[10px] text-white">Circuit Design</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -338,7 +338,7 @@ export default function UserActivitySheet({
                                 {job.status}
                               </Badge>
                             </div>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-white">
                               {formatDistanceToNow(new Date(job.created_at), { addSuffix: true })}
                             </span>
                           </div>
@@ -354,7 +354,7 @@ export default function UserActivitySheet({
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Member since</span>
+                      <span className="text-white">Member since</span>
                       <span>
                         {profile?.created_at
                           ? new Date(profile.created_at).toLocaleDateString('en-GB', {
@@ -366,9 +366,9 @@ export default function UserActivitySheet({
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Subscription</span>
+                      <span className="text-white">Subscription</span>
                       <span
-                        className={profile?.subscribed ? 'text-green-400' : 'text-muted-foreground'}
+                        className={profile?.subscribed ? 'text-green-400' : 'text-white'}
                       >
                         {profile?.subscribed
                           ? profile.subscription_tier || 'Active'

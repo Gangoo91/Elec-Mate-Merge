@@ -17,10 +17,7 @@ const CableSizingInfo = () => {
       </p>
       <ul className="space-y-1.5">
         {points.map((point, i) => (
-          <li
-            key={i}
-            className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
-          >
+          <li key={i} className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{point}</span>
           </li>

@@ -567,7 +567,7 @@ export default function ElectricianSouthamptonPage() {
     <GuideTemplate
       localArea="Southampton"
       title="Electrician in Southampton | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Southampton. Realistic 2026 pricing, SSEN DNO connections, post-war housing rewiring, port and marine work…"
+      description="Find qualified, registered electricians in Southampton. Realistic 2026 pricing, SSEN DNO connections, post-war housing rewiring, port and marine work."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -268,7 +268,9 @@ const sections = [
           <strong>JIB graded rates</strong>: from 5 January 2026, Stage 1 apprentices earn £8.16
           per hour nationally (£9.14 in the JIB London area), rising through £10.60 and £13.05 to{' '}
           <strong>£14.03 at Stage 4</strong> (£15.72 London) — with stage rises linked to passing
-          your qualifications, not just time served.
+          your qualifications, not just time served. Each stage is a single rate covering all
+          hours, including your off-the-job training day; there is no longer a separate lower
+          "at college" rate in England, Wales and Northern Ireland.
         </p>
         <p>
           On a standard 37.5-hour week, that is roughly £15,900 a year at Stage 1 rising to
@@ -368,9 +370,10 @@ const sections = [
           — the industry's recognised proof of qualified status — and eligible to apply for{' '}
           <strong>EngTech professional registration</strong> with an engineering institution
           (optional, but it exists because the apprenticeship is genuinely that level). From
-          there the ladder runs through the JIB grades: Electrician (£18.38 per hour on 2026
-          national rates), Approved Electrician (£20.08) once you add inspection and testing
-          qualifications, and Site Technician (£22.70) beyond that — before you even consider{' '}
+          there the ladder runs through the JIB grades: Electrician (£18.38 per hour on the 2026
+          national Transport Provided rate, effective 5 January 2026), Approved Electrician
+          (£20.08) once you add inspection and testing qualifications, and Site or Installation
+          Technician (£22.70) beyond that — before you even consider{' '}
           self-employment. The full path is mapped in our{' '}
           <SEOInternalLink href="/guides/electrician-career-progression">
             career progression guide

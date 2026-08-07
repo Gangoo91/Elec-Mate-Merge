@@ -17,18 +17,16 @@ import ZsLookupResult from './zs-lookup/ZsLookupResult';
 import ZsLookupGuidance from './zs-lookup/ZsLookupGuidance';
 import ZsLookupStandards from './zs-lookup/ZsLookupStandards';
 import {
-  CalculatorCard,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
   CalculatorEditorial,
-  CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { bs7671ZsLookupContent } from './content/bs7671-zs-lookup';
 
 const BS7671ZsLookupCalculator = () => {
-  const config = CALCULATOR_CONFIG['testing'];
   const isMobile = useIsMobile();
 
   const [activeTab, setActiveTab] = useState('results');
@@ -232,78 +230,84 @@ const BS7671ZsLookupCalculator = () => {
       label: 'Results',
       icon: Search,
       content: (
-        <div className="space-y-4">
-          {/* Search Configuration */}
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Search Type"
-              value={searchType}
-              onChange={setSearchType}
-              options={[
-                { value: 'device', label: 'Lookup by Device Type' },
-                { value: 'compliance', label: 'Check Compliance (80% rule)' },
-              ]}
-            />
-            <CalculatorSelect
-              label="Disconnection Time"
-              value={disconnectionTime}
-              onChange={(v) => setDisconnectionTime(v as '0.4' | '5')}
-              options={Object.entries(disconnectionTimes).map(([key, label]) => ({
-                value: key,
-                label,
-              }))}
-            />
-          </CalculatorInputGrid>
+        // This calculator has no CalculatorCard — its body lives inside a tab —
+        // so the panes wrap the tab's content instead.
+        <CalculatorPanes
+          form={
+            <div className="space-y-4">
+              {/* Search Configuration */}
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Search Type"
+                  value={searchType}
+                  onChange={setSearchType}
+                  options={[
+                    { value: 'device', label: 'Lookup by Device Type' },
+                    { value: 'compliance', label: 'Check Compliance (80% rule)' },
+                  ]}
+                />
+                <CalculatorSelect
+                  label="Disconnection Time"
+                  value={disconnectionTime}
+                  onChange={(v) => setDisconnectionTime(v as '0.4' | '5')}
+                  options={Object.entries(disconnectionTimes).map(([key, label]) => ({
+                    value: key,
+                    label,
+                  }))}
+                />
+              </CalculatorInputGrid>
 
-          {searchType === 'device' && (
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Quick Device"
-                type="text"
-                value={quickDevice}
-                onChange={handleQuickDevice}
-                placeholder="B32, C16, D40..."
-                hint="Type MCB designation"
+              {searchType === 'device' && (
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Quick Device"
+                    type="text"
+                    value={quickDevice}
+                    onChange={handleQuickDevice}
+                    placeholder="B32, C16, D40..."
+                    hint="Type MCB designation"
+                  />
+                  <CalculatorSelect
+                    label="Device Type"
+                    value={deviceType}
+                    onChange={setDeviceType}
+                    options={deviceTypeOptions}
+                    placeholder="Select device type"
+                  />
+                </CalculatorInputGrid>
+              )}
+
+              {searchType === 'compliance' && (
+                <CalculatorInput
+                  label="Measured Zs Value"
+                  unit="Ω"
+                  type="text"
+                  inputMode="decimal"
+                  value={measuredZs}
+                  onChange={setMeasuredZs}
+                  placeholder="e.g., 0.75"
+                  hint="Checks against 80% of max Zs (ambient temperature correction)"
+                />
+              )}
+
+              <CalculatorActions
+                category="testing"
+                onCalculate={performLookup}
+                onReset={resetCalculator}
+                isDisabled={!hasValidInputs()}
+                calculateLabel={searchType === 'device' ? 'Show Values' : 'Check Compliance'}
               />
-              <CalculatorSelect
-                label="Device Type"
-                value={deviceType}
-                onChange={setDeviceType}
-                options={deviceTypeOptions}
-                placeholder="Select device type"
-              />
-            </CalculatorInputGrid>
-          )}
-
-          {searchType === 'compliance' && (
-            <CalculatorInput
-              label="Measured Zs Value"
-              unit="Ω"
-              type="text"
-              inputMode="decimal"
-              value={measuredZs}
-              onChange={setMeasuredZs}
-              placeholder="e.g., 0.75"
-              hint="Checks against 80% of max Zs (ambient temperature correction)"
+            </div>
+          }
+          result={
+            <ZsLookupResult
+              searchType={searchType}
+              results={results}
+              complianceCheck={complianceCheck}
+              measuredZs={measuredZs}
             />
-          )}
-
-          <CalculatorActions
-            category="testing"
-            onCalculate={performLookup}
-            onReset={resetCalculator}
-            isDisabled={!hasValidInputs()}
-            calculateLabel={searchType === 'device' ? 'Show Values' : 'Check Compliance'}
-            calculateIcon={Search}
-          />
-
-          <ZsLookupResult
-            searchType={searchType}
-            results={results}
-            complianceCheck={complianceCheck}
-            measuredZs={measuredZs}
-          />
-        </div>
+          }
+        />
       ),
     },
     {
@@ -322,26 +326,17 @@ const BS7671ZsLookupCalculator = () => {
 
   return (
     <div className="space-y-4">
-      {/* Calculator Header Card */}
-      <div
-        className="rounded-2xl border p-4 sm:p-6"
-        style={{
-          borderColor: `${config.gradientFrom}20`,
-          background: `linear-gradient(135deg, ${config.gradientFrom}08, ${config.gradientTo}05)`,
-        }}
-      >
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 rounded-xl" style={{ backgroundColor: `${config.gradientFrom}15` }}>
-            <Search className="h-5 w-5" style={{ color: config.gradientFrom }} />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-white">BS 7671 Zs Lookup</h2>
-            <p className="text-sm text-white">
-              Tables 41.2-41.5 Maximum Earth Fault Loop Impedance
-            </p>
-          </div>
-        </div>
-      </div>
+      {/* Header removed 2026-08-07. It was a bordered, gradient-filled card whose
+          entire contents were a title and one subtitle line, fronted by a tinted
+          rounded box holding a magnifier icon — a lot of chrome for two lines,
+          which is why it rendered as a near-empty panel. Two things were wrong:
+          the house rule is that section headings are TYPOGRAPHY ONLY (no icons,
+          no coloured dots, no gradient bars), and every page embedding this
+          calculator already gives it a heading of its own — /guides/ze-values-uk
+          says "Check Your Zs Reading Against the BS 7671 Maximum" directly above
+          it — so the reader was being told the same thing twice.
+          The identifying line now lives with the table reference in the results,
+          where it is information rather than decoration. */}
 
       {/* Tabs */}
       {isMobile ? (
@@ -361,7 +356,7 @@ const BS7671ZsLookupCalculator = () => {
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400"
+                  className="flex items-center gap-2 text-sm font-semibold rounded-lg data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
                 >
                   <IconComponent className="h-4 w-4" />
                   <span className="hidden sm:inline">{tab.label}</span>

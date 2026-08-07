@@ -20,7 +20,7 @@ const tocItems = [
 const sections = [
   {
     id: 'the-symbol',
-    heading: 'RCBO (RCD + MCB Combined) — BS EN 60617 Symbol',
+    heading: 'RCBO (RCD + MCB Combined) — IEC 60617 Symbol',
     content: (
       <>
         <SymbolGallery
@@ -66,7 +66,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Drop this symbol into a circuit drawing"
-          description="The Elec-Mate Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
+          description="The Elec-Mate Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -99,7 +99,7 @@ const relatedPages = [
   },
   {
     href: '/guides/electrical-symbols-chart',
-    title: 'BS EN 60617 Master Symbol Library',
+    title: 'IEC 60617 Master Symbol Library',
     description: 'All 114 UK electrical symbols across 11 categories — the master reference.',
     icon: 'BookOpen',
     category: 'Reference',
@@ -107,7 +107,7 @@ const relatedPages = [
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'FileCheck2',
     category: 'Guide',
   },
@@ -124,7 +124,7 @@ export default function RcboSymbolPage() {
   return (
     <GuideTemplate
       title="RCBO Symbol | BS EN 61009 Circuit Diagram Reference"
-      description="RCBO (RCD + MCB Combined) BS EN 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
+      description="RCBO (RCD + MCB Combined) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -134,15 +134,15 @@ export default function RcboSymbolPage() {
       heroTitle={
         <>
           RCBO (RCD + MCB Combined) Symbol{' '}
-          <span className="text-yellow-400">BS EN 60617 reference</span>
+          <span className="text-yellow-400">IEC 60617 reference</span>
         </>
       }
-      heroSubtitle="RCBO residual current breaker with overcurrent electrical symbol BS EN 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
+      heroSubtitle="RCBO residual current breaker with overcurrent electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
         'A Residual Current Breaker with Overcurrent protection to BS EN 61009. Combines RCD + MCB in one device. Each circuit has individual earth fault and overload protection.',
         'Modern consumer units — preferred to split-load RCD arrangements; one trip = one circuit affected only.',
-        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to BS EN 60617.',
+        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
       sections={sections}
       faqs={[
@@ -160,7 +160,7 @@ export default function RcboSymbolPage() {
       faqHeading="FAQ — RCBO (RCD + MCB Combined) Symbol"
       relatedPages={relatedPages}
       ctaHeading="Use this symbol in real drawings"
-      ctaSubheading="Drag and drop BS EN 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
+      ctaSubheading="Drag and drop IEC 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
     />
   );
 }

@@ -39,13 +39,18 @@ const TaxEstimator = () => {
   });
 
   const [taxYear, setTaxYear] = useState<string>(CURRENT_TAX_YEAR);
-  const [calculated, setCalculated] = useState(false);
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
+  const [calculated, setCalculated] = useState(true);
   const rateTableStale = isRateTableStale();
   const rates = ratesFor(taxYear);
 
   const updateInput = (field: keyof TaxInputs, value: number | string | boolean) => {
     setInputs((prev) => ({ ...prev, [field]: value }));
-    setCalculated(false);
   };
 
   const calculateTax = () => {
@@ -193,7 +198,6 @@ const TaxEstimator = () => {
                 value={taxYear}
                 onValueChange={(value) => {
                   setTaxYear(value);
-                  setCalculated(false);
                 }}
                 options={taxYearOptions}
                 hint="Rates and thresholds for the year selected"

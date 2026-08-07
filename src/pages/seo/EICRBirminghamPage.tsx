@@ -659,7 +659,7 @@ export default function EICRBirminghamPage() {
   return (
     <GuideTemplate
       title="EICR Birmingham | Electrical Safety Report Cost 2026"
-      description="EICR costs in Birmingham for 2026. Landlord legal requirements, Article 4 HMO areas, council enforcement, observation codes explained…"
+      description="EICR costs in Birmingham for 2026. Landlord legal requirements, Article 4 HMO areas, council enforcement, observation codes explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

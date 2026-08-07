@@ -62,7 +62,7 @@ export function ActionCard({
   }
   if (resolved === 'rejected') {
     return (
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 flex items-center gap-2 text-[12px] text-white/40 line-through">
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 flex items-center gap-2 text-[12px] text-white line-through">
         <X className="h-3.5 w-3.5 not-line-through" />
         <span>{summarise(action, lookupTask, lookupProject, lookupCustomer)}</span>
       </div>
@@ -79,7 +79,7 @@ export function ActionCard({
           <p
             className={cn(
               'text-[10px] font-bold uppercase tracking-[0.14em] mb-0.5',
-              action.type === 'create-snag' ? 'text-orange-300' : 'text-white/50'
+              action.type === 'create-snag' ? 'text-orange-300' : 'text-white'
             )}
           >
             {labelForType(action.type)}
@@ -88,7 +88,7 @@ export function ActionCard({
             {primaryLine(action, lookupTask, lookupProject, lookupCustomer)}
           </p>
           {secondaryLine(action, lookupProject) && (
-            <p className="text-[11px] text-white/60 mt-1 leading-snug">
+            <p className="text-[11px] text-white mt-1 leading-snug">
               {secondaryLine(action, lookupProject)}
             </p>
           )}
@@ -104,12 +104,12 @@ export function ActionCard({
       {action.type === 'draft-message' && (
         <>
           <div className="mb-2 rounded-lg bg-white/[0.04] border border-white/[0.06] p-2.5 max-h-[200px] overflow-y-auto">
-            <pre className="text-[11.5px] text-white/85 whitespace-pre-wrap font-sans leading-relaxed">
+            <pre className="text-[11.5px] text-white whitespace-pre-wrap font-sans leading-relaxed">
               {action.payload.body}
             </pre>
           </div>
-          <p className="text-[10px] text-white/45 mb-2 leading-relaxed">
-            Sent via Elec-Mate. <strong className="text-white/65 font-semibold">Replies route to your account email</strong> — your customer
+          <p className="text-[10px] text-white mb-2 leading-relaxed">
+            Sent via Elec-Mate. <strong className="text-white font-semibold">Replies route to your account email</strong> — your customer
             sees your business name on the from-line.
           </p>
         </>
@@ -121,12 +121,12 @@ export function ActionCard({
           <button
             type="button"
             onClick={() => setShowWhy((v) => !v)}
-            className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/40 hover:text-white/70 transition-colors touch-manipulation"
+            className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white hover:text-white transition-colors touch-manipulation"
           >
             {showWhy ? '— Hide reasoning' : '+ Why?'}
           </button>
           {showWhy && (
-            <p className="mt-1.5 text-[11px] text-white/70 italic leading-snug border-l-2 border-elec-yellow/30 pl-2">
+            <p className="mt-1.5 text-[11px] text-white italic leading-snug border-l-2 border-elec-yellow/30 pl-2">
               {action.rationale}
             </p>
           )}
@@ -171,7 +171,7 @@ export function ActionCard({
                 encodeURIComponent(body);
               await openExternalUrl(mailto);
             }}
-            className="h-9 px-3 rounded-lg bg-white/[0.06] text-white/70 text-[12px] font-medium hover:bg-white/[0.1] touch-manipulation"
+            className="h-9 px-3 rounded-lg bg-white/[0.06] text-white text-[12px] font-medium hover:bg-white/[0.1] touch-manipulation"
             title="Copy body + open your default mail app"
           >
             Copy / mailto
@@ -180,7 +180,7 @@ export function ActionCard({
         <button
           type="button"
           onClick={onReject}
-          className="h-9 px-3 rounded-lg bg-white/[0.06] text-white/70 text-[12px] font-medium hover:bg-white/[0.1] touch-manipulation"
+          className="h-9 px-3 rounded-lg bg-white/[0.06] text-white text-[12px] font-medium hover:bg-white/[0.1] touch-manipulation"
         >
           Skip
         </button>

@@ -104,7 +104,7 @@ export const SiteVisitCaptureStep = ({
           <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
             Room-by-room capture
           </h2>
-          <p className="mt-1 text-[12.5px] text-white/65">
+          <p className="mt-1 text-[12.5px] text-white">
             Add rooms, capture items, photos and prompts.
           </p>
         </div>
@@ -131,7 +131,7 @@ export const SiteVisitCaptureStep = ({
             className={`flex h-11 items-center justify-center gap-2 rounded-xl text-sm font-medium transition-colors touch-manipulation active:scale-[0.98] ${
               captureMode === key
                 ? 'bg-elec-yellow font-semibold text-black'
-                : 'text-white/65 hover:text-white'
+                : 'text-white hover:text-white'
             }`}
           >
             <Icon className="h-4 w-4" />

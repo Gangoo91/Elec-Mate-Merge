@@ -614,7 +614,7 @@ export default function QuoteWritingGuidePage() {
   return (
     <GuideTemplate
       title="How to Write Electrical Quotes UK | Quote Writing Guide"
-      description="Professional electrical quote structure, pricing strategy, materials and labour breakdown, contingency, payment terms, what to include to avoid disputes…"
+      description="Professional electrical quote structure, pricing strategy, materials and labour breakdown, contingency, payment terms, what to include to avoid disputes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

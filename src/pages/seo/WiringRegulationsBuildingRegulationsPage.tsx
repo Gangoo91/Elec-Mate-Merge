@@ -555,7 +555,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
   return (
     <GuideTemplate
       title="Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained"
-      description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA)…"
+      description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA)."
       datePublished="2024-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

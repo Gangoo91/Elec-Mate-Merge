@@ -699,8 +699,8 @@ const sections = [
 export default function BestMultifunctionTester2026Page() {
   return (
     <GuideTemplate
-      title="Best Multifunction Tester 2026 | Top MFTs Compared"
-      description="Honest comparison of the best multifunction testers for UK electricians in 2026. Fluke 1664 FC, Megger MFT1741+, Metrel MI 3152, Kewtech KT66DL…"
+      title="Best Multifunction Tester UK 2026: Megger Wins"
+      description="Megger MFT1741+ wins at £650-800. Kewtech KT66DL is the £350-450 budget pick, Fluke 1664 FC £1,100+. Five UK MFTs compared on speed, price and Bluetooth."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

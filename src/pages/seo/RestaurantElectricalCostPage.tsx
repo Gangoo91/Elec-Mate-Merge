@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Kitchen canopy extract systems must be electrically interlocked with gas suppression or Ansul wet chemical systems under current building regulations and BS EN 15251.',
   'Emergency lighting to BS 5266-1 is mandatory in any restaurant serving the public and must cover all escape routes, exit signs, and the kitchen at sufficient lux levels.',
   'BS 7671 Reg 652.1 requires EICR frequency to be determined having regard to the type of installation, equipment present, use, and maintenance history — five years is the industry-standard recommended maximum for commercial premises such as restaurants, not a fixed statutory interval.',
-  'BS 7671:2018+A4:2026 Reg 421.1.7 (introduced by Amendment 4) recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk — particularly relevant in commercial catering kitchens where arc faults in concealed wiring pose a high ignition hazard.',
+  'BS 7671:2018+A4:2026 Reg 421.1.7 (introduced by Amendment 2:2022) recommends arc fault detection devices (AFDDs) on AC final circuits to mitigate fire risk — particularly relevant in commercial catering kitchens where arc faults in concealed wiring pose a high ignition hazard.',
 ];
 
 const faqs = [
@@ -668,7 +668,7 @@ export default function RestaurantElectricalCostPage() {
   return (
     <GuideTemplate
       title="Restaurant Electrical Installation Cost UK 2025/2026 | Catering"
-      description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1…"
+      description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1."
       datePublished="2025-01-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

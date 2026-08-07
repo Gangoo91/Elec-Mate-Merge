@@ -88,7 +88,7 @@ export const FinancialHealthSummary = ({
               </>
             ) : (
               <>
-                <div className="text-2xl sm:text-3xl font-bold text-blue-400">
+                <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
                   {cashRunway} months
                 </div>
                 <div className="text-xs text-elec-light/70 mt-1">Cash Runway</div>
@@ -113,7 +113,7 @@ export const FinancialHealthSummary = ({
 
           {/* Profit Margin */}
           <div className="text-center p-3 sm:p-4 rounded-lg bg-elec-dark/50">
-            <div className="text-2xl sm:text-3xl font-bold text-purple-400">
+            <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">
               {profitMargin.toFixed(1)}%
             </div>
             <div className="text-xs text-elec-light/70 mt-1">Profit Margin</div>

@@ -38,7 +38,7 @@ const tocItems = [
 const keyTakeaways = [
   'The Education & Skills Funding Agency (ESFA) funds up to 95% of apprenticeship training costs for non-levy paying employers and 100% (via levy funds) for levy-paying employers with large payrolls.',
   'Electrical apprenticeships in England follow the Level 3 Electrician Apprenticeship Standard (ST0145), which replaced the older framework and includes end-point assessment (EPA).',
-  'The National Minimum Wage for apprentices is £6.40 per hour (April 2024 rate), but most electrical employers pay above this — the JIB recommends age-related scales aligned with apprentice year.',
+  'The National Minimum Wage for apprentices is £6.40 per hour (April 2024 rate), but most electrical employers pay above this — the JIB sets a fixed hourly rate for each apprentice stage, from £8.16 (Stage 1) to £14.03 (Stage 4), effective 5 January 2026.',
   'You must register your apprentice with the Joint Industry Board (JIB) within the first few weeks of employment to establish their grading and entitlement to JIB benefits.',
   'Non-levy employers pay just 5% of training costs (capped at the funding band maximum), with the ESFA contributing the remaining 95% directly to the training provider.',
 ];
@@ -62,12 +62,12 @@ const faqs = [
   {
     question: 'What is the apprentice National Minimum Wage?',
     answer:
-      'The National Minimum Wage for apprentices is £6.40 per hour from April 2024. This rate applies to all apprentices in their first year and to those under 19 years old in any year. Once an apprentice is 19 or older AND has completed their first year, they are entitled to the National Minimum Wage for their age band (e.g., £11.44 per hour for those aged 21+). Most electrical employers pay above the minimum — the JIB recommends year-by-year scales: Year 1: 40% of Approved Electrician rate; Year 2: 50%; Year 3: 65%; Year 4: 75%.',
+      'The National Minimum Wage for apprentices is £6.40 per hour from April 2024. This rate applies to all apprentices in their first year and to those under 19 years old in any year. Once an apprentice is 19 or older AND has completed their first year, they are entitled to the National Minimum Wage for their age band (e.g., £11.44 per hour for those aged 21+). Most electrical employers pay above the minimum — the JIB sets a fixed hourly rate for each apprentice stage rather than a percentage of the Approved Electrician rate. From 5 January 2026 the National Standard rates are: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03 per hour. London Zone rates are £9.14, £11.88, £14.62 and £15.72. Each stage rate covers all hours worked, including off-the-job training.',
   },
   {
     question: 'Do I need to register my apprentice with the JIB?',
     answer:
-      "Yes. If you are a JIB-registered employer (which most NICEIC and NAPIT members are), you must register your apprentice with the Joint Industry Board (JIB) at the start of their employment. Registration establishes the apprentice's grade (Apprentice Year 1), entitles them to JIB benefits (such as the Welfare Benefit Scheme and ECS Card), and creates their employment record which is used for future grading assessments. Registration is done online through the JIB portal and costs a small annual fee.",
+      "Yes. If you are a JIB-registered employer (which most NICEIC and NAPIT members are), you must register your apprentice with the Joint Industry Board (JIB) at the start of their employment. Registration establishes the apprentice's grade (Apprentice Stage 1), entitles them to JIB benefits (such as the Welfare Benefit Scheme and ECS Card), and creates their employment record which is used for future grading assessments. Registration is done online through the JIB portal and costs a small annual fee.",
   },
   {
     question: 'Can I take on an apprentice if I am a sole trader?',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrical-salary-benchmarking',
     title: 'Electrician Salary Benchmarking',
-    description: 'JIB grade rates, London weighting, and how to benchmark pay in 2025.',
+    description: 'JIB grade rates, London weighting, and how to benchmark pay in 2026.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -286,7 +286,7 @@ const sections = [
   },
   {
     id: 'apprentice-wages',
-    heading: 'Apprentice Wages: Minimum Rates and JIB Recommendations',
+    heading: 'Apprentice Wages: Minimum Rates and JIB Rates',
     content: (
       <>
         <p>
@@ -301,18 +301,22 @@ const sections = [
               <span>
                 <strong>National Minimum Wage (apprentice rate)</strong> — £6.40 per hour from April
                 2024. This applies to all apprentices in their first year, and to apprentices under
-                19 in any year. Once an apprentice is 19 or older and past Year 1, the age-band NMW
+                19 in any year. Once an apprentice is 19 or older and past their first year, the
+                age-band NMW
                 applies (£11.44 per hour for those aged 21+).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>JIB recommended scales</strong> — the Joint Industry Board recommends
-                apprentice pay as a percentage of the Approved Electrician (AE) rate. Year 1: 40% of
-                AE rate; Year 2: 50%; Year 3: 65%; Year 4: 75%. At the 2025 JIB AE rate of
-                approximately £20.00/hour, this equates to roughly £8.00, £10.00, £13.00, and £15.00
-                per hour across the four years.
+                <strong>JIB apprentice rates</strong> — the Joint Industry Board sets a fixed hourly
+                rate for each apprentice stage, not a percentage of the Approved Electrician rate.
+                From 5 January 2026 the National Standard rates are Stage 1 £8.16, Stage 2 £10.60,
+                Stage 3 £13.05 and Stage 4 £14.03 per hour. London Zone rates are £9.14, £11.88,
+                £14.62 and £15.72. A single rate now covers all hours including off-the-job
+                training — the separate lower &quot;at college&quot; rate has been removed for
+                England, Wales and Northern Ireland. For comparison, the Approved Electrician rate
+                is £20.08 per hour (National Standard, transport provided).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,7 +440,8 @@ const sections = [
                 <strong>Grading on completion</strong> — on successful completion of the
                 apprenticeship standard and EPA, submit the apprentice's grading application to the
                 JIB for Approved Electrician status. This entitles them to an ECS Gold Card and the
-                full Approved Electrician rate under the Working Rule Agreement.
+                full Approved Electrician rate under the Working Rule Agreement — £20.08 per hour
+                (National Standard, transport provided) from 5 January 2026.
               </span>
             </li>
           </ul>
@@ -559,7 +564,7 @@ export default function HiringElectricianApprenticesPage() {
   return (
     <GuideTemplate
       title="Hiring Electrical Apprentices UK | Employer Guide to"
-      description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers…"
+      description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

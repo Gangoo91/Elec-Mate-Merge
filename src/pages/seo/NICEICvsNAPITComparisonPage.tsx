@@ -595,8 +595,8 @@ const sections = [
 export default function NICEICvsNAPITComparisonPage() {
   return (
     <GuideTemplate
-      title="NICEIC vs NAPIT 2026: Cost, Scope, Which to Pick"
-      description="NICEIC vs NAPIT 2026 compared: registration cost, assessment process, insurer + Building Control acceptance, public recognition. Which suits your firm?"
+      title="NICEIC vs NAPIT Cost: £400–£600 vs £350–£550"
+      description="NICEIC approx £400–£600/yr (Domestic Installer £200–£350), NAPIT £350–£550 for a sole trader. Assessment style, insurer acceptance and Part P compared."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

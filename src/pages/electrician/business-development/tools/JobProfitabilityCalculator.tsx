@@ -19,7 +19,6 @@ import {
   Percent,
   Settings,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -28,6 +27,7 @@ import {
   CalculatorSelect,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -56,6 +56,7 @@ import {
   VAT_REGISTRATION_THRESHOLD,
   type JobCostInputs,
 } from '@/data/job-costing';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 /**
  * `materialMarkupPercent` and `discountPercent` used to live here. Both were
@@ -117,17 +118,29 @@ const JobProfitabilityCalculator = () => {
   const { toast } = useToast();
   const haptic = useHaptic();
 
+  // Seeded with a plausible domestic job rather than zeros. With results now
+  // live, an empty form opened on a 42px "£0.00" profit — a confident answer
+  // to a question nobody had asked yet. A worked example also teaches the tool:
+  // labour on-cost and overhead are the two fields people forget, and starting
+  // them at zero quietly models a business with neither.
+  //
+  // Labour rate is the JIB 2026 Electrician (Own Transport) rate; the on-cost
+  // covers employer NI, holiday and pension.
   const [inputs, setInputs] = useState<JobInputs>({
-    materialCost: 0,
-    labourHours: 0,
-    hourlyRate: 0,
-    labourOnCostPercent: 0,
-    overheadPercentage: 0,
-    desiredProfitMargin: 0,
-    quoteAmount: 0,
-    travelHours: 0,
-    adminHours: 0,
-    miles: 0,
+    materialCost: 850,
+    labourHours: 14,
+    hourlyRate: 19.54,
+    labourOnCostPercent: 28,
+    overheadPercentage: 20,
+    desiredProfitMargin: 20,
+    // Costs on this example come to £1,551.83, so a 20% margin needs
+    // 1551.83 / 0.8 = £1,939.79. Left at 0 the worked example opened on a
+    // £1,551.83 LOSS in red — a calculator demonstrating a job priced at
+    // nothing.
+    quoteAmount: 1940,
+    travelHours: 2,
+    adminHours: 1,
+    miles: 40,
     mileageRate: 0.45,
     subcontractorCost: 0,
     parkingTolls: 0,
@@ -147,7 +160,13 @@ const JobProfitabilityCalculator = () => {
   });
 
   const [errors, setErrors] = useState<ValidationErrors>({});
-  const [calculated, setCalculated] = useState(false);
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
+  const [calculated, setCalculated] = useState(true);
   const [customValues, setCustomValues] = useState<{ [key: string]: boolean }>({});
   // Was a hardcoded 20. Sourced from the verified rate table so a rate change
   // lands in one place.
@@ -194,7 +213,6 @@ const JobProfitabilityCalculator = () => {
       });
     }
 
-    setCalculated(false);
   };
 
   const validateInputs = (): boolean => {
@@ -322,7 +340,6 @@ const JobProfitabilityCalculator = () => {
       useMultiWorker: false,
     });
     setErrors({});
-    setCalculated(false);
     setCustomValues({});
     setSelectedJobType('');
     setSelectedCategory('All');
@@ -346,7 +363,6 @@ const JobProfitabilityCalculator = () => {
         desiredProfitMargin: preset.defaults.desiredProfitMargin,
       }));
       setSelectedJobType(preset.name);
-      setCalculated(false);
       setCustomValues({});
       toast({
         title: 'Preset Applied',
@@ -444,7 +460,6 @@ const JobProfitabilityCalculator = () => {
       useMultiWorker: false,
     });
     setErrors({});
-    setCalculated(false);
   };
 
   const handleWorkersChange = (workers: Worker[]) => {
@@ -458,7 +473,6 @@ const JobProfitabilityCalculator = () => {
       labourHours: totalHours,
       hourlyRate: blendedRate,
     }));
-    setCalculated(false);
   };
 
   const toggleMultiWorker = () => {
@@ -466,7 +480,6 @@ const JobProfitabilityCalculator = () => {
       ...prev,
       useMultiWorker: !prev.useMultiWorker,
     }));
-    setCalculated(false);
   };
 
   // Calculations
@@ -588,30 +601,12 @@ const JobProfitabilityCalculator = () => {
         />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Calculator
-                className="h-6 w-6 sm:h-7 sm:w-7"
-                style={{ color: config.gradientFrom }}
-              />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Job Profitability Calculator
-              </h1>
-              <p className="text-sm text-white">Analyse quote profitability & pricing</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Job Profitability Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -621,10 +616,7 @@ const JobProfitabilityCalculator = () => {
         >
           {/* Job Type Presets */}
           <Collapsible open={selectedPreset !== ''} onOpenChange={() => {}}>
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Job Type Presets</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Job Type Presets</h3>
 
             <div className="grid grid-cols-2 gap-3">
               <CalculatorSelect
@@ -648,26 +640,26 @@ const JobProfitabilityCalculator = () => {
                 <p className="text-xs text-white mb-3">{selectedPresetData.description}</p>
                 <div className="grid grid-cols-4 gap-2 text-xs">
                   <div className="text-center">
-                    <Clock className="h-3 w-3 text-blue-400 mx-auto mb-1" />
+                    <Clock className="h-3 w-3 text-elec-yellow mx-auto mb-1" />
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.labourHours}h
                     </div>
                   </div>
                   <div className="text-center">
-                    <PoundSterling className="h-3 w-3 text-blue-400 mx-auto mb-1" />
+                    <PoundSterling className="h-3 w-3 text-elec-yellow mx-auto mb-1" />
                     <div className="text-white font-medium">
                       £{selectedPresetData.defaults.hourlyRate}/h
                     </div>
                   </div>
                   <div className="text-center">
-                    <Settings className="h-3 w-3 text-blue-400 mx-auto mb-1" />
+                    <Settings className="h-3 w-3 text-elec-yellow mx-auto mb-1" />
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.overheadPercentage}%
                     </div>
                     <div className="text-white">overhead</div>
                   </div>
                   <div className="text-center">
-                    <TrendingUp className="h-3 w-3 text-blue-400 mx-auto mb-1" />
+                    <TrendingUp className="h-3 w-3 text-elec-yellow mx-auto mb-1" />
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.desiredProfitMargin}%
                     </div>
@@ -680,10 +672,7 @@ const JobProfitabilityCalculator = () => {
 
           {/* Basic Job Information */}
           <div className="pt-4 border-t border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <Receipt className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Basic Job Information</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Basic Job Information</h3>
 
             <div className="grid grid-cols-2 gap-3">
               <CalculatorInput
@@ -714,17 +703,14 @@ const JobProfitabilityCalculator = () => {
           {/* Labour Configuration */}
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-white">Labour Configuration</span>
-              </div>
+              <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Labour Configuration</h3>
               <label className="flex items-center gap-2 cursor-pointer">
                 <span className="text-xs text-white">Multi-worker</span>
                 <input
                   type="checkbox"
                   checked={inputs.useMultiWorker}
                   onChange={toggleMultiWorker}
-                  className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
+                  className="h-4 w-4 rounded border-white/20 bg-white/10 text-elec-yellow focus:ring-elec-yellow/60"
                 />
               </label>
             </div>
@@ -735,17 +721,17 @@ const JobProfitabilityCalculator = () => {
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <div className="grid grid-cols-3 gap-3 text-center text-sm">
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">Total Hours</div>
+                      <div className="text-xs text-elec-yellow mb-1">Total Hours</div>
                       <div className="text-white font-medium">{totalLabourHours}h</div>
                     </div>
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">Blended Rate</div>
+                      <div className="text-xs text-elec-yellow mb-1">Blended Rate</div>
                       <div className="text-white font-medium">
                         £{blendedHourlyRate.toFixed(2)}/h
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">Total Cost</div>
+                      <div className="text-xs text-elec-yellow mb-1">Total Cost</div>
                       <div className="text-white font-medium">£{totalLabourCost.toFixed(2)}</div>
                     </div>
                   </div>
@@ -758,7 +744,7 @@ const JobProfitabilityCalculator = () => {
                     className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-blue-400">Worker {index + 1}</span>
+                      <span className="text-xs font-medium text-elec-yellow">Worker {index + 1}</span>
                       {inputs.workers.length > 1 && (
                         <button
                           onClick={() => {
@@ -832,7 +818,7 @@ const JobProfitabilityCalculator = () => {
                     };
                     handleWorkersChange([...inputs.workers, newWorker]);
                   }}
-                  className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-blue-400 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                  className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-elec-yellow hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
                 >
                   <Users className="h-4 w-4" />
                   Add Worker
@@ -906,10 +892,7 @@ const JobProfitabilityCalculator = () => {
 
           {/* Business Parameters */}
           <div className="pt-4 border-t border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <Percent className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">Business Parameters</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Business Parameters</h3>
 
             <div className="grid grid-cols-2 gap-3">
               {customValues.overheadPercentage ? (
@@ -959,10 +942,7 @@ const JobProfitabilityCalculator = () => {
 
           {/* VAT Configuration */}
           <div className="pt-4 border-t border-white/10">
-            <div className="flex items-center gap-2 mb-3">
-              <PoundSterling className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white">VAT Configuration</span>
-            </div>
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">VAT Configuration</h3>
 
             <div className="flex items-center gap-4 mb-3">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -970,7 +950,7 @@ const JobProfitabilityCalculator = () => {
                   type="radio"
                   checked={vatRegistered}
                   onChange={() => setVATRegistered(true)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-500"
+                  className="h-4 w-4 text-elec-yellow focus:ring-elec-yellow/60"
                 />
                 <span className="text-sm text-white">VAT Registered</span>
               </label>
@@ -979,7 +959,7 @@ const JobProfitabilityCalculator = () => {
                   type="radio"
                   checked={!vatRegistered}
                   onChange={() => setVATRegistered(false)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-500"
+                  className="h-4 w-4 text-elec-yellow focus:ring-elec-yellow/60"
                 />
                 <span className="text-sm text-white">Not Registered</span>
               </label>
@@ -1188,34 +1168,19 @@ const JobProfitabilityCalculator = () => {
             )}
 
             <CalculatorResult category="business">
-              <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white mb-1">Actual Profit</p>
-                <div
-                  className={cn('text-4xl font-bold', actualProfit >= 0 ? '' : 'text-red-400')}
-                  style={
-                    actualProfit >= 0
-                      ? {
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          backgroundClip: 'text',
-                        }
-                      : undefined
-                  }
-                >
-                  {formatCurrency(actualProfit)}
-                </div>
-                <p
-                  className={cn(
-                    'text-sm mt-1',
-                    actualProfitMargin !== null && actualProfitMargin >= inputs.desiredProfitMargin
-                      ? 'text-green-400'
-                      : 'text-red-400'
-                  )}
-                >
-                  {actualProfitMargin === null ? '—' : `${actualProfitMargin.toFixed(1)}%`} Margin
-                </p>
-              </div>
+              <ResultHeadline
+                label="Profit on this job"
+                value={formatCurrency(actualProfit)}
+                tone={actualProfit >= 0 ? 'default' : 'negative'}
+                aside={actualProfitMargin === null ? undefined : `${actualProfitMargin.toFixed(1)}% margin`}
+                caption={
+                  actualProfitMargin === null
+                    ? 'Enter a quote price to see the margin.'
+                    : actualProfitMargin >= inputs.desiredProfitMargin
+                      ? `Meets your ${inputs.desiredProfitMargin}% target.`
+                      : `Short of your ${inputs.desiredProfitMargin}% target.`
+                }
+              />
 
               <ResultsGrid columns={2}>
                 <ResultValue
@@ -1250,17 +1215,17 @@ const JobProfitabilityCalculator = () => {
                   <p className="text-xs text-white mb-3">VAT Breakdown</p>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">Quote (ex VAT)</div>
+                      <div className="text-xs text-elec-yellow mb-1">Quote (ex VAT)</div>
                       <div className="text-white font-medium">
                         {formatCurrency(inputs.quoteAmount)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">VAT ({vatRate}%)</div>
+                      <div className="text-xs text-elec-yellow mb-1">VAT ({vatRate}%)</div>
                       <div className="text-white font-medium">{formatCurrency(vatAmount)}</div>
                     </div>
                     <div>
-                      <div className="text-xs text-blue-400 mb-1">Total (inc VAT)</div>
+                      <div className="text-xs text-elec-yellow mb-1">Total (inc VAT)</div>
                       <div className="text-white font-medium">{formatCurrency(totalWithVAT)}</div>
                     </div>
                   </div>
@@ -1288,11 +1253,11 @@ const JobProfitabilityCalculator = () => {
 
             {/* What This Means */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       What This Means
                     </span>
                   </div>
@@ -1305,32 +1270,32 @@ const JobProfitabilityCalculator = () => {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
-                  <ul className="space-y-2 text-sm text-blue-200/80">
+                  <ul className="space-y-2 text-sm text-elec-yellow/80">
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Profit Margin:</strong> The percentage of
+                        <strong className="text-elec-yellow">Profit Margin:</strong> The percentage of
                         your quote that remains as profit after all costs
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Minimum Quote:</strong> The lowest price
+                        <strong className="text-elec-yellow">Minimum Quote:</strong> The lowest price
                         to achieve your target profit margin
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Direct Costs:</strong> Materials, labour,
+                        <strong className="text-elec-yellow">Direct Costs:</strong> Materials, labour,
                         travel, and other job-specific expenses
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
+                      <span className="text-elec-yellow mt-1">•</span>
                       <span>
-                        <strong className="text-blue-300">Overhead Costs:</strong> Business running
+                        <strong className="text-elec-yellow">Overhead Costs:</strong> Business running
                         costs allocated to each job
                       </span>
                     </li>

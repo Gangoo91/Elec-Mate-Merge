@@ -16,13 +16,13 @@ import {
   Building,
   FileText,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
   CalculatorResult,
+  ResultHeadline,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import {
@@ -31,8 +31,10 @@ import {
   DOMESTIC_REVERSE_CHARGE,
   VAT_SCHEME_THRESHOLDS,
 } from '@/data/uk-tax-rates';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const money = (n: number) => `£${n.toLocaleString('en-GB')}`;
 
 type Role = 'contractor' | 'subcontractor';
@@ -162,36 +164,21 @@ const CISDRCHelper = () => {
         <link rel="canonical" href="/electrician/business-development/tools/cis-drc" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Receipt className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                CIS & DRC Helper
-              </h1>
-              <p className="text-sm text-white">Calculate CIS deductions & DRC VAT rules</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="CIS & DRC Helper"
+          backTo="/electrician/business-development/tools"
+        />
 
         {/* Educational Content */}
         <div className="space-y-2">
           <Collapsible open={showCISGuide} onOpenChange={setShowCISGuide}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
-                  <Lightbulb className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                  <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm sm:text-base font-medium text-elec-yellow">
                     What is CIS?
                   </span>
                 </div>
@@ -208,29 +195,29 @@ const CISDRCHelper = () => {
                   HMRC scheme where contractors deduct money from subcontractor payments and pass it
                   to HMRC as advance tax payment.
                 </p>
-                <ul className="space-y-1 text-sm text-blue-200/80">
+                <ul className="space-y-1 text-sm text-elec-yellow/80">
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Contractors must register and verify subcontractors
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Deductions: {CIS_DEDUCTION_RATES.registered}% (registered and verified),{' '}
                     {CIS_DEDUCTION_RATES.unregistered}% (not registered or not matched),{' '}
                     {CIS_DEDUCTION_RATES.gross}% (gross payment status)
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Taken from labour only. A "payment" under the scheme excludes VAT, the CITB levy
                     and the cost of materials
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Also outside the deduction: consumable stores, plant hired from a third party,
                     fuel for that plant (but not travel) and prefabrication
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     You can only exclude materials you actually paid for, at what they cost you
                   </li>
                 </ul>
@@ -239,11 +226,11 @@ const CISDRCHelper = () => {
           </Collapsible>
 
           <Collapsible open={showDRCGuide} onOpenChange={setShowDRCGuide}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
-                  <Lightbulb className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                  <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm sm:text-base font-medium text-elec-yellow">
                     What is DRC?
                   </span>
                 </div>
@@ -263,39 +250,39 @@ const CISDRCHelper = () => {
                 {/* The guide listed only three conditions and left out the two
                     that most often switch DRC off for an electrician: the
                     end-user exclusion and the zero-rated carve-out. */}
-                <ul className="space-y-1 text-sm text-blue-200/80">
+                <ul className="space-y-1 text-sm text-elec-yellow/80">
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     All of these must be true: your customer is VAT registered in the UK, the
                     services fall within CIS, and they are standard or reduced rated
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     It does NOT apply if your customer has confirmed in writing that they are an end
                     user (they don't make an onward supply of construction services) or an
                     intermediary supplier
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Zero-rated work is outside it, so standard-rated items inside a zero-rated new
                     build supply are not reverse charged
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     5% disregard: if the reverse charge part is 5% or less of the whole supply, both
                     sides can agree at the start of the contract to ignore it — judged on overall
                     contract value, never invoice by invoice
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Started 1 March 2021
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Subcontractor doesn't charge VAT on invoice
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     On the Flat Rate Scheme, leave reverse charge sales out of your flat rate
                     turnover entirely
                   </li>
@@ -305,11 +292,11 @@ const CISDRCHelper = () => {
           </Collapsible>
 
           <Collapsible open={showCombinedGuide} onOpenChange={setShowCombinedGuide}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
-                  <Lightbulb className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                  <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm sm:text-base font-medium text-elec-yellow">
                     When do both apply?
                   </span>
                 </div>
@@ -326,21 +313,21 @@ const CISDRCHelper = () => {
                   If you're a CIS subcontractor working for a CIS contractor: Both CIS and DRC
                   apply.
                 </p>
-                <ul className="space-y-1 text-sm text-blue-200/80">
+                <ul className="space-y-1 text-sm text-elec-yellow/80">
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Your invoice shows: Labour + Materials (no VAT)
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     CIS deduction applies to labour only
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Contractor accounts for the VAT separately
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
+                    <span className="text-elec-yellow mt-1">•</span>
                     Your invoice must still say the reverse charge applies and show the VAT rate or
                     the VAT amount the customer has to account for
                   </li>
@@ -358,10 +345,7 @@ const CISDRCHelper = () => {
           badge="Tax"
         >
           {/* Role Selection */}
-          <div className="flex items-center gap-2 mb-3">
-            <Building className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Your Role</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Your Role</h3>
 
           <div className="w-full flex rounded-xl overflow-hidden border border-white/10 mb-4">
             <button
@@ -404,10 +388,7 @@ const CISDRCHelper = () => {
           </p>
 
           {/* Job Costs */}
-          <div className="flex items-center gap-2 mb-3">
-            <Hammer className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Job Costs</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Job Costs</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -439,10 +420,7 @@ const CISDRCHelper = () => {
           </div>
 
           {/* Tax Settings */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Percent className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Tax Settings</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">Tax Settings</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -469,10 +447,7 @@ const CISDRCHelper = () => {
           </div>
 
           {/* VAT & DRC Status */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Receipt className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">VAT & DRC Status</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">VAT & DRC Status</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
@@ -572,13 +547,13 @@ const CISDRCHelper = () => {
                   'flex items-start gap-3 p-3 rounded-xl border',
                   warning.type === 'warning'
                     ? 'bg-orange-500/10 border-orange-500/30'
-                    : 'bg-blue-500/10 border-blue-500/30'
+                    : 'bg-white/[0.04] border-white/[0.10]'
                 )}
               >
                 <AlertCircle
                   className={cn(
                     'w-4 h-4 flex-shrink-0 mt-0.5',
-                    warning.type === 'warning' ? 'text-orange-400' : 'text-blue-400'
+                    warning.type === 'warning' ? 'text-orange-400' : 'text-elec-yellow'
                   )}
                 />
                 <p className="text-sm text-white">{warning.text}</p>
@@ -589,22 +564,26 @@ const CISDRCHelper = () => {
 
         {/* Invoice Breakdown */}
         <CalculatorResult category="business">
-          <div className="flex items-center gap-2 mb-4">
-            <FileText className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Invoice Breakdown</span>
-          </div>
+          <ResultHeadline
+            label="You receive"
+            value={currency(invoice.cashReceived)}
+            aside={`${currency(invoice.invoiceTotal)} invoiced`}
+            caption={`After ${currency(invoice.cisDeduction)} of CIS deducted from labour. Materials, VAT and the CITB levy are outside the deduction.`}
+          />
+
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Invoice Breakdown</h3>
 
           <div className="space-y-3 text-sm">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-white">
-                <Hammer className="w-4 h-4 text-blue-400/70" />
+                <Hammer className="w-4 h-4 text-elec-yellow/70" />
                 Labour cost
               </span>
               <strong className="text-white">{currency(labourVal)}</strong>
             </div>
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-white">
-                <Package className="w-4 h-4 text-blue-400/70" />
+                <Package className="w-4 h-4 text-elec-yellow/70" />
                 Materials cost
               </span>
               <strong className="text-white">{currency(materialsVal)}</strong>
@@ -619,14 +598,14 @@ const CISDRCHelper = () => {
 
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-white">
-                <Receipt className="w-4 h-4 text-blue-400/70" />
+                <Receipt className="w-4 h-4 text-elec-yellow/70" />
                 VAT to charge
-                {vat === 0 && drcApplies && <Info className="w-3 h-3 text-blue-400" />}
+                {vat === 0 && drcApplies && <Info className="w-3 h-3 text-elec-yellow" />}
               </span>
               <strong className="text-white">{currency(vat)}</strong>
             </div>
             {vat === 0 && drcApplies && (
-              <p className="text-xs text-blue-400 pl-6">
+              <p className="text-xs text-elec-yellow pl-6">
                 £0 because DRC applies - contractor accounts for VAT
               </p>
             )}
@@ -677,21 +656,18 @@ const CISDRCHelper = () => {
 
         {/* What This Means */}
         {role === 'subcontractor' && cisDeduction > 0 && (
-          <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/10">
-            <div className="flex items-center gap-2 mb-3">
-              <Info className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-blue-300">What This Means</span>
-            </div>
-            <ul className="space-y-2 text-sm text-blue-200/80">
+          <div className="p-4 rounded-xl border border-white/[0.10] bg-white/[0.04]">
+            <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">What This Means</h3>
+            <ul className="space-y-2 text-sm text-elec-yellow/80">
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">•</span>
+                <span className="text-elec-yellow mt-1">•</span>
                 You invoice <strong className="text-white">
                   {currency(totalDueFromCustomer)}
                 </strong>{' '}
                 but receive <strong className="text-green-400">{currency(cashReceived)}</strong>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">•</span>
+                <span className="text-elec-yellow mt-1">•</span>
                 Contractor pays <strong className="text-white">
                   {currency(cisDeduction)}
                 </strong>{' '}
@@ -699,14 +675,14 @@ const CISDRCHelper = () => {
               </li>
               {drcApplies && (
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   Contractor accounts for{' '}
                   <strong className="text-white">{currency(invoice.reverseChargeVat)}</strong> VAT
                   to HMRC (not on your invoice)
                 </li>
               )}
               <li className="flex items-start gap-2">
-                <span className="text-blue-400 mt-1">•</span>
+                <span className="text-elec-yellow mt-1">•</span>
                 Claim your <strong className="text-white">{currency(cisDeduction)}</strong> CIS
                 deduction on your Self Assessment
               </li>

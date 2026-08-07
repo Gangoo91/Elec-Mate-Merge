@@ -21,7 +21,7 @@ export default function TrunkingInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Trunking Installation Guide | Types & Sizing UK"
-      description="Complete guide to electrical trunking for UK installations. PVC trunking, metal trunking, dado trunking, skirting trunking, mini trunking…"
+      description="Complete guide to electrical trunking for UK installations. PVC trunking, metal trunking, dado trunking, skirting trunking, mini trunking."
       datePublished="2025-06-01"
       dateModified="2026-06-10"
       breadcrumbs={[

@@ -560,7 +560,7 @@ export default function ElectricalContractorInsurancePage() {
   return (
     <GuideTemplate
       title="Electrical Contractor Insurance UK 2026 | PL, EL, PI and"
-      description="Complete guide to insurance for electrical contractors in the UK. Public liability (minimum £2m, typically £5m), employer's liability (legal requirement…"
+      description="Complete guide to insurance for electrical contractors in the UK. Public liability (minimum £2m, typically £5m), employer's liability (legal requirement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

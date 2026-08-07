@@ -634,7 +634,7 @@ export default function USBSocketNotChargingPage() {
   return (
     <GuideTemplate
       title="USB Socket Not Charging | Why & What to Do"
-      description="USB wall socket not charging your phone? Learn why — internal module failure, USB-A vs USB-C power limits, thermal shutdown…"
+      description="USB wall socket not charging your phone? Learn why — internal module failure, USB-A vs USB-C power limits, thermal shutdown."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

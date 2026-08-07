@@ -664,7 +664,7 @@ export default function AirSourceHeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Air Source Heat Pump Electrical Installation | Guide UK"
-      description="Complete guide to air source heat pump electrical installation in the UK. Supply requirements, circuit sizing, dedicated MCB/RCBO…"
+      description="Complete guide to air source heat pump electrical installation in the UK. Supply requirements, circuit sizing, dedicated MCB/RCBO."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -63,7 +63,7 @@ export default function PricingEmbeddingsProgress({
     return (
       <Card>
         <CardContent className="pt-6 flex items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          <Loader2 className="h-6 w-6 animate-spin text-white" />
         </CardContent>
       </Card>
     );
@@ -107,25 +107,25 @@ export default function PricingEmbeddingsProgress({
 
         <div className="grid grid-cols-4 gap-4 text-sm">
           <div>
-            <p className="text-muted-foreground">Total</p>
+            <p className="text-white">Total</p>
             <p className="font-semibold">{status.total.toLocaleString()}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Processed</p>
+            <p className="text-white">Processed</p>
             <p className="font-semibold text-primary">{status.processed.toLocaleString()}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Errors</p>
+            <p className="text-white">Errors</p>
             <p className="font-semibold text-destructive">{status.errors.toLocaleString()}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Skipped</p>
-            <p className="font-semibold text-muted-foreground">{status.skipped.toLocaleString()}</p>
+            <p className="text-white">Skipped</p>
+            <p className="font-semibold text-white">{status.skipped.toLocaleString()}</p>
           </div>
         </div>
 
         {isCompleted && status.completed_at && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Completed: {new Date(status.completed_at).toLocaleString()}
           </p>
         )}

@@ -5,9 +5,9 @@ const modified = '2026-06-10';
 
 export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-common-causes',
-  title: 'RCBO Keeps Tripping? | 8 Common Causes + Fixes',
+  title: 'RCBO Keeps Tripping? Causes + 9 mA Leakage Test',
   description:
-    "RCBO won't stay in? Step-by-step diagnosis: neutral-earth fault, accumulated leakage, faulty appliance, mechanical RCBO fault, nuisance trips + how to fix.",
+    'Overload or earth leakage: on a 30 mA RCBO total leakage must stay under 9 mA. Unplug all loads and reset — still trips? The fault is in the fixed wiring.',
   datePublished: published,
   dateModified: modified,
   readingTime: 8,
@@ -26,7 +26,7 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   keyTakeaways: [
     'An RCBO usually points you to one circuit, one load, or one damaged point rather than a whole board problem.',
     'The most common causes are overload, leakage to earth, damaged accessories, moisture ingress, and recent alteration work.',
-    'For a 30 mA RCBO, total downstream earth leakage from all loads must not exceed 9 mA (30% of 30 mA) to avoid nuisance trips — Reg 531.3.1.202(c).',
+    'For a 30 mA RCBO, total downstream earth leakage from all loads must not exceed 9 mA (30% of 30 mA) to avoid nuisance trips — Reg 531.3.2(c).',
     'Read the trip pattern first. Instant trips, load-related trips, and intermittent trips usually need a different test path.',
     'If the fix is bigger than a local repair, record that clearly and move the job toward a quote or further inspection.',
     'Elec-Mate helps you move from fault, to quote, to certificate, without losing the details in the middle.',
@@ -132,7 +132,7 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
           type: 'list',
           items: [
             'Insulation resistance test: link L and N together and measure L&N to E at 500 V DC. Minimum acceptable is 1.0 MΩ per Table 64 (Reg 643.3.2). Anything below that is your suspect.',
-            'Check for cumulative earth leakage: clamp around the live conductors only (excluding the PE), per the GN3 earth leakage clamp method (GN3 Reg 1.08). Total downstream leakage must not exceed 9 mA on a 30 mA RCBO (30% rule, Reg 531.3.1.202(c)).',
+            'Check for cumulative earth leakage: clamp around the live conductors only (excluding the PE), per the GN3 earth leakage clamp method (GN3 Reg 1.08). Total downstream leakage must not exceed 9 mA on a 30 mA RCBO (30% rule, Reg 531.3.2(c)).',
             'Look for shared neutrals between circuits — a borrowed neutral will trip on imbalance, not earth fault.',
             'Test at 0° and 180° phase angle — some faults only trigger on one half-cycle, especially with switched-mode loads.',
           ],

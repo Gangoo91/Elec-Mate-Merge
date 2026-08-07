@@ -41,6 +41,8 @@ export interface SearchFilters {
   maxPrice?: number;
   dealsOnly?: boolean;
   productType?: ProductType;
+  /** Brand names to narrow to. Brand is how tools get shopped for. */
+  brands?: string[];
 }
 
 export interface MarketplaceCoupon {
@@ -71,6 +73,8 @@ export interface DealOfTheDay {
 export interface SearchFacets {
   categories: { name: string; count: number }[];
   suppliers: { slug: string; name: string; count: number }[];
+  /** Brands carried by more than one supplier, most-stocked first. */
+  brands?: { name: string; count: number; supplierCount: number }[];
   priceRange: { min: number; max: number };
 }
 
@@ -111,6 +115,7 @@ export function useMarketplaceSearch(
           maxPrice: filters.maxPrice ?? null,
           dealsOnly: filters.dealsOnly ?? false,
           productType: filters.productType || null,
+          brands: filters.brands && filters.brands.length > 0 ? filters.brands : null,
           sort,
           page,
           pageSize,

@@ -4,12 +4,18 @@ import { checkCableProtectiveDeviceMatch } from './cableProtectiveDeviceValidato
 import { checkCircuitTypeConsistency } from './circuitTypeValidator';
 import { checkEarthingRequirements } from './earthingValidator';
 import { checkTestValues } from './testValueValidator';
-import { checkZsCompliance } from './zsValidator';
+import { checkZsCompliance, type ZsBasis } from './zsValidator';
 import { checkDeviceDirectionality } from './deviceDirectionalityValidator';
+import { checkVerificationResults } from './verificationValidator';
 
 // Main regulation checker function with enhanced Zs validation
 // Optional earthingArrangement — pass 'TT' to use RCD-based Zs limits
-export const checkRegulationCompliance = (result: TestResult, earthingArrangement?: string): RegulationCheckResult => {
+export const checkRegulationCompliance = (
+  result: TestResult,
+  earthingArrangement?: string,
+  /** Which maximum a measured Zs is judged against — see `ZsBasis`. */
+  zsBasis: ZsBasis = 100
+): RegulationCheckResult => {
   // A device row (incoming RCD, SPD, main switch) records no circuit, so it has
   // no cable, no Zs and no circuit type to check. Running the validators over
   // one flags every field it was never meant to carry. See ELE-1484.
@@ -22,8 +28,12 @@ export const checkRegulationCompliance = (result: TestResult, earthingArrangemen
     ...checkCircuitTypeConsistency(result),
     ...checkEarthingRequirements(result),
     ...checkTestValues(result),
-    ...checkZsCompliance(result, earthingArrangement),
+    ...checkZsCompliance(result, earthingArrangement, zsBasis),
     ...checkDeviceDirectionality(result), // Amendment 3:2024 compliance
+    // Part 6 verification results — RCD disconnection time, functional
+    // testing, breaking capacity and ring continuity. See the header of
+    // verificationValidator.ts for why these were missing.
+    ...checkVerificationResults(result),
   ];
 
   const hasCriticalIssues = allWarnings.some((warning) => warning.severity === 'critical');
@@ -37,12 +47,13 @@ export const checkRegulationCompliance = (result: TestResult, earthingArrangemen
 // Batch check multiple results
 export const checkAllResultsCompliance = (
   results: TestResult[],
-  earthingArrangement?: string
+  earthingArrangement?: string,
+  zsBasis: ZsBasis = 100
 ): Map<string, RegulationCheckResult> => {
   const complianceMap = new Map<string, RegulationCheckResult>();
 
   results.forEach((result) => {
-    complianceMap.set(result.id, checkRegulationCompliance(result, earthingArrangement));
+    complianceMap.set(result.id, checkRegulationCompliance(result, earthingArrangement, zsBasis));
   });
 
   return complianceMap;

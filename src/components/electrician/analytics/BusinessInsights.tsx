@@ -25,6 +25,7 @@
  * <select> that rendered the browser's blue focus ring on a black page.
  */
 import React, { useMemo, useState } from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   Area,
   Bar,
@@ -49,7 +50,7 @@ import {
 } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Quote } from '@/types/quote';
-import { isQuoteWon as isWon } from '@/utils/quote-status';
+import { isQuoteWon as isWon, isQuoteLost as isLost } from '@/utils/quote-status';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
 import { useBusinessInsights } from '@/hooks/useBusinessInsights';
 
@@ -123,16 +124,34 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
 
   const [override, setOverride] = useState<RangeKey | null>(null);
 
+  /** The cut-off date for a range, using the same rule the filters use. */
+  const startOf = (key: RangeKey) =>
+    key === '12m' ? subMonths(new Date(), 12) : subDays(new Date(), RANGES.find((r) => r.key === key)!.days);
+
+  /**
+   * The smallest window that ACTUALLY contains something.
+   *
+   * This used to derive the range from the age of the newest record —
+   * `age <= r.days` — which is a different rule from the one the data filters
+   * apply (`isAfter(date, from)`, strictly exclusive). A record exactly 30 days
+   * old therefore selected the 30-day window and was then filtered straight
+   * back out of it, and because the auto range equalled the selected range the
+   * "try a wider window" button was hidden too. The user landed on an empty
+   * panel with no way out, which is precisely the failure this range picker
+   * exists to prevent.
+   *
+   * Testing containment directly means the two can never disagree again,
+   * whatever the boundary convention.
+   */
   const autoRange: RangeKey = useMemo(() => {
     if (activity.length === 0) return '30d';
-    const newest = Math.max(...activity.map((d) => d.getTime()));
-    const age = differenceInDays(new Date(), new Date(newest));
-    return (RANGES.find((r) => age <= r.days) ?? RANGES[RANGES.length - 1]).key;
+    const found = RANGES.find((r) => activity.some((d) => isAfter(d, startOf(r.key))));
+    return (found ?? RANGES[RANGES.length - 1]).key;
   }, [activity]);
 
   const range = override ?? autoRange;
   const rangeDef = RANGES.find((r) => r.key === range)!;
-  const from = range === '12m' ? subMonths(new Date(), 12) : subDays(new Date(), rangeDef.days);
+  const from = startOf(range);
 
   // ── Window the data ──────────────────────────────────────────────────
   const inRange = useMemo(() => {
@@ -156,11 +175,18 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
     const cashIn = paid.reduce((s, i) => s + (i.total || 0), 0);
     const cashOut = inRange.exp.reduce((s, e) => s + e.amount, 0);
 
+    // Overdue is a SUBSET of outstanding, so both must come from the same set
+    // of invoices. They did not: outstanding filtered on `invoice_status`
+    // while overdue ran `isInvoiceOverdue` across every invoice in the window,
+    // which catches rows the status filter excludes. The panel could therefore
+    // report £244 out for payment and £4,087 of it overdue — more overdue than
+    // outstanding, which cannot happen and destroys trust in every other
+    // number on the screen.
     const unpaid = inRange.inv.filter(
       (i) => i.invoice_status && i.invoice_status !== 'paid' && i.invoice_status !== 'draft'
     );
     const outstanding = unpaid.reduce((s, i) => s + (i.total || 0), 0);
-    const overdue = inRange.inv.filter(isInvoiceOverdue).reduce((s, i) => s + (i.total || 0), 0);
+    const overdue = unpaid.filter(isInvoiceOverdue).reduce((s, i) => s + (i.total || 0), 0);
 
     const seconds = inRange.hrs.reduce((s, h) => s + h.seconds, 0);
     const hoursWorked = seconds / 3600;
@@ -172,7 +198,10 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
       outstanding,
       overdue,
       hoursWorked,
-      perHour: hoursWorked > 0 ? cashIn / hoursWorked : null,
+      // Needs BOTH hours and money in. With hours logged but nothing paid yet
+      // this returned £0/hr, which reads as "your work is worthless" rather
+      // than "no invoices have landed in this window".
+      perHour: hoursWorked > 0 && cashIn > 0 ? cashIn / hoursWorked : null,
     };
   }, [inRange]);
 
@@ -191,8 +220,31 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
     ];
   }, [inRange.q]);
 
-  const winRate =
-    funnel[1].count > 0 ? Math.round((funnel[3].count / funnel[1].count) * 100) : null;
+  /** Enough quotes, and genuine drop-off, for bars to say anything. */
+  const funnelHasShape =
+    funnel[0].count >= 4 && new Set(funnel.map((s) => s.count)).size > 1;
+
+  /**
+   * A win rate needs LOSSES on record.
+   *
+   * This was `won / sent`, unguarded, and it printed "100% win rate" in volt
+   * off a single quote. Worse, on this account it can never fall below 100%:
+   * a lost job is simply never marked rejected, so the denominator only grows
+   * when the numerator does. A number that cannot go down is not a
+   * measurement, and showing it in volt lends it the weight of one.
+   *
+   * Same rule the KPI strip already uses (useBusinessHubData.ts:119) — at
+   * least five DECIDED quotes and at least one recorded loss. Below that the
+   * funnel still shows every count; it just stops dressing them as a rate.
+   * The prompt to start recording losses lives on the "Quotes out" KPI.
+   */
+  const winRate = useMemo(() => {
+    const won = inRange.q.filter(isWon).length;
+    const lost = inRange.q.filter(isLost).length;
+    const decided = won + lost;
+    if (decided < 5 || lost === 0) return null;
+    return Math.round((won / decided) * 100);
+  }, [inRange.q]);
 
   const avgQuote =
     inRange.q.length > 0
@@ -252,7 +304,7 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
   // ─────────────────────────────────────────────────────────────────────
 
   return (
-    <div className="rounded-2xl border border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06] p-4 sm:p-5">
+    <div className={cn('rounded-2xl border border-white/[0.18] p-4 sm:p-5', CARD_SURFACE)}>
       {/* Range switcher — chips, not a raw <select>. The previous control was
           a native select, which paints the browser's own blue focus ring on a
           black page and is disallowed for 2–4 options anyway. */}
@@ -268,7 +320,7 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
                 aria-selected={active}
                 onClick={() => setOverride(r.key)}
                 className={cn(
-                  'h-9 rounded-lg px-3 text-[12px] font-semibold transition-colors touch-manipulation',
+                  'h-11 rounded-lg px-3.5 text-[12px] font-semibold transition-colors touch-manipulation',
                   active
                     ? 'bg-elec-yellow text-black'
                     : 'border border-white/[0.12] bg-white/[0.04] text-white hover:border-white/[0.25]'
@@ -443,9 +495,24 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
                 )}
               </div>
 
-              {/* Proportional — each bar is its share of Created. The old
-                  version drew four identical full-width bars, so the shape of
-                  the funnel (the entire point of a funnel) was invisible. */}
+              {/* Bars only when there is a SHAPE to see.
+                  Each bar is its share of Created, which is right — but with a
+                  single quote every step is 100% and it draws four identical
+                  full-width bars. A funnel whose whole job is showing drop-off,
+                  showing none, and implying a healthy pipeline where there is
+                  one job. Below four quotes, or when no step drops, the same
+                  counts read honestly as a line of text. */}
+              {!funnelHasShape ? (
+                <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+                  {funnel
+                    .filter((s) => s.count > 0)
+                    .map((s) => `${s.count} ${s.label.toLowerCase()}`)
+                    .join(' · ')}
+                  <span className="ml-1.5 text-white">
+                    — {money(funnel[0].value)} of work quoted
+                  </span>
+                </p>
+              ) : (
               <div className="mt-3 space-y-2">
                 {funnel.map((step, i) => {
                   const pct = funnel[0].count > 0 ? (step.count / funnel[0].count) * 100 : 0;
@@ -475,20 +542,29 @@ export const BusinessInsights: React.FC<Props> = ({ quotes, invoices = [], lastU
                   );
                 })}
               </div>
+              )}
             </div>
           )}
 
           {/* ── The rest ───────────────────────────────────────────────── */}
           <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-white/[0.10] pt-4 sm:grid-cols-4">
             <Metric label="Avg quote" value={avgQuote > 0 ? money(avgQuote) : '—'} />
-            <Metric label="Days to win" value={daysToWin != null ? `${daysToWin}` : '—'} />
+            {/* A quote accepted the day it went out averages to 0, and a bare
+                "0" beside an em-dash reads as another missing figure rather
+                than the best possible result. */}
+            <Metric
+              label="Days to win"
+              value={daysToWin == null ? '—' : daysToWin === 0 ? 'Same day' : `${daysToWin}`}
+            />
             <Metric
               label="Per hour"
               value={totals.perHour != null ? money(totals.perHour) : '—'}
               hint={
-                totals.hoursWorked > 0
-                  ? `${totals.hoursWorked.toFixed(1)}h logged`
-                  : 'Log hours to see this'
+                totals.hoursWorked > 0 && totals.cashIn === 0
+                  ? `${totals.hoursWorked.toFixed(1)}h logged · nothing paid yet`
+                  : totals.hoursWorked > 0
+                    ? `${totals.hoursWorked.toFixed(1)}h logged`
+                    : 'Log hours to see this'
               }
             />
             <Metric

@@ -561,7 +561,7 @@ export default function ClampMeterGuideElectriciansPage() {
   return (
     <GuideTemplate
       title="Clamp Meter Guide for Electricians UK 2026 | AC vs DC,"
-      description="Complete clamp meter guide for UK electricians. AC vs DC clamp meters, accuracy considerations, harmonic assessment, leakage current measurement…"
+      description="Complete clamp meter guide for UK electricians. AC vs DC clamp meters, accuracy considerations, harmonic assessment, leakage current measurement."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

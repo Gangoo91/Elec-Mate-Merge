@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -492,7 +494,7 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({ onPhotosRe
               {/* Board — enclosure with a recessed DIN rail, a proper main
                   switch, a 3P block, and breakers that flash volt in sequence
                   (board-read keyframe) — the scanner reading module by module. */}
-              <div className="rounded-2xl border border-white/[0.2] bg-gradient-to-b from-white/[0.12] to-white/[0.06] p-2 shadow-inner sm:p-2.5">
+              <div className={cn('rounded-2xl border border-white/[0.2] p-2 sm:p-2.5', CARD_SURFACE)}>
                 {/* DIN recess */}
                 <div className="rounded-xl bg-black/40 p-2 shadow-[inset_0_2px_6px_rgba(0,0,0,0.5)] sm:p-2.5">
                   <div className="flex items-stretch gap-1.5">

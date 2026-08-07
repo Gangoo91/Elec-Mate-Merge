@@ -5,3 +5,4 @@ export {
   type RegulationWarning,
   type RegulationCheckResult,
 } from './regulationChecker';
+export type { ZsBasis } from './regulationChecker/zsValidator';

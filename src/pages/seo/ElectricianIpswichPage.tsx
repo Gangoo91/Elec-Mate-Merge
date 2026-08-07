@@ -462,7 +462,7 @@ export default function ElectricianIpswichPage() {
     <GuideTemplate
       localArea="Ipswich"
       title="Electrician in Ipswich | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments…"
+      description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

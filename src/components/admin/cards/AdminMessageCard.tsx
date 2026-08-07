@@ -43,23 +43,23 @@ const AdminMessageCardComponent: React.FC<AdminMessageCardProps> = ({
                 </Badge>
               )}
             </div>
-            <p className="text-sm text-muted-foreground line-clamp-2">{message.content}</p>
+            <p className="text-sm text-white line-clamp-2">{message.content}</p>
             <div className="flex items-center gap-3 mt-2">
-              <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <span className="text-xs text-white flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 {formatDistanceToNow(new Date(message.created_at), {
                   addSuffix: true,
                 })}
               </span>
               {message.upvotes > 0 && (
-                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="text-xs text-white flex items-center gap-1">
                   <ThumbsUp className="h-3 w-3" />
                   {message.upvotes}
                 </span>
               )}
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+          <ChevronRight className="h-5 w-5 text-white shrink-0 mt-1" />
         </div>
       </CardContent>
     </Card>

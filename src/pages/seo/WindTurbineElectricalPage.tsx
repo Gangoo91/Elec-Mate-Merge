@@ -555,7 +555,7 @@ export default function WindTurbineElectricalPage() {
   return (
     <GuideTemplate
       title="Small Wind Turbine Electrical Installation UK | Micro Wind"
-      description="Complete guide to small wind turbine electrical installation in the UK. Micro wind under 50 kW, planning permission…"
+      description="Complete guide to small wind turbine electrical installation in the UK. Micro wind under 50 kW, planning permission."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

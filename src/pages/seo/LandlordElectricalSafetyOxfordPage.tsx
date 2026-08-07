@@ -673,7 +673,7 @@ export default function LandlordElectricalSafetyOxfordPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Oxford | EICR Landlords Oxford"
-      description="Landlord electrical safety requirements in Oxford. 2020 Regulations, Oxford City Council enforcement, student HMO licensing, penalties up to £30,000…"
+      description="Landlord electrical safety requirements in Oxford. 2020 Regulations, Oxford City Council enforcement, student HMO licensing, penalties up to £30,000."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

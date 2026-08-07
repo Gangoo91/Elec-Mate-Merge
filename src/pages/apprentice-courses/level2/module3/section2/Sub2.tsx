@@ -434,7 +434,7 @@ export default function Sub2() {
               include control logic, sequencing and timing.
             </p>
             <p>
-              Both use BS EN 60617 graphical symbols (the standard introduced in Sub 3) — the
+              Both use IEC 60617 graphical symbols (the standard introduced in Sub 3) — the
               symbols replaced the older BS 3939 set. Both are drawn for function, not for physical
               wiring.
             </p>
@@ -603,7 +603,7 @@ export default function Sub2() {
           >
             <p>
               A layout drawing (or floor plan) is an architect-style plan view of the building with
-              the electrical positions marked using BS EN 60617 symbols. It's drawn to scale
+              the electrical positions marked using IEC 60617 symbols. It's drawn to scale
               (typically 1:50 for individual rooms or 1:100 for whole floors — see Sub 4) and
               includes a key explaining each symbol used.
             </p>
@@ -807,7 +807,7 @@ export default function Sub2() {
                 Next subsection <ChevronRight className="h-3 w-3" />
               </div>
               <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                BS EN 60617 drawing symbols
+                IEC 60617 drawing symbols
               </div>
             </button>
           </div>

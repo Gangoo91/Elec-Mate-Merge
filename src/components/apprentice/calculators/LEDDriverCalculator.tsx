@@ -18,6 +18,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { ledDriverContent } from './content/led-driver';
 
@@ -192,328 +193,338 @@ const LEDDriverCalculator = () => {
       title="LED Driver Calculator"
       description="Calculate LED driver requirements for single LEDs or arrays in series/parallel"
     >
-      {/* Connection Type */}
-      <div className="space-y-2">
-        <p className="text-sm font-medium text-white">Connection Type</p>
-        <div className="flex gap-2">
-          {connectionOptions.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setConnectionType(opt.value)}
-              className={cn(
-                'flex-1 h-11 rounded-xl font-medium text-sm transition-all touch-manipulation',
-                connectionType === opt.value
-                  ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
-              )}
-              style={
-                connectionType === opt.value
-                  ? {
-                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+      <CalculatorPanes
+        form={
+          <>
+            {/* Connection Type */}
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-white">Connection Type</p>
+              <div className="flex gap-2">
+                {connectionOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setConnectionType(opt.value)}
+                    className={cn(
+                      'flex-1 h-11 rounded-xl font-medium text-sm transition-all touch-manipulation',
+                      connectionType === opt.value
+                        ? 'text-black'
+                        : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
+                    )}
+                    style={
+                      connectionType === opt.value
+                        ? {
+                            background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          }
+                        : undefined
                     }
-                  : undefined
-              }
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </div>
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-      {/* LED Specifications */}
-      <CalculatorInput
-        label="LED Forward Voltage"
-        unit="V"
-        type="text"
-        inputMode="decimal"
-        value={ledVoltage}
-        onChange={setLedVoltage}
-        placeholder="e.g., 3.2"
-        hint="Typical: White 3.0-3.4V, Red 1.8-2.2V"
-      />
-
-      <CalculatorInput
-        label="LED Forward Current"
-        unit="mA"
-        type="text"
-        inputMode="decimal"
-        value={ledCurrent}
-        onChange={setLedCurrent}
-        placeholder="e.g., 350"
-        hint="Common: 20mA, 350mA, 700mA, 1A"
-      />
-
-      <CalculatorInput
-        label="Number of LEDs"
-        unit="pcs"
-        type="text"
-        inputMode="numeric"
-        value={numLeds}
-        onChange={setNumLeds}
-        placeholder="e.g., 10"
-      />
-
-      {/* Supply Configuration */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Supply Voltage"
-          value={supplyVoltage}
-          onChange={setSupplyVoltage}
-          options={supplyOptions}
-        />
-        <CalculatorInput
-          label="Driver Efficiency"
-          type="text"
-          inputMode="decimal"
-          value={efficiency}
-          onChange={setEfficiency}
-          placeholder="0.85"
-          hint="0.80-0.95 typical"
-        />
-      </CalculatorInputGrid>
-
-      {/* Actions */}
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate}
-        calculateLabel="Calculate Driver"
-        showReset={!!result}
-      />
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge status={result.status} label={result.statusLabel} />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero Value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Recommended Driver</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.nearestStandardDriver}
-            </p>
-            <p className="text-sm text-white mt-2">
-              {connectionType} · {numLeds} LED{parseInt(numLeds) > 1 ? 's' : ''} ·{' '}
-              {result.totalPower.toFixed(2)}W array
-            </p>
-          </div>
-
-          {/* Result Values */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Total Voltage"
-              value={result.totalVoltage.toFixed(1)}
+            {/* LED Specifications */}
+            <CalculatorInput
+              label="LED Forward Voltage"
               unit="V"
-              category={CAT}
-              size="sm"
+              type="text"
+              inputMode="decimal"
+              value={ledVoltage}
+              onChange={setLedVoltage}
+              placeholder="e.g., 3.2"
+              hint="Typical: White 3.0-3.4V, Red 1.8-2.2V"
             />
-            <ResultValue
-              label="Total Current"
-              value={result.totalCurrentmA.toFixed(0)}
+
+            <CalculatorInput
+              label="LED Forward Current"
               unit="mA"
-              category={CAT}
-              size="sm"
+              type="text"
+              inputMode="decimal"
+              value={ledCurrent}
+              onChange={setLedCurrent}
+              placeholder="e.g., 350"
+              hint="Common: 20mA, 350mA, 700mA, 1A"
             />
-            <ResultValue
-              label="LED Array Power"
-              value={result.totalPower.toFixed(2)}
-              unit="W"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Driver Power"
-              value={result.driverPower.toFixed(2)}
-              unit="W"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
 
-          {/* Power Loss + Connection Guidance */}
-          <div className="space-y-2">
-            <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
-              <span className="text-sm text-white">Power Loss (heat)</span>
-              <span className="text-sm font-medium text-amber-400">
-                {result.powerLoss.toFixed(2)}W
-              </span>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white">{result.connectionGuidance}</p>
-            </div>
-            {result.messages.map((msg, idx) => (
-              <div key={idx} className="flex items-start gap-2 p-3 rounded-lg bg-white/5">
-                <span
-                  className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                  style={{ backgroundColor: config.gradientFrom }}
+            <CalculatorInput
+              label="Number of LEDs"
+              unit="pcs"
+              type="text"
+              inputMode="numeric"
+              value={numLeds}
+              onChange={setNumLeds}
+              placeholder="e.g., 10"
+            />
+
+            {/* Supply Configuration */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Supply Voltage"
+                value={supplyVoltage}
+                onChange={setSupplyVoltage}
+                options={supplyOptions}
+              />
+              <CalculatorInput
+                label="Driver Efficiency"
+                type="text"
+                inputMode="decimal"
+                value={efficiency}
+                onChange={setEfficiency}
+                placeholder="0.85"
+                hint="0.80-0.95 typical"
+              />
+            </CalculatorInputGrid>
+
+            {/* Actions */}
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate}
+              calculateLabel="Calculate Driver"
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge status={result.status} label={result.statusLabel} />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+
+                {/* Hero Value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Recommended Driver</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.nearestStandardDriver}
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {connectionType} · {numLeds} LED{parseInt(numLeds) > 1 ? 's' : ''} ·{' '}
+                    {result.totalPower.toFixed(2)}W array
+                  </p>
+                </div>
+
+                {/* Result Values */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Total Voltage"
+                    value={result.totalVoltage.toFixed(1)}
+                    unit="V"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Total Current"
+                    value={result.totalCurrentmA.toFixed(0)}
+                    unit="mA"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="LED Array Power"
+                    value={result.totalPower.toFixed(2)}
+                    unit="W"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Driver Power"
+                    value={result.driverPower.toFixed(2)}
+                    unit="W"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* Power Loss + Connection Guidance */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
+                    <span className="text-sm text-white">Power Loss (heat)</span>
+                    <span className="text-sm font-medium text-amber-400">
+                      {result.powerLoss.toFixed(2)}W
+                    </span>
+                  </div>
+                  <div className="p-3 rounded-lg bg-white/5">
+                    <p className="text-sm text-white">{result.connectionGuidance}</p>
+                  </div>
+                  {result.messages.map((msg, idx) => (
+                    <div key={idx} className="flex items-start gap-2 p-3 rounded-lg bg-white/5">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <p className="text-sm text-white">{msg}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Input values',
+                      formula: `Vf = ${ledVoltage}V | If = ${ledCurrent}mA | Count = ${numLeds} | ${connectionType} | Supply = ${supplyVoltage}V | η = ${efficiency}`,
+                    },
+                    {
+                      label:
+                        connectionType === 'series'
+                          ? 'Series voltage & current'
+                          : 'Parallel voltage & current',
+                      formula:
+                        connectionType === 'series'
+                          ? `V = Vf × n = ${ledVoltage} × ${numLeds} = ${result.totalVoltage.toFixed(1)}V | I = ${ledCurrent}mA (same through all)`
+                          : `V = Vf = ${ledVoltage}V (same across all) | I = If × n = ${ledCurrent} × ${numLeds} = ${result.totalCurrentmA.toFixed(0)}mA`,
+                      value:
+                        connectionType === 'series'
+                          ? `${result.totalVoltage.toFixed(1)} V, ${result.totalCurrentmA.toFixed(0)} mA`
+                          : `${result.totalVoltage.toFixed(1)} V, ${result.totalCurrentmA.toFixed(0)} mA`,
+                    },
+                    {
+                      label: 'LED power',
+                      formula: `P = V × I = ${result.totalVoltage.toFixed(1)} × ${(result.totalCurrentmA / 1000).toFixed(3)}`,
+                      value: `${result.totalPower.toFixed(2)} W`,
+                    },
+                    {
+                      label: 'Driver power',
+                      formula: `P_driver = P_LED ÷ η = ${result.totalPower.toFixed(2)} ÷ ${efficiency}`,
+                      value: `${result.driverPower.toFixed(2)} W`,
+                    },
+                    {
+                      label: 'Driver current from supply',
+                      formula: `I_supply = P_driver ÷ V_supply = ${result.driverPower.toFixed(2)} ÷ ${supplyVoltage}`,
+                      value: `${result.driverCurrent.toFixed(3)} A`,
+                    },
+                    {
+                      label: 'Recommended driver (20% headroom)',
+                      formula: `${result.driverPower.toFixed(2)} × 1.2 = ${result.recommendedDriverPower.toFixed(1)}W → nearest standard`,
+                      value: result.nearestStandardDriver,
+                      description:
+                        '20% safety margin prevents driver from running at maximum capacity',
+                    },
+                  ]}
                 />
-                <p className="text-sm text-white">{msg}</p>
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          'Proper driver sizing prevents LED thermal runaway and premature failure',
+                          'Voltage headroom ensures stable constant current across temperature variations',
+                          'Low efficiency drivers waste energy as heat — aim for >85%',
+                          'Series provides consistent current; parallel needs balancing resistors',
+                        ].map((item) => (
+                          <li key={item} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── BS 7671 Reference ── */}
+                <Collapsible open={showReference} onOpenChange={setShowReference}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>BS 7671 Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showReference && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          { reg: 'Regulation 559.5', desc: 'SELV/PELV lighting circuits' },
+                          { reg: 'Regulation 411.7', desc: 'Extra-low voltage systems' },
+                          { reg: 'BS EN 61347-2-13', desc: 'LED driver safety requirements' },
+                          { reg: 'IEC 62384', desc: 'LED driver performance standard' },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
               </div>
-            ))}
-          </div>
+            )}
 
-          <CalculatorDivider category={CAT} />
-
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Input values',
-                formula: `Vf = ${ledVoltage}V | If = ${ledCurrent}mA | Count = ${numLeds} | ${connectionType} | Supply = ${supplyVoltage}V | η = ${efficiency}`,
-              },
-              {
-                label:
-                  connectionType === 'series'
-                    ? 'Series voltage & current'
-                    : 'Parallel voltage & current',
-                formula:
-                  connectionType === 'series'
-                    ? `V = Vf × n = ${ledVoltage} × ${numLeds} = ${result.totalVoltage.toFixed(1)}V | I = ${ledCurrent}mA (same through all)`
-                    : `V = Vf = ${ledVoltage}V (same across all) | I = If × n = ${ledCurrent} × ${numLeds} = ${result.totalCurrentmA.toFixed(0)}mA`,
-                value:
-                  connectionType === 'series'
-                    ? `${result.totalVoltage.toFixed(1)} V, ${result.totalCurrentmA.toFixed(0)} mA`
-                    : `${result.totalVoltage.toFixed(1)} V, ${result.totalCurrentmA.toFixed(0)} mA`,
-              },
-              {
-                label: 'LED power',
-                formula: `P = V × I = ${result.totalVoltage.toFixed(1)} × ${(result.totalCurrentmA / 1000).toFixed(3)}`,
-                value: `${result.totalPower.toFixed(2)} W`,
-              },
-              {
-                label: 'Driver power',
-                formula: `P_driver = P_LED ÷ η = ${result.totalPower.toFixed(2)} ÷ ${efficiency}`,
-                value: `${result.driverPower.toFixed(2)} W`,
-              },
-              {
-                label: 'Driver current from supply',
-                formula: `I_supply = P_driver ÷ V_supply = ${result.driverPower.toFixed(2)} ÷ ${supplyVoltage}`,
-                value: `${result.driverCurrent.toFixed(3)} A`,
-              },
-              {
-                label: 'Recommended driver (20% headroom)',
-                formula: `${result.driverPower.toFixed(2)} × 1.2 = ${result.recommendedDriverPower.toFixed(1)}W → nearest standard`,
-                value: result.nearestStandardDriver,
-                description: '20% safety margin prevents driver from running at maximum capacity',
-              },
-            ]}
-          />
-
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    'Proper driver sizing prevents LED thermal runaway and premature failure',
-                    'Voltage headroom ensures stable constant current across temperature variations',
-                    'Low efficiency drivers waste energy as heat — aim for >85%',
-                    'Series provides consistent current; parallel needs balancing resistors',
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    { reg: 'Regulation 559.5', desc: 'SELV/PELV lighting circuits' },
-                    { reg: 'Regulation 411.7', desc: 'Extra-low voltage systems' },
-                    { reg: 'BS EN 61347-2-13', desc: 'LED driver safety requirements' },
-                    { reg: 'IEC 62384', desc: 'LED driver performance standard' },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
-
-      {/* Formula Reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="LED Driver Sizing"
-        formula="P_driver = (V_LED × I_LED × N) / η"
-        variables={[
-          { symbol: 'P_driver', description: 'Driver power (W)' },
-          { symbol: 'V_LED', description: 'LED forward voltage (V)' },
-          { symbol: 'I_LED', description: 'LED forward current (mA)' },
-          { symbol: 'N', description: 'Number of LEDs' },
-          { symbol: 'η', description: 'Driver efficiency (0.80-0.95)' },
-        ]}
+            {/* Formula Reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="LED Driver Sizing"
+              formula="P_driver = (V_LED × I_LED × N) / η"
+              variables={[
+                { symbol: 'P_driver', description: 'Driver power (W)' },
+                { symbol: 'V_LED', description: 'LED forward voltage (V)' },
+                { symbol: 'I_LED', description: 'LED forward current (mA)' },
+                { symbol: 'N', description: 'Number of LEDs' },
+                { symbol: 'η', description: 'Driver efficiency (0.80-0.95)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={ledDriverContent} category={CAT} />}
       />
-      <CalculatorEditorial content={ledDriverContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -583,7 +583,7 @@ export default function LandlordElectricalSafetySheffieldPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Sheffield | EICR Requirements"
-      description="Landlord electrical safety requirements in Sheffield. 2020 Regulations explained, Sheffield City Council enforcement, HMO requirements…"
+      description="Landlord electrical safety requirements in Sheffield. 2020 Regulations explained, Sheffield City Council enforcement, HMO requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

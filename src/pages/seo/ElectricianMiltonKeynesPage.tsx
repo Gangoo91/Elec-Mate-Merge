@@ -558,7 +558,7 @@ export default function ElectricianMiltonKeynesPage() {
     <GuideTemplate
       localArea="Milton Keynes"
       title="Electrician in Milton Keynes | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Milton Keynes. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new-build snagging…"
+      description="Find qualified, registered electricians in Milton Keynes. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new-build snagging."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

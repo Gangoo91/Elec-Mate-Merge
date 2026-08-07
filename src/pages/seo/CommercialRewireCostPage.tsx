@@ -2,14 +2,26 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  PoundSterling,
-  Calculator,
-  Building2,
-  AlertTriangle,
-  FileCheck2,
-  Wrench,
-} from 'lucide-react';
+import { PoundSterling, Calculator, Building2, FileCheck2 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared presentation classes
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-4 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const tableWrapCn =
+  '-mx-4 my-5 overflow-x-auto rounded-none border-y border-white/[0.14] ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const tableCn = 'w-full min-w-[560px] border-collapse text-left text-[13.5px] text-white';
+const thCn = 'px-4 py-3 font-semibold text-white align-bottom';
+const tdCn = 'px-4 py-3 text-white align-top';
+const trCn = 'border-t border-white/[0.1]';
+
+const subCn = 'mt-7 mb-2 text-[15px] font-semibold tracking-tight text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -21,8 +33,8 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
-  { id: 'overview', label: 'What Does a Commercial Rewire Involve?' },
-  { id: 'cost-per-m2', label: 'Cost Per Square Metre Breakdown' },
+  { id: 'overview', label: 'What a Commercial Rewire Involves' },
+  { id: 'cost-per-m2', label: 'Cost Per Square Metre' },
   { id: 'three-phase', label: '3-Phase Supply and Distribution' },
   { id: 'containment', label: 'Containment and Cable Management' },
   { id: 'data-fire-emergency', label: 'Data, Fire Alarm and Emergency Lighting' },
@@ -35,10 +47,10 @@ const tocItems = [
 
 const keyTakeaways = [
   'Commercial rewire costs in the UK typically range from £30 to £80 per square metre depending on specification, building complexity, and the scope of ancillary systems such as fire alarm and emergency lighting.',
-  'Three-phase distribution is standard in commercial premises. A new 3-phase distribution board with MCCB panel costs £2,000 to £6,000 depending on the number of ways and rating.',
+  'Three-phase distribution is standard in commercial premises. A new 3-phase distribution board with MCCB incomer costs £2,000 to £6,000 depending on the number of ways and rating.',
   'Containment (cable tray, trunking, conduit) often accounts for 25% to 40% of the total rewire cost in commercial buildings — significantly more than domestic work.',
-  'Fire alarm systems to BS 5839-1 and emergency lighting to BS 5266-1 are typically included in the scope and must be designed, installed, and commissioned by competent persons.',
-  'An Electrical Installation Certificate (EIC) must be issued on completion, covering the full installation to BS 7671:2018+A4:2026.',
+  'Fire alarm systems to BS 5839-1:2025 and emergency lighting to BS 5266-1:2025 are typically included in the scope. BS 7671 Regulations 560.9 and 560.10 require compliance with those standards.',
+  'An Electrical Installation Certificate (EIC) must be issued on completion under Regulation 644.1, issued by those responsible for design, construction and verification.',
 ];
 
 const faqs = [
@@ -60,12 +72,12 @@ const faqs = [
   {
     question: 'Is fire alarm installation included in a commercial rewire?',
     answer:
-      'Fire alarm installation is frequently included in the scope of a commercial rewire, particularly where the existing system is being replaced or the building use is changing. The fire alarm system must be designed and installed to BS 5839-1. The category of system (L1, L2, L3, L4, or M) depends on the risk assessment and building use. A typical Category L2 fire alarm installation in a 500 square metre office costs £3,000 to £8,000 for detection, sounders, interface units, and a conventional or addressable panel.',
+      'Fire alarm installation is frequently included in the scope of a commercial rewire, particularly where the existing system is being replaced or the building use is changing. BS 7671 Regulation 560.10 requires fire detection and fire alarm systems to comply with the relevant parts of the BS 5839 series — for non-domestic buildings that is BS 5839-1:2025. The system category (M, L1 to L5, or the property-protection categories P1 and P2) follows from the fire risk assessment and the building use. A typical Category L2 installation in a 500 square metre office costs £3,000 to £8,000 for detection, sounders, interface units, and a conventional or addressable panel.',
   },
   {
     question: 'What certification is required for a commercial rewire?',
     answer:
-      'An Electrical Installation Certificate (EIC) must be issued on completion of a commercial rewire, covering the full installation to BS 7671:2018+A4:2026. The EIC must be signed by the designer, installer, and inspector/tester. For commercial work, Part P notification is not required (Part P applies to domestic dwellings only), but the installation must still comply with the Building Regulations and the Electricity at Work Regulations 1989. Separate commissioning certificates are required for fire alarm (BS 5839-1) and emergency lighting (BS 5266-1) systems.',
+      'An Electrical Installation Certificate (EIC) must be issued on completion under Regulation 644.1 of BS 7671:2018+A4:2026, based on the model in Appendix 6. Regulation 644.4 requires the persons responsible for the design, construction and verification of the installation to issue it, taking account of their respective responsibilities, and to record the recommended interval to the first periodic inspection. Regulation 644.3 requires Schedules of Inspection plus Schedules of Circuit Details and Test Results. Part P notification does not apply to commercial premises, but the installation must still comply with the Building Regulations and the Electricity at Work Regulations 1989. Separate commissioning certificates are required for fire alarm and emergency lighting systems.',
   },
   {
     question: 'How long does a commercial rewire take?',
@@ -75,12 +87,12 @@ const faqs = [
   {
     question: 'Do I need asbestos checks before a commercial rewire?',
     answer:
-      'Yes. Any commercial building built or refurbished before 2000 may contain asbestos in ceiling tiles, floor tiles, pipe lagging, or cable containment. The Control of Asbestos Regulations 2012 requires the duty holder to provide an asbestos management survey or refurbishment/demolition survey before intrusive works begin. As an electrical contractor, you must not disturb any material that may contain asbestos without a survey. If asbestos is found, a licensed removal contractor must deal with it before electrical work proceeds in that area.',
+      'Yes. Any commercial building built or refurbished before the UK ban took full effect in 1999 may contain asbestos in ceiling tiles, floor tiles, pipe lagging, or cable containment. Regulation 4 of the Control of Asbestos Regulations 2012 places a duty to manage asbestos on the person responsible for maintenance of non-domestic premises, including taking reasonable steps to find out whether asbestos is present. Regulation 5 requires a suitable and sufficient assessment identifying asbestos before any work liable to disturb it begins. As an electrical contractor you must not disturb any material that may contain asbestos without that information — in practice, a management survey or a refurbishment/demolition survey. If asbestos is found, it must be dealt with before electrical work proceeds in that area.',
   },
   {
-    question: 'What is the difference between a Cat 5 and Cat 6 commercial rewire?',
+    question: 'What is the difference between a Cat A and a Cat B commercial fit-out?',
     answer:
-      'Cat 5 and Cat 6 refer to the specification level of the electrical installation rather than data cable categories — though the terms are sometimes confused. In commercial rewiring, the specification is usually defined by the level of containment, density of power and data outlets, quality of distribution equipment, and inclusion of ancillary systems. A basic Cat A specification covers the base build (distribution, containment routes, floor boxes), whilst a Cat B fit-out adds the final wiring to individual workstations, meeting rooms, and specialist areas.',
+      'Cat A and Cat B describe the fit-out stage, not the cabling. A Cat A fit-out delivers the base build ready to let: distribution boards, containment routes, general lighting, fire alarm, emergency lighting and floor boxes. A Cat B fit-out adds the tenant-specific wiring — workstation power and data, meeting rooms, kitchens, feature lighting and specialist areas. These are separate from data cable categories such as Cat 5e, Cat 6 and Cat 6A, which describe the balanced twisted-pair cabling itself. BS 7671:2018+A4:2026 now names those categories directly: Regulation 716.521.101 lists Category 5, 6, 6A, 7, 7A, 8.1 and 8.2 cabling for the distribution of DC power over data cabling.',
   },
 ];
 
@@ -123,7 +135,7 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'overview',
-    heading: 'What Does a Commercial Rewire Involve?',
+    heading: 'What a Commercial Rewire Involves',
     content: (
       <>
         <p>
@@ -142,105 +154,112 @@ const sections = [
         <p>
           Whether you are a building owner planning a refurbishment, a project manager tendering the
           electrical package, or an electrical contractor pricing a commercial rewire, this guide
-          provides realistic per-square-metre costs based on current UK market rates.
+          gives realistic per-square-metre costs alongside the BS 7671 requirements that drive them.
         </p>
-        <p className="text-sm text-white/60 border-l-2 border-yellow-400/40 pl-3 mt-2">
-          Written by a qualified electrician and reviewed against BS 7671:2018+A4:2026.
+        <p className="mt-2 border-l-2 border-elec-yellow/50 pl-3 text-sm text-white">
+          Written by a qualified electrician. Regulation references verified against
+          BS 7671:2018+A4:2026.
         </p>
       </>
     ),
   },
   {
     id: 'cost-per-m2',
-    heading: 'Cost Per Square Metre Breakdown',
+    heading: 'Cost Per Square Metre',
     content: (
       <>
         <p>
-          Commercial electrical installations are typically priced per square metre of gross
-          internal floor area. The rate varies significantly depending on the specification level
-          and building complexity.
+          Commercial electrical installations are priced per square metre of gross internal floor
+          area. Three specification bands cover most jobs.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="px-5 py-4 border-b border-white/10">
-            <h3 className="font-bold text-white text-lg">Per Square Metre Rates (2026)</h3>
-            <p className="text-white/60 text-xs mt-1">
-              Indicative UK market guidance — not a quote. Rates cover supply, install, test and
-              certification.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-            <div className="p-5 bg-green-500/[0.06]">
-              <div className="text-xs font-semibold uppercase tracking-wide text-green-300/80">
-                Basic
-              </div>
-              <div className="text-2xl font-bold text-white mt-1">£30–£45/m²</div>
-              <p className="text-white/70 text-sm leading-relaxed mt-3">
-                Standard office rewire with power, lighting and basic containment. No fire alarm or
-                emergency lighting in scope. Single distribution board replacement. Suits small
-                refurbishments under 300m².
-              </p>
-            </div>
-            <div className="p-5 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-              <div className="text-xs font-semibold uppercase tracking-wide text-yellow-300/80">
-                Mid · Most common
-              </div>
-              <div className="text-2xl font-bold text-white mt-1">£45–£60/m²</div>
-              <p className="text-white/70 text-sm leading-relaxed mt-3">
-                Full rewire with 3-phase distribution, sub-distribution boards, structured data
-                cabling, fire alarm (Category L2 to BS 5839-1), emergency lighting (BS 5266-1) and
-                dado or floor-box containment.
-              </p>
-            </div>
-            <div className="p-5 bg-blue-500/[0.06]">
-              <div className="text-xs font-semibold uppercase tracking-wide text-blue-300/80">
-                High spec
-              </div>
-              <div className="text-2xl font-bold text-white mt-1">£60–£80/m²</div>
-              <p className="text-white/70 text-sm leading-relaxed mt-3">
-                MCCB panel board, multiple sub-distribution boards, high-density power and data,
-                addressable fire alarm, maintained emergency lighting, DALI lighting control, BMS
-                integration and UPS provisions. Corporate offices, medical centres, high-end retail.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="px-5 py-3 border-b border-white/10">
-            <h3 className="font-bold text-white text-base">Worked Examples by Floor Area</h3>
-          </div>
-          <table className="w-full text-sm text-left">
-            <thead className="text-white/60 text-xs uppercase tracking-wide">
-              <tr className="border-b border-white/10">
-                <th className="px-5 py-3 font-semibold">Floor area</th>
-                <th className="px-5 py-3 font-semibold">Specification</th>
-                <th className="px-5 py-3 font-semibold text-right">Indicative cost</th>
+
+        <h3 className={subCn}>Per square metre rates, 2026</h3>
+        <p className="text-sm text-white">
+          Indicative UK market guidance, not a quote. Rates cover supply, install, test and
+          certification.
+        </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Specification</th>
+                <th className={thCn}>Rate</th>
+                <th className={thCn}>What it buys</th>
               </tr>
             </thead>
-            <tbody className="text-white">
-              <tr className="border-b border-white/5">
-                <td className="px-5 py-3">200m²</td>
-                <td className="px-5 py-3 text-white/80">Basic office</td>
-                <td className="px-5 py-3 text-right font-medium">£6,000–£9,000</td>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>Basic</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£30–£45/m²</td>
+                <td className={tdCn}>
+                  Power, lighting and basic containment. No fire alarm or emergency lighting in
+                  scope. Single distribution board replacement. Suits refurbishments under 300m².
+                </td>
               </tr>
-              <tr className="border-b border-white/5 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
-                <td className="px-5 py-3">500m²</td>
-                <td className="px-5 py-3 text-white/80">Mid spec</td>
-                <td className="px-5 py-3 text-right font-medium">£22,500–£30,000</td>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>
+                  Mid
+                  <span className="mt-1 block text-xs font-semibold text-elec-yellow">
+                    Most common
+                  </span>
+                </td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£45–£60/m²</td>
+                <td className={tdCn}>
+                  3-phase distribution, sub-distribution boards, structured data cabling, fire alarm
+                  (Category L2 to BS 5839-1), emergency lighting to BS 5266-1, and dado or floor-box
+                  containment.
+                </td>
               </tr>
-              <tr>
-                <td className="px-5 py-3">1,000m²</td>
-                <td className="px-5 py-3 text-white/80">High spec fit-out</td>
-                <td className="px-5 py-3 text-right font-medium">£60,000–£80,000</td>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>High spec</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£60–£80/m²</td>
+                <td className={tdCn}>
+                  MCCB panel board, multiple sub-distribution boards, high-density power and data,
+                  addressable fire alarm, maintained emergency lighting, DALI lighting control, BMS
+                  integration and UPS provisions. Corporate offices, medical centres, high-end
+                  retail.
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <h3 className={subCn}>Worked examples by floor area</h3>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Floor area</th>
+                <th className={thCn}>Specification</th>
+                <th className={thCn}>Indicative cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} whitespace-nowrap`}>200m²</td>
+                <td className={tdCn}>Basic office</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£6,000–£9,000</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} whitespace-nowrap`}>500m²</td>
+                <td className={tdCn}>Mid spec</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£22,500–£30,000</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} whitespace-nowrap`}>1,000m²</td>
+                <td className={tdCn}>High spec fit-out</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£60,000–£80,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <p>
           These figures include materials, labour, containment, testing and certification. They
           exclude specialist systems such as access control or CCTV unless specifically scoped, and
-          assume a vacant or partly occupied building. Always treat per-m² rates as a starting point
-          for a measured estimate, not a fixed price — the factors covered further down this guide
-          can move the rate by a factor of two.
+          assume a vacant or partly occupied building. Treat a per-m² rate as the starting point for
+          a measured estimate, never a fixed price — the factors further down this guide can move
+          the rate by a factor of two.
         </p>
       </>
     ),
@@ -255,79 +274,76 @@ const sections = [
           <SEOInternalLink href="/guides/distribution-board-wiring">
             distribution architecture
           </SEOInternalLink>{' '}
-          is the backbone of the installation and must be designed to accommodate the assessed load
-          with appropriate diversity applied.
+          is the backbone of the installation and must be designed to carry the assessed maximum
+          demand with appropriate diversity applied.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="px-5 py-3 border-b border-white/10">
-            <h3 className="font-bold text-white text-base">Distribution Equipment Costs</h3>
-          </div>
-          <table className="w-full text-sm text-left">
-            <thead className="text-white/60 text-xs uppercase tracking-wide">
-              <tr className="border-b border-white/10">
-                <th className="px-5 py-3 font-semibold">Item</th>
-                <th className="px-5 py-3 font-semibold text-right">Supply &amp; install</th>
+
+        <h3 className={subCn}>Distribution equipment — supply and install</h3>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Item</th>
+                <th className={thCn}>Cost</th>
+                <th className={thCn}>Notes</th>
               </tr>
             </thead>
-            <tbody className="text-white">
-              <tr className="border-b border-white/5 align-top">
-                <td className="px-5 py-3">
-                  <strong>3-phase main distribution board (TPN)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    An 18-way TPN board with MCCB incomer is roughly £3,500 installed; rate scales
-                    with rating and number of ways.
-                  </span>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>3-phase main board (TPN)</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£2,000–£6,000</td>
+                <td className={tdCn}>
+                  An 18-way TPN board with MCCB incomer is roughly £3,500 installed. The rate scales
+                  with rating and number of ways.
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£2,000–£6,000</td>
               </tr>
-              <tr className="border-b border-white/5 align-top">
-                <td className="px-5 py-3">
-                  <strong>Sub-distribution board (each)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Each floor or zone typically has its own board fed from the main board via a
-                    submain cable.
-                  </span>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Sub-distribution board (each)</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£800–£2,500</td>
+                <td className={tdCn}>
+                  Each floor or zone typically has its own board fed from the main board via a
+                  submain cable.
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£800–£2,500</td>
               </tr>
-              <tr className="border-b border-white/5 align-top">
-                <td className="px-5 py-3">
-                  <strong>Submain cables (per metre)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Depends on CSA. A 4-core 25mm² SWA floor submain is roughly £25/m installed
-                    including containment and termination.
-                  </span>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Submain cables (per metre)</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£15–£60/m</td>
+                <td className={tdCn}>
+                  Depends on CSA. A 4-core 25mm² SWA floor submain is roughly £25/m installed
+                  including containment and termination.
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£15–£60/m</td>
               </tr>
-              <tr className="align-top bg-blue-500/[0.04]">
-                <td className="px-5 py-3">
-                  <strong>Surge protection (SPD)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Type 1+2 at the main board £300–£600 installed; Type 2 at sub-boards £150–£300
-                    each. See the regulations section for when these are required.
-                  </span>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Surge protection (SPD)</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£150–£600</td>
+                <td className={tdCn}>
+                  Type 1+2 at the main board £300–£600 installed; Type 2 at sub-boards £150–£300
+                  each. See the regulations section for when these are required.
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£150–£600</td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <h3 className={subCn}>Phase balancing</h3>
         <p>
-          Phase balancing is critical in commercial installations. The design should distribute
-          single-phase loads evenly across the three phases to avoid excessive neutral current and
-          voltage imbalance. This must be verified during commissioning.
+          The design should distribute single-phase loads evenly across the three phases to limit
+          neutral current and voltage imbalance. This is verified during commissioning and recorded
+          on the schedules that accompany the certificate.
         </p>
+
+        <h3 className={subCn}>EV charging provision</h3>
         <p>
-          Commercial fit-outs increasingly include EV charging provision. BS 7671:2018+A4:2026
-          Section 722 covers electric vehicle charging installations, and Regulation 722.311.201
-          permits load curtailment — load reduction or disconnection, automatic or manual — to be
-          taken into account when determining the maximum demand of the installation. This means
-          that multiple EV charging points can often be accommodated on an existing incoming supply
-          provided a suitable load management system is specified, without requiring a costly DNO
-          supply upgrade. Designers must document the curtailment assumptions used in the demand
-          calculation. Budget an additional £800 to £2,500 per charge point installed, plus
-          allowance for the load management controller where multiple points are provided.
+          Commercial fit-outs increasingly include EV charging. Section 722 of BS 7671:2018+A4:2026
+          covers electric vehicle charging installations, and Regulation 722.311.201 states that
+          load curtailment — load reduction or disconnection, either automatically or manually — may
+          be taken into account when determining the maximum demand of the installation or part
+          thereof. In practice that means several charge points can often be accommodated on the
+          existing incoming supply where a suitable load management system is specified, avoiding a
+          costly DNO supply upgrade. The regulation does not prescribe a calculation method, so the
+          designer must document the curtailment assumptions behind the demand figure. Budget £800
+          to £2,500 per charge point installed, plus the load management controller where multiple
+          points are provided.
         </p>
       </>
     ),
@@ -339,100 +355,157 @@ const sections = [
       <>
         <p>
           Containment is one of the biggest cost drivers in commercial electrical work. Unlike
-          domestic installations where cables are clipped or run in the building fabric, commercial
-          work requires engineered containment routes that provide access, support, and fire
+          domestic installations, where cables are clipped or run in the building fabric, commercial
+          work requires engineered containment routes that provide access, support and fire
           protection.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Cable Tray and Basket</h3>
-            <p className="text-white text-sm leading-relaxed">
-              Cable tray (£8 to £15/m installed) and cable basket (£6 to £12/m installed) are the
-              primary containment for distribution routes above suspended ceilings. Medium-duty
-              cable tray is used for power cables; cable basket is often used for data cables. Fire
-              barriers must be installed where tray passes through compartment walls.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Trunking and Conduit</h3>
-            <p className="text-white text-sm leading-relaxed">
-              Dado trunking (£12 to £25/m installed) provides power and data outlets at desk height
-              in offices. Floor trunking and floor boxes (£80 to £200 per floor box installed) serve
-              open-plan areas. Steel conduit (£8 to £18/m installed) is used in exposed areas and
-              where mechanical protection is needed.
-            </p>
-          </div>
+
+        <h3 className={subCn}>Containment rates — installed</h3>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Containment</th>
+                <th className={thCn}>Rate</th>
+                <th className={thCn}>Typical use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Cable tray</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£8–£15/m</td>
+                <td className={tdCn}>
+                  Primary power distribution routes above suspended ceilings. Medium-duty tray is
+                  the commercial default.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Cable basket</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£6–£12/m</td>
+                <td className={tdCn}>Data cabling routes and lighter secondary distribution.</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Dado trunking</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£12–£25/m</td>
+                <td className={tdCn}>Power and data outlets at desk height in cellular offices.</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Floor boxes</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£80–£200 each</td>
+                <td className={tdCn}>
+                  Open-plan areas fed from floor trunking or an access floor void.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Steel conduit</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£8–£18/m</td>
+                <td className={tdCn}>
+                  Exposed and industrial areas, and anywhere mechanical protection is needed.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
         <p>
-          Containment typically accounts for 25% to 40% of the total electrical installation cost in
-          commercial buildings. Getting the containment design right at tender stage is critical —
-          underestimating containment is one of the most common causes of losses on commercial
-          electrical contracts.
+          Fire barriers must be reinstated wherever containment passes through a compartment wall or
+          floor. Containment typically accounts for 25% to 40% of the total electrical installation
+          cost in commercial buildings, and underestimating it is one of the most common causes of
+          losses on commercial electrical contracts. Measure every route before you price anything
+          else.
         </p>
       </>
     ),
   },
   {
     id: 'data-fire-emergency',
-    heading: 'Data, Fire Alarm, and Emergency Lighting',
+    heading: 'Data, Fire Alarm and Emergency Lighting',
     content: (
       <>
         <p>
-          A commercial rewire scope frequently includes structured data cabling, fire alarm systems,
-          and emergency lighting. These are often the responsibility of the electrical contractor
-          even though they require specialist design competence.
+          A commercial rewire scope frequently includes structured data cabling, fire alarm and
+          emergency lighting. These usually sit with the electrical contractor even though each
+          requires its own design competence and its own commissioning certificate.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
-          <div className="px-5 py-3 border-b border-white/10">
-            <h3 className="font-bold text-white text-base">Ancillary System Costs</h3>
-          </div>
-          <table className="w-full text-sm text-left">
-            <thead className="text-white/60 text-xs uppercase tracking-wide">
-              <tr className="border-b border-white/10">
-                <th className="px-5 py-3 font-semibold">System</th>
-                <th className="px-5 py-3 font-semibold text-right">Indicative cost</th>
+
+        <h3 className={subCn}>Ancillary system costs</h3>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>System</th>
+                <th className={thCn}>Indicative cost</th>
+                <th className={thCn}>Scope</th>
               </tr>
             </thead>
-            <tbody className="text-white">
-              <tr className="border-b border-white/5 align-top">
-                <td className="px-5 py-3">
-                  <strong>Structured data cabling (Cat6A point)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Includes patch-panel termination and testing. A typical desk needs 2 points.
-                    Fibre backbone between comms rooms: £500–£1,500 per link.
-                  </span>
-                </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">
-                  £80–£150/point
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Structured data cabling (Cat 6A)</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£80–£150/point</td>
+                <td className={tdCn}>
+                  Includes patch-panel termination and testing. A typical desk needs 2 points. Fibre
+                  backbone between comms rooms adds £500–£1,500 per link.
                 </td>
               </tr>
-              <tr className="border-b border-white/5 align-top">
-                <td className="px-5 py-3">
-                  <strong>Fire alarm to BS 5839-1 (Category L2, addressable)</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Detectors, manual call points, sounders, interface units and an addressable
-                    panel. Design must be by a competent fire alarm designer.
-                  </span>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>
+                  Fire alarm, BS 5839-1 (Category L2, addressable)
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£6–£12/m²</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£6–£12/m²</td>
+                <td className={tdCn}>
+                  Detectors, manual call points, sounders, interface units and an addressable panel.
+                  Category follows from the fire risk assessment.
+                </td>
               </tr>
-              <tr className="align-top">
-                <td className="px-5 py-3">
-                  <strong>Emergency lighting to BS 5266-1</strong>
-                  <span className="block text-white/60 text-xs mt-1">
-                    Maintained or non-maintained luminaires on escape routes, open areas and
-                    high-risk task areas. 3-hour duration is standard for most commercial premises.
-                  </span>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Emergency lighting, BS 5266-1</td>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>£3–£6/m²</td>
+                <td className={tdCn}>
+                  Maintained or non-maintained luminaires on escape routes, open areas and high-risk
+                  task areas. 3-hour duration is the usual commercial specification.
                 </td>
-                <td className="px-5 py-3 text-right font-medium whitespace-nowrap">£3–£6/m²</td>
               </tr>
             </tbody>
           </table>
         </div>
+
         <p>
-          For a 500m² office, ancillary systems might add £8,000 to £15,000 to the base electrical
-          installation cost. These systems require separate design, commissioning certificates, and
-          ongoing maintenance contracts.
+          For a 500m² office, ancillary systems typically add £8,000 to £15,000 to the base
+          electrical installation cost.
+        </p>
+
+        <h3 className={subCn}>Power over Ethernet is now in BS 7671</h3>
+        <p>
+          BS 7671:2018+A4:2026 introduced a new Section 716 covering the distribution of ELV DC
+          power over balanced data cabling — PoE lighting, wireless access points, cameras and door
+          controllers. If your scope includes any of those, the data cabling package is now partly a
+          BS 7671 package. The headline requirements are:
+        </p>
+        <div className={cardCn}>
+          <ul className="space-y-3 text-sm text-white">
+            <li>
+              <strong>Regulation 716.410.3.3</strong> — the protective measure extra-low voltage
+              provided by SELV or PELV shall be applied.
+            </li>
+            <li>
+              <strong>Regulation 716.521.101</strong> — ICT cables used to distribute DC power shall
+              comply with Category 5, 6, 6A, 7, 7A, 8.1 or 8.2, or other cables defined in
+              BS EN 50173-1.
+            </li>
+            <li>
+              <strong>Regulation 716.523.2.101</strong> — the design current in any conductor shall
+              not exceed <strong>750 mA</strong>.
+            </li>
+            <li>
+              <strong>Regulation 716.526.101</strong> — connecting hardware shall comply with
+              BS ISO/IEC 11801-1 and support a continuous operating current of 750 mA per contact.
+            </li>
+          </ul>
+        </div>
+        <p>
+          The practical cost impact is on connectors and on bundle planning: cheap patch panels that
+          will not carry 750 mA per contact are no longer an acceptable saving on a PoE-fed
+          installation.
         </p>
       </>
     ),
@@ -443,60 +516,55 @@ const sections = [
     content: (
       <>
         <p>
-          The per-square-metre rate can vary by a factor of two or more depending on these key
-          variables:
+          The per-square-metre rate can vary by a factor of two or more depending on these
+          variables.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
-              <h4 className="font-bold text-white text-sm">Building type and access</h4>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              A vacant shell with clear ceiling voids is far cheaper to wire than an occupied
-              building with limited access, asbestos risks and out-of-hours working.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
-              <h4 className="font-bold text-white text-sm">Specification density</h4>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Outlet density varies hugely. A basic warehouse office might have 1 double socket per
-              10m²; a trading floor might have 4 doubles per desk at 6m² per desk.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
-              <h4 className="font-bold text-white text-sm">Working-hours restrictions</h4>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Occupied buildings may need evening and weekend working, adding 25% to 50% to labour
-              costs through overtime rates and reduced productivity.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
-              <h4 className="font-bold text-white text-sm">Asbestos and legacy services</h4>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Pre-2000 buildings often contain asbestos. Removal or encapsulation is the client's
-              cost but causes programme delays that affect the electrical contractor.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:col-span-2">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-yellow-400 shrink-0" />
-              <h4 className="font-bold text-white text-sm">Location</h4>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              London rates are 20% to 40% higher than regional rates due to labour costs, parking,
-              congestion charge and site-access restrictions.
-            </p>
-          </div>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Factor</th>
+                <th className={thCn}>Effect on the rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Building type and access</td>
+                <td className={tdCn}>
+                  A vacant shell with clear ceiling voids is far cheaper to wire than an occupied
+                  building with limited access, asbestos risk and out-of-hours working.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Specification density</td>
+                <td className={tdCn}>
+                  Outlet density varies hugely. A basic warehouse office might have one double
+                  socket per 10m²; a trading floor might have four doubles per desk at 6m² per desk.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Working-hours restrictions</td>
+                <td className={tdCn}>
+                  Occupied buildings may need evening and weekend working, adding 25% to 50% to
+                  labour costs through overtime rates and reduced productivity.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Asbestos and legacy services</td>
+                <td className={tdCn}>
+                  Pre-2000 buildings often contain asbestos. Removal or encapsulation is the
+                  client&apos;s cost, but the programme delay lands on the electrical contractor.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold`}>Location</td>
+                <td className={tdCn}>
+                  London rates run 20% to 40% above regional rates on labour, parking, congestion
+                  charge and site-access restrictions.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
@@ -507,70 +575,172 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial electrical installations must comply with{' '}
+          Commercial installations must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          and the Electricity at Work Regulations 1989. Unlike domestic work, Part P of the Building
-          Regulations does not apply to commercial premises — but the installation must still comply
-          with the relevant parts of the Building Regulations, particularly Part B (fire safety).
+          and the Electricity at Work Regulations 1989. Part P of the Building Regulations does not
+          apply to commercial premises, but the installation must still satisfy the relevant parts
+          of the Building Regulations, particularly Part B (fire safety). These are the regulations
+          that change what a commercial rewire costs.
         </p>
+
+        <h3 className={subCn}>Quick reference — BS 7671:2018+A4:2026</h3>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr className={trCn}>
+                <th className={thCn}>Regulation</th>
+                <th className={thCn}>What it means on a commercial rewire</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>443.4.1</td>
+                <td className={tdCn}>
+                  SPDs are the default. Omission depends on the owner declaring they are not
+                  required.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>534.4.4.2</td>
+                <td className={tdCn}>
+                  Protective distance over 10 m — consider additional coordinated SPDs closer to the
+                  equipment.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>411.3.3</td>
+                <td className={tdCn}>
+                  30 mA RCD on socket-outlets rated up to 32 A. A documented risk assessment can
+                  disapply indent (b) only.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>411.3.4</td>
+                <td className={tdCn}>
+                  RCD protection of lighting circuits is a domestic requirement — it does not apply
+                  to commercial premises.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>421.1.7</td>
+                <td className={tdCn}>
+                  AFDDs are recommended, not required, in offices, retail and industrial units.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>560.9 / 560.10</td>
+                <td className={tdCn}>
+                  Emergency lighting to BS 5266-1; fire detection and alarm to the BS 5839 series.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={`${tdCn} font-semibold whitespace-nowrap`}>644.1 / 644.4</td>
+                <td className={tdCn}>
+                  An EIC shall be issued on completion by those responsible for design, construction
+                  and verification.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className={subCn}>Surge protection: Regulation 443.4.1</h3>
         <p>
-          An Electrical Installation Certificate (EIC) must be issued on completion, signed by the
-          designer, installer, and inspector/tester. For larger installations, the testing and
-          inspection may be split across multiple schedules of test results.
+          Regulation 443.4.1 requires protection against transient overvoltages where the
+          consequence caused by the overvoltage could result in:
         </p>
-        <p>
-          Surge protection is a key consideration on commercial rewires. BS 7671:2018+A4:2026
-          redrafted Regulation 443.4, and Regulation 443.4.1 now requires protection against
-          transient overvoltages where the consequence of an overvoltage could result in:
-        </p>
-        <div className="rounded-2xl bg-blue-900/30 border border-blue-700/40 p-5 my-4">
-          <ul className="space-y-2 text-white text-sm">
-            <li className="flex items-start gap-2">
-              <span className="text-blue-300 font-bold shrink-0">(a)</span>
-              <span>serious injury to, or loss of, human life;</span>
+        <div className={cardCn}>
+          <ul className="space-y-2 text-sm text-white">
+            <li>
+              <strong>(a)</strong> serious injury to, or loss of, human life;
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-300 font-bold shrink-0">(b)</span>
-              <span>deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023);</span>
+            <li>
+              <strong>(b)</strong> deleted by BS 7671:2018+A2:2022, Corrigendum (May 2023);
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-300 font-bold shrink-0">(c)</span>
-              <span>significant financial or data loss.</span>
+            <li>
+              <strong>(c)</strong> significant financial or data loss.
             </li>
           </ul>
-          <p className="text-white/70 text-xs mt-3 leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed text-white">
             For all other cases, protection against transient overvoltages shall be provided unless
             the owner of the installation declares it is not required due to any loss or damage
             being tolerable and they accept the risk of damage to equipment and any consequential
-            loss. Limb (b) of Regulation 443.4.1 was deleted by the BS 7671:2018+A2:2022 Corrigendum
-            (May 2023).
+            loss.
           </p>
         </div>
         <p>
-          On most commercial premises the "significant financial or data loss" condition is readily
-          met, so in practice a Type 1+2{' '}
-          <SEOInternalLink href="/guides/spd-surge-protection">SPD</SEOInternalLink> at the main
-          distribution board is specified on the large majority of commercial rewires. Where SPDs
-          are used they must be selected and
-          erected to Section 534. If the protective distance between an SPD and the equipment it
-          protects exceeds 10 metres, Regulation 534.4.4.2 warns that oscillations can lift the
-          voltage at the equipment terminals to up to twice the SPD's voltage protection level —
-          so additional coordinated Type 2 SPDs are typically fitted closer to downstream
-          sub-distribution boards and sensitive equipment.
+          On commercial premises the &ldquo;significant financial or data loss&rdquo; limb is
+          usually met outright, and even where it is not, the default position is that an SPD goes
+          in. Price one unless the client puts the declaration in writing. Where SPDs are used they
+          shall be selected and erected in accordance with Section 534. Regulation 534.4.4.2 adds a
+          detail worth carrying into the design: if the protective distance between the SPD and the
+          equipment it protects exceeds 10 metres, oscillations could lead to a voltage at the
+          equipment terminals of up to twice the SPD&apos;s voltage protection level, so consider
+          additional coordinated{' '}
+          <SEOInternalLink href="/guides/spd-surge-protection">SPDs</SEOInternalLink> closer to the
+          equipment or a device with a lower protection level. In a multi-storey office that means
+          budgeting Type 2 units at each sub-distribution board, not just one at the origin.
+        </p>
+
+        <h3 className={subCn}>RCD protection: Regulations 411.3.3 and 411.3.4</h3>
+        <p>
+          Regulation 411.3.3 requires additional protection by a 30 mA RCD for socket-outlets rated
+          up to 32 A. It has three indents: (a) socket-outlets in locations where they are liable to
+          be used by persons of capability BA1 or children (BA2), (b) socket-outlets in other
+          locations, and (c) mobile equipment up to 32 A for use outdoors. An exception is permitted
+          to indent (b) — but not to (a) or (c) — where a suitably documented risk assessment
+          undertaken with the involvement of a skilled person (electrically) determines that RCD
+          protection is not necessary. That risk assessment shall be provided with the electrical
+          installation certificate, so allow for producing it rather than assuming a verbal
+          agreement will do.
         </p>
         <p>
-          Additional protection by a 30mA RCD is required for socket-outlets with a rated current
-          not exceeding 32A under Regulation 411.3.3 of BS 7671. In commercial installations this is
-          typically delivered by RCBOs on individual circuits rather than bank RCDs, so that a fault
-          on one circuit does not take out several others — the same approach the regulations
-          encourage to avoid unwanted tripping.
+          Note that Regulation 411.3.4, which requires 30 mA RCD protection of final circuits
+          supplying luminaires, applies within domestic (household) premises only. Commercial
+          lighting circuits do not attract it, which is a genuine saving on a large lighting
+          package.
         </p>
         <p>
-          Fire alarm systems must be designed and installed to BS 5839-1, with a separate
-          commissioning certificate. Emergency lighting must comply with BS 5266-1. Both systems
-          require ongoing periodic testing and maintenance.
+          Commercial installations are usually protected by RCBOs on individual circuits rather than
+          bank RCDs, so that a fault on one circuit does not take out several others. Regulation
+          314.1 backs the approach directly: an installation shall be divided into circuits to
+          (a) avoid danger and minimise inconvenience in the event of a fault and (d) reduce the
+          possibility of unwanted tripping of RCDs due to excessive protective conductor currents
+          not due to a fault. Budget for it at tender — retrofitting RCBOs after a client complains
+          about nuisance tripping is not a variation you will get paid for.
+        </p>
+
+        <h3 className={subCn}>AFDDs: Regulation 421.1.7</h3>
+        <p>
+          Arc fault detection devices conforming to BS EN 62606 shall be provided for single-phase
+          AC final circuits supplying socket-outlets rated up to 32 A in high rise residential
+          buildings, houses in multiple occupation, purpose-built student accommodation, and care
+          homes. For all other premises — which covers most commercial work — the use of AFDDs is{' '}
+          <strong>recommended</strong>, not required. Where they are used, they shall be placed at
+          the origin of the circuit to be protected. Price them as a priced option and let the
+          client decide, rather than either omitting them silently or loading the tender with them.
+        </p>
+
+        <h3 className={subCn}>Certification</h3>
+        <p>
+          Under Regulation 644.1, an Electrical Installation Certificate based on the model in
+          Appendix 6 shall be issued to the person ordering the work on completion of verification.
+          Regulation 644.3 requires it to include the extent of the work covered, Schedule(s) of
+          Inspection, and Schedule(s) of Circuit Details and Test Results — on a large commercial
+          job those schedules run to many pages, which is why testing is not a last-afternoon
+          activity. Regulation 644.4 requires the persons responsible for the design, construction
+          and verification to issue the certificate taking account of their respective
+          responsibilities, and to record the recommended interval between initial verification and
+          the first periodic inspection.
+        </p>
+        <p>
+          Fire alarm and emergency lighting are certified separately. Regulation 560.9 requires
+          emergency lighting systems to comply with BS 5266-1, BS EN 1838 and BS EN 50172;
+          Regulation 560.10 requires fire detection and fire alarm systems to comply with the
+          relevant parts of the BS 5839 series. Both systems need commissioning certificates and
+          ongoing periodic testing.
         </p>
       </>
     ),
@@ -581,52 +751,36 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial rewires are high-value contracts with significant profit potential — but also
-          significant risk if priced incorrectly. Here are practical tips for quoting commercial
-          electrical work:
+          Commercial rewires are high-value contracts with real profit in them and real risk if
+          priced badly. Three things separate the tenders that make money from the ones that do not.
         </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-start gap-4">
-              <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Measure Containment First</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Walk the building and measure every containment route before pricing anything
-                  else. Containment is the biggest variable cost. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
-                  build itemised schedules of containment, distribution equipment, and final
-                  circuits.
-                </p>
-              </div>
-            </div>
+        <div className="my-5 space-y-4">
+          <div className={cardCn}>
+            <h3 className="mb-1 text-base font-bold text-white">Measure containment first</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Walk the building and measure every containment route before pricing anything else. It
+              is the biggest variable cost and the one most often guessed. Use Elec-Mate&apos;s{' '}
+              <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to build
+              itemised schedules of containment, distribution equipment and final circuits.
+            </p>
           </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Include All Certification Costs</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Allow adequate time for testing and completing the{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A 500m² commercial
-                  installation might take 2 to 3 days to test and certify properly. Do not squeeze
-                  this into the last afternoon of the contract.
-                </p>
-              </div>
-            </div>
+          <div className={cardCn}>
+            <h3 className="mb-1 text-base font-bold text-white">Price the certification properly</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Allow real time for testing and completing the{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and its schedules. A
+              500m² commercial installation takes 2 to 3 days to test and certify properly. Add the
+              fire alarm and emergency lighting commissioning certificates, and any documented risk
+              assessment you are relying on under Regulation 411.3.3.
+            </p>
           </div>
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Wrench className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Programme and Prelims</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Include programme-related costs (prelims): site supervision, welfare, temporary
-                  lighting, tool hire, waste disposal, and site access. On a 6-week commercial
-                  contract, prelims can add 8% to 12% to the direct costs.
-                </p>
-              </div>
-            </div>
+          <div className={cardCn}>
+            <h3 className="mb-1 text-base font-bold text-white">Do not forget the prelims</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Site supervision, welfare, temporary lighting, tool hire, waste disposal and site
+              access all cost money and none of them appear on a materials list. On a six-week
+              commercial contract, prelims add 8% to 12% to the direct costs.
+            </p>
           </div>
         </div>
         <SEOAppBridge
@@ -649,7 +803,7 @@ export default function CommercialRewireCostPage() {
       title="Commercial Rewire Cost UK 2026: Per m² Price Guide"
       description="Commercial rewire costs £30–£80 per m² in 2026. Per square metre pricing for 3-phase distribution, containment, data cabling, fire alarm, and BS 7671:2018+A4:2026 compliance."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
@@ -657,10 +811,10 @@ export default function CommercialRewireCostPage() {
       heroTitle={
         <>
           Commercial Rewire Cost:{' '}
-          <span className="text-yellow-400">UK Per m² Price Guide 2026</span>
+          <span className="text-elec-yellow">UK Per m² Price Guide 2026</span>
         </>
       }
-      heroSubtitle="What does a commercial rewire really cost? This guide covers per-square-metre pricing for 3-phase distribution, containment systems, data cabling, fire alarm, and emergency lighting — with realistic figures for electricians pricing commercial contracts."
+      heroSubtitle="What does a commercial rewire really cost? Per-square-metre pricing for 3-phase distribution, containment, data cabling, fire alarm and emergency lighting — with the BS 7671:2018+A4:2026 regulations that drive the price."
       readingTime={14}
       answerBox={{
         question: 'How much does a commercial rewire cost per square metre in the UK?',

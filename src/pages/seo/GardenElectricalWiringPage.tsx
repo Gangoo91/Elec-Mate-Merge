@@ -595,7 +595,7 @@ export default function GardenElectricalWiringPage() {
   return (
     <GuideTemplate
       title="Garden Electrical Wiring Regulations UK | SWA Cable, RCD,"
-      description="Complete guide to garden electrical wiring regulations under BS 7671. SWA armoured cable requirements, burial depths (0.5m gardens, 0.45m paved)…"
+      description="Complete guide to garden electrical wiring regulations under BS 7671. SWA armoured cable requirements, burial depths (0.5m gardens, 0.45m paved)."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

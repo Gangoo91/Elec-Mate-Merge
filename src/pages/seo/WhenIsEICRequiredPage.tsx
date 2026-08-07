@@ -18,7 +18,7 @@ import {
 export default function WhenIsEICRequiredPage() {
   return (
     <GuideTemplate
-      title="When Is an EIC Required? BS 7671 Guide | Elec-Mate"
+      title="When Is an EIC Required? BS 7671 Guide"
       description="When an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A4:2026: new installs, alterations, what triggers EIC vs MWC."
       datePublished="2025-06-10"
       dateModified="2026-06-10"

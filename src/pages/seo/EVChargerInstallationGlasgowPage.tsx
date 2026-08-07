@@ -491,7 +491,7 @@ export default function EVChargerInstallationGlasgowPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Glasgow 2026 | Costs, DNO, Scottish"
-      description="How much does EV charger installation cost in Glasgow in 2026? Local costs, SPEN DNO notification, OZEV grant, Scottish Building Standards vs Part P…"
+      description="How much does EV charger installation cost in Glasgow in 2026? Local costs, SPEN DNO notification, OZEV grant, Scottish Building Standards vs Part P."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

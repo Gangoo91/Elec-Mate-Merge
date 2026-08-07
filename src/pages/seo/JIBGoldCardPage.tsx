@@ -689,7 +689,7 @@ export default function JIBGoldCardPage() {
   return (
     <GuideTemplate
       title="JIB Gold Card UK | Electrician's Qualified Operative Card"
-      description="Complete guide to the JIB Gold Card — what it is, how to get it (AM2 + Level 3), all ECS card types explained, why employers require it…"
+      description="Complete guide to the JIB Gold Card — what it is, how to get it (AM2 + Level 3), all ECS card types explained, why employers require it."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

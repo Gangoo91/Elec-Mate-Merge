@@ -40,8 +40,8 @@ export const CashFlowHeader = ({
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Title and Health */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 shrink-0">
-            <TrendingUp className="h-5 w-5 text-blue-400" />
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/[0.06] to-white/[0.06] shrink-0">
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
           </div>
           <div className="min-w-0">
             <h1 className="text-lg sm:text-xl font-bold text-white truncate">Cash Flow Planner</h1>
@@ -72,7 +72,7 @@ export const CashFlowHeader = ({
           {/* Templates - Mobile only */}
           <button
             onClick={onLoadTemplates}
-            className="lg:hidden h-10 px-3 flex items-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-blue-400 text-sm font-medium hover:bg-blue-500/20 transition-colors"
+            className="lg:hidden h-10 px-3 flex items-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-elec-yellow text-sm font-medium hover:bg-white/[0.04] transition-colors"
           >
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">Templates</span>

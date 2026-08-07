@@ -23,13 +23,13 @@ const inlineChecks = [
     question: 'Standard symbols for emergency luminaires on a layout drawing follow which standard?',
     options: [
       'Free designer choice, agreed informally with the installer on each project.',
-      'BS EN 60617 graphic symbols, with markings distinguishing M, NM, HR, ST, SC and CB variants.',
+      'IEC 60617 graphic symbols, with markings distinguishing M, NM, HR, ST, SC and CB variants.',
       'The architect\'s house style, set by the practice rather than a published standard.',
       'BS 7671 wiring-diagram symbols applied unchanged to the lighting layout.',
     ],
     correctIndex: 1,
     explanation:
-      'BS 5266-1:2025 references BS EN 60617 for graphic symbols and specifies emergency-lighting-specific markings. Each symbol shows luminaire type (downlight, bulkhead, sign), emergency function (maintained / non-maintained / high-risk), supply type (self-contained / central battery) and self-test status, and links to the schedule for fitting reference, photometric distribution and circuit number.',
+      'BS 5266-1:2025 references IEC 60617 for graphic symbols and specifies emergency-lighting-specific markings. Each symbol shows luminaire type (downlight, bulkhead, sign), emergency function (maintained / non-maintained / high-risk), supply type (self-contained / central battery) and self-test status, and links to the schedule for fitting reference, photometric distribution and circuit number.',
   },
   {
     id: 'elm3-s5-grid',
@@ -77,14 +77,14 @@ const quizQuestions = [
     id: 1,
     question: 'BS 5266-1:2025 references which standard for graphic symbols on emergency-lighting layout drawings?',
     options: [
-      'BS EN 60617 — graphic symbols for diagrams — supplemented by BS 5266-specific markings (M, NM, HR, SC, CB) to distinguish luminaire variants on the drawing.',
+      'IEC 60617 — graphic symbols for diagrams — supplemented by BS 5266-specific markings (M, NM, HR, SC, CB) to distinguish luminaire variants on the drawing.',
       'BS 7671.',
       'BS EN 50172.',
       'No specific standard.',
     ],
     correctAnswer: 0,
     explanation:
-      'BS EN 60617 is the general standard for electrical schematic and layout symbols. BS 5266-1:2025 references it and adds emergency-lighting markings on the symbols. Designers and inspectors read the symbols against the schedule legend.',
+      'IEC 60617 is the general standard for electrical schematic and layout symbols. BS 5266-1:2025 references it and adds emergency-lighting markings on the symbols. Designers and inspectors read the symbols against the schedule legend.',
   },
   {
     id: 2,
@@ -211,7 +211,7 @@ const EmergencyLightingModule3Section5 = () => {
   useSEO({
     title: 'Emergency lighting layout drawings | EL Module 3.5 | Elec-Mate',
     description:
-      'BS 5266-1:2025 layout drawing requirements — symbols per BS EN 60617, photometric calculation grids, drawing scales 1:50 / 1:100, the schedule of luminaires, sign details, safety-equipment schedule, and the 2025 documentation pack.',
+      'BS 5266-1:2025 layout drawing requirements — symbols per IEC 60617, photometric calculation grids, drawing scales 1:50 / 1:100, the schedule of luminaires, sign details, safety-equipment schedule, and the 2025 documentation pack.',
   });
 
   return (
@@ -236,7 +236,7 @@ const EmergencyLightingModule3Section5 = () => {
           <TLDR
             points={[
               'Drawing scales: 1:100 for general floor plans, 1:50 for detail (refuge points, high-risk task plans, sign details).',
-              'Symbols per BS 5266-1:2025 referencing BS EN 60617 — luminaire body + emergency markings (M / NM / HR / SC / CB).',
+              'Symbols per BS 5266-1:2025 referencing IEC 60617 — luminaire body + emergency markings (M / NM / HR / SC / CB).',
               'Each symbol carries: type, photometric distribution, mounting orientation arrow (for asymmetric optics), circuit number, and reference label linking to the schedule.',
               'Photometric calculation grid: typically 0.5 m × 0.5 m or 1 m × 1 m on the target plane, output as point-by-point lux with min / max / uniformity at 0% reflectance.',
               'Schedule of luminaires: per-fitting reference, manufacturer + model, photometric file, M / NM / HR, SC / CB, mounting, circuit, commissioning notes.',
@@ -248,7 +248,7 @@ const EmergencyLightingModule3Section5 = () => {
 
           <LearningOutcomes
             outcomes={[
-              'Apply BS EN 60617 graphic symbols and BS 5266-1:2025 emergency markings to layout drawings',
+              'Apply IEC 60617 graphic symbols and BS 5266-1:2025 emergency markings to layout drawings',
               'Specify drawing scales (1:50 detail, 1:100 general) and select cross-section views for height-critical areas',
               'Set photometric calculation grid spacing (0.5 m or 1 m on target plane) and document output (min / max / uniformity at 0% reflectance)',
               'Compose a schedule of luminaires capturing every parameter the installer / commissioning engineer / inspector needs',
@@ -281,7 +281,7 @@ const EmergencyLightingModule3Section5 = () => {
               </li>
               <li>
                 <strong>Luminaire positions.</strong> Each emergency luminaire as a symbol (per
-                BS EN 60617 / BS 5266) at its specified location. Mounting orientation arrow for
+                IEC 60617 / BS 5266) at its specified location. Mounting orientation arrow for
                 asymmetric optics. Reference label (e.g. EM1, EM2) linking to the schedule.
                 Circuit number annotation.
               </li>
@@ -346,12 +346,12 @@ const EmergencyLightingModule3Section5 = () => {
 
           <ConceptBlock
             title="Reading and writing the visual language"
-            plainEnglish="A compliant emergency lighting drawing communicates rigorously through standard symbols. Every reader — installer, commissioning engineer, inspector — should be able to look at the drawing and understand the design without ambiguity. BS 5266-1:2025 references BS EN 60617 for general electrical symbols and adds emergency-specific markings. The drawing scale must permit the symbols to be read clearly; the photometric grid must be fine enough to capture localised minima."
+            plainEnglish="A compliant emergency lighting drawing communicates rigorously through standard symbols. Every reader — installer, commissioning engineer, inspector — should be able to look at the drawing and understand the design without ambiguity. BS 5266-1:2025 references IEC 60617 for general electrical symbols and adds emergency-specific markings. The drawing scale must permit the symbols to be read clearly; the photometric grid must be fine enough to capture localised minima."
           >
             <p>Symbol conventions:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
               <li>
-                <strong>Luminaire body.</strong> Per BS EN 60617 — square / rectangle for ceiling
+                <strong>Luminaire body.</strong> Per IEC 60617 — square / rectangle for ceiling
                 luminaires, half-circle for wall-mounted, etc. The body shape distinguishes
                 luminaire family.
               </li>
@@ -904,7 +904,7 @@ const EmergencyLightingModule3Section5 = () => {
           <KeyTakeaways
             title="Layout drawings — what makes them auditable"
             points={[
-              'Drawing scales: 1:100 general, 1:50 detail. Symbols per BS EN 60617 with BS 5266 emergency markings (M / NM / HR / SC / CB).',
+              'Drawing scales: 1:100 general, 1:50 detail. Symbols per IEC 60617 with BS 5266 emergency markings (M / NM / HR / SC / CB).',
               'Each luminaire symbol carries: type, photometric distribution, mounting orientation arrow, circuit number, reference label.',
               'Photometric grid 0.5 m or 1 m on the target plane; output min / max / uniformity at 0% reflectance.',
               'Schedule of luminaires: per-row reference, manufacturer + model, LDT/IES file, function, supply, mounting, distribution, orientation, circuit, duration, commissioning notes.',

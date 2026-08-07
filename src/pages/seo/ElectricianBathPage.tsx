@@ -606,7 +606,7 @@ export default function ElectricianBathPage() {
     <GuideTemplate
       localArea="Bath"
       title="Electrician in Bath | Local Electrical Guide"
-      description="Complete guide for electricians working in Bath. NGED DNO, UNESCO World Heritage conservation controls, Georgian townhouse rewiring…"
+      description="Complete guide for electricians working in Bath. NGED DNO, UNESCO World Heritage conservation controls, Georgian townhouse rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

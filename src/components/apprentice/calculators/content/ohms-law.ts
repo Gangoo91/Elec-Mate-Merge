@@ -35,9 +35,12 @@ export const ohmsLawContent: CalculatorContent = {
       { label: 'Resistance (R)', value: '19 Ω' },
     ],
     steps: [
-      'I = V ÷ R = 230 ÷ 19 = 12.1 A',
-      'P = V × I = 230 × 12.1 = 2783 W',
-      '(check) P = V² ÷ R = 230² ÷ 19 = 2784 W ✓',
+      // Carry the unrounded 12.105 into the power step. Feeding the displayed
+      // 12.1 back in gives 2783 W, which then disagrees with the V²/R check —
+      // and the check line was ticked as if it agreed.
+      'I = V ÷ R = 230 ÷ 19 = 12.105 A (≈ 12.1 A)',
+      'P = V × I = 230 × 12.105 = 2784 W',
+      '(check) P = V² ÷ R = 52900 ÷ 19 = 2784 W ✓',
     ],
     result: 'I ≈ 12.1 A, P ≈ 2.78 kW.',
   },

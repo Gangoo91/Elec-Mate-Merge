@@ -450,7 +450,7 @@ export default function ExtensionElectricalCostPage() {
   return (
     <GuideTemplate
       title="House Extension Electrical Cost UK | First Fix, Second Fix"
-      description="How much does house extension electrical work cost in the UK? Typical costs £1,200–£4,000. Covers first fix, second fix…"
+      description="How much does house extension electrical work cost in the UK? Typical costs £1,200–£4,000. Covers first fix, second fix."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

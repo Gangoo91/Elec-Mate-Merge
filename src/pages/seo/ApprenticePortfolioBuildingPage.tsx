@@ -430,7 +430,7 @@ export default function ApprenticePortfolioBuildingPage() {
   return (
     <GuideTemplate
       title="Electrical Apprentice Portfolio Building Tips UK | NVQ"
-      description="Complete guide to building a strong electrical apprentice NVQ portfolio. Evidence types, how to document jobs professionally, photography tips…"
+      description="Complete guide to building a strong electrical apprentice NVQ portfolio. Evidence types, how to document jobs professionally, photography tips."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

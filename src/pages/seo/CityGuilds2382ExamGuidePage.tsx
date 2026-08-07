@@ -572,7 +572,7 @@ export default function CityGuilds2382ExamGuidePage() {
   return (
     <GuideTemplate
       title="City & Guilds 2382 Exam Guide | 18th Edition Exam Tips UK"
-      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline…"
+      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

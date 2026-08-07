@@ -293,7 +293,7 @@ export default function AdminMateUser() {
                 {profile.agent_status ?? 'unknown'}
               </Pill>
               <Pill tone={jwtTone(profile.jwt_expires_at)}>{jwtLabel(profile.jwt_expires_at)}</Pill>
-              <span className="text-[11px] text-white/70 tabular-nums">Since {provisioned}</span>
+              <span className="text-[11px] text-white tabular-nums">Since {provisioned}</span>
             </div>
           }
           actions={
@@ -416,7 +416,7 @@ export default function AdminMateUser() {
           />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06]">
             <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+              <div className="text-[10px] text-white font-medium uppercase tracking-[0.14em]">
                 Input
               </div>
               <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">
@@ -424,7 +424,7 @@ export default function AdminMateUser() {
               </div>
             </div>
             <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+              <div className="text-[10px] text-white font-medium uppercase tracking-[0.14em]">
                 Output
               </div>
               <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">
@@ -432,7 +432,7 @@ export default function AdminMateUser() {
               </div>
             </div>
             <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+              <div className="text-[10px] text-white font-medium uppercase tracking-[0.14em]">
                 Cache read
               </div>
               <div className="mt-1.5 text-[18px] font-semibold text-emerald-300 tabular-nums">
@@ -440,7 +440,7 @@ export default function AdminMateUser() {
               </div>
             </div>
             <div className="bg-[hsl(0_0%_12%)] px-4 py-4">
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-[0.14em]">
+              <div className="text-[10px] text-white font-medium uppercase tracking-[0.14em]">
                 Cache write
               </div>
               <div className="mt-1.5 text-[18px] font-semibold text-white tabular-nums">

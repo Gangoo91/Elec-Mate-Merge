@@ -530,7 +530,7 @@ export default function ElectricalLoadCalculationPage() {
   return (
     <GuideTemplate
       title="Electrical Load Calculation — UK Guide 2024 | Diversity"
-      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from IET On-Site Guide Appendix A, maximum demand calculation…"
+      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from IET On-Site Guide Appendix A, maximum demand calculation."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

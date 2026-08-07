@@ -480,7 +480,7 @@ export default function SSSMTSGuidePage() {
   return (
     <GuideTemplate
       title="SSSTS vs SMSTS Guide | Site Supervisor Training for"
-      description="Complete guide to SSSTS and SMSTS for UK electricians. Course content, costs, who needs which, renewal process…"
+      description="Complete guide to SSSTS and SMSTS for UK electricians. Course content, costs, who needs which, renewal process."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

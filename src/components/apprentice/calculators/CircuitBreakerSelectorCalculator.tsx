@@ -15,6 +15,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { circuitBreakerSelectorContent } from './content/circuit-breaker-selector';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -238,7 +239,8 @@ const CircuitBreakerSelectorCalculator = () => {
     if (circuitType === 'ev') rcdReasons.push('EV charging point (Reg 722.531.3.101)');
     // Reg 701.411.3.3 — additional protection by RCD for ALL low voltage circuits
     // in a location containing a bath or shower.
-    if (circuitType === 'shower') rcdReasons.push('location containing a bath or shower (Reg 701.411.3.3)');
+    if (circuitType === 'shower')
+      rcdReasons.push('location containing a bath or shower (Reg 701.411.3.3)');
     // Reg 411.3.4 — within domestic (household) premises, AC final circuits
     // supplying luminaires.
     if (circuitType === 'lighting' && isDomestic)
@@ -272,7 +274,12 @@ const CircuitBreakerSelectorCalculator = () => {
     }
 
     const rating = recommendedEntry.recommended;
-    const zsInfo = resolveMaxZs(recommendedKey, rating, systemType === 'TT' && rcdRequired, iDeltaN);
+    const zsInfo = resolveMaxZs(
+      recommendedKey,
+      rating,
+      systemType === 'TT' && rcdRequired,
+      iDeltaN
+    );
     const maxZs = zsInfo.limit;
 
     const checks: ComplianceCheck[] = [];
@@ -477,413 +484,448 @@ const CircuitBreakerSelectorCalculator = () => {
       title="Circuit Breaker Selector"
       description="Find the right protective device for your circuit — BS 7671 compliant"
     >
-      <CalculatorSelect
-        label="Circuit Type"
-        value={circuitType}
-        onChange={setCircuitType}
-        options={circuitTypes}
-      />
-
-      <CalculatorSelect
-        label="Premises"
-        value={premises}
-        onChange={setPremises}
-        options={premisesTypes}
-        hint="Reg 411.3.4 applies to luminaire circuits in domestic premises only"
-      />
-
-      <CalculatorInput
-        label="Design Current (Ib)"
-        unit="A"
-        type="text"
-        inputMode="decimal"
-        value={designCurrent}
-        onChange={setDesignCurrent}
-        placeholder="e.g. 26"
-      />
-
-      <CalculatorInput
-        label="Cable Capacity (Iz)"
-        unit="A"
-        type="text"
-        inputMode="decimal"
-        value={cableIz}
-        onChange={setCableIz}
-        placeholder="Derated Iz of the cable"
-        hint="Reg 433.1.1(b) needs In ≤ Iz — leave blank and the overload check is incomplete"
-      />
-
-      <CalculatorSelect
-        label="System Type"
-        value={systemType}
-        onChange={setSystemType}
-        options={systemTypes}
-      />
-
-      <CalculatorInput
-        label="Prospective Fault Current"
-        unit="kA"
-        type="text"
-        inputMode="decimal"
-        value={prospectiveFault}
-        onChange={setProspectiveFault}
-        placeholder="Optional — Ipf at the device"
-        hint="Reg 434.1 / 432.1 — breaking capacity must not be less than Ipf"
-      />
-
-      <CalculatorInput
-        label="Measured Zs"
-        unit="Ω"
-        type="text"
-        inputMode="decimal"
-        value={measuredZs}
-        onChange={setMeasuredZs}
-        placeholder="Optional — for compliance check"
-        hint="Leave blank to skip Zs check"
-      />
-
-      <CalculatorSelect
-        label="RCD Rated Residual Current (IΔn)"
-        value={rcdRating}
-        onChange={setRcdRating}
-        options={rcdRatings}
-        hint="Sets the Table 41.5 limit on a TT system"
-      />
-
-      {/* RCD toggle */}
-      <button
-        onClick={() => setNeedsRcd(!needsRcd)}
-        className="flex items-center gap-3 w-full h-11 touch-manipulation"
-      >
-        <div
-          className={cn(
-            'w-5 h-5 rounded border-2 flex items-center justify-center transition-colors shrink-0',
-            needsRcd ? 'border-transparent' : 'border-white/30 bg-transparent'
-          )}
-          style={
-            needsRcd ? { background: config.gradientFrom, borderColor: config.gradientFrom } : {}
-          }
-        >
-          {needsRcd && (
-            <svg className="w-3 h-3 text-black" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M2 6l3 3 5-5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
-        </div>
-        <span className="text-sm text-white">Circuit requires RCD protection</span>
-      </button>
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={calculate}
-        onReset={reset}
-        calculateLabel="Find Device"
-        showReset
-      />
-
-      {error && (
-        <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
-          <p className="text-sm text-white">{error}</p>
-        </div>
-      )}
-
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          <ResultBadge status={result.status} label={result.statusLabel} />
-
-          {/* Hero device */}
-          <p
-            className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
-            style={{
-              backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-            }}
-          >
-            {result.recommendedLabel}
-          </p>
-
-          <ResultsGrid columns={2}>
-            <ResultValue label="Rating" value={`${result.rating}A`} category={CAT} size="sm" />
-            <ResultValue
-              label="Trip Curve"
-              value={result.curveType === 'N/A' ? '—' : `Type ${result.curveType}`}
-              category={CAT}
-              size="sm"
+      <CalculatorPanes
+        form={
+          <>
+            <CalculatorSelect
+              label="Circuit Type"
+              value={circuitType}
+              onChange={setCircuitType}
+              options={circuitTypes}
             />
-            <ResultValue
-              label="Breaking Capacity"
-              value={`${result.breakingCapacity}`}
+
+            <CalculatorSelect
+              label="Premises"
+              value={premises}
+              onChange={setPremises}
+              options={premisesTypes}
+              hint="Reg 411.3.4 applies to luminaire circuits in domestic premises only"
+            />
+
+            <CalculatorInput
+              label="Design Current (Ib)"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={designCurrent}
+              onChange={setDesignCurrent}
+              placeholder="e.g. 26"
+            />
+
+            <CalculatorInput
+              label="Cable Capacity (Iz)"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={cableIz}
+              onChange={setCableIz}
+              placeholder="Derated Iz of the cable"
+              hint="Reg 433.1.1(b) needs In ≤ Iz — leave blank and the overload check is incomplete"
+            />
+
+            <CalculatorSelect
+              label="System Type"
+              value={systemType}
+              onChange={setSystemType}
+              options={systemTypes}
+            />
+
+            <CalculatorInput
+              label="Prospective Fault Current"
               unit="kA"
-              category={CAT}
-              size="sm"
+              type="text"
+              inputMode="decimal"
+              value={prospectiveFault}
+              onChange={setProspectiveFault}
+              placeholder="Optional — Ipf at the device"
+              hint="Reg 434.1 / 432.1 — breaking capacity must not be less than Ipf"
             />
-            <ResultValue
-              label="Max Zs"
-              value={result.maxZs > 0 ? result.maxZs.toFixed(2) : '—'}
-              unit={result.maxZs > 0 ? 'Ω' : ''}
-              category={CAT}
-              size="sm"
+
+            <CalculatorInput
+              label="Measured Zs"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={measuredZs}
+              onChange={setMeasuredZs}
+              placeholder="Optional — for compliance check"
+              hint="Leave blank to skip Zs check"
             />
-          </ResultsGrid>
 
-          <p className="text-xs text-white">{result.zsBasis}</p>
+            <CalculatorSelect
+              label="RCD Rated Residual Current (IΔn)"
+              value={rcdRating}
+              onChange={setRcdRating}
+              options={rcdRatings}
+              hint="Sets the Table 41.5 limit on a TT system"
+            />
 
-          {/* Compliance checks — every condition of Reg 433.1.1 plus 411 and 432.1 */}
-          <CalculatorSection title="Compliance Checks">
-            <div className="space-y-2">
-              {result.checks.map((check) => (
-                <div key={check.label} className="flex items-start gap-2">
-                  <span
-                    className={cn('mt-1.5 w-1.5 h-1.5 rounded-full shrink-0', checkDotClass(check.status))}
+            {/* RCD toggle */}
+            <button
+              onClick={() => setNeedsRcd(!needsRcd)}
+              className="flex items-center gap-3 w-full h-11 touch-manipulation"
+            >
+              <div
+                className={cn(
+                  'w-5 h-5 rounded border-2 flex items-center justify-center transition-colors shrink-0',
+                  needsRcd ? 'border-transparent' : 'border-white/30 bg-transparent'
+                )}
+                style={
+                  needsRcd
+                    ? { background: config.gradientFrom, borderColor: config.gradientFrom }
+                    : {}
+                }
+              >
+                {needsRcd && (
+                  <svg className="w-3 h-3 text-black" viewBox="0 0 12 12" fill="none">
+                    <path
+                      d="M2 6l3 3 5-5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </div>
+              <span className="text-sm text-white">Circuit requires RCD protection</span>
+            </button>
+
+            <CalculatorActions
+              category={CAT}
+              onCalculate={calculate}
+              onReset={reset}
+              calculateLabel="Find Device"
+              showReset
+            />
+          </>
+        }
+        result={
+          <>
+            {error && (
+              <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
+                <p className="text-sm text-white">{error}</p>
+              </div>
+            )}
+
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                <ResultBadge status={result.status} label={result.statusLabel} />
+
+                {/* Hero device */}
+                <p
+                  className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
+                  {result.recommendedLabel}
+                </p>
+
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Rating"
+                    value={`${result.rating}A`}
+                    category={CAT}
+                    size="sm"
                   />
-                  <div>
-                    <p className="text-sm text-white font-medium">{check.label}</p>
-                    <p className="text-sm text-white">{check.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CalculatorSection>
+                  <ResultValue
+                    label="Trip Curve"
+                    value={result.curveType === 'N/A' ? '—' : `Type ${result.curveType}`}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Breaking Capacity"
+                    value={`${result.breakingCapacity}`}
+                    unit="kA"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Max Zs"
+                    value={result.maxZs > 0 ? result.maxZs.toFixed(2) : '—'}
+                    unit={result.maxZs > 0 ? 'Ω' : ''}
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
 
-          {/* RCD selection — curve type is not the same thing as RCD type */}
-          <CalculatorSection title="RCD Selection">
-            <p className="text-sm text-white">{result.rcdTypeGuidance}</p>
-            <p className="text-sm text-white mt-2">
-              The Type B / C / D above is the circuit-breaker's magnetic trip curve to
-              BS EN 60898. It is a different thing from an RCD Type AC / A / F / B, which
-              describes the residual current waveform the RCD responds to.
-            </p>
-          </CalculatorSection>
+                <p className="text-xs text-white">{result.zsBasis}</p>
 
-          <CalculatorDivider category={CAT} />
-
-          {/* Recommended Device Detail */}
-          <CalculatorSection title="Recommended Device">
-            <div className="space-y-3">
-              {result.applications.length > 0 && (
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">Applications</p>
-                  <ul className="space-y-1">
-                    {result.applications.map((app, i) => (
-                      <li key={i} className="text-sm text-white flex items-start gap-2">
+                {/* Compliance checks — every condition of Reg 433.1.1 plus 411 and 432.1 */}
+                <CalculatorSection title="Compliance Checks">
+                  <div className="space-y-2">
+                    {result.checks.map((check) => (
+                      <div key={check.label} className="flex items-start gap-2">
                         <span
-                          className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ background: config.gradientFrom }}
+                          className={cn(
+                            'mt-1.5 w-1.5 h-1.5 rounded-full shrink-0',
+                            checkDotClass(check.status)
+                          )}
                         />
-                        {app}
-                      </li>
+                        <div>
+                          <p className="text-sm text-white font-medium">{check.label}</p>
+                          <p className="text-sm text-white">{check.detail}</p>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-              )}
-              {result.advantages.length > 0 && (
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">Advantages</p>
-                  <ul className="space-y-1">
-                    {result.advantages.map((adv, i) => (
-                      <li key={i} className="text-sm text-white flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
-                        {adv}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {result.considerations.length > 0 && (
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">Considerations</p>
-                  <ul className="space-y-1">
-                    {result.considerations.map((con, i) => (
-                      <li key={i} className="text-sm text-white flex items-start gap-2">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                        {con}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </CalculatorSection>
-
-          {/* Alternative Options */}
-          {result.alternatives.length > 0 && (
-            <CalculatorSection title="Alternative Options">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {result.alternatives.map((alt) => (
-                  <div key={alt.key} className="p-3 rounded-xl bg-white/5 border border-white/10">
-                    <p className="text-sm text-white font-medium">{alt.label}</p>
-                    <div className="flex gap-3 mt-1 text-xs text-white">
-                      <span>{alt.breakingCapacity}kA</span>
-                      <span>
-                        {alt.maxZs > 0 ? `Max Zs: ${alt.maxZs.toFixed(2)}Ω` : 'Max Zs: manufacturer Ia'}
-                      </span>
-                    </div>
                   </div>
-                ))}
-              </div>
-            </CalculatorSection>
-          )}
+                </CalculatorSection>
 
-          <CalculatorDivider category={CAT} />
-
-          <CalculatorFormula
-            category={CAT}
-            title="Selection Logic"
-            steps={[
-              {
-                label: 'Design current',
-                formula: `Ib = ${designCurrent}A`,
-                result: `${designCurrent}A`,
-              },
-              {
-                label: 'Overload (a) In ≥ Ib',
-                formula: `In ≥ ${designCurrent}A`,
-                result: `${result.rating}A selected`,
-              },
-              ...(cableIz
-                ? [
-                    {
-                      label: 'Overload (b) In ≤ Iz',
-                      formula: `${result.rating}A ≤ ${cableIz}A`,
-                      result: result.rating <= parseFloat(cableIz) ? 'Satisfied' : 'Not satisfied',
-                    },
-                  ]
-                : []),
-              {
-                label: 'Device type',
-                formula: `${circuitType} circuit${result.needsRcd ? ' + RCD required' : ''}`,
-                result: result.recommendedLabel,
-              },
-              ...(result.maxZs > 0
-                ? [
-                    {
-                      label: 'Maximum Zs',
-                      formula: result.zsBasis,
-                      result: `${result.maxZs.toFixed(2)}Ω`,
-                    },
-                  ]
-                : []),
-              ...(prospectiveFault
-                ? [
-                    {
-                      label: 'Breaking capacity ≥ Ipf',
-                      formula: `${result.breakingCapacity}kA ≥ ${prospectiveFault}kA`,
-                      result:
-                        result.breakingCapacity >= parseFloat(prospectiveFault)
-                          ? 'Satisfied'
-                          : 'Not satisfied',
-                    },
-                  ]
-                : []),
-            ]}
-          />
-
-          {/* BS 7671 References */}
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
-              <span>BS 7671 References</span>
-              <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-2"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <p className="text-sm text-white">
-                  <span className="font-medium">Regulation 433.1.1</span> — Overload: (a) In ≥ Ib,
-                  (b) In ≤ Iz, (c) I2 ≤ 1.45 × Iz. Reg 433.1.201 gives (c) automatically once (a)
-                  and (b) are met for BS 88 fuses, BS EN 60898 / BS EN 60947-2 circuit-breakers and
-                  BS EN 61009-1 RCBOs.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Table 41.2 / Table 41.4</span> — Maximum Zs for
-                  fuses, 0.4 s and 5 s respectively.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Table 41.3</span> — Maximum Zs for circuit-breakers
-                  to BS EN 60898 and the overcurrent characteristics of RCBOs to BS EN 61009-1,
-                  covering both the 0.4 s time of Reg 411.3.2.2 and the 5 s time of Reg 411.3.2.3.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Table 41.5 / Reg 411.5.3</span> — Maximum Zs on a TT
-                  system where the RCD provides fault protection (Ra × IΔn ≤ 50 V).
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Regulation 411.4.4</span> — Zs × Ia ≤ U0 × Cmin,
-                  with Cmin = 0.95 for an ESQCR supply. Use it wherever the rating or device is not
-                  tabulated, including any BS EN 60947-2 MCCB.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Appendix 3</span> — a loop impedance measured at
-                  ambient temperature satisfies Reg 411.4.4 when Zs(m) ≤ 0.8 × U0 × Cmin / Ia. Other
-                  temperature-correction methods are not precluded.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Regulation 434.1 / 432.1</span> — Determine the
-                  prospective fault current; the device must break any overcurrent up to it, except
-                  where back-up protection to Reg 434.5.1 is provided.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Regulations 411.3.3, 411.3.4, 701.411.3.3</span> —
-                  30 mA RCD additional protection for socket-outlets, domestic luminaire circuits and
-                  every low voltage circuit in a location containing a bath or shower.
-                </p>
-                <p className="text-sm text-white">
-                  <span className="font-medium">Regulation 531.3.3 / 722.531.3.101</span> — RCD type
-                  selection, and DC fault detection for EV charging points.
-                </p>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* What the Curves Mean */}
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
-              <span>What the Curves Mean</span>
-              <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-2"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <p className="text-sm text-white">
-                  Circuit-breaker trip curves to BS EN 60898 — not to be confused with RCD Types AC,
-                  A, F and B.
-                </p>
-                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm">
-                  <p className="text-white font-medium">Curve B</p>
-                  <p className="text-white">Trips at 3–5 × In — domestic, resistive loads</p>
-                  <p className="text-white font-medium">Curve C</p>
-                  <p className="text-white">Trips at 5–10 × In — motors, fluorescent lighting</p>
-                  <p className="text-white font-medium">Curve D</p>
-                  <p className="text-white">
-                    Trips at 10–20 × In — transformers, welding, high inrush
+                {/* RCD selection — curve type is not the same thing as RCD type */}
+                <CalculatorSection title="RCD Selection">
+                  <p className="text-sm text-white">{result.rcdTypeGuidance}</p>
+                  <p className="text-sm text-white mt-2">
+                    The Type B / C / D above is the circuit-breaker's magnetic trip curve to BS EN
+                    60898. It is a different thing from an RCD Type AC / A / F / B, which describes
+                    the residual current waveform the RCD responds to.
                   </p>
-                </div>
-                <p className="text-sm text-white">
-                  Table 41.3 and Reg 411.4.4 use the upper end of each band (5, 10 and 20 × In) as
-                  Ia.
-                </p>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
+                </CalculatorSection>
 
-      <FormulaReference category={CAT} name="Overload coordination (Reg 433.1.1)" formula="Ib ≤ In ≤ Iz" />
-      <CalculatorEditorial content={circuitBreakerSelectorContent} category={CAT} />
+                <CalculatorDivider category={CAT} />
+
+                {/* Recommended Device Detail */}
+                <CalculatorSection title="Recommended Device">
+                  <div className="space-y-3">
+                    {result.applications.length > 0 && (
+                      <div>
+                        <p className="text-sm text-white font-medium mb-1">Applications</p>
+                        <ul className="space-y-1">
+                          {result.applications.map((app, i) => (
+                            <li key={i} className="text-sm text-white flex items-start gap-2">
+                              <span
+                                className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+                                style={{ background: config.gradientFrom }}
+                              />
+                              {app}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {result.advantages.length > 0 && (
+                      <div>
+                        <p className="text-sm text-white font-medium mb-1">Advantages</p>
+                        <ul className="space-y-1">
+                          {result.advantages.map((adv, i) => (
+                            <li key={i} className="text-sm text-white flex items-start gap-2">
+                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
+                              {adv}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {result.considerations.length > 0 && (
+                      <div>
+                        <p className="text-sm text-white font-medium mb-1">Considerations</p>
+                        <ul className="space-y-1">
+                          {result.considerations.map((con, i) => (
+                            <li key={i} className="text-sm text-white flex items-start gap-2">
+                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                              {con}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </CalculatorSection>
+
+                {/* Alternative Options */}
+                {result.alternatives.length > 0 && (
+                  <CalculatorSection title="Alternative Options">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {result.alternatives.map((alt) => (
+                        <div
+                          key={alt.key}
+                          className="p-3 rounded-xl bg-white/5 border border-white/10"
+                        >
+                          <p className="text-sm text-white font-medium">{alt.label}</p>
+                          <div className="flex gap-3 mt-1 text-xs text-white">
+                            <span>{alt.breakingCapacity}kA</span>
+                            <span>
+                              {alt.maxZs > 0
+                                ? `Max Zs: ${alt.maxZs.toFixed(2)}Ω`
+                                : 'Max Zs: manufacturer Ia'}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CalculatorSection>
+                )}
+
+                <CalculatorDivider category={CAT} />
+
+                <CalculatorFormula
+                  category={CAT}
+                  title="Selection Logic"
+                  steps={[
+                    {
+                      label: 'Design current',
+                      formula: `Ib = ${designCurrent}A`,
+                      result: `${designCurrent}A`,
+                    },
+                    {
+                      label: 'Overload (a) In ≥ Ib',
+                      formula: `In ≥ ${designCurrent}A`,
+                      result: `${result.rating}A selected`,
+                    },
+                    ...(cableIz
+                      ? [
+                          {
+                            label: 'Overload (b) In ≤ Iz',
+                            formula: `${result.rating}A ≤ ${cableIz}A`,
+                            result:
+                              result.rating <= parseFloat(cableIz) ? 'Satisfied' : 'Not satisfied',
+                          },
+                        ]
+                      : []),
+                    {
+                      label: 'Device type',
+                      formula: `${circuitType} circuit${result.needsRcd ? ' + RCD required' : ''}`,
+                      result: result.recommendedLabel,
+                    },
+                    ...(result.maxZs > 0
+                      ? [
+                          {
+                            label: 'Maximum Zs',
+                            formula: result.zsBasis,
+                            result: `${result.maxZs.toFixed(2)}Ω`,
+                          },
+                        ]
+                      : []),
+                    ...(prospectiveFault
+                      ? [
+                          {
+                            label: 'Breaking capacity ≥ Ipf',
+                            formula: `${result.breakingCapacity}kA ≥ ${prospectiveFault}kA`,
+                            result:
+                              result.breakingCapacity >= parseFloat(prospectiveFault)
+                                ? 'Satisfied'
+                                : 'Not satisfied',
+                          },
+                        ]
+                      : []),
+                  ]}
+                />
+
+                {/* BS 7671 References */}
+                <Collapsible>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
+                    <span>BS 7671 References</span>
+                    <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-2"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Regulation 433.1.1</span> — Overload: (a) In ≥
+                        Ib, (b) In ≤ Iz, (c) I2 ≤ 1.45 × Iz. Reg 433.1.201 gives (c) automatically
+                        once (a) and (b) are met for BS 88 fuses, BS EN 60898 / BS EN 60947-2
+                        circuit-breakers and BS EN 61009-1 RCBOs.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Table 41.2 / Table 41.4</span> — Maximum Zs
+                        for fuses, 0.4 s and 5 s respectively.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Table 41.3</span> — Maximum Zs for
+                        circuit-breakers to BS EN 60898 and the overcurrent characteristics of RCBOs
+                        to BS EN 61009-1, covering both the 0.4 s time of Reg 411.3.2.2 and the 5 s
+                        time of Reg 411.3.2.3.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Table 41.5 / Reg 411.5.3</span> — Maximum Zs
+                        on a TT system where the RCD provides fault protection (Ra × IΔn ≤ 50 V).
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Regulation 411.4.4</span> — Zs × Ia ≤ U0 ×
+                        Cmin, with Cmin = 0.95 for an ESQCR supply. Use it wherever the rating or
+                        device is not tabulated, including any BS EN 60947-2 MCCB.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Appendix 3</span> — a loop impedance measured
+                        at ambient temperature satisfies Reg 411.4.4 when Zs(m) ≤ 0.8 × U0 × Cmin /
+                        Ia. Other temperature-correction methods are not precluded.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Regulation 434.1 / 432.1</span> — Determine
+                        the prospective fault current; the device must break any overcurrent up to
+                        it, except where back-up protection to Reg 434.5.1 is provided.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">
+                          Regulations 411.3.3, 411.3.4, 701.411.3.3
+                        </span>{' '}
+                        — 30 mA RCD additional protection for socket-outlets, domestic luminaire
+                        circuits and every low voltage circuit in a location containing a bath or
+                        shower.
+                      </p>
+                      <p className="text-sm text-white">
+                        <span className="font-medium">Regulation 531.3.3 / 722.531.3.101</span> —
+                        RCD type selection, and DC fault detection for EV charging points.
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* What the Curves Mean */}
+                <Collapsible>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
+                    <span>What the Curves Mean</span>
+                    <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-2"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <p className="text-sm text-white">
+                        Circuit-breaker trip curves to BS EN 60898 — not to be confused with RCD
+                        Types AC, A, F and B.
+                      </p>
+                      <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm">
+                        <p className="text-white font-medium">Curve B</p>
+                        <p className="text-white">Trips at 3–5 × In — domestic, resistive loads</p>
+                        <p className="text-white font-medium">Curve C</p>
+                        <p className="text-white">
+                          Trips at 5–10 × In — motors, fluorescent lighting
+                        </p>
+                        <p className="text-white font-medium">Curve D</p>
+                        <p className="text-white">
+                          Trips at 10–20 × In — transformers, welding, high inrush
+                        </p>
+                      </div>
+                      <p className="text-sm text-white">
+                        Table 41.3 and Reg 411.4.4 use the upper end of each band (5, 10 and 20 ×
+                        In) as Ia.
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            <FormulaReference
+              category={CAT}
+              name="Overload coordination (Reg 433.1.1)"
+              formula="Ib ≤ In ≤ Iz"
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={circuitBreakerSelectorContent} category={CAT} />}
+      />
     </CalculatorCard>
   );
 };

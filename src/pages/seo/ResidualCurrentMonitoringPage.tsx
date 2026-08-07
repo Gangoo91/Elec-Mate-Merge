@@ -635,7 +635,7 @@ export default function ResidualCurrentMonitoringPage() {
   return (
     <GuideTemplate
       title="Residual Current Monitoring | RCM Guide UK"
-      description="Complete guide to residual current monitoring (RCM) for UK electricians. RCM vs RCD, EV charger RCMU requirements, BS 7671 regulations…"
+      description="Complete guide to residual current monitoring (RCM) for UK electricians. RCM vs RCD, EV charger RCMU requirements, BS 7671 regulations."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

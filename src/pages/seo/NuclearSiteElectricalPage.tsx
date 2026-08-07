@@ -640,7 +640,7 @@ export default function NuclearSiteElectricalPage() {
   return (
     <GuideTemplate
       title="Nuclear Site Electrical Engineering UK | Nuclear Industry"
-      description="Complete guide to nuclear site electrical engineering in the UK — nuclear island vs conventional island, QA Nuclear Baseline, BPSS/SC security clearance…"
+      description="Complete guide to nuclear site electrical engineering in the UK — nuclear island vs conventional island, QA Nuclear Baseline, BPSS/SC security clearance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

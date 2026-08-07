@@ -596,7 +596,7 @@ export default function EICRBrightonPage() {
   return (
     <GuideTemplate
       title="EICR Brighton | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Brighton for 2026. Landlord legal requirements, Brighton & Hove City Council enforcement, Regency and Victorian housing findings…"
+      description="EICR costs in Brighton for 2026. Landlord legal requirements, Brighton & Hove City Council enforcement, Regency and Victorian housing findings."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

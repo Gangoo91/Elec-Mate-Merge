@@ -17,8 +17,8 @@ export default function CSCSCardMockExamPage() {
       questionBank={
         cscsCardQuestionBank as unknown as Parameters<typeof PublicMockExamPage>[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={30}
+      questionsPerExam={30}
+      timeLimitMinutes={35}
       passThreshold={70}
       breadcrumbLabel="CSCS Card"
     />

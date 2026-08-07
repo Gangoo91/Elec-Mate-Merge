@@ -190,16 +190,25 @@ function isNearEmpty(reportType: string, data: any): boolean {
     case 'solar-pv':
       return (data.panels?.length ?? 0) === 0 && (data.inverters?.length ?? 0) === 0;
     default:
-      // ELE-856: scheduleOfTests threshold tightened from <= 1 to === 0.
-      // A new EICR always starts with exactly 1 blank circuit row, so <= 1 was
-      // treating a brand-new mobile session (1 blank row) as near-empty and
-      // allowing it to overwrite a cloud cert that had real circuits saved from PC.
-      // Any report with even 1 circuit row must be treated as having data.
-      // ELE-875 — also gate on inspectionItems having no outcomes; otherwise a
-      // mobile remount with the empty checklist could be treated as non-empty.
+      /*
+       * These thresholds MUST match `prevent_blank_report_overwrite` in the
+       * database, which treats a payload as empty-ish at
+       * `scheduleOfTests <= 1 AND circuits = 0 AND boards = 0`.
+       *
+       * They did not. The client used `scheduleOfTests === 0`, so a payload
+       * carrying exactly one schedule row and no boards passed here and was
+       * then rejected by the trigger with P0001 — a 400 on every autosave, for
+       * ever, on the most ordinary state there is: a fresh or remounted session
+       * holding one blank circuit row. Blocking it here costs nothing (the
+       * write was never going to land) and turns a retry loop into a single
+       * logged decision.
+       *
+       * ELE-875 — also gate on inspectionItems having no outcomes; otherwise a
+       * mobile remount with the empty checklist could be treated as non-empty.
+       */
       return (
         (data.circuits?.length ?? 0) === 0 &&
-        (data.scheduleOfTests?.length ?? 0) === 0 &&
+        (data.scheduleOfTests?.length ?? 0) <= 1 &&
         (data.distributionBoards?.length ?? 0) === 0 &&
         (!Array.isArray(data.inspectionItems) ||
           data.inspectionItems.filter(
@@ -587,7 +596,15 @@ export const useReportSync = ({
   }, []);
 
   // === PROCESS OFFLINE QUEUE ===
-  const processQueue = useCallback(async () => {
+  /**
+   * Drain the queue.
+   *
+   * @param force  Ignore the exponential backoff. Set when a person pressed
+   *   "Retry Now": an operation that has failed six times is waiting
+   *   2^6 = 64 minutes, so an unforced retry skips every item and the button
+   *   appears to do nothing — which is exactly what it looked like.
+   */
+  const processQueue = useCallback(async (force = false) => {
     if (!isOnline || !userId) return;
 
     const operations = await syncQueue.getPendingForUser(userId);
@@ -599,8 +616,8 @@ export const useReportSync = ({
     let failCount = 0;
 
     for (const operation of operations) {
-      // Check if should retry based on backoff
-      if (!syncQueue.shouldRetry(operation)) {
+      // Backoff applies to automatic passes only — see `force` above.
+      if (!force && !syncQueue.shouldRetry(operation)) {
         continue;
       }
 
@@ -616,7 +633,7 @@ export const useReportSync = ({
             await syncQueue.complete(operation.id);
             successCount++;
           } else {
-            throw new Error(result.error || 'Create failed');
+            throw result.error ?? new Error('Create failed');
           }
         } else if (operation.type === 'update' && operation.reportId) {
           const result = await reportCloud.updateReport(
@@ -629,11 +646,42 @@ export const useReportSync = ({
             await syncQueue.complete(operation.id);
             successCount++;
           } else {
-            throw new Error(result.error || 'Update failed');
+            // Rethrow the Supabase error itself. `new Error(result.error)`
+            // stringified the object to "[object Object]", losing the code and
+            // message — which is why a permanent rejection was indistinguishable
+            // from a network blip.
+            throw result.error ?? new Error('Update failed');
           }
         }
       } catch (error) {
         console.error('[ReportSync] Queue operation failed:', error);
+
+        /*
+         * Some rejections will never succeed, and retrying them forever is
+         * worse than failing.
+         *
+         * `reports_prevent_blank_overwrite` raises P0001 when the stored
+         * certificate is populated and the incoming one is empty — it is
+         * protecting saved work from a blank autosave, and it is right to.
+         * But the queue had no idea, so it retried on every tick and, after
+         * five attempts, told the electrician "we'll keep trying" while
+         * their device quietly diverged from the certificate on record.
+         *
+         * Drop the operation and say plainly what happened — the fix is
+         * something only they can choose: reload the saved version.
+         */
+        const err = error as { code?: string; message?: string } | null;
+        if (err?.code === 'P0001' && /blank-overwrite/i.test(err?.message ?? '')) {
+          await syncQueue.complete(operation.id);
+          toast({
+            title: 'Not saved — the saved copy has more circuits',
+            description:
+              'This device is showing fewer circuits than the version on record, so it was not overwritten. Reload the certificate to get the saved version back.',
+            variant: 'destructive',
+          });
+          continue;
+        }
+
         const retryCount = await syncQueue.incrementRetry(operation.id);
 
         // Warn user if operation is failing repeatedly
@@ -789,7 +837,7 @@ export const useReportSync = ({
               customerId,
               false
             );
-            if (!result.success) throw new Error(result.error || 'Update failed');
+            if (!result.success) throw result.error ?? new Error('Update failed');
             // Fetch new version after successful update
             const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
             if (newVersion) {
@@ -833,7 +881,7 @@ export const useReportSync = ({
               return { success: false, reportId: savedReportId };
             }
 
-            if (!result.success) throw new Error(result.error || 'Update failed');
+            if (!result.success) throw result.error ?? new Error('Update failed');
 
             // Update expected version after successful save
             expectedVersionRef.current += 1;
@@ -848,7 +896,7 @@ export const useReportSync = ({
             customerId,
             isAutoSync
           );
-          if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
+          if (!result.success || !result.reportId) throw result.error ?? new Error('Create failed');
           savedReportId = result.reportId;
           // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
           currentReportIdRef.current = savedReportId;
@@ -1096,9 +1144,10 @@ export const useReportSync = ({
     if (status.cloud === 'error' || status.cloud === 'queued') {
       await syncToCloud(true, false);
     }
-    // Also process any queued operations
+    // Also process any queued operations, ignoring backoff — this path only
+    // runs because someone asked for it.
     if (userId) {
-      await processQueue();
+      await processQueue(true);
     }
   }, [status.cloud, syncToCloud, userId, processQueue]);
 

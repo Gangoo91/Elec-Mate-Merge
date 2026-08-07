@@ -664,7 +664,7 @@ export default function AdminPricingModeration() {
                     <div className="w-full space-y-3">
                       <div>
                         <p className="text-[13px] font-semibold text-white">Reject & delete?</p>
-                        <p className="text-[12px] text-white/70 mt-0.5">
+                        <p className="text-[12px] text-white mt-0.5">
                           Select reason(s). This permanently deletes the submission.
                         </p>
                       </div>
@@ -688,7 +688,7 @@ export default function AdminPricingModeration() {
                           value={otherReason}
                           onChange={(e) => setOtherReason(e.target.value)}
                           placeholder="Additional notes..."
-                          className="min-h-[80px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/50"
+                          className="min-h-[80px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/25"
                         />
                       )}
                       <div className="flex gap-3 w-full">

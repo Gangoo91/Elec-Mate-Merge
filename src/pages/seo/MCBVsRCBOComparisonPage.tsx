@@ -519,7 +519,7 @@ export default function MCBVsRCBOComparisonPage() {
   return (
     <GuideTemplate
       title="MCB vs RCBO | When to Use Each | Cost Comparison UK"
-      description="Complete comparison of MCBs vs RCBOs for UK electricians. Split-load vs RCBO board, cost difference, nuisance tripping, BS 7671 requirements…"
+      description="Complete comparison of MCBs vs RCBOs for UK electricians. Split-load vs RCBO board, cost difference, nuisance tripping, BS 7671 requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -43,8 +43,8 @@ const keyTakeaways = [
   'A modern kitchen typically requires 5-8 separate circuits: ring or radial for worktop sockets, cooker circuit, hob circuit (if separate), dishwasher, washing machine, fridge/freezer, extractor fan, and lighting.',
   'Dedicated circuits for high-power appliances (cooker, hob, dishwasher, washing machine) prevent nuisance tripping and ensure adequate current capacity — do not share a circuit between a cooker and anything else.',
   'All socket outlets in a kitchen require 30mA RCD protection under BS 7671 Regulation 411.3.3. Using individual RCBOs prevents a fault on one circuit tripping the entire kitchen.',
-  'Under A4:2026 Regulation 411.3.4, every AC lighting circuit in a domestic kitchen must have 30mA RCD protection — a mandatory addition introduced by the 18th Edition Amendment 4.',
-  'The fridge/freezer should be on a non-RCD circuit or a separate RCBO — if an RCD protecting multiple circuits trips, the fridge/freezer will defrost, potentially spoiling food without the occupant noticing.',
+  'Under BS 7671 Regulation 411.3.4, every AC final circuit supplying luminaires in a dwelling — the kitchen lighting circuit included — must have 30mA RCD protection. This was new in the 18th Edition (BS 7671:2018) and is unchanged in A4:2026.',
+  'The fridge/freezer should be on its own RCBO. Its socket outlet still needs 30mA RCD protection under Regulation 411.3.3, but a dedicated RCBO means a fault on another kitchen circuit does not defrost the freezer.',
   "Elec-Mate's AI circuit designer creates complete kitchen wiring schedules — enter the appliance list and it allocates circuits, sizes cables, and selects protective devices automatically.",
 ];
 
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'How many circuits does a kitchen need?',
     answer:
-      'A well-designed modern kitchen typically needs 5 to 8 circuits. At a minimum: one ring or radial circuit for worktop sockets, one dedicated circuit for the cooker (typically 32A or 45A depending on the cooker rating), one dedicated circuit for the hob if it is separate from the oven, one dedicated circuit for the dishwasher (via a fused spur or dedicated socket), one dedicated circuit for the washing machine (via a fused spur or dedicated socket), one circuit for the fridge/freezer (ideally on a separate RCBO or non-RCD circuit), one switched fused spur for the extractor fan, and one lighting circuit. Larger kitchens with additional appliances (wine cooler, boiling water tap, waste disposal unit, under-cabinet lighting) may need additional circuits. The key principle is that high-power appliances should each have their own dedicated circuit to prevent overloading and nuisance tripping.',
+      'A well-designed modern kitchen typically needs 5 to 8 circuits. At a minimum: one ring or radial circuit for worktop sockets, one dedicated circuit for the cooker (typically 32A or 45A depending on the cooker rating), one dedicated circuit for the hob if it is separate from the oven, one dedicated circuit for the dishwasher (via a fused spur or dedicated socket), one dedicated circuit for the washing machine (via a fused spur or dedicated socket), one circuit for the fridge/freezer (on its own RCBO), one switched fused spur for the extractor fan, and one lighting circuit. Larger kitchens with additional appliances (wine cooler, boiling water tap, waste disposal unit, under-cabinet lighting) may need additional circuits. The key principle is that high-power appliances should each have their own dedicated circuit to prevent overloading and nuisance tripping.',
   },
   {
     question: 'Should kitchen sockets be on a ring or radial circuit?',
@@ -67,12 +67,12 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every kitchen circuit?',
     answer:
-      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. Under A4:2026 Regulation 411.3.4, all AC final circuits supplying luminaires within domestic premises must also have 30mA RCD protection — so the kitchen lighting circuit requires an RCD or RCBO. The cooker circuit (connected via a cooker control unit, not a socket) does not require RCD protection under Regulation 411.3.3, but Regulation 522.6.202 requires RCD protection where a cable is concealed in a wall or partition within a prescribed zone (within 150mm of the top of the wall, within 150mm of a corner between two adjoining walls, or running horizontally/vertically to or from an accessory). In practice, most modern consumer units use RCBOs on every circuit. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
+      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. Regulation 411.3.4 requires that all AC final circuits supplying luminaires within domestic premises also have 30mA RCD protection — so the kitchen lighting circuit requires an RCD or RCBO. A cooker connected through a cooker control unit rather than a socket outlet is not caught by Regulation 411.3.3, but most cooker control units incorporate a 13A socket outlet and that socket does need 30mA RCD protection. Separately, Regulation 522.6.202 and Table 52.1 require additional protection by a 30mA RCD where a cable is concealed in a wall or partition at a depth of less than 50mm and relies on being run in a prescribed zone (within 150mm of the top of the wall, within 150mm of an angle formed by two adjoining walls, or formed horizontally and vertically from an accessory or switchgear on the wall) rather than on earthed mechanical protection. In practice, most modern consumer units use RCBOs on every circuit. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
   },
   {
     question: 'Where should kitchen worktop sockets be positioned?',
     answer:
-      'Worktop sockets should be positioned at a convenient height above the worktop surface — typically 150mm to 200mm above the worktop. This places them at approximately 1050mm to 1100mm from the finished floor level (assuming a standard 900mm worktop height). Sockets should be positioned between appliance locations, not behind appliances (where they would be inaccessible). Allow at least 300mm from the edge of the hob or any heat source. Do not position sockets directly above the sink or draining board. The number of worktop sockets depends on the kitchen size and customer requirements — a minimum of 4 to 6 socket outlets above the worktop is typical for a medium kitchen. Consider USB sockets for charging devices. All worktop sockets must be accessible without moving appliances or reaching over the hob.',
+      'Worktop sockets should be positioned at a convenient height above the worktop surface — typically 150mm to 200mm above the worktop. This places them at approximately 1050mm to 1100mm from the finished floor level (assuming a standard 900mm worktop height). Sockets should be positioned between appliance locations, not behind appliances (where they would be inaccessible). IET Guidance Note 3 gives a minimum of 100mm horizontally from the edge of a hob or freestanding cooker — allow more where the worktop layout permits. Do not position sockets directly above the sink or draining board. The number of worktop sockets depends on the kitchen size and customer requirements — a minimum of 4 to 6 socket outlets above the worktop is typical for a medium kitchen. Consider USB sockets for charging devices. All worktop sockets must be accessible without moving appliances or reaching over the hob.',
   },
   {
     question: 'Is a kitchen a special location under BS 7671?',
@@ -274,16 +274,17 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Ring Final Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
               Uses 2.5mm2 cable in a loop from the consumer unit, around all socket positions, and
-              back to the consumer unit. Protected by a 32A MCB. Can serve an unlimited number of
-              sockets within 100m2 floor area. Each socket can supply up to 13A via the plug fuse.
-              The ring topology means current can flow in both directions, effectively halving the
-              current in each leg of the ring under normal conditions. However, rings are more
+              back to the consumer unit. Protected by a 30A or 32A device (Regulation 433.1.204).
+              Can serve an unlimited number of socket outlets; the floor area served has
+              historically been limited to 100m². Each socket can supply up to 13A via the plug
+              fuse. The ring topology means current can flow in both directions, effectively halving
+              the current in each leg of the ring under normal conditions. However, rings are more
               complex to test (the{' '}
               <SEOInternalLink href="/guides/ring-main-explained">
-                figure-of-eight test
+                ring final circuit continuity test
               </SEOInternalLink>{' '}
-              is required) and faults such as broken rings or spurs from the wrong point are harder
-              to detect.
+              of Regulation 643.2.1 is required) and faults such as broken rings or spurs from the
+              wrong point are harder to detect.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -374,9 +375,11 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dishwasher (1.8-2.4kW)</strong> — dedicated circuit via a switched fused
-                spur with a 13A fuse, or a dedicated unswitched socket behind the appliance. 2.5mm2
-                cable, 16A or 20A RCBO. The fused spur should be accessible (not behind the
-                appliance) for isolation.
+                spur with a 13A fuse, or a dedicated socket behind the appliance. 2.5mm2 cable, 16A
+                or 20A RCBO. For an appliance built into kitchen furniture the means of isolation
+                has to be accessible with the appliance in place, so a socket hidden behind the
+                machine is not enough on its own — put a switched fused connection unit above the
+                worktop.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -390,9 +393,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fridge/freezer (0.1-0.3kW)</strong> — low power, but should be on its own
-                circuit (separate RCBO) to prevent loss of power if another circuit trips. An
-                unswitched socket behind the unit is standard — the plug provides the means of
-                disconnection.
+                circuit (separate RCBO) to prevent loss of power if another circuit trips. Its
+                socket outlet still needs 30mA RCD protection under Regulation 411.3.3. A socket
+                behind the unit is common, but where the appliance is built into kitchen furniture
+                the isolation point must remain accessible with the appliance in place.
               </span>
             </li>
           </ul>
@@ -405,23 +409,26 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-yellow-400 shrink-0" />
-            A4:2026 — Arc Fault Detection Devices (AFDDs)
+            Regulation 421.1.7 — Arc Fault Detection Devices (AFDDs)
           </h4>
           <p className="text-white/80 text-sm leading-relaxed mb-4">
-            BS 7671:2018+A4:2026 Regulation 421.1.7 introduces an AFDD requirement that depends on
-            the premises type. For single-phase AC final circuits supplying socket outlets rated up
-            to 32A, AFDDs conforming to BS EN 62606 are <strong>recommended</strong>, not mandatory, in
-            building types, and <strong>recommended</strong> in all others — which includes an
-            ordinary dwelling kitchen. Where used, the AFDD must be placed at the origin of the
-            circuit it protects.
+            BS 7671:2018+A4:2026 Regulation 421.1.7 sets an AFDD requirement that depends on the
+            premises type. For single-phase AC final circuits supplying socket outlets with a rated
+            current not exceeding 32A, AFDDs conforming to BS EN 62606{' '}
+            <strong>shall be provided</strong> in four higher-risk premises types, and are{' '}
+            <strong>recommended</strong> in all other premises — which includes an ordinary dwelling
+            kitchen. Where used, the AFDD must be placed at the origin of the circuit it protects.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-red-900/30 border border-red-700/40 p-4">
               <p className="text-xs font-semibold text-red-300 uppercase tracking-wide mb-2">
-                AFDD recommended (not "shall")
+                AFDD mandatory ("shall be provided")
               </p>
               <ul className="text-white/80 text-sm space-y-1">
-                <li>High-rise residential buildings (over 18m / six storeys)</li>
+                <li>
+                  High rise residential buildings — assumed to be over 18m in height or in excess of
+                  six storeys, whichever is met first
+                </li>
                 <li>Houses in multiple occupation (HMOs)</li>
                 <li>Purpose-built student accommodation</li>
                 <li>Care homes</li>
@@ -475,13 +482,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                The cooker circuit requires RCD protection where its cable is concealed in a wall
-                within a prescribed zone — defined by Regulation 522.6.202 as within 150mm of the
-                top of a wall or partition, within 150mm of a corner between two adjoining walls, or
-                running horizontally or vertically to or from any accessory. The threshold for
-                additional protection at depths less than 50mm is set by Table 52.1. In most kitchen
-                installations the cooker cable runs through the wall behind the cooker position — an
-                RCBO is therefore standard practice.
+                The cooker circuit needs 30mA RCD protection where its cable is concealed in a wall
+                at a depth of less than 50mm and relies on being run in a prescribed zone.
+                Regulation 522.6.202 points to Table 52.1, whose footnote defines a prescribed zone
+                as within 150mm of the top of the wall or partition, within 150mm of an angle formed
+                by two adjoining walls, or formed horizontally and vertically from any point,
+                accessory or switchgear on the wall. In most kitchen installations the cooker cable
+                runs through the wall behind the cooker position — an RCBO is therefore standard
+                practice. Where the cooker control unit incorporates a 13A socket outlet, Regulation
+                411.3.3 requires the 30mA RCD in any case.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -662,17 +671,18 @@ const sections = [
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-yellow-400 mb-2 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 shrink-0" />
-            A4:2026 — Regulation 411.3.4: RCD on Lighting Circuits
+            Regulation 411.3.4: RCD on Lighting Circuits
           </h4>
           <p className="text-white text-sm leading-relaxed">
-            BS 7671:2018+A4:2026 Regulation 411.3.4 introduces a mandatory requirement: within
-            domestic (household) premises, all AC final circuits supplying luminaires shall have
+            Regulation 411.3.4 is a mandatory requirement: within domestic (household) premises,
             additional protection by an RCD with a rated residual operating current not exceeding
-            30&nbsp;mA. This applies to the kitchen lighting circuit regardless of whether the cable
-            is concealed or surface-run. Compliance requires that the protective device for the
-            kitchen lighting circuit is an RCBO (or that the circuit sits under a 30&nbsp;mA RCD in
-            the consumer unit). This requirement was absent in the 17th and pre-A4 18th Editions and
-            is one of the most commonly missed points on new domestic installations.
+            30&nbsp;mA shall be provided for AC final circuits supplying luminaires. This applies to
+            the kitchen lighting circuit regardless of whether the cable is concealed or
+            surface-run. Compliance requires that the protective device for the kitchen lighting
+            circuit is an RCBO (or that the circuit sits under a 30&nbsp;mA RCD in the consumer
+            unit). It was a new regulation in the 18th Edition (BS 7671:2018), had no equivalent in
+            the 17th Edition, and carries through unchanged into A4:2026 — it remains one of the
+            most commonly missed points on new domestic installations.
           </p>
         </div>
         <p>
@@ -697,8 +707,8 @@ const sections = [
 export default function KitchenWiringGuidePage() {
   return (
     <GuideTemplate
-      title="Kitchen Wiring Guide | Circuits, RCDs & Regulations"
-      description="Complete guide to kitchen wiring in the UK. Number of circuits needed, ring vs radial, dedicated appliance circuits, RCD protection, zone restrictions…"
+      title="Kitchen Wiring Regulations UK: 5-8 Circuits"
+      description="A UK kitchen needs 5-8 circuits: cooker 32A or 45A on 6.0mm² or 10.0mm², ring or radial worktop sockets, and 30mA RCD protection on sockets and lighting."
       datePublished="2025-08-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -718,7 +728,7 @@ export default function KitchenWiringGuidePage() {
         answer:
           'A modern UK kitchen typically needs 5 to 8 separate circuits: a ring or radial for worktop sockets, a dedicated cooker circuit (32A or 45A), a separate hob circuit if the hob is not part of the oven, dedicated supplies for the dishwasher and washing machine, a fridge/freezer circuit on its own RCBO, an extractor-fan spur, and a lighting circuit. High-power appliances each get their own circuit to avoid overload and nuisance tripping.',
         detail:
-          'Under BS 7671:2018+A4:2026, every socket outlet up to 32A needs 30mA RCD protection (Regulation 411.3.3) and every AC lighting final circuit in a dwelling now needs 30mA RCD protection too (Regulation 411.3.4).',
+          'Under BS 7671:2018+A4:2026, every socket outlet up to 32A needs 30mA RCD protection (Regulation 411.3.3) and every AC final circuit supplying luminaires in a dwelling needs 30mA RCD protection too (Regulation 411.3.4).',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

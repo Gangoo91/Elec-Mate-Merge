@@ -498,7 +498,7 @@ export default function ElectricianAberdeenPage() {
       noindex={true}
       localArea="Aberdeen"
       title="Electrician in Aberdeen | Local Electricians 2026"
-      description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring…"
+      description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

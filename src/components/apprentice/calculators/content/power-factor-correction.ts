@@ -35,11 +35,7 @@ export const powerFactorCorrectionContent: CalculatorContent = {
       { label: 'tanφ₁ (0.75 pf)', value: '0.882' },
       { label: 'tanφ₂ (0.95 pf)', value: '0.329' },
     ],
-    steps: [
-      'Qc = P × (tanφ₁ − tanφ₂)',
-      'Qc = 50 × (0.882 − 0.329)',
-      'Qc = 50 × 0.553 ≈ 27.7 kVAr',
-    ],
+    steps: ['Qc = P × (tanφ₁ − tanφ₂)', 'Qc = 50 × (0.882 − 0.329)', 'Qc = 50 × 0.553 ≈ 27.7 kVAr'],
     result: '≈ 27.7 kVAr of capacitance to reach 0.95 power factor.',
   },
 
@@ -48,6 +44,7 @@ export const powerFactorCorrectionContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'PFC sizing Qc = P(tanφ₁ − tanφ₂) is exact and matches the engine. No specific BS 7671 reg governs capacitor-bank sizing; the installation itself complies with BS 7671.',
+    notes:
+      'PFC sizing Qc = P(tanφ₁ − tanφ₂) is exact and matches the engine. No specific BS 7671 reg governs capacitor-bank sizing; the installation itself complies with BS 7671.',
   },
 };

@@ -164,7 +164,7 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      'During a domestic EICR you find a 4-way consumer unit with no AFDDs anywhere. Reg 421.1.7 was introduced in A4:2026 as a recommendation. What is the correct EICR position?',
+      'During a domestic EICR you find a 4-way consumer unit with no AFDDs anywhere. Reg 421.1.7 was introduced by Amendment 2:2022 as a recommendation. What is the correct EICR position?',
     options: [
       'Code C1 — danger present',
       'Code C2 — potentially dangerous',
@@ -1007,7 +1007,7 @@ const InspectionTestingModule8Section1 = () => {
 
           <ConceptBlock
             title="Item 4.23 — AFDD operational indication (Reg 421.1.7)"
-            plainEnglish="Reg 421.1.7 was introduced in A4:2026 recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents. Where AFDDs are installed, item 4.23 of the inspection schedule confirms each one provides an operational indication (status LED or test function) that can be observed during inspection."
+            plainEnglish="Reg 421.1.7 was introduced by Amendment 2:2022 recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents. Where AFDDs are installed, item 4.23 of the inspection schedule confirms each one provides an operational indication (status LED or test function) that can be observed during inspection."
             onSite="The inspector’s job is twofold: (i) confirm presence/absence of AFDDs against the design intent, and (ii) where AFDDs are fitted, confirm the operational indication (LED or test display) is healthy. AFDDs without an indication that the device is powered and able to indicate a healthy state are not fit for purpose at inspection — they pass the visual ‘is it there’ test but fail the ‘does it work’ test."
           >
             <p>

@@ -788,7 +788,7 @@ export default function BS5266EmergencyLightingStandardPage() {
   return (
     <GuideTemplate
       title="BS 5266 Emergency Lighting Standard | UK Guide"
-      description="Complete guide to BS 5266 emergency lighting standard. Escape routes, open areas, high-risk task areas, standby lighting, testing intervals (daily…"
+      description="Complete guide to BS 5266 emergency lighting standard. Escape routes, open areas, high-risk task areas, standby lighting, testing intervals (daily."
       datePublished="2025-06-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

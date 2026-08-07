@@ -52,10 +52,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: "Under the Work at Height Regulations 2005, what is considered 'working at height'?",
     options: [
-      'Only work carried out above 2 metres from the ground or floor level',
+      'Work carried out above 2 metres from the ground, floor or permanent platform level',
       'Any work where a person could fall a distance liable to cause personal injury',
-      'Only work carried out on scaffolding, ladders, or elevated platforms',
-      'Only work where a fall would result in a fracture or more serious injury',
+      'Work on scaffolding, ladders or elevated platforms, but never at or below ground level',
+      'Work where a fall would be likely to result in a fracture or a more serious injury',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,10 +140,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Who has a legal duty under HASAWA 1974 to take reasonable care of their own health and safety at work?',
     options: [
-      'Only the health and safety officer',
-      'Only the site supervisor',
+      'The health and safety officer',
+      'The site supervisor and manager',
       'Every employee',
-      'Only the employer',
+      'The employer, not the employee',
     ],
     correctAnswer: 2,
     explanation:
@@ -351,10 +351,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: "What role does CDM 2015 assign to the 'principal designer'?",
     options: [
-      'Carrying out all site inspections for work at height',
-      'Providing all personal protective equipment on site',
+      'Managing health and safety during the construction phase and controlling site access',
+      'Preparing the construction phase plan and inducting every worker onto the site',
       'Planning, managing, and coordinating health and safety during the pre-construction phase',
-      'Acting as the site first aider during construction',
+      'Appointing duty holders and allowing sufficient time and resources for the project',
     ],
     correctAnswer: 2,
     explanation:
@@ -371,7 +371,7 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     options: [
       'HASAWA 1974',
       'RIDDOR 2013',
-      'Electricity at Work Regulations 1989',
+      'LOLER 1998',
       'PUWER 1998',
     ],
     correctAnswer: 3,
@@ -423,10 +423,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Under the Work at Height Regulations 2005, what must be considered when selecting equipment for work at height?',
     options: [
-      'Only the lowest purchase or hire cost of the available equipment',
-      'Only the personal preference of the individual worker carrying out the task',
+      'The lowest purchase or hire cost available from the plant supplier at the time',
+      'The individual worker\'s personal preference and previous experience of the equipment',
       'The working conditions, distance of potential fall, duration, and frequency of use',
-      'Only whether the equipment is currently available in the site store',
+      'Whether the equipment is already on site and can be rigged without a permit',
     ],
     correctAnswer: 2,
     explanation:
@@ -493,10 +493,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'An employee notices that a guardrail on a working platform is loose. What should they do first?',
     options: [
-      'Ignore it if they feel confident working without it',
-      'Repair it themselves even if not trained to do so',
+      'Carry on working but keep clear of the loose section of guardrail',
+      'Tighten the guardrail fittings themselves and carry on working',
       'Report the defect to a supervisor and stop using the platform',
-      'Continue working but hold on to the loose rail',
+      'Continue working and report the defect at the end of the shift',
     ],
     correctAnswer: 2,
     explanation:
@@ -673,9 +673,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       "A contractor is hired to work at height on a client's premises. Under the Work at Height Regulations 2005, who holds the primary duty to ensure the work is safe?",
     options: [
       'Any person who controls the work activity to any extent',
-      'Only the client whose premises the work is carried out on',
-      'Only the contractor who directly employs the workers at height',
-      'The Health and Safety Executive as the enforcing authority',
+      'The client, as the occupier of the premises where the work is carried out',
+      'The contractor who directly employs the workers going up to height',
+      'The Health and Safety Executive as the enforcing authority for the site',
     ],
     correctAnswer: 0,
     explanation:
@@ -708,10 +708,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Under Regulation 9 of the Work at Height Regulations 2005, what specific duty exists regarding fragile surfaces?',
     options: [
-      'A duty to display warning signage at the base of every ladder used to access a roof',
-      'A requirement to fit guard rails to all sloping roofs regardless of pitch',
+      'Warning notices must be displayed at the approach to every fragile surface, after which normal access is permitted',
+      'Guard rails must be fitted around every sloping roof, regardless of pitch, before any person works on it',
       'No person shall pass across, work on, or near a fragile surface unless it is the only reasonably practicable means',
-      'A duty to provide edge protection only where the roof exceeds 3 metres in height',
+      'Edge protection must be provided wherever a fragile roof exceeds 3 metres in height above the ground',
     ],
     correctAnswer: 2,
     explanation:
@@ -726,9 +726,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A self-employed window cleaner working on a commercial building falls and is seriously injured. Which legislation can the HSE use to prosecute?',
     options: [
-      'Only the Work at Height Regulations 2005, as no employer is involved',
-      'No legislation applies because the worker is self-employed',
-      'Only the Provision and Use of Work Equipment Regulations 1998',
+      'The Work at Height Regulations 2005 alone, since no employer-employee relationship exists',
+      'No legislation applies, because a self-employed person owes duties only to themselves',
+      'The Provision and Use of Work Equipment Regulations 1998 and the RIDDOR 2013 reporting duties',
       'HASAWA 1974 Sections 2 and 3, the Work at Height Regulations 2005, and potentially CDM 2015',
     ],
     correctAnswer: 3,
@@ -745,9 +745,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'Under LOLER 1998, what must the competent person provide after a thorough examination of lifting equipment used for work at height?',
     options: [
       'A written report including any defects and their significance, before the equipment is next used',
-      'A verbal confirmation to the operator that the equipment passed examination',
-      'A green pass tag fixed to the equipment with no accompanying paperwork',
-      'A certificate that need only be issued once every two years',
+      'A verbal confirmation to the operator, with the written report following within 28 days',
+      'A green pass tag fixed to the equipment, the report being retained by the hire company only',
+      'A certificate of conformity, which needs to be reissued only once every two years',
     ],
     correctAnswer: 0,
     explanation:
@@ -786,10 +786,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: "What does the '3-point contact' rule mean when using a ladder?",
     options: [
-      'The ladder must be supported at three separate points along its length',
-      'Three workers must be present whenever a ladder is in use',
+      'The ladder must be supported at three separate points along its length before use',
+      'Three separate checks — footing, angle and tie — must be signed off before climbing',
       'The user must maintain two hands and one foot, or two feet and one hand, on the ladder at all times',
-      'The ladder must be tied off at the top, middle, and base before climbing',
+      'The ladder must be secured at the top, at the mid-point and at the base before anyone climbs it',
     ],
     correctAnswer: 2,
     explanation:
@@ -958,9 +958,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What is the main component used to connect scaffold tubes together?',
     options: [
       'Scaffold couplers (fittings)',
-      'Welded steel brackets fixed permanently to each tube',
-      'Cable ties looped around the overlapping tube ends',
-      'Threaded bolts passed directly through the scaffold tubes',
+      'Welded steel brackets fixed to each tube',
+      'Cable ties looped around the tube ends',
+      'Threaded bolts passed through the tubes',
     ],
     correctAnswer: 0,
     explanation:
@@ -1046,10 +1046,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'Before using a MEWP on site, what pre-use checks should the operator carry out?',
     options: [
-      'Only a check that the fuel tank or battery has sufficient charge',
+      'A check that the fuel tank or battery has sufficient charge for the shift, recorded on the plant log',
       'Visual inspection, function checks of controls, emergency lowering, tyres, and outriggers where fitted',
-      'Only confirmation that the operator holds a valid IPAF PAL card',
-      'Only a check of the platform guard rails and gate latch',
+      'Confirmation that the operator holds a valid IPAF PAL card for the correct machine category',
+      'A check of the platform guard rails and gate latch only, as the machine was examined at handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -1064,10 +1064,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the key difference between a telescopic boom lift and an articulated boom lift?',
     options: [
-      'Telescopic booms are self-propelled; articulated booms must be towed into position',
-      'Telescopic booms are powered by diesel; articulated booms are always battery powered',
+      'Telescopic booms are self-propelled and driven from the platform; articulated booms must be towed into position',
+      'Telescopic booms are always diesel powered for outdoor use; articulated booms are always battery powered for indoor use',
       'Telescopic booms can only go straight up; articulated booms have a knuckle joint allowing them to reach up and over obstacles',
-      'Telescopic booms move only vertically; articulated booms move only horizontally',
+      'Telescopic booms move only vertically like a scissor lift; articulated booms move only horizontally along a fixed track',
     ],
     correctAnswer: 2,
     explanation:
@@ -1081,9 +1081,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 59,
     question: 'When should scaffold boards be discarded?',
     options: [
-      'Only when they have been in service for more than five years',
-      'Only when they fail to pass a load test at twice the rated load',
-      'Only when the painted identification band has worn away',
+      'Once five years have passed from the date stamped on the end band, regardless of their condition',
+      'When they fail a load test carried out at twice their rated working load',
+      'When the painted identification band has worn away, even if the board itself is sound',
       'When they show signs of excessive warping, splitting, decay, or damage beyond acceptable limits',
     ],
     correctAnswer: 3,
@@ -1204,10 +1204,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'When using a mobile scaffold tower, what must be done before moving it?',
     options: [
-      'Leave one worker on the platform to steady the tower while it is pushed',
-      'Move it quickly while fully extended to save time relocating it',
+      'Leave one worker on the platform to steady the tower and watch for overhead obstructions while it is pushed',
+      'Move it at walking pace while fully extended, provided the stabilisers remain deployed',
       'Ensure all personnel, tools, and materials are removed from the platform and the height is reduced if required',
-      'Detach the stabilisers and outriggers so the tower rolls more freely',
+      'Retract the stabilisers and outriggers so the tower rolls freely, then redeploy them on arrival',
     ],
     correctAnswer: 2,
     explanation:
@@ -1240,9 +1240,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What must be in place before a scaffold is loaded with materials?',
     options: [
       'A completed inspection by a competent person confirming it is fit for purpose and adequate for the intended load',
-      'A verbal assurance from the scaffolder that the scaffold should hold the load',
-      'A green tag fixed to the scaffold at any point in the previous month',
-      'Confirmation that the materials weigh no more than a single operative',
+      'A verbal assurance from the scaffolder who erected it that the structure will comfortably take the load',
+      'A green tag fixed to the scaffold at any point within the previous month by anyone on site',
+      'Confirmation that the total weight of the materials is no more than that of a single operative',
     ],
     correctAnswer: 0,
     explanation:
@@ -1256,10 +1256,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: 'What is the primary advantage of using a podium step over a standard stepladder?',
     options: [
-      'Podium steps are lighter and therefore quicker to carry between rooms',
+      'Podium steps are lighter than a stepladder and can be carried between rooms by one person',
       'Podium steps provide an enclosed platform with guard rails, giving a larger and safer working area',
-      'Podium steps can be used on uneven or sloping ground without adjustment',
-      'Podium steps allow a worker to reach much greater heights than a stepladder',
+      'Podium steps have self-levelling feet, so they can be used on uneven or sloping ground',
+      'Podium steps allow a worker to reach a greater height than a stepladder of the same size',
     ],
     correctAnswer: 1,
     explanation:
@@ -1309,9 +1309,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'Why is it important to secure a ladder at the top, bottom, or both?',
     options: [
       'To prevent the ladder from slipping, sliding, or falling — the primary cause of ladder-related accidents',
-      'To increase the maximum permitted working duration beyond 30 minutes',
-      'To allow the ladder to be leaned at a shallower angle than 1:4',
-      'To remove the need for a second person to foot the ladder',
+      'To increase the maximum permitted working duration at height from 30 minutes to a full shift',
+      'To allow the ladder to be leaned at a shallower angle than the 1:4 rule would otherwise permit',
+      'To remove the need for a second person to foot the ladder while it is being climbed',
     ],
     correctAnswer: 0,
     explanation:
@@ -1346,10 +1346,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A MEWP is to be used on a public highway. Which additional considerations are required beyond standard site use?',
     options: [
-      'No additional measures are needed provided the MEWP is fully inspected',
-      'Only a high-visibility vest worn by the MEWP operator is required',
+      'No additional measures are needed provided the MEWP has a current LOLER report',
+      'A high-visibility vest for the operator and cones placed around the machine\'s outriggers',
       'Chapter 8 traffic management, road closure permits, vehicle lighting, and potentially a banksman',
-      'Only verbal notification to passing pedestrians is required',
+      'Verbal warnings to passing pedestrians and a temporary footway closure sign',
     ],
     correctAnswer: 2,
     explanation:
@@ -1383,9 +1383,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'A scaffold inspector discovers that swivel couplers have been used where right-angle couplers are specified in the design. What is the significance?',
     options: [
       'Swivel couplers have a lower safe working load than right-angle couplers and may compromise structural integrity',
-      'Swivel couplers are lighter, so the scaffold will be safer and easier to erect',
-      'There is no significance, as all scaffold couplers carry identical loads',
-      'Swivel couplers improve drainage and reduce corrosion at the joint',
+      'Swivel couplers are lighter than right-angle couplers, so the scaffold will be easier and safer to erect',
+      'There is no significance, as all scaffold couplers of either pattern carry an identical safe working load',
+      'Swivel couplers shed water better, so the joint corrodes less and the structure lasts longer',
     ],
     correctAnswer: 0,
     explanation:
@@ -1400,10 +1400,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Under what circumstances would an IPAF PAL Card holder require additional training before operating a particular MEWP?',
     options: [
-      'Only when the PAL card is within three months of its expiry date',
+      'When the PAL card is within three months of its expiry date, at which point a full refresher course must be completed',
       'When the specific machine type differs from the categories on their card, or when site-specific familiarisation is needed',
-      'Only when operating a MEWP at heights above 15 metres',
-      'Additional training is never required once a PAL card has been issued',
+      'When the MEWP is to be operated above 15 metres, which requires a separate high-level endorsement',
+      'Additional training is never needed once a PAL card is issued, as it covers all MEWP categories',
     ],
     correctAnswer: 1,
     explanation:
@@ -1435,9 +1435,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A tower scaffold is to be erected to 8 metres height outdoors with a 1.4m x 2.0m base. According to the 3:1 rule, is this permissible without stabilisers?',
     options: [
-      'Yes — 8 divided by 2.0 is 4:1 but the rule allows up to 5:1',
-      'No — tower scaffolds cannot exceed 4 metres outdoors',
-      'Yes — the 3:1 rule only applies to scaffolds above 10 metres',
+      'Yes — 8 divided by the 2.0m base gives 4:1, and outdoors the rule permits up to 5:1',
+      'No — tower scaffolds may never exceed 4 metres platform height when used outdoors',
+      'Yes — the 3:1 rule applies only to towers over 10 metres, so 8 metres is permitted',
       'No — the height-to-narrowest-base ratio is 8:1.4 = 5.7:1, exceeding the 3:1 outdoor limit',
     ],
     correctAnswer: 3,
@@ -1604,7 +1604,7 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       '6 metres',
       '4 metres',
       '2 metres',
-      'There is no limit if a harness is worn',
+      '10 metres',
     ],
     correctAnswer: 0,
     explanation:
@@ -1654,8 +1654,8 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Why must a rescue plan be in place before any worker uses a personal fall arrest system?',
     options: [
-      'Because the energy absorber must be replaced after every single use of the harness',
-      'Because guard rails cannot be fitted once a harness is in use',
+      'Because the energy absorber must be replaced after every single deployment, and a spare must be kept to hand',
+      'Because guard rails and other collective measures cannot be fitted once a harness is in use',
       'Because a personal fall arrest system reduces the maximum free-fall distance to zero',
       'Because a suspended worker can develop suspension trauma within minutes, which can be fatal if rescue is delayed',
     ],
@@ -1706,10 +1706,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'When should a full-body harness be removed from service and not used?',
     options: [
-      'Only if the manufacturer has issued a formal product recall',
-      'Only if it has not been used for more than twelve months',
+      'If the manufacturer has issued a formal product recall, or the harness has been repaired by an approved centre',
+      'If it has been in storage unused for more than twelve months without a recorded interim inspection',
       'If it has been subjected to a fall arrest, shows signs of damage, wear, or chemical exposure, or has passed its service life',
-      'Only if it has been worn by more than one named user',
+      'If it has been worn by more than one named user, since a harness is issued to a single person only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1742,9 +1742,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What is the function of the dorsal (back) attachment point on a full-body harness?',
     options: [
       'The primary attachment point for fall arrest — it positions the arrest force at the centre of the back',
-      'The attachment point used for work positioning and seated suspension only',
-      'The attachment point reserved for connecting a ladder safety device',
-      'The attachment point used solely for hauling tools up to the worker',
+      'The attachment point used for work positioning and seated suspension, taking the load at the waist',
+      'The attachment point reserved for connecting a guided type fall arrester on a ladder safety system',
+      'The attachment point used for hauling tools and materials up to the worker at height',
     ],
     correctAnswer: 0,
     explanation:
@@ -1761,10 +1761,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'When calculating total fall distance for a personal fall arrest system, which factors must be included?',
     options: [
-      "Only the free-fall distance, as the energy absorber adds no further distance",
-      "Free-fall distance, energy absorber deployment, harness stretch, D-ring shift, and a safety clearance below the worker's feet",
-      "Only the length of the lanyard plus the height of the anchor point",
-      "Only the energy absorber deployment, as free fall is eliminated by the harness",
+      'The free-fall distance and the height of the anchor point above the working platform, plus a one metre safety margin',
+      'Free-fall distance, energy absorber deployment, harness stretch, D-ring shift, and a safety clearance below the worker\'s feet',
+      'The length of the lanyard, the height of the anchor point, and the reach of the rescue equipment on site',
+      'The energy absorber deployment and harness stretch, since free fall is eliminated by a fixed anchor overhead',
     ],
     correctAnswer: 1,
     explanation:
@@ -1816,9 +1816,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'EN 13374 Class C edge protection is designed for surfaces with slopes between 30 and 45 degrees. What additional requirement does Class C have compared to Class A?',
     options: [
       'Class C must include a mesh infill or panel capable of withstanding the dynamic forces of a person sliding down the slope',
-      'Class C requires the top rail to be raised to a minimum height of 1500mm',
-      'Class C must be constructed entirely from timber rather than steel',
-      'Class C only needs a single rail because the steep slope holds workers in place',
+      'Class C requires the top rail to be raised to a minimum height of 1500mm above the working surface',
+      'Class C must be constructed entirely from steel scaffold tube rather than proprietary aluminium components',
+      'Class C needs only a single top rail, because the steep pitch keeps workers against the roof surface',
     ],
     correctAnswer: 0,
     explanation:
@@ -1964,9 +1964,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'When calculating the required clearance distance for a fall arrest system, which of the following factors must be included?',
     options: [
       'Lanyard length, deceleration distance, height of worker below anchor, and a safety margin',
-      'Only the lanyard length, as the energy absorber adds no clearance',
-      'Only the height of the anchor point above the ground',
-      'Only the weight of the worker and the tools being carried',
+      'The lanyard length and the deceleration distance, the harness stretch being negligible',
+      'The height of the anchor point above ground and the length of the rescue line',
+      'The weight of the worker with tools and the rated capacity of the anchor point',
     ],
     correctAnswer: 0,
     explanation:
@@ -2016,9 +2016,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'During a pre-use inspection of a full-body harness, a worker discovers stitching that appears to be cut on the dorsal D-ring attachment. What should they do?',
     options: [
-      'Continue to use the harness for the rest of the shift and report it afterwards',
-      'Repair the stitching with strong thread before next using the harness',
-      'Use the harness only for light tasks where a fall is unlikely',
+      'Continue to use the harness for the rest of the shift and report the damage at the end of the day',
+      'Repair the stitching with strong polyester thread and re-inspect it before the next use',
+      'Use the harness only for light, short-duration tasks where a fall is unlikely to occur',
       'Immediately withdraw the harness from service, tag it as defective, and report it to their supervisor',
     ],
     correctAnswer: 3,
@@ -2106,9 +2106,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'Liner panels beneath profiled metal roofing sheets are a common fragile surface hazard. In what situation is the risk of falling through liner panels greatest?',
     options: [
       'During re-roofing work when the top profiled sheets have been removed exposing the liner below',
-      'Only once the roof has been fully re-clad with new profiled sheets',
-      'Only when the roof is wet from rain or covered in frost',
-      'Only when the building is occupied by people working below the roof',
+      'After the roof has been fully re-clad, when the new profiled sheets are walked on directly',
+      'When the roof surface is wet from rain or covered in frost, making the panels slippery',
+      'When the building below is occupied, because the extra load on the panels is greater',
     ],
     correctAnswer: 0,
     explanation:
@@ -2161,9 +2161,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A competent person is conducting a 6-monthly LOLER thorough examination of an SRL. Which of the following would NOT typically be assessed during this examination?',
     options: [
-      'Correct operation of the braking mechanism by pull-testing',
-      'Condition of the internal cable or webbing for corrosion, fraying, or distortion',
-      'Housing integrity, label legibility, and certification traceability',
+      'Correct operation of the braking mechanism under load',
+      'Condition of the cable or webbing for corrosion or fraying',
+      'Housing integrity, label legibility and certification',
       'The psychological readiness of the intended user',
     ],
     correctAnswer: 3,
@@ -2180,9 +2180,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'On a large commercial re-roofing project involving fragile cement fibre sheets and multiple roof lights, the hierarchy of control for preventing falls through fragile surfaces should prioritise which approach first?',
     options: [
       'Working from underneath using a MEWP or mobile scaffold tower to avoid being on the fragile surface at all',
-      'Issuing each worker with a personal fall arrest harness before any other measure',
-      'Installing safety netting beneath the fragile roof before any other measure',
-      'Covering the fragile sheets with load-bearing boards before any other measure',
+      'Issuing every worker with a personal fall arrest harness and running lines before any other measure',
+      'Installing safety netting immediately beneath the fragile roof sheets before any other measure',
+      'Covering the fragile sheets with load-bearing crawling boards and staging before any other measure',
     ],
     correctAnswer: 0,
     explanation:
@@ -2220,10 +2220,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: "What is the definition of a 'competent person' in the context of work at height?",
     options: [
-      'Any person who holds a current first aid at work certificate',
-      'A person who has worked in construction for at least five years',
+      'Any person holding a current first aid at work certificate and a valid CSCS card',
+      'A person who has worked in the construction industry for at least five years',
       'A person with sufficient training, experience, and knowledge to carry out the task safely',
-      'Any person formally appointed as a site supervisor or manager',
+      'Any person formally appointed in writing as a site supervisor or line manager',
     ],
     correctAnswer: 2,
     explanation:
@@ -2256,9 +2256,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What is the primary purpose of a permit-to-work system for work at height?',
     options: [
       'To provide a formal documented system of checks and authorisations before high-risk work begins',
-      'To record the hours each worker spends at height for payroll purposes',
-      'To replace the need for a separate risk assessment and method statement',
-      'To grant blanket permission for all work at height for the whole project',
+      'To record the hours each worker spends at height so that height allowances can be paid',
+      'To replace the need for a separate risk assessment and method statement for the task',
+      'To grant blanket permission for all work at height for the duration of the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2289,10 +2289,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'Why must a rescue plan be prepared before any work at height commences?',
     options: [
-      'Because the emergency services will always reach a casualty within minutes',
-      'Because a rescue plan removes the need to provide fall protection equipment',
+      'Because the emergency services are trained in rope rescue and will always reach a casualty within minutes',
+      'Because having a rescue plan removes the need to provide collective fall protection at the work position',
       'Because the Work at Height Regulations require that emergency procedures, including rescue, are planned in advance',
-      'Because rescue plans are only needed once a fall has already occurred',
+      'Because rescue plans only become a legal requirement once a fall has already occurred on the site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2306,9 +2306,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'What is suspension trauma?',
     options: [
-      'A muscle injury caused by the sudden jerk of a lanyard arresting a fall',
-      'A condition where a worker becomes dizzy from looking down from height',
-      'The impact injury sustained when a falling worker strikes the ground',
+      'A muscle and ligament injury to the back and neck caused by the sudden jerk of a lanyard arresting a fall',
+      'A loss of balance and dizziness caused by a worker looking down from an unguarded edge at height',
+      'The crush injury sustained when a falling worker strikes the ground or an obstruction on the way down',
       'A potentially fatal condition caused by the body remaining motionless in a vertical position in a harness after a fall',
     ],
     correctAnswer: 3,
@@ -2324,9 +2324,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What does a method statement describe?',
     options: [
       'The step-by-step safe sequence of work, including the hazards, controls, and responsibilities for each stage',
-      'A list of the qualifications held by each worker on the site',
-      'The likelihood and severity rating of each identified hazard',
-      'A schedule of the equipment inspection dates for the project',
+      'The qualifications, cards and training records held by each worker assigned to the task',
+      'The likelihood and severity rating of each identified hazard, and the residual risk score after controls',
+      'The schedule of statutory inspection dates for all access equipment used on the project',
     ],
     correctAnswer: 0,
     explanation:
@@ -2394,9 +2394,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'Why must ground conditions be assessed before erecting any access equipment for work at height?',
     options: [
       'To ensure the base is firm, level, and capable of supporting the equipment and imposed loads without sinking or shifting',
-      'To confirm the ground is the correct colour for the type of work',
-      'To measure the exact distance from the equipment to the nearest building',
-      'To check whether the ground has been recently swept and tidied',
+      'To confirm the surface is smooth enough for the equipment to be wheeled into position by a single operative',
+      'To measure the exact distance from the equipment to the nearest building for the site plan',
+      'To check that the ground has been swept and tidied so that the working area looks presentable',
     ],
     correctAnswer: 0,
     explanation:
@@ -2411,10 +2411,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'What measures should be taken to protect members of the public when work at height is being carried out near a public area?',
     options: [
-      'Members of the public may be allowed through if they wear a hard hat',
+      'Members of the public may be allowed to pass beneath the work provided they are issued with a hard hat',
       'Barriers, warning signs, and exclusion zones should be established to keep the public away from the work area',
-      'A single verbal warning to passers-by is sufficient to discharge the duty',
-      'No measures are needed provided the work is completed before opening hours',
+      'A verbal warning called down to passers-by by a worker on the platform discharges the duty',
+      'No measures are needed provided the work is completed outside the premises opening hours',
     ],
     correctAnswer: 1,
     explanation:
@@ -2428,10 +2428,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: "What is the '30/30 rule' in relation to lightning and work at height?",
     options: [
-      'Work may continue at height provided workers stay 30 metres from any metal',
-      'Workers should descend 30 minutes before a storm and stop for 30 seconds',
+      'Work may continue at height provided every worker stays at least 30 metres away from any metal structure and 30 metres from the highest point on site',
+      'Workers must begin descending 30 minutes before a forecast storm is due and may resume 30 seconds after the last audible thunder has passed',
       'If the time between seeing lightning and hearing thunder is 30 seconds or less, seek shelter; wait 30 minutes after the last lightning before resuming work',
-      'Work must stop for 30 minutes every 30 minutes during stormy weather',
+      'Work must be halted for 30 minutes in every 30 minutes of stormy weather, so that exposure to the risk is limited to half the shift',
     ],
     correctAnswer: 2,
     explanation:
@@ -2448,9 +2448,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A permit-to-work for a complex roof access task should include which of the following elements?',
     options: [
-      'Only the name of the worker and the date the permit was issued',
-      'Only a general statement that the work involves a risk of falling',
-      'Only the contact details of the nearest hospital and ambulance station',
+      'The name of the worker, the date the permit was issued, and the signature of the site manager authorising it',
+      'A general statement that the work involves a risk of falling, with the roof plan attached',
+      'The contact details of the nearest hospital, the site first aider and the ambulance service',
       'Description of work, hazards, precautions, PPE, authorised persons, time limits, and sign-off for completion',
     ],
     correctAnswer: 3,
@@ -2466,9 +2466,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'Who is typically responsible for issuing a permit-to-work on a construction site?',
     options: [
       'A designated competent person or authorised manager who understands the hazards and controls',
-      'Any operative who happens to be first on site that morning',
-      'The Health and Safety Executive inspector for the area',
-      'The worker who will actually be carrying out the task at height',
+      'Any experienced operative who is first on site and able to sign the permit register',
+      'The Health and Safety Executive inspector responsible for the region',
+      'The worker who will actually carry out the task, as they know the risks best',
     ],
     correctAnswer: 0,
     explanation:
@@ -2518,9 +2518,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'When should a permit-to-work be cancelled or closed?',
     options: [
-      'Only at the end of the construction project, regardless of progress',
-      'As soon as the first worker steps onto the working platform',
-      'Only if the Health and Safety Executive specifically requests its closure',
+      'At the end of the construction project, so that the permit covers the whole programme of work',
+      'As soon as the first worker steps onto the working platform and begins the task',
+      'When the Health and Safety Executive or the client specifically requests its closure',
       'When the specified work is completed, or at the end of the shift, or when conditions change significantly',
     ],
     correctAnswer: 3,
@@ -2537,9 +2537,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'What additional precautions should be taken if work at height must continue during icy conditions?',
     options: [
       'Gritting or salting of walkways and platforms, enhanced slip-resistant footwear, and continuous monitoring of conditions',
-      'Increasing the working duration so the task is finished before nightfall',
-      'Removing all guard rails so workers can grip the scaffold tubes directly',
-      'Allowing workers to remove gloves to improve their grip on cold surfaces',
+      'Extending the length of the working day so that the task is completed before the temperature drops overnight',
+      'Removing the guard rails so that workers can grip the cold scaffold tubes directly while moving about',
+      'Allowing workers to remove their gloves so they can get a better grip on cold, wet surfaces',
     ],
     correctAnswer: 0,
     explanation:
@@ -2571,10 +2571,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: "What role does a 'method statement receiver' play in a permit-to-work system?",
     options: [
-      'They are the person who designs the scaffold and signs off its structural calculations',
-      'They are the person who only supplies the equipment but takes no part in the work itself',
+      'They are the person who designs the scaffold, signs off its structural calculations, and issues the handover certificate to the principal contractor before work begins',
+      'They are the supplier who provides the access equipment to site but takes no part in the work itself and therefore signs only the delivery note',
       'They are the person who accepts the permit, understands the precautions, and is responsible for ensuring the work is carried out in accordance with the permit conditions',
-      'They are the HSE inspector who must countersign every permit before work can begin',
+      'They are the HSE inspector who must countersign every permit before work may begin and who attends site to witness the first lift',
     ],
     correctAnswer: 2,
     explanation:
@@ -2589,9 +2589,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'When planning work at height, what factor determines whether a permit-to-work is needed rather than just a method statement and risk assessment?',
     options: [
-      'Whether the work will take place during normal daytime working hours',
-      'Whether the height of the work exceeds a fixed threshold of 2 metres',
-      'Whether the workers are directly employed or are subcontractors',
+      'Whether the work is taking place during normal daytime working hours or outside them',
+      'Whether the height at which the work takes place exceeds the fixed statutory threshold of 2 metres',
+      'Whether the workers are directly employed by the principal contractor or are subcontractors',
       'The level of risk, complexity of the work, and whether multiple trades or hazardous interfaces are involved',
     ],
     correctAnswer: 3,
@@ -2607,9 +2607,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of including time limits on a permit-to-work?',
     options: [
       'To ensure that conditions are periodically reassessed and the permit is not left open beyond the period for which hazards have been evaluated',
-      'To limit how long a single worker may remain on the platform per shift',
-      'To record the exact hours worked so the contractor can be paid correctly',
-      'To set a deadline by which the whole construction project must finish',
+      'To limit the length of time a single worker may remain on a working platform in one shift before being relieved by a colleague',
+      'To record the exact hours worked at height so that the contractor can be paid correctly for the task',
+      'To set the date by which the whole construction project must be completed under the contract programme',
     ],
     correctAnswer: 0,
     explanation:
@@ -2659,9 +2659,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: "What is meant by 'competence' being task-specific in the context of work at height?",
     options: [
-      'A person who holds any health and safety qualification is competent for all tasks at height',
-      'Competence is confirmed once and remains valid for the worker’s entire career',
-      'Competence depends only on the number of years a person has worked in construction',
+      'A person holding any recognised health and safety qualification is competent for all work at height tasks',
+      'Competence is confirmed once at induction and then remains valid for the rest of the worker\'s career',
+      'Competence depends only on the number of years a person has worked in the construction industry',
       'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
     ],
     correctAnswer: 3,
@@ -2695,10 +2695,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'When planning work at height over or near water, which additional control measure is essential?',
     options: [
-      'Issuing each worker with waterproof clothing and warm gloves',
+      'Issuing each worker with waterproof clothing, warm gloves and a thermal undersuit',
       'Providing personal flotation devices, establishing rescue boat cover, and designating a banksman',
-      'Lowering the working platform to within 1 metre of the water surface',
-      'Restricting work to low tide when the water level is at its lowest',
+      'Lowering the working platform to within 1 metre of the water surface to shorten any fall',
+      'Restricting the work to low tide, when the water level beneath the works is lowest',
     ],
     correctAnswer: 1,
     explanation:
@@ -2712,10 +2712,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: "What is the purpose of a 'toolbox talk' in relation to work at height?",
     options: [
-      'To deliver a full formal training course before workers can work at height',
-      'To record the names of workers present for site attendance purposes',
+      'To deliver the full formal training course that workers must complete before they are allowed to work at height',
+      'To record the names of the workers present on site that day for attendance and payroll purposes',
       'To provide a brief, focused safety briefing to workers on specific hazards and controls relevant to the task at hand',
-      'To replace the written risk assessment and method statement for the task',
+      'To replace the written risk assessment and method statement for short-duration work at height',
     ],
     correctAnswer: 2,
     explanation:
@@ -2730,9 +2730,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker notices that the ground beneath a scaffold tower has become waterlogged after heavy rain. What should they do?',
     options: [
-      'Carry on working but ask a colleague to watch the tower for any movement',
-      'Place extra ballast on the platform to weigh the tower down',
-      'Move the tower to a different part of the site without reassessment',
+      'Carry on working but ask a colleague at ground level to keep watching the tower for any sign of movement or sinking',
+      'Place extra ballast at the base of the tower to weigh it down until the ground has dried out again',
+      'Move the tower onto firmer ground elsewhere on site and carry on working without any further reassessment',
       'Report the change in conditions, stop work on the tower, and have a competent person reassess the base stability before resuming',
     ],
     correctAnswer: 3,
@@ -2749,9 +2749,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'How should falling objects be controlled when work at height is being carried out above an occupied area?',
     options: [
       'Toe boards, brick guards, debris netting, tool lanyards, and exclusion zones should be used as appropriate',
-      'Warning the occupants below to wear hard hats and continue as normal',
-      'Lowering tools by hand to colleagues rather than using lanyards',
-      'Relying solely on workers being careful not to drop anything',
+      'Hard hats issued to the occupants below, with a verbal warning to carry on with their normal activities',
+      'Tools lowered by hand to colleagues on the ground, rather than tool lanyards which snag on the platform',
+      'Care taken by each worker not to drop anything, since toe boards obstruct movement on the platform',
     ],
     correctAnswer: 0,
     explanation:
@@ -2768,10 +2768,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A principal contractor is planning a phased re-roofing project on an occupied school. Multiple trades will be working at height simultaneously. Beyond a risk assessment and method statement, what additional safe system of work controls are most appropriate?',
     options: [
-      'Scheduling all trades to work at the same time to finish the project faster',
+      'A single site-wide risk assessment covering every operative, with all trades scheduled onto the roof at the same time so that the programme is completed faster',
       'A permit-to-work system with phase-specific permits, a coordination plan for concurrent trades, exclusion zones below, and a site-specific rescue plan tested with a practice drill',
-      'Closing the school entirely so that no further controls are needed',
-      'Relying solely on each individual worker wearing a harness, with no further coordination required',
+      'A full closure of the school for the duration of the works, on the basis that with no pupils on site no further controls are needed beyond the risk assessment already in place',
+      'A requirement for each worker to wear a fall arrest harness clipped to the scaffold, with each trade managing its own work in isolation from the others',
     ],
     correctAnswer: 1,
     explanation:
@@ -2786,10 +2786,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'During a rescue, a casualty who has been suspended motionless in a harness for 20 minutes is brought to the ground. What position should they initially be placed in, and why?',
     options: [
-      'Lying flat on their back immediately to maximise blood flow to the brain',
-      'In the recovery position on their side so the legs are fully extended',
+      'Lying flat on their back immediately, so that blood flow to the brain is maximised and consciousness is restored as quickly as possible',
+      'In the recovery position on their side with the legs fully extended, so that the airway is kept clear while circulation returns',
       'In the W-position (semi-reclined with knees raised) to prevent a sudden surge of pooled blood returning to the heart causing reflow syndrome',
-      'Standing upright and walking around to restore circulation to the legs',
+      'Standing upright and walked around slowly, so that the leg muscles pump the pooled blood back into general circulation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2804,9 +2804,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "A mobile crane is to be used adjacent to 33 kV overhead power lines on a construction site. The crane's maximum boom reach could encroach within the GS6 clearance zone. What control measures should be implemented?",
     options: [
-      'Fit the crane boom with an insulating sleeve and proceed with no other controls',
-      'Allow the crane to operate at full reach provided the operator is experienced',
-      'Simply position the crane as far from the lines as the site space happens to allow, with no further controls',
+      'Fit an insulating sleeve over the crane boom and issue the operator with rubber gauntlets and insulating boots, on the basis that the insulation will protect against contact with a 33 kV line at any point in the boom\'s reach',
+      'Allow the crane to operate at full reach provided the operator holds a current CPCS card and has more than five years of experience, on the basis that an experienced operator will judge the clearance to the lines by eye',
+      'Position the crane as far from the overhead lines as the available site space happens to allow and brief the operator to keep a lookout, with no barriers, no permit and no contact with the network operator',
       'Contact the distribution network operator to discuss options including isolation or diversion; install goal posts and physical barriers to define the safe zone; use a banks person; and restrict boom operation with a rated capacity limiter',
     ],
     correctAnswer: 3,
@@ -2823,9 +2823,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'On a remote rural site with no mobile phone signal, how should the rescue plan for harness users be adapted?',
     options: [
       'The plan must rely entirely on self-rescue and on-site assisted rescue by trained personnel with rescue equipment, a satellite communication device should be provided, and the nearest emergency services response time must be factored into planning',
-      'The plan can rely on a worker driving to the nearest village to summon help once a fall occurs',
-      'No rescue plan is required because the site is remote and rarely visited',
-      'The plan should assume an air ambulance will always reach the casualty within minutes',
+      'The plan may rely on a worker driving to the nearest village to summon help once a fall has occurred, provided a vehicle is kept on site with the keys available and the route has been driven and timed at least once beforehand by the supervisor',
+      'No written rescue plan is required on a remote site, because the emergency services cannot be summoned quickly in any event and the workers must simply take extra care while clipped on to the anchor',
+      'The plan should assume that an air ambulance will reach the casualty within minutes, so only a landing area needs to be identified and kept clear of plant and stored materials at all times',
     ],
     correctAnswer: 0,
     explanation:
@@ -2840,10 +2840,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A method statement for a work-at-height task identifies that two different subcontractors will be working on the same scaffold at overlapping times. What specific planning control addresses this interface risk?',
     options: [
-      'Simply allowing both subcontractors free access and trusting them to keep clear of each other',
+      'Free access to the scaffold for both subcontractors at all times, trusting each gang to keep clear of the other, since both hold valid CSCS cards and have been inducted onto the site by the principal contractor',
       'A coordination procedure that defines time-zoning or space-zoning, communication protocols between subcontractors, a single point of coordination responsibility, and a review of combined loading on the scaffold',
-      'Issuing each subcontractor with their own separate scaffold tag for the same structure',
-      'Doubling the number of guard rails so both subcontractors can work safely',
+      'A separate scaffold tag issued to each subcontractor for the same structure, so that each gang can record its own inspection and sign the scaffold off for its own use',
+      'A doubled number of guard rails and toe boards on every lift of the scaffold, so that there is enough edge protection for both gangs to work at the same time in any position',
     ],
     correctAnswer: 1,
     explanation:
@@ -2858,10 +2858,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Under what circumstances might work at height be permitted to continue in wind speeds above Force 5 (17 mph)?',
     options: [
-      'Whenever the workers verbally confirm they are comfortable continuing',
-      'Whenever the task is nearly complete and stopping would cause delay',
+      'Whenever the operatives on the platform verbally confirm that they are comfortable continuing, since the person exposed to the risk is best placed to judge the conditions at the work position',
+      'Whenever the task is close to completion and stopping would delay the programme, provided the supervisor records the decision in the site diary afterwards',
       'Where a specific risk assessment demonstrates that the particular task, equipment, and location are suitable for the actual conditions — for example, an enclosed MEWP in a sheltered courtyard',
-      'Work above Force 5 is always permitted because the limit is only advisory',
+      'Work above Force 5 is always permitted, because the Force 5 figure is advisory guidance rather than a limit written into the Work at Height Regulations',
     ],
     correctAnswer: 2,
     explanation:
@@ -2876,9 +2876,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker performing self-rescue after a fall uses a trauma strap (suspension relief strap). What is the purpose of this device?',
     options: [
-      'It releases the harness leg straps so the worker can drop free of the system',
-      'It signals the worker\'s location to rescuers using a built-in beacon',
-      'It cushions the impact if the worker swings into the building during the fall',
+      'It releases the harness leg straps on command so that the worker can drop clear of the system onto a safety net or airbag positioned below the work area',
+      'It signals the suspended worker\'s location to the rescue team using a built-in beacon and an audible alarm triggered automatically by the fall arrest',
+      'It cushions the impact if the worker swings back into the building or structure during the arrest of the fall, protecting the ribs and pelvis',
       'It provides a loop for the feet to stand in, allowing the worker to periodically straighten their legs and restore blood circulation while awaiting rescue',
     ],
     correctAnswer: 3,
@@ -2895,9 +2895,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'When conducting a dynamic risk assessment during work at height, a supervisor notices that forecast conditions have changed and thunderstorms are now expected within 2 hours. Applying the 30/30 rule and good practice, what actions should be taken?',
     options: [
       'Plan to have all workers safely descended and equipment secured well before the storm arrives; cease work at height immediately if the 30/30 rule triggers; do not resume until 30 minutes after the last thunder or lightning',
-      'Continue working at full pace to finish the task before the storm arrives, ignoring the forecast',
-      'Allow work to continue throughout the storm provided workers avoid touching metal scaffold tubes',
-      'Wait until the first lightning strike is directly overhead before instructing workers to descend',
+      'Continue working at full pace so that the task is finished before the storm arrives, since the forecast is only a probability and the scaffold is earthed through its base plates, which will carry any strike safely to ground',
+      'Allow work to continue throughout the storm provided workers avoid touching the metal scaffold tubes and wear insulating gloves, as rubber-soled boots will protect against a strike',
+      'Wait until the first lightning strike is seen directly overhead before instructing workers to descend, as descending any earlier wastes productive time on the programme',
     ],
     correctAnswer: 0,
     explanation:
@@ -2935,10 +2935,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Under RIDDOR 2013, a fatal workplace accident must be reported to the HSE within what time frame?',
     options: [
-      'Within 10 days using the online reporting form',
-      'Within 15 days of the accident occurring',
+      'Within 10 days, using the online F2508 reporting form',
+      'Within 15 days of the accident, in the same way as an over-seven-day injury',
       'Without delay — by the quickest practicable means (usually telephone)',
-      'Within 24 hours by email to the local authority',
+      'Within 24 hours, by email to the local authority environmental health team',
     ],
     correctAnswer: 2,
     explanation:
@@ -2952,9 +2952,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'Who is responsible for reporting a RIDDOR-reportable incident to the HSE?',
     options: [
-      'The injured worker, who must report their own accident',
-      'The first aider who treated the casualty at the scene',
-      'The Health and Safety Executive inspector for the region',
+      'The injured worker, who must complete an F2508 form for their own accident within ten days',
+      'The first aider who treated the casualty, as part of completing the accident book entry',
+      'The Health and Safety Executive inspector for the region, once notified by the site manager',
       'The responsible person — usually the employer, self-employed person, or person in control of the premises',
     ],
     correctAnswer: 3,
@@ -3005,10 +3005,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'After a fall from height, what is the first priority when attending to the casualty?',
     options: [
-      'Move the casualty to a comfortable position as quickly as possible',
-      'Give the casualty food and water to help them recover from the shock',
+      'Move the casualty into a comfortable position away from the base of the scaffold as quickly as possible, then check whether they are breathing',
+      'Give the casualty a hot sweet drink and something to eat to counter the shock, then keep them talking until the ambulance arrives',
       'Assess the scene for danger, then check their airway, breathing, and circulation (ABC) without moving them unnecessarily due to potential spinal injury',
-      'Photograph the scene thoroughly before doing anything else',
+      'Photograph the scene thoroughly from every angle so that the evidence is preserved before anyone approaches the casualty',
     ],
     correctAnswer: 2,
     explanation:
@@ -3022,9 +3022,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: "What is a 'near miss' in the context of work at height?",
     options: [
-      'An accident that results in a worker being absent for over seven days',
-      'A fall from height that results in a specified injury to a worker',
-      'Any minor injury that is treated using the on-site first aid kit',
+      'An accident that results in the injured worker being absent from work for more than seven days',
+      'A fall from height that results in a specified injury, such as a fracture to an arm or a leg',
+      'Any minor injury treated using the on-site first aid kit and recorded in the accident book',
       'An incident where someone was nearly hit by a falling object or nearly fell, but no injury occurred',
     ],
     correctAnswer: 3,
@@ -3041,9 +3041,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'Under the Health and Safety at Work etc. Act 1974, what is the primary duty of an employee?',
     options: [
       'To take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions',
-      'To carry out their own risk assessments and issue permits to work for the whole site',
-      'To provide and pay for all the personal protective equipment used on site',
-      'To report directly to the Health and Safety Executive after every shift worked at height',
+      'To carry out the risk assessments and issue the permits to work for every task at height performed on the site',
+      'To provide, maintain and pay for all the personal protective equipment used by the workforce on site',
+      'To report directly to the Health and Safety Executive after every shift that involves work at height',
     ],
     correctAnswer: 0,
     explanation:
@@ -3092,9 +3092,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'What is the purpose of reporting near misses on a construction site?',
     options: [
-      'To allocate blame to the worker involved in the near miss',
-      'To satisfy a legal duty to report every near miss to the HSE',
-      'To calculate insurance premiums based on the number of near misses',
+      'To identify which worker was at fault so that retraining or disciplinary action can be targeted correctly',
+      'To satisfy the legal duty under RIDDOR 2013 to report every near miss to the enforcing authority',
+      'To calculate the employer\'s liability insurance premium from the number of near misses recorded',
       'To identify hazards and weaknesses in controls before a serious injury occurs, promoting a proactive safety culture',
     ],
     correctAnswer: 3,
@@ -3145,10 +3145,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What is root cause analysis used for after a work-at-height incident?',
     options: [
-      'To establish which individual worker was to blame for the incident',
-      'To calculate the financial cost of the incident for insurance purposes',
+      'To establish which individual worker made the error so that responsibility for the incident can be recorded correctly',
+      'To calculate the total financial cost of the incident for the insurer and the contract claim',
       'To identify the underlying fundamental causes of the incident so that effective corrective actions can prevent recurrence',
-      'To determine the level of compensation owed to the injured worker',
+      'To determine the level of compensation owed to the injured worker under employers\' liability',
     ],
     correctAnswer: 2,
     explanation:
@@ -3164,10 +3164,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: "The '5 Whys' technique is a root cause analysis method. How does it work?",
     options: [
-      "The investigator interviews five different witnesses to the incident",
-      "The investigator lists five possible causes and selects the most likely one",
-      "The investigator assigns five corrective actions to prevent recurrence",
-      "The investigator repeatedly asks 'why?' (typically five times) to drill down from the immediate cause to the underlying root cause",
+      'The investigator interviews five separate witnesses to the incident and compares their accounts for consistency',
+      'The investigator lists the five most likely causes of the incident and selects whichever is supported by most evidence',
+      'The investigator assigns five separate corrective actions, one for each level of the hierarchy of control',
+      'The investigator repeatedly asks \'why?\' (typically five times) to drill down from the immediate cause to the underlying root cause',
     ],
     correctAnswer: 3,
     explanation:
@@ -3200,10 +3200,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'Following a fatal fall from height on a construction site, which of the following actions should be taken immediately?',
     options: [
-      'Clear the scene and resume work quickly to avoid project delays',
+      'Clear the scene, recover the equipment and resume work quickly so that the programme is not delayed, and report the death to the HSE later in the week',
       'Secure the scene to preserve evidence, contact emergency services, report to the HSE without delay, and do not disturb the scene unless necessary to save life',
-      'Move the casualty to the site office and wait for management to arrive',
-      'Dismantle the scaffold immediately to prevent any further falls',
+      'Move the casualty to the site office out of view of the workforce and wait there for senior management to attend the scene',
+      'Dismantle the scaffold immediately so that no further falls can occur from the same structure before the investigation',
     ],
     correctAnswer: 1,
     explanation:
@@ -3218,7 +3218,7 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: "What is 'suspension trauma' also known as, and what is its medical mechanism?",
     options: [
       'Whiplash syndrome; caused by the sudden jerk of the lanyard arresting the fall',
-      'A sudden rush of pooled, toxin-laden blood from the legs back to the heart and kidneys can cause reflow syndrome, potentially resulting in cardiac arrest or acute renal failure',
+      'Reflow syndrome; caused by a sudden rush of pooled blood from the legs back to the heart while the worker is still suspended in the harness',
       'Harness hang syndrome or orthostatic intolerance; caused by venous pooling in the legs due to immobility in a vertical position, reducing cardiac output',
       'Compartment syndrome; caused by the harness leg straps cutting off blood supply to the feet',
     ],
@@ -3235,9 +3235,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'After rescuing a casualty who has been suspended in a harness for approximately 25 minutes, why should they NOT be laid flat on their back immediately?',
     options: [
-      'Lying flat improves blood flow to the brain and aids a quicker recovery',
-      'Lying flat is the standard recovery position for any unconscious casualty',
-      'Lying flat prevents the casualty from going into shock after the fall',
+      'An improvement in blood flow to the brain, which speeds recovery, making it the correct position for any casualty who has been suspended motionless in a harness after a fall',
+      'The standard recovery position for an unconscious casualty, which should be used regardless of how long the person has been suspended in the harness',
+      'The risk of shock following the fall, which is the greatest danger after a suspension of this length and is best managed by lying the casualty flat',
       'A sudden rush of pooled, toxin-laden blood from the legs back to the heart and kidneys can cause reflow syndrome, potentially resulting in cardiac arrest or acute renal failure',
     ],
     correctAnswer: 3,
@@ -3254,9 +3254,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       "Under CDM 2015, what are the client's duties in relation to work at height on their project?",
     options: [
       'The client must make suitable arrangements for managing the project, ensure sufficient time and resources are allocated, and appoint competent duty holders',
-      'The client must personally carry out all work-at-height risk assessments on site',
-      'The client has no duties once a principal contractor has been appointed',
-      'The client must supply all the fall protection equipment used on the project',
+      'The client must personally carry out the risk assessments for all work at height and countersign each method statement before work starts',
+      'The client has no further duties once a principal contractor and a principal designer have been appointed in writing for the project',
+      'The client must supply all the fall protection equipment used on the project and arrange its statutory inspection at the required intervals',
     ],
     correctAnswer: 0,
     explanation:
@@ -3307,9 +3307,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'What certification or training should a person have before using a harness as part of a personal fall protection system?',
     options: [
-      'A first aid at work certificate covering treatment of fall casualties',
-      'A general site induction with no specific harness instruction required',
-      'A valid IPAF PAL card for operating mobile elevating work platforms',
+      'A first aid at work certificate covering the treatment of fall casualties and the management of suspension trauma, renewed every three years',
+      'A general site induction covering the site rules, with harness fitting and pre-use inspection demonstrated informally by an experienced colleague on the first day',
+      'A valid IPAF PAL card, which covers the operation of mobile elevating work platforms and the use of any harness worn within the platform',
       'Formal harness user training covering correct fitting, adjustment, pre-use inspection, connection to anchor points, emergency procedures, and the limitations of the system',
     ],
     correctAnswer: 3,
@@ -3326,9 +3326,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'IPAF training is specifically required for the operation of which type of work-at-height equipment?',
     options: [
       'Mobile elevating work platforms (MEWPs)',
-      'Mobile scaffold towers and prefabricated aluminium towers',
-      'Full-body harnesses and personal fall arrest systems',
-      'Leaning ladders and stepladders used for short-duration tasks',
+      'Mobile scaffold towers and prefabricated towers',
+      'Full-body harnesses and fall arrest systems',
+      'Leaning ladders and stepladders',
     ],
     correctAnswer: 0,
     explanation:
@@ -3360,10 +3360,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'What information should be recorded following a scaffold inspection?',
     options: [
-      "Only the date of inspection and a tick to confirm the scaffold passed",
-      "Only the total cost of hiring the scaffold for the project duration",
-      "The name and position of the inspector, date and time, location, the scaffold's condition, any defects found, actions required, and a statement that it is or is not safe for use",
-      "Only the names of all the workers who used the scaffold that day",
+      'The date and time of the inspection, a tick to confirm the scaffold passed, the initials of the person carrying it out, and the date the next inspection falls due',
+      'The total cost of hiring the scaffold for the project duration, the erection date, the agreed off-hire date and the name of the scaffolding contractor',
+      'The name and position of the inspector, date and time, location, the scaffold\'s condition, any defects found, actions required, and a statement that it is or is not safe for use',
+      'The names of all the workers who used the scaffold that day, the loads they carried onto each lift, and the trade each of them belongs to',
     ],
     correctAnswer: 2,
     explanation:
@@ -3378,9 +3378,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "An employer's duty under Section 2 of the HSWA 1974 includes providing which of the following for work at height?",
     options: [
-      'Personal liability insurance covering every worker on the site',
-      'A written guarantee that no worker will be injured during the project',
-      'Payment for any private medical treatment a worker may choose to seek',
+      'Personal liability insurance covering every worker on the site against any injury sustained while working at height',
+      'A written guarantee to each worker that nobody will be injured while working on the project',
+      'Payment for any private medical treatment a worker chooses to seek after an accident at height',
       'Safe plant and systems of work, information, instruction, training, and supervision so far as is reasonably practicable',
     ],
     correctAnswer: 3,
@@ -3397,9 +3397,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'How should scaffold inspection records be managed on a busy construction site with multiple scaffold structures?',
     options: [
       'Each scaffold structure should have its own individual inspection record, be uniquely identified, and records should be kept on site and available for review by any person working on or responsible for the scaffold',
-      'Only the most recently erected scaffold needs an inspection record kept on site',
-      'Records may be kept verbally provided the inspector can recall the details when asked',
-      'A single combined record covering all scaffolds is sufficient, kept off site at head office',
+      'Only the most recently erected scaffold needs an inspection record kept on site, since all the earlier structures will already have been signed off, tagged and handed over to the trades who use them',
+      'Records may be kept verbally provided the competent person who carried out the inspection remains on site and can recall the details of each structure when asked',
+      'A single combined record covering every scaffold on the site is sufficient, and may be kept at head office so that it is available to the HSE if the site is ever visited',
     ],
     correctAnswer: 0,
     explanation:
@@ -3414,10 +3414,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "A subcontractor's worker on a construction site refuses to use the provided harness because they say it is uncomfortable. What is the correct course of action?",
     options: [
-      "Allow the worker to continue at height without a harness as it is their choice",
-      "Investigate the complaint — check harness fit and size, provide training if needed, and ensure no worker is permitted to work at height without the required PPE; escalate to the subcontractor's management if necessary",
-      "Dismiss the complaint and instruct the worker to wear the harness regardless",
-      "Send the worker home immediately without investigating the cause of the complaint",
+      'Allow the worker to continue at height without the harness, since it is their own choice, they are employed by the subcontractor rather than the principal contractor, and the scaffold has guard rails',
+      'Investigate the complaint — check harness fit and size, provide training if needed, and ensure no worker is permitted to work at height without the required PPE; escalate to the subcontractor\'s management if necessary',
+      'Dismiss the complaint and instruct the worker to wear the harness regardless of the fit, as comfort is not a valid reason to refuse issued personal protective equipment on a construction site',
+      'Send the worker home immediately for refusing to wear the equipment provided, without investigating whether the harness fits correctly or whether they were ever trained to use and inspect it',
     ],
     correctAnswer: 1,
     explanation:
@@ -3432,10 +3432,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the purpose of the W-position (or semi-sitting position with knees raised) after rescuing a suspension trauma casualty?',
     options: [
-      'It speeds the return of pooled blood to the heart to restart circulation quickly',
-      'It keeps the airway open in the same way as the recovery position',
+      'It speeds the return of pooled blood to the heart, so that normal circulation is restored quickly',
+      'It keeps the airway open in the same way as the recovery position while the casualty is assessed',
       'It slows the return of pooled venous blood to the heart, reducing the risk of reflow syndrome and cardiac arrest',
-      'It relieves pressure on the spine in case of a suspected back injury',
+      'It relieves pressure on the spine in case the casualty struck the structure during the fall',
     ],
     correctAnswer: 2,
     explanation:
@@ -3450,9 +3450,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "Under RIDDOR 2013, which of the following scenarios involving work at height would be classified as a 'dangerous occurrence' even if nobody was injured?",
     options: [
-      'A worker dropping a hand tool from a scaffold that lands harmlessly',
-      'A worker forgetting to clip on their lanyard for a few moments',
-      'A minor slip on a wet platform that causes no injury',
+      'A worker dropping a hand tool from a scaffold onto the walkway below, where it lands harmlessly and nobody is struck or has to take avoiding action',
+      'A worker forgetting to clip their lanyard onto the anchor point for a few moments while moving along the leading edge',
+      'A minor slip on a wet working platform which is stopped by the guard rail and causes no injury to the worker',
       'An uncontrolled release or escape of a substance that could cause injury (e.g., a counterweight falling from a crane being used for work at height)',
     ],
     correctAnswer: 3,
@@ -3468,9 +3468,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question: 'What is the legal retention period for records of LOLER thorough examinations?',
     options: [
       'Until the next thorough examination for equipment not used for lifting persons, or 2 years for equipment used for lifting persons',
-      'For a fixed period of 6 months regardless of the type of equipment',
-      'For the entire working life of the equipment plus a further 5 years',
-      'There is no legal requirement to retain examination records',
+      'For a fixed period of 6 months from the date of the report, regardless of the type of equipment or how it is used',
+      'For the entire working life of the equipment and then for a further 5 years after it is scrapped',
+      'There is no legal requirement to retain the reports once the defects identified have been remedied',
     ],
     correctAnswer: 0,
     explanation:
@@ -3487,10 +3487,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker falls from a scaffold and is found unconscious with a suspected spinal injury. A first aider arrives on scene. Following the ABC protocol, the casualty has no obstructed airway but is not breathing. What is the correct action regarding spinal precautions?',
     options: [
-      'Do not attempt to open the airway at all, as any movement could worsen the spinal injury',
+      'Do not attempt to open the airway at all, because any movement of the head or neck could worsen a spinal injury; wait for the paramedics to arrive with a collar and monitor for any sign that breathing has returned on its own',
       'The immediate priority is to open the airway using a jaw thrust (rather than head tilt) to minimise spinal movement, and commence CPR if no breathing is detected — the need to resuscitate overrides the spinal precaution to avoid movement',
-      'Roll the casualty fully onto their side into the recovery position before checking breathing',
-      'Wait for the paramedics to arrive before attempting any airway management',
+      'Roll the casualty fully onto their side into the recovery position before checking the breathing again, as this protects the airway and keeps the spine in line while help is on its way',
+      'Immobilise the head and neck by hand and wait for the paramedics before attempting any airway management or chest compressions, since a spinal injury is the more serious of the two risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -3505,10 +3505,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "Following a serious work-at-height incident, a root cause analysis using the '5 Whys' reveals that the immediate cause was a missing guard rail, but the root cause was a failure in the management system for scaffold handover inspections. What type of corrective action best addresses the root cause?",
     options: [
-      'Simply refitting the missing guard rail and allowing the work to continue',
-      'Disciplining the worker who fell for not noticing the missing guard rail',
+      'Refitting the missing guard rail, briefing the gang on the incident at a toolbox talk, and allowing the work to continue on the same scaffold once it is back in place and has been checked',
+      'Disciplining the worker who fell for failing to notice that the guard rail was missing before stepping onto the platform, and reissuing the site safety rules to everyone',
       'Revising the scaffold handover procedure, retraining all competent persons on the inspection protocol, implementing a verification system, and auditing compliance at defined intervals',
-      'Issuing every worker on site with a personal fall arrest harness',
+      'Issuing every worker on the site with a personal fall arrest harness and lanyard, to be worn on all scaffolds in future regardless of the edge protection fitted',
     ],
     correctAnswer: 2,
     explanation:
@@ -3523,9 +3523,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       "Under CDM 2015, a principal designer identifies during the design phase that a proposed building feature will require ongoing work at height for maintenance throughout the building's life. What is the principal designer's duty?",
     options: [
-      'There is no duty, as maintenance risks fall outside the scope of CDM 2015',
-      'The duty is simply to warn the future building owner verbally about the risk',
-      'The duty is to carry out the maintenance work personally for the life of the building',
+      'There is no duty in respect of that feature, because maintenance risks arise after handover and therefore fall outside the scope of CDM 2015 and the principal designer\'s appointment, which ends at practical completion',
+      'The duty is to warn the future building owner verbally at handover about the maintenance risk, so that they can make their own arrangements for access when the time comes',
+      'The duty is to arrange for the maintenance work to be carried out by the original design team for the whole life of the building under a separate maintenance contract',
       'Design out or reduce the need for work at height where reasonably practicable, and where it cannot be eliminated, provide information about remaining risks in the health and safety file for future duty holders',
     ],
     correctAnswer: 3,
@@ -3542,9 +3542,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       "An incident investigation reveals that a contractor's operatives were not trained in harness use but were directed by their supervisor to work at height using harnesses. Which parties may face enforcement action, and under what legislation?",
     options: [
       'The contractor (employer) for failing to provide adequate training under HSWA s.2 and WAH Regs; the supervisor for directing untrained persons; and potentially the principal contractor for failing to monitor under CDM 2015',
-      'Only the individual operatives, for working at height without proper training',
-      'No party can face action because no injury actually occurred',
-      'Only the harness manufacturer, for supplying equipment to untrained users',
+      'The individual operatives alone, who each have a duty under HSWA s.7 to take reasonable care of their own safety and to co-operate with their employer, and who should have refused to work at height untrained',
+      'No party can face enforcement action, because no fall occurred and nobody was injured, so there is no breach for the HSE or the principal contractor to pursue against anyone',
+      'The harness manufacturer alone, for supplying fall arrest equipment to a contractor whose operatives had not completed the manufacturer\'s own user training course beforehand',
     ],
     correctAnswer: 0,
     explanation:
@@ -3559,10 +3559,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A construction company wants to implement a positive near-miss reporting culture. Which of the following strategies is most likely to be effective?',
     options: [
-      'Disciplining any worker who reports a near miss to deter careless behaviour',
+      'Disciplining any worker who reports a near miss, so that carelessness is deterred and the number of near misses recorded on the site falls month on month towards zero',
       'Implementing a no-blame reporting system with visible management commitment, feedback on actions taken, recognition for reporting, and integration of near-miss data into risk assessment reviews',
-      'Making near-miss reporting anonymous and never acting on the reports received',
-      'Setting a target that limits the number of near misses workers may report',
+      'Making near-miss reporting completely anonymous, collating the reports into a monthly file for the safety adviser, and taking no visible action on the individual reports received',
+      'Setting a target that limits the number of near misses each gang may report each month, so that supervisors are not overwhelmed by paperwork and can focus on the serious ones',
     ],
     correctAnswer: 1,
     explanation:
@@ -3577,10 +3577,10 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'A competent person conducting a 7-day scaffold inspection discovers that unauthorised modifications have been made since the last inspection. What is the correct procedure?',
     options: [
-      'Allow the modified scaffold to remain in use as it appears structurally sound',
-      'Simply note the modifications on the inspection record and continue as normal',
+      'Allow the modified scaffold to remain in use, since it appears structurally sound and the trades need access to complete their work, and note the change on the inspection record so that it is picked up at the next 7-day inspection',
+      'Note the modifications on the inspection record, sign the scaffold off as inspected and safe for use, and ask the scaffolding contractor to have a look at the alterations when they are next on site',
       'Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse',
-      'Reverse the modifications yourself on the spot and sign off the scaffold as safe',
+      'Reverse the modifications yourself on the spot using the fittings to hand, sign the scaffold off as safe, and brief the gang using it that no further alterations are to be made without permission',
     ],
     correctAnswer: 2,
     explanation:
@@ -3595,9 +3595,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
     question:
       'What are the legal consequences for an employer found guilty of breaching the Health and Safety at Work etc. Act 1974 resulting in a fatal fall from height?',
     options: [
-      'A fixed maximum fine of £5,000 with no possibility of imprisonment',
-      'A formal written warning from the HSE with no financial penalty',
-      'A requirement to retrain staff, but no fine or criminal record',
+      'A fixed maximum fine of £5,000 in the magistrates\' court with no possibility of imprisonment for any individual, no unlimited fines for organisations, and no separate corporate offence available to the prosecution under any other Act',
+      'A formal written warning from the HSE followed by an Improvement Notice, with no financial penalty unless the notice is subsequently breached, and no possibility of proceedings against individuals',
+      'A requirement to retrain all staff and revise the risk assessments under an HSE action plan, but no fine, no criminal record and no possibility of proceedings against individual directors',
       'Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fines for organisations under the sentencing guidelines, plus potential corporate manslaughter charges under the Corporate Manslaughter and Corporate Homicide Act 2007',
     ],
     correctAnswer: 3,
@@ -3614,9 +3614,9 @@ export const workingAtHeightQuestionBank: StandardMockQuestion[] = [
       'Following a RIDDOR-reportable fall from height, the HSE inspector issues an Improvement Notice. What does this mean and what must the duty holder do?',
     options: [
       'The duty holder has a specified period to remedy the contravention identified; failure to comply is a criminal offence, and the duty holder has the right to appeal to an employment tribunal within 21 days',
-      'The work must stop immediately and permanently, with no right of appeal',
-      'It is simply advisory guidance that the duty holder may choose to ignore',
-      'The duty holder must pay an automatic fixed fine within 21 days of issue',
+      'All work at height on the site must stop immediately and permanently, the notice takes effect the moment it is served, and there is no right of appeal against it to any court or employment tribunal',
+      'It is advisory guidance identifying good practice which the duty holder may adopt or set aside as they see fit, and no further enforcement action follows if it is simply ignored',
+      'The duty holder must pay an automatic fixed penalty within 21 days of the notice being issued, after which the matter is treated as closed and no further action is taken',
     ],
     correctAnswer: 0,
     explanation:

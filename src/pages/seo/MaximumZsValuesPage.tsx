@@ -1,6 +1,8 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
 import {
   Zap,
   ShieldCheck,
@@ -22,9 +24,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Maximum Zs Values BS 7671 | Complete Table Guide';
+const PAGE_TITLE = 'Max Zs Values: B6 7.28Ω, B16 2.73Ω, B32 1.37Ω';
 const PAGE_DESCRIPTION =
-  'Max Zs per BS 7671: Table 41.2 fuses at 0.4 s, Table 41.3 circuit-breakers, Table 41.4 fuses at 5 s. Type B/C MCBs, BS 3036, 0.8 correction, exceedance fixes.';
+  'Max permitted Zs per BS 7671: B6 7.28Ω, B16 2.73Ω, B32 1.37Ω, C16 1.37Ω, C20 1.09Ω. All Type B, C and BS 3036 values, ×0.8 corrected. RCBOs the same.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -36,6 +38,7 @@ const tocItems = [
   { id: 'type-b-mcb', label: 'Type B MCB Values (Table 41.3)' },
   { id: 'type-c-mcb', label: 'Type C MCB Values (Table 41.3)' },
   { id: 'bs3036-fuse', label: 'BS 3036 Fuse Values (Table 41.2)' },
+  { id: 'calculator', label: 'Zs Lookup Calculator (Free)' },
   { id: 'correction-factor', label: '0.8 Temperature Correction Factor' },
   { id: 'how-to-use', label: 'How to Use the Tables' },
   { id: 'zs-exceeds', label: 'What to Do When Zs Exceeds Maximum' },
@@ -46,8 +49,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Maximum Zs values are the highest earth fault loop impedance that ensures the protective device will disconnect within the required time (0.4 s for final circuits, 5 s for distribution circuits) in the event of an earth fault.',
-  'BS 7671 Table 41.2 covers fuses at 0.4 s, Table 41.3 covers circuit-breakers (Types B, C and D are all in that one table), and Table 41.4 covers fuses at 5 s. All are given at maximum conductor operating temperature — apply the 0.8 correction factor when testing at ambient.',
+  'Maximum Zs values are the highest earth fault loop impedance that ensures the protective device will disconnect within the required time in the event of an earth fault. In a TN system that is 0.4 s for the final circuits covered by Regulation 411.3.2.2, and 5 s for distribution circuits and any circuit outside that scope (Regulation 411.3.2.3).',
+  'BS 7671 Table 41.2 covers fuses at 0.4 s, Table 41.3 covers circuit-breakers (Types B, C and D are all in that one table), and Table 41.4 covers fuses at 5 s. NOTE 2 to each table sets the temperature basis: line conductors at the maximum permitted operating temperature of Table 52.2, protective conductors at the assumed initial temperature of Tables 54.2 to 54.5. Apply the 0.8 factor of Appendix 3 when testing at ambient.',
   'Key Type B MCB values for 0.4 s disconnection: B6=7.28 ohms, B10=4.37 ohms, B16=2.73 ohms, B20=2.19 ohms, B32=1.37 ohms, B40=1.09 ohms, B50=0.87 ohms.',
   'Type C MCBs have lower maximum Zs values than Type B (same rating) because they require higher fault current to trip magnetically — Type C trips at 10x rated current vs 5x for Type B.',
   'Elec-Mate provides an instant Zs lookup calculator — select the protective device type and rating, and the app shows the maximum permitted Zs with the 0.8 correction already applied.',
@@ -72,7 +75,7 @@ const faqs = [
   {
     question: 'Do I use the 0.4-second or 5-second disconnection values?',
     answer:
-      'Use the 0.4-second values for all final circuits — circuits that directly supply current-using equipment or socket outlets. This covers socket circuits, lighting circuits, cooker circuits, shower circuits, and all other circuits that supply fixed or portable equipment in a domestic or commercial installation. Use the 5-second values only for distribution circuits — circuits that supply other distribution boards but do not directly supply current-using equipment. In a typical domestic installation, only the circuit feeding a sub-distribution board (if one exists) would use the 5-second values. Note that "the 5-second values" only exist as a distinct set for some devices: fuses have a separate table (Table 41.4), and Type D MCBs have a separate row, but Type B and Type C MCBs print one Zs figure valid for both times — because an MCB clears an earth fault on its magnetic trip, the current needed does not change with the permitted time. If in doubt, use the 0.4-second values — they are more conservative and always acceptable.',
+      'In a TN system, Regulation 411.3.2.2 puts the 0.4-second requirement on final circuits rated up to 63 A with one or more socket-outlets, and up to 32 A supplying only fixed connected current-using equipment. That covers socket circuits, lighting circuits and the great majority of domestic final circuits. Regulation 411.3.2.3 then permits 5 seconds for a distribution circuit and for any circuit not covered by 411.3.2.2 — so a large final circuit outside those ratings, such as a 45 A fixed-connected shower, falls under the 5-second rule rather than the 0.4-second one. In a typical domestic installation the 5-second values matter mainly for the circuit feeding a sub-distribution board. Note that "the 5-second values" only exist as a distinct set for some devices: fuses have a separate table (Table 41.4), and Type D MCBs have a separate row, but Type B and Type C MCBs print one Zs figure valid for both times — because an MCB clears an earth fault on its magnetic trip, the current needed does not change with the permitted time. If in doubt, use the 0.4-second values — they are more conservative and always acceptable.',
   },
   {
     question: 'What maximum Zs values apply to BS 3036 rewirable fuses?',
@@ -87,7 +90,7 @@ const faqs = [
   {
     question: 'What happens if my measured Zs is between the corrected and uncorrected maximum?',
     answer:
-      'If your measured Zs at ambient temperature falls between the corrected value (tabulated x 0.8) and the uncorrected tabulated maximum, the situation requires professional judgement. Strictly, the circuit passes the tabulated maximum. However, the IET guidance is that you should apply the 0.8 factor because when the cables heat up under load, the actual Zs will increase and could exceed the tabulated maximum. In practice, you should consider the specific circumstances: if the circuit carries a light load and the cables will never reach their maximum operating temperature, the 0.8 factor may be overly conservative. If the circuit is heavily loaded and cables routinely run warm, the 0.8 factor is essential. On an EICR, a measured Zs that passes the tabulated maximum but fails the 0.8-corrected value might be classified as C3 (improvement recommended) with a note explaining the temperature consideration. If it fails the tabulated maximum outright, it is a C2 (potentially dangerous).',
+      'If your measured Zs at ambient temperature falls between the corrected value (tabulated x 0.8) and the uncorrected tabulated maximum, the situation requires professional judgement. Strictly, the circuit passes the tabulated maximum. However, BS 7671 Appendix 3 is explicit that where the measurement is made at ambient temperature, compliance is considered to be met when the measured Zs does not exceed 0.8 x U0 x Cmin / Ia — that is, 0.8 x the tabulated value — because when the cables heat up under load the actual Zs will increase and could exceed the tabulated maximum. In practice, you should consider the specific circumstances: if the circuit carries a light load and the cables will never reach their maximum operating temperature, the 0.8 factor may be overly conservative. If the circuit is heavily loaded and cables routinely run warm, the 0.8 factor is essential. On an EICR, a measured Zs that passes the tabulated maximum but fails the 0.8-corrected value might be classified as C3 (improvement recommended) with a note explaining the temperature consideration. If it fails the tabulated maximum outright, it is a C2 (potentially dangerous).',
   },
 ];
 
@@ -124,12 +127,24 @@ const sections = [
     heading: 'What Are Maximum Zs Values?',
     content: (
       <>
+        <p className="mb-2">
+          <a
+            href="#calculator"
+            className="inline-flex items-center h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[13px] touch-manipulation transition-colors"
+          >
+            Jump to the free Zs lookup calculator
+          </a>
+        </p>
         <p>
           Maximum Zs values are the highest earth fault loop impedance values at which a protective
           device (MCB, fuse, or RCBO) will still disconnect the supply within the required time in
-          the event of an earth fault. BS 7671 specifies maximum disconnection times of 0.4 seconds
-          for final circuits and 5 seconds for distribution circuits. The maximum Zs values in the
-          BS 7671 tables are calculated to ensure these disconnection times are achieved.
+          the event of an earth fault. In a TN system, Regulation 411.3.2.2 and Table 41.1 require
+          0.4 seconds for final circuits rated up to 63 A with socket-outlets or up to 32 A
+          supplying only fixed connected equipment, and Regulation 411.3.2.3 permits 5 seconds for
+          distribution circuits and for any final circuit outside that scope. Tables 41.2 to 41.4
+          are the TN tables and are calculated to ensure those times are achieved. TT systems are
+          different — Table 41.1 requires 0.2 seconds and Regulation 411.3.2.4 permits 1 second for
+          a distribution circuit — and on TT the disconnecting device is normally an RCD.
         </p>
         <p>
           The calculation is straightforward: the protective device has a time-current
@@ -373,15 +388,43 @@ const sections = [
     ),
   },
   {
+    id: 'calculator',
+    heading: 'Look Up the Maximum Zs for Your Device',
+    content: (
+      <>
+        <p>
+          Free to use, no sign-up and no email needed. Choose the device — MCB or RCBO on a B, C or
+          D curve, BS 3036 or BS 88 fuse, or an RCD — and the lookup returns the tabulated maximum
+          Zs from Tables 41.2 to 41.5 alongside the 0.8-corrected figure you compare your ambient
+          reading against. Switch the disconnection time between 0.4 s and 5 s, or type a
+          designation such as B32 or C20 straight into the quick device box.
+        </p>
+        <p>
+          Working the other way round, the compliance mode takes a measured Zs and lists every
+          protective device that reading would satisfy — useful when you are deciding whether a
+          circuit needs a smaller rating or a different curve.
+        </p>
+        <CalculatorSurface>
+          <BS7671ZsLookupCalculator />
+        </CalculatorSurface>
+      </>
+    ),
+  },
+  {
     id: 'correction-factor',
     heading: 'The 0.8 Temperature Correction Factor',
     content: (
       <>
         <p>
-          The maximum Zs values in BS 7671 tables are specified at the maximum conductor operating
-          temperature — 70 degrees Celsius for PVC-insulated cables (which covers the vast majority
-          of domestic installations). When you measure Zs on site with your multifunction tester,
-          the conductors are at ambient temperature — typically between 10 and 25 degrees Celsius.
+          NOTE 2 to Tables 41.2 to 41.4 sets out the temperature basis, and it is worth reading
+          carefully because it is not simply &ldquo;everything at 70 degrees&rdquo;. The tabulated
+          values should not be exceeded when the line conductors are at the maximum permitted
+          operating temperature given in Table 52.2 — 70 degrees Celsius for 70 °C thermoplastic
+          (PVC), which covers the vast majority of domestic installations — and the circuit
+          protective conductors are at the assumed initial temperature given in Tables 54.2 to 54.5.
+          When you measure Zs on site with your multifunction tester, the conductors are at ambient
+          temperature — typically between 10 and 25 degrees Celsius — and NOTE 2 directs you to
+          Appendix 3 to adjust the reading.
         </p>
         <p>
           As cables carry current during normal operation, they heat up. Copper conductor resistance
@@ -408,17 +451,22 @@ const sections = [
             </p>
             <p className="text-white text-sm leading-relaxed mt-1">
               If you measure Zs = 1.15 Ω at ambient, this exceeds the corrected maximum (1.10 Ω)
-              even though it is below the tabulated maximum (1.37 Ω). When the cables heat up under
-              load, the actual Zs could reach 1.44 Ω — exceeding the tabulated maximum and
-              preventing disconnection within the required time.
+              even though it is below the tabulated maximum (1.37 Ω). Apply the roughly 20 per cent
+              rise between ambient and 70 °C and the actual Zs under load reaches about 1.38 Ω —
+              over the tabulated maximum, and no longer guaranteed to disconnect within the required
+              time.
             </p>
           </div>
         </div>
         <p>
-          The 0.8 factor is a design guideline recommended by the IET rather than a regulation
-          within BS 7671 itself. However, it is widely adopted, expected by verifying bodies, and
-          considered best practice. Elec-Mate applies the 0.8 correction automatically when
-          validating Zs measurements.
+          The 0.8 factor is not something the trade invented — it is published in BS 7671 itself.
+          Appendix 3 states that where impedance measurements are made at ambient temperature, the
+          requirements of Regulation 411.4.4 or 411.5.4 are considered to be met when Zs(measured) ≤
+          0.8 × U0 × Cmin / Ia, and defines 0.8 as &ldquo;a factor to take into account the increase
+          of resistance of the conductors with the increase of temperature due to load
+          current&rdquo;. Appendix 3 also notes that this is one method of correcting for
+          temperature difference and that other methods are not precluded. Elec-Mate applies the 0.8
+          correction automatically when validating Zs measurements.
         </p>
       </>
     ),
@@ -447,8 +495,8 @@ const sections = [
               <span>
                 <strong className="text-yellow-400">Step 2 — Find the table:</strong> Use Table 41.2
                 for fuses at 0.4 s, Table 41.3 for circuit-breakers — every curve, B, C and D, is in
-                that one table — and Table 41.4 for fuses at 5 s. Use
-                the 0.4 s column for final circuits or the 5 s column for distribution circuits.
+                that one table — and Table 41.4 for fuses at 5 s. Use the 0.4 s column for final
+                circuits or the 5 s column for distribution circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -543,8 +591,10 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Add RCD protection</h3>
                 <p className="text-white text-sm leading-relaxed">
                   An <SEOInternalLink href="/guides/rcd-testing-procedure">RCD</SEOInternalLink>{' '}
-                  provides earth fault disconnection that does not depend on Zs. A 30 mA RCD will
-                  trip at 30 mA of earth leakage regardless of the loop impedance. This is the
+                  disconnects on residual current rather than on fault current, so it needs far less
+                  of an earth path than an MCB does. There is still a Zs limit — Regulation 411.5.3
+                  and Table 41.5 give 1667 Ω for a 30 mA device and 500 Ω for a 100 mA device — but
+                  those are orders of magnitude above anything an MCB will tolerate. This is the
                   standard approach for TT systems where Zs is inherently high.
                 </p>
               </div>
@@ -567,10 +617,11 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 provides maximum Zs values for 5-second disconnection, which applies to
-          distribution circuits — circuits supplying other distribution boards rather than
-          current-using equipment or socket outlets directly. But there is a catch that trips up a
-          lot of people, and it is worth being precise about.
+          BS 7671 provides maximum Zs values for 5-second disconnection. Under Regulation 411.3.2.3
+          that applies in a TN system to distribution circuits and to any circuit not covered by
+          Regulation 411.3.2.2 — so it also picks up large final circuits above 63 A with
+          socket-outlets or above 32 A supplying only fixed equipment. But there is a catch that
+          trips up a lot of people, and it is worth being precise about.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -602,10 +653,10 @@ const sections = [
         <p>
           The practical upshot: if you are looking for a more lenient 5-second figure for a Type B
           or Type C MCB, there isn't one, and any table offering you a higher number is wrong. In a
-          typical domestic installation only the circuit feeding a sub-distribution board would use
-          5-second values at all. Everything supplying socket outlets, lighting, cookers and showers
-          uses 0.4 seconds. If in doubt, use the 0.4-second values — they are never wrong, only
-          conservative.
+          typical domestic installation it is mainly the circuit feeding a sub-distribution board
+          that uses 5-second values, along with any final circuit large enough to fall outside
+          Regulation 411.3.2.2. Everything supplying socket outlets and lighting uses 0.4 seconds.
+          If in doubt, use the 0.4-second values — they are never wrong, only conservative.
         </p>
       </>
     ),
@@ -628,9 +679,10 @@ const sections = [
         />
         <p>
           The auto-validation works across all test values — not just Zs. Insulation resistance is
-          checked against the 1 MΩ minimum,{' '}
+          checked against the 1 MΩ minimum of Table 64,{' '}
           <SEOInternalLink href="/guides/rcd-testing-procedure">RCD trip times</SEOInternalLink> are
-          checked against the 40 ms and 300 ms limits, and{' '}
+          checked against the single AC test at IΔn — 300 ms maximum for a general non-delay RCD,
+          130 to 500 ms for a Type S — and{' '}
           <SEOInternalLink href="/guides/continuity-testing-r1-r2">R1+R2 values</SEOInternalLink>{' '}
           are cross-referenced with Zs. Voice-to-test-results lets you speak values while testing —
           no clipboards, no double-handling of data.

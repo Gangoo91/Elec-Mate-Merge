@@ -48,6 +48,7 @@ export const conduitBendingContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Bending geometry is trigonometry (good practice). Minimum bend radii follow manufacturer/installation guidance; the wiring system still complies with BS 7671 522.8 (avoid damage).',
+    notes:
+      'Bending geometry is trigonometry (good practice). Minimum bend radii follow manufacturer/installation guidance; the wiring system still complies with BS 7671 522.8 (avoid damage).',
   },
 };

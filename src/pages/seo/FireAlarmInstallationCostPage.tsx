@@ -617,7 +617,7 @@ export default function FireAlarmInstallationCostPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Installation Cost UK 2026 | System Pricing Guide"
-      description="How much does fire alarm installation cost in 2026? Complete UK pricing guide covering domestic LD1/LD2/LD3 grades…"
+      description="How much does fire alarm installation cost in 2026? Complete UK pricing guide covering domestic LD1/LD2/LD3 grades."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

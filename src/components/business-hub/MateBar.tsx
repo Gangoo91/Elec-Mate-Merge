@@ -19,6 +19,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { useHaptic } from '@/hooks/useHaptic';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 export const MateBar = ({ onOpen }: { onOpen: () => void }) => {
   const haptic = useHaptic();
@@ -35,9 +36,11 @@ export const MateBar = ({ onOpen }: { onOpen: () => void }) => {
       aria-label="Ask Mate"
       className={[
         'group flex w-full items-center gap-3 rounded-2xl border text-left',
-        'border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06]',
-        'hover:border-elec-yellow/50 hover:from-white/[0.16] active:from-white/[0.18]',
-        'transition-[background-color,border-color,transform] duration-150 ease-out',
+        'border-elec-yellow/35',
+        CARD_SURFACE,
+        'hover:border-elec-yellow/60 hover:from-white/[0.19] hover:via-white/[0.11] hover:to-white/[0.07]',
+        'active:from-white/[0.22]',
+        'transition-[background-image,background-color,border-color,transform] duration-150 ease-out',
         'touch-manipulation select-none [-webkit-tap-highlight-color:transparent]',
         'active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
         'py-2 pl-4 pr-2 sm:pl-5 sm:pr-2.5',

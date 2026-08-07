@@ -7,12 +7,12 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Circuit Diagrams and Symbols - MOET Module 6 Section 2.1';
 const DESCRIPTION =
-  'BS EN 60617 symbols, circuit diagram layout, power circuits, control circuits, signal flow, and IEC 81346 reference designation for electrical maintenance.';
+  'IEC 60617 symbols, circuit diagram layout, power circuits, control circuits, signal flow, and IEC 81346 reference designation for electrical maintenance.';
 
 const quickCheckQuestions = [
   {
     id: 'bs60617-check',
-    question: 'What is the purpose of BS EN 60617 in electrical engineering?',
+    question: 'What is the purpose of IEC 60617 in electrical engineering?',
     options: [
       'It defines the requirements for electrical testing',
       'It specifies cable sizes for domestic installations',
@@ -21,7 +21,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      'BS EN 60617 provides the internationally standardised graphical symbols used on electrical and electronic circuit diagrams. Using standardised symbols ensures that diagrams can be read and interpreted correctly by anyone, regardless of which organisation or country produced them.',
+      'IEC 60617 provides the internationally standardised graphical symbols used on electrical and electronic circuit diagrams. Using standardised symbols ensures that diagrams can be read and interpreted correctly by anyone, regardless of which organisation or country produced them.',
   },
   {
     id: 'power-control-check',
@@ -29,7 +29,7 @@ const quickCheckQuestions = [
       'What is the key difference between a power circuit and a control circuit on a schematic diagram?',
     options: [
       'Power circuits are always drawn on a separate sheet, while control circuits never are',
-      'Power circuits use BS EN 60617 symbols, while control circuits use IEC 81346 symbols only',
+      'Power circuits use IEC 60617 symbols, while control circuits use IEC 81346 symbols only',
       'Power circuits always operate at 230 V, while control circuits always operate at 400 V',
       'Power circuits carry the main load current to drive equipment; control circuits carry low-current signals to control the operation of the power circuit',
     ],
@@ -94,7 +94,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'BS EN 60617 symbols are important because they:',
+    question: 'IEC 60617 symbols are important because they:',
     options: [
       'Guarantee that any circuit drawn with them will comply with BS 7671',
       'Remove the need for a wiring diagram when constructing a control panel',
@@ -103,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS EN 60617 symbols are internationally standardised, ensuring that circuit diagrams can be read and understood by any competent person regardless of nationality, organisation, or the software used to create the diagram. This is essential for maintenance across multi-national installations.',
+      'IEC 60617 symbols are internationally standardised, ensuring that circuit diagrams can be read and understood by any competent person regardless of nationality, organisation, or the software used to create the diagram. This is essential for maintenance across multi-national installations.',
   },
   {
     id: 4,
@@ -186,7 +186,7 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'The symbol for a fuse on a BS EN 60617 circuit diagram is:',
+    question: 'The symbol for a fuse on a IEC 60617 circuit diagram is:',
     options: [
       'A circle with the letter F inside it',
       'A zig-zag line representing the fuse element',
@@ -268,7 +268,7 @@ const MOETModule6Section2_1 = () => {
             Circuit Diagrams and Symbols
           </h1>
           <p className="text-white">
-            BS EN 60617 symbols, power and control circuits, signal flow and reference designation
+            IEC 60617 symbols, power and control circuits, signal flow and reference designation
           </p>
         </header>
 
@@ -279,7 +279,7 @@ const MOETModule6Section2_1 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>BS EN 60617:</strong> International standard for graphical symbols
+                <strong>IEC 60617:</strong> International standard for graphical symbols
               </li>
               <li className="pl-1">
                 <strong>Power circuits:</strong> Main load current paths (L1, L2, L3, N, PE)
@@ -317,7 +317,7 @@ const MOETModule6Section2_1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              'Identify and interpret BS EN 60617 graphical symbols on circuit diagrams',
+              'Identify and interpret IEC 60617 graphical symbols on circuit diagrams',
               'Distinguish between power circuits and control circuits on schematics',
               'Follow signal flow conventions to understand circuit operation',
               'Use cross-referencing to trace related components across diagram sheets',
@@ -337,11 +337,11 @@ const MOETModule6Section2_1 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS EN 60617 Graphical Symbols
+            IEC 60617 Graphical Symbols
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS EN 60617 is the international standard that defines the graphical symbols used on
+              IEC 60617 is the international standard that defines the graphical symbols used on
               electrical and electronic circuit diagrams. It provides a universal visual language
               that allows circuit diagrams to be read by any competent person, regardless of which
               country or organisation produced them. Mastering these symbols is fundamental to

@@ -539,7 +539,7 @@ export default function ConsumerUnitReplacementLiverpoolPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Liverpool | Fuse Box Upgrade"
-      description="Consumer unit replacement in Liverpool — metal enclosure rules since 2016, costs £400–750, BS EN 61439, Part P Building Regulations…"
+      description="Consumer unit replacement in Liverpool — metal enclosure rules since 2016, costs £400–750, BS EN 61439, Part P Building Regulations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

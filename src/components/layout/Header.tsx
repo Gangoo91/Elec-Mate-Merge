@@ -1,4 +1,5 @@
 import { Menu, Search, Info } from 'lucide-react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
@@ -17,68 +18,82 @@ interface HeaderProps {
   sidebarCollapsed?: boolean;
 }
 
-// Live clock component - desktop only
+/**
+ * Header clock — desktop only.
+ *
+ * What this replaces was five spans at three sizes for one time value: bold
+ * hours, a volt colon on `animate-pulse`, bold minutes, then a smaller colon
+ * and seconds, then AM/PM in a `bg-elec-yellow/20` badge — all beside a second,
+ * differently-styled pill for the date. Six elements to say "Friday, ten past
+ * three".
+ *
+ * Three things were wrong beyond the fussiness:
+ *
+ *   SECONDS. A `setInterval(…, 1000)` re-rendered the app header once a second,
+ *   on every page, for a digit nobody reads. This now schedules a single
+ *   timeout to the next MINUTE boundary — one render a minute instead of sixty,
+ *   and it flips exactly when the minute does rather than drifting by however
+ *   many seconds into the minute the page happened to load.
+ *
+ *   THE PULSING COLON. A permanent animation on a piece of furniture. Motion
+ *   should mean something is happening; this meant the clock was on.
+ *
+ *   THE VOLT WASH. `bg-elec-yellow/20` behind `border-elec-yellow/30` is
+ *   translucent volt over near-black, which goes muddy brown — the exact thing
+ *   the card recipe warns about. The period is quiet lower-case text now.
+ */
 const LiveClock = ({ className }: { className?: string }) => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
-    const startTimer = () => {
-      timer = setInterval(() => setTime(new Date()), 1000);
+    const schedule = () => {
+      const now = new Date();
+      setTime(now);
+      // Land on the boundary, not 60s from whenever this mounted.
+      const msToNextMinute = 60_000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+      timeout = setTimeout(schedule, msToNextMinute);
     };
 
     const handleVisibility = () => {
-      if (document.hidden) {
-        clearInterval(timer);
-      } else {
-        setTime(new Date());
-        startTimer();
-      }
+      clearTimeout(timeout);
+      // Resync on return: a backgrounded tab's timers are throttled, so the
+      // clock would otherwise come back showing whenever it last fired.
+      if (!document.hidden) schedule();
     };
 
-    startTimer();
+    schedule();
     document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
-      clearInterval(timer);
+      clearTimeout(timeout);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 
-  const hours = format(time, 'h');
-  const minutes = format(time, 'mm');
-  const seconds = format(time, 'ss');
-  const period = format(time, 'a');
-  const day = format(time, 'EEE');
-  const date = format(time, 'd MMM');
-
   return (
-    <div className={cn('flex items-center gap-2', className)}>
-      {/* Date pill */}
-      <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
-        <span className="text-xs font-medium text-white">{day}</span>
-        <span className="text-xs font-semibold text-white">{date}</span>
-      </div>
-
-      {/* Time display */}
-      <div className="flex items-center">
-        <div className="flex items-baseline gap-0.5 px-2.5 py-1 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-sm">
-          <span className="text-base font-bold tabular-nums text-white tracking-tight">
-            {hours}
+    <div className={cn('flex items-center', className)}>
+      {/* One pill, not two. Same material as every card in the app — gold
+          hairline edge over the shared surface — so the header belongs to the
+          same product as the page under it. */}
+      <div
+        className={cn(
+          'relative flex items-baseline gap-2 overflow-hidden rounded-lg border border-elec-yellow/35 px-3 py-1.5',
+          CARD_SURFACE
+        )}
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
+        />
+        <span className="text-[12px] font-medium text-white">{format(time, 'EEE d MMM')}</span>
+        <span className="text-[15px] font-semibold tabular-nums tracking-tight text-white">
+          {format(time, 'h:mm')}
+          <span className="ml-1 text-[11px] font-medium lowercase text-white">
+            {format(time, 'aaa')}
           </span>
-          <span className="text-base font-bold text-elec-yellow animate-pulse">:</span>
-          <span className="text-base font-bold tabular-nums text-white tracking-tight">
-            {minutes}
-          </span>
-          <span className="inline-flex items-baseline">
-            <span className="text-xs font-medium text-white ml-0.5">:</span>
-            <span className="text-xs font-medium tabular-nums text-white w-4">{seconds}</span>
-          </span>
-          <span className="ml-1 px-1.5 py-0.5 text-xs font-bold rounded bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
-            {period.toUpperCase()}
-          </span>
-        </div>
+        </span>
       </div>
     </div>
   );

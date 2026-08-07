@@ -223,7 +223,7 @@ export default function AdminConversations() {
                   subtitle={
                     <span className="flex items-center gap-2">
                       <span className="truncate">{message.content}</span>
-                      <span className="text-white/30">·</span>
+                      <span className="text-white">·</span>
                       <span className="shrink-0">
                         {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
                       </span>
@@ -232,7 +232,7 @@ export default function AdminConversations() {
                   trailing={
                     <>
                       {message.upvotes > 0 && (
-                        <span className="hidden sm:flex items-center gap-1 text-[12px] text-white/70 tabular-nums">
+                        <span className="hidden sm:flex items-center gap-1 text-[12px] text-white tabular-nums">
                           <ThumbsUp className="h-3 w-3" />
                           {message.upvotes}
                         </span>
@@ -272,7 +272,7 @@ export default function AdminConversations() {
                   <Avatar initials={getInitials(selectedMessage?.author_name)} />
                   <div>
                     <p className="text-white">{selectedMessage?.author_name}</p>
-                    <p className="text-[12px] font-normal text-white/60">
+                    <p className="text-[12px] font-normal text-white">
                       {selectedMessage?.created_at &&
                         formatDistanceToNow(new Date(selectedMessage.created_at), {
                           addSuffix: true,
@@ -293,21 +293,21 @@ export default function AdminConversations() {
                 {/* Message Meta */}
                 <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] divide-y divide-white/[0.06]">
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[12px] text-white/70">Category</span>
+                    <span className="text-[12px] text-white">Category</span>
                     <Pill tone={categoryTone(selectedMessage?.category || null)}>
                       {selectedMessage?.category || 'none'}
                     </Pill>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[12px] text-white/70">Upvotes</span>
+                    <span className="text-[12px] text-white">Upvotes</span>
                     <span className="text-[13px] text-white font-medium flex items-center gap-1.5 tabular-nums">
                       <ThumbsUp className="h-3 w-3" />
                       {selectedMessage?.upvotes || 0}
                     </span>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[12px] text-white/70">Author ID</span>
-                    <span className="text-[12px] font-mono text-white/60">
+                    <span className="text-[12px] text-white">Author ID</span>
+                    <span className="text-[12px] font-mono text-white">
                       {selectedMessage?.author_id?.slice(0, 8)}…
                     </span>
                   </div>

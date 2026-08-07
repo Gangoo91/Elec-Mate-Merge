@@ -275,7 +275,7 @@ const HNCModule4Section3_6 = () => {
             points={[
               'AFDDs (Arc Fault Detection Devices) detect the high-frequency signature of arcing faults — series (broken conductor) or parallel (insulation breakdown) — that MCBs and RCDs miss.',
               'Arcing faults are a leading electrical fire cause: BEAMA estimates 50–60% of UK electrical fires originate from undetected arcing.',
-              'BS 7671 Reg 421.1.7 (introduced in A4:2026) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
+              'BS 7671 Reg 421.1.7 (introduced by Amendment 2:2022) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
               'Combined AFDD + MCB + RCD modules are the practical specification — single 18&nbsp;mm wide unit replaces an RCBO at slightly higher cost.',
               'Best-fit applications: HMOs, care homes, schools, listed buildings, wooden-clad construction, hospitality bedrooms — anywhere a fire would be catastrophic.',
             ]}
@@ -286,7 +286,7 @@ const HNCModule4Section3_6 = () => {
             clause="Regulation 421.1.7 of BS 7671:2018+A4:2026 has been introduced recommending the installation of arc fault detection devices (AFDDs). The regulation text explicitly recommends installation of AFDDs as a measure within Part 4 — Protection for Safety, Chapter 42. The text uses 'recommending the installation' — advisory rather than mandatory phrasing; it does not use 'shall' or other mandatory wording."
             meaning={
               <>
-                Reg 421.1.7 was introduced in BS 7671:2018+A4:2026 and explicitly RECOMMENDS
+                Reg 421.1.7 was introduced by Amendment 2:2022 and explicitly RECOMMENDS
                 AFDD installation in AC final circuits to mitigate fire risk from arc faults.
                 The wording is advisory (&lsquo;recommending&rsquo;) — NOT mandatory. Designers
                 must still consider AFDDs as part of the risk-based design process and document

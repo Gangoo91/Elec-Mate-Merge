@@ -479,7 +479,7 @@ export default function OutbuildingElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Outbuilding Electrical Installation Guide UK | Garden"
-      description="Complete guide to outbuilding electrical installation. SWA armoured cable requirements, trench depth under paths and drives, sub-board installation…"
+      description="Complete guide to outbuilding electrical installation. SWA armoured cable requirements, trench depth under paths and drives, sub-board installation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

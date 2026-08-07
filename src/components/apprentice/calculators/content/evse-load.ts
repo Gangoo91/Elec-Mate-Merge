@@ -44,7 +44,8 @@ export const evseLoadContent: CalculatorContent = {
       'Reg 433.1.1(a): select the next standard rating, In = 50 A',
       'Reg 433.1.1(b): confirm In ≤ Iz for the cable after Ca × Ci × Cg',
     ],
-    result: '≈ 40.5 A/phase → In = 50 A; check Iz and voltage drop, and consider G100 if over capacity.',
+    result:
+      '≈ 40.5 A/phase → In = 50 A; check Iz and voltage drop, and consider G100 if over capacity.',
   },
 
   standards: [

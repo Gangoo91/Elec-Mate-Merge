@@ -3,17 +3,32 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
   BookOpen,
-  FileCheck2,
-  ShieldCheck,
-  Zap,
   Calculator,
-  GraduationCap,
   ClipboardCheck,
-  AlertTriangle,
-  Brain,
+  FileCheck2,
+  GraduationCap,
   Layers,
   Scale,
+  ShieldCheck,
 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared classes
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const plainCardCn =
+  '-mx-4 rounded-none border-y border-white/10 bg-white/[0.04] p-4 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const tableWrapCn =
+  '-mx-4 mt-6 overflow-x-auto border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const thCn = 'px-4 py-3 text-left text-[13px] font-semibold text-white whitespace-nowrap';
+const tdCn = 'px-4 py-3 align-top text-sm text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -21,7 +36,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 18th Edition Guide | A4:2026 Changes Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671:2018+A4:2026 — all 7 parts, key shifts since the 17th Ed, and what A4:2026 actually changed (AFDD recommendation, lighting RCDs, bidirectional devices) in plain English.';
+  'BS 7671:2018+A4:2026 — the parts of the standard, what each amendment actually changed, and the A4:2026 additions (Chapter 57 batteries, Section 716 PoE, Chapter 81 energy efficiency, bidirectional devices) in plain English.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -30,7 +45,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-bs7671', label: 'What Is BS 7671?' },
-  { id: 'seven-parts', label: 'The 7 Parts' },
+  { id: 'seven-parts', label: 'The Parts of BS 7671' },
   { id: 'changes-from-17th', label: 'Changes from 17th Edition' },
   { id: 'amendment-2', label: 'Amendment 2 (2022)' },
   { id: 'amendment-4', label: 'Amendment 4 (2026)' },
@@ -40,10 +55,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A4:2026 is the current standard — all new electrical work in the UK must comply with it. The 18th Edition has had four amendments: A1:2020, A2:2022, A3:2024 and A4:2026.',
-  'Amendment 4 is A4:2026 — do not confuse it with Amendment 3, which was the free PDF supplement issued on 31 July 2024. A4 is a substantive amendment that inserts and deletes numbered regulations.',
-  'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.1 and Section 421), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
-  'Amendment 4 (A4:2026) is published. Key changes include Reg 411.3.4 — 30 mA RCD additional protection is now required for AC final circuits supplying luminaires in domestic premises — Reg 421.1.7 recommending (not mandating) AFDDs in AC final circuits, and Reg 551.7.1(c) requiring a suitable protective device wherever energy flow is bidirectional.',
+  'The current standard is BS 7671:2018+A4:2026. Amendment 4 was issued on 15 April 2026 and may be implemented immediately; the previous version (A2:2022 + Corrigendum May 2023 + A3:2024) is withdrawn on 15 October 2026.',
+  'The 18th Edition has had four amendments: A1:2020 (February 2020, electronic), A2:2022 (March 2022, brown cover), A3:2024 (31 July 2024, electronic) and A4:2026 (April 2026, orange cover). The 31 July 2024 date belongs to Amendment 3, not Amendment 4.',
+  'Amendment 4 adds a new Chapter 57 (stationary secondary batteries), a new Section 716 (Power over Ethernet), a new Section 545 (functional earthing for ICT), and a new Chapter 81 (energy efficiency, replacing the deleted Appendix 17). It also redrafts Regulation 551.7.1 for bidirectional energy flow.',
+  'AFDDs are not simply "recommended". Regulation 421.1.7 says AFDDs shall be provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises they are recommended.',
+  'Regulation 411.3.4 has required a 30 mA RCD on AC final circuits supplying luminaires in domestic (household) premises since the 18th Edition was published in 2018 — it is not a new A4:2026 rule.',
   'Elec-Mate has every BS 7671 regulation built into the app — tap any certificate field to see the relevant clause, with 70+ calculators based on BS 7671 tables.',
 ];
 
@@ -51,37 +67,37 @@ const faqs = [
   {
     question: 'What is the difference between BS 7671 and the IET Wiring Regulations?',
     answer:
-      'They are the same document. BS 7671 is the British Standard number assigned by the British Standards Institution (BSI). The IET Wiring Regulations is the common name used by the Institution of Engineering and Technology (IET), which publishes the standard jointly with BSI. The full title is "BS 7671:2018+A2:2022 Requirements for Electrical Installations — IET Wiring Regulations, Eighteenth Edition." Electricians, training providers, and competent person schemes use both names interchangeably. The physical book has a brown cover, which is why it is colloquially known as the "brown book." When someone refers to the 18th Edition, the Wiring Regs, BS 7671, or the brown book, they are all talking about the same standard.',
+      'They are the same document. BS 7671 is the British Standard number assigned by the British Standards Institution (BSI). The IET Wiring Regulations is the common name used by the Institution of Engineering and Technology (IET), which publishes the standard jointly with BSI. The full title of the current version is "BS 7671:2018+A4:2026 Requirements for Electrical Installations — IET Wiring Regulations, Eighteenth Edition." Electricians, training providers, and competent person schemes use both names interchangeably. Cover colour is a common shorthand and it changes with each printing: BS 7671:2018 was issued with a blue cover, the Amendment 2:2022 printing was brown (hence "the brown book"), and the Amendment 4:2026 printing is orange. When someone refers to the 18th Edition, the Wiring Regs or BS 7671, they are all talking about the same standard.',
   },
   {
     question: 'Is BS 7671 a legal requirement?',
     answer:
-      'BS 7671 is not itself a law — it is a British Standard. However, it is referenced by laws and regulations that ARE legally enforceable. The Electricity at Work Regulations 1989 require all electrical systems to be constructed and maintained to prevent danger. The Building Regulations 2010 (Part P in England) require electrical installations in dwellings to be designed and installed to protect persons from fire and electric shock. Approved Document P specifically references BS 7671 as the means of demonstrating compliance. In practice, compliance with BS 7671 is the universally accepted way to demonstrate that electrical work meets the legal requirements. A court or enforcement body would expect an electrician to demonstrate compliance with BS 7671 as evidence that their work is safe. Failure to comply does not automatically constitute a criminal offence, but it would be extremely difficult to defend work that departs from the standard without a compelling technical justification.',
+      'BS 7671 is not itself a law — it is a British Standard, and the standard states plainly that compliance with a British Standard cannot confer immunity from legal obligations. However, it is referenced by laws and regulations that ARE legally enforceable. The Electricity at Work Regulations 1989 require all electrical systems to be constructed and maintained to prevent danger. The Building Regulations 2010 (Part P in England) require electrical installations in dwellings to be designed and installed to protect persons from fire and electric shock. Approved Document P specifically references BS 7671 as the means of demonstrating compliance. In practice, compliance with BS 7671 is the universally accepted way to demonstrate that electrical work meets the legal requirements. A court or enforcement body would expect an electrician to demonstrate compliance with BS 7671 as evidence that their work is safe. Failure to comply does not automatically constitute a criminal offence, but it would be extremely difficult to defend work that departs from the standard without a compelling technical justification.',
   },
   {
     question: 'What changed between the 17th and 18th Edition of BS 7671?',
     answer:
-      'The 18th Edition (BS 7671:2018) replaced the 17th Edition on 1 January 2019. The major changes include: (1) New requirements for Arc Fault Detection Devices (AFDDs) under Section 421, recommended for specific higher-risk installations. (2) Significantly expanded surge protection requirements in Section 534, requiring a risk assessment and, in many cases, installation of Type 2 SPDs. (3) A new Section 722 for Electric Vehicle Charging Installations, covering cable sizing, protection, and earthing for EV charge points. (4) Metal consumer unit enclosure requirements (Regulation 421.1.201) carried forward from Amendment 4 to the 17th Edition. (5) Updated requirements for energy efficiency in Part 8 (Section 826), addressing metering, power factor, and switching. (6) Revised RCD requirements, with Type A (or better) required for circuits likely to produce DC residual currents. (7) Strengthened requirements for installations in locations containing a bath or shower (Section 701). The 18th Edition is a substantially different document from the 17th Edition and electricians were given a one-year transition period to adopt it.',
+      'BS 7671:2018 was issued on 1 July 2018 and came into effect on 1 January 2019 — installations designed after 31 December 2018 are to comply with it. That gives a six-month overlap, not a full year. The main changes from BS 7671:2008+A3:2015 include: (1) A new Regulation 421.1.7 recommending arc fault detection devices (AFDDs) to mitigate fire risk in AC final circuits — the mandatory premises list came later, at A2:2022. (2) A new Regulation 411.3.4 requiring 30 mA RCD additional protection for AC final circuits supplying luminaires in domestic premises. (3) A completely revised Section 534 for surge protective devices, the most significant technical change being the selection requirements for the voltage protection level (Up). (4) A new Chapter 46 covering non-automatic isolation and switching, and a new Regulation group 419 for cases where automatic disconnection to Regulation 411.3.2 is not feasible. (5) Regulation 521.10.202 replacing 521.11.201, so cable support against premature collapse in a fire applies throughout the installation, not just in escape routes. (6) A completely restructured Part 6 — Chapters 61, 62 and 63 deleted and replaced by Chapters 64 and 65, with regulation numbering aligned to the CENELEC standard. (7) Appendix 17 introduced as informative guidance on energy efficiency, later replaced by Part 8. Regulation 421.1.201, the non-combustible consumer unit enclosure requirement, was carried forward from Amendment 3 to the 17th Edition (2015) rather than introduced in 2018.',
   },
   {
     question: 'Do I need to buy a new copy of BS 7671 for each amendment?',
     answer:
-      'Not necessarily. Amendment 1 (2020) and Amendment 2 (2022) were incorporated into reprints of the main publication. Amendment 3 (A3:2024) was the free PDF supplement issued on 31 July 2024 — that date belongs to A3, not A4, and the two are constantly confused. Amendment 4 (A4:2026) is the current amendment — you download it from the IET website and use it alongside your existing copy. The IET may issue an updated consolidated reprint in due course. Elec-Mate includes all current regulation text within the app, including Amendment 4, so you always have the current version in your pocket without needing to carry the physical book on site.',
+      'It depends on the amendment. Amendment 1:2020 was issued electronically in February 2020 and Amendment 3:2024 was issued electronically on 31 July 2024 — both are used alongside your existing copy. Amendment 2:2022 and Amendment 4:2026 were issued as full printed reprints of the standard: the A2:2022 printing is brown, the A4:2026 printing is orange. If you are working to the current standard you need the A4:2026 text, because A4 inserts new chapters and sections (57, 81, 545, 716) that simply are not in an older book. Elec-Mate includes the current regulation text within the app, so you always have it in your pocket without carrying the physical book on site.',
   },
   {
     question: 'What qualifications do I need to work to BS 7671?',
     answer:
-      'There is no single mandatory qualification, but the industry standard is the City and Guilds 2382-22 (or the older 2382-18) qualification, which is the 18th Edition IET Wiring Regulations exam. This is a theory-based qualification that demonstrates understanding of the standard. Most competent person scheme providers (NICEIC, NAPIT, ELECSA) require the 2382 as a minimum for registration, alongside practical qualifications such as the NVQ Level 3 in Electrotechnical Services and the City and Guilds 2391 (Inspection and Testing). Apprentices typically study BS 7671 as part of their Level 3 qualification. Qualified electricians must update their qualification each time a new edition is published — the 2382-22 covers the 18th Edition including amendments.',
+      'There is no single mandatory qualification, but the industry standard is the City and Guilds 2382-22 (or the older 2382-18) qualification, which is the 18th Edition IET Wiring Regulations exam. This is a theory-based qualification that demonstrates understanding of the standard. Most competent person scheme providers (NICEIC, NAPIT and similar) require the 2382 as a minimum for registration, alongside practical qualifications such as the NVQ Level 3 in Electrotechnical Services and the City and Guilds 2391 (Inspection and Testing). Apprentices typically study BS 7671 as part of their Level 3 qualification. Because the exam is written against a specific version of the standard, expect the syllabus and the question bank to be reissued as amendments land.',
   },
   {
     question: 'How often is BS 7671 updated?',
     answer:
-      'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 4 (A4:2026, issued 31 July 2024, already in force). The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
+      'Major new editions appear roughly every decade. The 16th Edition was issued in 1991 and reissued as BS 7671:2001 in June 2001, the 17th Edition as BS 7671:2008 in January 2008, and the 18th Edition as BS 7671:2018 in July 2018. Between editions, amendments address urgent changes, new technologies, or corrections. The 18th Edition has had four amendments: Amendment 1 (February 2020), Amendment 2 (March 2022), Amendment 3 (31 July 2024) and Amendment 4 (April 2026). Amendment 4:2026 was issued on 15 April 2026 and may be implemented immediately; the previous version is withdrawn on 15 October 2026. The IET has not confirmed a date for a 19th Edition.',
   },
   {
     question: 'What did Amendment 4 introduce for bidirectional devices?',
     answer:
-      'Regulation 530.3.201 requires that the selection and erection of protective equipment take account of the appropriate use of either a unidirectional or a bidirectional protective device. A4:2026 also redrafted Regulation 551.7.1, adding indent (c) — a suitable protective device shall be provided where energy flow is bidirectional — and indent (d), which prohibits connecting a source to the load side of an RCD in certain conditions. For a generating set in parallel with another source, 551.7.1 refers device selection back to 530.3.201. This applies to installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. Regulation 530.3.201 requires that protective devices are suitable for the direction(s) of fault current that can occur. Additionally, under Reg 133.1.3, the use of unidirectional or bidirectional devices must be recorded on the appropriate Part 6 electrical certificate.',
+      'Regulation 530.3.201 — introduced by Amendment 3:2024 — requires that the selection and erection of equipment for protection shall take account of the appropriate use of either a unidirectional protective device or a bidirectional protective device. Its note points out that product standards require RCCBs, RCBOs, circuit-breakers and AFDDs to be marked to show whether they are unidirectional, for example "in" and "out", "line" and "load", or arrows. Amendment 4:2026 built on that by redrafting Regulation 551.7.1 for generating sets operating in parallel with another source: indent (c) requires protective devices to be selected in accordance with Regulation 530.3.201, and a new indent (d) prohibits connecting a source of supply to the load side of any RCD providing additional protection that is shared with other circuits, except where that RCD disconnects all live conductors including the neutral. A4 also split Regulation 551.7.2 in two: 551.7.2.1 requires the generating set to be installed on the supply side of all the protective devices for the final circuits of a distribution board, and states that stationary secondary batteries in accordance with the new Chapter 57 are to be considered a generating set and not a load. This matters wherever a battery energy storage system, solar PV with battery backup, or a vehicle-to-grid charger can push energy back towards the supply, because standard protective devices are built to interrupt fault current flowing one way.',
   },
 ];
 
@@ -96,28 +112,136 @@ const sections = [
           and verification of electrical installations in the United Kingdom. Published jointly by
           the British Standards Institution (BSI) and the Institution of Engineering and Technology
           (IET), it is the single most important document for every working electrician in the UK.
-          The current edition is BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring
-          Regulations, as amended by A1:2020, A2:2022, A3:2024 and A4:2026.
+          The current version is <strong>BS 7671:2018+A4:2026</strong> — the 18th Edition, as
+          amended by A1:2020, A2:2022, A3:2024 and A4:2026.
         </p>
-        <p>
-          The standard applies to all electrical installations operating at nominal voltages up to
-          and including 1000 V AC or 1500 V DC. This covers virtually every domestic, commercial,
-          and light industrial installation in the country — from a single socket outlet in a flat
-          to a complete rewire of a hospital. It does not cover certain specialist installations
-          such as mines, quarries, explosive atmospheres, or high-voltage distribution systems,
-          which are covered by separate regulations.
+
+        <div className={tableWrapCn}>
+          <table className="w-full min-w-[520px] border-collapse">
+            <caption className="sr-only">BS 7671 at a glance</caption>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th scope="col" className={thCn}>
+                  Question
+                </th>
+                <th scope="col" className={thCn}>
+                  Answer
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Current version</td>
+                <td className={tdCn}>BS 7671:2018+A4:2026</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Amendment 4 issued</td>
+                <td className={tdCn}>15 April 2026 — may be implemented immediately</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Previous version withdrawn</td>
+                <td className={tdCn}>15 October 2026 (A2:2022 + Corrigendum May 2023 + A3:2024)</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>18th Edition issued</td>
+                <td className={tdCn}>1 July 2018; in effect for designs after 31 December 2018</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Voltage scope</td>
+                <td className={tdCn}>Up to and including 1000 V AC or 1500 V DC</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Structure</td>
+                <td className={tdCn}>Parts 1 to 7, plus Part 8 (functional requirements)</td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Legal status</td>
+                <td className={tdCn}>
+                  Not law itself — the accepted route to satisfying the Electricity at Work
+                  Regulations 1989 and Part P
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="mt-6">
+          The standard applies to circuits supplied at nominal voltages up to and including 1000 V
+          AC or 1500 V DC. That covers virtually every domestic, commercial, and light industrial
+          installation in the country — from a single socket-outlet in a flat to a complete rewire
+          of a hospital. It does not cover certain specialist installations such as mines, quarries,
+          explosive atmospheres, or high-voltage distribution systems, which are covered by separate
+          regulations.
         </p>
         <p>
           BS 7671 is not a textbook or a how-to guide. It is a set of requirements — minimum
           standards that must be met for an installation to be considered safe. The companion
           documents — the IET Guidance Notes (GN1 through GN8), the On-Site Guide, and the
-          Electrician's Guide — provide the practical interpretation and worked examples that help
-          electricians apply the regulations on site. The most commonly referenced companion is{' '}
+          Electrician&apos;s Guide — provide the practical interpretation and worked examples that
+          help electricians apply the regulations on site. The most commonly referenced companion is{' '}
           <SEOInternalLink href="/guides/testing-sequence-guide">
             Guidance Note 3 (GN3): Inspection and Testing
           </SEOInternalLink>
           , now in its 9th Edition.
         </p>
+
+        <h3 className="mt-8 text-base font-semibold text-white">
+          Which amendment changed what — the short version
+        </h3>
+        <div className={tableWrapCn}>
+          <table className="w-full min-w-[640px] border-collapse">
+            <caption className="sr-only">Amendments to the 18th Edition</caption>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th scope="col" className={thCn}>
+                  Amendment
+                </th>
+                <th scope="col" className={thCn}>
+                  Issued
+                </th>
+                <th scope="col" className={thCn}>
+                  Headline changes
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>A1:2020</td>
+                <td className={tdCn}>February 2020 (electronic)</td>
+                <td className={tdCn}>
+                  Section 722 (EV charging) amended and rebased on HD 60364-7-722:2018
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>A2:2022</td>
+                <td className={tdCn}>28 March 2022 (brown cover)</td>
+                <td className={tdCn}>
+                  AFDDs became a requirement in four premises types (421.1.7); new Chapter 82
+                  (prosumer&apos;s installations); 443.5 risk-assessment method deleted; Appendix 3
+                  Table 3A deleted and RCD testing changed
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>A3:2024</td>
+                <td className={tdCn}>31 July 2024 (electronic)</td>
+                <td className={tdCn}>
+                  Two new definitions and one new regulation on bidirectional and unidirectional
+                  devices (530.3.201)
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>A4:2026</td>
+                <td className={tdCn}>15 April 2026 (orange cover)</td>
+                <td className={tdCn}>
+                  New Chapter 57 (stationary secondary batteries), new Section 716 (Power over
+                  Ethernet), new Section 545 (functional earthing for ICT), new Chapter 81 (energy
+                  efficiency); 551.7.1 redrafted for bidirectional energy flow
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <SEOAppBridge
           title="Every BS 7671 regulation in your pocket"
           description="Elec-Mate has auto BS 7671 regs built into every certificate. Tap any field and see the relevant regulation — clause number, full text…"
@@ -128,114 +252,132 @@ const sections = [
   },
   {
     id: 'seven-parts',
-    heading: 'The 7 Parts of BS 7671',
+    heading: 'The Parts of BS 7671',
     content: (
       <>
         <p>
-          BS 7671 is structured into seven parts, each covering a distinct area of electrical
-          installation design and practice. Understanding this structure is essential for navigating
-          the standard efficiently — whether you are looking up a specific regulation, studying for
-          the 2382 exam, or checking compliance on site.
+          BS 7671 is built from seven numbered parts covering design and installation, plus Part 8,
+          which carries the functional requirements added by later amendments. Knowing the structure
+          is what makes the book quick to use — whether you are looking up a regulation, studying
+          for the 2382 exam, or checking compliance on site.
         </p>
-        <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-2">
+        <div className="mt-6 space-y-4">
+          <div className={cardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">
               Part 1: Scope, Object, and Fundamental Principles
             </h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-white">
               Defines the scope of the standard — what types of installations it covers and what it
               does not. Sets out the fundamental principles of electrical safety: protection against
               electric shock, protection against thermal effects, protection against overcurrent,
-              protection against fault current, and protection against overvoltage. This part is the
-              foundation upon which every other regulation is built.
+              protection against fault current, and protection against overvoltage. Regulation
+              133.1.3 also sits here: where equipment is not to an applicable standard, or is used
+              outside the scope of its standard, the designer must confirm it gives at least the
+              same degree of safety and record it as a departure on the Part 6 certification.
             </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Part 2: Definitions</h3>
-            <p className="text-white text-sm leading-relaxed">
+          <div className={plainCardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">Part 2: Definitions</h3>
+            <p className="text-sm leading-relaxed text-white">
               Contains all the defined terms used throughout the standard. Understanding these
               definitions is critical because many terms have specific technical meanings that
-              differ from everyday usage. For example, "extraneous-conductive-part" has a precise
-              definition that determines whether bonding is required. "Skilled person," "instructed
-              person," and "ordinary person" have specific meanings that affect the level of
-              protection required. Part 2 is frequently tested in the 2382 exam.
+              differ from everyday usage. For example, &quot;extraneous-conductive-part&quot; has a
+              precise definition that determines whether bonding is required. &quot;Skilled
+              person,&quot; &quot;instructed person,&quot; and &quot;ordinary person&quot; have
+              specific meanings that affect the level of protection required. Part 2 is frequently
+              tested in the 2382 exam.
             </p>
           </div>
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-2">
+          <div className={cardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">
               Part 3: Assessment of General Characteristics
             </h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-white">
               Requires the designer to assess the characteristics of the installation before
-              starting the design. This includes the purpose of the installation, the supply
-              characteristics (earthing system, supply voltage, prospective fault current), the
-              nature of the demand, the environmental conditions, and compatibility with other
-              systems. Part 3 is where the design process starts — you cannot size cables, select
-              protective devices, or design earthing arrangements without first assessing the
-              general characteristics.
+              starting the design: the purpose of the installation, the supply characteristics
+              (earthing system, supply voltage, prospective fault current), the nature of the
+              demand, the environmental conditions, and compatibility with other systems. You cannot
+              size cables, select protective devices, or design earthing arrangements without first
+              assessing the general characteristics. A4:2026 added a protective neutral bonding
+              (PNB) figure and requirements to Regulation 312.2.1.1.
             </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Part 4: Protection for Safety</h3>
-            <p className="text-white text-sm leading-relaxed">
+          <div className={plainCardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">Part 4: Protection for Safety</h3>
+            <p className="text-sm leading-relaxed text-white">
               The largest and most frequently referenced part. Covers protection against electric
               shock (Chapter 41), protection against thermal effects (Chapter 42), protection
-              against overcurrent (Chapter 43), protection against electromagnetic and voltage
-              disturbances (Chapter 44). Chapter 41 alone contains the regulations for automatic
-              disconnection of supply (ADS), including maximum disconnection times, RCD
-              requirements, and earth fault loop impedance limits — the regulations electricians use
-              most often on site.
+              against overcurrent (Chapter 43), protection against voltage disturbances and
+              electromagnetic disturbances (Chapter 44), and isolation and switching (Chapter 46).
+              Chapter 41 holds the automatic disconnection of supply (ADS) requirements — Table 41.1
+              maximum disconnection times and Tables 41.2 to 41.6 for maximum earth fault loop
+              impedance — which are the tables electricians reach for most often on site.
             </p>
           </div>
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-2">
+          <div className={cardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">
               Part 5: Selection and Erection of Equipment
             </h3>
-            <p className="text-white text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-white">
               Covers the practical selection and installation of equipment — wiring systems (Chapter
-              52), switching devices (Chapter 53), earthing arrangements and protective conductors
-              (Chapter 54), other equipment (Chapter 55), and safety services (Chapter 56). This is
-              where you find the regulations for cable selection, installation methods, minimum
-              conductor sizes, and equipment ratings. Amendment 4's new requirement on bidirectional
-              devices (within Section 530) sits in this part.
+              52), protection, isolation, switching, control and monitoring (Chapter 53), earthing
+              arrangements and protective conductors (Chapter 54), other equipment (Chapter 55),
+              safety services (Chapter 56) and, new at A4:2026, stationary secondary batteries
+              (Chapter 57). This is where you find cable selection, installation methods, minimum
+              conductor sizes, and equipment ratings. Regulation 530.3.201 on unidirectional and
+              bidirectional protective devices sits here, as does the redrafted Regulation 551.7.1
+              for generating sets in parallel with another source.
             </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Part 6: Inspection and Testing</h3>
-            <p className="text-white text-sm leading-relaxed">
+          <div className={plainCardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">Part 6: Inspection and Testing</h3>
+            <p className="text-sm leading-relaxed text-white">
               Sets out the requirements for{' '}
               <SEOInternalLink href="/guides/testing-sequence-guide">
-                initial verification and periodic inspection and testing
+                initial verification (Chapter 64) and periodic inspection and testing (Chapter 65)
               </SEOInternalLink>
-              . Specifies which tests must be carried out, in what order, and what the pass/fail
-              criteria are. Table 64 (insulation resistance minimum values and DC test voltages per
-              Reg 643.3.2) and the Zs tables for maximum earth fault loop impedance are in this
-              part. Part 6 is the legal basis for every{' '}
+              . It specifies which tests must be carried out and what the pass criteria are. Table
+              64 — minimum values of insulation resistance and the DC test voltages, applied by
+              Regulation 643.3.2 — is in this part. The maximum earth fault loop impedance tables
+              are not: they are Tables 41.2 to 41.6 in Chapter 41, with the supporting
+              loop-impedance material in Appendix 3. Part 6 is the basis for every{' '}
               <SEOInternalLink href="/guides/electrical-certificate-types-uk">
                 electrical certificate
               </SEOInternalLink>{' '}
               issued in the UK.
             </p>
           </div>
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-2">
+          <div className={cardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">
               Part 7: Special Installations or Locations
             </h3>
-            <p className="text-white text-sm leading-relaxed">
-              Contains additional or modified requirements for specific types of installation or
-              location where the risk of electric shock or fire is increased. Sections include:
-              bathrooms (701), swimming pools (702), saunas (703), construction sites (704),
-              agricultural premises (705), restrictive conductive locations (706), solar PV (712),
-              EV charging (722), exhibitions (711), marinas (709), and more. Where a Part 7 section
-              applies, its requirements supplement or modify the general requirements in Parts 1 to
-              6. Part 7 is often tested in the 2382 exam because it contains many specific,
-              memorable requirements.
+            <p className="text-sm leading-relaxed text-white">
+              Contains additional or modified requirements where the risk of electric shock or fire
+              is increased. Sections include locations containing a bath or shower (701), swimming
+              pools and other basins (702), saunas (703), construction and demolition sites (704),
+              agricultural and horticultural premises (705), conducting locations with restricted
+              movement (706), marinas (709), exhibitions, shows and stands (711), solar PV (712),
+              Power over Ethernet (716, new at A4:2026), and EV charging (722). Where a Part 7
+              section applies, its requirements supplement or modify the general requirements in
+              Parts 1 to 6 and Part 8. Part 7 is heavily tested in the 2382 exam because it is full
+              of specific, memorable requirements.
+            </p>
+          </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-2 text-lg font-bold text-white">Part 8: Functional Requirements</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Part 8 did not exist in the 2018 book — energy efficiency was informative guidance in
+              Appendix 17. Amendment 2:2022 added Chapter 82, Prosumer&apos;s low-voltage electrical
+              installations, which sets requirements for installations with local generation and
+              storage (Sections 821 to 826). Amendment 4:2026 added Chapter 81, an informative
+              chapter on energy efficiency that points the reader to the Building Regulations and to
+              BS HD 60364-8-1:2019, and deleted Appendix 17.
             </p>
           </div>
         </div>
         <SEOAppBridge
-          title="20,000+ practice questions covering all 7 parts"
-          description="Elec-Mate's 18th Edition course covers every part of BS 7671 with practice questions mapped to the City and Guilds 2382-22 exam syllabus."
+          title="Practice questions covering every part of BS 7671"
+          description="Elec-Mate's 18th Edition course works through the whole standard with questions mapped to the City and Guilds 2382-22 exam syllabus."
           icon={GraduationCap}
         />
       </>
@@ -247,106 +389,103 @@ const sections = [
     content: (
       <>
         <p>
-          The 18th Edition (BS 7671:2018) came into effect on 1 January 2019, replacing the 17th
-          Edition (BS 7671:2008+A3:2015). Electricians had a one-year transition period during which
-          both editions were accepted. The 18th Edition introduced several significant changes that
-          affect day-to-day practice.
+          BS 7671:2018 was issued on 1 July 2018 and came into effect on 1 January 2019, replacing
+          the 17th Edition (BS 7671:2008+A3:2015). Installations designed after 31 December 2018 are
+          to comply with the 18th Edition, so the overlap was six months rather than a year. These
+          are the 2018 changes that still shape day-to-day practice.
         </p>
-        <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  Arc Fault Detection Devices (Section 421)
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  The 18th Edition introduced Regulation 421.1.7, which recommends AFDDs for AC
-                  final circuits in premises with sleeping accommodation where fire risk is
-                  elevated. AFDDs detect dangerous arcing faults that do not trip conventional MCBs
-                  or RCDs — for example, a loose connection in a junction box or a damaged cable
-                  behind plasterwork. Be careful with what A4:2026 actually says here, because it
-                  is widely overstated. Regulation 421.1.7 was introduced by A4:2026{' '}
-                  <strong>recommending</strong> the installation of AFDDs to mitigate the risk of
-                  fire in AC final circuits of a fixed installation. The wording is advisory — it
-                  recommends rather than using "shall" — so this is not a prescriptive obligation,
-                  and it is not written around a list of premises types such as HMOs or care homes.
-                  Treat AFDDs as a strongly signposted recommendation you should be able to justify
-                  departing from, not as a mandatory requirement.
-                </p>
-              </div>
-            </div>
+        <div className="mt-6 space-y-4">
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">
+              30 mA RCD on domestic lighting — Regulation 411.3.4
+            </h3>
+            <p className="text-sm leading-relaxed text-white">
+              Regulation 411.3.4, &quot;Additional requirements for circuits with luminaires&quot;,
+              states: within domestic (household) premises, additional protection by an RCD with a
+              rated residual operating current not exceeding 30 mA shall be provided for AC final
+              circuits supplying luminaires. It uses &quot;shall&quot;, so it is a requirement, not
+              a recommendation — and it has been in force since the 18th Edition was published in
+              2018. It is often reported as a new Amendment 4 rule; it is not. On new work and
+              rewires, lighting circuits are protected by a 30 mA RCD or RCBO.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Surge Protection (Section 534)</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Section 534 was significantly expanded in the 18th Edition, requiring a risk
-                  assessment for surge protection in all installations. Where the consequences of an
-                  overvoltage event would be serious — loss of important data, destruction of
-                  valuable equipment, impact on safety services — surge protection devices (SPDs)
-                  must be installed. In practice, this means most new domestic installations now
-                  include Type 2 SPDs. Under A4:2026, Section 534 has been completely revised; the
-                  most significant technical change is the introduction of updated selection
-                  requirements for the voltage protection level (Up) of SPDs, which designers must
-                  now apply when specifying devices.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">
+              Arc fault detection devices — Regulation 421.1.7
+            </h3>
+            <p className="text-sm leading-relaxed text-white">
+              This is the most widely misquoted regulation in the book, in both directions. The 18th
+              Edition introduced 421.1.7 in 2018 as a recommendation. Amendment 2:2022 redrafted it
+              into a requirement for four premises types, and Amendment 4:2026 reworded the first of
+              them. As it now stands, AFDDs conforming to BS EN 62606{' '}
+              <strong>shall be provided</strong> for single-phase AC final circuits supplying
+              socket-outlets with a rated current not exceeding 32 A in (a) high rise residential
+              buildings (HRRBs), (b) houses in multiple occupation (HMOs), (c) purpose-built student
+              accommodation, and (d) care homes. A note assumes an HRRB to be a residential building
+              over 18 m in height or in excess of six storeys, whichever is met first. For all other
+              premises, AFDDs are <strong>recommended</strong> for single-phase AC final circuits
+              supplying socket-outlets not exceeding 32 A. Where used, they go at the origin of the
+              circuit to be protected, and Regulation 532.6 confirms they are installed at the
+              origin of the final circuits to be protected and in AC single-phase circuits not
+              exceeding 230 V. Using an AFDD does not remove the need to apply the other measures in
+              the standard.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  EV Charging Installations (Section 722)
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  A completely new section dedicated to electric vehicle charging installations,
-                  covering cable sizing, protection, earthing, and the specific requirements for
-                  different charging modes. Section 722 requires dedicated circuits for EV charge
-                  points, appropriate RCD protection (Type A or Type B depending on the charger),
-                  and consideration of maximum demand implications. With the growth of EV ownership,
-                  this section has become one of the most commercially relevant parts of BS 7671 for
-                  domestic electricians.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">
+              Surge protection — Section 443 and Section 534
+            </h3>
+            <p className="text-sm leading-relaxed text-white">
+              The two sections do different jobs, and they are routinely confused. Section 443
+              decides <em>whether</em> you need protection against transient overvoltages; Section
+              534 governs the selection and erection of the SPDs themselves. Section 534 was
+              completely revised in 2018, the most significant technical change being the selection
+              requirements for the voltage protection level (Up). Amendment 2:2022 then redrafted
+              Section 443: Regulation 443.4.1 requires protection where the consequence of an
+              overvoltage could cause serious injury or loss of human life, or significant financial
+              or data loss — and for all other cases protection shall be provided{' '}
+              <strong>unless the owner declares it is not required</strong> and accepts the risk.
+              The old risk-assessment method in Regulation 443.5, and Annex A443, were deleted. In
+              practice SPDs are now the default on most new installations.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">RCD Type A Requirement</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  The 18th Edition strengthened the requirements for RCD types. Regulation 531.3.3
-                  now requires Type A RCDs (or better) for circuits supplying equipment likely to
-                  produce DC residual currents. This includes circuits serving washing machines,
-                  dishwashers, EV chargers, and other equipment with electronic power supplies. Type
-                  AC RCDs, which only detect sinusoidal AC fault currents, are no longer sufficient
-                  for these circuits. In practice, most manufacturers now supply Type A devices as
-                  standard for domestic installations.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">EV charging installations — Section 722</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Section 722 was not new in 2018 — the 18th Edition made significant changes to
+              Regulation 722.411.4.1 on the use of a PME supply, deleting the &quot;reasonably
+              practicable&quot; exception, and revised the requirements for external influences,
+              RCDs, socket-outlets and connectors. Amendment 1:2020 then rewrote the section on the
+              basis of HD 60364-7-722:2018, and Amendment 2:2022 folded that in alongside further
+              changes, including prosumer&apos;s installations (722.826.3.201). Section 722 does not
+              apply to wireless (inductive) charging.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Energy Efficiency (Part 8)</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  The 18th Edition added Part 8 (Sections 801 to 805), addressing energy efficiency
-                  in electrical installations for the first time. This part covers metering, power
-                  factor correction, switching for energy management, and general energy efficiency
-                  measures. While Part 8 is not as heavily tested or applied as Parts 4 and 5, it
-                  reflects the growing importance of energy efficiency in building design and aligns
-                  BS 7671 with broader sustainability objectives.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">RCD types — Regulation 531.3.3</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Regulation 531.3.3 sets out the RCD types — AC, A, F and B — by how they behave in the
+              presence of DC components and frequencies. Amendment 2:2022 added the sentence that
+              changed specification in practice: RCD Type AC shall only be used to serve fixed
+              equipment where it is known that the load current contains no DC components, with
+              electric heating and simple filament lighting given as examples. Anything with
+              electronics in it — washing machines, dishwashers, EV chargers, LED drivers — needs
+              Type A or better. Most manufacturers now supply Type A as standard for domestic work.
+            </p>
+          </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">
+              Cable support, fire and escape routes — Regulation 521.10.202
+            </h3>
+            <p className="text-sm leading-relaxed text-white">
+              Regulation 521.10.202 replaced 521.11.201 and requires cables to be adequately
+              supported against premature collapse in the event of a fire{' '}
+              <strong>throughout the installation</strong>, not just in escape routes as previously.
+              This is the reason plastic clips alone are no longer acceptable for supporting cables
+              on a ceiling. Amendment 4:2026 added a note explaining the intent of the regulation,
+              and redrafted Regulation 422.2 and 422.2.1 so that 422.2.1 now lists the cables
+              permitted in protected escape routes.
+            </p>
           </div>
         </div>
       </>
@@ -358,126 +497,241 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 2 to BS 7671:2018 was published in March 2022 and came into effect immediately.
-          It consolidated Amendment 1 (2020) and introduced additional changes and corrections. The
-          current base document is therefore BS 7671:2018+A4:2026. Any reference to "the
-          Regulations" means the 2018 edition as amended by A1:2020, A2:2022, A3:2024 and A4:2026.
+          BS 7671:2018+A2:2022 was issued on 28 March 2022 and could be implemented immediately; BS
+          7671:2018+A1:2020 remained current until it was withdrawn on 27 September 2022. A2 was a
+          printed reprint of the whole standard — the brown cover — and it is still the version most
+          often quoted second-hand, which is why several A2 changes get misattributed to Amendment
+          4.
         </p>
         <p>
-          Key changes in Amendment 2 include updated requirements for prosumer installations
-          (installations that both consume and generate electrical energy, such as those with solar
-          PV and battery storage), clarifications to the requirements for protection against
-          transient overvoltages, and various editorial corrections. Amendment 2 also introduced
-          revised requirements for the connection of microgeneration systems, ensuring that the
-          standard keeps pace with the rapid growth of domestic renewable energy installations.
+          The substantive A2:2022 changes that still matter on site are these. Regulation 411.3.1.2
+          was redrafted, so main protective bonding applies to extraneous-conductive-parts liable to
+          introduce a dangerous potential difference, with a note clarifying that metallic pipework
+          fed by non-metallic pipes entering the building is not normally an
+          extraneous-conductive-part. Regulation 421.1.7 became a requirement for AFDDs in high rise
+          residential buildings, HMOs, purpose-built student accommodation and care homes. A new
+          Chapter 82 introduced prosumer&apos;s low-voltage electrical installations. Regulation
+          531.3.3 restricted Type AC RCDs to fixed equipment with no DC component in the load
+          current. Appendix 11 (warning and user instruction labels) and a rewritten Appendix 13 on
+          protected escape routes were added.
         </p>
+        <div className={cardCn}>
+          <h3 className="mb-3 text-lg font-bold text-white">
+            The two testing changes A2:2022 made — still catching people out
+          </h3>
+          <p className="mb-3 text-sm leading-relaxed text-white">
+            Regulation group 643.3 was redrafted. Where connected equipment is likely to influence
+            the measurement or be damaged, the Table 64 test is applied <strong>before</strong> the
+            equipment is connected; then, following connection, a test at <strong>250 V DC</strong>{' '}
+            is applied between live conductors and the protective conductor, with a minimum
+            acceptable value of <strong>1 MΩ</strong> (Regulation 643.3.3).
+          </p>
+          <p className="text-sm leading-relaxed text-white">
+            RCD testing changed at the same time, and Table 3A in Appendix 3 was{' '}
+            <strong>deleted</strong>. Regulation 643.8 now requires the effectiveness of automatic
+            disconnection by RCDs to be verified using test equipment to BS EN 61557-6, and its note
+            says that regardless of RCD type, effectiveness is deemed verified where the RCD
+            disconnects within the stated time on an alternating current test at rated residual
+            operating current (I∆n) — for a general non-delay type, 300 ms maximum. The old
+            half-rated and five-times tests are product-standard tests, not an installation
+            verification requirement in BS 7671.
+          </p>
+        </div>
         <p>
-          For practising electricians, the most significant practical impact of Amendment 2 was the
-          clarification of requirements around{' '}
-          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
-          design for installations with solar PV and battery storage. The amendment recognised that
-          these installations require specific consideration of reverse power flow, anti-islanding
-          protection, and the interaction between the DNO supply and the local generation source.
+          For the consumer unit itself, A2:2022 is also where Regulation 531.3.2 indent (b) began
+          highlighting the use of RCBOs on individual final circuits in residential premises to
+          minimise unwanted tripping — the practical reason most new{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer units</SEOInternalLink> are
+          now fully populated with RCBOs rather than split-load RCDs.
         </p>
       </>
     ),
   },
   {
     id: 'amendment-4',
-    heading: 'Amendment 4 (2026) — Key New Requirements',
+    heading: 'Amendment 4 (2026) — What Actually Changed',
     content: (
       <>
         <p>
-          A point of frequent confusion: the free PDF supplement issued on 31 July 2024 was{' '}
-          <strong>Amendment 3 (A3:2024)</strong>, not Amendment 4. Amendment 4 is A4:2026, and it is
-          a substantive amendment rather than a light-touch supplement — it inserts new regulations
-          (for example 411.6.5 and an entirely new Regulation group 419), redrafts others such as
-          411.4.5 and 411.3.3, and deletes material including Appendix 3 Table 3A. References to
-          "the Regulations" now mean BS 7671:2018 as amended by A1:2020, A2:2022, A3:2024 and
-          A4:2026.
+          BS 7671:2018+A4:2026 was issued on <strong>15 April 2026</strong> and may be implemented
+          immediately. The previous version — BS 7671:2018+A2:2022+Corrigendum (May 2023)+A3:2024 —
+          remains current but is withdrawn on <strong>15 October 2026</strong>. Amendment 4 is a
+          substantive amendment: it adds whole chapters and sections, so an older book cannot simply
+          be annotated to match it.
         </p>
         <p>
-          Amendment 4 introduces several significant new requirements. One that matters on almost
-          every modern domestic job is bidirectional energy flow. Regulation 530.3.201 — introduced
-          by Amendment 3 and carried into A4:2026 — requires that the selection and erection of
-          equipment for protection shall take account of the appropriate use of either a
-          unidirectional or a bidirectional protective device, a mandatory consideration rather
-          than an optional one. Building on it, A4:2026 redrafted Regulation
-          551.7.1 and added indent (c), requiring a suitable protective device where energy flow is
-          bidirectional, and indent (d), which prohibits connecting a source to the load side of an
-          RCD in certain conditions. Where a generating set runs in parallel with another source,
-          551.7.1 sends you back to 530.3.201 for device selection. This responds to the growth of
-          battery storage and solar PV with battery backup, where energy can flow from the
-          installation back towards the supply.
+          A point of frequent confusion: the electronic amendment issued on 31 July 2024 was{' '}
+          <strong>Amendment 3 (A3:2024)</strong>, not Amendment 4. A3 was a very small amendment —
+          two new definitions and one new regulation, 530.3.201, on the use of bidirectional and
+          unidirectional devices.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">
-            Reg 530.3.201 and 551.7.1(c) — bidirectional energy flow
+
+        <h3 className="mt-8 text-base font-semibold text-white">
+          Amendment 4:2026 changes at a glance
+        </h3>
+        <div className={tableWrapCn}>
+          <table className="w-full min-w-[640px] border-collapse">
+            <caption className="sr-only">Main changes introduced by Amendment 4:2026</caption>
+            <thead>
+              <tr className="border-b border-white/[0.14] bg-white/[0.06]">
+                <th scope="col" className={thCn}>
+                  Regulation or section
+                </th>
+                <th scope="col" className={thCn}>
+                  What changed
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>312.2.1.1</td>
+                <td className={tdCn}>
+                  Now includes a protective neutral bonding (PNB) figure and requirements
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>421.1.7(a)</td>
+                <td className={tdCn}>
+                  Reworded to read &quot;high rise residential buildings&quot;
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>422.2 and 422.2.1</td>
+                <td className={tdCn}>
+                  Protected escape routes modified; 422.2.1 now lists the cables permitted in a
+                  protected escape route, and cables in a fire-resisting enclosure are deemed
+                  outside it
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>434.2.1 and 434.3(a)</td>
+                <td className={tdCn}>
+                  &quot;Inherently short-circuit and earth fault proof&quot; introduced for
+                  conductor selection and erection
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Annex B443</td>
+                <td className={tdCn}>Deleted</td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Table 51</td>
+                <td className={tdCn}>
+                  Revised to identify combined protective and functional earthing conductors,
+                  combined protective and functional bonding conductors, and functional bonding
+                  conductors
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Table 52.1</td>
+                <td className={tdCn}>
+                  Now carries the requirements for cables in a wall or partition
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>537.4.2</td>
+                <td className={tdCn}>
+                  Firefighter&apos;s switches now required in locations specified by the fire
+                  engineer to support the building&apos;s fire strategy; 537.4.2.1 deleted
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Section 545 (new)</td>
+                <td className={tdCn}>
+                  Functional earthing and functional equipotential bonding for ICT equipment and
+                  systems
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>551.7.1 and 551.7.2</td>
+                <td className={tdCn}>
+                  Redrafted for generating sets in parallel — see the panel below
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Chapter 57 (new)</td>
+                <td className={tdCn}>
+                  Stationary secondary batteries; the old Regulation 551.8 requirements moved here
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>653.1 and 653.2</td>
+                <td className={tdCn}>
+                  Condition reports must take account of the Appendix 6 notes for the person
+                  producing the report and include guidance for the recipient
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Section 716 (new)</td>
+                <td className={tdCn}>
+                  Power over Ethernet — distribution of ELV DC power over data cabling
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Chapter 81 (new)</td>
+                <td className={tdCn}>
+                  Energy efficiency, referring to the Building Regulations and BS HD 60364-8-1:2019;
+                  Appendix 17 deleted
+                </td>
+              </tr>
+              <tr className="border-b border-white/[0.08]">
+                <td className={tdCn}>Appendix 4</td>
+                <td className={tdCn}>
+                  Buried cables now have distinct reference methods and current-carrying capacities
+                  depending on whether the cable is in direct contact with soil or in a conduit or
+                  duct; Tables 4A2, 4D4A, 4E4A, 4H4A and 4J4A revised
+                </td>
+              </tr>
+              <tr>
+                <td className={tdCn}>Appendix 6</td>
+                <td className={tdCn}>
+                  Condition report notes redrafted and items rearranged; code FI no longer needs to
+                  be marked as unsatisfactory
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className={`${cardCn} my-6`}>
+          <h3 className="mb-3 text-lg font-bold text-white">
+            Bidirectional energy flow — Regulation 530.3.201 and 551.7.1
           </h3>
-          <p className="text-white text-sm leading-relaxed mb-3">
-            Standard MCBs, RCDs and RCBOs are designed to interrupt fault current flowing in one
-            direction — from the supply, through the device, to the load. Where a source such as a
-            battery or PV inverter can export, fault current can flow the other way. Regulation
-            530.3.201 requires that directional characteristic to be taken into account when
-            selecting and erecting protective equipment. In outline:
+          <p className="mb-3 text-sm leading-relaxed text-white">
+            Standard MCBs, RCDs and RCBOs are built to interrupt fault current flowing one way —
+            from the supply, through the device, to the load. Where a battery or PV inverter can
+            export, fault current can flow the other way. Regulation 530.3.201 requires the
+            selection and erection of equipment for protection to take account of the appropriate
+            use of either a unidirectional or a bidirectional protective device; its note points out
+            that product standards require RCCBs, RCBOs, circuit-breakers and AFDDs to be marked to
+            show which they are — &quot;in&quot; and &quot;out&quot;, &quot;line&quot; and
+            &quot;load&quot;, or arrows. Amendment 4 then redrafted Regulation 551.7.1, which
+            applies where a generating set runs in parallel with another source:
           </p>
-          <ul className="space-y-2 text-white text-sm leading-relaxed">
-            <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Where fault current can flow in both directions, the protective devices must be
-                suitable for bidirectional operation, or
-              </span>
+          <ul className="space-y-3 text-sm leading-relaxed text-white">
+            <li>
+              <strong>Indent (c)</strong> — protective devices shall be selected in accordance with
+              Regulation 530.3.201.
             </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                The installation must be designed so that unidirectional devices are not subjected
-                to reverse fault current they cannot safely interrupt, or
-              </span>
+            <li>
+              <strong>Indent (d)</strong> — except where the RCD disconnects all live conductors
+              including the neutral, a source of supply shall not be connected to the load side of
+              any RCD providing additional protection that is shared with other circuits.
             </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Additional measures are taken to ensure that the protective device can still provide
-                the required level of protection regardless of the direction of energy flow.
-              </span>
+            <li>
+              <strong>Regulation 551.7.2.1</strong> — the generating set shall be installed on the
+              supply side of all the protective devices for the final circuits of a distribution
+              board, and stationary secondary batteries to Chapter 57 are to be treated as a
+              generating set, not a load.
             </li>
           </ul>
         </div>
+
         <p>
-          Amendment 4 also includes corrections, clarifications and editorial updates. It does,
-          however, change numbering — this is not a purely editorial amendment. A4:2026 inserts
-          Regulation 411.6.5 and a new Regulation group 419, redrafts 411.4.5 and 411.3.3, and
-          deletes numbered material including Appendix 3 Table 3A (the RCD time/current performance
-          criteria). Work through the amendment properly rather than assuming your existing
-          regulation numbers still point where they used to.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-            <div>
-              <h3 className="font-bold text-white mb-1">
-                Reg 411.3.4 — RCD protection for domestic lighting circuits (new in A4:2026)
-              </h3>
-              <p className="text-white text-sm leading-relaxed">
-                One of the most practically significant A4:2026 changes for domestic electricians:
-                Regulation 411.3.4 now requires that, within domestic (household) premises, AC final
-                circuits supplying luminaires shall be provided with additional protection by an RCD
-                with a rated residual operating current not exceeding 30 mA. The regulation uses
-                'shall', making this a mandatory requirement — not a recommendation. On new domestic
-                installations and rewires, all lighting circuits must therefore be protected by a 30
-                mA RCD or RCBO. This has direct implications for consumer unit specification and
-                schedule-of-circuits documentation on Part 6 certificates.
-              </p>
-            </div>
-          </div>
-        </div>
-        <p>
-          For electricians installing solar PV, battery storage, or EV chargers, Amendment 4 is
-          essential reading. The requirement for bidirectional protection has implications for
-          consumer unit specification, device selection, and circuit design that were not explicitly
-          addressed in the earlier amendments.
+          If you install solar PV, battery storage or EV chargers, that combination — 530.3.201,
+          551.7.1, 551.7.2 and the new Chapter 57 — is the part of Amendment 4 that will change how
+          you specify a job. It affects device selection, where the storage system lands relative to
+          the RCD, and what you record on the certificate.
         </p>
         <SEOAppBridge
           title="70+ calculators built to BS 7671:2018+A4:2026"
@@ -498,78 +752,62 @@ const sections = [
           devices, carrying out tests, and completing certificates. Here is how the key parts of the
           standard map to common on-site activities.
         </p>
-        <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Cable Sizing and Circuit Design</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Appendix 4 of BS 7671 contains the current-carrying capacity tables for different
-                  cable types and installation methods. You use these tables — combined with
-                  correction factors for grouping, ambient temperature, and thermal insulation — to
-                  determine the minimum cable size for every circuit. The voltage drop limits in
-                  Regulation 525 determine whether the cable is large enough to maintain adequate
-                  voltage at the load.
-                </p>
-              </div>
-            </div>
+        <div className="mt-6 space-y-4">
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">Cable sizing and circuit design</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Appendix 4 contains the current-carrying capacity tables for each cable type and
+              reference method, together with the rating factors for grouping, ambient temperature
+              and thermal insulation. Every reference method has its own tabulated capacity — you
+              read the column for the method you are actually using rather than applying a
+              multiplier on top. For voltage drop, Section 525 sets the requirement and Regulation
+              525.202 points you to Appendix 4, Section 6.4 for the permitted limits. Note that
+              A4:2026 changed the buried-cable methods: direct in soil and in a conduit or duct now
+              have distinct reference methods and distinct capacities.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Testing and Certification</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Part 6 specifies the{' '}
-                  <SEOInternalLink href="/guides/testing-sequence-guide">
-                    testing sequence
-                  </SEOInternalLink>
-                  , the tests required, and the pass/fail criteria. Every test value you record on
-                  an{' '}
-                  <SEOInternalLink href="/guides/electrical-certificate-types-uk">
-                    EIC or EICR
-                  </SEOInternalLink>{' '}
-                  is compared against the BS 7671 maximum permitted values. The certificate forms
-                  themselves are defined in Appendix 6 of the standard.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">Testing and certification</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Part 6 specifies the{' '}
+              <SEOInternalLink href="/guides/testing-sequence-guide">
+                testing sequence
+              </SEOInternalLink>
+              , the tests required, and the acceptance criteria. Every test value you record on an{' '}
+              <SEOInternalLink href="/guides/electrical-certificate-types-uk">
+                EIC or EICR
+              </SEOInternalLink>{' '}
+              is compared against the BS 7671 limits. The model forms are in Appendix 6, which since
+              A2:2022 carries separate pages for the schedule of circuit details and the schedule of
+              test results, plus fields for recording SPD and AFDD details.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Protection and Device Selection</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Chapters 41, 43, and 53 govern how you select protective devices — MCBs, RCDs,
-                  RCBOs, fuses — to provide protection against electric shock, overcurrent, and
-                  fault current. The maximum Zs tables tell you whether the device will disconnect
-                  within the required time. The adiabatic equation tells you whether the cable can
-                  withstand the fault current for the duration of the disconnection time.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">Protection and device selection</h3>
+            <p className="text-sm leading-relaxed text-white">
+              Chapters 41, 43 and 53 govern how you select protective devices — MCBs, RCDs, RCBOs,
+              fuses — for protection against electric shock, overload and fault current. Regulation
+              411.3.2.2 sets which final circuits the Table 41.1 maximum disconnection times apply
+              to: circuits rated up to 63 A with one or more socket-outlets, and circuits rated up
+              to 32 A supplying only fixed connected current-using equipment. Tables 41.2 to 41.6
+              tell you whether the device will disconnect in time at the measured Zs; the adiabatic
+              equation tells you whether the conductor survives the fault for that duration.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  <SEOInternalLink href="/bs7671-observation-codes">
-                    Observation Codes
-                  </SEOInternalLink>{' '}
-                  and Condition Reporting
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  When carrying out periodic inspection (EICR), you assess the installation against
-                  the current edition of BS 7671. Every departure from the standard, every defect,
-                  every deterioration is recorded as an observation with a classification code (C1,
-                  C2, C3, or FI). The ability to accurately classify observations against BS 7671 is
-                  one of the most critical skills for an inspection and testing electrician.
-                </p>
-              </div>
-            </div>
+          <div className={plainCardCn}>
+            <h3 className="mb-1 font-bold text-white">
+              <SEOInternalLink href="/bs7671-observation-codes">Observation codes</SEOInternalLink>{' '}
+              and condition reporting
+            </h3>
+            <p className="text-sm leading-relaxed text-white">
+              When carrying out a periodic inspection you assess the installation against the
+              current edition of BS 7671, recording every departure, defect and deterioration as an
+              observation with a classification code (C1, C2, C3 or FI). A4:2026 touched this
+              directly: Regulation 653.1 requires the Appendix 6 notes for the person producing the
+              report to be taken into account, Regulation 653.2 requires guidance for the recipient
+              to be included, and Appendix 6 now states that code FI no longer needs to be marked as
+              unsatisfactory.
+            </p>
           </div>
         </div>
         <SEOAppBridge
@@ -584,18 +822,26 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/amendment-3-changes',
+    href: '/guides/bs-7671-amendment-4-2026',
     title: 'Amendment 4 Changes (A4:2026)',
     description:
-      'Detailed breakdown of every change in Amendment 4, including the new bidirectional device requirements in Section 530.',
+      'Detailed breakdown of Amendment 4 — the new Chapter 57, Section 716, Section 545 and the redrafted Regulation 551.7.1.',
     icon: ShieldCheck,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/bs-7671-amendment-3-changes',
+    title: 'Amendment 3 Changes (A3:2024)',
+    description:
+      'The 31 July 2024 amendment: two new definitions and Regulation 530.3.201 on bidirectional and unidirectional devices.',
+    icon: Layers,
     category: 'Guide',
   },
   {
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'Study for the C&G 2382-22 exam with 20,000+ practice questions and AI study assistant.',
+      'Study for the C&G 2382-22 exam with practice questions and an AI study assistant.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -620,13 +866,6 @@ const relatedPages = [
     icon: Scale,
     category: 'Guide',
   },
-  {
-    href: '/consumer-unit-regulations',
-    title: 'Consumer Unit Regulations',
-    description: 'Metal CU requirements, RCD protection, RCBO selection, and SPD requirements.',
-    icon: Layers,
-    category: 'Guide',
-  },
 ];
 
 // -------------------------------------------------------------------
@@ -639,7 +878,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-09-01"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Hub"
@@ -649,12 +888,12 @@ export default function BS7671EighteenthEditionGuidePage() {
           BS 7671: 18th Edition <span className="text-yellow-400">Wiring Regulations Guide</span>
         </>
       }
-      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), and Amendment 4 (A4:2026) covering bidirectional device requirements (Reg 530.3.201), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), updated AFDD rules (Reg 421.1.7), and a revised Section 534 for SPDs."
+      heroSubtitle="The complete guide to BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations. Every part of the standard explained, what each of the four amendments actually changed, and the A4:2026 additions: Chapter 57 for stationary secondary batteries, Section 716 for Power over Ethernet, Section 545 for ICT functional earthing, Chapter 81 for energy efficiency, and the redrafted Regulation 551.7.1 for bidirectional energy flow."
       readingTime={18}
       answerBox={{
-        question: 'What is the 18th Edition of BS 7671?',
+        question: 'What is the current version of BS 7671?',
         answer:
-          'BS 7671 is the British Standard for electrical installations — the IET Wiring Regulations. The current version is the 18th Edition (BS 7671:2018), in force since 1 January 2019 and kept up to date by amendments, most recently Amendment 4 (A4:2026). It is not statutory in itself, but compliance is the accepted way to satisfy the Electricity at Work Regulations 1989 and Part P of the Building Regulations. It is organised into seven parts covering scope and definitions, fundamental principles, assessment, protection for safety, selection and erection, inspection and testing, and special installations and locations.',
+          'BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations as amended by A1:2020, A2:2022, A3:2024 and A4:2026. Amendment 4 was issued on 15 April 2026 and may be implemented immediately; the previous version is withdrawn on 15 October 2026. BS 7671 is not statutory in itself, but compliance is the accepted way to satisfy the Electricity at Work Regulations 1989 and Part P of the Building Regulations.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -46,8 +46,8 @@ const ZsLookupStandards = () => {
                 Table 41.4
               </span>
               <p className="text-[13px] text-white/85 leading-relaxed">
-                <strong>Fuse values:</strong> Maximum earth fault loop impedance for general
-                purpose and HRC fuses.
+                <strong>Fuse values:</strong> Maximum earth fault loop impedance for general purpose
+                and HRC fuses.
               </p>
             </div>
           </div>
@@ -105,8 +105,8 @@ const ZsLookupStandards = () => {
         </div>
 
         <p className="text-[13px] text-white/85 leading-relaxed">
-          <strong>International basis:</strong> These requirements align with IEC 60364 international
-          standards and extensive research into electrical safety thresholds.
+          <strong>International basis:</strong> These requirements align with IEC 60364
+          international standards and extensive research into electrical safety thresholds.
         </p>
       </div>
 

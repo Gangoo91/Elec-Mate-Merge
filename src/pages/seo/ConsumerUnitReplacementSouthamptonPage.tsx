@@ -601,7 +601,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Southampton | Fuse Box Southampton"
-      description="Consumer unit replacement in Southampton — metal enclosure rules, Part P Building Regulations, costs £400–800, BS EN 61439…"
+      description="Consumer unit replacement in Southampton — metal enclosure rules, Part P Building Regulations, costs £400–800, BS EN 61439."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

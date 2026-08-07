@@ -387,10 +387,10 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'Which device is used to actively limit the power exported to the grid from a solar installation?',
     options: [
-      'A surge protective device',
-      'A residual current device',
+      'A surge protective device on the a.c. side',
+      'A Type B residual current device',
       'An export limitation device with a current/power sensor',
-      'A maximum power point tracker',
+      'A maximum power point tracker in the inverter',
     ],
     correctAnswer: 2,
     explanation:
@@ -3031,9 +3031,9 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'What is the main advantage of heterojunction solar cell technology?',
     options: [
-      'It needs no inverter to feed the grid',
-      'It can be manufactured without silicon',
-      'It tolerates far higher string voltages',
+      'It needs no inverter to feed the a.c. grid supply',
+      'It can be manufactured entirely without silicon',
+      'It tolerates far higher d.c. string voltages',
       'It offers higher efficiency and a better temperature coefficient',
     ],
     correctAnswer: 3,

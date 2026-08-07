@@ -23,8 +23,8 @@ export const JibPayScales2026Config: GeneratedGuideConfig = {
     'The JIB (Joint Industry Board for the Electrical Contracting Industry) sets industry-wide pay scales for UK electricians employed by JIB-member firms. Updated annually, this guide covers the 2026 rates for every JIB grade plus context on which firms use them. This guide is for qualified electricians, JIB members and apprentices benchmarking their pay.',
   keyTakeaways: [
     'JIB pay scales apply to electricians employed by JIB-member firms — not all UK electrical employers are JIB members.',
-    'JIB grades (low to high): Apprentice → Electrician → Approved Electrician → Senior Electrician → Approved Senior Electrician.',
-    '2026 typical rates: Apprentice (year 1) ~£8.60/hour, Approved Electrician ~£18-22/hour, Senior Electrician ~£22-27/hour.',
+    'JIB grades (low to high): Apprentice Stage 1-4 → Electrical Labourer / Trainee Stage 1 → Trainee Stage 2 → Trainee Stage 3 → Electrician → Approved Electrician → Site or Installation Technician.',
+    'JIB rates from 5 January 2026 (Transport Provided): Apprentice Stage 1 £8.16/hour, Electrician £18.38/hour, Approved Electrician £20.08/hour, Site Technician £22.70/hour.',
     'Travel time, daily fares, lodging allowance and overtime are all on the JIB rate card.',
     'Non-JIB employers often pay BELOW JIB rates for junior staff and ABOVE for experienced staff.',
     'Use the JIB rate as your floor when negotiating a non-JIB job.',
@@ -48,7 +48,7 @@ export const JibPayScales2026Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Apprentice Year 1: ~£8.60/hour. Apprentice Year 2: ~£11.45/hour. Apprentice Year 3: ~£14.30/hour. Apprentice Year 4: ~£16.50/hour. Electrician: ~£17.80/hour. Approved Electrician: ~£19.50-22.00/hour. Senior Electrician: ~£22-25/hour. Approved Senior Electrician: ~£25-27.50/hour. Technician: ~£23-26/hour. These are base rates — overtime, weekend, bank holiday and lodging allowances are additional.',
+          text: 'JIB National Standard rates from 5 January 2026, shown as Transport Provided / Own Transport / Shop Employed. Site or Installation Technician: £22.70 / £23.87 / £21.24. Approved Electrician: £20.08 / £21.19 / £18.61. Electrician (including Domestic): £18.38 / £19.54 / £16.95. Trainee Electrician Stage 3: £17.51 / £18.57 / £16.12. Stage 2: £16.54 / £17.62 / £15.29. Stage 1 and Electrical Labourer: £14.60 / £15.69 / £13.09. Apprentices are paid a single rate covering all hours including off-the-job training: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03. The London Zone rates are higher — see the London table. These are base rates; overtime, weekend, bank holiday and lodging allowances are additional.',
         },
       ],
     },
@@ -81,7 +81,7 @@ export const JibPayScales2026Config: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'Many small electrical contractors and smaller firms are not JIB members. Their pay structures vary: some pay below JIB for junior staff (taking advantage of inexperience), some pay above JIB for senior staff (competing for talent). Use the JIB rate as your floor when negotiating: "The JIB rate for an Approved Electrician is £19.50 — I need at least that."',
+          text: 'Many small electrical contractors and smaller firms are not JIB members. Their pay structures vary: some pay below JIB for junior staff (taking advantage of inexperience), some pay above JIB for senior staff (competing for talent). Use the JIB rate as your floor when negotiating: "The JIB rate for an Approved Electrician is £20.08 an hour — I need at least that."',
         },
       ],
     },

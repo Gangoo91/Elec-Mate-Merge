@@ -17,8 +17,8 @@ export default function AM2OnlineMockExamPage() {
       questionBank={
         am2QuestionBank as unknown as Parameters<typeof PublicMockExamPage>[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={60}
+      questionsPerExam={30}
+      timeLimitMinutes={70}
       passThreshold={70}
       breadcrumbLabel="AM2 Online Knowledge Test"
     />

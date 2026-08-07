@@ -617,7 +617,7 @@ export default function Year4ElectricalApprenticePage() {
   return (
     <GuideTemplate
       title="Year 4 Electrical Apprentice | Final Year Guide 2026"
-      description="Complete guide to year 4 of an electrical apprenticeship. AM2 assessment, End-Point Assessment (EPA), final portfolio submission…"
+      description="Complete guide to year 4 of an electrical apprenticeship. AM2 assessment, End-Point Assessment (EPA), final portfolio submission."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -18,6 +18,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { wireGaugeContent } from './content/wire-gauge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -326,7 +327,17 @@ const WireGaugeCalculator = () => {
 
   const handleCalculate = useCallback(() => {
     setResult(performCalculation());
-  }, [awgSize, metricSize, inputMode, length, loadCurrent, systemVoltage, ambientTemp, cableGrouping, installationType]);
+  }, [
+    awgSize,
+    metricSize,
+    inputMode,
+    length,
+    loadCurrent,
+    systemVoltage,
+    ambientTemp,
+    cableGrouping,
+    installationType,
+  ]);
 
   const handleReset = useCallback(() => {
     setAwgSize('');
@@ -394,413 +405,426 @@ const WireGaugeCalculator = () => {
       title="Wire Gauge Calculator"
       description="AWG/metric conversion with voltage drop analysis"
     >
-      {/* Input Mode Selection */}
-      <CalculatorSelect
-        label="Input Type"
-        value={inputMode}
-        onChange={setInputMode}
-        options={[
-          { value: 'awg', label: 'AWG Size' },
-          { value: 'metric', label: 'Metric Size (mm²)' },
-        ]}
-      />
-
-      {inputMode === 'awg' ? (
-        <CalculatorSelect
-          label="AWG Size"
-          value={awgSize}
-          onChange={setAwgSize}
-          options={awgOptions}
-          placeholder="Select AWG size"
-        />
-      ) : (
-        <CalculatorInput
-          label="Metric Size"
-          unit="mm²"
-          type="text"
-          inputMode="decimal"
-          value={metricSize}
-          onChange={setMetricSize}
-          placeholder="e.g., 2.5"
-          hint="Cross-sectional area"
-        />
-      )}
-
-      {/* Installation Analysis */}
-      <CalculatorSection title="Installation Analysis">
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Cable Length"
-            unit="m"
-            type="text"
-            inputMode="decimal"
-            value={length}
-            onChange={setLength}
-            placeholder="e.g., 25"
-            hint="One-way distance"
-          />
-          <CalculatorInput
-            label="Load Current"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={loadCurrent}
-            onChange={setLoadCurrent}
-            placeholder="e.g., 16"
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorSelect
-            label="System Voltage"
-            value={systemVoltage}
-            onChange={setSystemVoltage}
-            options={[
-              { value: '230', label: '230V (Single Phase)' },
-              { value: '400', label: '400V (Three Phase)' },
-              { value: '110', label: '110V (Site/Tools)' },
-              { value: '12', label: '12V (Low Voltage)' },
-              { value: '24', label: '24V (Low Voltage)' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Installation Method"
-            value={installationType}
-            onChange={setInstallationType}
-            options={[
-              { value: 'conduit', label: 'In Conduit/Trunking' },
-              { value: 'free', label: 'Free Air' },
-              { value: 'buried', label: 'Direct Buried' },
-            ]}
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Ambient Temperature"
-            unit="°C"
-            type="text"
-            inputMode="numeric"
-            value={ambientTemp}
-            onChange={setAmbientTemp}
-            placeholder="30"
-          />
-          <CalculatorInput
-            label="Cables in Group"
-            type="text"
-            inputMode="numeric"
-            value={cableGrouping}
-            onChange={setCableGrouping}
-            placeholder="1"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!hasValidInputs()}
-        calculateLabel="Calculate"
-        showReset={!!result}
-      />
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge status={getOverallStatus()} label={getStatusLabel()} />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Wire Size</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              AWG {result.wire.awg}
-            </p>
-            <p className="text-sm text-white mt-2">{result.wire.metric}mm²</p>
-          </div>
-
-          {/* Wire properties */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Diameter"
-              value={formatNumber(result.wire.diameter, 2)}
-              unit="mm"
-              category={CAT}
-              size="sm"
+      <CalculatorPanes
+        form={
+          <>
+            {/* Input Mode Selection */}
+            <CalculatorSelect
+              label="Input Type"
+              value={inputMode}
+              onChange={setInputMode}
+              options={[
+                { value: 'awg', label: 'AWG Size' },
+                { value: 'metric', label: 'Metric Size (mm²)' },
+              ]}
             />
-            <ResultValue
-              label="Resistance"
-              value={formatNumber(result.wire.resistance, 1)}
-              unit="mΩ/m"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Current Capacity"
-              value={formatNumber(result.analysis.effectiveAmpacity, 0)}
-              unit="A"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Temp Derating"
-              value={formatNumber(result.analysis.temperatureDerating * 100)}
-              unit="%"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
 
-          {/* Voltage Drop Analysis */}
-          {hasVoltageDropData && (
-            <>
-              <ResultsGrid columns={2}>
-                <ResultValue
-                  label="Voltage Drop"
-                  value={formatNumber(result.analysis.voltageDropPercentage, 1)}
-                  unit="%"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Drop (V)"
-                  value={formatNumber(result.analysis.voltageDrop, 1)}
-                  unit="V"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Power Loss"
-                  value={
-                    result.analysis.powerLoss >= 1000
-                      ? formatNumber(result.analysis.powerLoss / 1000, 1)
-                      : formatNumber(result.analysis.powerLoss, 0)
-                  }
-                  unit={result.analysis.powerLoss >= 1000 ? 'kW' : 'W'}
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Efficiency"
-                  value={formatNumber(result.analysis.efficiency, 1)}
-                  unit="%"
-                  category={CAT}
-                  size="sm"
-                />
-              </ResultsGrid>
-
-              {/* Compliance status */}
-              <div
-                className={cn(
-                  'flex items-center gap-2 p-3 rounded-lg border text-sm',
-                  result.analysis.suitableForLength && result.analysis.adequateCapacity
-                    ? 'bg-green-500/5 border-green-500/20'
-                    : 'bg-red-500/5 border-red-500/20'
-                )}
-              >
-                {result.analysis.suitableForLength && result.analysis.adequateCapacity ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-400" />
-                ) : (
-                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                )}
-                <span className="text-white font-medium">
-                  {result.analysis.suitableForLength
-                    ? 'Meets BS 7671 voltage drop requirements (≤5%)'
-                    : 'Exceeds BS 7671 voltage drop limits'}
-                </span>
-              </div>
-            </>
-          )}
-
-          {/* Warnings */}
-          {result.warnings.length > 0 && (
-            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-              <div className="space-y-1">
-                {result.warnings.map((warning, index) => (
-                  <p key={index} className="text-sm text-white">{warning}</p>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <CalculatorDivider category={CAT} />
-
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Wire identification',
-                formula: `AWG ${result.wire.awg} → ${result.wire.metric}mm² (${formatNumber(result.wire.diameter, 2)}mm diameter)`,
-                value: `Base resistance: ${formatNumber(result.wire.resistance, 1)} mΩ/m`,
-              },
-              {
-                label: 'Base current capacity',
-                formula: `${installationType} installation → ${formatNumber(result.analysis.effectiveAmpacity / result.analysis.temperatureDerating / result.analysis.groupingFactor, 0)}A base`,
-                value: `Installation method: ${installationType}`,
-              },
-              {
-                label: 'Derating factors',
-                formula: `${formatNumber(result.analysis.effectiveAmpacity / result.analysis.temperatureDerating / result.analysis.groupingFactor, 0)}A × ${formatNumber(result.analysis.temperatureDerating, 2)} (temp) × ${formatNumber(result.analysis.groupingFactor, 2)} (grouping)`,
-                value: `${formatNumber(result.analysis.effectiveAmpacity, 0)}A effective capacity`,
-              },
-              ...(hasVoltageDropData
-                ? [
-                    {
-                      label: 'Voltage drop',
-                      formula: `Vd = ${loadCurrent}A × ${formatNumber(result.wire.resistance, 1)} mΩ/m × 2 × ${length}m ÷ 1000`,
-                      value: `${formatNumber(result.analysis.voltageDrop, 1)}V (${formatNumber(result.analysis.voltageDropPercentage, 1)}%)`,
-                    },
-                  ]
-                : []),
-            ]}
-          />
-
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
+            {inputMode === 'awg' ? (
+              <CalculatorSelect
+                label="AWG Size"
+                value={awgSize}
+                onChange={setAwgSize}
+                options={awgOptions}
+                placeholder="Select AWG size"
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                {parseFloat(loadCurrent) > 0 && (
-                  <p className="text-sm text-white">
-                    This cable can safely carry{' '}
-                    <span className="font-medium">
-                      {formatNumber(result.analysis.effectiveAmpacity)}A
-                    </span>{' '}
-                    continuous load in {installationType} installation.
-                  </p>
-                )}
-                {result.analysis.voltageDropPercentage > 0 && (
-                  <p className="text-sm text-white">
-                    Voltage drop of{' '}
-                    <span className="font-medium">
-                      {formatNumber(result.analysis.voltageDropPercentage, 1)}%
-                    </span>{' '}
-                    {result.analysis.voltageDropPercentage <= 5 ? 'meets' : 'exceeds'} BS 7671
-                    requirements.
-                  </p>
-                )}
-                {result.analysis.powerLoss > 0 && (
-                  <p className="text-sm text-white">
-                    Power losses of{' '}
-                    <span className="font-medium">{formatNumber(result.analysis.powerLoss)}W</span>{' '}
-                    reduce system efficiency.
-                  </p>
-                )}
-                <div className="space-y-1 pt-2 border-t border-white/10">
-                  <p className="text-sm text-white font-medium">Practical Tips</p>
-                  <ul className="space-y-1">
-                    {[
-                      'Verify actual installation conditions match calculations',
-                      'Consider future load increases when selecting cable size',
-                      'Use appropriate protective devices rated for cable ampacity',
-                      'Ensure adequate mechanical protection for installation method',
-                      ...(parseFloat(ambientTemp) > 40
-                        ? ['High ambient temperature — consider ventilation']
-                        : []),
-                    ].map((tip, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        {tip}
-                      </li>
-                    ))}
-                  </ul>
+            ) : (
+              <CalculatorInput
+                label="Metric Size"
+                unit="mm²"
+                type="text"
+                inputMode="decimal"
+                value={metricSize}
+                onChange={setMetricSize}
+                placeholder="e.g., 2.5"
+                hint="Cross-sectional area"
+              />
+            )}
+
+            {/* Installation Analysis */}
+            <CalculatorSection title="Installation Analysis">
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Cable Length"
+                  unit="m"
+                  type="text"
+                  inputMode="decimal"
+                  value={length}
+                  onChange={setLength}
+                  placeholder="e.g., 25"
+                  hint="One-way distance"
+                />
+                <CalculatorInput
+                  label="Load Current"
+                  unit="A"
+                  type="text"
+                  inputMode="decimal"
+                  value={loadCurrent}
+                  onChange={setLoadCurrent}
+                  placeholder="e.g., 16"
+                />
+              </CalculatorInputGrid>
+
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorSelect
+                  label="System Voltage"
+                  value={systemVoltage}
+                  onChange={setSystemVoltage}
+                  options={[
+                    { value: '230', label: '230V (Single Phase)' },
+                    { value: '400', label: '400V (Three Phase)' },
+                    { value: '110', label: '110V (Site/Tools)' },
+                    { value: '12', label: '12V (Low Voltage)' },
+                    { value: '24', label: '24V (Low Voltage)' },
+                  ]}
+                />
+                <CalculatorSelect
+                  label="Installation Method"
+                  value={installationType}
+                  onChange={setInstallationType}
+                  options={[
+                    { value: 'conduit', label: 'In Conduit/Trunking' },
+                    { value: 'free', label: 'Free Air' },
+                    { value: 'buried', label: 'Direct Buried' },
+                  ]}
+                />
+              </CalculatorInputGrid>
+
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Ambient Temperature"
+                  unit="°C"
+                  type="text"
+                  inputMode="numeric"
+                  value={ambientTemp}
+                  onChange={setAmbientTemp}
+                  placeholder="30"
+                />
+                <CalculatorInput
+                  label="Cables in Group"
+                  type="text"
+                  inputMode="numeric"
+                  value={cableGrouping}
+                  onChange={setCableGrouping}
+                  placeholder="1"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
+
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!hasValidInputs()}
+              calculateLabel="Calculate"
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge status={getOverallStatus()} label={getStatusLabel()} />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
                 </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-2"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    { reg: 'Section 523', desc: 'Current-carrying capacity' },
-                    { reg: 'Appendix 4', desc: 'Voltage drop limits (5%)' },
-                    { reg: 'Regulation 411', desc: 'Protective measures' },
-                    { reg: 'Section 433', desc: 'Overload protection' },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Wire Size</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    AWG {result.wire.awg}
+                  </p>
+                  <p className="text-sm text-white mt-2">{result.wire.metric}mm²</p>
+                </div>
+
+                {/* Wire properties */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Diameter"
+                    value={formatNumber(result.wire.diameter, 2)}
+                    unit="mm"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Resistance"
+                    value={formatNumber(result.wire.resistance, 1)}
+                    unit="mΩ/m"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Current Capacity"
+                    value={formatNumber(result.analysis.effectiveAmpacity, 0)}
+                    unit="A"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Temp Derating"
+                    value={formatNumber(result.analysis.temperatureDerating * 100)}
+                    unit="%"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* Voltage Drop Analysis */}
+                {hasVoltageDropData && (
+                  <>
+                    <ResultsGrid columns={2}>
+                      <ResultValue
+                        label="Voltage Drop"
+                        value={formatNumber(result.analysis.voltageDropPercentage, 1)}
+                        unit="%"
+                        category={CAT}
+                        size="sm"
                       />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
+                      <ResultValue
+                        label="Drop (V)"
+                        value={formatNumber(result.analysis.voltageDrop, 1)}
+                        unit="V"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Power Loss"
+                        value={
+                          result.analysis.powerLoss >= 1000
+                            ? formatNumber(result.analysis.powerLoss / 1000, 1)
+                            : formatNumber(result.analysis.powerLoss, 0)
+                        }
+                        unit={result.analysis.powerLoss >= 1000 ? 'kW' : 'W'}
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Efficiency"
+                        value={formatNumber(result.analysis.efficiency, 1)}
+                        unit="%"
+                        category={CAT}
+                        size="sm"
+                      />
+                    </ResultsGrid>
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Voltage Drop"
-        formula="Vd = I × R × 2L"
-        variables={[
-          { symbol: 'Vd', description: 'Voltage drop (V)' },
-          { symbol: 'I', description: 'Load current (A)' },
-          { symbol: 'R', description: 'Conductor resistance (mΩ/m)' },
-          { symbol: '2L', description: 'Total cable length (go and return)' },
-        ]}
+                    {/* Compliance status */}
+                    <div
+                      className={cn(
+                        'flex items-center gap-2 p-3 rounded-lg border text-sm',
+                        result.analysis.suitableForLength && result.analysis.adequateCapacity
+                          ? 'bg-green-500/5 border-green-500/20'
+                          : 'bg-red-500/5 border-red-500/20'
+                      )}
+                    >
+                      {result.analysis.suitableForLength && result.analysis.adequateCapacity ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-400" />
+                      ) : (
+                        <AlertTriangle className="h-4 w-4 text-red-400" />
+                      )}
+                      <span className="text-white font-medium">
+                        {result.analysis.suitableForLength
+                          ? 'Meets BS 7671 voltage drop requirements (≤5%)'
+                          : 'Exceeds BS 7671 voltage drop limits'}
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {/* Warnings */}
+                {result.warnings.length > 0 && (
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                    <div className="space-y-1">
+                      {result.warnings.map((warning, index) => (
+                        <p key={index} className="text-sm text-white">
+                          {warning}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Wire identification',
+                      formula: `AWG ${result.wire.awg} → ${result.wire.metric}mm² (${formatNumber(result.wire.diameter, 2)}mm diameter)`,
+                      value: `Base resistance: ${formatNumber(result.wire.resistance, 1)} mΩ/m`,
+                    },
+                    {
+                      label: 'Base current capacity',
+                      formula: `${installationType} installation → ${formatNumber(result.analysis.effectiveAmpacity / result.analysis.temperatureDerating / result.analysis.groupingFactor, 0)}A base`,
+                      value: `Installation method: ${installationType}`,
+                    },
+                    {
+                      label: 'Derating factors',
+                      formula: `${formatNumber(result.analysis.effectiveAmpacity / result.analysis.temperatureDerating / result.analysis.groupingFactor, 0)}A × ${formatNumber(result.analysis.temperatureDerating, 2)} (temp) × ${formatNumber(result.analysis.groupingFactor, 2)} (grouping)`,
+                      value: `${formatNumber(result.analysis.effectiveAmpacity, 0)}A effective capacity`,
+                    },
+                    ...(hasVoltageDropData
+                      ? [
+                          {
+                            label: 'Voltage drop',
+                            formula: `Vd = ${loadCurrent}A × ${formatNumber(result.wire.resistance, 1)} mΩ/m × 2 × ${length}m ÷ 1000`,
+                            value: `${formatNumber(result.analysis.voltageDrop, 1)}V (${formatNumber(result.analysis.voltageDropPercentage, 1)}%)`,
+                          },
+                        ]
+                      : []),
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      {parseFloat(loadCurrent) > 0 && (
+                        <p className="text-sm text-white">
+                          This cable can safely carry{' '}
+                          <span className="font-medium">
+                            {formatNumber(result.analysis.effectiveAmpacity)}A
+                          </span>{' '}
+                          continuous load in {installationType} installation.
+                        </p>
+                      )}
+                      {result.analysis.voltageDropPercentage > 0 && (
+                        <p className="text-sm text-white">
+                          Voltage drop of{' '}
+                          <span className="font-medium">
+                            {formatNumber(result.analysis.voltageDropPercentage, 1)}%
+                          </span>{' '}
+                          {result.analysis.voltageDropPercentage <= 5 ? 'meets' : 'exceeds'} BS 7671
+                          requirements.
+                        </p>
+                      )}
+                      {result.analysis.powerLoss > 0 && (
+                        <p className="text-sm text-white">
+                          Power losses of{' '}
+                          <span className="font-medium">
+                            {formatNumber(result.analysis.powerLoss)}W
+                          </span>{' '}
+                          reduce system efficiency.
+                        </p>
+                      )}
+                      <div className="space-y-1 pt-2 border-t border-white/10">
+                        <p className="text-sm text-white font-medium">Practical Tips</p>
+                        <ul className="space-y-1">
+                          {[
+                            'Verify actual installation conditions match calculations',
+                            'Consider future load increases when selecting cable size',
+                            'Use appropriate protective devices rated for cable ampacity',
+                            'Ensure adequate mechanical protection for installation method',
+                            ...(parseFloat(ambientTemp) > 40
+                              ? ['High ambient temperature — consider ventilation']
+                              : []),
+                          ].map((tip, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-white">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {tip}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── BS 7671 Reference ── */}
+                <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>BS 7671 Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showRegs && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-2"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          { reg: 'Section 523', desc: 'Current-carrying capacity' },
+                          { reg: 'Appendix 4', desc: 'Voltage drop limits (5%)' },
+                          { reg: 'Regulation 411', desc: 'Protective measures' },
+                          { reg: 'Section 433', desc: 'Overload protection' },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Voltage Drop"
+              formula="Vd = I × R × 2L"
+              variables={[
+                { symbol: 'Vd', description: 'Voltage drop (V)' },
+                { symbol: 'I', description: 'Load current (A)' },
+                { symbol: 'R', description: 'Conductor resistance (mΩ/m)' },
+                { symbol: '2L', description: 'Total cable length (go and return)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={wireGaugeContent} category={CAT} />}
       />
-      <CalculatorEditorial content={wireGaugeContent} category={CAT} />
     </CalculatorCard>
   );
 };

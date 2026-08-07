@@ -551,7 +551,7 @@ export default function WhatIsEarthingPage() {
   return (
     <GuideTemplate
       title="What Is Earthing? | Why Electrical Earthing Matters"
-      description="Plain English guide to electrical earthing. Why earthing matters for safety, how it works, TN-S, TN-C-S (PME), and TT earthing arrangements explained…"
+      description="Plain English guide to electrical earthing. Why earthing matters for safety, how it works, TN-S, TN-C-S (PME), and TT earthing arrangements explained."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

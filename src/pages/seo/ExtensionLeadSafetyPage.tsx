@@ -1,17 +1,28 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  ShieldCheck,
-  AlertTriangle,
-  Zap,
-  FileCheck2,
-  CheckCircle,
-  Home,
-  Thermometer,
-  PoundSterling,
-} from 'lucide-react';
+import { ShieldCheck, Zap, FileCheck2, Home } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared layout classes — edge-to-edge on phones, inset from sm: up
+// -------------------------------------------------------------------
+
+// The article column is px-5 on phones (SEOPageShell), so -mx-5 is a true full
+// bleed on mobile; from sm: up the cards inset and round as normal.
+const tableWrap =
+  '-mx-5 my-5 overflow-x-auto rounded-none border-y border-white/[0.12] bg-[hsl(0_0%_9%)] ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const cardWrap =
+  '-mx-5 my-5 rounded-none border-y border-white/[0.12] bg-[hsl(0_0%_9%)] p-5 ' +
+  'sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6';
+
+const th = 'px-4 py-3 text-left font-semibold text-white whitespace-nowrap';
+const td = 'px-4 py-3 align-top text-white';
+const tdNum = 'px-4 py-3 align-top text-white whitespace-nowrap tabular-nums';
+const tdReg = 'px-4 py-3 align-top font-mono text-elec-yellow whitespace-nowrap';
+const subHead = 'mt-8 mb-3 text-[17px] font-semibold tracking-tight text-white';
+const termList = 'space-y-4 text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -36,50 +47,55 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Never exceed 13A total load across all appliances on a single extension lead — overloading is the leading cause of extension lead fires.',
-  'Never daisy-chain extension leads (plug one into another) — this is a fire risk and a common cause of overloading.',
-  'Always fully uncoil cable drum extension leads before use — a coiled 13A lead can overheat and melt its own insulation.',
-  'Outdoor extension leads must have an IP44 rating or higher and must be plugged into an RCD-protected socket.',
-  'RCD-protected extension leads add meaningful protection for power tools and garden equipment.',
-  'BS 7671:2018+A4:2026 (Reg 411.3.3) now requires RCD protection (≤30 mA) for all socket outlets ≤32 A in dwellings — omission is not permitted.',
-  'If you need an extension lead permanently in the same spot, the right solution is to have an additional socket outlet installed by a registered electrician.',
+  'Never exceed 13 A total across everything plugged into one extension lead — that is about 3,000 W at 230 V. Overloading is the leading cause of extension lead fires.',
+  'Never daisy-chain extension leads (plug one into another) — it puts the whole combined load through the original socket and creates an extra connection that can arc.',
+  'Always fully unwind a cable drum before applying any load. Coiled cable cannot shed the heat it generates and can melt its own insulation.',
+  'Outdoor leads should be IP44 or better, and must be RCD-protected: BS 7671:2018+A4:2026 Reg 411.3.3(c) requires 30 mA RCD protection for mobile equipment rated up to 32 A used outdoors, with no risk-assessment exception.',
+  'Reg 411.3.3 also requires 30 mA RCD protection for socket-outlets up to 32 A. The documented risk-assessment exception applies only to indent (b) — never where ordinary persons (BA1) or children (BA2) are liable to use the socket, so it is not available in a home.',
+  'If an RCD lead trips repeatedly, treat it as a fault. Reg 531.3.2(c) expects total leakage downstream of an RCD to stay below 30% of its rating — 9 mA on a 30 mA device.',
+  'If you need an extension lead permanently in the same spot, the right answer is an additional socket-outlet fitted by a registered electrician.',
 ];
 
 const faqs = [
   {
     question: 'How many appliances can I plug into an extension lead?',
     answer:
-      'There is no fixed maximum number of appliances — what matters is the total current draw. A standard UK extension lead is rated at 13A at 230V, giving a maximum power load of around 3,000W. Add up the wattages of all appliances you intend to use simultaneously and divide by 230 to get the total current in amps. This must not exceed 13A. High-wattage appliances such as kettles (2,500W / 10.9A) or electric heaters (2,000–3,000W) should ideally not share an extension lead with other appliances.',
+      'There is no fixed maximum number of appliances — what matters is the total current draw. A standard UK extension lead is rated at 13 A, which at 230 V is a maximum of about 3,000 W. Add up the wattages of everything you intend to run at the same time and divide by 230 to get the total current in amps. That total must not exceed 13 A. High-wattage appliances such as kettles (2,500 W, about 10.9 A) or electric heaters (2,000-3,000 W) should not share an extension lead with anything else.',
   },
   {
     question: 'Is it safe to plug an extension lead into another extension lead?',
     answer:
-      'No — daisy-chaining extension leads (plugging one into another) is unsafe and should never be done. It multiplies the risk of overloading the circuit and the original socket. The connection point between the two leads also creates a potential arcing and overheating hazard. If you need more sockets, use a single extension lead with an adequate number of outlets, or have additional sockets installed.',
+      'No. Daisy-chaining extension leads is unsafe and should never be done. The combined load of everything on both leads passes through the original socket-outlet and through the plug-and-socket joint between the two leads, and neither is designed to be a permanent load-bearing connection. That joint can work loose under load and arc, which generates heat. If you need more outlets, use a single lead with enough sockets, or have additional sockets installed.',
   },
   {
     question: 'Do I need to uncoil my extension lead fully?',
     answer:
-      'Yes, for cable drum extension leads (cable reels). When a cable is coiled, the magnetic fields of individual turns cancel out less effectively and the insulation acts as a heat trap. A fully coiled 13A rated cable drum extension carrying a significant load can reach temperatures sufficient to melt its own insulation and cause a fire. Always fully uncoil cable drum reels before use, even if you only need a short length.',
+      'Yes, for cable drum extension leads. The reason is thermal, not magnetic: a conductor carrying current generates heat in proportion to the square of that current, and on a drum each turn of cable is surrounded by other warm turns and by the drum body, so the heat has nowhere to go. A coiled drum carrying a heavy load can exceed the temperature its insulation is rated for and melt it. Always unwind the drum completely before you plug the load in, even for a short run. If a drum carries a reduced rating for coiled use, that lower figure is the only load it may carry wound on.',
   },
   {
     question: 'What IP rating do I need for an outdoor extension lead?',
     answer:
-      'Outdoor extension leads must have an IP (Ingress Protection) rating of at least IP44, which means protected against solid objects greater than 1mm and against water splashing from any direction. For use in very wet conditions or near irrigation, IP55 or higher is preferable. Never use an indoor-rated extension lead outdoors — the insulation and connectors are not designed to withstand moisture.',
+      'Look for IP44 or better. The first digit, 4, means protection against solid objects of 1 mm and larger; the second digit, 4, means protection against splashing water from any direction. For very wet conditions or near irrigation, IP55 or higher is preferable. Never use an indoor-rated lead outdoors — its insulation and connectors are not built to keep moisture out. Note that IP44 is a product rating on the lead, not a figure set by BS 7671.',
   },
   {
     question: 'What is an RCD-protected extension lead?',
     answer:
-      'An RCD-protected extension lead contains a built-in Residual Current Device (RCD) that trips in milliseconds if it detects a current imbalance suggesting electricity is flowing through a person. These are particularly valuable for power tools, garden equipment, and any situation where the lead may be cut or damaged. Look for leads with a 30mA RCD — this is the rating that provides protection against electrocution.',
+      'It is an extension lead with a residual current device built into the plug or the socket block. The RCD monitors the current flowing out and back, and disconnects if the two do not match — which is what happens when current leaks to earth through a damaged cable or through a person. Choose 30 mA: that is the rating BS 7671 recognises for additional protection against electric shock. Higher ratings such as 100 mA or 300 mA are used for fire protection and will not protect a person. Under Reg 643.8, a general non-delay RCD is deemed effective where it disconnects within 300 ms on an AC test at its rated residual operating current.',
+  },
+  {
+    question: 'Why does my RCD extension lead keep tripping?',
+    answer:
+      'Repeated tripping is nearly always leakage to earth, not a faulty RCD. Every connected appliance leaks a small current to earth even when healthy, and BS 7671 Reg 531.3.2(c) expects the accumulated protective conductor and earth leakage current downstream of an RCD to stay below 30% of its rated residual operating current — 9 mA on a 30 mA device. Several tools or appliances on one lead can reach that between them before anything is actually wrong. Damp connectors, wet tools and water-ingress in a damaged cable all add leakage. Unplug everything, then reconnect one item at a time to find the culprit. Never fit a higher-rated RCD or bypass one to stop the tripping.',
   },
   {
     question: 'Can I use an extension lead permanently?',
     answer:
-      'Extension leads are designed for temporary use. Using an extension lead as a permanent solution — especially under carpets, around door frames, or in hidden locations — is a fire risk. If you regularly need an extension lead in the same position, the correct solution is to have a registered electrician install additional socket outlets. This is safer, neater, and protects your home insurance validity.',
+      'Extension leads are designed for temporary use. Running one permanently — especially under carpets, around door frames, or anywhere it is hidden and cannot be inspected — is a fire risk. If you regularly need power in the same position, have a registered electrician install additional socket-outlets. It is safer, it is neater, and the work is certificated.',
   },
   {
     question: 'What fuse should be in an extension lead plug?',
     answer:
-      'Most standard extension leads are rated at 13A, so the plug should contain a 13A fuse (coloured brown). Some lighter-duty leads or trailing sockets rated below 13A may be fitted with a 3A (red) or 5A (black) fuse — check the lead\'s rating label. Never replace a blown fuse with one of a higher rating to "fix" a tripping problem — a blown fuse indicates a fault that must be investigated.',
+      'BS 7671 Table 55.1 lists BS 1363 as the standard for 13 A fused plugs and shuttered socket-outlets, with fuses to BS 1362. Most extension leads are rated 13 A and take a 13 A fuse (brown). Lighter-duty leads and trailing sockets may be rated lower and fitted with a smaller fuse — check the rating label on the lead rather than assuming. Never fit a higher-rated fuse to stop a lead blowing: a fuse that keeps operating is reporting a fault that needs investigating.',
   },
 ];
 
@@ -128,63 +144,84 @@ const sections = [
     content: (
       <>
         <p>
-          Extension leads are one of the most commonly misused items in UK homes and workplaces.
-          Electrical Safety First estimates that overloaded extension leads cause thousands of fires
-          in the UK every year. The combination of multiple high-wattage appliances, coiled cables,
-          and the temptation to daisy-chain leads creates conditions that can result in fire and
-          electric shock.
+          Extension leads are among the most commonly misused items in UK homes and workplaces. Four
+          habits account for almost all of the harm they cause: loading them past 13 A, plugging one
+          into another, running them straight off a coiled drum, and taking an indoor lead outside.
+          Each of those is a fire or shock risk on its own, and they tend to happen together.
         </p>
         <p>
-          The good news is that extension lead hazards are almost entirely preventable. A small
-          amount of knowledge about load limits, lead types, and safe usage turns a potential hazard
-          into a safe, useful tool.
+          The good news is that every one of them is avoidable without any specialist knowledge. The
+          rest of this guide covers the load limit, the two rules that are never worth breaking, the
+          RCD requirements that BS 7671:2018+A4:2026 actually sets, and the point at which a fixed
+          socket-outlet becomes the correct answer.
         </p>
       </>
     ),
   },
   {
     id: 'load-calculation',
-    heading: 'Load Calculation: Do Not Exceed 13A',
+    heading: 'Load Calculation: Do Not Exceed 13 A',
     content: (
       <>
         <p>
-          Every UK standard extension lead is rated at a maximum of 13 amperes (A) at 230 volts,
-          giving a maximum power capacity of approximately 3,000 watts (W). Before plugging in
-          multiple appliances, calculate the total load.
+          A standard UK extension lead is rated at 13 A. At 230 V that is a ceiling of roughly 3,000
+          W across everything plugged into it at once — not per socket. To check a combination,
+          divide each appliance wattage by 230 and add up the results.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <p className="font-semibold text-white mb-3">Load calculation: Amps = Watts ÷ 230V</p>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>Kettle (2,500W) — approximately 10.9A</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>Electric heater (2,000W) — approximately 8.7A</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>Microwave (1,000W) — approximately 4.3A</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>Laptop charger (65W) — approximately 0.3A</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>Television (100W) — approximately 0.4A</span>
-            </li>
-          </ul>
-          <p className="text-white mt-3 text-sm">
-            A kettle alone uses nearly 11A — almost the entire capacity of a 13A extension lead.
-            Never plug a kettle and a microwave into the same extension lead simultaneously.
+        <div className={cardWrap}>
+          <p className="text-[15px] font-semibold text-white">Amps = Watts ÷ 230 V</p>
+          <p className="mt-2 text-[14.5px] leading-relaxed text-white">
+            13 A × 230 V = 2,990 W. Once the running total passes 13 A, something has to come off
+            the lead.
           </p>
         </div>
+        <div className={tableWrap}>
+          <table className="w-full min-w-[420px] border-collapse text-[14.5px]">
+            <thead className="border-b border-white/[0.12]">
+              <tr>
+                <th className={th}>Appliance</th>
+                <th className={th}>Typical power</th>
+                <th className={th}>Approx. current at 230 V</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={td}>Kettle</td>
+                <td className={tdNum}>2,500 W</td>
+                <td className={tdNum}>10.9 A</td>
+              </tr>
+              <tr>
+                <td className={td}>Electric heater</td>
+                <td className={tdNum}>2,000 W</td>
+                <td className={tdNum}>8.7 A</td>
+              </tr>
+              <tr>
+                <td className={td}>Microwave</td>
+                <td className={tdNum}>1,000 W</td>
+                <td className={tdNum}>4.3 A</td>
+              </tr>
+              <tr>
+                <td className={td}>Television</td>
+                <td className={tdNum}>100 W</td>
+                <td className={tdNum}>0.4 A</td>
+              </tr>
+              <tr>
+                <td className={td}>Laptop charger</td>
+                <td className={tdNum}>65 W</td>
+                <td className={tdNum}>0.3 A</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <p>
-          Check the wattage label on the back or underside of each appliance and add up the totals.
-          Most extension leads also have a maximum load label — always respect it. Some economy
-          leads are rated at less than 13A despite having a 13A plug fuse.
+          A kettle alone draws close to 11 A — almost the whole capacity of the lead. Add the
+          microwave and you are over the limit before anything else is plugged in. Heating loads are
+          the ones that catch people out; electronics barely register.
+        </p>
+        <p>
+          Check the rating label on the back or underside of each appliance and add the totals.
+          Extension leads carry a maximum load label too, and it is worth reading: some economy
+          leads are rated below 13 A even though they are fitted with a 13 A plug fuse.
         </p>
       </>
     ),
@@ -199,43 +236,43 @@ const sections = [
           things you can do with extension leads. It is prohibited in many workplace settings and is
           a common cause of electrical fires in homes.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Compound overloading risk</strong> — the total load on a daisy-chain appears
-                at the original socket outlet and at the connection between the two leads. The
-                original socket, its wiring, and the plug connection all carry the full combined
-                load.
-              </span>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>Compound overloading.</strong> The total load on the chain appears at the
+              original socket-outlet and at the joint between the two leads. That original socket,
+              its wiring and its plug connection carry the full combined load, however sensible each
+              individual lead looks.
             </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Arcing at the connection point</strong> — the connection between the first
-                lead's socket and the second lead's plug is a loose mechanical contact that can arc
-                if it works loose under load. Arcing generates heat and is a direct fire hazard.
-              </span>
+            <li>
+              <strong>Arcing at the joint.</strong> The connection between the first lead&rsquo;s
+              socket and the second lead&rsquo;s plug is a mechanical contact that can work loose
+              under load. A loose contact under load arcs, and arcing generates heat inside a
+              plastic enclosure.
             </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>The correct solution</strong> — use a single extension lead with sufficient
-                sockets, or have additional socket outlets installed by a registered electrician.
-                See the section below on when to upgrade to a permanent socket.
-              </span>
+            <li>
+              <strong>The correct answer.</strong> Use one lead with enough sockets, or have extra
+              socket-outlets installed. See the section below on when to upgrade.
             </li>
           </ul>
         </div>
+        <h3 className={subHead}>Where AFDDs fit in</h3>
         <p>
-          BS 7671:2018+A4:2026 Regulation 421.1.7 recommends that your electrician fits an Arc Fault
-          Detection Device (AFDD) at the consumer unit on the AC final circuit supplying your
-          sockets. An AFDD monitors the circuit continuously and disconnects the supply if it
-          detects the current patterns associated with serial arcing — exactly the type of arcing
-          that occurs at a loose or worn connection, such as an overloaded extension lead plug
-          worked loose under load. This provides a layer of upstream arc-fire protection that a fuse
-          or MCB alone cannot offer.
+          An arc fault detection device (AFDD) watches a circuit continuously and disconnects it on
+          the current signature of a series arc — exactly what a worn or loosened plug connection
+          produces. It catches a fault that a fuse or MCB cannot see, because an arcing loose
+          connection does not necessarily draw enough current to operate either of them.
+        </p>
+        <p>
+          BS 7671:2018+A4:2026 Regulation 421.1.7 was redrafted at Amendment 4. AFDDs conforming to
+          BS EN 62606 are now <strong>required</strong> for single-phase AC final circuits supplying
+          socket-outlets rated up to 32 A in high-rise residential buildings, houses in multiple
+          occupation, purpose-built student accommodation and care homes. For all other premises,
+          including an ordinary house, the regulation <strong>recommends</strong> them rather than
+          requiring them. Where they are used they must be placed at the origin of the circuit
+          protected (Reg 421.1.7, and Reg 532.6 for AC single-phase circuits not exceeding 230 V) —
+          in practice, in the consumer unit. Fitting one does not remove the need for the other
+          protective measures BS 7671 requires.
         </p>
       </>
     ),
@@ -246,47 +283,100 @@ const sections = [
     content: (
       <>
         <p>
-          An RCD (Residual Current Device) protected extension lead contains a built-in RCD that
-          trips in milliseconds if electricity starts flowing through an unintended path — for
-          example, through a person who has cut through the cable or touched a live conductor. These
-          leads significantly reduce the risk of fatal electric shock.
+          A residual current device compares the current flowing out along the line conductor with
+          the current returning along the neutral. If they differ, current is escaping somewhere it
+          should not — through a damaged cable, a wet connection, or a person — and the RCD
+          disconnects. A 30 mA device is the rating BS 7671 recognises for additional protection
+          against electric shock. Under Reg 643.8, a general non-delay RCD is deemed effective where
+          it disconnects within 300 ms on an alternating current test at its rated residual
+          operating current.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Use for power tools</strong> — always use an RCD-protected extension lead or
-                plug-in RCD adaptor when using power tools such as drills, circular saws, and angle
-                grinders. A 30mA RCD can trip fast enough to prevent a fatal shock even if you cut
-                through the cable.
-              </span>
+        <h3 className={subHead}>What Regulation 411.3.3 actually requires</h3>
+        <p>
+          Amendment 4 redrafted Reg 411.3.3 into three indents. In AC systems, additional protection
+          by an RCD rated not more than 30 mA shall be provided for:
+        </p>
+        <div className={tableWrap}>
+          <table className="w-full min-w-[560px] border-collapse text-[14.5px]">
+            <thead className="border-b border-white/[0.12]">
+              <tr>
+                <th className={th}>Indent</th>
+                <th className={th}>Applies to</th>
+                <th className={th}>Risk-assessment exception?</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={tdReg}>411.3.3(a)</td>
+                <td className={td}>
+                  Socket-outlets rated up to 32 A in locations where they are liable to be used by
+                  ordinary persons (BA1) or children (BA2)
+                </td>
+                <td className={td}>No</td>
+              </tr>
+              <tr>
+                <td className={tdReg}>411.3.3(b)</td>
+                <td className={td}>Socket-outlets rated up to 32 A in other locations</td>
+                <td className={td}>
+                  Yes — only on a suitably documented risk assessment undertaken with the
+                  involvement of a skilled person (electrically), supplied with the certificate
+                </td>
+              </tr>
+              <tr>
+                <td className={tdReg}>411.3.3(c)</td>
+                <td className={td}>
+                  Mobile equipment rated up to 32 A for use outdoors — power tools, mowers, hedge
+                  trimmers
+                </td>
+                <td className={td}>No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Two things follow. A home is a location liable to be used by ordinary persons and
+          children, so indent (a) applies and there is no exception to fall back on. And anything
+          portable you take outside falls under indent (c) in its own right — so a mower or a drill
+          used in the garden needs 30 mA RCD protection whether or not the socket it is fed from
+          happens to have it.
+        </p>
+        <p>
+          That protection can come from the RCD or RCBO in the consumer unit, from an RCD built into
+          the lead, or from a plug-in RCD adaptor that sits between the plug and the socket. All
+          three work; the point is that one of them is present.
+        </p>
+        <h3 className={subHead}>Why an RCD lead trips constantly</h3>
+        <p>
+          Persistent tripping is normally leakage, not a defective device. Every healthy appliance
+          leaks a small current to earth, and Reg 531.3.2(c) expects the accumulated protective
+          conductor and earth leakage currents downstream of an RCD to be no more than 30% of its
+          rated residual operating current — <strong>9 mA on a 30 mA RCD</strong>. Put several
+          tools, a jet washer and a site radio on one lead and they can pass that between them with
+          nothing actually faulty.
+        </p>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>Split the load.</strong> Reg 531.3.2(a) and (b), and Reg 314.1(d), address
+              exactly this: subdivide circuits so that normal leakage does not trip the device.
+              Practically, run high-leakage tools off their own lead rather than ganging everything
+              onto one.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Use for garden equipment</strong> — lawnmowers, hedge trimmers, and garden
-                power tools must be used with RCD protection. Under BS 7671:2018+A4:2026 Regulation
-                411.3.3, RCD protection (≤30 mA) is now required for all socket outlets rated ≤32 A;
-                in dwellings, omission of RCD protection is not permitted under any exception.
-              </span>
+            <li>
+              <strong>Dry the connections.</strong> Water in a plug, a socket or a nicked cable is a
+              leakage path. Damp is the single most common cause of an outdoor lead tripping in the
+              rain.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>30mA is the protective rating</strong> — only 30mA RCDs provide protection
-                against electrocution. Higher-rated RCDs (100mA, 300mA) protect against fire but not
-                against fatal shock. Ensure your RCD-protected lead is rated at 30mA.
-              </span>
+            <li>
+              <strong>Find the appliance.</strong> Unplug everything, reset, then add items back one
+              at a time. The one that trips it is the one to have looked at.
+            </li>
+            <li>
+              <strong>Never work around it.</strong> Do not fit a higher-rated RCD, bypass the
+              device or hold the test button. A device that keeps operating is reporting something.
             </li>
           </ul>
         </div>
-        <p>
-          If the sockets in your home or workplace are not already RCD-protected, you can also use a
-          plug-in RCD adaptor (a small device that fits between the plug and the socket) to add
-          protection. These cost around £10 to £20 and provide 30mA protection for the appliance
-          plugged into them.
-        </p>
       </>
     ),
   },
@@ -296,38 +386,29 @@ const sections = [
     content: (
       <>
         <p>
-          Cable drum extension leads — the type wound on a reel — present a specific hazard that
-          flat extension leads do not: overheating when used while coiled.
+          Cable drum extension leads carry a hazard that flat leads do not: they overheat if used
+          while still wound on the drum.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Why coiling causes overheating</strong> — when a conductor carries current,
-                it generates heat proportional to the square of the current (P = I²R). In a coil,
-                this heat cannot dissipate effectively — each turn insulates adjacent turns. A 13A
-                cable carrying significant current while coiled can reach temperatures far above its
-                insulation rating.
-              </span>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>Why coiling overheats.</strong> A conductor carrying current generates heat in
+              proportion to the square of that current (P = I²R). On a drum, every turn of cable is
+              surrounded by other warm turns and by the drum body, so the heat has nowhere to go.
+              The temperature climbs until the cable is losing as much heat as it makes — and on a
+              fully wound drum under load that point can be well above what the insulation is rated
+              for.
             </li>
-            <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>The fire risk is real</strong> — there are documented cases of cable drum
-                extension leads causing fires when used coiled under load. The insulation melts,
-                conductors contact each other or the drum casing, and a fire starts. This can happen
-                in minutes with a high load.
-              </span>
+            <li>
+              <strong>The fire risk is real.</strong> Wound drums are a known cause of fires. The
+              insulation softens and melts, the conductors touch each other or the drum, and it goes
+              from there. Under a heavy load it does not take long.
             </li>
-            <li className="flex items-start gap-3">
-              <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>The rule: always fully uncoil</strong> — before plugging in any load, unwind
-                the entire cable from the drum. This applies even if you only need a short length.
-                Some cable drums have a coiled-use rating printed on them at a very low wattage — if
-                so, only use at that rating or lower if you cannot fully uncoil.
-              </span>
+            <li>
+              <strong>The rule.</strong> Unwind the whole cable before you plug anything in, even
+              for a short run. If the drum carries a separate reduced rating for coiled use, that
+              lower figure is the only load it may carry wound on — and it is usually a few hundred
+              watts, not enough for a heater or a kettle.
             </li>
           </ul>
         </div>
@@ -340,46 +421,72 @@ const sections = [
     content: (
       <>
         <p>
-          Using the wrong extension lead outdoors is a common cause of electric shock. Indoor
-          extension leads are not weatherproof and must not be used in gardens, on patios, or in any
-          location where they may be exposed to rain, damp, or moisture.
+          Choosing a lead for outdoor power tools comes down to four checks. Get these right and the
+          lead will neither overheat nor nuisance-trip.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>IP44 minimum for outdoor use</strong> — IP44 means the lead and its
-                connections are protected against solid particles greater than 1mm and against water
-                splashing from any direction. Look for the IP44 (or higher) marking on the lead
-                itself, not just on the packaging.
-              </span>
+        <div className={tableWrap}>
+          <table className="w-full min-w-[520px] border-collapse text-[14.5px]">
+            <thead className="border-b border-white/[0.12]">
+              <tr>
+                <th className={th}>Check</th>
+                <th className={th}>What good looks like</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={td}>Weather rating</td>
+                <td className={td}>
+                  IP44 or better, marked on the lead body itself and not only on the packaging.
+                  Higher, such as IP55, for very wet conditions
+                </td>
+              </tr>
+              <tr>
+                <td className={td}>RCD</td>
+                <td className={td}>
+                  30 mA — built into the lead, a plug-in adaptor, or the socket it feeds from. Reg
+                  411.3.3(c) requires it for mobile equipment up to 32 A used outdoors, with no
+                  exception
+                </td>
+              </tr>
+              <tr>
+                <td className={td}>Cable</td>
+                <td className={td}>
+                  Fully unwound off the drum before any load is applied, and long enough to reach
+                  without a second lead joined on
+                </td>
+              </tr>
+              <tr>
+                <td className={td}>Load</td>
+                <td className={td}>
+                  Everything running at once under 13 A in total, about 3,000 W. One tool per lead
+                  where the tool is a heavy one
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          IP44 is a product rating under BS EN 60529, not a figure set by BS 7671. The first digit
+          means protection against solid objects of 1 mm and larger; the second means protection
+          against splashing water from any direction. An indoor lead has neither, which is why it
+          must never be used in a garden, on a patio, or anywhere it can be rained on.
+        </p>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>Keep the connections out of the wet.</strong> Even a weatherproof lead should
+              not have its socket end lying in standing water. If a connection does get wet, let it
+              dry completely before reconnecting.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Connect to an RCD-protected socket</strong> — under BS 7671:2018+A4:2026
-                Regulation 411.3.3, all socket outlets rated ≤32 A in a dwelling must be
-                RCD-protected (≤30 mA) with no omission permitted. If your outdoor socket is not
-                RCD-protected, use a plug-in RCD adaptor rated at 30 mA until the installation is
-                upgraded.
-              </span>
+            <li>
+              <strong>Store it indoors.</strong> UV, frost and temperature cycling degrade the
+              sheath. Bring outdoor leads in after use and look them over before each use for
+              cracking, cuts and crushed sections.
             </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Keep connections dry</strong> — even weatherproof leads should not have
-                their socket end submerged or left in standing water. If connections become wet,
-                allow them to dry completely before reconnecting.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Store indoors after use</strong> — UV exposure, frost, and temperature
-                cycles degrade extension lead insulation over time. Store outdoor leads indoors and
-                inspect them before each use for cracking or damage.
-              </span>
+            <li>
+              <strong>Watch the leakage.</strong> Wet tools and damp connectors are the usual reason
+              an outdoor lead trips repeatedly — see the RCD section above before assuming the
+              device is faulty.
             </li>
           </ul>
         </div>
@@ -392,53 +499,50 @@ const sections = [
     content: (
       <>
         <p>
-          Extension leads are designed as a temporary solution. If you find yourself regularly using
-          an extension lead in the same location, or running leads across floors, under rugs, or
-          through doorways, it is time to have a qualified electrician install additional socket
-          outlets.
+          Extension leads are a temporary solution. If you are reaching for one in the same place
+          every day, or running leads across floors, under rugs or through doorways, it is time to
+          have a qualified electrician fit additional socket-outlets.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Cost</strong> — adding a double socket outlet typically costs £80 to £200
-                depending on location and the ease of running new cabling. This is a one-time cost
-                that eliminates a permanent fire risk.
-              </span>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>Cost.</strong> Adding a double socket-outlet is commonly quoted in the region
+              of £80 to £200 depending on the position and how easily new cable can be run. It is a
+              one-off cost that removes a standing risk.
             </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Insurance and compliance</strong> — a properly installed socket outlet
-                fitted by a registered electrician comes with an Electrical Installation Certificate
-                (EIC) or a Minor Works Certificate, demonstrating compliance with Part P of the
-                Building Regulations.
-              </span>
+            <li>
+              <strong>Certification.</strong> A socket-outlet fitted by a registered electrician
+              comes with an Electrical Installation Certificate or a Minor Electrical Installation
+              Works Certificate, recording the tests carried out and the compliance of the work.
             </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Outdoor sockets</strong> — if you regularly use power tools or garden
-                equipment, having a dedicated weatherproof outdoor socket installed is significantly
-                safer than running an extension lead from an indoor socket.
-              </span>
+            <li>
+              <strong>Outdoor sockets.</strong> If you use power tools or garden equipment
+              regularly, a dedicated weatherproof outdoor socket is far better than feeding a lead
+              out through a window or door every time.
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <p className="text-white text-sm">
-            <strong>A4:2026 requirement:</strong> Under BS 7671:2018+A4:2026 Regulation 411.3.3, any
-            new or replacement socket outlet (≤32 A) in a dwelling must be RCD-protected at ≤30 mA —
-            omission is not permitted. Socket outlets incorporating an integral RCD to BS 7288:2016
-            are a neat single-device solution that satisfies this requirement without fitting a
-            separate RCD upstream.
+        <div className={cardWrap}>
+          <p className="text-[15px] font-semibold text-white">
+            What A4:2026 means for a new socket
+          </p>
+          <p className="mt-2 text-[14.5px] leading-relaxed text-white">
+            Under Reg 411.3.3, a new or replacement socket-outlet rated up to 32 A in a home needs
+            additional protection by an RCD not exceeding 30 mA, and the documented risk-assessment
+            exception is not available where ordinary persons or children are liable to use it. That
+            protection usually comes from an RCD or RCBO in the consumer unit. Where running a new
+            protected circuit is impractical, Reg 531.3.6 also recognises a socket-outlet
+            incorporating an RCD (an SRCD) to BS 7288 for additional protection — but note that BS
+            7288 devices are intended to provide additional protection only, so the circuit still
+            needs its fault protection from the device at the origin.
           </p>
         </div>
         <p>
-          Find a NICEIC or NAPIT registered electrician to carry out this work. All notifiable work
-          (including new socket circuits) must be registered with building control or completed by a
-          registered competent person who self-certifies the work.
+          In England and Wales this work sits under Part P of the Building Regulations: it must
+          either be notified to building control or carried out by a registered competent person who
+          self-certifies it. Scotland and Northern Ireland have their own equivalent building
+          standards. A NICEIC or NAPIT registered electrician can handle the notification as part of
+          the job.
         </p>
       </>
     ),
@@ -450,64 +554,44 @@ const sections = [
       <>
         <p>
           Not all extension leads on the UK market are equal. Very cheap leads may use undersized
-          conductors or sub-standard insulation, making them unsafe at their rated current.
+          conductors or sub-standard insulation, which makes them unsafe at the current printed on
+          the label.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Check for a BS 1363 plug</strong> — BS 1363 is the British Standard
-                governing UK 13 A fused plugs and shuttered socket outlets (as required by BS 7671
-                Table 55.1). Every extension lead sold for UK use must be fitted with a BS 1363
-                fused plug containing a BS 1362 fuse. Look for the BS 1363 marking on the plug body
-                — an unmarked plug is a sign of a non-compliant product.
-              </span>
+        <div className={cardWrap}>
+          <ul className={termList}>
+            <li>
+              <strong>A BS 1363 plug.</strong> BS 7671 Table 55.1 lists BS 1363 as the standard for
+              13 A fused plugs and shuttered socket-outlets, with fuses to BS 1362, and Reg
+              553.1.201 requires socket-outlets for household use to be of the shuttered type. Look
+              for the BS 1363 marking moulded into the plug body — an unmarked plug is a warning
+              sign.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Look for UKCA or CE marking</strong> — this confirms the lead has been
-                assessed against UK or European safety standards. Avoid very cheap leads without
-                clear conformity markings.
-              </span>
+            <li>
+              <strong>UKCA or CE marking.</strong> This is the manufacturer&rsquo;s declaration that
+              the lead has been assessed against the applicable safety standards. Avoid anything
+              without clear conformity marking.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Check the conductor size</strong> — a 13A extension lead should have
-                conductors of at least 1.25mm². Leads with thinner conductors may overheat before
-                the 13A fuse blows. Good-quality leads will state the conductor size on the lead
-                itself or packaging.
-              </span>
+            <li>
+              <strong>Conductor size.</strong> A lead intended for the full 13 A should state its
+              conductor size, and a thin flex on a 13 A label is the classic corner cut — it will
+              get hot long before the fuse notices. Good leads print the size on the sheath.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Individual switched sockets</strong> — extension leads with individually
-                switched socket outlets make it easy to turn off appliances without unplugging them,
-                reducing the total standby load and making the lead safer and more convenient.
-              </span>
+            <li>
+              <strong>Individually switched sockets.</strong> Being able to switch an appliance off
+              without unplugging it makes the lead easier to live with and cuts the standby load
+              sitting on it.
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Surge protection for sensitive electronics</strong> — for computers,
-                televisions, and audio equipment, consider a surge-protected extension lead. These
-                contain metal oxide varistors (MOVs) that absorb voltage spikes. See our guide on{' '}
-                <SEOInternalLink href="/power-surge-protection">
-                  power surge protection
-                </SEOInternalLink>{' '}
-                for more detail.
-              </span>
+            <li>
+              <strong>Surge protection, for electronics only.</strong> For computers, televisions
+              and audio equipment, a surge-protected lead adds metal oxide varistors that clamp
+              voltage spikes. It does nothing for overload or shock risk. See our guide on{' '}
+              <SEOInternalLink href="/power-surge-protection">
+                power surge protection
+              </SEOInternalLink>{' '}
+              for the detail.
             </li>
           </ul>
         </div>
-        <SEOAppBridge
-          title="1m 1 Socket Extension Lead | BS 7671:2018+A4:2026"
-          description="1m single socket extension lead rated 1300W. BS 7671:2018+A4:2026 compliant, heavy-duty construction for site and workshop use."
-          icon={FileCheck2}
-        />
       </>
     ),
   },
@@ -520,25 +604,25 @@ const sections = [
 export default function ExtensionLeadSafetyPage() {
   return (
     <GuideTemplate
-      title="Extension Lead Safety UK | Load + Daisy-Chain Rules"
-      description="Extension lead safety: 13A load limit, why daisy-chaining is dangerous, when to use an RCD lead, and the BS 1363 plug marking to check before buying."
+      title="Extension Lead Safety: 13A Max, 30mA RCD, IP44"
+      description="Never exceed 13 A (about 3,000 W) on one extension lead, never daisy-chain leads, fully uncoil cable drums, and use IP44 with a 30 mA RCD outdoors."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          Extension Lead Safety UK: <span className="text-yellow-400">The Complete Guide</span>
+          Extension Lead Safety UK: <span className="text-elec-yellow">The Complete Guide</span>
         </>
       }
-      heroSubtitle="Everything you need to know about using extension leads safely in the UK — from calculating loads and avoiding daisy-chaining, to choosing RCD-protected leads and knowing when to get a permanent socket installed."
+      heroSubtitle="How to use extension leads safely in the UK — the 13 A load limit, why daisy-chaining and coiled drums start fires, what BS 7671:2018+A4:2026 requires for RCD protection outdoors, and when a fixed socket is the right answer."
       readingTime={10}
       answerBox={{
         question: 'Are extension leads safe to use permanently in the UK?',
         answer:
-          'Extension leads are designed for temporary use, not permanent wiring. The main risks are overloading (a standard 4-gang lead is rated 13A total — the combined appliance wattages must stay under roughly 3,000W), daisy-chaining leads together, and trailing-cable trip hazards. For a load needed permanently, have an electrician fit a fixed socket-outlet rather than rely on an extension lead, and use RCD-protected leads for outdoor or wet areas.',
+          'Extension leads are designed for temporary use, not permanent wiring. The main risks are overloading (a standard 4-gang lead is rated 13 A total — the combined appliance wattages must stay under roughly 3,000 W), daisy-chaining leads together, using a cable drum still wound, and trailing-cable trip hazards. For a load needed permanently, have an electrician fit a fixed socket-outlet. Outdoors, BS 7671 Reg 411.3.3(c) requires 30 mA RCD protection for mobile equipment rated up to 32 A.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

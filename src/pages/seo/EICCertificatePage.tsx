@@ -542,7 +542,7 @@ export default function EICCertificatePage() {
                   EICs. Regulation 411.3.4 (new in A4:2026) requires that, within domestic premises,
                   AC final circuits supplying luminaires shall have additional protection by a 30 mA
                   RCD — this must be verified on the schedule of inspections for every lighting
-                  circuit. Regulation 421.1.7 (new in A4:2026) recommends arc fault detection
+                  circuit. Regulation 421.1.7 (introduced by Amendment 2:2022) recommends arc fault detection
                   devices (AFDDs) on AC final circuits. The wording is advisory — it does not make
                   them mandatory, and it is not scoped to particular premises types such as HMOs or
                   care homes. Where AFDDs are fitted their operational indication shall be confirmed (Regs

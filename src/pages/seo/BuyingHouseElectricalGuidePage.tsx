@@ -660,7 +660,7 @@ export default function BuyingHouseElectricalGuidePage() {
   return (
     <GuideTemplate
       title="Buying a House Electrical Checklist UK | What to Check"
-      description="Complete guide to electrical checks when buying a house in the UK. What to look for at viewing, getting an EICR during purchase, pre-1966 wiring dangers…"
+      description="Complete guide to electrical checks when buying a house in the UK. What to look for at viewing, getting an EICR during purchase, pre-1966 wiring dangers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

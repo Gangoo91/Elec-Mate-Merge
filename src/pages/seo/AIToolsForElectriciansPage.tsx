@@ -15,8 +15,8 @@ import {
 export default function AIToolsForElectriciansPage() {
   return (
     <GuideTemplate
-      title="AI for Electricians: 7 Tools 2026"
-      description="AI for electricians reduces data entry and admin time on site. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
+      title="AI Tools for Electricians: Board Scan to RAMS"
+      description="What AI actually does for UK electricians: scan a consumer unit, code C1/C2/C3 defects to BS 7671, price jobs and write site-specific RAMS in seconds."
       datePublished="2026-01-15"
       dateModified="2026-06-10"
       breadcrumbs={[

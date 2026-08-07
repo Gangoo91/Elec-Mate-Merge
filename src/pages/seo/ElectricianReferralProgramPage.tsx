@@ -579,7 +579,7 @@ export default function ElectricianReferralProgramPage() {
   return (
     <GuideTemplate
       title="Electrician Referral Programme UK | Building a Referral"
-      description="How to build a referral network as a UK electrician — relationships with builders, plumbers, kitchen fitters, and estate agents; referral fee structures…"
+      description="How to build a referral network as a UK electrician — relationships with builders, plumbers, kitchen fitters, and estate agents; referral fee structures."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

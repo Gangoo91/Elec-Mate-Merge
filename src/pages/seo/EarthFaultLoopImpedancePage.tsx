@@ -42,11 +42,11 @@ const tocItems = [
 
 const keyTakeaways = [
   'Earth fault loop impedance (Zs) is the total impedance of the fault loop path from the point of fault, through the circuit protective conductor (CPC), back to the transformer, and via the phase conductor to the point of fault: Zs = Ze + (R1+R2).',
-  'Zs must be low enough to ensure the protective device (MCB, RCBO, or fuse) operates within the required disconnection time — 0.4 seconds for final circuits and 5 seconds for distribution circuits under BS 7671.',
-  'The measured Zs at the furthest point of each circuit must not exceed the maximum Zs value listed in BS 7671 Chapter 41 — Table 41.2 for fuses (BS 88, BS 3036, BS 1362) and Table 41.3(a)/(b)/(c) for Type B, C, and D MCBs respectively.',
+  'Zs must be low enough to ensure the protective device (MCB, RCBO, or fuse) operates within the required disconnection time — 0.4 seconds for final circuits rated up to 63 A with socket-outlets (or 32 A supplying fixed equipment) under Reg 411.3.2.2, and 5 seconds for distribution circuits and other circuits under Reg 411.3.2.3.',
+  'The measured Zs at the furthest point of each circuit must not exceed the maximum Zs value listed in BS 7671 Chapter 41 — Table 41.2 for fuses at 0.4 s (BS 88-2, BS 88-3, BS 3036, BS 1362), Table 41.4 for the same fuses at 5 s, and Table 41.3(a)/(b)/(c) for Type B, C, and D MCBs respectively.',
   'Temperature correction must be applied when comparing designed (calculated) Zs values with the maximum permitted values, because conductor resistance increases as temperature rises during normal operation.',
   'Elec-Mate includes a Zs calculator that checks measured values against the BS 7671 maximum Zs tables, plus 50+ other calculators including cable sizing, voltage drop, PFC, max demand, and adiabatic equation.',
-  'MCB Zs limits (BS 7671:2018+A4:2026 Table 41.3) cover both final circuits (0.4 s) and distribution circuits (5 s) — a single table entry applies because the instantaneous magnetic trip governs, not the thermal element. For installations with BS 88 or BS 3036 fuses, use Table 41.2 (Reg 411.4.201): the 32 A BS 88-2 gG limit is 0.99 Ω, compared with 1.37 Ω for a 32 A Type B MCB — a lower limit that catches circuits which would otherwise pass.',
+  'MCB Zs limits (BS 7671:2018+A4:2026 Table 41.3, Reg 411.4.202) cover both final circuits (0.4 s) and distribution circuits (5 s). For Type B and Type C a single row applies to both times, because the instantaneous magnetic trip governs rather than the thermal element. Type D is the exception: Table 41.3(c) prints a separate 0.4 s row and 5 s row, and the 5 s values are double the 0.4 s ones. For installations with BS 88 or BS 3036 fuses, use Table 41.2 (Reg 411.4.201): the 32 A BS 88-2 gG limit is 0.99 Ω, compared with 1.37 Ω for a 32 A Type B MCB — a lower limit that catches circuits which would otherwise pass.',
 ];
 
 const faqs = [
@@ -58,12 +58,12 @@ const faqs = [
   {
     question: 'How is Zs measured on site?',
     answer:
-      "Zs is measured using a multifunction tester or a dedicated loop impedance meter. The instrument is connected between the phase and earth terminals at the furthest point of the circuit being tested (for example, at the last socket on a ring or radial circuit). The instrument injects a brief test current, measures the voltage drop, and calculates the impedance using Ohm's law. The result is displayed in ohms. Zs must be measured at every circuit during initial verification and at representative points during periodic inspection. The test should be performed with the circuit energised and all connections made. A no-trip loop impedance test mode is available on most modern instruments — this is essential for circuits protected by RCDs, because a standard loop test may trip the RCD. The measured Zs must be compared with the maximum Zs value from BS 7671 Chapter 41 — Table 41.2 for fuse-protected circuits (Reg 411.4.201) or Table 41.3(a)/(b)/(c) for Type B/C/D MCB-protected circuits (Reg 411.4.204).",
+      "Zs is measured using a multifunction tester or a dedicated loop impedance meter. The instrument is connected between the phase and earth terminals at the furthest point of the circuit being tested (for example, at the last socket on a ring or radial circuit). The instrument injects a brief test current, measures the voltage drop, and calculates the impedance using Ohm's law. The result is displayed in ohms. Zs must be measured at every circuit during initial verification and at representative points during periodic inspection. The test should be performed with the circuit energised and all connections made. A no-trip loop impedance test mode is available on most modern instruments — this is essential for circuits protected by RCDs, because a standard loop test may trip the RCD. The measured Zs must be compared with the maximum Zs value from BS 7671 Chapter 41 — Table 41.2 for fuse-protected circuits at 0.4 s, or Table 41.4 for fuses at 5 s (Regs 411.4.201 and 411.4.203), or Table 41.3(a)/(b)/(c) for Type B/C/D MCB-protected circuits (Reg 411.4.202).",
   },
   {
     question: 'What is Ze and how is it different from Zs?',
     answer:
-      'Ze is the external earth fault loop impedance — the impedance of the supply-side portion of the fault loop, measured at the origin of the installation with the main earthing conductor disconnected from the MET (main earthing terminal). Ze includes the impedance of the supply transformer, the supply phase conductor, and the supply earth return path. It does not include any impedance from the installation itself. Zs is the total earth fault loop impedance at any point in the installation, which includes Ze plus the impedance of the installation cables: Zs = Ze + (R1+R2), where R1 is the resistance of the phase conductor and R2 is the resistance of the protective conductor from the origin to the point of measurement. Ze is typically 0.2 to 0.8 ohms for a TN-S supply and 0.35 to 0.8 ohms for a TN-C-S (PME) supply. The DNO provides a maximum Ze value for each supply.',
+      'Ze is the external earth fault loop impedance — the impedance of the supply-side portion of the fault loop, measured at the origin of the installation with the main earthing conductor disconnected from the MET (main earthing terminal). Ze includes the impedance of the supply transformer, the supply phase conductor, and the supply earth return path. It does not include any impedance from the installation itself. Zs is the total earth fault loop impedance at any point in the installation, which includes Ze plus the impedance of the installation cables: Zs = Ze + (R1+R2), where R1 is the resistance of the phase conductor and R2 is the resistance of the protective conductor from the origin to the point of measurement. The IET On-Site Guide gives the typical maximum external loop impedance quoted by distributors as 0.8 ohms for a TN-S supply and 0.35 ohms for a TN-C-S (PME) supply — actual measured values are usually well below these. The DNO provides a maximum Ze value for each supply.',
   },
   {
     question: 'What is R1+R2 and how do I measure it?',
@@ -73,17 +73,17 @@ const faqs = [
   {
     question: 'Why do I need to apply temperature correction to Zs?',
     answer:
-      'The resistance of copper and aluminium conductors increases as temperature rises. When you measure R1+R2 during dead testing, the cable is cold (approximately 10 to 20 degrees Celsius ambient). When you measure Zs during live testing, the cable may be slightly warm from the test current but is still not at its normal operating temperature. However, when a real fault occurs, the cable will be at its normal operating temperature (which could be 70 degrees Celsius for PVC insulated cables). At this higher temperature, the resistance — and therefore Zs — is higher than the cold measured value. BS 7671 Appendix 3 provides a correction factor of 1.2 for PVC cables (to convert from 10 degrees to 70 degrees). When comparing a calculated or measured Zs with the maximum permitted value, you must apply this correction to ensure the Zs will still be within limits at the worst-case operating temperature. The rule is: Zs (corrected) = Zs (measured) x 1.2 for thermoplastic cables or x 1.28 for thermosetting cables.',
+      'The resistance of copper and aluminium conductors increases as temperature rises. Conductor resistance tables are published at 20 degrees Celsius, and when you measure R1+R2 during dead testing the cable is at roughly that ambient temperature. When you measure Zs during live testing, the cable may be slightly warm from the test current but is still not at its normal operating temperature. However, when a real fault occurs, the cable will be at its normal operating temperature (which could be 70 degrees Celsius for thermoplastic/PVC insulated cables). At this higher temperature, the resistance — and therefore Zs — is higher than the cold measured value. Guidance Note 3 uses a correction factor A of 1.20 to convert a 20 degree R1+R2 reading to its 70 degree value. Only R1+R2 is corrected — Ze is the supply-side impedance and is not multiplied. The rule is: Zs (at operating temperature) = Ze + 1.20 x (R1+R2) for thermoplastic cables, or 1.28 in place of 1.20 for 90 degree thermosetting cables. As an alternative, BS 7671 Appendix 3 lets you compare an uncorrected measured Zs against 0.8 times the tabulated maximum — use one method or the other, not both.',
   },
   {
     question: 'Where do I find the maximum Zs values in BS 7671?',
     answer:
-      'The maximum Zs values are listed in BS 7671 Chapter 41. Under BS 7671:2018+A4:2026: Table 41.2 (Reg 411.4.201) covers all fuse types — BS 88-2 gG/gM, BS 88-3, BS 3036, and BS 1362 fuses all appear in this single table. Table 41.3(a) (Reg 411.4.204) covers Type B MCBs and RCBOs; Table 41.3(b) covers Type C; Table 41.3(c) covers Type D. Each sub-table lists the maximum Zs for each protective device rating (6 A, 10 A, 16 A, 20 A, 32 A, etc.). Importantly, MCB table values in Table 41.3 apply to both 0.4 s (final circuit) and 5 s (distribution circuit) disconnection — the instantaneous magnetic trip governs MCB operation, so a single Zs limit covers both circuit types. GN3 (Guidance Note 3: Inspection and Testing) provides 80% of maximum Zs as the cold-measured site limit — for example, 1.37 Ω maximum becomes 1.10 Ω site limit for a 32 A Type B MCB. The IET On-Site Guide also reproduces these values. When using the tables, remember the tabulated maximum Zs values assume conductors at their maximum operating temperature — so you must apply temperature correction when comparing values measured at ambient temperature.',
+      'The maximum Zs values are listed in BS 7671 Chapter 41. Under BS 7671:2018+A4:2026: Table 41.2 (Reg 411.4.201) covers fuses for the 0.4 s disconnection time — BS 88-2 gG/gM in 41.2(a), BS 88-3 in 41.2(b), BS 3036 in 41.2(c) and BS 1362 in 41.2(d). Table 41.4 (Reg 411.4.203) gives the corresponding fuse values for 5 s. Table 41.3(a) (Reg 411.4.202) covers Type B MCBs and the overcurrent characteristics of RCBOs; Table 41.3(b) covers Type C; Table 41.3(c) covers Type D. Each sub-table lists the maximum Zs for each protective device rating (6 A, 10 A, 16 A, 20 A, 32 A, etc.). Table 41.3 covers both the 0.4 s (final circuit) and 5 s (distribution circuit) disconnection times, and for Type B and Type C a single row serves both, because the instantaneous magnetic trip governs. Type D is the exception — 41.3(c) prints separate 0.4 s and 5 s rows, with the 5 s values double the 0.4 s ones. BS 7671 Appendix 3 gives the on-site acceptance criterion as 0.8 times the tabulated maximum for a Zs measured at ambient temperature — for example, 1.37 Ω becomes 1.10 Ω for a 32 A Type B MCB. GN3 (Guidance Note 3: Inspection and Testing) and the IET On-Site Guide reproduce this. When using the tables, remember the tabulated maximum Zs values assume conductors at their maximum operating temperature — so you must either apply the 0.8 factor or temperature-correct the reading when comparing values measured at ambient temperature.',
   },
   {
     question: 'What happens if Zs is too high?',
     answer:
-      'If the measured Zs at any point on a circuit exceeds the maximum Zs value from the BS 7671 tables for that protective device, the protective device may not operate quickly enough during an earth fault. This means the fault could persist long enough to cause electric shock (the whole purpose of the disconnection time limit is to prevent lethal electric shock). On an EICR, this would be classified as a C2 (Potentially Dangerous) observation — or C1 (Danger Present) if the risk is immediate. The remedial action depends on the cause: if Zs is high because R1+R2 is high (long cable run, thin CPC), the solution may be to use a cable with a larger CPC, reduce the circuit length, or change the protective device to one with a higher maximum Zs (for example, fitting an RCD or RCBO, which has a much higher maximum Zs of approximately 1667 ohms at 30 mA). If Zs is high because Ze is high, the issue is with the supply and should be reported to the DNO.',
+      'If the measured Zs at any point on a circuit exceeds the maximum Zs value from the BS 7671 tables for that protective device, the protective device may not operate quickly enough during an earth fault. This means the fault could persist long enough to cause electric shock (the whole purpose of the disconnection time limit is to prevent lethal electric shock). On an EICR, this would be classified as a C2 (Potentially Dangerous) observation — or C1 (Danger Present) if the risk is immediate. The remedial action depends on the cause: if Zs is high because R1+R2 is high (long cable run, thin CPC), the solution may be to use a cable with a larger CPC, reduce the circuit length, or change the protective device to one with a higher maximum Zs (for example, fitting an RCD, for which BS 7671 Table 41.5 gives a much higher maximum Zs of 1667 ohms at 30 mA — noting the table also warns that an earth electrode resistance exceeding 200 ohms may not be stable). If Zs is high because Ze is high, the issue is with the supply and should be reported to the DNO.',
   },
 ];
 
@@ -166,8 +166,9 @@ const sections = [
           the supply. A lower Zs means higher fault current and faster disconnection.{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> sets
           maximum Zs values for each protective device type and rating to ensure the disconnection
-          time is fast enough to prevent electric shock (0.4 seconds for final circuits and 5
-          seconds for distribution circuits).
+          time is fast enough to prevent electric shock — 0.4 seconds for final circuits rated up to
+          63 A with socket-outlets, or up to 32 A supplying fixed equipment (Reg 411.3.2.2), and 5
+          seconds for distribution circuits and other circuits (Reg 411.3.2.3).
         </p>
       </>
     ),
@@ -235,17 +236,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-S (separate earth):</strong> Ze is typically 0.2 to 0.8 ohms. The earth
-                return path is via the metallic cable sheath or a separate earth conductor in the
-                supply cable. This provides a reliable, low-impedance earth return.
+                <strong>TN-S (separate earth):</strong> the IET On-Site Guide gives 0.8 ohms as the
+                typical maximum Ze quoted by distributors; measured values are usually lower. The
+                earth return path is via the metallic cable sheath or a separate earth conductor in
+                the supply cable. This provides a reliable, low-impedance earth return.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-C-S (PME):</strong> Ze is typically 0.35 to 0.8 ohms. The earth return
-                path uses the combined neutral/earth conductor (PEN) of the supply cable. This is
-                the most common supply arrangement in the UK for newer installations.
+                <strong>TN-C-S (PME):</strong> the typical maximum Ze quoted by distributors is 0.35
+                ohms — lower than TN-S, not higher — and measured values are usually well below it.
+                The earth return path uses the combined neutral/earth conductor (PEN) of the supply
+                cable. This is the most common supply arrangement in the UK for newer installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -304,9 +307,10 @@ const sections = [
                   R1+R2 depends on the cable length, the conductor cross-sectional area, and the
                   conductor material. Longer circuits have higher R1+R2. Thinner conductors (1.0 mm²
                   CPC in a 2.5 mm² T+E cable) have higher R2 than thicker ones. The R1+R2 value per
-                  metre for common cables is published in the IET On-Site Guide (Table I3) — for
-                  example, 2.5/1.5 mm² T+E cable has an R1+R2/m of 19.51 milliohms per metre at
-                  20°C.
+                  metre for common cables is published in the IET On-Site Guide (Table I1, which
+                  covers copper and aluminium conductors up to 35 mm² at 20°C) — for example,
+                  2.5/1.5 mm² T+E cable has an R1+R2/m of 19.51 milliohms per metre at 20°C
+                  (7.41 + 12.1).
                 </p>
               </div>
             </div>
@@ -334,27 +338,28 @@ const sections = [
       <>
         <p>
           Conductor resistance increases with temperature. Copper has a positive temperature
-          coefficient — at 70°C (the maximum operating temperature for PVC insulated cables), the
-          resistance is approximately 20% higher than at 10°C (a typical ambient temperature when
-          cold measurements are taken).
+          coefficient — at 70°C (the maximum operating temperature for thermoplastic/PVC insulated
+          cables), the resistance is approximately 20% higher than at 20°C, the reference
+          temperature at which conductor resistance tables are published.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-white mb-4">
-            Temperature Correction Factors (BS 7671 Appendix 3)
-          </h4>
+          <h4 className="font-bold text-white mb-4">Temperature Correction Factors</h4>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PVC (thermoplastic) cables:</strong> Multiply measured R1+R2 by{' '}
-                <strong>1.20</strong> to correct from ambient to 70°C operating temperature.
+                <strong>1.20</strong> to correct from 20°C to the 70°C operating temperature. This
+                is the factor GN3 calls A, used as Zs = Ze + A(R1+R2).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>XLPE (thermosetting) cables:</strong> Multiply measured R1+R2 by{' '}
-                <strong>1.28</strong> to correct from ambient to 90°C operating temperature.
+                <strong>1.28</strong> to correct from 20°C to a 90°C operating temperature. Note
+                that where a thermosetting cable has been sized as though it were 70°C
+                thermoplastic (Reg 512.1.5), Table 41.3 Note 3 requires 70°C to be used instead.
               </span>
             </li>
           </ul>
@@ -367,12 +372,13 @@ const sections = [
         <p>
           When comparing a <strong>measured</strong> Zs (taken during live testing at ambient
           temperature) against the BS 7671 maximum values, you should check that the measured value
-          does not exceed 80% of the tabulated maximum. GN3 (Guidance Note 3: Inspection and
-          Testing) formalises this as a 0.80 site factor — the cold-measured limit is 80% of the BS
-          7671 maximum Zs. For example, the 32 A Type B MCB maximum of 1.37 Ω becomes a GN3 site
-          limit of 1.10 Ω. The IET On-Site Guide also reproduces these adjusted values. This
+          does not exceed 80% of the tabulated maximum. This 0.8 factor is set out in{' '}
+          <strong>BS 7671 Appendix 3</strong> itself — the note to Table 41.3 points you there, and
+          GN3 (Guidance Note 3: Inspection and Testing) and the IET On-Site Guide reproduce it. For
+          example, the 32 A Type B MCB maximum of 1.37 Ω becomes a site limit of 1.10 Ω. This
           accounts for the fact that measured Zs will increase when the cable reaches operating
-          temperature under normal load.
+          temperature under normal load. Apply either the 0.8 factor to an uncorrected measured
+          value or the 1.20 correction to R1+R2 — applying both double-counts the same allowance.
         </p>
       </>
     ),
@@ -385,15 +391,23 @@ const sections = [
         <p>
           BS 7671 Chapter 41 lists the maximum earth fault loop impedance (Zs) for each type and
           rating of protective device. Under BS 7671:2018+A4:2026, Table 41.2 (Reg 411.4.201) covers
-          fuses (BS 88-2, BS 88-3, BS 3036, and BS 1362), and Table 41.3(a)/(b)/(c) (Reg 411.4.204)
-          covers Type B, C, and D MCBs respectively. The MCB table values apply to both 0.4 s (final
-          circuit) and 5 s (distribution circuit) disconnection, because the instantaneous magnetic
-          trip governs — a single Zs column covers both circuit types.
+          fuses (BS 88-2, BS 88-3, BS 3036, and BS 1362) for the 0.4 s disconnection time and Table
+          41.4 (Reg 411.4.203) covers the same fuses for 5 s. Table 41.3(a)/(b)/(c) (Reg 411.4.202)
+          covers Type B, C, and D MCBs and the overcurrent characteristics of RCBOs. Table 41.3
+          covers both 0.4 s (final circuit) and 5 s (distribution circuit) disconnection: for Type B
+          and Type C a single row serves both times, because the instantaneous magnetic trip
+          governs. Type D is the exception — Table 41.3(c) prints a separate 0.4 s row and 5 s row,
+          and the 5 s figures are double the 0.4 s ones (a 32 A Type D is 0.34 Ω at 0.4 s but 0.68 Ω
+          at 5 s).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 overflow-x-auto">
           <h4 className="font-bold text-white mb-4">
-            Maximum Zs for MCBs — BS 7671:2018+A4:2026 Table 41.3 (0.4 s and 5 s, 230 V)
+            Maximum Zs for MCBs — BS 7671:2018+A4:2026 Table 41.3 (230 V, Cmin 0.95)
           </h4>
+          <p className="text-white text-sm mb-4">
+            Type B and Type C values apply to both 0.4 s and 5 s. The Type D column below is the
+            0.4 s row; for 5 s, Table 41.3(c) allows double these figures.
+          </p>
           <table className="w-full text-white text-sm">
             <thead>
               <tr className="border-b border-white/10">
@@ -450,16 +464,19 @@ const sections = [
           </table>
         </div>
         <p>
-          For circuits protected by a 30 mA RCD (in addition to the overcurrent device), the maximum
-          Zs is approximately 1667 ohms (calculated from 50V / 0.03A). This much higher limit means
+          For circuits protected by a 30 mA RCD (in addition to the overcurrent device), BS 7671
+          Table 41.5 gives a maximum Zs of 1667 ohms (50 V / 0.03 A, per Reg 411.5.3). The table
+          also gives 500 Ω at 100 mA, 167 Ω at 300 mA and 100 Ω at 500 mA, and notes that an earth
+          electrode resistance exceeding 200 ohms may not be stable. This much higher limit means
           that circuits with high Zs values — such as long runs on TT systems — can still achieve
           the required disconnection time when RCD protection is provided.
         </p>
         <p>
-          GN3 (Guidance Note 3: Inspection and Testing) provides cold-measured site limits at 80% of
-          the BS 7671 maximum Zs values — for example, 1.37 Ω becomes 1.10 Ω for a 32 A Type B MCB.
-          These GN3 0.80-factor limits are the values to compare your measured Zs against on site.
-          The IET On-Site Guide also reproduces these adjusted limits.
+          BS 7671 Appendix 3 gives the on-site acceptance criterion as 80% of the tabulated maximum
+          Zs for a value measured at ambient temperature — for example, 1.37 Ω becomes 1.10 Ω for a
+          32 A Type B MCB. These 0.8-factor limits are the values to compare an uncorrected measured
+          Zs against on site. GN3 (Guidance Note 3: Inspection and Testing) and the IET On-Site
+          Guide reproduce the same rule.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
@@ -500,19 +517,20 @@ const sections = [
                 <strong>Ze (measured):</strong> 0.35 ohms (TN-C-S supply)
               </li>
               <li>
-                <strong>R1+R2 (measured at furthest socket):</strong> 0.56 ohms
+                <strong>R1+R2 (measured at furthest socket):</strong> 0.24 ohms — for a correctly
+                wired ring this is about a quarter of the end-to-end (19.51 mΩ/m x 50 m = 0.98 Ω)
               </li>
               <li>
-                <strong>Zs (calculated):</strong> 0.35 + 0.56 = <strong>0.91 ohms</strong>
+                <strong>Zs (calculated):</strong> 0.35 + 0.24 = <strong>0.59 ohms</strong>
               </li>
               <li>
                 <strong>Maximum Zs (32 A Type B, 0.4s):</strong> 1.37 ohms
               </li>
               <li>
-                <strong>80% of maximum:</strong> 1.10 ohms
+                <strong>80% of maximum (Appendix 3 site limit):</strong> 1.10 ohms
               </li>
               <li>
-                <strong>Result:</strong> 0.91 ohms is less than 1.10 ohms — <strong>PASS</strong>
+                <strong>Result:</strong> 0.59 ohms is less than 1.10 ohms — <strong>PASS</strong>
               </li>
             </ul>
           </div>
@@ -529,7 +547,7 @@ const sections = [
                 <strong>Ze (measured):</strong> 0.45 ohms
               </li>
               <li>
-                <strong>R1+R2/m (from On-Site Guide):</strong> 30.20 milliohms/m
+                <strong>R1+R2/m (from On-Site Guide):</strong> 30.20 milliohms/m (12.1 + 18.1)
               </li>
               <li>
                 <strong>R1+R2 (calculated at 20°C):</strong> 0.03020 x 35 = 1.057 ohms
@@ -564,7 +582,7 @@ const sections = [
                 <strong>Ze (measured):</strong> 0.50 ohms
               </li>
               <li>
-                <strong>R1+R2/m:</strong> 6.44 milliohms/m (10/4 mm² from tables)
+                <strong>R1+R2/m:</strong> 6.44 milliohms/m (10/4 mm², 1.83 + 4.61)
               </li>
               <li>
                 <strong>R1+R2 (calculated):</strong> 0.00644 x 18 = 0.116 ohms
@@ -579,16 +597,18 @@ const sections = [
                 <strong>Maximum Zs (40 A Type B, 0.4s):</strong> 1.09 ohms
               </li>
               <li>
-                <strong>80% of maximum:</strong> 0.87 ohms
+                <strong>Compare against:</strong> the full 1.09 ohms. The Appendix 3 0.8 factor
+                applies to an <em>uncorrected</em> measured Zs — this figure has already been
+                corrected to 70°C, so applying 0.8 as well would double-count.
               </li>
               <li>
-                <strong>Result:</strong> 0.639 ohms is within 0.87 ohms — <strong>PASS</strong>
+                <strong>Result:</strong> 0.639 ohms is within 1.09 ohms — <strong>PASS</strong>
               </li>
             </ul>
             <p className="text-white text-sm mt-3">
-              Note: If Ze were higher (for example, 0.80 ohms on a property far from the
-              transformer), Zs would be 0.939 ohms — still within the maximum but above the 80% rule
-              of thumb. This shows why{' '}
+              Note: If Ze were higher (for example, 0.80 ohms on a TN-S supply at the distributor's
+              typical maximum), Zs would be 0.939 ohms — still within the 1.09 ohm maximum, but with
+              very little margin. This shows why{' '}
               <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink> matter for
               high-current circuits.
             </p>
@@ -608,8 +628,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Forgetting temperature correction.</strong> Comparing a cold-measured Zs
-                directly with the BS 7671 maximum values without applying the 1.20 correction factor
-                can give a false pass. The cable resistance at operating temperature is higher — if
+                directly with the BS 7671 maximum values without applying either the 1.20 correction
+                factor to R1+R2 or the 0.8 factor from Appendix 3 can give a false pass. The cable resistance at operating temperature is higher — if
                 the measured value is close to the limit, it may exceed it when hot.
               </span>
             </li>
@@ -695,7 +715,8 @@ const sections = [
                   All the maximum Zs values from BS 7671:2018+A4:2026 are built into the calculator
                   — Table 41.2 for fuses (BS 88, BS 3036, BS 1362) and Table 41.3(a)/(b)/(c) for
                   Type B, C, and D MCBs. Select the device type and rating and the correct maximum
-                  Zs is applied automatically, including the GN3 0.80 cold-measured site limit.
+                  Zs is applied automatically, including the 0.8 cold-measured site limit of BS 7671
+                  Appendix 3.
                 </p>
               </div>
             </div>
@@ -751,9 +772,9 @@ export default function EarthFaultLoopImpedancePage() {
   return (
     <GuideTemplate
       title="Earth Fault Loop Impedance Calculation | Zs Guide"
-      description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors…"
+      description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors."
       datePublished="2025-05-10"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"
@@ -769,7 +790,7 @@ export default function EarthFaultLoopImpedancePage() {
       answerBox={{
         question: 'How do you calculate earth fault loop impedance (Zs)?',
         answer:
-          'Zs = Ze + (R1 + R2): the external loop impedance Ze (measured at the origin, or the DNO declared maximum — 0.35 Ω for TN-C-S/PME, 0.8 Ω for TN-S) plus the resistance of the circuit line and protective conductors (R1 + R2). The measured Zs must not exceed the maximum value for the protective device in BS 7671 Tables 41.2–41.6, and good practice applies the 80% rule to allow for conductors heating during a fault. If Zs is too high the device will not disconnect within the required 0.4 s (final circuits up to 63 A) or 5 s (distribution circuits) per Reg 411.3.2.2 and 411.3.2.3.',
+          'Zs = Ze + (R1 + R2): the external loop impedance Ze (measured at the origin, or the distributor\'s typical declared maximum — 0.35 Ω for TN-C-S/PME, 0.8 Ω for TN-S) plus the resistance of the circuit line and protective conductors (R1 + R2). The measured Zs must not exceed the maximum value for the protective device in BS 7671 Tables 41.2 to 41.5, and BS 7671 Appendix 3 applies a 0.8 factor to a value measured at ambient temperature to allow for conductors heating under load. If Zs is too high the device will not disconnect within the required 0.4 s (final circuits up to 63 A with socket-outlets, or 32 A supplying fixed equipment) or 5 s (distribution circuits) per Reg 411.3.2.2 and 411.3.2.3.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

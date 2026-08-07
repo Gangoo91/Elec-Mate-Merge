@@ -1122,7 +1122,7 @@ export default function AdminUsers() {
                             </button>
                           </div>
 
-                          <p className="truncate text-[12px] text-white/90">
+                          <p className="truncate text-[12px] text-white">
                             {user.email || (user.username ? `@${user.username}` : '—')}
                           </p>
 
@@ -1131,7 +1131,7 @@ export default function AdminUsers() {
                               <span className={`font-medium ${toneText[accentTone]}`}>
                                 {user.role || 'visitor'}
                               </span>
-                              <span aria-hidden className="text-white/30">·</span>
+                              <span aria-hidden className="text-white">·</span>
                               <span>
                                 {joinedDays !== null
                                   ? joinedDays === 0
@@ -1141,7 +1141,7 @@ export default function AdminUsers() {
                               </span>
                               {user.isOnline ? (
                                 <>
-                                  <span aria-hidden className="text-white/30">·</span>
+                                  <span aria-hidden className="text-white">·</span>
                                   <span className="flex items-center gap-1 text-green-400">
                                     <Dot tone="green" />
                                     online
@@ -1149,17 +1149,17 @@ export default function AdminUsers() {
                                 </>
                               ) : user.last_seen ? (
                                 <>
-                                  <span aria-hidden className="text-white/30">·</span>
+                                  <span aria-hidden className="text-white">·</span>
                                   <span>{relativeTime(user.last_seen)}</span>
                                 </>
                               ) : null}
                               {rawEngagement && (
                                 <>
-                                  <span aria-hidden className="text-white/30">·</span>
+                                  <span aria-hidden className="text-white">·</span>
                                   <span>
                                     {formatTimeShort(rawEngagement.total_seconds_tracked)}
                                   </span>
-                                  <span aria-hidden className="text-white/30">·</span>
+                                  <span aria-hidden className="text-white">·</span>
                                   <span>{rawEngagement.login_count} logins</span>
                                 </>
                               )}

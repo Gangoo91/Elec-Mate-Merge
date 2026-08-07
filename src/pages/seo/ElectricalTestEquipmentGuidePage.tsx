@@ -495,7 +495,7 @@ export default function ElectricalTestEquipmentGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Test Equipment Guide — MFT, Clamp Meter, CAT"
-      description="Complete UK buying guide for electricians: multifunction testers (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators…"
+      description="Complete UK buying guide for electricians: multifunction testers (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -133,16 +133,16 @@ export default function AdminBulkCreate() {
     // AdminPanel's <Outlet> wrapper already provides bg + horizontal padding.
     <div className="max-w-3xl mx-auto space-y-6 text-white pb-4">
       <header>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
           Admin · Onboarding
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight flex items-center gap-2">
           <UserPlus className="h-6 w-6 text-elec-yellow" /> Bulk create accounts
         </h1>
-        <p className="mt-1.5 text-[13px] text-white/55">
+        <p className="mt-1.5 text-[13px] text-white">
           Paste or type email addresses to create accounts in one go — for a college cohort, a team,
           or anyone. Everyone gets the same temporary password and changes it at{' '}
-          <span className="text-white/80">Settings → Security</span> on first login.
+          <span className="text-white">Settings → Security</span> on first login.
         </p>
       </header>
 
@@ -160,7 +160,7 @@ export default function AdminBulkCreate() {
         <div className="flex flex-wrap gap-3 text-[12px]">
           <span className="text-emerald-400">{parsed.valid.length} valid</span>
           {parsed.dupes > 0 && (
-            <span className="text-white/45">
+            <span className="text-white">
               {parsed.dupes} duplicate{parsed.dupes > 1 ? 's' : ''}
             </span>
           )}
@@ -193,7 +193,7 @@ export default function AdminBulkCreate() {
             <RefreshCw className="h-4 w-4" /> New
           </button>
         </div>
-        <p className="text-[11px] text-white/40">
+        <p className="text-[11px] text-white">
           Min 8 characters. Everyone in this batch gets this password.
         </p>
       </section>
@@ -203,7 +203,7 @@ export default function AdminBulkCreate() {
         <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
           <div className="min-w-0">
             <p className="text-[13px] font-medium text-white">Grant free access</p>
-            <p className="text-[11.5px] text-white/55 mt-0.5">
+            <p className="text-[11.5px] text-white mt-0.5">
               So they can use the app straight away (no paywall). Recommended for cohorts.
             </p>
           </div>
@@ -241,18 +241,18 @@ export default function AdminBulkCreate() {
             <AlertDialogTitle className="text-white">
               Create {parsed.valid.length} account{parsed.valid.length === 1 ? '' : 's'}?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60 space-y-1">
+            <AlertDialogDescription className="text-white space-y-1">
               <span className="block">
                 This creates {parsed.valid.length} live account
                 {parsed.valid.length === 1 ? '' : 's'}, all with the password{' '}
-                <span className="font-mono text-white/85">{password}</span>.
+                <span className="font-mono text-white">{password}</span>.
               </span>
               <span className="block">
                 {grantAccess
                   ? 'They will be granted free access immediately.'
                   : 'They will NOT be granted free access (they may hit the paywall).'}
               </span>
-              <span className="block text-white/40">
+              <span className="block text-white">
                 Anyone who already has an account is skipped. This can’t be undone in bulk.
               </span>
             </AlertDialogDescription>
@@ -279,7 +279,7 @@ export default function AdminBulkCreate() {
               <span className="text-emerald-400 font-semibold">
                 {result.summary.created} created
               </span>
-              <span className="text-white/50">{result.summary.skipped} skipped</span>
+              <span className="text-white">{result.summary.skipped} skipped</span>
               {result.summary.failed > 0 && (
                 <span className="text-red-400">{result.summary.failed} failed</span>
               )}
@@ -309,8 +309,8 @@ export default function AdminBulkCreate() {
             )}
           </div>
           {result.skipped.length > 0 && (
-            <div className="text-[12px] text-white/55">
-              <p className="font-medium text-white/70 mb-1">Skipped</p>
+            <div className="text-[12px] text-white">
+              <p className="font-medium text-white mb-1">Skipped</p>
               {result.skipped.map((s) => (
                 <p key={s.email}>
                   {s.email} — {s.reason}

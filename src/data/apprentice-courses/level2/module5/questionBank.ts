@@ -45,10 +45,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a domestic rewire with one electrician and one apprentice, who carries the CDM 2015 client duties?',
     options: [
-      'The supervising electrician, as the senior competent person on site',
-      'The apprentice, because they are present on every working day',
+      'The supervising electrician on site',
+      'The apprentice, present every working day',
       'The householder who commissioned the work',
-      'The competent person scheme provider that registers the work',
+      'The competent person scheme provider',
     ],
     correctAnswer: 2,
     explanation:
@@ -177,10 +177,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 10,
     question: 'A site agent and a site manager — what is the typical difference in role?',
     options: [
-      'They are exactly the same role — the two titles are interchangeable and carry identical authority',
-      'The site manager is the more senior commercial role; the site agent only handles deliveries and gate security',
+      'They are exactly the same role — the two titles are interchangeable and carry identical authority, the wording being down to company house style',
+      'The site manager is the more senior commercial role and holds the budget; the site agent only handles deliveries, gate security and site tidiness',
       'The site agent is more senior, often running multiple sites or the whole project commercially; the site manager runs the day-to-day operations on one site',
-      'The site agent works for the client while the site manager always works for a subcontractor',
+      'The site agent works directly for the client as their representative, while the site manager is always employed by a subcontractor to run one package',
     ],
     correctAnswer: 2,
     explanation:
@@ -226,10 +226,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 13,
     question: 'On an industrial project the "M&E co-ordinator" role exists. What is their main function?',
     options: [
-      'Manage the maintenance and electrical testing schedule once the building is occupied',
+      'Manage the maintenance and electrical testing schedule once the building is occupied and handed to the facilities team',
       'Co-ordinate mechanical and electrical services so trades do not clash in ceilings, risers and plant rooms — usually using a BIM model',
-      'Negotiate the mechanical and electrical material prices with wholesalers for the project',
-      'Carry out the final commissioning of all mechanical and electrical plant single-handed',
+      'Negotiate mechanical and electrical material prices with wholesalers and place orders against the project procurement schedule',
+      'Carry out the final commissioning of all mechanical and electrical plant single-handed before the client witnesses handover tests',
     ],
     correctAnswer: 1,
     explanation:
@@ -242,10 +242,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 14,
     question: 'A project safety advisor visits site monthly. Who do they typically work for?',
     options: [
-      'The HSE — site safety advisors are government inspectors carrying out routine visits',
-      'The individual trades, who jointly employ the advisor and share the cost between them',
+      'The HSE — safety advisors are government inspectors making routine monthly visits to every notified construction site',
+      'The individual trades on site, who jointly employ the advisor and share the monthly cost between them by headcount',
       'The Principal Contractor (or a CDM consultancy) — they audit conditions, review RAMS and report to senior management',
-      'The client directly, replacing the need for a Principal Designer on the project',
+      'The client directly, which under CDM 2015 removes the need to appoint a Principal Designer for the project',
     ],
     correctAnswer: 2,
     explanation:
@@ -259,9 +259,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You are an apprentice on your first day on a healthcare site. Who should give you the site induction?',
     options: [
-      'The client — they own the building, so they brief everyone entering it',
-      'The hospital\'s estates department, as the site sits within their premises',
-      'Your training provider, who must approve any new placement before you start',
+      'The client — they own the building, so they brief everyone entering it on local rules and hazards before work starts',
+      'The hospital\'s estates department, as the site sits within their premises and they hold the ward access permits',
+      'Your training provider, who must approve and induct you at any new placement before you first attend site',
       'The site manager (or their nominee) — covers site rules, hazards, emergency procedures, welfare and reporting routes',
     ],
     correctAnswer: 3,
@@ -309,10 +309,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A foreman tells you to ignore the site rule on harnesses because the job is "only five minutes". What do you do?',
     options: [
-      'Do it as told — a foreman\'s instruction overrides the site rules for short tasks',
-      'Wear the harness but skip clipping on, since five minutes is too brief to matter',
+      'Do it as told — a direct instruction from the foreman overrides the written site rules for a short task',
+      'Wear the harness but skip clipping on, since five minutes at height is too brief for the risk to matter',
       'Refuse politely, do the task with proper fall protection, and report the instruction to your own supervisor',
-      'Get a colleague to foot the ladder instead, so the harness is not needed at all',
+      'Get a colleague to foot the ladder instead, so the harness is not needed for a task of that length',
     ],
     correctAnswer: 2,
     explanation:
@@ -376,10 +376,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a high-rise residential refurb (HRRB) covered by the Building Safety Act 2022, an additional duty holder is the:',
     options: [
-      'Principal Fire Officer, appointed by the local fire and rescue authority',
-      'Senior Responsible Engineer, who signs off the structural calculations',
+      'Principal Fire Officer, appointed by the local fire and rescue authority for the duration of the works',
+      'Senior Responsible Engineer, who signs off the structural calculations and the fire strategy drawings',
       'Principal Accountable Person, with golden-thread information duties through the Building Safety Regulator',
-      'Building Safety Marshal, who patrols the building during the works only',
+      'Building Safety Marshal, who patrols the building throughout the works and reports weekly to the client',
     ],
     correctAnswer: 2,
     explanation:
@@ -393,9 +393,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a domestic EICR your supervisor is the only person on site and they are absent for an hour. The customer asks you to make a circuit live again. What do you do?',
     options: [
-      'Energise it — the customer owns the property, so their request overrides the test',
-      'Energise it but only after a quick visual check that nothing is obviously wrong',
-      'Energise it and text your supervisor afterwards to let them know what you did',
+      'Energise it — the customer owns the property, so their instruction overrides the testing procedure',
+      'Energise it, but only after a quick visual check that nothing on the circuit is obviously wrong',
+      'Energise it and text your supervisor afterwards to let them know exactly what you did and why',
       'Decline politely, explain you cannot energise without your supervisor present, and call them for guidance',
     ],
     correctAnswer: 3,
@@ -446,10 +446,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 26,
     question: 'On a typical contracting site, who does the apprentice report to first?',
     options: [
-      'The site manager from the Principal Contractor, before anyone else',
-      'The client or their representative on the weekly progress meeting',
+      'The Principal Contractor\'s site manager',
+      'The client at the weekly progress meeting',
       'The supervising electrician or charge hand',
-      'The training provider\'s assessor, who oversees the placement',
+      'The training provider\'s placement assessor',
     ],
     correctAnswer: 2,
     explanation:
@@ -594,9 +594,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You make an error wiring a circuit and only notice the next day. What is the correct response?',
     options: [
-      'Quietly fix it yourself before anyone notices, so it never becomes an issue',
-      'Wait to see if the circuit causes a problem before deciding whether to mention it',
-      'Leave it as-is — if it passed initial testing then it must be acceptable',
+      'Quietly put it right yourself before anyone notices, so it never becomes an issue for the job, the record or your apprenticeship',
+      'Wait to see whether the circuit actually causes a problem in service before deciding whether to mention it to anyone at all',
+      'Leave it as it is — if the circuit passed its initial verification then it must be acceptable and needs no further action',
       'Tell your supervisor immediately, isolate if needed, and put it right — errors caught and corrected are not disciplinary issues; errors hidden are',
     ],
     correctAnswer: 3,
@@ -662,9 +662,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A subcontractor electrician notices the main contractor is breaching scaffold rules. The correct route is:',
     options: [
-      'Say nothing — scaffold is the main contractor\'s responsibility, not the electrician\'s',
-      'Report it straight to the HSE before telling anyone on site, to protect yourself',
-      'Fix the scaffold yourself so the hazard is removed before anyone gets hurt',
+      'Say nothing — the scaffold is the main contractor\'s responsibility and an electrician has no standing to comment on it',
+      'Report it straight to the HSE before telling anyone on site, so that you are protected if there is later an incident',
+      'Adjust the scaffold yourself so the hazard is removed before anyone can be hurt, then tell the main contractor what you changed',
       'Stop your work in the affected area, report to your supervisor and to the Principal Contractor — HASAWA s.3 covers risk to non-employees',
     ],
     correctAnswer: 3,
@@ -680,9 +680,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A NICEIC scheme assessor visits your site for a routine assessment. Who do they report findings to?',
     options: [
       'The Qualified Supervisor and the contracting business — non-conformities go on a written report with corrective action timescales',
-      'The HSE, who use the scheme assessment as the basis for any enforcement action',
-      'The customer whose installation was assessed, who receives the non-conformity list',
-      'Building Control, who hold the master record of every registered firm\'s assessments',
+      'The HSE, who use the scheme assessment report as the basis for any enforcement action taken against the firm',
+      'The customer whose installation was assessed, who receives the non-conformity list and the corrective actions',
+      'Building Control, who hold the master record of every registered firm\'s assessments and their outcomes',
     ],
     correctAnswer: 0,
     explanation:
@@ -696,10 +696,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a domestic install you uncover undisclosed asbestos in a wall you need to chase. What is the correct reporting?',
     options: [
-      'Carry on chasing carefully and just wear a dust mask to limit fibre exposure',
+      'Carry on chasing carefully and wear a disposable dust mask to limit fibre exposure, then damp down and clear the debris before anyone else enters the room',
       'Stop work immediately, isolate the area, tell the householder and your supervisor — Control of Asbestos Regs 2012 require a refurbishment/demolition survey before disturbing fabric',
-      'Damp the area down with water and bag the debris before continuing the chase',
-      'Report it only to the HSE and wait for them to attend before doing anything else',
+      'Damp the area down thoroughly with water and bag up the debris as you go, since wetting suppresses the fibres and makes it safe to complete the chase the same day',
+      'Report it only to the HSE and wait for them to attend before doing anything else, as they are the enforcing authority for all licensed asbestos work',
     ],
     correctAnswer: 1,
     explanation:
@@ -713,10 +713,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You are working alone on a domestic call-out and feel unwell. What is the safest reporting protocol?',
     options: [
-      'Finish the job quickly so you can leave, then mention it at the next morning briefing',
-      'Wait until your scheduled check-in time before saying anything, to avoid false alarms',
+      'Finish the job quickly so you can leave site, then mention how you felt at the next morning briefing',
+      'Wait until your scheduled lone-worker check-in time before saying anything, to avoid raising a false alarm',
       'Stop work, contact your supervisor or office, leave site safely if able and follow the lone-worker check-in procedure',
-      'Lie down in the customer\'s property until you feel well enough to carry on working',
+      'Lie down somewhere in the customer\'s property until you feel well enough to carry on with the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -764,10 +764,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A safeguarding concern arises on a school job — an adult is behaving in a way that worries you. The correct first step is:',
     options: [
-      'Confront the adult directly and ask them to explain their behaviour before reporting it',
+      'Confront the adult directly and ask them to explain their behaviour before you report it to anyone on site',
       'Withdraw, tell your site manager and the school\'s Designated Safeguarding Lead — they decide next steps including any police involvement',
-      'Call 999 immediately yourself before telling anyone on site about your concern',
-      'Say nothing unless you actually witness an offence being committed by the adult',
+      'Call 999 immediately yourself before telling anyone on site, since a safeguarding concern is always a matter for the police',
+      'Say nothing unless you actually witness an offence being committed, as reporting a suspicion could be unfair',
     ],
     correctAnswer: 1,
     explanation:
@@ -781,10 +781,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A union shop steward visits site. Their role with members is to:',
     options: [
-      'Negotiate the firm\'s commercial contracts and material prices on the members\' behalf',
-      'Carry out the site safety inductions for all new union members joining the site',
+      'Negotiate the firm\'s commercial contracts and material prices on behalf of the members working on site',
+      'Carry out the site safety inductions for all new union members joining the project and keep the records',
       'Represent members in grievance and disciplinary matters and provide a confidential reporting/advice route',
-      'Set and enforce the JIB grade pay rates that the employer must follow',
+      'Set and enforce the JIB grade pay rates that the employer is obliged to follow for every operative',
     ],
     correctAnswer: 2,
     explanation:
@@ -798,9 +798,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You suspect a colleague is stealing tools. The correct reporting route is:',
     options: [
-      'Confront the colleague directly and demand they return the tools straight away',
-      'Call the police yourself before telling anyone in the company about your suspicion',
-      'Say nothing — without firm proof, raising it could be a defamation risk for you',
+      'Confront the colleague directly and demand they return the tools before you tell anyone in the company',
+      'Call the police yourself before telling anyone in the company, so that the evidence is properly preserved for them',
+      'Say nothing — without firm proof, raising it could expose you to a defamation claim from the colleague',
       'Report confidentially to your line manager (or HR), with any evidence — the company decides next steps including police involvement',
     ],
     correctAnswer: 3,
@@ -832,10 +832,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a CDM 2015 site, who does the Principal Contractor report up to on construction phase progress?',
     options: [
-      'The HSE, who must receive a progress report from the PC at every project stage',
+      'The HSE, who must receive a written progress report from the Principal Contractor at every project stage',
       'The client (often via the contract administrator) — the client must satisfy themselves the project is being managed safely',
-      'The Principal Designer, who continues to oversee the works through the construction phase',
-      'Nobody above them — the Principal Contractor is the top duty holder on a CDM project',
+      'The Principal Designer, who continues to oversee the works throughout the construction phase under CDM 2015',
+      'Nobody above them — the Principal Contractor is the top duty holder once the construction phase has begun',
     ],
     correctAnswer: 1,
     explanation:
@@ -849,10 +849,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A trainee apprentice reports a problem to their supervisor and is told "not now". What should they do?',
     options: [
-      'Drop it — once a supervisor says "not now", the matter is closed and should not be raised again',
-      'Go straight over the supervisor\'s head to the contracts manager every time without waiting',
+      'Drop it — once a supervisor has said "not now", the matter is closed and should not be raised again on that job',
+      'Go straight over the supervisor\'s head to the contracts manager every time, without waiting for a reply',
       'Document the report (time, who, what), follow up later in writing, and escalate one level up if it is a safety matter not addressed',
-      'Sort out the problem themselves rather than bothering the supervisor a second time',
+      'Sort the problem out themselves rather than bothering the supervisor a second time about the same issue',
     ],
     correctAnswer: 2,
     explanation:
@@ -952,9 +952,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A local authority Environmental Health Officer turns up about a noise complaint. Are they entitled to enter the site?',
     options: [
       'Yes — Local Authority enforcement officers have similar powers of entry under HASAWA s.20 for premises they enforce',
-      'No — only HSE inspectors have any legal power to enter a construction or work site',
-      'Only with a court warrant obtained in advance, never on an unannounced visit',
-      'Only if the site manager gives written permission for them to come on site',
+      'No — only HSE inspectors have any legal power to enter a construction or other work site without consent',
+      'Only with a court warrant obtained in advance, never on an unannounced visit to site like this one',
+      'No — Environmental Health Officers deal with food and housing matters and have no power of entry onto a construction site',
     ],
     correctAnswer: 0,
     explanation:
@@ -968,10 +968,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A scheme assessor (NICEIC, NAPIT, ELECSA) arrives for a routine assessment. Do they need an induction?',
     options: [
-      'No — scheme assessors are technically competent, so an induction would be pointless',
+      'No — scheme assessors are technically competent people, so a site induction would serve no real purpose',
       'Yes — every visitor regardless of role gets a site-specific induction covering hazards, PPE, fire procedures and welfare',
-      'No — they only review paperwork in the office and never enter the work area',
-      'Only if they intend to stay on site for more than one full working day',
+      'No — they only review paperwork in the site office and never enter the working area itself at all',
+      'Only if they intend to stay on site for more than one full working day or enter a live working area',
     ],
     correctAnswer: 1,
     explanation:
@@ -985,10 +985,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A police officer attends a domestic property where you are working, asking about an unrelated matter. What do you do?',
     options: [
-      'Answer all their questions fully, since you must always co-operate with the police',
-      'Tell them to leave the property immediately as they have no right to be there',
+      'Answer all of their questions fully and in detail, since you are legally required to co-operate with the police at all times',
+      'Tell them to leave the property immediately, as they have no right to be there without a warrant from a court',
       'Be polite and helpful, but tell them you cannot give access without the householder\'s permission and call your supervisor for guidance',
-      'Give them access to the whole property so they can complete their enquiry quickly',
+      'Give them access to the whole property so they can complete their enquiry as quickly as possible and leave',
     ],
     correctAnswer: 2,
     explanation:
@@ -1002,9 +1002,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A school site requires DBS checks for trades working in occupied buildings. Why?',
     options: [
-      'Insurance — the school\'s insurer will not cover trades who have not been DBS-checked',
-      'Competence — a DBS check confirms the worker is technically qualified for the job',
-      'Data protection — the check proves the worker can be trusted with pupils\' personal data',
+      'Insurance — the school\'s insurer will not cover any trade working on the premises who has not been DBS-checked',
+      'Competence — a DBS check confirms the worker is technically qualified for the job they are sent to do on site',
+      'Data protection — the check proves the worker can be trusted with pupils\' personal data held under UK GDPR',
       'Safeguarding — anyone in a position of trust around children/vulnerable adults must be DBS-checked under safeguarding policies',
     ],
     correctAnswer: 3,
@@ -1020,9 +1020,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A media crew arrives to film a project for marketing. The site manager should:',
     options: [
       'Brief them on site rules, escort them, ensure no live testing or unsafe activities are filmed unattended, and confirm written permissions for any recognisable workers',
-      'Let them film freely — media crews carry their own insurance and manage their own safety',
-      'Refuse all filming on site, as recording a live construction site is never permitted',
-      'Allow them in without induction provided they wear their own hi-vis and hard hats',
+      'Let them film freely — media crews carry their own public liability insurance and manage their own safety on site under their own written risk assessment',
+      'Refuse all filming on site, as recording a live construction site is never permitted under CDM 2015 and standard insurance conditions',
+      'Allow them in without an induction provided they wear their own hi-vis and hard hats and stay with the marketing team throughout the visit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1053,10 +1053,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer\'s tenant on a void refurb wants to come and "see how it\'s going" mid-week. The right answer is:',
     options: [
-      'Let them visit whenever they like — as the future occupant they have a right of access',
-      'Refuse outright, since tenants have no involvement until the refurb is fully handed over',
+      'Let them visit whenever they like — as the future occupant of the property they have a right of access during the works',
+      'Refuse outright, since tenants have no involvement in the works until the refurb is fully handed over to the landlord',
       'Refer them to the client (the landlord) — access is the client\'s decision, not the contractor\'s; if agreed, escort and induct',
-      'Give them a key so they can let themselves in to check progress in their own time',
+      'Give them a key so they can let themselves in and check on progress in their own time without troubling you',
     ],
     correctAnswer: 2,
     explanation:
@@ -1138,9 +1138,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A specialist engineer arrives from a manufacturer to commission a piece of switchgear. Their visit is:',
     options: [
-      'Exempt from induction — manufacturer specialists are competent on their own equipment',
-      'Covered by their employer\'s rules only, so the site induction does not apply to them',
-      'Allowed to commission the switchgear without anyone reviewing their method of work',
+      'Exempt from induction — manufacturer specialists are competent on their own equipment and carry their own approvals',
+      'Covered by their employer\'s rules only, so the main site induction does not apply to their visit at all',
+      'Allowed to commission the switchgear without anyone on site reviewing their method of work beforehand',
       'Inside the site rules — induct, sign in, brief on hazards; their RAMS for the commissioning task should also be reviewed',
     ],
     correctAnswer: 3,
@@ -1156,9 +1156,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A young person (14-year-old) on work experience visits site for a day. Extra duties apply because of:',
     options: [
       'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
-      'CDM 2015 Reg 15 — young persons must be appointed as Workers with full reporting duties',
-      'The Working Time Regulations 1998 — under-18s must opt out of the 48-hour week in writing',
-      'PUWER 1998 Reg 9 — young persons may only use equipment after a competence assessment',
+      'CDM 2015 Reg 15 — young persons must be appointed as Workers with full reporting duties to the PC',
+      'The Working Time Regulations 1998 — under-18s must opt out of the 48-hour working week in writing',
+      'PUWER 1998 Reg 9 — young persons may only use work equipment after a formal competence assessment',
     ],
     correctAnswer: 0,
     explanation:
@@ -1172,10 +1172,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A neighbour to a domestic site complains about noise and dust. Are they a "site visitor"?',
     options: [
-      'Yes — anyone affected by the works counts as a site visitor and must be signed in',
+      'Yes — anyone affected by the works counts as a site visitor under CDM 2015, so they must be signed into the register and given an induction before work continues near them',
       'No, they\'re a member of the public — but HASAWA s.3 still requires you to manage the impact of your work on them; talk to them politely and adjust working methods if reasonable',
-      'Yes — neighbours are owed a full site induction before any work near their boundary',
-      'No, and you owe them no duty at all since the work is on the customer\'s property',
+      'Yes — neighbours are owed a full site induction and a copy of the method statement before any work takes place close to their boundary, party wall or shared access',
+      'No, and you owe them no duty at all, since the work is being carried out entirely on the customer\'s property and not on theirs at any point',
     ],
     correctAnswer: 1,
     explanation:
@@ -1189,10 +1189,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A solicitor and surveyor arrive to inspect a defect for a third-party claim. The site manager should:',
     options: [
-      'Give them immediate access to inspect the defect so the claim can be settled quickly',
-      'Refuse to let them onto the site under any circumstances and ask them to leave',
+      'Give them immediate access to inspect the defect so that the claim can be settled quickly and cheaply for the firm',
+      'Refuse to let them onto the site under any circumstances and ask them to leave the premises immediately',
       'Refer them to the contractor\'s commercial/legal lead, take their details, and not give site access without authorisation from above',
-      'Answer all their questions about the defect personally to show the firm has nothing to hide',
+      'Answer all of their questions about the defect personally, to show that the firm has nothing to hide from the claim',
     ],
     correctAnswer: 2,
     explanation:
@@ -1205,9 +1205,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 71,
     question: 'On a healthcare estate visit, infection control rules may require:',
     options: [
-      'Only the standard construction PPE — infection control does not affect electrical trades',
-      'A separate first-aid certificate for every operative working in the clinical areas',
-      'A DBS check in place of normal PPE, as patient contact is the only real risk',
+      'Only the standard construction PPE — infection control rules do not affect electrical trades working on an estate',
+      'A separate first-aid certificate for every operative who works in or passes through the clinical areas of the hospital',
+      'A DBS check in place of the normal PPE, as direct patient contact is the only real infection risk on the ward',
       'Specific PPE (e.g. gowns, gloves, hand hygiene), no eating/drinking in clinical areas, controlled access through air-locked corridors',
     ],
     correctAnswer: 3,
@@ -1223,9 +1223,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A visitor with a mobility need (wheelchair user) attends an inspection. The site team should:',
     options: [
       'Plan an accessible route in advance, brief on the planned route, provide an escort, and adjust under Equality Act 2010 reasonable adjustments duty',
-      'Reschedule the inspection for after handover, since live sites cannot be made accessible',
-      'Carry the visitor over any obstacles so the inspection can go ahead as planned',
-      'Ask them to inspect only the ground-floor areas that happen to be step-free that day',
+      'Reschedule the inspection for after handover, since a live construction site cannot reasonably be made accessible to a wheelchair user',
+      'Carry the visitor over any obstacles on the route so that the inspection can go ahead as planned on the day without delay',
+      'Ask them to inspect only the ground-floor areas that happen to be step-free, and report the rest to them by photograph afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -1239,10 +1239,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a nursing-home job a confused resident wanders into the work area. The right immediate action is:',
     options: [
-      'Carry on working and ignore them, as the care home staff are responsible for residents',
+      'Carry on working and ignore them, as the care home staff are responsible for their own residents',
       'Make safe, calmly guide them out of the work area and contact the home\'s care staff — they manage resident welfare',
-      'Take the resident back to their room yourself before returning to the job',
-      'Tell the resident firmly to leave and continue with the live work straight away',
+      'Take the resident back to their own room yourself before returning to the job you were doing',
+      'Tell the resident firmly to leave the area and continue with the live work straight away as planned',
     ],
     correctAnswer: 1,
     explanation:
@@ -1273,9 +1273,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'On a domestic call-out you arrive to find the customer is intoxicated and aggressive. The safest action is:',
     options: [
-      'Carry on with the job and avoid eye contact so as not to provoke the customer further',
-      'Try to calm the customer down yourself before deciding whether to start the work',
-      'Refuse to leave until the customer has paid for the call-out attendance in full',
+      'Carry on with the job and avoid eye contact so as not to provoke the customer any further while you are in the property',
+      'Try to calm the customer down yourself before deciding whether it is safe to start the work that day',
+      'Refuse to leave the property until the customer has paid for the call-out attendance in full and in cash',
       'Withdraw to your van, contact your supervisor and the office, and reschedule via written communication when the customer is fit to engage',
     ],
     correctAnswer: 3,
@@ -1309,10 +1309,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 77,
     question: 'BS 7671 is best described as:',
     options: [
-      'An Act of Parliament that is directly enforceable by the HSE through criminal courts',
+      'An Act of Parliament that is directly enforceable by the HSE through the criminal courts in England and Wales',
       'A non-statutory British Standard that is widely cited and referenced by Approved Document P of the Building Regulations',
-      'A statutory instrument made under the Electricity at Work Regulations 1989',
-      'A European directive that became UK law automatically on a fixed transition date',
+      'A statutory instrument made under the Electricity at Work Regulations 1989 and enforced by the HSE directly',
+      'A European directive that became UK law automatically on a fixed transition date after 2016 and still applies',
     ],
     correctAnswer: 1,
     explanation:
@@ -1406,9 +1406,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 83,
     question: 'The Manual Handling Operations Regulations 1992 require employers to:',
     options: [
-      'Enforce a strict 25 kg maximum lifting limit for all workers regardless of the task',
-      'Provide mechanical lifting aids for any load over 10 kg in every situation',
-      'Ban all manual lifting on site and require every load to be moved by machine',
+      'Enforce a strict 25 kg maximum lifting limit for all workers regardless of the task or the posture involved',
+      'Provide mechanical lifting aids for any load weighing more than 10 kg in every situation on site',
+      'Ban all manual lifting on site and require every load to be moved by machine or by a lifting aid',
       'Avoid hazardous manual handling so far as reasonably practicable; if unavoidable, assess and reduce the risk',
     ],
     correctAnswer: 3,
@@ -1424,9 +1424,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'The Personal Protective Equipment at Work Regulations 1992 (as amended 2022) extend duties to:',
     options: [
       'Both employees and "limb (b)" workers (workers who are not employees but provide personal services)',
-      'The self-employed only, who previously had no PPE protection at all',
-      'Members of the public who visit a workplace and need protective equipment',
-      'Apprentices and young persons specifically, but not adult employees',
+      'The self-employed only, who previously had no PPE protection at all under the 1992 Regulations',
+      'Members of the public who visit a workplace and may need protective equipment while they are there',
+      'Apprentices and young persons specifically, but not adult employees who are already covered',
     ],
     correctAnswer: 0,
     explanation:
@@ -1525,10 +1525,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'The Control of Substances Hazardous to Health Regulations 2002 (COSHH) require employers to:',
     options: [
-      'Ban all hazardous substances from site and replace them with safe alternatives',
-      'Keep a safety data sheet on file but take no further action until an incident occurs',
+      'Ban all hazardous substances from site and replace them with safe alternatives before work starts',
+      'Keep a safety data sheet on file for each substance but take no further action until an incident occurs',
       'Assess the risk from hazardous substances, prevent or control exposure, and provide info, instruction and training',
-      'Provide respiratory PPE to every worker on site regardless of the substances used',
+      'Provide respiratory PPE to every worker on site regardless of which substances are actually being used',
     ],
     correctAnswer: 2,
     explanation:
@@ -1560,9 +1560,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'BS 7671 Reg 132.13 in A4:2026 places a duty on the designer to provide:',
     options: [
       'Documentation describing the supply characteristics and other information needed for the installation',
-      'A signed Electrical Installation Certificate before any cable is run on site',
-      'Verbal confirmation to the client that the design meets BS 7671 requirements',
-      'A periodic inspection notice fixed at the consumer unit on completion',
+      'A signed Electrical Installation Certificate before any cable is run on the site at all',
+      'Verbal confirmation to the client that the design meets all BS 7671 requirements in full',
+      'A periodic inspection notice fixed at the consumer unit on completion of the works',
     ],
     correctAnswer: 0,
     explanation:
@@ -1593,10 +1593,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Approved Document P of the Building Regulations applies to:',
     options: [
-      'All commercial and industrial electrical installations across England and Wales',
-      'Portable electrical appliances and the PAT testing of them in any building',
+      'All commercial and industrial electrical installations across England and Wales without exception',
+      'Portable electrical appliances and the PAT testing of them in any type of building in use',
       'Fixed electrical installations in new and existing dwellings, and parts of buildings serving dwellings',
-      'The structural fire safety of high-rise residential buildings only',
+      'The structural fire safety of high-rise residential buildings and nothing else at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -1628,9 +1628,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'The Health and Safety (First-Aid) Regulations 1981 require employers to:',
     options: [
       'Provide adequate and appropriate equipment, facilities and personnel for first aid based on a needs assessment',
-      'Appoint at least one qualified first-aider for every ten employees on every site',
-      'Keep a fully stocked first-aid room at every workplace regardless of its size',
-      'Send any injured worker to hospital immediately rather than treating them on site',
+      'Appoint at least one qualified first-aider for every ten employees on every site, without exception',
+      'Keep a fully stocked first-aid room at every workplace regardless of its size or risk level',
+      'Send any injured worker straight to hospital rather than treating them anywhere on site themselves',
     ],
     correctAnswer: 0,
     explanation:
@@ -1644,10 +1644,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'The Workplace (Health, Safety and Welfare) Regulations 1992 cover:',
     options: [
-      'The safe use, maintenance and inspection of all work equipment and machinery',
+      'The safe use, maintenance and inspection of all work equipment and machinery on site',
       'Workplace conditions: ventilation, temperature, lighting, cleanliness, welfare, traffic routes etc.',
-      'The assessment and control of exposure to hazardous substances at work',
-      'The selection, provision and use of personal protective equipment for workers',
+      'The assessment and control of exposure to hazardous substances used at work by employees',
+      'The selection, provision and correct use of personal protective equipment for workers',
     ],
     correctAnswer: 1,
     explanation:
@@ -1661,10 +1661,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Under HASAWA s.2, the employer\'s general duty to employees includes:',
     options: [
-      'Ensuring only that the workplace premises themselves are kept clean and tidy',
-      'Reporting all employee injuries and diseases directly to the HSE under RIDDOR',
+      'Ensuring only that the workplace premises themselves are kept clean, tidy and free from obstruction throughout working hours on site',
+      'Reporting all employee injuries and diseases directly to the HSE under RIDDOR, which is the whole of the employer\'s general duty to staff',
       'Ensuring, so far as reasonably practicable, the H&S of all employees — including safe systems, training, premises and a written policy where 5+ employees',
-      'Providing free personal protective equipment to anyone who enters the workplace',
+      'Providing free personal protective equipment to anyone who enters the workplace, whether they are employed there or simply visiting for the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -1696,9 +1696,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Statutory law differs from non-statutory standards (e.g. BS 7671) because:',
     options: [
       'Statutory law is binding through Acts/Regulations enforceable by criminal sanction; non-statutory standards are voluntary unless cited in law or contract',
-      'Statutory law applies only to employers, while non-statutory standards apply only to employees',
-      'Statutory law is reviewed every year, whereas non-statutory standards never change once published',
-      'Statutory law covers electrical work only, while non-statutory standards cover all other trades',
+      'Statutory law applies only to employers, while non-statutory standards apply only to employees and the self-employed working on the same site',
+      'Statutory law is reviewed and reissued every year, whereas non-statutory standards never change once they have been published by the standards body',
+      'Statutory law covers electrical work only, while non-statutory standards are what govern all of the other trades working in construction',
     ],
     correctAnswer: 0,
     explanation:
@@ -1764,9 +1764,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What is the purpose of a site diary?',
     options: [
       'A daily contemporaneous record of weather, deliveries, visitors, instructions received and progress',
-      'A list of every operative\'s hours used to calculate the weekly payroll',
-      'A schedule of test results recorded against each circuit on completion',
-      'A register tracking the current revision of every drawing issued to site',
+      'A list of every operative\'s hours on site, used to calculate the weekly payroll run',
+      'A schedule of the test results recorded against each circuit on completion of the works',
+      'A register tracking the current revision of every drawing issued to site for construction',
     ],
     correctAnswer: 0,
     explanation:
@@ -1796,10 +1796,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You arrive on site and the Method Statement tells you to use a step-up access tower for high-level work. The tower is missing a guardrail. What do you do?',
     options: [
-      'Use the tower anyway but stay below the level where the guardrail would normally be',
-      'Fit any spare scaffold tube as a guardrail and carry on with the high-level work',
+      'Use the tower anyway, but stay below the level at which the guardrail would normally sit while working',
+      'Fit any spare scaffold tube as a temporary guardrail and carry on with the high-level work as planned',
       'Stop, report to the supervisor, and do not work at height until the tower is compliant or an alternative is in place',
-      'Work from a stepladder beside the tower instead, since the method statement is only guidance',
+      'Work from a stepladder beside the tower instead, since the method statement is only guidance and not an instruction',
     ],
     correctAnswer: 2,
     explanation:
@@ -1812,9 +1812,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 107,
     question: 'What is a permit-to-work used for?',
     options: [
-      'To record the test results for every circuit before the installation is energised',
-      'To prove that workers have been briefed on a specific safety topic that day',
-      'To track who is on site at any one time for emergency roll-call purposes',
+      'To record the test results for every circuit before the installation is energised and handed to the client',
+      'To prove that all workers have been briefed on a specific safety topic before starting work that day on site',
+      'To track exactly who is on site at any one time for emergency roll-call purposes at the muster point',
       'Formal authorisation to do high-risk work (e.g. hot work, confined space, live work) under defined conditions for a defined time',
     ],
     correctAnswer: 3,
@@ -1844,10 +1844,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 109,
     question: 'A specification ("spec") differs from a drawing because it:',
     options: [
-      'Shows the exact physical dimensions and layout, while the drawing lists the materials in words',
+      'Shows the exact physical dimensions and layout, while the drawing lists all of the materials in words and figures',
       'Describes performance, materials, finishes, standards and quality requirements in words; the drawing shows geometry and arrangement',
-      'Always overrides the drawing automatically wherever the two documents disagree',
-      'Is produced by the contractor on site, while the drawing comes from the designer',
+      'Always overrides the drawing automatically wherever the two documents disagree with one another on a detail',
+      'Is produced by the contractor on site, while the drawing always comes from the designer at tender stage',
     ],
     correctAnswer: 1,
     explanation:
@@ -1877,9 +1877,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You receive a verbal instruction to add a socket. Best practice for the workplace record is:',
     options: [
-      'Crack on with the extra socket straight away, as a verbal instruction is binding enough',
-      'Note it only in the site diary and add the cost to the final account at the end',
-      'Wait until the next progress meeting to mention it before doing any of the work',
+      'Crack on with the extra socket straight away, as a verbal instruction from the customer is binding enough on its own',
+      'Note it only in the site diary and add the cost to the final account at the end of the job when invoicing',
+      'Wait until the next progress meeting to mention it before doing any of the additional work that has been asked for',
       'Confirm in writing (email) before starting, capturing scope, price impact and time impact — and only proceed once acknowledged',
     ],
     correctAnswer: 3,
@@ -1894,9 +1894,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'A toolbox talk record is kept to:',
     options: [
       'Evidence that workers were briefed on a specific topic — sign-in sheet, date, content, attendees, presenter',
-      'Record the hours each operative worked so the briefing time can be paid',
-      'Log any near-misses raised by the team during the briefing for the accident book',
-      'Track who is on site for the emergency fire roll-call at the muster point',
+      'Record the hours each operative worked so that the briefing time can be paid correctly that week',
+      'Log any near-misses raised by the team during the briefing for entry in the accident book',
+      'Track who is on site for the emergency fire roll-call at the designated muster point outside',
     ],
     correctAnswer: 0,
     explanation:
@@ -1978,10 +1978,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'O&M (operation and maintenance) manuals are handed over to:',
     options: [
-      'The Building Control surveyor, who keeps them on the council\'s permanent records',
+      'The Building Control surveyor, who keeps them on the council\'s permanent records for the property',
       'The end client at handover — they describe how to operate, maintain and find spares for the installation',
-      'The wholesaler who supplied the equipment, for their own warranty records',
-      'The Principal Designer, who archives them with the pre-construction information',
+      'The wholesaler who supplied the equipment, for their own warranty and returns records',
+      'The Principal Designer, who archives them together with the pre-construction information',
     ],
     correctAnswer: 1,
     explanation:
@@ -1995,10 +1995,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A delivery note signed "received unchecked" means:',
     options: [
-      'You have fully checked and accepted the delivery as correct in every respect',
-      'The supplier accepts full liability for any shortage found at any later date',
+      'You have fully checked and accepted the delivery as correct in every respect on arrival at the site gate',
+      'The supplier accepts full liability for any shortage or damage found at any later date, however long afterwards',
       'You have not confirmed quantity or condition — protects against signing for items you haven\'t verified, but limits a later claim',
-      'The delivery cannot be used until a second person has counter-signed the note',
+      'The delivery cannot be used on site until a second person has counter-signed the note and checked the contents',
     ],
     correctAnswer: 2,
     explanation:
@@ -2012,9 +2012,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'The construction phase plan (CPP) under CDM 2015 must:',
     options: [
-      'Set out the commercial terms, prices and payment schedule agreed with the client',
-      'List the test results for every circuit recorded during inspection and testing',
-      'Record the hours each trade works against the project for payroll purposes',
+      'Set out the commercial terms, prices and the payment schedule agreed with the client before work starts',
+      'List the test results for every circuit recorded during inspection and testing at completion',
+      'Record the hours each trade works against the project for payroll and valuation purposes each week',
       'Set out the H&S arrangements for the project, including site rules, RAMS for high-risk work and emergency procedures',
     ],
     correctAnswer: 3,
@@ -2030,9 +2030,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A defects/near-miss report should always include:',
     options: [
       'Date, time, location, what happened, who was involved, immediate action, and proposed corrective/preventive action',
-      'Only the name of the person responsible, so they can be held accountable later',
-      'The cost of the damage and who will pay for it, but not the cause of the incident',
-      'A photograph of the scene alone, since written detail can be added afterwards',
+      'Only the name of the person responsible, so that they can be held accountable afterwards by the firm',
+      'The cost of the damage and who will pay for it, but not the cause of the incident or the action taken',
+      'A photograph of the scene alone, since the written detail can always be added afterwards if needed',
     ],
     correctAnswer: 0,
     explanation:
@@ -2080,9 +2080,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A daily plant check (e.g. MEWP pre-use) is recorded on:',
     options: [
-      'The site diary, recorded by whoever was supervising the work that day',
-      'The accident book, alongside any injuries that occurred during the shift',
-      'The toolbox talk register, signed by everyone who attended the briefing',
+      'The site diary, completed at the end of the shift by whoever was supervising the work on that particular site that day',
+      'The accident book, alongside any injuries or near-misses that occurred at any point during that day',
+      'The toolbox talk register, signed by everyone who attended the briefing at the start of that morning',
       'A pre-use inspection sheet kept with the equipment — checks structural integrity, controls, fluids, signage; defects taken out of service',
     ],
     correctAnswer: 3,
@@ -2114,10 +2114,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A test result sheet (e.g. for installation testing) is kept because:',
     options: [
-      'CDM 2015 requires it as part of the construction phase plan kept on site',
+      'CDM 2015 requires it as part of the construction phase plan kept on site throughout the works',
       'BS 7671 Part 6 requires it as evidence of compliance, and it forms part of the cert handed to the client per Reg 132.13',
-      'It is needed only for the contractor\'s own records and is never given to the customer',
-      'The wholesaler requires it before they will honour the warranty on the cable',
+      'It is needed only for the contractor\'s own records and is never handed to the customer at handover time',
+      'The wholesaler requires it before they will honour the warranty on the cable supplied for the job',
     ],
     correctAnswer: 1,
     explanation:
@@ -2135,10 +2135,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer rings to add an EV charger to a quote you are delivering tomorrow. What is the best response?',
     options: [
-      'Add the charger to the quote at no extra cost to keep the customer happy',
-      'Tell the customer it is too late to change anything once the quote is being delivered',
+      'Add the charger to the quote at no extra cost, to keep the customer happy and win the wider job when you deliver it tomorrow',
+      'Tell the customer that it is too late to change anything once the quote is already being delivered to them the next day',
       'Acknowledge verbally, immediately confirm in writing as a variation with cost and time impact, and do not start until the variation is signed',
-      'Fit the charger first and agree the price with the customer afterwards once it is in',
+      'Fit the charger first and agree the price with the customer afterwards once it is installed and working properly',
     ],
     correctAnswer: 2,
     explanation:
@@ -2151,9 +2151,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 127,
     question: 'When handing over a completed installation to a domestic customer, what must you give them?',
     options: [
-      'Only a verbal explanation of what was done, with paperwork kept by the contractor',
-      'A copy of the construction phase plan and the firm\'s health and safety policy',
-      'An invoice and a receipt only — the certification stays with Building Control',
+      'Only a verbal explanation of what was done, with the certificate and test results retained by the contractor until the final invoice is paid',
+      'A copy of the construction phase plan, the firm\'s health and safety policy and its public liability certificate for the customer\'s records',
+      'An invoice and a receipt only — the Electrical Installation Certificate is lodged with Building Control and never issued to the householder',
       'The Electrical Installation Certificate, schedule of test results and the manufacturer\'s instructions / user guides for any equipment installed',
     ],
     correctAnswer: 3,
@@ -2169,9 +2169,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A landlord asks for the EICR result. The installation is unsatisfactory (C1 / C2 codes present). How do you communicate this?',
     options: [
       'Provide the EICR, explain plainly which observations are coded C1 (danger present) or C2 (potentially dangerous), and the urgency to make safe',
-      'Mark the report satisfactory anyway so the landlord can let the property quickly',
-      'Give only a verbal summary and withhold the written report until remedials are paid for',
-      'Send the report straight to the tenants without explaining the codes to the landlord',
+      'Record the installation as satisfactory and list the C1 and C2 items as recommendations, so the landlord can let the property immediately',
+      'Give a verbal summary of the worst faults only, and withhold the written report until the remedial work has been quoted for and paid for',
+      'Send the coded report straight to the tenants and the local authority first, leaving the landlord to work out the coding for themselves',
     ],
     correctAnswer: 0,
     explanation:
@@ -2184,10 +2184,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 129,
     question: 'What information should a quotation contain to be clear to a domestic customer?',
     options: [
-      'Only a single total figure, leaving the detail to be discussed verbally on the day',
+      'A single total figure and a start date, with the scope, exclusions and payment terms agreed verbally on the day',
       'Scope of work, what is and is not included, price (ex/inc VAT), payment terms, validity and any assumptions',
-      'The contractor\'s health and safety policy and a copy of their public liability cover',
-      'A full schedule of test results and the EIC for the proposed installation',
+      'The contractor\'s health and safety policy, public liability cover and competent person scheme number',
+      'A full schedule of test results, a schedule of inspections and the EIC for the proposed installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2235,9 +2235,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A domestic customer cancels a quote 5 days after signing it (off-premises contract). Which Act protects their cancellation right?',
     options: [
       'Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 — 14-day cancellation right for off-premises contracts',
-      'The Consumer Rights Act 2015 — a 30-day right to reject for any signed quotation',
-      'The Sale of Goods Act 1979 — a 7-day cooling-off period on all home contracts',
-      'The Late Payment of Commercial Debts Act 1998 — allowing cancellation within 14 days',
+      'The Consumer Rights Act 2015 — which gives the customer a 30-day right to reject and cancel any signed quotation without giving a reason',
+      'The Sale of Goods Act 1979 — which sets a statutory 7-day cooling-off period on every contract agreed in a customer\'s own home',
+      'The Late Payment of Commercial Debts (Interest) Act 1998 — which lets either party cancel within 14 days of signing the agreement',
     ],
     correctAnswer: 0,
     explanation:
@@ -2251,10 +2251,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer\'s written quote should include a clear validity period because:',
     options: [
-      'Consumer law requires every quotation to state an expiry date by statute',
+      'Consumer law requires every written quotation to state an expiry date before it can be legally accepted',
       'Material prices and labour rates change; an open-ended quote can leave the contractor on the hook for old prices',
-      'It starts the 14-day cancellation period running from the date of the quote',
-      'Building Control will not accept a notification unless the quote shows a validity date',
+      'It starts the 14-day statutory cancellation period running from the date the quotation was issued to the customer',
+      'Building Control will not accept a competent person scheme notification unless the quote shows a validity date',
     ],
     correctAnswer: 1,
     explanation:
@@ -2268,10 +2268,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer asks why their EICR shows a C3 observation. The plain-English answer is:',
     options: [
-      'It means danger is present and the circuit must be made safe immediately',
-      'It means the installation is potentially dangerous and needs urgent remedial work',
+      'It means danger is present — the affected circuit must be made safe immediately and the installation is recorded as unsatisfactory',
+      'It means the installation is potentially dangerous, so urgent remedial work is required before the report can be satisfactory',
       'It is an "improvement recommended" — the installation is not unsatisfactory because of it, but addressing it would improve safety',
-      'It means further investigation is required before the report can be completed',
+      'It means further investigation is required without delay, and the report cannot be issued until that investigation is complete',
     ],
     correctAnswer: 2,
     explanation:
@@ -2285,9 +2285,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer wants the EIC emailed to them. From a UK GDPR standpoint:',
     options: [
-      'You may post it to any address the customer mentions without confirming it first',
-      'You should CC the wholesaler and Building Control so everyone has a copy on file',
-      'Email is not permitted for certificates — they must always be handed over on paper',
+      'You may post or email the certificate to any address the customer mentions on the phone, since consent is implied by them asking for it',
+      'You should copy the wholesaler, the manufacturer and Building Control into the email so that every party has a record of the certificate',
+      'Certificates may never be emailed under UK GDPR — they must be printed and handed over in person to the person named on the contract',
       'Send via secure means, only to the verified email address, retain the cert per your retention policy, and the privacy notice should cover this use',
     ],
     correctAnswer: 3,
@@ -2303,9 +2303,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer has agreed verbally that they will pay on completion. To avoid a dispute, you should:',
     options: [
       'Confirm payment terms in writing on the quote and acceptance — and follow the Late Payment of Commercial Debts Act if they slip',
-      'Rely on the verbal agreement, since a spoken promise to pay is fully binding anyway',
-      'Take a cash deposit up front so there is no need to record the payment terms at all',
-      'Leave the payment terms open and simply invoice whatever feels fair on completion',
+      'Rely on the verbal agreement, because a spoken promise to pay for completed work is fully binding and needs no written record',
+      'Take a cash deposit up front, which removes the need to record the payment terms anywhere on the quote or the invoice',
+      'Leave the payment terms open on the quote and invoice whatever the job turns out to be worth once the work is finished',
     ],
     correctAnswer: 0,
     explanation:
@@ -2319,10 +2319,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You complete a Minor Works Certificate for a domestic customer. The customer copy must be:',
     options: [
-      'Kept by the contractor only, with the customer receiving just a verbal confirmation',
+      'Retained by the contractor for their own records, with the customer given a verbal confirmation that the work has been notified',
       'Provided to the customer (paper or electronic), with the Building Control notification handled via your competent person scheme',
-      'Sent only to Building Control, who then forward a copy to the customer themselves',
-      'Held back until full payment is received, then released to the customer on request',
+      'Sent to Building Control first, who then issue the completion certificate and forward the customer copy on your behalf',
+      'Held back until the invoice is paid in full, then released to the customer along with the scheme notification number',
     ],
     correctAnswer: 1,
     explanation:
@@ -2336,10 +2336,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer asks for "the same job but cheaper" by deleting RCDs. What is the correct response?',
     options: [
-      'Agree to leave the RCDs out, since the customer is entitled to accept the risk themselves',
-      'Fit the RCDs but do not connect them, so the board looks compliant but costs less',
+      'Agree to omit the RCDs and record the customer\'s instruction in writing, since the customer is entitled to accept the risk on their own property',
+      'Fit the RCD devices but leave them unconnected, so the consumer unit looks compliant and the customer still gets the lower price',
       'Decline politely, explain why RCD protection is required by BS 7671 (e.g. Reg 411.3.3 for socket-outlets ≤32A) and is not optional for compliant work',
-      'Leave the RCDs out but note it on the certificate as a departure from the standard',
+      'Leave the RCDs out and record it on the certificate as a departure from BS 7671, which makes the reduced installation acceptable to sign off',
     ],
     correctAnswer: 2,
     explanation:
@@ -2353,9 +2353,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer leaves a complaint on Google reviews about communication. The right response is:',
     options: [
-      'Ignore it completely, as engaging with a public review only draws attention to it',
-      'Reply publicly disputing the customer\'s version of events point by point',
-      'Demand the customer removes the review before you will discuss the issue at all',
+      'Leave the review unanswered but ask friends and family to post positive reviews so that the average rating recovers',
+      'Reply publicly disputing the customer\'s account point by point and set out the evidence that shows they are mistaken',
+      'Ask the customer to take the review down before you will discuss the issue, then deal with the complaint privately',
       'Respond publicly and professionally — acknowledge the issue, offer to resolve offline, and do not get into a public argument',
     ],
     correctAnswer: 3,
@@ -2371,9 +2371,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer\'s privacy notice on your quote/invoice typically covers:',
     options: [
       'What personal data you collect, why, how long you keep it, who you share with, and the customer\'s rights under UK GDPR',
-      'The scope of work, exclusions, price and payment terms agreed with the customer',
-      'The contractor\'s liability cover and the limits that apply to any claim made',
-      'The competent person scheme membership number and the warranty period offered',
+      'The scope of work, the exclusions, the price, the payment terms and the validity period agreed with the customer',
+      'The contractor\'s public liability cover, the limits that apply to any claim and the excess the customer would pay',
+      'The competent person scheme membership number, the warranty period offered and the complaints procedure',
     ],
     correctAnswer: 0,
     explanation:
@@ -2387,10 +2387,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Handover documentation for a new-build dwelling typically includes:',
     options: [
-      'Only the final invoice and a receipt, with all certification kept by the contractor',
+      'Only the final invoice and a receipt for the work — the EIC, the schedule of test results and the manufacturer literature stay with the contractor as their record',
       'EIC, schedule of test results, schedule of inspections, manufacturer instructions for installed kit (CU, AFDDs, smoke alarms, EV charger if any), and user instructions',
-      'The construction phase plan and the firm\'s health and safety policy statement',
-      'A verbal demonstration of the consumer unit only, with no written paperwork',
+      'The construction phase plan, the firm\'s health and safety policy statement and its risk assessments, which the developer passes on to the buyer on completion',
+      'A verbal demonstration of the consumer unit and the smoke alarms only, since the developer issues all of the written documentation to the buyer directly',
     ],
     correctAnswer: 1,
     explanation:
@@ -2404,10 +2404,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A landlord refuses to share the EICR with their tenants, but the law in England since 2020 requires:',
     options: [
-      'No copy need be given to tenants at all — only the landlord retains the EICR',
-      'A copy given to tenants only if they specifically ask for it in writing',
+      'No copy needs to be given to tenants at all — the landlord simply retains the EICR and produces it only if the local authority serves a formal written request under the Housing Act 2004',
+      'A copy given to tenants only if they specifically ask for it in writing, and to the local authority only where an enforcement notice has already been served on the landlord for that property',
       'A copy of the EICR to be given to existing tenants within 28 days, new tenants before occupation, and to the local authority on request — Electrical Safety Standards in the Private Rented Sector Regs 2020',
-      'A copy displayed in the property\'s communal area for all tenants to read',
+      'A copy displayed in the property\'s communal area for tenants to read, with the original retained by the landlord and produced to the local authority at the next licensing inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -2421,9 +2421,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A commercial customer wants a written method statement for a planned outage. What level of detail is appropriate?',
     options: [
-      'A single line stating the outage time, with the detail explained verbally on the day',
-      'A generic template covering all electrical work, reused unchanged for every job',
-      'Only the price and duration of the outage, since the method is the contractor\'s concern',
+      'A single line stating the outage window and a contact number, with the working method explained verbally on the day',
+      'A generic template covering all electrical work, reused unchanged for every job so that the wording stays consistent',
+      'The price, the duration and the isolation point only, since the working method is the contractor\'s own business',
       'Step-by-step sequence, isolation strategy, who is involved, contingency for restoration, and notification chain — task-specific',
     ],
     correctAnswer: 3,
@@ -2439,9 +2439,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer asks what happens if they discover a defect 3 months after handover. The correct briefing is:',
     options: [
       'Workmanship/materials defects are usually covered by your guarantee/scheme insurance-backed warranty (e.g. NICEIC PCG, NAPIT IBG); explain how to make a claim',
-      'Once the work is handed over and paid for, the contractor has no further liability for it',
-      'Any defect after handover is the customer\'s responsibility under the Consumer Rights Act',
-      'Defects must be reported to Building Control, who arrange the repair at the customer\'s cost',
+      'Once the work has been handed over and the final invoice paid, liability passes to the customer and no claim can be made against the contractor',
+      'Any defect appearing after handover is the customer\'s responsibility, because the Consumer Rights Act only covers the first 30 days after completion',
+      'Defects must be reported to Building Control, who then instruct a remedial contractor and recharge the cost of the repair to the customer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2455,10 +2455,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer asks why the new RCBO trips when they plug in their old freezer. Plain-English answer:',
     options: [
-      'The RCBO is faulty and oversensitive; we will swap it for a higher-rated device',
+      'The RCBO is over-sensitive and nuisance tripping; we will replace it with a 100 mA device so that the freezer circuit stays on',
       'It is doing its job — the freezer likely has earth leakage; explain we will investigate, and recommend repair/replacement of the appliance',
-      'The new board is wired incorrectly; we will rewire the circuit to stop the tripping',
-      'The freezer is fine; we will fit a non-RCD circuit for it so it stops tripping',
+      'The consumer unit has been wired with a shared neutral; we will rewire the circuit so that the freezer stops tripping the device',
+      'The freezer is fine — we will move it onto a dedicated circuit without RCD protection so that the tripping stops for good',
     ],
     correctAnswer: 1,
     explanation:
@@ -2472,10 +2472,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer wants to pay cash with no invoice. What is the right answer?',
     options: [
-      'Accept the cash and offer a small discount in return for not raising an invoice',
-      'Take the cash but issue the invoice only if the customer later asks for one',
+      'Accept the cash and offer a discount in return, since work paid for in cash falls below the VAT threshold and needs no invoice',
+      'Take the cash and issue an invoice only if the customer later asks, keeping a note of the payment in your own job diary meanwhile',
       'Decline — provide a proper VAT invoice (or zero-VAT invoice if not registered) for tax compliance and to protect the customer\'s warranty rights',
-      'Accept the cash, as a customer is entitled to choose how they pay for the work',
+      'Accept the cash without paperwork — how a customer chooses to pay is their decision and the certificate is the only record needed',
     ],
     correctAnswer: 2,
     explanation:
@@ -2489,9 +2489,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'When briefing a customer at the end of an EV charger install, you should:',
     options: [
-      'Hand over only the invoice, since the charger\'s app explains everything the customer needs',
-      'Leave the manufacturer guides in the box for the customer to read in their own time',
-      'Give a quick verbal explanation only, as the certificate covers the technical detail',
+      'Hand over the invoice and the certificate only, since the manufacturer\'s app takes the customer through the commissioning steps and every setting they are likely to need',
+      'Leave the manufacturer guides and the certificate pack in the box for the customer to read in their own time, and demonstrate the unit only if they ask you to',
+      'Give a brief verbal explanation of the on/off button, as the certificate and the smart charge point regulations are matters for the installer rather than the customer',
       'Demonstrate operation, explain the smart features and tariff considerations, hand over manufacturer guides and your cert pack, and note the smart charger regs (e.g. randomised delay)',
     ],
     correctAnswer: 3,
@@ -2507,9 +2507,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer is unsure if they need an EICR or a PIR. The correct response is:',
     options: [
       'They are the same product — EICR replaced the older "PIR" (periodic inspection report) terminology; explain politely',
-      'A PIR is for new installations and an EICR is only for existing ones, so they need the EICR',
-      'A PIR is a visual inspection only, while an EICR involves full testing of every circuit',
-      'A PIR is issued by the landlord and an EICR is issued by the electrician, so both are needed',
+      'A PIR is for new installations and an EICR is only for existing ones, so a new build needs the PIR first',
+      'A PIR is a visual inspection only, while an EICR involves full dead and live testing of every circuit',
+      'A PIR is issued by the landlord and an EICR by the electrician, so both documents are needed for a let',
     ],
     correctAnswer: 0,
     explanation:
@@ -2523,10 +2523,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer requests a verbal price over the phone. Best practice is:',
     options: [
-      'Give a firm fixed price over the phone so the customer can decide there and then',
+      'Give a firm fixed price over the phone, as a verbal quotation only becomes binding once it is put in writing',
       'Give a rough indicator only, then follow up with a written, scoped quote — so both sides have the same understanding',
-      'Refuse to give any figure at all until you have visited and surveyed the property',
-      'Quote the highest likely price verbally so there is room to reduce it later',
+      'Refuse to give any figure at all until you have surveyed the property and seen the consumer unit and wiring',
+      'Quote the highest likely price verbally so there is room to come down when you issue the written quote',
     ],
     correctAnswer: 1,
     explanation:
@@ -2540,10 +2540,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A landlord asks how long you must keep their EICR. UK GDPR storage limitation suggests:',
     options: [
-      'Indefinitely — once collected, the data can be kept forever for future reference',
-      'Exactly 12 months, after which the report must be deleted under UK GDPR',
+      'Indefinitely — once the data has been lawfully collected it may be retained forever in case the same customer returns for more work',
+      'Exactly 12 months from the date of the report, after which UK GDPR requires the EICR to be deleted from all systems and backups',
       'Only as long as needed for the legitimate purpose — typically the EICR validity period plus a buffer for limitation/insurance reasons (often 6+ years)',
-      'Until the next EICR is done, when the previous one must be destroyed immediately',
+      'Until the next EICR is carried out, at which point the previous report must be destroyed to avoid holding duplicate records of the property',
     ],
     correctAnswer: 2,
     explanation:
@@ -2560,9 +2560,9 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 151,
     question: 'What is the purpose of a company Health and Safety policy?',
     options: [
-      'To record the test results for every installation the company completes',
-      'To list the prices the company charges for each type of electrical work',
-      'To set out who is on site each day for the emergency fire roll-call',
+      'To record the results of every test the company carries out, so that it can prove to an inspector that its work meets BS 7671',
+      'To list the prices the company charges for each type of electrical work so that quotations stay consistent across the workforce',
+      'To name the responsible person on site each day and set out the fire roll-call arrangements for the company\'s own premises',
       'To set out the company\'s commitment, organisation and arrangements for managing H&S — required in writing if 5+ employees (HASAWA s.2(3))',
     ],
     correctAnswer: 3,
@@ -2577,9 +2577,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'A company\'s drug and alcohol policy is most likely to require:',
     options: [
       'Zero tolerance with for-cause and post-incident testing, supported by an employee assistance referral route',
-      'Random testing only on Fridays, with no consequences for a first positive result',
-      'Testing of new starters at interview only, with no further checks once employed',
-      'Self-declaration by each worker, with the company taking no action either way',
+      'Random testing of the whole workforce every Friday, with a verbal warning for a first positive result',
+      'Testing of new starters at interview stage only, with no further screening once they are employed',
+      'Self-declaration by each worker at induction, with the company taking no further action either way',
     ],
     correctAnswer: 0,
     explanation:
@@ -2592,10 +2592,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 153,
     question: 'What is the purpose of an equal opportunities policy?',
     options: [
-      'To set out the company\'s commitment to managing health and safety on site',
+      'To set out the company\'s commitment to managing health and safety and its arrangements for site inductions',
       'To set out how the company prevents discrimination and harassment based on the Equality Act 2010 protected characteristics',
-      'To set out the pay rates and bonus structure offered to all employees equally',
-      'To set out how the company handles customer complaints fairly and consistently',
+      'To set out the pay rates, bonus structure and overtime rates offered to every employee on the same basis',
+      'To set out how the company handles customer complaints and disputes fairly and consistently in every case',
     ],
     correctAnswer: 1,
     explanation:
@@ -2609,10 +2609,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A company\'s grievance procedure is governed by which statutory code?',
     options: [
-      'The Health and Safety at Work etc. Act 1974',
-      'The Public Interest Disclosure Act 1998',
+      'The Health and Safety at Work etc. Act 1974, section 2(3)',
+      'The Public Interest Disclosure Act 1998 whistleblowing code',
       'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
-      'The Working Time Regulations 1998',
+      'The Working Time Regulations 1998 and its ACAS guidance',
     ],
     correctAnswer: 2,
     explanation:
@@ -2644,9 +2644,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Why should every apprentice read the company\'s Health and Safety policy on day one?',
     options: [
       'Because it tells them the reporting routes, named responsible people and arrangements they will rely on every day',
-      'Because they must sign it to confirm they accept personal liability for any accident',
-      'Because it sets out the pay rates and overtime arrangements for their grade',
-      'Because reading it counts towards their off-the-job training hours for the apprenticeship',
+      'Because they must sign it to confirm that they accept personal liability for any accident on site',
+      'Because it sets out the pay rates, overtime arrangements and travel allowances for their grade',
+      'Because reading it counts towards the off-the-job training hours recorded for their apprenticeship',
     ],
     correctAnswer: 0,
     explanation:
@@ -2677,10 +2677,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A bullying and harassment policy operationalises duties under:',
     options: [
-      'The Working Time Regulations 1998 and the Employment Rights Act 1996',
-      'The Public Interest Disclosure Act 1998 and the Bribery Act 2010',
+      'The Working Time Regulations 1998 and the unfair dismissal provisions of the Employment Rights Act 1996',
+      'The Public Interest Disclosure Act 1998 and the corporate hospitality provisions of the Bribery Act 2010',
       'Equality Act 2010 ss.26-27 (harassment) and HASAWA (employer duty to protect health, including mental)',
-      'The Consumer Rights Act 2015 and the Data Protection Act 2018',
+      'The Consumer Rights Act 2015 and the special category data provisions of the Data Protection Act 2018',
     ],
     correctAnswer: 2,
     explanation:
@@ -2712,9 +2712,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A company\'s lone working policy should:',
     options: [
       'Set out who can work alone, what risk assessment applies, communication/check-in arrangements, and high-risk activities that need a buddy',
-      'Ban lone working entirely, requiring at least two operatives on every job without exception',
-      'Apply only to apprentices, since qualified electricians are always free to work alone',
-      'Require every lone worker to carry a permit to work signed by the site manager',
+      'Ban lone working entirely, requiring at least two operatives on every job on the basis that HASAWA prohibits working alone',
+      'Apply only to apprentices and trainees, since qualified electricians are competent to work alone on any task without assessment',
+      'Require every lone worker to hold a permit to work signed by the site manager before starting any activity, whatever the risk',
     ],
     correctAnswer: 0,
     explanation:
@@ -2728,10 +2728,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A vehicle/driving-at-work policy should cover:',
     options: [
-      'Only the fuel allowance and mileage rates paid to staff who use their own vehicles',
+      'Fuel allowances and the mileage rates paid to staff who use their own vehicles, since driving is covered by road traffic law',
       'Licence checks, insurance, MOT, vehicle inspection, mobile phone use, fatigue management — all part of the employer\'s duty under HASAWA s.3 to others',
-      'Only the route planning and delivery scheduling for the company\'s vans',
-      'Only the rules on personal use of company vehicles outside working hours',
+      'Only the route planning and delivery scheduling for the company\'s vans, since driver conduct on the road is a matter for the police',
+      'The rules on personal use of company vehicles outside working hours and the tax treatment of that benefit in kind',
     ],
     correctAnswer: 1,
     explanation:
@@ -2762,9 +2762,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "fit and proper person" policy in a regulated firm typically requires:',
     options: [
-      'A one-off DBS check at recruitment, with no need for any further review afterwards',
-      'A signed declaration of good character from the worker, taken at face value',
-      'A formal qualification in the relevant trade, with conduct not being considered',
+      'A single DBS check taken at recruitment, with no need for any further review once the worker is employed',
+      'A signed declaration of good character from the worker, taken at face value on the day of appointment',
+      'A formal qualification in the relevant trade, with past conduct playing no part in the decision at all',
       'Background checks (DBS), reference checks, ongoing competence assessment and prompt action on conduct issues',
     ],
     correctAnswer: 3,
@@ -2780,9 +2780,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'An IT/acceptable use policy typically prohibits:',
     options: [
       'Sharing passwords, using company systems for unlawful or commercial private purposes, downloading unauthorised software',
-      'Using personal phones at all on site, even for taking job photographs',
-      'Accessing the company email account from home or outside office hours',
-      'Storing any customer data electronically rather than on paper records only',
+      'Using personal mobile phones on site for any purpose, including taking photographs of completed work',
+      'Accessing the company email account from home, or from any device at all outside normal office hours',
+      'Storing any customer data electronically at all, on the basis that records must be kept only on paper',
     ],
     correctAnswer: 0,
     explanation:
@@ -2796,10 +2796,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A social media policy for tradespeople typically asks them to:',
     options: [
-      'Post regularly about every job to build the company\'s online profile and win work',
+      'Post regularly about every job, including the address, to build the company\'s online profile and win work from neighbouring properties',
       'Avoid identifying clients or live worksites without consent, no derogatory comments about colleagues/clients/competitors, and respect confidentiality',
-      'Use only their personal accounts so the company is never associated with their posts',
-      'Tag the customer and the wholesaler in every post to maximise the firm\'s reach',
+      'Use only their own personal accounts, so that the company can never be associated with anything they post about a job or a client',
+      'Tag the customer, the wholesaler and the manufacturer in every post to maximise the firm\'s online reach and its search ranking',
     ],
     correctAnswer: 1,
     explanation:
@@ -2813,10 +2813,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A company\'s mental health/wellbeing policy typically signposts to:',
     options: [
-      'The HSE incident reporting line, which logs every wellbeing concern raised at work',
-      'The company\'s own occupational health department only, with no external services',
+      'The HSE incident reporting line, which logs every wellbeing concern raised by a worker and passes it back to the employer',
+      'The company\'s own occupational health department only, with no signposting to any external charities or helplines',
       'EAP (Employee Assistance Programme), Lighthouse Construction Industry Charity helpline, Mind, Mates in Mind, and the GP route',
-      'The trade union helpline, which is the only confidential route open to employees',
+      'The trade union helpline, which is treated as the only confidential route open to employees under HASAWA',
     ],
     correctAnswer: 2,
     explanation:
@@ -2830,9 +2830,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'An apprentice\'s training agreement is a contractual document setting out:',
     options: [
-      'Only the pay rate, with all training arrangements handled separately by the college',
-      'Only the qualifications to be achieved, with no mention of pay or conditions',
-      'Only the employer\'s health and safety duties towards the apprentice on site',
+      'The pay rate and the hours alone, with all of the training arrangements handled separately by the training provider',
+      'Only the qualifications to be achieved and the assessment dates, with no mention of pay or conditions',
+      'The employer\'s health and safety duties towards the apprentice while they are on site or travelling to it',
       'Roles of employer/training provider/apprentice, off-the-job learning hours, end-point assessment plans and pay/conditions',
     ],
     correctAnswer: 3,
@@ -2848,9 +2848,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A return-to-work meeting after sick absence is conducted to:',
     options: [
       'Welcome back, identify any ongoing health needs, confirm fitness for normal duties and discuss any reasonable adjustments',
-      'Issue a disciplinary warning for the days of work that were missed during the absence',
-      'Deduct the sick days from the worker\'s holiday entitlement for the year ahead',
-      'Require a doctor\'s note for every single day of absence before they can return',
+      'Issue a formal disciplinary warning covering the days of work that were missed, as the ACAS code requires',
+      'Deduct the days of sickness from the worker\'s holiday entitlement for the remainder of the leave year',
+      'Require a doctor\'s fit note covering every single day of absence before the worker is allowed back on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -2864,10 +2864,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A safeguarding policy in a contracting firm working in schools should include:',
     options: [
-      'A standard DBS check for the supervisor only, with no training for the wider team',
+      'A standard DBS check for the site supervisor only, with no safeguarding training for the rest of the team on site',
       'Enhanced DBS for staff, named safeguarding officer, training, and a clear route for reporting concerns about children/vulnerable adults',
-      'A signed declaration from each worker that they have no criminal record at all',
-      'A blanket ban on speaking to any pupil, removing the need for DBS checks entirely',
+      'A signed declaration from each worker confirming that they have no criminal record of any kind, checked once at recruitment',
+      'A blanket ban on speaking to any pupil on the premises, which removes the need for DBS checks on the workforce entirely',
     ],
     correctAnswer: 1,
     explanation:
@@ -2898,9 +2898,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A complaint handling procedure for customers should include:',
     options: [
-      'Ignore complaints unless they are put in writing and sent by recorded delivery',
-      'Refer every complaint straight to the firm\'s solicitor before any internal review',
-      'Offer the customer a refund immediately to make the complaint go away quickly',
+      'Handle every complaint verbally on site, keeping no written record of it unless the customer specifically asks for one',
+      'Refer every complaint straight to the firm\'s solicitor before carrying out any internal review of the job or the paperwork',
+      'Offer the customer a full refund immediately so that the complaint goes away before it reaches the competent person scheme',
       'Acknowledge promptly, investigate fairly, respond in writing within a stated timescale, signpost to ADR (e.g. scheme provider) if unresolved',
     ],
     correctAnswer: 3,
@@ -2916,9 +2916,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A company\'s environmental policy may commit to:',
     options: [
       'Waste segregation, responsible disposal of WEEE, energy reduction, low-NOx vehicle policy and supplier sustainability — supporting environmental compliance and contracts that require it',
-      'Sending all site waste to landfill in a single skip to keep collection costs low',
-      'Disposing of old cable and equipment by burning it on site to save haulage',
-      'Leaving waste management entirely to the client, as it is not the contractor\'s concern',
+      'Sending all site waste to landfill in a single mixed skip to keep collection costs down, since segregation of waste is the carrier\'s legal duty rather than the contractor\'s',
+      'Disposing of old cable and redundant equipment by burning it on site, which saves haulage costs and is permitted on private land where the client consents',
+      'Leaving waste management entirely to the client under the duty of care, as the contractor\'s only environmental obligation is to leave the work area tidy each day',
     ],
     correctAnswer: 0,
     explanation:
@@ -2949,10 +2949,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A new starter induction policy should cover at least:',
     options: [
-      'Only the pay arrangements and holiday entitlement for the new starter\'s grade',
-      'Only the technical detail of the first job the new starter will be working on',
+      'Pay arrangements, holiday entitlement and the pension details for the new starter\'s grade, and nothing more than that',
+      'Only the technical detail of the first job the new starter will be working on, as everything else is learned on the job',
       'H&S basics, fire procedure, first aid, reporting routes, key policies (D&A, equality, IT, social media), site rules and named manager',
-      'Only a tour of the office, leaving site-specific rules to be picked up on the job',
+      'A tour of the office and an introduction to the team, leaving site-specific rules to be picked up on the job',
     ],
     correctAnswer: 2,
     explanation:
@@ -2966,9 +2966,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A confidentiality clause in a contract of employment typically prevents:',
     options: [
-      'An employee from ever working in the electrical trade again after they leave',
-      'An employee from reporting genuine wrongdoing to a regulator such as the HSE',
-      'An employee from taking annual leave during a busy period for the company',
+      'An employee from working anywhere in the electrical trade for a period of two years after they leave the company',
+      'An employee from reporting genuine wrongdoing to a regulator such as the HSE or their competent person scheme',
+      'An employee from taking annual leave during any period that the company has declared to be a busy trading period',
       'Disclosure of client information, designs, prices and trade secrets — both during employment and (within reason) afterwards',
     ],
     correctAnswer: 3,
@@ -3002,10 +3002,10 @@ export const module5QuestionBank: QuestionBank[] = [
     id: 177,
     question: 'A toolbox talk is best described as:',
     options: [
-      'A full-day formal training course delivered off site by an external provider',
+      'A full-day formal training course delivered off site by an external provider, ending with a written assessment',
       'A short, focused safety briefing on a specific topic delivered to the work team — interactive, recorded with attendees signed in',
-      'A one-to-one disciplinary meeting between a worker and their line manager',
-      'A written notice posted on the site board that workers read in their own time',
+      'A one-to-one disciplinary meeting between a worker and their line manager about an unsafe act witnessed on site',
+      'A written safety notice posted on the site board for workers to read in their own time and sign at week\'s end',
     ],
     correctAnswer: 1,
     explanation:
@@ -3053,9 +3053,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question: 'What is "active listening" on site?',
     options: [
       'Giving the speaker your full attention, not interrupting, then summarising back what you heard to confirm understanding',
-      'Writing down every word the speaker says so there is a verbatim record afterwards',
-      'Listening only for the instructions that affect your own task and ignoring the rest',
-      'Waiting for the speaker to finish so you can immediately give your own opinion',
+      'Writing down every word that the speaker says so that there is a verbatim record of the instruction afterwards',
+      'Listening only for the instructions that affect your own task and letting the rest of the briefing go by',
+      'Waiting quietly for the speaker to finish so that you can give your own view on the job straight away',
     ],
     correctAnswer: 0,
     explanation:
@@ -3121,9 +3121,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A "pre-start" meeting before a new project is best held by:',
     options: [
       'Face-to-face (or video for distributed teams) — covers scope, programme, RAMS, key contacts and unanswered questions',
-      'A group email to all parties, since it gives everyone the same written information',
-      'A WhatsApp group, so the team can ask questions in their own time over the week',
-      'A phone call to each trade individually, keeping each conversation private',
+      'A group email to all parties, since it gives everyone exactly the same written information at the same time',
+      'A WhatsApp group, so that the team can ask their questions in their own time over the first week of works',
+      'A phone call to each trade individually, so that every conversation stays private and focused on that trade',
     ],
     correctAnswer: 0,
     explanation:
@@ -3137,10 +3137,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A two-way radio is used on a large site because:',
     options: [
-      'It keeps a permanent written record of every message for later reference',
+      'It keeps a permanent written record of every message that can be checked later if there is a dispute over instructions',
       'It allows fast, group communication in noisy/large environments where mobiles are unreliable; useful for banksman, lifts, emergencies',
-      'It is the only legal way to communicate during a site emergency under CDM 2015',
-      'It is cheaper than mobile phones and so reduces the project\'s running costs',
+      'It is the only means of communication permitted during a declared site emergency under the CDM Regulations 2015',
+      'It is cheaper to run than mobile phones and so reduces the project\'s overall running costs for the contractor',
     ],
     correctAnswer: 1,
     explanation:
@@ -3154,10 +3154,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A SBAR (Situation, Background, Assessment, Recommendation) handover is used because:',
     options: [
-      'It keeps the handover deliberately brief so the next shift can start work quickly',
-      'It is a legal requirement under CDM 2015 for every crew change on a construction site',
+      'It keeps the handover deliberately brief so that the incoming shift can start work with the minimum of delay',
+      'It is a legal requirement under the CDM Regulations 2015 for every crew change on a notifiable construction site',
       'It structures a clinical/safety handover so nothing important is missed — increasingly used in construction safety briefings too',
-      'It records the handover in writing so it can be used as evidence in a dispute',
+      'It records the handover in writing so that it can be produced as evidence in a later contractual dispute',
     ],
     correctAnswer: 2,
     explanation:
@@ -3171,9 +3171,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A WhatsApp group for a small contracting team is fine for:',
     options: [
-      'Sending customer addresses and EICR results so the whole team can see them',
-      'Recording formal variations to price and scope agreed with the client',
-      'Issuing the official RAMS and method statements for high-risk tasks',
+      'Sending customer addresses, phone numbers and EICR results, so that the whole team can see them without having to log into the office system',
+      'Recording formal variations to the price and the scope agreed verbally with the client during a site visit',
+      'Issuing the official RAMS and method statements for high-risk tasks to everyone on the job at the same time',
       'Logistics chat (e.g. "running 10 mins late") — but anything contractually significant or personal data should still go through formal channels',
     ],
     correctAnswer: 3,
@@ -3189,9 +3189,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A "tailgate" briefing is similar to a toolbox talk but typically:',
     options: [
       'Held at the work face at the start of shift, very short (2-5 min), focused on the day\'s specific tasks and hazards',
-      'Held in a classroom off site and lasting a full day, with a written test at the end',
-      'Held only after an accident, to brief the team on what went wrong and what changes',
-      'Held once at the start of the project and never repeated during the works',
+      'Held in a classroom off site, lasting a full day and ending with a written test of understanding',
+      'Held only after an accident, to brief the team on what went wrong and what is changing as a result',
+      'Held once at the start of the project and never repeated during the rest of the construction phase',
     ],
     correctAnswer: 0,
     explanation:
@@ -3205,10 +3205,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Email etiquette for site teams typically asks you to:',
     options: [
-      'CC the whole company on every email so nobody can claim they were not informed',
+      'CC the whole company on every single email so that nobody can later claim that they were not informed of a change to the programme or the design',
       'Use clear subject lines, keep messages short, only CC people who need it, and avoid sending sensitive info as attachments without checking the recipient',
-      'Write in capitals so the message stands out and is read straight away by everyone',
-      'Reply to every email within minutes, even if it means sending an incomplete answer',
+      'Write the important points in capitals so that the message stands out in the inbox and is acted on before the others',
+      'Reply to every email within minutes of receiving it, even if that means sending an incomplete or unchecked answer',
     ],
     correctAnswer: 1,
     explanation:
@@ -3222,10 +3222,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "stand-down" is a communication tool used after:',
     options: [
-      'A successful project handover, to thank the team and close out the works',
-      'A change of shift, to brief the incoming crew on the day\'s remaining tasks',
+      'A successful project handover, to thank the team and formally close out the works on site',
+      'A change of shift, to brief the incoming crew on the tasks left over from the previous shift',
       'A serious incident or near-miss — work stops, the workforce is briefed on what happened and what changes',
-      'A delivery shortage, to decide how to make up the missing materials',
+      'A materials shortage, to decide how the team will work around the missing deliveries',
     ],
     correctAnswer: 2,
     explanation:
@@ -3257,9 +3257,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A "request for information" (RFI) is a:',
     options: [
       'Formal written question from contractor to designer/CA when a drawing or spec is unclear or contradictory — recorded and tracked',
-      'A request from the client to the contractor for a price for additional work',
-      'A formal complaint raised by a worker about their treatment at work',
-      'A notice issued by Building Control requiring a defect to be corrected',
+      'A written request from the client to the contractor for a price for additional work outside the original scope',
+      'A formal complaint raised by a worker about their treatment at work, handled under the grievance procedure',
+      'A notice issued by Building Control requiring a defect to be corrected within a stated period of time',
     ],
     correctAnswer: 0,
     explanation:
@@ -3290,10 +3290,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A QR code on a site notice can:',
     options: [
-      'Replace the printed notice entirely, since everyone on site has a smartphone now',
-      'Track who has read the notice by logging each person who scans the code',
+      'Replace the printed notice entirely, on the basis that everybody working on site now carries a smartphone that can read the code',
+      'Track who has read the notice by logging the identity of every person who scans it, which satisfies the site record-keeping duty in full',
       'Supplement the notice — e.g. linking to manufacturer instructions, full RAMS or O&M info — but the printed words should still cover the key safety message',
-      'Lock the notice so only authorised staff can read it by scanning the code',
+      'Lock the notice so that only authorised staff are able to read the content, once they have scanned it with a company-issued device',
     ],
     correctAnswer: 2,
     explanation:
@@ -3307,9 +3307,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A site notice board typically displays:',
     options: [
-      'The commercial contract, priced quotations and the client\'s payment schedule',
-      'The personal details and home addresses of everyone working on the project',
-      'The full set of construction drawings at their current revision for reference',
+      'The priced contract sum, the payment schedule and the retention figures agreed between client and contractor',
+      'The personal details, home addresses and next-of-kin contacts of everyone currently working on the project',
+      'The full set of construction drawings at their current revision, for any trade to consult or take away',
       'F10 notice (where required), site rules, fire plan, first-aid info, the H&S policy statement and current toolbox talk topics',
     ],
     correctAnswer: 3,
@@ -3325,9 +3325,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Voice notes (e.g. WhatsApp audio) for site instructions are usually:',
     options: [
       'Avoided for anything important — they are hard to search, share, transcribe and reference later; use written for record',
-      'The best choice for important instructions — they capture tone and cannot be misread',
-      'Legally binding as a record of instruction, the same as a written email would be',
-      'Preferred on site because they can be listened to over ear defenders and noise',
+      'The best choice for important instructions, since they capture tone of voice and so cannot be misread',
+      'Legally binding as a record of instruction in exactly the same way as a written email would be',
+      'Preferred on site because they can be listened to over ear defenders and high background noise levels',
     ],
     correctAnswer: 0,
     explanation:
@@ -3341,10 +3341,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "tag" or label on a defective tool is a form of:',
     options: [
-      'Written communication — it is a permanent paper record of the tool\'s fault history',
+      'Written communication — it forms a permanent paper record of that tool\'s inspection and fault history',
       'Visual communication — instantly tells anyone who picks it up that the tool is out of service, with reason and date',
-      'Verbal communication — it relies on the last user telling the next user it is faulty',
-      'Electronic communication — it sends an alert to the supervisor when the tool fails',
+      'Verbal communication — it relies on the last user telling the next user that it is faulty before use',
+      'Electronic communication — it sends an alert to the supervisor\'s phone whenever the tool fails a check',
     ],
     correctAnswer: 1,
     explanation:
@@ -3358,10 +3358,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A weekly progress report typically uses which communication style?',
     options: [
-      'A single long paragraph, so the reader gets the full picture in one go',
-      'Bullet points only, with no headings, to keep the report as short as possible',
+      'A single long unbroken paragraph, so that the reader takes in the full picture of the week\'s progress in one go',
+      'Bullet points with no headings and no dates, so that the report stays as short as it can possibly be to read',
       'Structured (sections: progress, programme, RFIs, variations, H&S incidents, look-ahead) so the reader can scan quickly',
-      'Verbal at the weekly meeting only, with nothing written down afterwards',
+      'Verbal at the weekly progress meeting only, with nothing written down or circulated to the wider project team',
     ],
     correctAnswer: 2,
     explanation:
@@ -3393,9 +3393,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'For an emergency on site (e.g. fire), what is the primary communication method?',
     options: [
       'Site alarm + verbal "evacuate" + roll call at muster point — every site\'s induction covers this',
-      'A group email to all workers explaining the location and nature of the fire',
-      'A note on the site notice board telling people what to do in an emergency',
-      'A WhatsApp message to the team so everyone gets the alert on their phone',
+      'A group email to every worker on the site explaining the location and nature of the fire',
+      'A note pinned on the site notice board telling people what they should do in an emergency',
+      'A WhatsApp message to the whole team, so that everyone gets the alert on their own phone',
     ],
     correctAnswer: 0,
     explanation:
@@ -3413,10 +3413,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'How should you brief a colleague whose first language is not English on a safe-isolation procedure?',
     options: [
-      'Speak more loudly and slowly in English until they appear to understand the procedure',
+      'Speak more loudly and much more slowly in English, repeating each step of the procedure until they nod to show they have understood',
       'Use plain English with a visual demonstration, ask them to demonstrate it back, and provide a written checklist (translated where possible)',
-      'Hand them the written procedure in English and let them read it on their own',
-      'Tell them to only watch a qualified colleague and never attempt isolation themselves',
+      'Hand them the written safe isolation procedure in English and let them read it through on their own before they start work',
+      'Tell them to watch a qualified colleague carrying out the isolation, and never to attempt the procedure for themselves at all',
     ],
     correctAnswer: 1,
     explanation:
@@ -3430,10 +3430,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A colleague is dyslexic and struggles with written method statements. A reasonable adjustment under the Equality Act 2010 might be:',
     options: [
-      'Excusing them from following the method statement at all because they cannot read it',
-      'Printing the method statement in a smaller font so there is less text to get through',
+      'Excusing them from having to follow the written method statement at all, on the grounds that they cannot read it easily',
+      'Printing the method statement in a much smaller font so that there is far less text on the page to work through',
       'Providing the MS in larger sans-serif font on cream paper, supplemented by a verbal walk-through and a labelled site sketch',
-      'Moving them onto tasks that do not need a method statement so the issue never arises',
+      'Moving them permanently onto tasks that need no method statement, so that the difficulty never arises for them',
     ],
     correctAnswer: 2,
     explanation:
@@ -3464,9 +3464,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer is deaf. What is the most accessible way to brief them on the work programme for the week?',
     options: [
       'Use written communication (printed schedule + email), face them clearly when speaking so they can lip-read, and offer to use a BSL interpreter for complex discussions',
-      'Speak much louder than normal and exaggerate your mouth movements throughout',
-      'Ask a hearing family member to relay everything so you do not have to adapt at all',
-      'Leave a voicemail with the full programme so they can replay it as many times as needed',
+      'Speak much louder than normal and exaggerate your mouth movements throughout, so that every word of the programme is picked up without written notes',
+      'Ask a hearing family member to relay everything you say, so that you do not have to adapt the way you communicate at all during the visit',
+      'Leave a detailed voicemail setting out the full programme, so that they can replay it as many times as they need to before work starts',
     ],
     correctAnswer: 0,
     explanation:
@@ -3480,10 +3480,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Why should H&S signage on site use ISO 7010 pictograms?',
     options: [
-      'They are cheaper to print than text-based signs and so reduce site costs',
+      'They are cheaper to print than text-based signs and so reduce the cost of setting up a site',
       'They are internationally standardised so workers from any background can recognise the meaning instantly',
-      'They are a legal requirement under CDM 2015 on every construction site',
-      'They last longer outdoors than printed wording, which fades in sunlight',
+      'They are a legal requirement under the CDM Regulations 2015 on every construction site',
+      'They last longer outdoors than printed wording, which fades quickly in strong sunlight',
     ],
     correctAnswer: 1,
     explanation:
@@ -3497,10 +3497,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A neurodivergent colleague (autistic) has told you they find busy verbal briefings overwhelming. The most respectful adjustment is:',
     options: [
-      'Exclude them from the verbal briefings entirely and just give them the written notes',
-      'Insist they attend every briefing the same as everyone else to avoid special treatment',
+      'Exclude them from the verbal briefings entirely and give them only the written notes afterwards',
+      'Insist that they attend every briefing like everyone else so as to avoid any special treatment',
       'Give them the written brief in advance, allow processing time, follow up one-to-one in a quiet area for questions',
-      'Move them to a different team so they no longer have to attend any group briefings',
+      'Move them to a different team so that they no longer have to attend any of the group briefings',
     ],
     correctAnswer: 2,
     explanation:
@@ -3532,9 +3532,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Subtitles/captions on a training video are helpful for:',
     options: [
       'Deaf and hard-of-hearing people, non-native English speakers, anyone in a noisy environment, and many neurodivergent people — universal benefit',
-      'Only profoundly deaf people who cannot hear the soundtrack at all',
-      'Only viewers watching on a phone where the screen is too small to follow',
-      'Only people who have chosen to mute the video for their own convenience',
+      'Only profoundly deaf viewers who cannot hear the soundtrack at all, since every other viewer can simply follow the spoken audio',
+      'Viewers watching on a phone screen too small to make out what is being demonstrated in the video footage itself',
+      'People who have deliberately muted the video for their own convenience while working at a shared desk',
     ],
     correctAnswer: 0,
     explanation:
@@ -3565,10 +3565,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer letter using technical jargon could be made more accessible by:',
     options: [
-      'Adding more technical detail so the customer fully understands the regulations cited',
-      'Translating the whole letter into Latin terms used in the trade standards',
+      'Adding more technical detail and the full regulation numbers, so that the customer understands exactly what has been cited and why',
+      'Rewriting the trade terms in the formal wording used in the British Standard, so that nothing in the letter is ambiguous',
       'Replacing jargon with plain alternatives (e.g. "RCD" → "safety switch that cuts power if there\'s a fault"), short sentences, and a friendly closing',
-      'Writing it in a smaller font so the letter fits onto a single side of paper',
+      'Writing it in a smaller font so that the whole letter fits onto a single side of paper and looks less daunting',
     ],
     correctAnswer: 2,
     explanation:
@@ -3582,9 +3582,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A colour-blind person may struggle with safety signs that rely on red/green only. The accessible solution is:',
     options: [
-      'Use only bright fluorescent colours so the signs stand out more strongly',
-      'Make the signs much larger so the colour is easier to see from a distance',
-      'Replace all red and green signs with blue ones that everyone can distinguish',
+      'Use only bright fluorescent colours throughout, so that every sign stands out far more strongly against the background',
+      'Make the signs considerably larger so that the colour on them is easier to pick out from a much greater distance',
+      'Replace all of the red and green signs with blue ones, since blue is the one colour that every worker can tell apart',
       'Pair colour with shape and text — red circle with slash for prohibition, blue circle for mandatory, yellow triangle for warning',
     ],
     correctAnswer: 3,
@@ -3600,9 +3600,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A site induction video for a multi-national workforce should:',
     options: [
       'Have multiple language subtitles, use clear visuals, avoid colloquialisms, and include a short comprehension check at the end',
-      'Be delivered in English only, since all workers are expected to speak English on site',
-      'Be kept as short as possible by cutting the safety detail to save the team time',
-      'Rely on fast-paced narration so the induction can be completed in under five minutes',
+      'Be delivered in spoken English only, since every worker on a UK construction site is expected to understand English',
+      'Be kept as short as it possibly can be by cutting out the safety detail, so that the team lose the least time',
+      'Rely on fast-paced narration throughout so that the whole induction can be completed in under five minutes per worker',
     ],
     correctAnswer: 0,
     explanation:
@@ -3616,10 +3616,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A blind customer needs the EICR result. The accessible approach is:',
     options: [
-      'Post a standard printed report and assume a relative will read it to them',
+      'Post out a standard printed report and assume that a relative or a carer will read it out to them once it arrives in the post',
       'Provide a tagged accessible PDF (or large-print/braille if requested), an audio summary, and offer a verbal walk-through of any concerns',
-      'Give only a verbal summary on the day and keep no written record for them',
-      'Send a scanned image of the handwritten report, which a screen reader can interpret',
+      'Give a verbal summary of the findings on the day only, and keep no written record at all for the customer to refer back to later',
+      'Send a scanned image of the handwritten report, on the basis that a screen reader can interpret it and read it aloud to them',
     ],
     correctAnswer: 1,
     explanation:
@@ -3633,10 +3633,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A sans-serif font like Arial or Verdana is generally easier to read on screen because:',
     options: [
-      'The decorative serifs guide the eye smoothly along each line of text',
-      'They use less ink when printed, making documents cheaper to produce',
+      'The decorative serifs guide the reader\'s eye smoothly along each line of text on a backlit computer screen',
+      'They use noticeably less ink when printed, which makes documents cheaper for the company to produce in bulk',
       'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
-      'They can be displayed at a much smaller size while staying readable',
+      'They can be displayed at a much smaller point size while still remaining perfectly readable on screen',
     ],
     correctAnswer: 2,
     explanation:
@@ -3668,9 +3668,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A deaf-blind customer can communicate using:',
     options: [
       'Tactile signing (deafblind manual or block alphabet), with the help of a communicator-guide — every situation is individual',
-      'Standard British Sign Language alone, the same as a deaf customer would use',
-      'A large-print written schedule, which they can read with a magnifying glass',
-      'A hearing loop in the room, which amplifies your voice for them to follow',
+      'Standard British Sign Language on its own, in exactly the same way as a deaf customer with full vision would',
+      'A large-print written schedule, which they can read for themselves using a magnifying glass and a bright lamp',
+      'A hearing loop fitted in the room, which amplifies your voice enough for them to follow the whole conversation',
     ],
     correctAnswer: 0,
     explanation:
@@ -3718,9 +3718,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Closed captioning differs from subtitling in that:',
     options: [
-      'Closed captions appear in a larger font, while subtitles are always small',
-      'Closed captions are only ever in English, while subtitles are translations',
-      'Closed captions can be switched off, while subtitles are permanently on screen',
+      'Closed captions appear in a larger font on screen, while subtitles are always displayed small',
+      'Closed captions are only ever in English, while subtitles are always foreign-language translations',
+      'Closed captions can be switched off by the viewer, while subtitles are burned permanently on screen',
       'Closed captions also describe non-speech audio (sirens, music, off-screen voices) — useful for deaf viewers',
     ],
     correctAnswer: 3,
@@ -3752,10 +3752,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer who uses a wheelchair lives in a property with a step at the front door. The accessible approach for a survey visit is:',
     options: [
-      'Turn up as planned and ask the customer to come outside to meet you at the door',
+      'Turn up at the property as planned and ask the customer to come outside and meet you at the front door of the property',
       'Phone ahead to discuss access — alternative meeting place, or use a portable ramp, or invite a family member as agreed with the customer',
-      'Cancel the survey, as a property with a step cannot be assessed for the customer',
-      'Carry the customer over the step yourself so the survey can go ahead as normal',
+      'Cancel the survey altogether, since a property with a step at the door cannot properly be assessed with the customer present',
+      'Lift the customer over the step yourself so that the survey can go ahead exactly as it was originally planned for the day',
     ],
     correctAnswer: 1,
     explanation:
@@ -3786,9 +3786,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'For an audit by a hearing-impaired customer rep, the venue should ideally have:',
     options: [
-      'Bright overhead lighting kept low so a projector screen can be seen clearly',
-      'A large table between the parties so notes can be spread out during the audit',
-      'Background music to put everyone at ease and make the meeting feel relaxed',
+      'Overhead lighting kept low throughout, so that a projector screen can be seen clearly by everyone',
+      'A large table between the parties, so that notes and drawings can be spread out during the audit',
+      'Background music playing quietly to put everyone at ease and keep the meeting feeling relaxed',
       'A hearing loop (induction loop), good lighting (for lip-reading), and chairs arranged so faces are visible',
     ],
     correctAnswer: 3,
@@ -3804,9 +3804,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'When using technical drawings to communicate with a customer, you should:',
     options: [
       'Walk them through the key symbols, highlight what they care about (sockets, switches, locations) and offer to print a simplified version',
-      'Hand them the full set of technical drawings and let them work out the symbols themselves',
-      'Avoid showing them drawings at all, as customers cannot be expected to read them',
-      'Explain every symbol on the drawing in full so they understand the whole design',
+      'Hand them the full set of technical drawings and leave them to work out what the symbols mean for themselves in their own time',
+      'Avoid showing them any drawings at all, on the basis that a domestic customer cannot be expected to read a technical drawing',
+      'Explain every symbol on the drawing in turn, so that they understand the whole of the design before they sign it off',
     ],
     correctAnswer: 0,
     explanation:
@@ -3820,10 +3820,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "personal emergency evacuation plan" (PEEP) is needed for:',
     options: [
-      'Every visitor to the site, regardless of whether they can evacuate unaided',
+      'Every visitor who comes on to the site, whether or not they are able to evacuate without assistance from a marshal',
       'Anyone who cannot evacuate without assistance — e.g. mobility-impaired visitors, people with conditions affecting evacuation',
-      'Only the appointed fire marshals, who lead the evacuation in an emergency',
-      'Only workers carrying out hot works or other high-risk activities on site',
+      'Only the appointed fire marshals, who lead the evacuation from the building and then sweep each of the floors',
+      'Any worker carrying out hot works or other high-risk activities on the site during that particular shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -3841,10 +3841,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer says "you\'re useless, I want a different electrician". What is the best response?',
     options: [
-      'Defend yourself firmly and argue back that the work has been done correctly',
-      'Pack up your tools and leave the job immediately without telling anyone',
+      'Defend yourself firmly and set out, point by point, why the work you have done is entirely correct and to the required standard',
+      'Pack up your tools and leave the job straight away, without telling the customer or anyone back at your own office',
       'Stay calm, listen to the specific complaint, acknowledge their frustration, and fetch your supervisor — document the interaction afterwards',
-      'Promise the customer a different electrician on the spot to calm them down',
+      'Promise the customer a different electrician on the spot, so as to calm the situation down before it escalates further',
     ],
     correctAnswer: 2,
     explanation:
@@ -3858,9 +3858,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A row breaks out between you and another trade over space in a riser cupboard. The best first step is to:',
     options: [
-      'Get your own work into the riser first so the other trade has to fit around you',
-      'Down tools and refuse to continue until the other trade leaves the cupboard',
-      'Report the other trade to the HSE for obstructing your access to the riser',
+      'Get your own containment into the riser first, so that the other trade has to fit their services around it',
+      'Down tools and refuse to continue on the job until the other trade has cleared out of the riser cupboard',
+      'Report the other trade to the HSE for obstructing your access to the riser while the site is live',
       'Step back, take a breath, and propose a quick joint look at the drawings with both supervisors to agree the sequence',
     ],
     correctAnswer: 3,
@@ -3876,9 +3876,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A colleague is making jokes about your background that make you uncomfortable. What is the right response?',
     options: [
       'Tell them clearly the comments are not OK, and report it to your supervisor or HR if it continues — this may be harassment under Equality Act 2010 s.26',
-      'Laugh along with the jokes so you fit in and do not make things awkward on site',
-      'Make similar jokes back about the colleague so they see how it feels to be targeted',
-      'Say nothing and avoid the colleague, since complaining could damage your reputation',
+      'Laugh along with the jokes so that you fit in with the rest of the team and do not make things awkward for anyone else on site',
+      'Make similar jokes back about the colleague\'s own background, so that they can see for themselves how it feels to be on the receiving end',
+      'Say nothing at all and keep away from the colleague, since making a formal complaint about it could damage your own reputation on site',
     ],
     correctAnswer: 0,
     explanation:
@@ -3892,10 +3892,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'You believe you have been treated unfairly at work. What is the formal first step?',
     options: [
-      'Submit a claim directly to an employment tribunal without raising it internally first',
+      'Submit a claim directly to an employment tribunal, without ever raising the matter internally with your line manager or employer',
       'Raise it informally with your line manager first, then in writing as a formal grievance per the company procedure (which should mirror the ACAS Code)',
-      'Report the matter straight to the HSE, who investigate unfair treatment at work',
-      'Resign immediately and claim constructive dismissal as the first formal step',
+      'Report the matter straight to the HSE, who investigate complaints about the unfair treatment of workers as part of their enforcement role',
+      'Resign immediately and claim constructive dismissal, which is treated as the correct first formal step in every case of unfair treatment',
     ],
     correctAnswer: 1,
     explanation:
@@ -3909,10 +3909,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A site manager and the client argue about a £3k variation. As the apprentice present, you should:',
     options: [
-      'Take the client\'s side, since the customer is always right in a dispute over price',
-      'Step in and offer your own opinion on what the variation should be worth',
+      'Take the client\'s side in front of the site manager, on the basis that the customer is always right when the price of a variation is disputed',
+      'Step in and offer your own opinion on what the variation ought to be worth, based on the hours that you have actually worked on it so far',
       'Stay out of the negotiation, carry on with your task, and let the supervisor and client resolve it — but record what you heard in case it\'s asked about later',
-      'Leave the room straight away so you cannot be drawn into the argument at all',
+      'Leave the room straight away and say nothing to anybody afterwards, so that you cannot be drawn into the argument at any point later on',
     ],
     correctAnswer: 2,
     explanation:
@@ -3926,9 +3926,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Aggressive behaviour from a member of the public at a domestic job suddenly escalates and you feel unsafe. What do you do?',
     options: [
-      'Stand your ground and argue back to show you will not be intimidated on the job',
-      'Carry on working and hope the person calms down before things escalate further',
-      'Try to physically remove the aggressor from the property so you can finish safely',
+      'Stand your ground and argue back firmly, so as to show the person that you will not be intimidated on their property',
+      'Carry on working and hope that the person calms down of their own accord before things escalate any further',
+      'Try to physically remove the aggressor from the property yourself so that you can finish the job in one visit',
       'Withdraw to a safe place, call your supervisor, and call 999 if you fear imminent harm — never put yourself in danger to finish a job',
     ],
     correctAnswer: 3,
@@ -3944,9 +3944,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A common cause of trade-on-trade conflict is:',
     options: [
       'Sequencing — one trade not ready when another is, or two trades working in the same space at the same time without co-ordination',
-      'Differences in pay rates between trades, which the JIB grade structure resolves',
-      'Disagreement over which trade chairs the daily morning briefing on site',
-      'Personality clashes alone, which have nothing to do with the work being done',
+      'Differences in the pay rates between trades, which the JIB grade structure is designed to resolve on site',
+      'Disagreement over which trade chairs the daily morning briefing and sets the priorities for the site',
+      'Personality clashes on their own, which have nothing to do with the work actually being done in the building',
     ],
     correctAnswer: 0,
     explanation:
@@ -3977,10 +3977,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A formal grievance under the ACAS Code typically includes the right to be accompanied by:',
     options: [
-      'A solicitor of their choice, who has an automatic right to attend the meeting',
-      'A family member or friend who does not work for the company at all',
+      'A solicitor of their own choosing, who has an automatic statutory right to attend the grievance meeting',
+      'A family member or a close friend, provided that they do not work for the company themselves at the time',
       'A trade union rep or a work colleague at the grievance meeting (statutory right under the Employment Relations Act 1999)',
-      'An ACAS conciliator, who must be present at every grievance meeting by law',
+      'An ACAS conciliator, who by law must be present at every formal grievance meeting held by the employer',
     ],
     correctAnswer: 2,
     explanation:
@@ -3994,9 +3994,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A senior trade is verbally aggressive to an apprentice. The right response is:',
     options: [
-      'Accept it as part of the trade, since apprentices are expected to take rough treatment',
-      'Shout back at the senior trade so they learn the apprentice will not be pushed around',
-      'Say nothing, because raising it against a senior worker would look like trouble-making',
+      'Accept it as part of the trade, since apprentices have always been expected to take rough treatment on site',
+      'Shout back at the senior trade, so that they learn the apprentice will not simply be pushed around on the job',
+      'Say nothing at all, because raising it against a senior worker would only look like trouble-making to the firm',
       'Tell them clearly the behaviour is not OK, withdraw if needed, and report it to your line manager — this is bullying, not "banter"',
     ],
     correctAnswer: 3,
@@ -4012,9 +4012,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A "win-win" approach to conflict resolution focuses on:',
     options: [
       'Looking for the underlying interests of both parties and finding a solution that meets both — a more durable outcome than either side "winning"',
-      'Splitting the difference exactly down the middle so neither side gets what they wanted',
-      'Standing firm on your opening position until the other party gives way completely',
-      'Letting the more senior person decide the outcome so the dispute ends quickly',
+      'Splitting the difference exactly down the middle, so that neither of the two sides ends up getting what they actually wanted',
+      'Standing firm on your opening position until the other party gives way completely and accepts your terms in full',
+      'Letting the more senior person present decide the outcome, so that the dispute ends as quickly as possible for both',
     ],
     correctAnswer: 0,
     explanation:
@@ -4028,10 +4028,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer\'s complaint about timeliness of a job often masks a deeper issue, which is usually:',
     options: [
-      'Poor workmanship that the customer has only just noticed on the finished job',
+      'Poor workmanship that the customer has only just noticed, now that the job has been finished and cleared up',
       'Lack of communication — the customer didn\'t know what was happening; reasonable updates would have prevented the complaint',
-      'A dispute over the final price that the customer has disguised as a timing complaint',
-      'The customer\'s own unreasonable expectations about how quickly work can be done',
+      'A dispute over the final price, which the customer has disguised as a complaint about the timing instead',
+      'The customer\'s own unreasonable expectations about how quickly electrical work can be carried out safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -4048,7 +4048,7 @@ export const module5QuestionBank: QuestionBank[] = [
       'Step in between the two parties to physically separate them and stop the fight',
       'Take a video of the fight on your phone so there is clear evidence afterwards',
       'Move to safety, call site management/999 if needed, and provide a written witness account afterwards',
-      'Ignore it and carry on working, as it is not the apprentice\'s place to get involved',
+      'Report it to the training provider\'s assessor at their next visit rather than to anyone on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -4080,9 +4080,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A site manager loses their temper and makes a threat against an employee. What is the appropriate response?',
     options: [
       'Withdraw from the immediate situation, report it as a grievance per the ACAS Code, and if the threat is criminal involve the police',
-      'Threaten the manager back so they understand the behaviour will not be tolerated',
-      'Say nothing, since a manager has the authority to speak to staff however they choose',
-      'Wait to see if the manager apologises before deciding whether to do anything about it',
+      'Threaten the manager back in front of witnesses, so that they understand the behaviour will not be tolerated by the team',
+      'Say nothing, since a site manager has the authority to speak to their own staff however they choose to on site',
+      'Wait to see whether the manager apologises first, before deciding whether to do anything further about it',
     ],
     correctAnswer: 0,
     explanation:
@@ -4096,10 +4096,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "conciliation" via ACAS is offered before:',
     options: [
-      'A formal grievance is raised, as conciliation replaces the company\'s internal process',
+      'A formal grievance is raised, since ACAS conciliation is designed to replace the company\'s own internal grievance process',
       'An Employment Tribunal claim — early conciliation is mandatory under most claims (the EC certificate is required to lodge a claim)',
-      'A disciplinary meeting, where ACAS chairs the hearing on the employer\'s behalf',
-      'A County Court claim for unpaid wages, which ACAS must attempt to settle first',
+      'A disciplinary meeting, at which an ACAS officer chairs the hearing on the employer\'s behalf and then rules',
+      'A County Court claim for unpaid wages, which ACAS is required to attempt to settle before it can be issued',
     ],
     correctAnswer: 1,
     explanation:
@@ -4113,10 +4113,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer becomes aggressive about pricing. Best practice is:',
     options: [
-      'Drop the price immediately to whatever the customer demands to end the argument',
-      'Match the customer\'s tone so they realise you will not be talked down to on price',
+      'Drop the price immediately to whatever the customer is demanding, so as to bring the argument to an end and keep their goodwill',
+      'Match the customer\'s tone throughout, so that they realise you are not going to be talked down on the price of the work you quoted',
       'Stay calm, restate the basis of the price (scope, time, materials), offer to revisit any specific item — and end the conversation if it stays abusive',
-      'Refuse to discuss the price further and walk off the job without explanation',
+      'Refuse to discuss the price any further and simply walk off the job without giving the customer any explanation at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -4148,9 +4148,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A neighbour at a domestic site makes racist comments to your colleague. The right response is:',
     options: [
       'Withdraw your colleague, report to the supervisor and the customer, and make a record — a hate-speech matter may need police involvement',
-      'Tell your colleague to ignore it and carry on, since the neighbour is not your customer',
-      'Confront the neighbour directly and demand an apology before continuing work',
-      'Say nothing, as comments made by a neighbour are nothing to do with the contractor',
+      'Tell your colleague to ignore the remarks and carry on working, since the neighbour is not your customer on this particular job',
+      'Confront the neighbour directly and demand an apology from them in front of the customer before continuing with the work',
+      'Say nothing, as comments made by a neighbour are nothing to do with the contractor carrying out the work',
     ],
     correctAnswer: 0,
     explanation:
@@ -4164,10 +4164,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Two colleagues disagree about a wiring approach. Healthy resolution looks like:',
     options: [
-      'Whoever is the more senior of the two colleagues decides which approach is used',
+      'Whichever of the two colleagues is the more senior decides which approach is used on the job',
       'Refer to the spec/drawings/BS 7671 — the standards arbitrate; if still unclear, raise an RFI to the designer',
-      'Both carry on with their own approach and see which circuit passes testing',
-      'The supervisor picks the cheaper of the two approaches to keep costs down',
+      'Both carry on with their own approach and see which of the two circuits passes its testing',
+      'The supervisor picks whichever of the two approaches is cheaper, to keep the job costs down',
     ],
     correctAnswer: 1,
     explanation:
@@ -4181,10 +4181,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "mediation" in workplace conflict is:',
     options: [
-      'A binding ruling imposed on both parties by an independent legal adjudicator',
-      'A formal investigation carried out by the employer before a disciplinary hearing',
+      'A binding ruling imposed on both parties by an independent legal adjudicator appointed by the employer',
+      'A formal investigation carried out by the employer before any disciplinary hearing can be held',
       'A facilitated conversation between disputing parties, led by a trained neutral, aimed at reaching a voluntary resolution',
-      'A tribunal hearing where a judge decides the outcome of the workplace dispute',
+      'A tribunal hearing at which a judge decides the outcome of the workplace dispute for both parties',
     ],
     correctAnswer: 2,
     explanation:
@@ -4198,9 +4198,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A subcontractor disputes a deduction from their final account. The best forum is:',
     options: [
-      'An employment tribunal, since a deduction from pay is an unlawful wages claim',
-      'ACAS early conciliation, which is mandatory before any commercial dispute',
-      'A grievance under the ACAS Code, raised with the main contractor\'s HR team',
+      'An employment tribunal, since a deduction from money owed is treated as an unlawful deduction from wages under the Employment Rights Act',
+      'ACAS early conciliation, which is a mandatory first step before any commercial dispute can be heard anywhere else',
+      'A grievance raised under the ACAS Code with the main contractor\'s HR department, in writing, within 14 days',
       'Negotiation first, then the contract\'s formal dispute resolution route (often adjudication under the Construction Act for construction contracts)',
     ],
     correctAnswer: 3,
@@ -4216,9 +4216,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A customer\'s teenager films you working without consent and posts it on social media. The right response is:',
     options: [
       'Politely raise it with the customer (parent), explain the privacy concern, and if not removed escalate via your supervisor — UK GDPR may apply',
-      'Take the teenager\'s phone and delete the video yourself before it spreads further',
-      'Call the police immediately, as filming a worker without consent is a criminal offence',
-      'Ignore it completely, since anything filmed in a private home is legally allowed',
+      'Take the teenager\'s phone off them and delete the video from it yourself, before it can be spread around any further online',
+      'Call the police immediately, since filming a worker without their consent is a criminal offence under UK GDPR rules',
+      'Post your own video of the job on the firm\'s social media so that your side of the story is out there too',
     ],
     correctAnswer: 0,
     explanation:
@@ -4232,10 +4232,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "Type A" personality colleague pushes hard on every disagreement. How do you co-exist productively?',
     options: [
-      'Push back just as hard on every point so they learn to back down around you',
+      'Push back just as hard on every single point that comes up, so that they learn to back down whenever they are around you',
       'Stay factual, document agreements in writing, don\'t take it personally, and engage your supervisor early if it affects safety or the work',
-      'Avoid them completely and refuse to work on any task alongside them on site',
-      'Always give way to keep the peace, even when you know your approach is correct',
+      'Avoid them completely and refuse to work on any task alongside them for the remainder of the project on site',
+      'Always give way to keep the peace, even when you are certain that your own approach is the technically correct one',
     ],
     correctAnswer: 1,
     explanation:
@@ -4320,10 +4320,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A site manager fails to communicate a programme change. The likely operational impact on the electrical contractor is:',
     options: [
-      'A modest saving, since the electrical contractor can use the time on another job',
-      'A safety improvement, because the team has more time to plan the work properly',
+      'A modest saving overall, since the electrical contractor can simply use the free time on another job elsewhere that week',
+      'A safety improvement, because the team then has more time to plan out the work properly beforehand',
       'Wasted attendance (van and labour mobilised for nothing), abortive material drops and a knock-on delay claim against the main contractor',
-      'No real impact, as the main contractor absorbs all programme changes automatically',
+      'No real impact, as the main contractor absorbs all programme changes and their costs automatically',
     ],
     correctAnswer: 2,
     explanation:
@@ -4337,9 +4337,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'What is the worst-case legal consequence of a failure to communicate a known electrical hazard to other site workers?',
     options: [
-      'A deduction from the worker\'s wages to cover any damage caused by the hazard',
-      'Loss of the firm\'s competent person scheme registration as the only consequence',
-      'A verbal warning from the site manager, recorded on the worker\'s personnel file',
+      'A deduction from the worker\'s wages to cover any damage that the hazard causes to the installation',
+      'Loss of the firm\'s competent person scheme registration, which is the only real consequence in practice',
+      'A verbal warning from the site manager, recorded on the worker\'s own personnel file for a year',
       'Prosecution under HASAWA s.7 (employee duty) or s.3 (employer duty to non-employees) following an injury or fatality',
     ],
     correctAnswer: 3,
@@ -4355,9 +4355,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Which of these is a positive effect of good communication on site?',
     options: [
       'Higher productivity, fewer reworks, better safety record, stronger team morale and repeat-customer business',
-      'Lower material costs, since well-briefed teams use cheaper components than usual',
-      'Shorter working hours for everyone, because less time is spent talking on site',
-      'Reduced need for any written records, as good verbal communication replaces them',
+      'Lower material costs, since a well-briefed team uses cheaper components on the job than usual',
+      'Shorter working hours for everyone, because far less time is then spent talking on the site',
+      'Reduced need for any written records, as good verbal communication replaces them entirely',
     ],
     correctAnswer: 0,
     explanation:
@@ -4371,10 +4371,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "knock-on" delay caused by poor comms with one trade can affect:',
     options: [
-      'Only the trade that caused the delay, with no effect on any other trade on site',
+      'Only the trade that actually caused the delay, with no effect at all on any of the other trades working on the site',
       'The whole programme — successor trades cannot start, scaffold may be retained, plant hire is extended; the cumulative cost grows fast',
-      'Only the project budget, since delays are purely a commercial rather than a timing issue',
-      'Nothing beyond that day, as each trade simply makes up lost time the next morning',
+      'The project budget alone, since a delay is purely a commercial matter rather than a programming one',
+      'Nothing beyond that day, as each trade simply makes the lost time up over the following morning',
     ],
     correctAnswer: 1,
     explanation:
@@ -4388,10 +4388,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Failure to record a verbal customer instruction can result in:',
     options: [
-      'No consequence at all, since a verbal instruction from a customer is fully binding',
-      'An automatic breach of UK GDPR for failing to record the customer\'s request',
+      'No consequence at all, since a verbal instruction from a customer is fully binding on both parties in law',
+      'An automatic breach of UK GDPR, for failing to keep a written record of the customer\'s own request',
       'A "your word against theirs" dispute about scope and price — usually resolved in the customer\'s favour with no record',
-      'An HSE investigation, as undocumented instructions are a health and safety failing',
+      'An HSE investigation, as an undocumented instruction is a health and safety failing in its own right',
     ],
     correctAnswer: 2,
     explanation:
@@ -4405,9 +4405,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Mis-labelled circuits at a consumer unit are a poor-communication issue. The risk is:',
     options: [
-      'A failed Building Control inspection only, with no risk to anyone working on it',
-      'Confusion for the customer when reading the board, but no safety consequence',
-      'A delay at the next periodic inspection while the labels are corrected',
+      'A failed Building Control inspection only, with no real risk to anyone who works on the board at a later date',
+      'Confusion for the customer when reading the board, but no safety consequence for anyone at all',
+      'A delay at the next periodic inspection, while the labelling is corrected before testing starts',
       'Wrong circuit isolated by future maintainers — leading to live work where the worker thought they had isolated; potentially fatal',
     ],
     correctAnswer: 3,
@@ -4439,10 +4439,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A failure to communicate variations promptly to the QS results in:',
     options: [
-      'No impact, because the QS automatically picks up every variation from the drawings',
+      'No impact, because the QS automatically picks up every variation from the marked-up drawings',
       'Variations missed from the next valuation — cash-flow strain on the contractor and arguments at final account',
-      'A health and safety breach, since variations must be reported under CDM 2015',
-      'A delay to the programme only, with no effect on the contractor\'s cash flow',
+      'A health and safety breach, since every variation must be reported under the CDM Regulations',
+      'A delay to the programme only, with no effect at all on the contractor\'s own cash flow position',
     ],
     correctAnswer: 1,
     explanation:
@@ -4456,10 +4456,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A trade missing a toolbox talk because they weren\'t told about it can lead to:',
     options: [
-      'No consequence, as one missed toolbox talk makes little difference to a worker',
-      'A deduction from the worker\'s pay for the time the briefing would have taken',
+      'No consequence, as one missed toolbox talk makes very little difference to an experienced worker on site',
+      'A deduction from the worker\'s pay for the time that the safety briefing would have taken to deliver',
       'Working without the latest safety briefing — and the firm cannot evidence training under HASAWA s.2(2)(c) for that worker',
-      'An automatic RIDDOR report to the HSE for the missed safety communication',
+      'An automatic RIDDOR report to the HSE for the missed safety communication on that particular job',
     ],
     correctAnswer: 2,
     explanation:
@@ -4473,9 +4473,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Customer perception of a contractor is often shaped MORE by:',
     options: [
-      'The exact test results recorded on the installation certificate at completion',
-      'The brand of consumer unit and accessories the contractor chose to install',
-      'The qualifications and scheme registrations held by the individual electricians',
+      'The exact test results that are recorded on the installation certificate when the job is completed',
+      'The brand of consumer unit and the range of accessories that the contractor has chosen to install in the property',
+      'The qualifications and the scheme registrations held by each of the individual electricians on the job',
       'How well and how often the contractor communicates progress, problems and costs — the technical work is assumed to be competent',
     ],
     correctAnswer: 3,
@@ -4491,9 +4491,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Poor handover information at job completion (no certs, no manuals) typically leads to:',
     options: [
       'Repeat support calls, warranty disputes, and a Building Control or scheme audit failure if certs are missing',
-      'A faster handover, since the customer has less paperwork to read through',
-      'No consequence, as the certification is held on the contractor\'s system anyway',
-      'An immediate fine from the HSE for failing to issue the installation certificate',
+      'A faster handover, since the customer then has far less paperwork to read through on the day',
+      'No consequence, as all of the certification is held on the contractor\'s own system anyway',
+      'An immediate fine from the HSE for failing to issue the installation certificate on time',
     ],
     correctAnswer: 0,
     explanation:
@@ -4507,10 +4507,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A failure to update RAMS after a near-miss is a communication failure that can lead to:',
     options: [
-      'A delay only, while the paperwork is brought up to date before work resumes',
+      'A delay only, while the paperwork is brought back up to date before the work resumes on site',
       'The same near-miss recurring — possibly with worse outcome — because the controls weren\'t shared or tightened',
-      'A reduction in the team\'s pay for failing to keep the documents current',
-      'No effect at all, since the near-miss did not actually injure anyone the first time',
+      'A reduction in the team\'s pay for failing to keep the site documents current and up to date',
+      'No effect at all, since the near-miss did not actually injure anybody on the first occasion',
     ],
     correctAnswer: 1,
     explanation:
@@ -4524,10 +4524,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A wholesaler delivers the wrong cable size because the order was unclear. The cost falls on:',
     options: [
-      'The wholesaler, who is responsible for clarifying any ambiguous order they receive',
-      'The customer, since the materials are ultimately being installed in their property',
+      'The wholesaler, who is responsible for clarifying any ambiguous order before they despatch it',
+      'The customer, since the materials are ultimately being installed in their own property',
       'Whoever placed the unclear order — the contractor pays for return restock fees and the impact on the day\'s work',
-      'Nobody, because wholesalers always exchange wrongly supplied goods free of charge',
+      'Nobody, because a wholesaler will always exchange wrongly supplied goods free of charge',
     ],
     correctAnswer: 2,
     explanation:
@@ -4541,9 +4541,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A site that consistently has poor comms tends to attract:',
     options: [
-      'Lower running costs, because less time is spent in meetings and briefings',
-      'A more independent workforce that solves problems without needing to be told',
-      'Faster decision-making, since fewer people are consulted before work proceeds',
+      'Lower running costs, because far less time is spent in meetings and formal briefings each week',
+      'A more independent workforce that solves problems on its own without needing to be told what to do',
+      'Faster decision-making, since fewer people are consulted before the work is allowed to proceed',
       'Higher staff turnover, lower morale and a worse safety culture — and worse commercial performance follows',
     ],
     correctAnswer: 3,
@@ -4559,9 +4559,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A failure to read the spec carefully before pricing causes:',
     options: [
       'Items missed from the bid, leading to a job that loses money or to disputes with the customer over what was included',
-      'A safer installation, because a simpler price means a simpler scope of works',
-      'No real impact, since any missed items can simply be added as paid variations',
-      'A faster quote that wins more work by undercutting competitors on price',
+      'A safer installation, because a simpler price always means a simpler scope of works on site',
+      'No real impact, since any missed items can simply be added later as paid variations to the contract',
+      'A faster quote that wins more work by undercutting the competition on price nearly every time',
     ],
     correctAnswer: 0,
     explanation:
@@ -4575,10 +4575,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Lack of feedback to apprentices on their work can lead to:',
     options: [
-      'Faster independence, as apprentices learn best by being left to work things out alone',
+      'Faster independence, as apprentices learn best by being left to work things out on their own',
       'Slower skill development, repeated errors and disengagement — feedback is what turns experience into competence',
-      'No effect, because apprentices pick up skills naturally from watching the team work',
-      'A breach of the apprenticeship agreement that the training provider must report',
+      'No effect, because apprentices pick up the skills naturally by watching the rest of the team',
+      'A breach of the apprenticeship agreement that the training provider is obliged to report on',
     ],
     correctAnswer: 1,
     explanation:
@@ -4592,10 +4592,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A health-related communication failure (e.g. not telling a worker about a known asbestos area) can lead to:',
     options: [
-      'A short delay only, while the worker is sent to be checked over by a doctor',
-      'A fine for the worker who entered the area without checking the asbestos register',
+      'A short delay only, while the worker is sent off to be checked over by an occupational doctor',
+      'A fine for the worker who entered the area without first checking the asbestos register for it',
       'Long-term occupational disease (mesothelioma) decades later — and a major civil liability claim against the firm',
-      'No consequence, provided the worker wore a standard dust mask while in the area',
+      'No consequence at all, provided that the worker wore a standard dust mask while in the area',
     ],
     correctAnswer: 2,
     explanation:
@@ -4609,9 +4609,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A failure to communicate a near-miss promptly may breach:',
     options: [
-      'RIDDOR 2013 only, since near-misses must always be reported directly to the HSE',
-      'The Consumer Rights Act 2015, because a near-miss affects the quality of the work',
-      'UK GDPR, as failing to record an incident is a personal data processing failure',
+      'RIDDOR 2013 only, since every near-miss on site must be reported directly to the HSE within ten days',
+      'The Consumer Rights Act 2015, because a near-miss affects the quality of the work being delivered',
+      'UK GDPR, as failing to record an incident properly is a personal data processing failure in itself',
       'The company\'s own incident reporting policy, and potentially HASAWA s.7 if a hazard goes unaddressed and harms someone',
     ],
     correctAnswer: 3,
@@ -4643,10 +4643,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A drawing issued at revision C while the team works to revision B because no one was told is a:',
     options: [
-      'Minor issue that the next revision will quietly correct without any rework needed',
+      'A minor issue that the next revision of the drawing will quietly correct without any rework',
       'Communication failure that leads to rework — the controlled drawing register exists exactly to prevent this',
-      'Design error by the architect that the contractor cannot be held responsible for',
-      'Health and safety breach reportable to the HSE under CDM 2015 regulations',
+      'A design error by the architect, for which the contractor cannot be held responsible at all',
+      'A health and safety breach reportable to the HSE under the CDM Regulations 2015 within days',
     ],
     correctAnswer: 1,
     explanation:
@@ -4660,10 +4660,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Internal team comms failures (e.g. a new starter not knowing reporting routes) can lead to:',
     options: [
-      'A faster start, since the new starter can get straight onto the tools on day one',
-      'No real issue, as new starters soon pick up the reporting routes from colleagues',
+      'A faster start on site, since the new starter can get straight onto the tools on their very first day',
+      'No real issue at all, as a new starter soon picks up the reporting routes from their colleagues in the first week',
       'Hazards going unreported, isolation of the new starter, and slower integration into the team — a missed induction is a real cost',
-      'An automatic HSE prosecution the moment an uninducted worker steps onto site',
+      'An automatic HSE prosecution the moment that an uninducted worker steps onto a live construction site',
     ],
     correctAnswer: 2,
     explanation:
@@ -4677,9 +4677,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Good communication is consistently associated with:',
     options: [
-      'Higher material costs, since more time is spent meeting and briefing the team',
-      'Longer working days, because communication takes time away from the tools',
-      'More paperwork for everyone, which slows the pace of work on site overall',
+      'Higher material costs, since far more of the working day is then spent meeting and briefing the team rather than fitting anything',
+      'Longer working days, because the time that is spent communicating is time taken away from being on the tools each day',
+      'More paperwork for everyone on the site, which slows the overall pace of the work down right across the project',
       'Better safety performance, higher productivity, lower complaint rates, higher customer NPS and lower staff turnover — measurable on every metric',
     ],
     correctAnswer: 3,
@@ -4700,9 +4700,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Under CDM 2015 Reg 15, your duty as a Worker on a construction site is to:',
     options: [
       'Co-operate with the Principal Contractor, comply with directions and H&S information, and report anything you see that puts you or others at risk',
-      'Prepare the construction phase plan and keep it updated throughout the works',
-      'Carry out risk assessments for the whole site and brief the other trades on them',
-      'Appoint the Principal Designer and provide the pre-construction information to bidders',
+      'Prepare the construction phase plan and keep it updated throughout the works, then pass it on to the Principal Designer at handover',
+      'Carry out the risk assessments for the whole of the site and brief every other trade on the findings before any work starts',
+      'Appoint the Principal Designer and provide the pre-construction information to everyone bidding for the electrical package',
     ],
     correctAnswer: 0,
     explanation:
@@ -4716,10 +4716,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A customer\'s name, address and EICR results count as personal data. Under the UK GDPR / Data Protection Act 2018, you should:',
     options: [
-      'Share them freely with anyone who asks, as a completed certificate is a public document',
+      'Share them freely with anyone who asks for a copy, on the basis that a completed certificate becomes a public document once it has been lodged with the scheme provider and Building Control',
       'Process them only for the agreed purpose (the cert), store them securely, share only with parties who need them (e.g. landlord, scheme provider), and have a privacy notice telling the customer what you do with their data',
-      'Delete them as soon as the job is paid for, since you no longer need the customer\'s data',
-      'Keep them indefinitely on a shared drive so the whole team can access them at any time',
+      'Delete them as soon as the job has been paid for, since the UK GDPR storage limitation principle means that you no longer have any legitimate need to hold the customer\'s data once the invoice has been settled',
+      'Keep them indefinitely on a shared drive so that the whole team can access them at any time, on the basis that data held for genuine business purposes is exempt from the storage limitation principle',
     ],
     correctAnswer: 1,
     explanation:
@@ -4733,10 +4733,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A struggling tradesperson in the UK construction industry can get free 24/7 mental health support from:',
     options: [
-      'The HSE incident line, which logs every mental health concern raised by workers',
-      'Their employer\'s occupational health department, which is the only confidential route',
+      'The HSE incident line, which logs every mental health concern raised by a worker at their workplace',
+      'Their employer\'s occupational health department, which is the only confidential route open to them',
       'The Lighthouse Construction Industry Charity (helpline 0345 605 1956) and apps such as the Lighthouse Helpline app',
-      'The local job centre, which signposts construction workers to mental health services',
+      'The local job centre, which signposts construction workers to mental health services free of charge',
     ],
     correctAnswer: 2,
     explanation:
@@ -4768,9 +4768,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'BS 7671 Reg 514.12 covers periodic inspection and testing notices. The A4:2026 amendment introduced an exception for:',
     options: [
       'Domestic (household) premises in certain situations — the standard 514.12 notice does not apply where conditions are met',
-      'Industrial premises with their own on-site maintenance team and electrical engineer',
-      'Installations protected throughout by AFDDs, where the notice is no longer required',
-      'Commercial premises inspected more often than every five years by a competent person',
+      'Industrial premises that have their own on-site maintenance team and a responsible electrical engineer',
+      'Installations protected throughout by AFDDs, where the periodic notice is no longer required at all',
+      'Commercial premises that are inspected more often than every five years by a competent person',
     ],
     correctAnswer: 0,
     explanation:
@@ -4784,10 +4784,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A "protected disclosure" under PIDA 1998 (Public Interest Disclosure Act) is a report about:',
     options: [
-      'Any personal grievance the worker has about their own pay or working conditions',
+      'Any personal grievance that a worker has about their own pay, hours or working conditions, once it is raised in writing with their employer',
       'A relevant failure (criminal offence, breach of legal obligation, miscarriage of justice, danger to H&S, environmental damage, or cover-up of the above)',
-      'A complaint about a colleague\'s conduct that the worker finds personally annoying',
-      'A disagreement with management about how the company should be run commercially',
+      'A complaint about a colleague\'s conduct that the worker personally finds annoying or unprofessional, once it is reported to a manager',
+      'A disagreement with management about the way that the company ought to be run commercially, raised at a formal team meeting',
     ],
     correctAnswer: 1,
     explanation:
@@ -4818,9 +4818,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Equality Act 2010 protected characteristic — "gender reassignment" protects:',
     options: [
-      'Only a person who has completed medical treatment and obtained a Gender Recognition Certificate',
-      'Only a person who has legally changed their name and updated their official documents',
-      'Only a person currently undergoing surgical treatment, but not before or after it',
+      'Only a person who has completed medical treatment and obtained a Gender Recognition Certificate, since the characteristic depends on the legal change being complete',
+      'A person who has legally changed their name and updated all official documents, since protection follows the paperwork',
+      'A person currently undergoing surgical treatment, but not those before or after that stage of the process',
       'A person who is proposing to undergo, is undergoing, or has undergone a process to reassign their sex — they have the protected characteristic from the moment they propose it',
     ],
     correctAnswer: 3,
@@ -4836,9 +4836,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Equality Act 2010 protected characteristic — "disability" is defined as:',
     options: [
       'A physical or mental impairment with a substantial and long-term (12 months+) adverse effect on ability to carry out normal day-to-day activities',
-      'Only a physical impairment that is visible to others and confirmed by a doctor',
-      'Any short-term illness or injury that prevents a person working for over a week',
-      'Only a condition that means a person is registered disabled with the local authority',
+      'Only a physical impairment that is visible to other people and that has been confirmed by a doctor in writing on a fit note',
+      'Any short-term illness or injury that prevents a person from carrying out their normal day-to-day work for more than a week at a time',
+      'A condition that means the person is registered as disabled with their local authority and holds a blue badge',
     ],
     correctAnswer: 0,
     explanation:
@@ -4852,10 +4852,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Equality Act 2010 protected characteristic — "religion or belief" includes:',
     options: [
-      'Only the major established religions, with no protection for minority or new faiths',
+      'Only the major established religions, with no protection at all for minority faiths, for newer belief systems or for a lack of belief',
       'Religion and any religious or philosophical belief (including a lack of belief) — recognised philosophical beliefs include ethical veganism and gender-critical belief',
-      'Only religious belief, with philosophical and political beliefs specifically excluded',
-      'Only belief held by someone who actively practises and attends a place of worship',
+      'Religious belief itself only, with philosophical beliefs and political beliefs both specifically excluded from the protection that the Act gives to a worker',
+      'A belief held by someone who actively practises it and who attends a recognised place of worship regularly',
     ],
     correctAnswer: 1,
     explanation:
@@ -4886,9 +4886,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'The ACAS Code applies to:',
     options: [
-      'Only employers with five or more employees, mirroring the H&S policy threshold',
-      'Only large unionised firms where a trade union is formally recognised on site',
-      'Only public-sector employers, with private contractors free to set their own procedures',
+      'Only employers with five or more employees, mirroring the written health and safety policy threshold',
+      'Large unionised firms, where a trade union is formally recognised for collective bargaining',
+      'Public-sector employers, leaving private contractors free to set their own procedures',
       'All employers and workers — failure to follow it can affect tribunal awards in unfair dismissal and similar claims',
     ],
     correctAnswer: 3,
@@ -4937,10 +4937,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'Under UK GDPR, the lawful basis most commonly relied on for processing customer data on a contracting job is:',
     options: [
-      'Consent — the customer must tick a box agreeing to every use of their data',
-      'Legal obligation — a statute requires the data to be processed for the work',
+      'Consent — the customer must tick a box agreeing to every separate use that you make of their personal data',
+      'Legal obligation — a statute requires the data to be processed in order for the electrical work to be carried out',
       'Contract — processing necessary for the performance of the contract (or to take pre-contract steps at the customer\'s request)',
-      'Vital interests — the processing is needed to protect someone\'s life',
+      'Vital interests — the processing is necessary in order to protect somebody\'s life or physical safety on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -4972,9 +4972,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'CDM 2015 Reg 15 requires Workers to report which of the following?',
     options: [
       'Anything they consider likely to endanger their own H&S, or that of another person — to the appropriate person (typically site manager or supervisor)',
-      'Only injuries serious enough to require hospital treatment, reported under RIDDOR',
-      'Only defects in equipment that they are personally using on that day\'s task',
-      'Only hazards that fall within their own trade, leaving others for those trades to report',
+      'Injuries serious enough to need hospital treatment, which the employer then reports to the HSE under RIDDOR 2013',
+      'Only defects in the equipment that they are personally using on that particular day\'s task, reported to the site storeman or supervisor',
+      'Hazards that fall within their own trade, leaving the other trades on site to report their own hazards',
     ],
     correctAnswer: 0,
     explanation:
@@ -4988,10 +4988,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'BS 7671 Reg 514.15 requires warning notices where:',
     options: [
-      'An earthing or main bonding connection is made, fixed at the connection point',
+      'An earthing or a main protective bonding connection is made, with the warning notice fixed at or near the connection point',
       'An installation includes alternative or additional sources of supply (e.g. PV, battery, generator) — at the origin and at certain other points',
-      'A single isolation device does not disconnect all the live conductors of a circuit',
-      'An installation is due for its next periodic inspection and test by a competent person',
+      'A single isolation device does not disconnect all of the live conductors of a circuit or of an item of equipment',
+      'An installation is due for its next periodic inspection and test, with the notice giving the date on which it falls due',
     ],
     correctAnswer: 1,
     explanation:
@@ -5005,10 +5005,10 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A subject access request (SAR) under UK GDPR/DPA 2018 must be responded to within:',
     options: [
-      '72 hours (extendable to one week for complex requests if the data subject is told of the extension)',
-      '14 days (extendable to 28 days for complex requests if the data subject is told of the extension)',
+      '72 hours (extendable to one week for complex requests, provided the data subject is told about the extension)',
+      '14 days (extendable to 28 days for complex requests, provided the data subject is told about the extension)',
       'One month (extendable to three months for complex requests if the data subject is told of the extension within the first month)',
-      'Six months (extendable to one year for complex requests if the data subject is told of the extension)',
+      'Six months (extendable to one year for complex requests, provided the data subject is told of the extension)',
     ],
     correctAnswer: 2,
     explanation:
@@ -5022,9 +5022,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'A protected disclosure under PIDA must be made (in normal cases) to:',
     options: [
-      'The national media first, to ensure the wrongdoing is made public straight away',
-      'A solicitor only, who must lodge the disclosure on the worker\'s behalf',
-      'A trade union representative, who is the only protected route under PIDA',
+      'The national media in the first instance, so as to ensure that the wrongdoing is made public straight away and cannot be buried',
+      'A solicitor only, who must then lodge the disclosure with the employer on the worker\'s behalf and in writing',
+      'A trade union representative, who is treated as the only protected route for making a disclosure under PIDA',
       'The employer or another responsible person (with wider routes including prescribed persons such as the HSE or ICO if conditions are met)',
     ],
     correctAnswer: 3,
@@ -5040,9 +5040,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'Equality Act 2010 protected characteristic — "marriage and civil partnership" protects:',
     options: [
       'Anyone who is married or in a civil partnership; cohabitees and single people are not protected by this characteristic',
-      'Anyone in a long-term relationship, whether married, in a civil partnership or cohabiting',
-      'Only married couples, with civil partners protected under a separate characteristic',
-      'Anyone planning to marry, but not those who are already married or in a civil partnership',
+      'Anyone in a long-term relationship, whether married, in a civil partnership or cohabiting with a partner',
+      'Only married couples, with civil partners protected under a separate characteristic of their own',
+      'Anyone who is planning to marry, but not those who are already married or in a civil partnership',
     ],
     correctAnswer: 0,
     explanation:
@@ -5090,9 +5090,9 @@ export const module5QuestionBank: QuestionBank[] = [
     question:
       'BS 7671 Reg 514.11 (A4:2026) covers warning notices about:',
     options: [
-      'Earthing — to identify the main earthing terminal and protective bonding connections',
-      'Periodic inspection — to state the date of the next inspection and test',
-      'Alternative supplies — to warn that more than one source of supply is present',
+      'Earthing — to identify the main earthing terminal and the protective bonding connections in the installation',
+      'Periodic inspection — to state the date on which the next inspection and test of the installation are due',
+      'Alternative supplies — to warn that more than one source of supply is present in the installation',
       'Isolation — to alert workers where an isolation device does not isolate all live conductors at a single point',
     ],
     correctAnswer: 3,
@@ -5108,9 +5108,9 @@ export const module5QuestionBank: QuestionBank[] = [
       'A construction firm with a strong wellbeing culture typically combines which of the following?',
     options: [
       'Mental Health First Aiders, EAP access, signposting (Lighthouse, Mind, Mates in Mind, Samaritans), regular wellbeing toolbox talks, and a no-blame reporting culture',
-      'A single annual wellbeing poster on the site notice board and nothing more',
-      'A policy that tells struggling workers to keep personal problems away from work',
-      'Random testing for stress and a disciplinary process for anyone who is found struggling',
+      'A single annual wellbeing poster displayed on the site notice board, with everything else left to the individual workers to sort out for themselves',
+      'A policy that tells struggling workers to keep their personal problems well away from the workplace, so that the job is not affected by them',
+      'Random testing for stress, together with a disciplinary process for anyone who is found to be struggling to cope with the demands of the work',
     ],
     correctAnswer: 0,
     explanation:

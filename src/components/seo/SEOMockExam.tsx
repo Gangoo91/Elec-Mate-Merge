@@ -70,6 +70,13 @@ interface SEOMockExamProps {
   examName: string;
   /** The full question bank — must contain at least `questionsPerExam` entries. */
   questionBank: SEOMockExamQuestion[];
+  /**
+   * Ids of the 3 questions to show as samples in the crawlable HTML. Needed
+   * where several exams share one bank — without it every such page renders
+   * the same three questions. Ids not present in the bank are ignored; an
+   * empty or absent list falls back to the first three.
+   */
+  sampleQuestionIds?: Array<number | string>;
   /** How many questions the user gets per attempt. Default 25. */
   questionsPerExam?: number;
   /** Time limit per attempt (minutes). Default 30. */
@@ -206,6 +213,7 @@ function RowNumber({ n }: { n: number }) {
 export function SEOMockExam({
   examName,
   questionBank,
+  sampleQuestionIds,
   questionsPerExam = 25,
   timeLimitMinutes = 30,
   passThreshold = 70,
@@ -265,12 +273,30 @@ export function SEOMockExam({
    */
   const [failureRates, setFailureRates] = useState<Record<string, number>>({});
 
-  // 3 sample questions rendered server-side for SEO. Picked deterministically
-  // and shuffled with a fixed salt so crawl HTML is identical between crawls.
-  const sampleQuestions = useMemo(
-    () => shuffleAllQuestionOptions(questionBank.slice(0, Math.min(3, questionBank.length)), 0),
-    [questionBank]
-  );
+  /**
+   * 3 sample questions rendered server-side for SEO. Picked deterministically
+   * and shuffled with a fixed salt so crawl HTML is identical between crawls.
+   *
+   * `sampleQuestionIds` exists because the default — the first three in the
+   * bank — is wrong when several exams share one bank. The three C&G 2391
+   * pages (2391-52, 2391-50 Initial Verification, 2391-51 Periodic) all draw
+   * from the same 326-question bank and so all three rendered the SAME three
+   * sample questions. Those are the only questions a crawler ever sees, since
+   * the rest sit behind the start button, so the pages looked near-identical
+   * where it mattered most. Worse, the default three happen to be periodic /
+   * EICR questions, which were being shown on the Initial Verification page.
+   */
+  const sampleQuestions = useMemo(() => {
+    const chosen = sampleQuestionIds?.length
+      ? sampleQuestionIds
+          .map((id) => questionBank.find((q) => q.id === id))
+          .filter((q): q is SEOMockExamQuestion => Boolean(q))
+      : [];
+    const picked = chosen.length
+      ? chosen
+      : questionBank.slice(0, Math.min(3, questionBank.length));
+    return shuffleAllQuestionOptions(picked, 0);
+  }, [questionBank, sampleQuestionIds]);
 
   const start = useCallback(() => {
     const picked = shuffleAllQuestionOptions(
@@ -617,7 +643,13 @@ export function SEOMockExam({
               Start the mock exam
             </button>
             <p className="mt-3 text-[13.5px] leading-relaxed text-white">
-              Free, no sign-up. Retake as many times as you like — different questions each time.
+              {/* Only promise a fresh paper when the bank is actually bigger
+                  than the paper. Some topic banks hold exactly one exam's
+                  worth, and "different questions each time" would be a lie
+                  the visitor catches on their second attempt. */}
+              {questionBank.length > questionsPerExam
+                ? 'Free, no sign-up. Retake as many times as you like — different questions each time.'
+                : 'Free, no sign-up. Retake as many times as you like — the questions are reshuffled, with the answer order changed.'}
             </p>
           </div>
 

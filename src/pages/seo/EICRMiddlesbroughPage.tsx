@@ -547,7 +547,7 @@ export default function EICRMiddlesbroughPage() {
   return (
     <GuideTemplate
       title="EICR Middlesbrough | Electrical Installation Condition"
-      description="EICR Middlesbrough — landlord regulations, inspection costs in the Tees Valley, common findings in older terraced properties…"
+      description="EICR Middlesbrough — landlord regulations, inspection costs in the Tees Valley, common findings in older terraced properties."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

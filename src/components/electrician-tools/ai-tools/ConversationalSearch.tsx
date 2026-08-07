@@ -1407,7 +1407,7 @@ export default function ConversationalSearch() {
           )}
         </AnimatePresence>
 
-        <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl">
+        <div className="mx-auto w-full max-w-[1400px] px-1 sm:px-4 lg:px-8">
           {/* Compression indicator */}
           <AnimatePresence>
             {isCompressing && (

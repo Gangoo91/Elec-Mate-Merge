@@ -516,7 +516,7 @@ export default function HouseExtensionElectricalGuidePage() {
   return (
     <GuideTemplate
       title="House Extension Electrical Guide UK | Wiring a House"
-      description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit…"
+      description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

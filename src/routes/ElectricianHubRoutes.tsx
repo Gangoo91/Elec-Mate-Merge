@@ -170,6 +170,7 @@ const CalendarPage = lazyWithRetry(() => import('@/pages/electrician/CalendarPag
 const SnaggingPage = lazyWithRetry(() => import('@/pages/electrician/SnaggingPage'));
 const BusinessAIPage = lazyWithRetry(() => import('@/components/business-ai/BusinessAIPage'));
 const TimeTrackerPage = lazyWithRetry(() => import('@/pages/electrician/TimeTrackerPage'));
+const BookingPage = lazyWithRetry(() => import('@/pages/electrician/BookingPage'));
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -509,6 +510,16 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <RenewableCalc />
+        </LazyRoute>
+      }
+    />
+
+    {/* Booking link — share it, see what it brought in, set availability */}
+    <Route
+      path="booking"
+      element={
+        <LazyRoute>
+          <BookingPage />
         </LazyRoute>
       }
     />

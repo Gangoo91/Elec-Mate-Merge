@@ -8,6 +8,8 @@ import {
 } from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
+import type { CellWarning } from '@/utils/cellWarnings';
+import { CellWarningMarker } from './CellWarningMarker';
 import { rcdTypeOptions } from '@/types/wiringTypes';
 import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
 import { normaliseRcdRating } from '@/utils/rcdRating';
@@ -15,6 +17,8 @@ import ValidatedInput from '../ValidatedInput';
 import ComboboxCell from './ComboboxCell';
 
 interface RcdDetailsCellsProps {
+  cellWarnings?: Partial<Record<keyof TestResult, CellWarning>>;
+  onOpenWarning?: () => void;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
@@ -24,6 +28,8 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
   result,
   onUpdate,
   onBulkUpdate,
+  cellWarnings,
+  onOpenWarning,
 }) => {
   const handleRcdBsStandardChange = useCallback(
     (value: string) => {
@@ -51,6 +57,8 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
       {/* Column 13: BS (EN) - RCD */}
       <TableCell className="p-0 h-8 align-middle w-40 min-w-[140px] max-w-[140px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.rcdBsStandard}
+          onOpenWarning={onOpenWarning}
           value={result.rcdBsStandard || ''}
           onChange={handleRcdBsStandardChange}
           options={rcdBsStandardOptions}
@@ -62,6 +70,8 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
       {/* Column 14: Type - RCD */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[105px] max-w-[105px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.rcdType}
+          onOpenWarning={onOpenWarning}
           value={result.rcdType || ''}
           onChange={handleRcdTypeChange}
           options={rcdTypeOptions}
@@ -71,7 +81,8 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
       </TableCell>
 
       {/* Column 15: IΔn (mA) — keep as Select (only 6 standard values) */}
-      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="relative p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+        <CellWarningMarker warning={cellWarnings?.rcdRating} onOpen={onOpenWarning} />
         {/* normaliseRcdRating: certs filled on mobile before 2026-08 stored
             bare '30' — map to '30mA' on read so the Select doesn't go blank */}
         <Select

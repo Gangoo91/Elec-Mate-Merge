@@ -20,7 +20,7 @@ export default function SPDSurgeProtectionPage() {
   return (
     <GuideTemplate
       title="SPD Surge Protection Guide | BS 7671 Requirements"
-      description="Complete guide to Surge Protective Devices (SPDs) under BS 7671. Type 1, 2, and 3 SPDs, risk assessment under Regulation 443.4…"
+      description="Complete guide to Surge Protective Devices (SPDs) under BS 7671. Type 1, 2, and 3 SPDs, risk assessment under Regulation 443.4."
       datePublished="2025-05-15"
       dateModified="2026-06-10"
       breadcrumbs={[

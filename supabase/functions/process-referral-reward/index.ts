@@ -98,14 +98,35 @@ serve(async (req) => {
       .eq('id', profile.referred_by)
       .single();
 
+    // Reward value = one month at the referrer's own price. Computed before the
+    // Stripe check so the pending (App Store / Play Store) path banks the right
+    // amount too — it used to hardcode 1299.
+    // Source of truth: src/data/stripePrices.ts — keep in step with it. These
+    // were stale at the pre-June-2026 prices (apprentice 599, electrician 1299),
+    // so a "free month" credited £12.99 against a £19.99 charge and the user was
+    // still billed the difference.
+    const tierPrices: Record<string, number> = {
+      apprentice: 699, // £6.99
+      apprentice_yearly: 583, // £69.99/yr ÷ 12
+      electrician: 1999, // £19.99
+      electrician_yearly: 1667, // £199.99/yr ÷ 12
+      business_ai: 3999, // £39.99
+      business_ai_yearly: 3999,
+      employer: 4999, // £49.99
+      employer_yearly: 4999,
+    };
+    const creditPence = tierPrices[referrerProfile?.subscription_tier || ''] || 1999;
+
     if (!referrerProfile?.stripe_customer_id) {
-      // Referrer doesn't have a Stripe customer — store reward as pending
+      // No Stripe customer — the referrer is billed by Apple or Google, so a
+      // Stripe balance credit is impossible. Bank it as pending for manual
+      // payout; the referral still counts towards their race total below.
       console.log('[process-referral-reward] Referrer has no Stripe customer, storing as pending');
       await supabase.from('referral_rewards').insert({
         user_id: profile.referred_by,
         referral_id: referralRow.id,
         reward_type: 'credit',
-        amount_pence: 1299, // Default to electrician monthly price
+        amount_pence: creditPence,
         status: 'pending',
       });
 
@@ -130,46 +151,12 @@ serve(async (req) => {
       );
     }
 
-    // 4. Calculate reward — 1 free month per successful referral, capped at 2
+    // 4. Calculate reward — 1 free month per successful referral.
+    // The 2-referral cap was removed for the August Referral Race: the campaign
+    // promises "every mate who subscribes is a free month for both of you", and
+    // a cap silently paid nothing from the third mate onwards — exactly the
+    // people the race is trying to create.
     const successfulReferrals = (referrerProfile.successful_referrals || 0) + 1;
-
-    // Cap: max 2 free months total per referrer
-    if (successfulReferrals > 2) {
-      console.log(
-        '[process-referral-reward] Referrer already claimed 2 free months, no more credit'
-      );
-
-      // Still update stats and mark as rewarded (for social proof)
-      await supabase
-        .from('referrals')
-        .update({ status: 'rewarded', updated_at: new Date().toISOString() })
-        .eq('id', referralRow.id);
-      await supabase
-        .from('profiles')
-        .update({
-          successful_referrals: successfulReferrals,
-          total_referrals: successfulReferrals,
-        })
-        .eq('id', profile.referred_by);
-
-      return new Response(
-        JSON.stringify({ success: true, reward_applied: false, reason: 'cap_reached' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Determine credit amount based on referrer's own subscription price
-    const tierPrices: Record<string, number> = {
-      apprentice: 599,
-      apprentice_yearly: 599,
-      electrician: 1299,
-      electrician_yearly: 1299,
-      business_ai: 2999,
-      business_ai_yearly: 2999,
-      employer: 2999,
-      employer_yearly: 2999,
-    };
-    const creditPence = tierPrices[referrerProfile.subscription_tier || ''] || 1299;
 
     // 5. Apply Stripe balance credit
     try {

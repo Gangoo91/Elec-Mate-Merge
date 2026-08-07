@@ -17,8 +17,8 @@ export default function L3FaultDiagnosisMockExamPage() {
       questionBank={
         module4Questions as unknown as Parameters<typeof PublicMockExamPage>[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={30}
+      questionsPerExam={30}
+      timeLimitMinutes={35}
       passThreshold={70}
       breadcrumbLabel="Level 3 Fault Diagnosis"
     />

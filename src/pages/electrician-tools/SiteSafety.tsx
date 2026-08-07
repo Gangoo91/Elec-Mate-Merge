@@ -18,7 +18,15 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubToolGrid,
+  HubKpi,
+  HubKpiRow,
+  type HubTool,
+} from '@/components/hub/HubPrimitives';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
@@ -140,251 +148,9 @@ const ToolLoader = SectionSkeleton;
 // Editorial helpers — same pattern as ElectricianHub
 // ─────────────────────────────────────────────────────────────────────────
 
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
 // ─────────────────────────────────────────────────────────────────────────
-// Sticky masthead — College pattern
-// ─────────────────────────────────────────────────────────────────────────
-
-const PageMasthead = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center h-12 gap-4 sm:gap-6">
-          <button
-            type="button"
-            onClick={() => navigate('/electrician')}
-            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-          >
-            ← Back
-          </button>
-          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-              Electrician
-            </span>
-            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-              Site Safety
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Hero — date eyebrow + thematic two-tone headline + verdict + CTA.
-//
-// Same shape as AITooling ("Power up the work.") — a yellow opener and a
-// white tail. Headline picks from a context-aware set so the page never
-// reads the same twice in a row, and changes tone when there's something
-// overdue.
-// ─────────────────────────────────────────────────────────────────────────
-
-interface HeroHeadline {
-  yellow: string;
-  white: string;
-}
-
-const HEADLINES_OVERDUE: HeroHeadline[] = [
-  { yellow: 'Close', white: 'out the overdue.' },
-  { yellow: 'Tighten', white: 'the safety up.' },
-  { yellow: 'Action', white: 'the gaps.' },
-];
-
-const HEADLINES_PERMITS: HeroHeadline[] = [
-  { yellow: 'Eyes', white: 'on the job.' },
-  { yellow: 'Live', white: 'work, locked off.' },
-  { yellow: 'Permit', white: 'in. Boots on.' },
-];
-
-const HEADLINES_CLEAR: HeroHeadline[] = [
-  { yellow: 'Stay', white: 'sharp on site.' },
-  { yellow: 'Plan it.', white: 'Brief it. Run it.' },
-  { yellow: 'Watch', white: 'the volts.' },
-  { yellow: 'Sign on,', white: 'switch off, work safe.' },
-  { yellow: 'Safety', white: 'is the spec.' },
-];
-
-const HEADLINES_EMPTY: HeroHeadline[] = [
-  { yellow: 'Start', white: 'with a RAMS.' },
-  { yellow: 'First', white: 'job. First brief.' },
-];
-
-const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
-  // Rotate by hour so the page changes feel during the day but stays stable
-  // across renders within the same hour. Hashing on the day-of-year too means
-  // tomorrow opens with a different word.
-  const now = new Date();
-  const hour = now.getHours();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return pool[(hour + dayOfYear) % pool.length];
-};
-
-const Hero = ({
-  headline,
-  verdict,
-  cta,
-}: {
-  headline: HeroHeadline;
-  verdict: string;
-  cta?: { label: string; onClick: () => void };
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="relative pt-2 sm:pt-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>{dateEyebrow()}</Eyebrow>
-    </motion.div>
-
-    <motion.h1
-      variants={itemVariants}
-      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
-    >
-      <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-      <span className="text-white">{headline.white}</span>
-    </motion.h1>
-
-    <motion.p
-      variants={itemVariants}
-      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-    >
-      {verdict}
-    </motion.p>
-
-    {cta && (
-      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-        <button
-          type="button"
-          onClick={cta.onClick}
-          className={cn(
-            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
-            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-          )}
-        >
-          <span>{cta.label}</span>
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </motion.div>
-    )}
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// HeadlineStats — safety variant, mirrors dashboard HeadlineStats visuals
-// ─────────────────────────────────────────────────────────────────────────
-
-interface SafetyStat {
-  label: string;
-  value: string | number;
-  sub?: string;
-  accent?: boolean;
-  onClick: () => void;
-}
-
-const SafetyHeadlineStats = ({
-  stats,
-  number = '01',
-  label = 'AT A GLANCE',
-}: {
-  stats: SafetyStat[];
-  number?: string;
-  label?: string;
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>
-        {number} · {label}
-      </Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-      {stats.map((stat) => {
-        const valueStr = String(stat.value);
-        const isNumericish =
-          typeof stat.value === 'number' || /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
-        const sizeClass =
-          isNumericish || valueStr.length <= 4
-            ? 'text-4xl sm:text-5xl lg:text-[56px]'
-            : valueStr.length <= 8
-              ? 'text-3xl sm:text-4xl lg:text-5xl'
-              : 'text-2xl sm:text-3xl lg:text-4xl';
-
-        return (
-          <button
-            key={stat.label}
-            type="button"
-            onClick={stat.onClick}
-            className={cn(
-              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-[hsl(0_0%_15%)] transition-colors',
-              stat.accent &&
-                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
-            )}
-          >
-            <div
-              className={cn(
-                'text-[10px] font-medium uppercase tracking-[0.18em]',
-                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-              )}
-            >
-              {stat.label}
-            </div>
-            <span
-              className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                sizeClass,
-                stat.accent ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {stat.value}
-            </span>
-            {stat.sub && (
-              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
-                {stat.sub}
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </motion.div>
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// EditorialToolGrid — same DNA as ElectricianHub but click-driven
-// (cards trigger setActiveView, not router navigation)
+// A tool entry, as this page has always modelled it: a click handler rather
+// than a route, because every tool opens in place via setActiveView.
 // ─────────────────────────────────────────────────────────────────────────
 
 interface ToolCard {
@@ -397,110 +163,45 @@ interface ToolCard {
   alert?: boolean;
 }
 
-const EditorialToolGrid = ({
-  number,
-  label,
-  cards,
-  columns = 'three',
-}: {
-  number: string;
-  label: string;
-  cards: ToolCard[];
-  columns?: 'two' | 'three';
-}) => {
-  if (cards.length === 0) return null;
+/**
+ * ToolCard → HubTool.
+ *
+ * `meta` was a single line doing two jobs. Six entries carried a real figure
+ * ("3 overdue", "12 saved"); the other fourteen carried a verb — "Start a
+ * RAMS", "Browse hazards", "Capture" — which is the card's own title restated
+ * as an instruction, printed where every other hub shows live data.
+ *
+ * So a figure becomes the card's value and everything else is dropped: the
+ * description already says what the tool does, and a card is either reporting
+ * or inviting, never both.
+ */
+const NUMERIC_META = /^([\d,.]+)\s+(.+)$/;
 
-  const colClass =
-    columns === 'two'
-      ? 'grid-cols-1 sm:grid-cols-2'
-      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+/**
+ * Recent documents carry a DATE in `meta` ("14 Apr"), not a count — and
+ * "14 Apr" matches the numeric pattern, so the generic mapper rendered "14"
+ * as the card's headline figure with "Apr" as its unit. A date is not a
+ * metric; it goes in the line that says what the card is.
+ */
+const recentToHubTool = (c: ToolCard): HubTool => ({
+  id: c.id,
+  title: c.title,
+  description: [c.eyebrow, c.meta].filter(Boolean).join(' · '),
+  onClick: c.onClick,
+});
 
-  // Pad the final row at the largest breakpoint so the rounded grid never
-  // shows the bleed-through grey from the `bg-white/[0.12]` background.
-  const largestColCount = columns === 'two' ? 2 : 3;
-  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
-
-  return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-4"
-    >
-      <motion.div variants={itemVariants}>
-        <Eyebrow>
-          {number} · {label}
-        </Eyebrow>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          colClass
-        )}
-      >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-        {cards.map((card, i) => (
-          <button
-            key={card.id}
-            type="button"
-            onClick={card.onClick}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
-          >
-            <div className="flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  · {card.eyebrow}
-                </span>
-              </div>
-              {card.alert && (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
-                  Action
-                </span>
-              )}
-            </div>
-
-            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-              {card.title}
-            </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
-              {card.description}
-            </p>
-
-            <div className="flex-grow" />
-
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">
-                {card.meta ?? 'Open'}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </div>
-          </button>
-        ))}
-
-        {Array.from({ length: fillerCount }).map((_, i) => (
-          <div
-            key={`filler-${i}`}
-            aria-hidden
-            className="hidden lg:block bg-[hsl(0_0%_10%)]"
-          />
-        ))}
-      </motion.div>
-    </motion.section>
-  );
+const toHubTool = (c: ToolCard): HubTool => {
+  const m = c.meta ? NUMERIC_META.exec(c.meta) : null;
+  return {
+    id: c.id,
+    title: c.title,
+    description: c.description,
+    onClick: c.onClick,
+    value: m ? m[1] : undefined,
+    valueLabel: m ? m[2] : undefined,
+    alert: c.alert,
+  };
 };
-
-// ─────────────────────────────────────────────────────────────────────────
-// Main page
-// ─────────────────────────────────────────────────────────────────────────
 
 const SiteSafety = () => {
   const [searchParams] = useSearchParams();
@@ -526,83 +227,17 @@ const SiteSafety = () => {
 
   const equipmentDueCount = equipmentOverdue.length + equipmentDueSoon.length;
 
-  // Verdict — pick the most action-worthy signal first.
-  const { headline, verdict, cta } = useMemo(() => {
-    if (coshhOverdue.length > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_OVERDUE),
-        verdict: `${coshhOverdue.length} COSHH ${coshhOverdue.length === 1 ? 'review' : 'reviews'} overdue. Closing those out keeps the score green.`,
-        cta: { label: 'Open COSHH', onClick: () => setActiveView('coshh') },
-      };
-    }
-    if (equipmentOverdue.length > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_OVERDUE),
-        verdict: `${equipmentOverdue.length} ${equipmentOverdue.length === 1 ? 'item' : 'items'} of equipment overdue an inspection.`,
-        cta: { label: 'Open equipment', onClick: () => setActiveView('equipment') },
-      };
-    }
-    if (dashboardStats.activePermits > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_PERMITS),
-        verdict: `${dashboardStats.activePermits} active ${dashboardStats.activePermits === 1 ? 'permit' : 'permits'} on site, nothing overdue. Steady ship.`,
-        cta: { label: 'View permits', onClick: () => setActiveView('permit-to-work') },
-      };
-    }
-    if (totalDocuments > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_CLEAR),
-        verdict: `${totalDocuments} safety ${totalDocuments === 1 ? 'document' : 'documents'} on file. Pull a RAMS together for tomorrow's job in under a minute.`,
-        cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
-      };
-    }
-    return {
-      headline: pickHeadline(HEADLINES_EMPTY),
-      verdict: 'No safety docs yet. Generate your first RAMS in under a minute — AI handles the boilerplate.',
-      cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
-    };
-  }, [coshhOverdue.length, equipmentOverdue.length, dashboardStats.activePermits, totalDocuments]);
-
+  /*
+   * The hero is gone, and with it the rotating slogan.
+   *
+   * It printed a two-tone headline picked from a pool by hour and day-of-year
+   * — "Watch the volts.", "Safety is the spec." — over a verdict paragraph
+   * that restated the stat band directly beneath it, then a CTA duplicating a
+   * tool card further down. Roughly 300px of the first screen, none of it
+   * information. What was load-bearing was knowing whether anything is
+   * overdue, and that is a KPI, not a slogan.
+   */
   const safetyScore = weeklySummary?.safetyScore ?? null;
-  const stats: SafetyStat[] = [
-    {
-      label: 'Score',
-      value: safetyScore != null ? `${safetyScore}` : '—',
-      sub:
-        safetyScore == null
-          ? 'No data yet'
-          : safetyScore >= 80
-            ? 'Strong'
-            : safetyScore >= 60
-              ? 'Steady'
-              : 'Needs attention',
-      accent: true,
-      onClick: () => setScoreSheetOpen(true),
-    },
-    {
-      label: 'Documents',
-      value: totalDocuments,
-      sub: 'On file',
-      onClick: () => setActiveView('documents'),
-    },
-    {
-      label: 'Permits',
-      value: dashboardStats.activePermits,
-      sub: dashboardStats.activePermits === 1 ? '1 active' : 'Active now',
-      onClick: () => setActiveView('permit-to-work'),
-    },
-    {
-      label: 'Equipment',
-      value: equipmentDueCount,
-      sub:
-        equipmentOverdue.length > 0
-          ? `${equipmentOverdue.length} overdue`
-          : equipmentDueCount > 0
-            ? 'Due soon'
-            : 'All clear',
-      onClick: () => setActiveView('equipment'),
-    },
-  ];
 
   // Tool grids
   const recentCards: ToolCard[] = (recentDocuments ?? []).slice(0, 3).map((doc) => {
@@ -917,54 +552,108 @@ const SiteSafety = () => {
   }
 
   // ── Default editorial dashboard ──────────────────────────────────────
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   *
+   * Twenty tools in five groups of four. They were 3 / 6 / 7 / 4, and the grid
+   * is auto-fit at four tracks — so "SAFETY & RECORDING" drew 4 + 2 and
+   * "COMPLIANCE & PERMITS" drew 4 + 3, each leaving a hole on the end.
+   *
+   * The regrouping is also a better division than the old one, which had
+   * "recording" holding both the hazard reference library and the accident
+   * book. Now: build the documents, work the day, report what happened,
+   * control high-risk work, look things up.
+   */
+  const byId = new Map(
+    [...coreTools, ...recordingTools, ...complianceTools, ...resourceTools].map((c) => [c.id, c])
+  );
+  const group = (ids: string[]): HubTool[] =>
+    ids.map((id) => byId.get(id)).filter(Boolean).map((c) => toHubTool(c as ToolCard));
+
+  const buildTools = group(['ai-rams', 'documents', 'safety-templates', 'hazard-database']);
+  const onSiteTools = group(['team-briefing', 'photo-docs', 'site-diary', 'pre-use-checks']);
+  const reportingTools = group([
+    'near-miss',
+    'safety-observations',
+    'accident-book',
+    'inspection-checklists',
+  ]);
+  const controlTools = group(['permit-to-work', 'safe-isolation', 'coshh', 'fire-watch']);
+  const referenceTools = group(['equipment', 'emergency', 'safety-alerts', 'safety-resources']);
+
   return (
     <RAMSProvider>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
-        <PageMasthead />
+      <HubPage>
+        <HubMasthead section="Electrician" title="Site Safety" backTo="/electrician" />
 
-        <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-          <Hero headline={headline} verdict={verdict} cta={cta} />
-
-          <SafetyHeadlineStats stats={stats} />
+        <HubBody>
+          <HubKpiRow>
+            <HubKpi
+              accent
+              label="Safety score"
+              value={safetyScore != null ? String(safetyScore) : '—'}
+              sentiment={
+                safetyScore == null ? 'neutral' : safetyScore >= 80 ? 'good' : safetyScore >= 60 ? 'neutral' : 'bad'
+              }
+              verdict={
+                safetyScore == null
+                  ? 'No data yet'
+                  : safetyScore >= 80
+                    ? 'Strong'
+                    : safetyScore >= 60
+                      ? 'Steady'
+                      : 'Needs attention'
+              }
+              onClick={() => setScoreSheetOpen(true)}
+            />
+            <HubKpi
+              label="COSHH overdue"
+              value={String(coshhOverdue.length)}
+              sentiment={coshhOverdue.length > 0 ? 'bad' : 'neutral'}
+              direction={coshhOverdue.length > 0 ? 'up' : 'flat'}
+              verdict={coshhOverdue.length > 0 ? 'Review these first' : 'All reviews current'}
+              onClick={() => setActiveView('coshh')}
+            />
+            <HubKpi
+              label="Equipment due"
+              value={String(equipmentDueCount)}
+              sentiment={equipmentOverdue.length > 0 ? 'bad' : 'neutral'}
+              verdict={
+                equipmentOverdue.length > 0
+                  ? 'Inspections overdue'
+                  : equipmentDueCount > 0
+                    ? 'Due soon'
+                    : 'All clear'
+              }
+              context={
+                equipmentOverdue.length > 0 ? `${equipmentOverdue.length} already overdue` : undefined
+              }
+              onClick={() => setActiveView('equipment')}
+            />
+            <HubKpi
+              label="Permits live"
+              value={String(dashboardStats.activePermits)}
+              verdict={dashboardStats.activePermits > 0 ? 'Work under permit now' : 'No live permits'}
+              context={totalDocuments > 0 ? `${totalDocuments} documents on file` : undefined}
+              onClick={() => setActiveView('permit-to-work')}
+            />
+          </HubKpiRow>
 
           {recentCards.length > 0 && (
-            <EditorialToolGrid
-              number="02"
-              label="RECENT"
-              cards={recentCards}
-              columns="three"
-            />
+            <HubToolGrid label="Recent" cards={recentCards.map(recentToHubTool)} columns="four" />
           )}
 
-          <EditorialToolGrid
-            number={recentCards.length > 0 ? '03' : '02'}
-            label="CORE TOOLS"
-            cards={coreTools}
-            columns="three"
-          />
+          <HubToolGrid label="Build the documents" cards={buildTools} columns="four" />
 
-          <EditorialToolGrid
-            number={recentCards.length > 0 ? '04' : '03'}
-            label="SAFETY & RECORDING"
-            cards={recordingTools}
-            columns="three"
-          />
+          <HubToolGrid label="On site" cards={onSiteTools} columns="four" />
 
-          <EditorialToolGrid
-            number={recentCards.length > 0 ? '05' : '04'}
-            label="COMPLIANCE & PERMITS"
-            cards={complianceTools}
-            columns="three"
-          />
+          <HubToolGrid label="Report something" cards={reportingTools} columns="four" />
 
-          <EditorialToolGrid
-            number={recentCards.length > 0 ? '06' : '05'}
-            label="RESOURCES"
-            cards={resourceTools}
-            columns="two"
-          />
-        </div>
-      </div>
+          <HubToolGrid label="Permits & control" cards={controlTools} columns="four" />
+
+          <HubToolGrid label="Kit & reference" cards={referenceTools} columns="four" />
+        </HubBody>
+      </HubPage>
 
       <SafetyScoreSheet
         open={scoreSheetOpen}

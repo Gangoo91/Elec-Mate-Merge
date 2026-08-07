@@ -1,4 +1,5 @@
 import React from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 
@@ -183,7 +184,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         // hover. Volt is only ever solid-with-black-text, or plain text.
         isSelected
           ? 'border-elec-yellow bg-gradient-to-b from-white/[0.16] to-white/[0.08]'
-          : 'border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06] hover:border-elec-yellow/50 hover:from-white/[0.16]',
+          : cn('border-white/[0.18] hover:border-elec-yellow/50 hover:from-white/[0.19]', CARD_SURFACE),
         // Not yours to bulk-edit — say so visually instead of failing silently.
         isBulkMode && !selectable && 'opacity-40 active:scale-100 cursor-not-allowed'
       )}

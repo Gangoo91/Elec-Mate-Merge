@@ -704,12 +704,12 @@ export default function AdminOutreach() {
                   {selectedCampaign.subject}
                 </p>
                 {selectedCampaign.preheader && (
-                  <p className="text-[12px] text-white/70 leading-snug pt-1 border-t border-white/10 mt-2">
+                  <p className="text-[12px] text-white leading-snug pt-1 border-t border-white/10 mt-2">
                     <span className="text-elec-yellow font-semibold">Preview: </span>
                     {selectedCampaign.preheader}
                   </p>
                 )}
-                <p className="text-[11px] text-white/50 pt-1">
+                <p className="text-[11px] text-white pt-1">
                   From: {selectedCampaign.from_name || 'Andrew from Elec-Mate'} &middot;{' '}
                   {selectedCampaign.from_email || 'founder@elec-mate.com'}
                 </p>

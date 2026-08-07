@@ -538,7 +538,7 @@ export default function ElectricalVanLeasingPage() {
   return (
     <GuideTemplate
       title="Electrician Van Leasing UK | Van Finance Guide for"
-      description="Complete guide to van leasing for electricians in the UK. Lease vs hire purchase vs outright purchase, 100% VAT reclaim on leasing…"
+      description="Complete guide to van leasing for electricians in the UK. Lease vs hire purchase vs outright purchase, 100% VAT reclaim on leasing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

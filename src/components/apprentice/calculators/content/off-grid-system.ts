@@ -30,7 +30,8 @@ export const offGridSystemContent: CalculatorContent = {
   ],
 
   workedExample: {
-    scenario: '10 kWh/day, 3.5 peak-sun-hours, 85% system efficiency, 3 days autonomy, 48 V, 80% DoD.',
+    scenario:
+      '10 kWh/day, 3.5 peak-sun-hours, 85% system efficiency, 3 days autonomy, 48 V, 80% DoD.',
     inputs: [
       { label: 'Daily demand', value: '10 kWh' },
       { label: 'Peak-sun-hours', value: '3.5' },

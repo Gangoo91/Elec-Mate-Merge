@@ -581,7 +581,7 @@ export default function EICRBathPage() {
   return (
     <GuideTemplate
       title="EICR Bath | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Bath for 2026. Landlord legal requirements, Bath & North East Somerset Council enforcement, Georgian listed building challenges…"
+      description="EICR costs in Bath for 2026. Landlord legal requirements, Bath & North East Somerset Council enforcement, Georgian listed building challenges."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

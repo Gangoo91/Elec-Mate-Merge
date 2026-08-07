@@ -23,7 +23,7 @@ const tocItems = [
 const sections = [
   {
     id: 'the-symbol',
-    heading: 'SPD (Surge Protection Device) — BS EN 60617 Symbol',
+    heading: 'SPD (Surge Protection Device) — IEC 60617 Symbol',
     content: (
       <>
         <SymbolGallery
@@ -184,7 +184,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Drop this symbol into a circuit drawing"
-          description="The Elec-Mate Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
+          description="The Elec-Mate Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -337,7 +337,7 @@ const relatedPages = [
   },
   {
     href: '/guides/electrical-symbols-chart',
-    title: 'BS EN 60617 Master Symbol Library',
+    title: 'IEC 60617 Master Symbol Library',
     description: 'All 114 UK electrical symbols across 11 categories — the master reference.',
     icon: 'BookOpen',
     category: 'Reference',
@@ -345,7 +345,7 @@ const relatedPages = [
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'FileCheck2',
     category: 'Guide',
   },
@@ -362,7 +362,7 @@ export default function SpdSymbolPage() {
   return (
     <GuideTemplate
       title="SPD Symbol | BS EN 61643-11 Surge Protection Drawing"
-      description="SPD (Surge Protection Device) BS EN 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
+      description="SPD (Surge Protection Device) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -372,10 +372,10 @@ export default function SpdSymbolPage() {
       heroTitle={
         <>
           SPD (Surge Protection Device) Symbol{' '}
-          <span className="text-yellow-400">BS EN 60617 reference</span>
+          <span className="text-yellow-400">IEC 60617 reference</span>
         </>
       }
-      heroSubtitle="SPD surge protection device electrical symbol BS EN 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
+      heroSubtitle="SPD surge protection device electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={5}
       answerBox={{
         question: 'What is the SPD symbol in electrical drawings?',
@@ -388,7 +388,7 @@ export default function SpdSymbolPage() {
         'Where Section 443 requires SPDs and no external lightning protection system is fitted, Reg 534.4.1.4 requires Type 2 SPDs as close as possible to the installation origin. PE connecting-conductor minimums (Reg 534.4.10): 6 mm² Cu for Type 2, 16 mm² Cu for Type 1.',
         'Voltage protection level (Up): for a 230/400 V installation the installed SPD assembly Up shall not exceed 2.5 kV (Reg 534.4.4.2 / Table 443.2 Category II). An SPD on the load side of an RCD needs an RCD with 3 kA 8/20 surge immunity (Reg 534.4.7).',
         'Section 534 (selection and erection of SPDs) was substantially revised in BS 7671:2018+A4:2026 — apply the current requirements.',
-        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to BS EN 60617.',
+        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
       sections={sections}
       faqs={[
@@ -416,7 +416,7 @@ export default function SpdSymbolPage() {
       faqHeading="FAQ — SPD (Surge Protection Device) Symbol"
       relatedPages={relatedPages}
       ctaHeading="Use this symbol in real drawings"
-      ctaSubheading="Drag and drop BS EN 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
+      ctaSubheading="Drag and drop IEC 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
     />
   );
 }

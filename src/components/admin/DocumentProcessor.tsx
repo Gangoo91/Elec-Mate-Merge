@@ -95,12 +95,12 @@ export const DocumentProcessor = ({
           {icon || <FileText className="h-6 w-6 text-primary" />}
           <div className="flex-1">
             <h3 className="text-lg font-semibold">{title}</h3>
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <p className="text-sm text-white">{description}</p>
           </div>
           {statusIcon && (
             <div className="flex items-center gap-2 text-sm">
               {statusIcon}
-              <span className="text-muted-foreground">{statusText}</span>
+              <span className="text-white">{statusText}</span>
             </div>
           )}
         </div>
@@ -112,10 +112,10 @@ export const DocumentProcessor = ({
               type="file"
               accept=".txt"
               onChange={handleFileChange}
-              className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
             />
             {selectedFile && (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Selected: {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
               </p>
             )}
@@ -141,7 +141,7 @@ export const DocumentProcessor = ({
             )}
           </Button>
 
-          {isProcessing && <span className="text-sm text-muted-foreground">{estimatedTime}</span>}
+          {isProcessing && <span className="text-sm text-white">{estimatedTime}</span>}
         </div>
 
         {error && (
@@ -170,7 +170,7 @@ export const DocumentProcessor = ({
                     'N/A'}
                 </strong>
               </p>
-              {result.message && <p className="text-muted-foreground italic">{result.message}</p>}
+              {result.message && <p className="text-white italic">{result.message}</p>}
             </div>
           </div>
         )}

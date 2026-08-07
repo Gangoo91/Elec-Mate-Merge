@@ -791,7 +791,7 @@ export default function NoPowerToSocketsPage() {
   return (
     <GuideTemplate
       title="No Power to Sockets | Troubleshooting Guide"
-      description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults…"
+      description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults."
       datePublished="2025-07-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
 // Native scroll used instead of Radix ScrollArea for performance with many rows
+import type { ZsBasis } from '@/utils/autoRegChecker';
 import { TestResult } from '@/types/testResult';
 import { cn } from '@/lib/utils';
 import EnhancedTestResultDesktopTableHeader from './EnhancedTestResultDesktopTableHeader';
@@ -36,6 +37,12 @@ interface EnhancedTestResultDesktopTableProps {
    * as before, with no checkbox column and no behaviour change.
    */
   isRowSelected?: (id: string) => boolean;
+  /** Opens the Validate sheet on a circuit, from a flagged cell. */
+  onOpenWarning?: (circuitId: string) => void;
+  /** Which maximum a measured Zs is judged against — see `ZsBasis`. */
+  zsBasis?: ZsBasis;
+  /** When false the grid carries no compliance marking. Findings are unaffected. */
+  showChecks?: boolean;
   onToggleRowSelect?: (id: string, shiftKey: boolean) => void;
   onToggleSelectAll?: () => void;
   allSelected?: boolean;
@@ -55,6 +62,9 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   onScanBoard,
   earthingArrangement,
   isRowSelected,
+  onOpenWarning,
+  zsBasis,
+  showChecks,
   onToggleRowSelect,
   onToggleSelectAll,
   allSelected = false,
@@ -534,6 +544,9 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         earthingArrangement={earthingArrangement}
                         isSelected={isRowSelected ? isRowSelected(result.id) : false}
                         onToggleSelect={onToggleRowSelect}
+                        onOpenWarning={onOpenWarning}
+                zsBasis={zsBasis}
+                showChecks={showChecks}
                       />
                     ))}
                   </TableBody>

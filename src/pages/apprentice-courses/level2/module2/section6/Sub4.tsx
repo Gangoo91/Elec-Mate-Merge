@@ -309,7 +309,7 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS EN 60617 — Graphical symbols for diagrams"
+            source="IEC 60617 — Graphical symbols for diagrams"
             clause="Standard transistor symbols comprise a circle (the device envelope), three terminal lines and an arrow on the emitter (BJT) or source (FET) indicating direction of current flow. NPN/N-channel devices show the arrow pointing outward; PNP/P-channel devices point inward."
             meaning={
               <>
@@ -319,7 +319,7 @@ export default function Sub4() {
                 read the function in any manual you open.
               </>
             }
-            cite="Verbatim wording paraphrased from BS EN 60617 — see BSI for the full symbol library."
+            cite="Verbatim wording paraphrased from IEC 60617 — see BSI for the full symbol library."
           />
 
           <InlineCheck

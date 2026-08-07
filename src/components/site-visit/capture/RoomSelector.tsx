@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { getRoomTypesForProperty } from '@/data/siteVisit/roomTypes';
 import type { RoomType, PropertyType, SiteVisitRoom } from '@/types/siteVisit';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 interface RoomSelectorProps {
   existingRooms: SiteVisitRoom[];
@@ -41,7 +42,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
 
   return (
     <div className="space-y-2">
-      <label className="text-[11.5px] font-medium text-white/65">Add room — tap to add</label>
+      <label className="text-[11.5px] font-medium text-white">Add room — tap to add</label>
       <div className="flex flex-wrap gap-2">
         {availableTypes.map((rt) => (
           <button
@@ -61,7 +62,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
             'flex h-11 items-center gap-1.5 rounded-full border border-dashed px-4 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.97]',
             showCustom
               ? 'border-elec-yellow/60 bg-elec-yellow/[0.1] text-elec-yellow'
-              : 'border-white/20 text-white/70 hover:border-elec-yellow/40 hover:text-elec-yellow'
+              : 'border-white/20 text-white hover:border-elec-yellow/40 hover:text-elec-yellow'
           )}
         >
           <Plus className="h-3.5 w-3.5" />
@@ -78,7 +79,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
               if (e.key === 'Enter') handleAddCustom();
             }}
             placeholder="e.g. Boot room, Plant room 2"
-            className="h-11 flex-1 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+            className={cn(inputCn, 'flex-1')}
             autoCapitalize="words"
             autoComplete="off"
             enterKeyHint="done"

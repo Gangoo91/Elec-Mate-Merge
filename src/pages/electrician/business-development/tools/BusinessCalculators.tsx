@@ -165,9 +165,14 @@ const BusinessCalculators = () => (
     />
 
     <HubBody>
+      {/* One column basis for every group on this page. Mixing two/three/four
+          gave the same card three different widths down a single screen —
+          a two-item group stretched to full width next to a four-up row above
+          it. A consistent module width is what makes a grid read as designed;
+          short groups simply leave the trailing columns empty. */}
       <HubToolGrid label="Price the work" cards={pricing} columns="four" />
-      <HubToolGrid label="Did it make money?" cards={profit} columns="two" />
-      <HubToolGrid label="Tax & VAT" cards={tax} columns="three" />
+      <HubToolGrid label="Did it make money?" cards={profit} columns="four" />
+      <HubToolGrid label="Tax & VAT" cards={tax} columns="four" />
       <HubToolGrid label="Running the business" cards={running} columns="four" />
     </HubBody>
   </HubPage>

@@ -24,7 +24,7 @@ const sections = [
     title: 'Technical information and drawings',
     icon: Ruler,
     description:
-      'LO2 — sources of technical information, drawing types (block, schematic, wiring, layout), BS EN 60617 symbols and scale conversion.',
+      'LO2 — sources of technical information, drawing types (block, schematic, wiring, layout), IEC 60617 symbols and scale conversion.',
     href: 'section2',
   },
   {
@@ -96,7 +96,7 @@ export default function Module3() {
             answer to every shift.{' '}
             <span className="text-white font-medium">Section 2</span> shows you how
             to read the technical information you'll be handed on day one — drawings,
-            specs, RAMS, BS EN 60617 symbols and scale.{' '}
+            specs, RAMS, IEC 60617 symbols and scale.{' '}
             <span className="text-white font-medium">Section 3</span> covers wiring
             systems theory — circuit types, environments, current-carrying capacity,
             protective devices and conduit fill.{' '}

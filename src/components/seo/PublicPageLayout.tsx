@@ -5,6 +5,8 @@ import { ArrowRight, Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { RelatedMockExamCta } from '@/components/seo/RelatedMockExamCta';
+import { GUIDE_TO_MOCK_EXAM } from '@/data/seo/guideToMockExam';
 
 interface PublicPageLayoutProps {
   children: React.ReactNode;
@@ -42,6 +44,21 @@ const navSections = [
       { to: '/training/18th-edition-course', label: '18th Edition' },
       { to: '/training/electrical-apprentice', label: 'Apprentice' },
       { to: '/training/am2-exam-preparation', label: 'AM2 Prep' },
+    ],
+  },
+  /**
+   * The mock exams had no nav entry at all, on any of the 1,391 public pages.
+   * They are the best-converting format on the site — 6.4% click-through from
+   * search against 1.3% for the guides, measured at the same ranking positions
+   * — and until now the only way to reach one was to already know the URL.
+   */
+  {
+    label: 'Mock Exams',
+    links: [
+      { to: '/mock-exams/18th-edition-bs-7671', label: '18th Edition' },
+      { to: '/mock-exams/2391-inspection-testing', label: 'C&G 2391' },
+      { to: '/mock-exams/am2-online-knowledge-test', label: 'AM2' },
+      { to: '/mock-exams', label: 'All mock exams' },
     ],
   },
 ];
@@ -82,6 +99,13 @@ const footerTraining = [
   { to: '/training/level-3-electrical', label: 'Level 3 Electrical' },
   { to: '/training/epa-preparation', label: 'EPA Preparation' },
   { to: '/training/apprentice-portfolio', label: 'Portfolio Guide' },
+  // Mock exams live in this column rather than a sixth one: the footer grid is
+  // 12 wide and already full (4 link columns + a 4-wide brand block), and a
+  // fifth column wraps to a second row on desktop.
+  { to: '/mock-exams/18th-edition-bs-7671', label: '18th Edition Mock Exam' },
+  { to: '/mock-exams/2391-inspection-testing', label: '2391 Mock Exam' },
+  { to: '/mock-exams/am2-online-knowledge-test', label: 'AM2 Mock Exam' },
+  { to: '/mock-exams', label: 'All Mock Exams' },
 ];
 
 const footerAIAndGuides = [
@@ -223,6 +247,9 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  // Trailing slashes and query strings must not defeat the lookup — a visitor
+  // arriving on /guides/ze-values-uk/ should see the same page as one without.
+  const relatedExam = GUIDE_TO_MOCK_EXAM[location.pathname.replace(/\/+$/, '') || '/'];
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -385,6 +412,11 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         {children}
       </main>
 
+      {/* Sits directly under the article, before the generic pre-footer bands,
+          because it is the one thing on this page the reader might actually
+          want next. Absent for any route without an honest pairing. */}
+      {relatedExam && <RelatedMockExamCta {...relatedExam} />}
+
       {/* Pre-footer figures — raised onto the neutral card ground so the page
           ends on two distinct bands (light strip, then the dark footer) rather
           than one flat run of black. Figures carry the emphasis. */}
@@ -431,7 +463,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
             {[
               { heading: 'Certificates', links: footerCertificates, accent: 'text-violet-300' },
               { heading: 'Calculators', links: footerCalculators, accent: 'text-sky-300' },
-              { heading: 'Training', links: footerTraining, accent: 'text-emerald-300' },
+              { heading: 'Training and mock exams', links: footerTraining, accent: 'text-emerald-300' },
               { heading: 'AI and guides', links: footerAIAndGuides, accent: 'text-amber-300' },
             ].map((col) => (
               <div key={col.heading} className="lg:col-span-2">

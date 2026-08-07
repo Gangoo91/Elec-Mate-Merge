@@ -588,7 +588,7 @@ export default function DigitalVsPaperCertificatesPage() {
   return (
     <GuideTemplate
       title="Digital vs Paper Electrical Certificates | Comparison"
-      description="Compare digital and paper electrical certificates for UK electricians. Legal validity, scheme acceptance, speed, accuracy, storage, delivery…"
+      description="Compare digital and paper electrical certificates for UK electricians. Legal validity, scheme acceptance, speed, accuracy, storage, delivery."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

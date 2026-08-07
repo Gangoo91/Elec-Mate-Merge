@@ -4,16 +4,25 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   ShieldCheck,
-  AlertTriangle,
   FileCheck2,
   Calculator,
   Zap,
   GraduationCap,
   BookOpen,
   CircuitBoard,
-  Building,
-  Lightbulb,
 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared styles
+// -------------------------------------------------------------------
+
+/** Cards run edge-to-edge on phones, inset and rounded from sm: up. */
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 my-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6';
+
+const cellCn = 'py-2.5 pr-4 align-top';
+const numCellCn = 'py-2.5 pr-4 align-top whitespace-nowrap';
 
 // -------------------------------------------------------------------
 // Data
@@ -41,7 +50,8 @@ const keyTakeaways = [
   'Regulation 314.1 requires that every installation shall be divided into circuits, as necessary, to avoid danger and minimise inconvenience in the event of a fault. This is not a suggestion — it is a mandatory design requirement listing six specific objectives, items (a) to (f).',
   'Regulation 314.2 requires that separate circuits are provided for parts of the installation that need to be separately controlled, in such a way that those circuits are not affected by the failure of other circuits, with due account taken of the consequences of the operation of any single protective device.',
   'Regulation 314.3 sets the number of final circuits and the number of points per final circuit, such that compliance with Chapter 43 (overcurrent), Chapter 46 and Section 537 (isolation and switching) and Chapter 52 (current-carrying capacity) is facilitated.',
-  'Ring final circuits are standard for 13A socket outlets in domestic installations (BS 7671 Appendix 15, Regulation 433.1.204). Radial circuits are preferred for dedicated loads (cooker, shower, immersion heater) and where the cable run is too long for a ring. Both are equally valid — the choice depends on the application.',
+  'Regulation 314.4 is the one that answers "how do I prevent indirect energising?" — where an installation comprises more than one final circuit, each final circuit shall be connected to a separate way in a distribution board, and the wiring of each final circuit shall be electrically separate from that of every other final circuit. No borrowed neutrals, no shared cables.',
+  'Ring final circuits for BS 1363 accessories are covered by Regulation 433.1.204: a 30 A or 32 A protective device, copper line and neutral conductors of at least 2.5 mm² (1.5 mm² for two-core mineral insulated cable to BS EN 60702-1), and a cable current-carrying capacity of not less than 20 A. Appendix 15 is the informative guidance that supports it.',
   'Regulation 314.1(c) requires the design to take account of hazards that may arise from the failure of a single circuit, such as a lighting circuit — the basis for keeping lighting on a separate protective device from the socket-outlet circuits, so that a trip on a socket circuit does not leave the occupants in darkness.',
 ];
 
@@ -54,12 +64,12 @@ const faqs = [
   {
     question: 'How many circuits does a domestic installation need?',
     answer:
-      'BS 7671 does not specify a minimum number of circuits, but the On-Site Guide and Appendix 15 provide guidance. A typical modern domestic installation (3-bedroom house) would have as a minimum: 2 ring final circuits for socket outlets (upstairs and downstairs, or front and back), 2 lighting circuits (upstairs and downstairs), 1 dedicated cooker circuit (typically 32A radial), 1 dedicated shower circuit (if electric shower — typically 40A or 50A radial), 1 dedicated immersion heater circuit, 1 dedicated circuit for a smoke/fire alarm system, and possibly dedicated circuits for EV charger, heat pump, or other high-demand fixed equipment. This gives a minimum of approximately 8 to 12 circuits for a standard house. Larger properties, or those with more electrical equipment, will need more.',
+      'BS 7671 does not specify a minimum number of circuits, but the On-Site Guide and Appendix 15 provide guidance. A typical modern domestic installation (3-bedroom house) would have as a minimum: 2 ring final circuits for socket outlets (upstairs and downstairs, or front and back), 2 lighting circuits (upstairs and downstairs), 1 dedicated cooker circuit (typically a 32 A radial), 1 dedicated shower circuit (if an electric shower is fitted — typically 40 A, 45 A or 50 A depending on the rating), 1 dedicated immersion heater circuit, 1 dedicated circuit for a smoke/fire alarm system, and possibly dedicated circuits for EV charger, heat pump, or other high-demand fixed equipment. This gives a minimum of approximately 8 to 12 circuits for a standard house. Larger properties, or those with more electrical equipment, will need more.',
   },
   {
     question: 'When should I use a ring final circuit instead of a radial?',
     answer:
-      'A ring final circuit is the standard arrangement for 13A socket outlets in domestic installations in the UK. It uses 2.5mm squared cable in a ring (from the consumer unit, around the sockets, and back to the consumer unit) protected by a 32A MCB. The ring arrangement effectively halves the impedance at the mid-point of the ring, giving lower voltage drop and lower Zs compared to a single radial of the same length. Use a ring circuit when: the circuit serves multiple general-purpose socket outlets in a defined area (up to 100 square metres floor area per Appendix 15), the socket outlets are distributed around the room(s) so that the ring route is practical, and the cable can be routed in a continuous ring without excessive detours. Use a radial circuit when: the circuit serves a dedicated load (cooker, shower, immersion), the floor area is small (a 20A radial in 2.5mm squared serves up to 50 square metres), or the cable routing makes a ring impractical.',
+      'A ring final circuit is the standard arrangement for BS 1363 socket outlets in UK domestic installations. Regulation 433.1.204 permits it with a 30 A or 32 A protective device and copper line and neutral conductors of at least 2.5 mm². Because the two legs of the ring act in parallel, the worst-case R1+R2 at the mid-point is a quarter of the end-to-end loop value measured at the board, so Zs and voltage drop are lower than a single radial run in the same cable over the same route. Use a ring when the circuit serves multiple general-purpose socket outlets across an area (historically limited to 100 m² of floor area, Appendix 15), the outlets are spread out so that the ring route is practical, and the cable can be run as a continuous ring. Use a radial when the circuit serves a dedicated load (cooker, shower, immersion heater), the floor area is small (Appendix 15, Figure 15B shows a 20 A radial in 2.5 mm² historically limited to 50 m²), or the routing makes a ring impractical.',
   },
   {
     question: 'Can I put lighting and sockets on the same circuit?',
@@ -67,19 +77,29 @@ const faqs = [
       'BS 7671 does not contain a blanket prohibition on lighting and socket outlets sharing a circuit, but it is strongly discouraged. Regulation 314.1(c) requires the division of circuits to take account of hazards that may arise from the failure of a single circuit, such as a lighting circuit. If lighting and sockets share a circuit and that circuit trips (for example, due to a fault on an appliance plugged into a socket), the occupants can be left in darkness — a danger, particularly on stairways. Combined with Regulation 314.2 (separate circuits for parts that need to be separately controlled), this is precisely the scenario the standard aims to prevent. Always provide separate lighting circuits.',
   },
   {
+    question: 'What is the maximum length of a 2.5 mm² radial circuit?',
+    answer:
+      'BS 7671 does not tabulate a maximum length for any circuit. The length that works is whatever still satisfies voltage drop (Appendix 4) and the maximum earth fault loop impedance (Zs) needed for the disconnection time in Table 41.1 (Regulation 411.3.2.2), once the correct rating factors have been applied for grouping, ambient temperature and thermal insulation. What Appendix 15 does give is a floor area: Figure 15B notes that a 20 A radial in 2.5 mm² has historically been limited to 50 m² of floor area served. Treat that as a sanity check on the design, not as a length limit — a long, lightly loaded run and a short, heavily loaded one fail for completely different reasons. Work the numbers for the actual cable, route and installation method.',
+  },
+  {
     question: 'What is the maximum floor area for a ring final circuit?',
     answer:
-      'Appendix 15 of BS 7671 (which supports Regulation 433.1.204) notes that, historically, a limit of 100 square metres of floor area has been adopted for a ring final circuit. It is informative guidance, not a hard regulatory limit — but exceeding it significantly increases the cable length and therefore the R1+R2 and Zs values, which may compromise automatic disconnection of supply. Appendix 15 also advises designers to locate socket outlets to share the load reasonably around the ring, to avoid supplying immersion heaters or comprehensive electric space heating from the ring, and to put cookers, ovens and hobs rated above 2 kW on their own dedicated radial circuit. For large open-plan areas it is often better to use two ring circuits or a mix of ring and radial circuits.',
+      'Appendix 15 of BS 7671 (which supports Regulation 433.1.204) notes that, historically, a limit of 100 m² of floor area has been adopted for a ring final circuit. It is informative guidance, not a hard regulatory limit — but exceeding it increases the cable length and therefore the R1+R2 and Zs values, which may compromise automatic disconnection of supply. Appendix 15 also advises designers to locate socket outlets to provide reasonable sharing of the load around the ring, not to supply immersion heaters or comprehensive electric space heating from the ring, and to connect cookers, ovens and hobs with a rated power exceeding 2 kW on their own dedicated radial circuit. For large open-plan areas it is often better to use two ring circuits or a mix of ring and radial circuits.',
   },
   {
     question: 'Do I need a dedicated circuit for a dishwasher or washing machine?',
     answer:
-      'BS 7671 does not specifically require dedicated circuits for dishwashers or washing machines in domestic premises. These appliances are typically connected via a 13A plug to a socket on the ring final circuit. However, there are practical reasons to consider a dedicated circuit: a faulty appliance trips only its own circuit (not the entire ring); the appliance earth leakage does not contribute to accumulated leakage on the shared RCD; and the RCBO type can be matched to the appliance (Type A or Type F for inverter-driven washing machines). Whether a dedicated circuit is provided depends on the client brief, the budget, and the installation design. For new installations, providing dedicated RCBO-protected circuits for major appliances is considered best practice.',
+      'BS 7671 does not specifically require dedicated circuits for dishwashers or washing machines in domestic premises. These appliances are typically connected via a 13 A plug to a socket on the ring final circuit. However, there are practical reasons to consider a dedicated circuit: a faulty appliance trips only its own circuit (not the entire ring); the appliance earth leakage does not contribute to accumulated leakage on the shared RCD; and the RCBO type can be matched to the appliance (Type A or Type F for inverter-driven washing machines). Whether a dedicated circuit is provided depends on the client brief, the budget, and the installation design. For new installations, providing dedicated RCBO-protected circuits for major appliances is considered best practice.',
   },
   {
     question: 'How does circuit division affect RCD arrangements?',
     answer:
-      'Regulation 314.1(d) requires the division of circuits to reduce the possibility of unwanted tripping of RCDs due to excessive protective conductor (PE) currents that are not due to a fault. This directly influences how circuits are distributed across RCDs in a split-load consumer unit, or whether individual RCBOs are used. If too many circuits share a single RCD, the accumulated standing earth leakage from all the connected equipment may approach the 30mA trip threshold, causing nuisance tripping. The solution is to limit the number of circuits per RCD or to use individual RCBOs. This is one of the strongest practical arguments for RCBO boards in modern installations.',
+      'Regulation 314.1(d) requires the division of circuits to reduce the possibility of unwanted tripping of RCDs due to excessive protective conductor (PE) currents that are not due to a fault, and Regulation 531.3.2 is where that turns into a number. Indent (c) requires that the accumulation of protective conductor currents and/or earth leakage currents downstream of an RCD is not more than 30% of the rated residual operating current — so for a 30 mA RCD the design ceiling is 9 mA, not 30 mA. That is far tighter than most people assume, and a handful of modern appliances will reach it. Indent (a) requires subdivision of circuits with individual associated RCDs, and indent (b) specifically highlights the use of RCBOs for individual final circuits in residential premises; both cross-refer to Section 314. Note also that a 30 mA RCD may operate at any residual current above 50% of its rating (15 mA), so the 30% figure is a design margin, not a coincidence.',
+  },
+  {
+    question: 'What RCD type should each circuit have?',
+    answer:
+      'Regulation 531.3.3 lists RCD Types AC, A, F and B, and states that RCD Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — examples given are electric heating appliances and simple filament lighting, neither containing electronic components. In a modern dwelling almost nothing meets that description, so Type A is the practical minimum for general socket-outlet and lighting circuits. Type F adds tripping for composite residual currents and suits line-to-neutral circuits supplying frequency-inverter appliances such as washing machines. Type B is for loads that can produce smooth DC residual current. Selecting the type is part of the circuit division decision, because the load determines both which RCD is suitable and how many circuits can share one.',
   },
 ];
 
@@ -94,7 +114,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/regulation-418-supplementary-protection',
     title: 'Additional RCD Protection',
-    description: '30mA RCD requirements, RCD types, and how circuit division affects nuisance tripping.',
+    description:
+      '30 mA RCD requirements, RCD types, and how circuit division affects nuisance tripping.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -138,10 +159,65 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          sets out the requirements for dividing an electrical installation into circuits. This is
-          the foundation of circuit design — it determines how many circuits the installation needs,
-          what type of circuits to use, and how to arrange them to provide safe and reliable
-          operation.
+          is printed under the heading <em>Division of installation</em>. It sits in Chapter 31,
+          Part 3 (Assessment of General Characteristics), and runs to four regulations. Each one
+          does a different job:
+        </p>
+        <div className={cardCn}>
+          <div className="overflow-x-auto">
+            <table className="w-full text-white text-sm">
+              <thead>
+                <tr className="border-b border-white/20">
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">
+                    Regulation
+                  </th>
+                  <th className="text-left py-2 font-semibold">What it requires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className={numCellCn}>314.1</td>
+                  <td className={cellCn}>
+                    Every installation shall be divided into circuits, as necessary, to achieve six
+                    objectives, items (a) to (f).
+                  </td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={numCellCn}>314.2</td>
+                  <td className={cellCn}>
+                    Separate circuits for parts of the installation that need to be separately
+                    controlled, unaffected by the failure of other circuits.
+                  </td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={numCellCn}>314.3</td>
+                  <td className={cellCn}>
+                    The number of final circuits, and points per circuit, shall facilitate
+                    compliance with Chapter 43, Chapter 46, Section 537 and Chapter 52.
+                  </td>
+                </tr>
+                <tr>
+                  <td className={numCellCn}>314.4</td>
+                  <td className={cellCn}>
+                    Each final circuit connected to a separate way in a distribution board, and
+                    wired electrically separately from every other final circuit.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h3 className="text-base font-semibold text-white mt-6 mb-2">
+          To prevent indirect energising of a circuit, what must be done?
+        </h3>
+        <p>
+          Regulation 314.1(f) sets the objective — prevent the indirect energising of a circuit
+          intended to be isolated — and Regulation 314.4 says what must actually be done about it.
+          Where an installation comprises more than one final circuit, each final circuit shall be
+          connected to a separate way in a distribution board, and the wiring of each final circuit
+          shall be electrically separate from that of every other final circuit. On site that means
+          no borrowed neutrals, no two circuits sharing a cable, and no arrangement in which
+          isolating one way at the board leaves conductors in that circuit live from another way.
         </p>
         <p>
           Circuit division is not just about calculating cable sizes and protective device ratings.
@@ -149,11 +225,6 @@ const sections = [
           maintenance, provides operational flexibility, and minimises nuisance tripping. A
           well-designed circuit arrangement means a fault on one circuit does not plunge the house
           into darkness, does not disable the fire alarm, and does not defrost the freezer.
-        </p>
-        <p>
-          This guide covers the regulatory requirements, the practical decisions (ring vs radial,
-          how many circuits, what goes on each), and design approaches for both domestic and
-          commercial installations.
         </p>
       </>
     ),
@@ -168,14 +239,14 @@ const sections = [
           necessary, to achieve six objectives. The regulation lists them as items (a) to (f), and a
           compliant design must satisfy each one that is relevant to the installation:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(a)</span>
               <span>
                 <strong>Avoid danger and minimise inconvenience</strong> in the event of a fault. A
-                single circuit feeding the whole installation is not acceptable — a fault must not be
-                allowed to disable everything at once.
+                single circuit feeding the whole installation is not acceptable — a fault must not
+                be allowed to disable everything at once.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -189,7 +260,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(c)</span>
               <span>
-                <strong>Take account of hazards arising from the failure of a single circuit</strong>{' '}
+                <strong>
+                  Take account of hazards arising from the failure of a single circuit
+                </strong>{' '}
                 such as a lighting circuit. This is the regulatory basis for keeping lighting
                 separate from sockets and for dedicating critical circuits (fire alarm, emergency
                 lighting).
@@ -198,9 +271,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(d)</span>
               <span>
-                <strong>Reduce the possibility of unwanted tripping of RCDs</strong> due to excessive
-                protective conductor (PE) currents not due to a fault. This drives the choice between
-                split-load RCD boards and individual RCBO boards.
+                <strong>Reduce the possibility of unwanted tripping of RCDs</strong> due to
+                excessive protective conductor (PE) currents not due to a fault. This drives the
+                choice between split-load RCD boards and individual RCBO boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,7 +287,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="text-yellow-400 font-bold mt-0.5 shrink-0 w-6">(f)</span>
               <span>
-                <strong>Prevent the indirect energising of a circuit intended to be isolated</strong>{' '}
+                <strong>
+                  Prevent the indirect energising of a circuit intended to be isolated
+                </strong>{' '}
                 — supported by Regulation 314.4, which requires each final circuit to be wired
                 electrically separately from every other final circuit.
               </span>
@@ -232,9 +307,9 @@ const sections = [
         <p>
           The remaining regulations in Section 314 turn the broad objectives of 314.1 into concrete
           design rules. It is worth getting the numbering right, because each one means something
-          different:
+          different — here they are in full:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span className="text-yellow-400 font-bold mt-0.5 shrink-0 whitespace-nowrap">
@@ -266,48 +341,57 @@ const sections = [
                 Where an installation comprises more than one final circuit, each final circuit
                 shall be connected to a separate way in a distribution board, and the wiring of each
                 final circuit shall be electrically separate from that of every other final circuit,
-                to prevent the indirect energising of a circuit intended to be isolated.
+                so as to prevent the indirect energising of a final circuit intended to be isolated.
               </span>
             </li>
           </ul>
         </div>
+        <h3 className="text-base font-semibold text-white mt-6 mb-2">
+          Which loads get their own circuit, and on whose authority
+        </h3>
         <p>
-          In practice, Regulation 314.2 is the one that drives the everyday separation decisions
-          below — the situations where giving a load its own circuit is not optional:
+          Section 314 is a set of objectives, not a shopping list of circuits, so it is worth being
+          precise about where each everyday separation rule actually comes from:
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Lighting vs power</strong> — lighting and socket-outlet circuits must be on
-                separate protective devices. A fault on a socket circuit must not extinguish the
-                lighting. This is the most fundamental circuit separation in any installation.
-              </span>
+            <li>
+              <strong>Safety services</strong> — the one hard requirement. Regulation 560.7.1 states
+              that, except where the recommendations of other safety standards apply, circuits of
+              safety services shall be independent of other circuits. Its note explains why: an
+              electrical fault, intervention or modification in one system must not affect the
+              correct functioning of the other. Fire alarm and emergency lighting circuits get their
+              own way at the board, and 560.7.2 keeps them out of locations exposed to fire risk
+              (BE2) except as that regulation permits.
             </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Safety services</strong> — fire alarm systems, emergency lighting, and smoke
-                detection must be on dedicated circuits, separate from all other loads. These
-                circuits must not be affected by faults elsewhere in the installation.
-              </span>
+            <li>
+              <strong>Lighting and power</strong> — not a prohibition, an objective. Regulation
+              314.1(c) requires the design to take account of hazards arising from the failure of a
+              single circuit, such as a lighting circuit, and 314.2 requires separate circuits for
+              parts that need separate control. Put together, a design that leaves occupants in the
+              dark when a socket circuit trips does not meet 314.1(c). Separate protective devices
+              for lighting and sockets are how competent designers discharge that duty.
             </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>High-current dedicated loads</strong> — equipment with high current demand
-                (cooker, electric shower, immersion heater, EV charger) must have dedicated
-                circuits. Sharing a circuit between a high-demand load and other equipment causes
-                voltage fluctuations and nuisance tripping.
-              </span>
+            <li>
+              <strong>Cookers, ovens and hobs above 2 kW</strong> — Appendix 15 advises connecting
+              them on their own dedicated radial circuit, and advises against supplying immersion
+              heaters or comprehensive electric space heating from a ring final circuit. That is
+              informative guidance supporting Regulation 433.1.204, but it is the reason those loads
+              come off the ring.
+            </li>
+            <li>
+              <strong>Showers, EV chargers and other high-current loads</strong> — no regulation
+              names them individually. They end up on dedicated circuits because 433.1.1 (Ib ≤ In ≤
+              Iz) and the voltage drop and Zs limits cannot be met any other way once the load is
+              added to a shared circuit.
             </li>
           </ul>
         </div>
         <p>
-          The regulation does not prescribe exactly how to divide circuits — it sets the objectives
-          (avoid danger, minimise inconvenience) and leaves the specific design to the competent
-          electrician. This is where professional judgement and design skill are essential.
+          Section 314 does not prescribe exactly how to divide circuits — it sets the objectives and
+          leaves the specific design to the competent electrician. That is a feature, not a gap: it
+          is also why an inspector can record a division of circuits as unsatisfactory without
+          pointing at a numeric limit.
         </p>
       </>
     ),
@@ -319,82 +403,100 @@ const sections = [
       <>
         <p>
           Each circuit must be designed to carry the maximum demand of the connected load. The
-          protective device rating and cable size are selected based on the design current (Ib) of
-          the circuit — the maximum current expected in normal operation.
+          protective device rating and cable size are selected from the design current (Ib) of the
+          circuit, and Regulation 433.1.1 sets the coordination that follows: Ib ≤ In ≤ Iz.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-white mb-3">Typical Circuit Design Currents (Domestic)</h4>
+        <div className={cardCn}>
+          <h4 className="font-semibold text-white mb-3">
+            Typical domestic circuit design currents
+          </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-white text-sm">
               <thead>
                 <tr className="border-b border-white/20">
-                  <th className="text-left py-2 pr-4">Circuit</th>
-                  <th className="text-left py-2 pr-4">Design Current</th>
-                  <th className="text-left py-2 pr-4">MCB Rating</th>
-                  <th className="text-left py-2">Cable Size</th>
+                  <th className="text-left py-2 pr-4 font-semibold">Circuit</th>
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">
+                    Design current
+                  </th>
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">Device</th>
+                  <th className="text-left py-2 font-semibold whitespace-nowrap">Cable</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Ring final circuit (sockets)</td>
-                  <td className="py-2 pr-4">Varies (diversity)</td>
-                  <td className="py-2 pr-4">32A</td>
-                  <td className="py-2">2.5mm sq</td>
+                  <td className={cellCn}>Ring final circuit (sockets)</td>
+                  <td className={cellCn}>Varies — diversity applies</td>
+                  <td className={numCellCn}>32 A</td>
+                  <td className={numCellCn}>2.5 mm²</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">20A radial (sockets)</td>
-                  <td className="py-2 pr-4">Up to 20A</td>
-                  <td className="py-2 pr-4">20A</td>
-                  <td className="py-2">2.5mm sq</td>
+                  <td className={cellCn}>Radial (sockets)</td>
+                  <td className={cellCn}>Up to 20 A</td>
+                  <td className={numCellCn}>20 A</td>
+                  <td className={numCellCn}>2.5 mm²</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Lighting circuit</td>
-                  <td className="py-2 pr-4">Up to 6A</td>
-                  <td className="py-2 pr-4">6A</td>
-                  <td className="py-2">1.5mm sq</td>
+                  <td className={cellCn}>Lighting</td>
+                  <td className={cellCn}>Up to 6 A</td>
+                  <td className={numCellCn}>6 A</td>
+                  <td className={numCellCn}>1.5 mm²</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Cooker (12kW)</td>
-                  <td className="py-2 pr-4">Approx 30A (with diversity)</td>
-                  <td className="py-2 pr-4">32A</td>
-                  <td className="py-2">6.0mm sq</td>
+                  <td className={cellCn}>Cooker, 12 kW</td>
+                  <td className={cellCn}>≈ 28 A after diversity (52 A connected)</td>
+                  <td className={numCellCn}>32 A</td>
+                  <td className={numCellCn}>6 mm²</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Electric shower (9.5kW)</td>
-                  <td className="py-2 pr-4">Approx 41A</td>
-                  <td className="py-2 pr-4">45A</td>
-                  <td className="py-2">10.0mm sq</td>
+                  <td className={cellCn}>Electric shower, 9.5 kW</td>
+                  <td className={cellCn}>≈ 41 A</td>
+                  <td className={numCellCn}>45 A</td>
+                  <td className={numCellCn}>10 mm²</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Immersion heater (3kW)</td>
-                  <td className="py-2 pr-4">Approx 13A</td>
-                  <td className="py-2 pr-4">16A</td>
-                  <td className="py-2">2.5mm sq</td>
+                  <td className={cellCn}>Immersion heater, 3 kW</td>
+                  <td className={cellCn}>≈ 13 A</td>
+                  <td className={numCellCn}>16 A</td>
+                  <td className={numCellCn}>2.5 mm²</td>
                 </tr>
                 <tr>
-                  <td className="py-2 pr-4">EV charger (7.4kW)</td>
-                  <td className="py-2 pr-4">Approx 32A</td>
-                  <td className="py-2 pr-4">32A</td>
-                  <td className="py-2">6.0mm sq</td>
+                  <td className={cellCn}>EV charger, 7.4 kW</td>
+                  <td className={cellCn}>≈ 32 A</td>
+                  <td className={numCellCn}>32 A</td>
+                  <td className={numCellCn}>6 mm²</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="text-white text-xs mt-3">
-            Cable sizes assume standard installation method (clipped direct or enclosed in conduit).
-            Always verify using the{' '}
+            Currents are at 230 V. Cable sizes are the usual starting point, not an answer — the
+            current-carrying capacity that matters is the tabulated Iz for the actual reference
+            method, after the rating factors for ambient temperature, grouping and thermal
+            insulation. Verify every circuit with the{' '}
             <SEOInternalLink href="/tools/cable-sizing-calculator">
               cable sizing calculator
             </SEOInternalLink>{' '}
-            with the actual installation method, cable run length, and derating factors.
+            using the real installation method, run length and rating factors.
           </p>
         </div>
+        <h3 className="text-base font-semibold text-white mt-6 mb-2">
+          Diversity applies to circuits too, not just to the main supply
+        </h3>
         <p>
-          Diversity is applied to the total installation demand (at the main switch and supply
-          level), not to individual circuit design. Each circuit must be designed to carry its full
-          maximum demand — diversity is used when calculating the total demand on the main supply to
-          determine the supply cable size and main fuse rating. For dedicated high-demand circuits,
-          see our detailed sizing guides for the{' '}
+          A common misreading is that diversity belongs only at the origin. Regulation 311.1 says
+          otherwise: in determining the maximum demand of an installation <em>or part thereof</em>,
+          diversity may be taken into account — and Part 2 defines diversity in the same terms, as a
+          means of determining maximum demand for an installation or part thereof, taking account of
+          usage patterns. The cooker row above is exactly that. The On-Site Guide method takes the
+          first 10 A of the appliance&apos;s rated current in full, adds 30% of the remainder, and
+          adds a further 5 A if a socket-outlet is incorporated in the control unit. A 12 kW cooker
+          draws roughly 52 A connected, which becomes about 28 A of design current — which is why a
+          32 A device is normal on a 12 kW cooker and a 52 A one is not.
+        </p>
+        <p>
+          Diversity is a design allowance, not a get-out. Once assessed, the circuit must still
+          satisfy Ib ≤ In ≤ Iz, the voltage drop limit and the Zs limit for its disconnection time.
+          For the dedicated high-demand circuits, see the sizing guides for the{' '}
           <SEOInternalLink href="/guides/cable-size-for-cooker-circuit">
             cooker circuit
           </SEOInternalLink>
@@ -418,82 +520,110 @@ const sections = [
           UK electricians. Both are equally compliant with BS 7671 — the choice depends on the
           application, cable routing, and floor area.
         </p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <CircuitBoard className="w-5 h-5 text-blue-400" />
-              Ring Final Circuit
-            </h3>
-            <div className="text-white text-sm leading-relaxed space-y-2">
-              <p>
-                Cable runs in a ring from the consumer unit, around the socket outlets, and back to
-                the consumer unit. Both ends of the line, neutral, and earth are connected to the
-                same terminals.
-              </p>
-              <p>
-                <strong>Protection:</strong> 30A or 32A overcurrent device (Appendix 15)
-              </p>
-              <p>
-                <strong>Cable:</strong> 2.5mm sq (copper, twin and earth)
-              </p>
-              <p>
-                <strong>Floor area:</strong> historically limited to 100 sq m (Appendix 15)
-              </p>
-              <p>
-                <strong>Advantages:</strong> Lower Zs at mid-point (halved impedance), lower voltage
-                drop, can supply multiple 13A sockets over a large area
-              </p>
-              <p>
-                <strong>Use when:</strong> Multiple general-purpose socket outlets serving a room or
-                area up to 100 sq m
-              </p>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <CircuitBoard className="w-5 h-5 text-green-400" />
-              Radial Circuit
-            </h3>
-            <div className="text-white text-sm leading-relaxed space-y-2">
-              <p>
-                Cable runs from the consumer unit to the load(s) in a single direction. No return
-                path to the consumer unit — the cable terminates at the last point on the circuit.
-              </p>
-              <p>
-                <strong>Protection:</strong> Varies (e.g. 20A socket radial, or matched to the load)
-              </p>
-              <p>
-                <strong>Cable:</strong> Sized for the design current and length
-              </p>
-              <p>
-                <strong>Floor area:</strong> a 20A/2.5mm sq socket radial historically limited to 50
-                sq m (Appendix 15, Figure 15B)
-              </p>
-              <p>
-                <strong>Advantages:</strong> Simpler cable routing, ideal for dedicated loads, no
-                ring continuity issues
-              </p>
-              <p>
-                <strong>Use when:</strong> Dedicated load (cooker, shower, EV charger), small area,
-                or where ring routing is impractical
-              </p>
-            </div>
+        <div className={cardCn}>
+          <div className="overflow-x-auto">
+            <table className="w-full text-white text-sm">
+              <thead>
+                <tr className="border-b border-white/20">
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap"></th>
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">
+                    Ring final circuit
+                  </th>
+                  <th className="text-left py-2 font-semibold whitespace-nowrap">Radial circuit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className={cellCn}>
+                    <strong>Arrangement</strong>
+                  </td>
+                  <td className={cellCn}>
+                    Starts and finishes at the distribution board, both ends of line, neutral and
+                    cpc on the same terminals
+                  </td>
+                  <td className={cellCn}>
+                    Starts at the distribution board and terminates at the last point — no return
+                    leg
+                  </td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={cellCn}>
+                    <strong>Protective device</strong>
+                  </td>
+                  <td className={cellCn}>
+                    30 A or 32 A, to BS 88 series, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN
+                    61009-1 (Reg 433.1.204)
+                  </td>
+                  <td className={cellCn}>
+                    Matched to the load — 20 A for a general socket radial, or sized to the
+                    appliance
+                  </td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={cellCn}>
+                    <strong>Minimum conductor</strong>
+                  </td>
+                  <td className={cellCn}>
+                    2.5 mm² copper line and neutral; 1.5 mm² for two-core mineral insulated cable to
+                    BS EN 60702-1. Iz not less than 20 A
+                  </td>
+                  <td className={cellCn}>Sized for the design current, route length and Zs</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={cellCn}>
+                    <strong>Floor area served</strong>
+                  </td>
+                  <td className={cellCn}>Historically 100 m² (Appendix 15)</td>
+                  <td className={cellCn}>
+                    Historically 50 m² for a 20 A circuit in 2.5 mm² (Appendix 15, Figure 15B)
+                  </td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className={cellCn}>
+                    <strong>Why choose it</strong>
+                  </td>
+                  <td className={cellCn}>
+                    Two parallel legs, so lower R1+R2, lower Zs and lower volt drop over the same
+                    route
+                  </td>
+                  <td className={cellCn}>
+                    Simpler routing, no ring continuity to prove, and the only sensible arrangement
+                    for a single fixed load
+                  </td>
+                </tr>
+                <tr>
+                  <td className={cellCn}>
+                    <strong>Use when</strong>
+                  </td>
+                  <td className={cellCn}>
+                    Multiple general-purpose socket outlets spread across an area, and the cable can
+                    be run as a continuous ring
+                  </td>
+                  <td className={cellCn}>
+                    A dedicated load, a small area, or a route where a ring is impractical
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-            <p className="text-white text-sm">
-              <strong>Common mistake:</strong> Spurs on ring circuits are often misunderstood. Per
-              Appendix 15, an unfused spur run in 2.5mm sq cable should feed one single or one twin
-              socket-outlet only, and may be connected to the ring at a socket-outlet, at a junction
-              box, or at the origin of the circuit in the distribution board. If you need to supply
-              several additional sockets, either extend the ring itself or use a fused connection
-              unit (max 13A fuse) to create a fused spur — the number of sockets a fused spur can
-              feed then depends on the load, having taken diversity into account.
-            </p>
-          </div>
-        </div>
+        <h3 className="text-base font-semibold text-white mt-6 mb-2">
+          Spurs: what Appendix 15 actually says
+        </h3>
+        <p>
+          Spurs are the part of Appendix 15 that gets misquoted most. An unfused spur run in 2.5 mm²
+          cable should feed one single or one twin socket-outlet only, and may be connected at the
+          origin of the circuit in the distribution board as well as out on the ring. Where the
+          connection is made in a junction box, the box should be to BS EN 60670-22 and — if it has
+          screw terminals — it must remain accessible for inspection, testing and maintenance under
+          Regulation 526.3, or use maintenance-free terminals instead.
+        </p>
+        <p>
+          If several extra socket outlets are needed, either extend the ring itself or fit a fused
+          connection unit to BS 1363-4 with a maximum 13 A fuse. The number of socket outlets a
+          fused spur can supply is not fixed by a rule: Appendix 15 makes it dependent on the load
+          characteristics, having taken diversity into account.
+        </p>
       </>
     ),
   },
@@ -503,50 +633,62 @@ const sections = [
     content: (
       <>
         <p>
-          Beyond ring vs radial, the design must consider which loads go on which circuits. Proper
-          circuit separation ensures safety, reliability, and ease of maintenance.
+          Beyond ring vs radial, the design has to decide which loads go on which circuits. These
+          are the conventions that discharge the 314.1 objectives in a normal dwelling.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Lighting circuits</strong> — must be separate from socket-outlet circuits.
-                Provide at least two lighting circuits in any dwelling (upstairs and downstairs, or
-                front and back). This ensures that a fault on one lighting circuit does not leave
-                the entire property in darkness. Each lighting circuit is typically protected by a
-                6A MCB with 1.5mm sq cable.
-              </span>
+            <li>
+              <strong>Lighting</strong> — kept off the socket-outlet circuits, and split into at
+              least two circuits in a dwelling (upstairs and downstairs, or front and back), so that
+              one fault cannot darken the whole property. Typically a 6 A device on 1.5 mm². The
+              driver is 314.1(c), not a numbered prohibition.
             </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Socket-outlet circuits</strong> — provide at least two ring or radial
-                circuits for general socket outlets. Distribute them so that a trip on one circuit
-                does not remove all socket power (for example, one circuit for upstairs, one for
-                downstairs; or one for the kitchen/utility and one for living areas).
-              </span>
+            <li>
+              <strong>Socket outlets</strong> — at least two general circuits, arranged so a trip on
+              one does not remove all socket power. Upstairs and downstairs, or kitchen and utility
+              on one and living areas on the other.
             </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Dedicated circuits</strong> — the following loads should always have
-                dedicated circuits: cooker, electric shower, immersion heater, electric vehicle
-                charger, heat pump, fire alarm system, security system, and any other load exceeding
-                2kW or requiring specific control.
-              </span>
+            <li>
+              <strong>Dedicated circuits</strong> — cooker, electric shower, immersion heater, EV
+              charger and heat pump. Appendix 15 specifically puts cookers, ovens and hobs above 2
+              kW on their own radial and keeps immersion heaters and comprehensive electric space
+              heating off the ring.
             </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Outdoor circuits</strong> — outdoor socket outlets, garden lighting, and
-                outbuilding supplies should be on separate circuits from indoor circuits. This
-                limits the impact of outdoor faults (which are more common due to weather exposure)
-                on the indoor installation.
-              </span>
+            <li>
+              <strong>Safety services</strong> — fire alarm and emergency lighting circuits are
+              independent of other circuits under Regulation 560.7.1, and under 560.7.2 must not
+              pass through locations exposed to fire risk (BE2) except as that regulation permits.
+            </li>
+            <li>
+              <strong>Outdoor circuits</strong> — outdoor socket outlets, garden lighting and
+              outbuilding supplies on their own circuits. Weather-exposed faults and higher standing
+              leakage are exactly the accumulation that Regulation 531.3.2 asks you to keep off a
+              shared RCD.
             </li>
           </ul>
         </div>
+        <h3 className="text-base font-semibold text-white mt-6 mb-2">
+          Circuit division and RCD selection are the same decision
+        </h3>
+        <p>
+          Regulation 531.3.2 requires RCDs to be selected and erected so as to limit the risk of
+          unwanted tripping, and lists what must be considered: subdivision of circuits with
+          individual associated RCDs, the use of RCBOs for individual final circuits in residential
+          premises, and a hard ceiling — the accumulation of protective conductor currents and earth
+          leakage currents downstream of the RCD shall be not more than 30% of the rated residual
+          operating current. On a 30 mA device that is 9 mA across everything downstream. Both of
+          the first two indents cross-refer back to Section 314, which is why the circuit schedule
+          and the board layout have to be designed together.
+        </p>
+        <p>
+          Type matters as much as count. Regulation 531.3.3 restricts RCD Type AC to fixed equipment
+          where it is known that the load current contains no DC components — the examples given are
+          electric heating appliances and simple filament lighting with no electronic components. A
+          modern dwelling has almost nothing that qualifies, so Type A is the working minimum, with
+          Type F where a frequency-inverter appliance sits on a line-to-neutral circuit and Type B
+          where smooth DC residual current is possible.
+        </p>
       </>
     ),
   },
@@ -560,85 +702,49 @@ const sections = [
           starting point — adjust based on the specific property, customer requirements, and
           installed equipment.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-white mb-3">Typical Domestic Circuit Schedule</h4>
+        <div className={cardCn}>
+          <h4 className="font-semibold text-white mb-3">Typical domestic circuit schedule</h4>
           <div className="overflow-x-auto">
             <table className="w-full text-white text-sm">
               <thead>
                 <tr className="border-b border-white/20">
-                  <th className="text-left py-2 pr-4">Circuit</th>
-                  <th className="text-left py-2 pr-4">Type</th>
-                  <th className="text-left py-2 pr-4">Protection</th>
-                  <th className="text-left py-2">Cable</th>
+                  <th className="text-left py-2 pr-4 font-semibold">Circuit</th>
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">Type</th>
+                  <th className="text-left py-2 pr-4 font-semibold whitespace-nowrap">
+                    Protection
+                  </th>
+                  <th className="text-left py-2 font-semibold whitespace-nowrap">Cable</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Downstairs sockets</td>
-                  <td className="py-2 pr-4">Ring</td>
-                  <td className="py-2 pr-4">32A RCBO Type A</td>
-                  <td className="py-2">2.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Upstairs sockets</td>
-                  <td className="py-2 pr-4">Ring</td>
-                  <td className="py-2 pr-4">32A RCBO Type A</td>
-                  <td className="py-2">2.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Kitchen sockets</td>
-                  <td className="py-2 pr-4">Ring</td>
-                  <td className="py-2 pr-4">32A RCBO Type A</td>
-                  <td className="py-2">2.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Downstairs lighting</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">6A RCBO Type A</td>
-                  <td className="py-2">1.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Upstairs lighting</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">6A RCBO Type A</td>
-                  <td className="py-2">1.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Cooker</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">32A RCBO Type A</td>
-                  <td className="py-2">6.0mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Electric shower</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">45A RCBO Type A</td>
-                  <td className="py-2">10.0mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Immersion heater</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">16A RCBO Type A</td>
-                  <td className="py-2">2.5mm sq</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-2 pr-4">Smoke/fire alarm</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">6A MCB Type B</td>
-                  <td className="py-2">1.5mm sq</td>
-                </tr>
-                <tr>
-                  <td className="py-2 pr-4">Outdoor socket</td>
-                  <td className="py-2 pr-4">Radial</td>
-                  <td className="py-2 pr-4">20A RCBO Type A</td>
-                  <td className="py-2">2.5mm sq</td>
-                </tr>
+                {[
+                  ['Downstairs sockets', 'Ring', '32 A RCBO Type A', '2.5 mm\u00b2'],
+                  ['Upstairs sockets', 'Ring', '32 A RCBO Type A', '2.5 mm\u00b2'],
+                  ['Kitchen sockets', 'Ring', '32 A RCBO Type A', '2.5 mm\u00b2'],
+                  ['Downstairs lighting', 'Radial', '6 A RCBO Type A', '1.5 mm\u00b2'],
+                  ['Upstairs lighting', 'Radial', '6 A RCBO Type A', '1.5 mm\u00b2'],
+                  ['Cooker', 'Radial', '32 A RCBO Type A', '6 mm\u00b2'],
+                  ['Electric shower', 'Radial', '45 A RCBO Type A', '10 mm\u00b2'],
+                  ['Immersion heater', 'Radial', '16 A RCBO Type A', '2.5 mm\u00b2'],
+                  ['Smoke and fire alarm', 'Radial', '6 A MCB Type B', '1.5 mm\u00b2'],
+                  ['Outdoor socket', 'Radial', '20 A RCBO Type A', '2.5 mm\u00b2'],
+                ].map(([circuit, type, protection, cable], i) => (
+                  <tr key={circuit} className={i < 9 ? 'border-b border-white/10' : undefined}>
+                    <td className={cellCn}>{circuit}</td>
+                    <td className={numCellCn}>{type}</td>
+                    <td className={numCellCn}>{protection}</td>
+                    <td className={numCellCn}>{cable}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
           <p className="text-white text-xs mt-3">
-            Add dedicated circuits for EV charger (32A/6.0mm sq), heat pump, or other high-demand
-            equipment as required. Consumer unit should accommodate spare ways for future additions.
+            Ten circuits, ten ways, and every one of them individually isolatable \u2014 which is
+            what Regulation 314.4 is asking for. Add dedicated ways for an EV charger, heat pump or
+            other high-demand equipment, and leave spare ways for future additions. The fire alarm
+            circuit is shown on its own way because Regulation 560.7.1 requires circuits of safety
+            services to be independent of other circuits.
           </p>
         </div>
         <SEOAppBridge
@@ -659,54 +765,44 @@ const sections = [
           considerations for three-phase supplies, larger load diversity, and more complex circuit
           arrangements.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Phase balancing</strong> — in three-phase installations, circuits must be
-                distributed across the three phases to balance the load. Unbalanced loads cause
-                excessive neutral current and voltage imbalance. Allocate single-phase circuits
-                approximately equally across L1, L2, and L3.
-              </span>
+            <li>
+              <strong>Phase balancing</strong> — in three-phase installations, circuits are
+              distributed across the three phases to balance the load. Unbalanced loads cause
+              excessive neutral current and voltage imbalance, so allocate single-phase circuits
+              approximately equally across L1, L2 and L3.
             </li>
-            <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Sub-distribution</strong> — large commercial installations use
-                sub-distribution boards to reduce cable lengths and improve discrimination. The main
-                distribution board supplies sub-boards via sub-main cables, and the sub-boards
-                supply final circuits. Each sub-board serves a defined area or function.
-              </span>
+            <li>
+              <strong>Sub-distribution</strong> — large commercial installations use
+              sub-distribution boards to reduce cable lengths and improve discrimination. The main
+              board supplies sub-boards via sub-mains, and the sub-boards supply final circuits.
+              Each sub-board serves a defined area or function.
             </li>
-            <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Essential and non-essential loads</strong> — commercial installations often
-                separate essential loads (servers, fire alarms, emergency lighting, security) from
-                non-essential loads (general lighting, socket outlets, HVAC). Essential loads may be
-                supplied from a UPS or generator, requiring separate distribution.
-              </span>
+            <li>
+              <strong>Essential and non-essential loads</strong> — essential loads (servers, fire
+              alarms, emergency lighting, security) are separated from non-essential loads (general
+              lighting, socket outlets, HVAC). Essential loads may be supplied from a UPS or
+              generator, requiring separate distribution, and safety services carry the independence
+              requirement of Regulation 560.7.1 in their own right.
             </li>
-            <li className="flex items-start gap-3">
-              <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Mechanical plant circuits</strong> — HVAC equipment, lifts, and other
-                mechanical plant require dedicated circuits with specific protective devices. These
-                circuits often use Type C or D MCBs due to the inductive loads and high starting
-                currents.
-              </span>
+            <li>
+              <strong>Mechanical plant circuits</strong> — HVAC equipment, lifts and other
+              mechanical plant take dedicated circuits. Type C or D devices are common because the
+              inrush of an inductive load will trip a Type B on a healthy circuit.
             </li>
           </ul>
         </div>
         <p>
           The design process for a commercial installation typically starts with a load schedule
-          (listing every item of equipment and its power demand), followed by a diversity assessment
-          (applying allowances for diversity — BS 7671 defines diversity but the worked allowance
-          tables sit in the IET On-Site Guide and Guidance Note 1), then circuit allocation
-          (deciding which loads go on which circuits), and finally cable sizing and protective
-          device selection for each circuit. Current-carrying capacity and voltage drop figures for
-          that final step come from BS 7671 Appendix 4. The{' '}
+          (every item of equipment and its power demand), followed by a diversity assessment, then
+          circuit allocation (deciding which loads go on which circuits), and finally cable sizing
+          and protective device selection for each circuit. BS 7671 permits the diversity step at
+          Regulation 311.1 and defines the term in Part 2, but the worked allowance tables are in
+          the IET On-Site Guide (Appendix A, Table A2) — which itself cautions that the values are
+          guidance only, are not recently updated, and that appropriate allowances call for special
+          knowledge and experience. Current-carrying capacity and voltage drop figures for the final
+          step come from BS 7671 Appendix 4. The{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -725,9 +821,9 @@ export default function Regulation314CircuitDivisionPage() {
   return (
     <GuideTemplate
       title="Regulation 314 | Division of Installation Into Circuits"
-      description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions…"
+      description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"
@@ -737,7 +833,7 @@ export default function Regulation314CircuitDivisionPage() {
         answer:
           'Regulation 314 requires every installation to be divided into circuits. Regulation 314.1 lists six objectives (a–f): avoid danger and inconvenience, allow safe testing and maintenance, limit the effect of a single circuit failing, reduce unwanted RCD tripping, mitigate electromagnetic disturbance, and prevent indirect energising. Regulations 314.2 to 314.4 then require separate circuits for parts needing separate control, set the number of circuits and points, and keep each final circuit electrically separate.',
         detail:
-          'Section 314 sits in Part 3 (Assessment of General Characteristics) of BS 7671:2018+A4:2026 and is the foundation of circuit design.',
+          'Section 314 is headed "Division of installation" and sits in Chapter 31 of Part 3 (Assessment of General Characteristics) of BS 7671:2018+A4:2026.',
       }}
       heroTitle={
         <>

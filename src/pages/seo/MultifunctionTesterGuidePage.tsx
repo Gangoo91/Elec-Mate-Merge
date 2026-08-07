@@ -656,7 +656,7 @@ export default function MultifunctionTesterGuidePage() {
   return (
     <GuideTemplate
       title="Multifunction Tester Guide | How to Use MFT"
-      description="Complete guide to using a multifunction tester (MFT) for electrical testing. Test modes, lead connections, calibration, common instruments (Megger…"
+      description="Complete guide to using a multifunction tester (MFT) for electrical testing. Test modes, lead connections, calibration, common instruments (Megger."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

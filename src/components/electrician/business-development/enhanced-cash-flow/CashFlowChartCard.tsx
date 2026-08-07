@@ -49,9 +49,9 @@ export const CashFlowChartCard = ({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           {chartType === 'line' ? (
-            <TrendingUp className="h-5 w-5 text-blue-400" />
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
           ) : (
-            <BarChart3 className="h-5 w-5 text-blue-400" />
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
           )}
           <h3 className="font-semibold text-white text-sm sm:text-base">
             {chartType === 'line' ? 'Cash Flow Trends' : 'Monthly Net Flow'}
@@ -65,7 +65,7 @@ export const CashFlowChartCard = ({
             className={cn(
               'p-1.5 rounded-md transition-colors',
               chartType === 'line'
-                ? 'bg-blue-500/20 text-blue-400'
+                ? 'bg-white/[0.04] text-elec-yellow'
                 : 'text-white hover:text-white'
             )}
           >
@@ -76,7 +76,7 @@ export const CashFlowChartCard = ({
             className={cn(
               'p-1.5 rounded-md transition-colors',
               chartType === 'bar'
-                ? 'bg-blue-500/20 text-blue-400'
+                ? 'bg-white/[0.04] text-elec-yellow'
                 : 'text-white hover:text-white'
             )}
           >

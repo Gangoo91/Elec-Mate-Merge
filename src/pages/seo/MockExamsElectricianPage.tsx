@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { MockExamIndexLinks } from '@/components/seo/MockExamIndexLinks';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   BookOpen,
@@ -555,6 +556,7 @@ export default function MockExamsElectricianPage() {
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Electrician Mock Exams"
       relatedPages={relatedPages}
+      embeddedTool={<MockExamIndexLinks />}
       ctaHeading="Start practising with unlimited mock exams today"
       ctaSubheading="Join 1,000+ UK electricians preparing for their exams with Elec-Mate. AI-powered mock exams that adapt to your weak areas, flashcards with spaced repetition, and structured study courses. 7-day free trial, cancel anytime."
     />

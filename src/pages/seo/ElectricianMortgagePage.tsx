@@ -546,7 +546,7 @@ export default function ElectricianMortgagePage() {
     <GuideTemplate
       localArea="Finance"
       title="Electrician Mortgage UK | Getting a Mortgage as"
-      description="Complete guide to getting a mortgage as a self-employed electrician in the UK — SA302 requirements, 2-3 years of accounts, contractor day rate mortgages…"
+      description="Complete guide to getting a mortgage as a self-employed electrician in the UK — SA302 requirements, 2-3 years of accounts, contractor day rate mortgages."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -30,7 +30,8 @@ export const zsValuesContent: CalculatorContent = {
   ],
 
   workedExample: {
-    scenario: '32 A Type B MCB on a TN system, final circuit with socket-outlets (0.4 s disconnection).',
+    scenario:
+      '32 A Type B MCB on a TN system, final circuit with socket-outlets (0.4 s disconnection).',
     inputs: [
       { label: 'Device', value: '32 A Type B' },
       { label: 'Disconnection time', value: '0.4 s' },
@@ -52,7 +53,10 @@ export const zsValuesContent: CalculatorContent = {
       clauseText:
         'The maximum disconnection times in Table 41.1 shall apply to final circuits rated up to 63 A with one or more socket-outlets, and to final circuits rated up to 32 A supplying only fixed connected current-using equipment.',
       tableRefs: ['Table 41.1', 'Table 41.2', 'Table 41.3', 'Table 41.4'],
-      sourceFacetIds: ['9f714882-23a7-4f4a-8b27-08d21783177c', 'c60b151a-198d-4d1e-ba04-b5750c64a253'],
+      sourceFacetIds: [
+        '9f714882-23a7-4f4a-8b27-08d21783177c',
+        'c60b151a-198d-4d1e-ba04-b5750c64a253',
+      ],
     },
   ],
 

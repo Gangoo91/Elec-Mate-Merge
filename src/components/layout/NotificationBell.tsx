@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUserNotifications, type UserNotification } from '@/hooks/useUserNotifications';
-import { formatDistanceToNow, isToday, isYesterday } from 'date-fns';
+import { isToday, isYesterday } from 'date-fns';
 import { cn } from '@/lib/utils';
 // Shared category → colour/label source (same as the /notifications page).
-import { categoryTone as toneFor } from '@/lib/notificationCategory';
+import { categoryTone as toneFor, compactAge } from '@/lib/notificationCategory';
 
 const bucketOf = (iso: string): 'Today' | 'Yesterday' | 'Earlier' => {
   const d = new Date(iso);
@@ -83,7 +83,7 @@ export default function NotificationBell() {
         <SheetContent
           side={isMobile ? 'bottom' : 'right'}
           className={cn(
-            'p-0 flex flex-col bg-background border-white/10',
+            'flex flex-col p-0 bg-[hsl(0_0%_9%)] border-white/[0.14]',
             isMobile ? 'h-[88vh] rounded-t-2xl' : 'w-[420px] max-w-[420px]'
           )}
         >
@@ -105,7 +105,7 @@ export default function NotificationBell() {
               {unreadCount > 0 && (
                 <button
                   onClick={() => markAllAsRead.mutate()}
-                  className="ml-auto inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-[12px] font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                  className="ml-auto inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-[12px] font-semibold text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
                 >
                   <CheckCheck className="h-3.5 w-3.5" />
                   Mark all read
@@ -118,7 +118,7 @@ export default function NotificationBell() {
             {isLoading ? (
               <div className="p-4 space-y-2.5">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-16 rounded-xl bg-white/[0.04] animate-pulse" />
+                  <div key={i} className="h-16 animate-pulse rounded-xl bg-white/[0.07]" />
                 ))}
               </div>
             ) : notifications.length === 0 ? (
@@ -127,7 +127,7 @@ export default function NotificationBell() {
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   <p className="text-[15px] font-semibold text-white">You're all caught up</p>
                 </div>
-                <p className="text-[13px] text-white/60 max-w-xs leading-relaxed">
+                <p className="max-w-xs text-[13px] leading-relaxed text-white">
                   Payments, jobs, certificate deadlines and team updates all land here.
                 </p>
               </div>
@@ -135,12 +135,12 @@ export default function NotificationBell() {
               <div>
                 {groups.map((group) => (
                   <div key={group.label}>
-                    <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm px-4 pt-3.5 pb-2">
-                      <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/50">
+                    <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-4 pb-2 pt-3.5 backdrop-blur-sm">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
                         {group.label}
                       </p>
                     </div>
-                    <div className="divide-y divide-white/[0.05]">
+                    <div className="divide-y divide-white/[0.09]">
                       {group.items.map((n) => {
                         const tone = toneFor(n.type, n.title, n.message);
                         return (
@@ -148,17 +148,21 @@ export default function NotificationBell() {
                             key={n.id}
                             onClick={() => handleOpen(n)}
                             className={cn(
-                              'group relative flex gap-3 pl-4 pr-3 py-3.5 cursor-pointer transition-colors',
-                              'hover:bg-white/[0.03] active:bg-white/[0.05] touch-manipulation',
-                              !n.is_read && 'bg-elec-yellow/[0.05]'
+                              'group relative flex cursor-pointer gap-3 py-3.5 pl-4 pr-3 transition-colors',
+                              'hover:bg-white/[0.06] active:bg-white/[0.09] touch-manipulation',
+                              // Unread is a BRIGHTER SURFACE, not a volt tint.
+                              // `bg-elec-yellow/[0.05]` over near-black is the
+                              // muddy-brown case the card recipe warns about —
+                              // and at 5% it was invisible anyway, so it cost
+                              // the mud and bought nothing.
+                              !n.is_read && 'bg-white/[0.055]'
                             )}
                           >
                             {/* Accent — brighter when unread, tone colour when read */}
                             <span
                               className={cn(
-                                'absolute left-0 inset-y-0 w-[3px]',
-                                !n.is_read ? 'bg-elec-yellow' : 'opacity-40',
-                                n.is_read && tone.bar
+                                'absolute inset-y-0 left-0 w-[3px]',
+                                !n.is_read ? 'bg-elec-yellow' : tone.bar
                               )}
                               aria-hidden
                             />
@@ -172,9 +176,9 @@ export default function NotificationBell() {
                                 >
                                   {tone.label}
                                 </span>
-                                <span className="text-white/25 text-[10px]">·</span>
-                                <span className="text-[11px] text-white/45 tabular-nums">
-                                  {formatDistanceToNow(new Date(n.created_at), { addSuffix: true })}
+                                <span className="text-[10px] text-white">·</span>
+                                <span className="text-[11px] tabular-nums text-white">
+                                  {compactAge(n.created_at)}
                                 </span>
                                 {!n.is_read && (
                                   <span className="ml-auto h-2 w-2 rounded-full bg-elec-yellow shrink-0" />
@@ -183,12 +187,12 @@ export default function NotificationBell() {
                               <p
                                 className={cn(
                                   'mt-1 text-[14px] leading-snug',
-                                  n.is_read ? 'font-medium text-white/90' : 'font-semibold text-white'
+                                  n.is_read ? 'font-medium text-white' : 'font-semibold text-white'
                                 )}
                               >
                                 {n.title}
                               </p>
-                              <p className="mt-0.5 text-[12.5px] text-white/70 leading-snug line-clamp-2">
+                              <p className="mt-0.5 line-clamp-2 text-[12.5px] leading-snug text-white">
                                 {n.message}
                               </p>
                             </div>
@@ -198,7 +202,7 @@ export default function NotificationBell() {
                                 deleteNotification.mutate(n.id);
                               }}
                               aria-label="Dismiss"
-                              className="self-start mt-0.5 opacity-0 group-hover:opacity-100 sm:transition-opacity text-white/40 hover:text-white/80 p-1.5 touch-manipulation"
+                              className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center self-start rounded-lg text-white opacity-60 transition-opacity touch-manipulation hover:bg-white/[0.08] hover:opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                             </button>

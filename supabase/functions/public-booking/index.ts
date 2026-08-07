@@ -108,7 +108,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select(
-      'full_name, scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates'
+      'full_name, scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates, scheduling_slot_minutes'
     )
     .eq('id', electricianId)
     .single();
@@ -134,6 +134,19 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
       start?: string;
       end?: string;
     }>) || [];
+  /*
+   * Slot length.
+   *
+   * Was the module constant SLOT_DURATION_MINUTES, which fixed every booking
+   * at an hour — on the public booking page AND on the post-acceptance quote
+   * slot picker, since ELE-955 routed both through this function. Guarded
+   * against a bad value so a null or a zero can never produce a zero-length
+   * slot and an infinite walk below.
+   */
+  const slotMinutes: number =
+    Number(profile.scheduling_slot_minutes) > 0
+      ? Number(profile.scheduling_slot_minutes)
+      : SLOT_DURATION_MINUTES;
 
   // company_profiles is keyed by user_id, not id (long-standing bug
   // returning null here — preserved profile lookup above is what
@@ -158,13 +171,24 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     .lte('start_at', dateTo.toISOString())
     .order('start_at', { ascending: true });
 
-  // Find available 1-hour slots using the electrician's working hours.
+  // Find available slots using the electrician's working hours.
   // Skips: days with no window set (closed days), past times, days
   // already at their daily booking cap, and any blackout windows.
   const slots: Array<{ date: string; start: string; end: string }> = [];
-  const durationMs = SLOT_DURATION_MINUTES * 60 * 1000;
+  const durationMs = slotMinutes * 60 * 1000;
   const bufferMs = bufferMinutes * 60 * 1000;
   const minNoticeMs = minNoticeHours * 60 * 60 * 1000;
+
+  /**
+   * The next point on the slot grid at or after `ms`.
+   *
+   * `anchorMs` is the day's opening time, so slots always line up with when
+   * the electrician actually starts rather than with midnight.
+   */
+  const alignUp = (ms: number, anchorMs: number, stepMs: number): number => {
+    if (ms <= anchorMs) return anchorMs;
+    return anchorMs + Math.ceil((ms - anchorMs) / stepMs) * stepMs;
+  };
 
   const isBlackedOut = (dateStr: string): boolean => {
     if (!Array.isArray(blackoutDates) || blackoutDates.length === 0) return false;
@@ -195,12 +219,19 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     // If even the day end is before the notice cutoff, skip the day
     if (effectiveStart >= dayEndMs) continue;
 
-    // Round cursor up to the next whole hour
-    const cursorDate = new Date(effectiveStart);
-    if (cursorDate.getUTCMinutes() > 0 || cursorDate.getUTCSeconds() > 0) {
-      cursorDate.setUTCHours(cursorDate.getUTCHours() + 1, 0, 0, 0);
-    }
-    let cursor = cursorDate.getTime();
+    /*
+     * Align the cursor to the slot grid, not to the clock hour.
+     *
+     * This rounded up to the next whole hour. That was invisible while every
+     * slot was 60 minutes and every working day opened on the hour, but it
+     * silently breaks any other length: with 30-minute slots the cursor would
+     * still land only on the hour, so choosing 30 would have produced exactly
+     * the same slots as 60 and the setting would have looked dead.
+     *
+     * The grid is anchored to the day's opening time, so a 90-minute day from
+     * 08:00 offers 08:00, 09:30, 11:00 — not 08:00, 09:00, 10:00.
+     */
+    let cursor = alignUp(effectiveStart, dayStartMs, durationMs);
 
     // Get events for this specific day. Pad each event by the
     // configured buffer on either side so the sparky has travel time
@@ -234,13 +265,8 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
         });
         cursor += durationMs;
       }
-      cursor = Math.max(cursor, event.end);
-      // Round up to the next whole hour after event ends
-      const postEvent = new Date(cursor);
-      if (postEvent.getUTCMinutes() > 0) {
-        postEvent.setUTCHours(postEvent.getUTCHours() + 1, 0, 0, 0);
-        cursor = postEvent.getTime();
-      }
+      // Back onto the slot grid after the event, for the same reason.
+      cursor = alignUp(Math.max(cursor, event.end), dayStartMs, durationMs);
     }
 
     // Remaining slots after last event
@@ -256,6 +282,25 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     slots.push(...daySlots);
   }
 
+  /*
+   * Days the electrician works, independent of what is already in the diary.
+   *
+   * The quote-acceptance flow asks for a START DATE rather than an hour, so it
+   * needs the days that are plausible at all — a working day, not a holiday.
+   * It deliberately ignores existing events and the daily cap: those govern
+   * whether a one-hour slot is free, which has no bearing on whether a client
+   * may ask to begin a multi-week job that week. The electrician confirms.
+   */
+  const openDates: string[] = [];
+  for (let d = new Date(dateFrom); d < dateTo; d.setUTCDate(d.getUTCDate() + 1)) {
+    const dateStr = d.toISOString().split('T')[0];
+    if (!workingHours[DAY_KEYS[d.getUTCDay()]]) continue;
+    if (isBlackedOut(dateStr)) continue;
+    // Respect the same notice period the slot walker applies.
+    if (new Date(`${dateStr}T23:59:59Z`).getTime() < now.getTime() + minNoticeMs) continue;
+    openDates.push(dateStr);
+  }
+
   return new Response(
     JSON.stringify({
       electrician: {
@@ -263,13 +308,206 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
         company: companyProfile?.company_name || null,
       },
       slots,
+      open_dates: openDates,
+      slot_minutes: slotMinutes,
     }),
     { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
   );
 }
 
+/**
+ * A client asking to start the work on a given date.
+ *
+ * ELE-1513. Deliberately NOT a booking: no calendar event is written and
+ * nothing is reserved, because the client cannot know how long the job takes
+ * and neither, reliably, can we — 63% of accepted quotes carry no hour-priced
+ * labour at all, and where hours exist they are a cost measure rather than
+ * elapsed time. The electrician confirms, and that confirmation is what puts
+ * anything in the diary.
+ */
+async function handleStartDateRequest(
+  // deno-lint-ignore no-explicit-any
+  body: any,
+  supabase: ReturnType<typeof createClient>
+) {
+  const {
+    electrician_id,
+    quote_id,
+    requested_date,
+    time_preference,
+    client_name,
+    client_phone,
+    client_email,
+    client_address,
+    job_description,
+  } = body;
+
+  if (!electrician_id || !quote_id || !requested_date || !client_name || !client_phone) {
+    return new Response(
+      JSON.stringify({
+        error:
+          'electrician_id, quote_id, requested_date, client_name and client_phone are required',
+      }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(requested_date)) {
+    return new Response(JSON.stringify({ error: 'Invalid date format (expected YYYY-MM-DD)' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Today is allowed; yesterday is not. Compared on the date string so a
+  // request made at 23:50 for "tomorrow" is not rejected by a UTC rollover.
+  const todayStr = new Date().toISOString().split('T')[0];
+  if (requested_date < todayStr) {
+    return new Response(JSON.stringify({ error: 'That date has already passed' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const preference = ['morning', 'afternoon', 'flexible'].includes(time_preference)
+    ? time_preference
+    : 'flexible';
+
+  /*
+   * Scoped to the electrician as well as the quote.
+   *
+   * `quote_id` arrives from a public page and is attacker-controlled. Without
+   * the user_id predicate, a valid quote id belonging to someone else would
+   * let anyone write a start date onto that stranger's quote.
+   */
+  const { data: quote, error: quoteError } = await supabase
+    .from('quotes')
+    .update({
+      requested_start_date: requested_date,
+      requested_time_preference: preference,
+      requested_at: new Date().toISOString(),
+    })
+    .eq('id', quote_id)
+    .eq('user_id', electrician_id)
+    .select('quote_number, customer_id')
+    .maybeSingle();
+
+  if (quoteError) throw new Error(`Could not save the request: ${quoteError.message}`);
+  if (!quote) {
+    return new Response(JSON.stringify({ error: 'Quote not found' }), {
+      status: 404,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const prettyDate = new Date(`${requested_date}T12:00:00Z`).toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
+  const prefLabel =
+    preference === 'morning' ? 'morning' : preference === 'afternoon' ? 'afternoon' : 'any time';
+  const ref = quote.quote_number ? `Quote ${quote.quote_number}` : 'Quote';
+
+  // Everything below is non-critical: the request itself is already saved and
+  // must not fail because a notification did.
+  try {
+    await supabase.from('spark_tasks').insert({
+      user_id: electrician_id,
+      title: `Confirm start date: ${client_name} — ${prettyDate}`,
+      details: [
+        `${ref}`,
+        `Client would like to start: ${prettyDate} (${prefLabel})`,
+        '',
+        `Client: ${client_name}`,
+        `Phone: ${client_phone}`,
+        client_email ? `Email: ${client_email}` : null,
+        client_address ? `Address: ${client_address}` : null,
+        job_description ? `\n${job_description}` : null,
+        '',
+        'Requested from the quote acceptance page. Nothing is in the diary until you confirm.',
+      ]
+        .filter(Boolean)
+        .join('\n'),
+      status: 'open',
+      // Higher than a plain booking: a client is waiting on an answer.
+      priority: 'high',
+      due_at: new Date(`${requested_date}T09:00:00Z`).toISOString(),
+      customer_id: quote.customer_id || null,
+      tags: ['booking', 'start-date-request'],
+    });
+  } catch {
+    /* non-critical */
+  }
+
+  try {
+    await supabase.from('user_notifications').insert({
+      user_id: electrician_id,
+      type: 'booking_received',
+      title: `Start date requested — ${client_name}`,
+      message: `${ref}: ${client_name} would like to start ${prettyDate} (${prefLabel}). Confirm to put it in your diary.`,
+      link: '/electrician/quotes',
+      metadata: {
+        quote_id,
+        quote_number: quote.quote_number,
+        requested_date,
+        time_preference: preference,
+        client_name,
+        client_phone,
+        client_email: client_email || null,
+      },
+      is_read: false,
+    });
+  } catch {
+    /* non-critical */
+  }
+
+  try {
+    await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+      },
+      body: JSON.stringify({
+        userId: electrician_id,
+        title: `📅 ${ref} — start date requested`,
+        body: `${client_name} · ${prettyDate} · ${prefLabel}`,
+        type: 'default',
+        data: {
+          deep_link: '/electrician/quotes',
+          category: 'start_date_requested',
+          quote_id,
+        },
+        // A client is sitting waiting to hear back.
+        skipQuietHours: true,
+      }),
+    });
+  } catch {
+    /* non-critical */
+  }
+
+  return new Response(
+    JSON.stringify({
+      requested: true,
+      quote_number: quote.quote_number,
+      requested_date,
+      time_preference: preference,
+    }),
+    { status: 201, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+  );
+}
+
 async function handleBookSlot(req: Request, supabase: ReturnType<typeof createClient>) {
   const body = await req.json();
+
+  // A client accepting a quote asks for a start date instead of reserving an
+  // hour. Different enough — no calendar event, nothing to double-book — to
+  // be its own path rather than a flag threaded through the booking one.
+  if (body?.mode === 'request') {
+    return await handleStartDateRequest(body, supabase);
+  }
+
   const {
     electrician_id,
     date,
@@ -313,9 +551,29 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     });
   }
 
+  /*
+   * The slot length this electrician offers.
+   *
+   * Read again here rather than trusted from the request: the client is a
+   * public page and must not be able to name its own duration. Without this
+   * lookup a 90-minute slot would be written as a 60-minute event, and the
+   * overlap check above would then happily let a second client book into the
+   * half hour that was really still occupied.
+   */
+  const { data: slotProfile } = await supabase
+    .from('profiles')
+    .select('scheduling_slot_minutes')
+    .eq('id', electrician_id)
+    .maybeSingle();
+
+  const bookedMinutes =
+    Number(slotProfile?.scheduling_slot_minutes) > 0
+      ? Number(slotProfile.scheduling_slot_minutes)
+      : SLOT_DURATION_MINUTES;
+
   // Don't allow booking in the past
   const startAt = new Date(`${date}T${start_time}:00Z`);
-  const endAt = new Date(startAt.getTime() + SLOT_DURATION_MINUTES * 60 * 1000);
+  const endAt = new Date(startAt.getTime() + bookedMinutes * 60 * 1000);
 
   if (startAt.getTime() < Date.now()) {
     return new Response(JSON.stringify({ error: 'Cannot book a time slot in the past' }), {

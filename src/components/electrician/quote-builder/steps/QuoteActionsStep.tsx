@@ -9,7 +9,6 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
-import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import { useReferralPrompt } from '@/hooks/useReferralPrompt';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -22,7 +21,7 @@ interface QuoteActionsStepProps {
 const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
   const [loading, setLoading] = useState(false);
   const [publicLink, setPublicLink] = useState<string>('');
-  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
+  const { recordPositiveAction } = useAppReview();
   const {
     recordPositiveAction: recordReferralAction,
     showReferralPrompt,
@@ -223,11 +222,6 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
           )}
         </CardContent>
       </Card>
-      <AppReviewPromptSheet
-        open={showReviewPrompt}
-        onRate={handleRate}
-        onDismiss={handleDismiss}
-      />
       <ReferralShareSheet
         open={showReferralPrompt}
         onOpenChange={(open) => !open && handleReferralClose()}

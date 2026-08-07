@@ -644,7 +644,7 @@ export default function NotifiableWorkGuidePage() {
   return (
     <GuideTemplate
       title="Notifiable Electrical Work | Part P Guide UK"
-      description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes…"
+      description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes."
       datePublished="2025-04-10"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

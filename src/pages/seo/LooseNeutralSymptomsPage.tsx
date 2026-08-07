@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Is a loose neutral dangerous?',
     answer:
-      'Yes, a loose neutral can be very dangerous. On a single-phase supply, a loose neutral causes voltage fluctuations that can damage appliances and, in extreme cases, cause a fire at the point of the loose connection due to arcing and overheating. On a TN-C-S (PME) earthing system, the danger is even greater: the combined neutral-earth conductor (PEN conductor) provides both the neutral return path and the main earthing terminal. If this conductor becomes open-circuit (a "lost neutral"), the voltage on the earthing system rises to a potentially lethal level. Exposed metalwork connected to the earthing system — taps, radiators, gas pipes, boiler casings — can become live at up to 230V with respect to true earth. This is why BS 7671 requires additional earthing precautions (main bonding, supplementary bonding) on TN-C-S systems and why a lost neutral on PME is treated as a life-threatening emergency.',
+      'Yes, a loose neutral can be very dangerous. On a single-phase supply, a loose neutral causes voltage fluctuations that can damage appliances and, in extreme cases, cause a fire at the point of the loose connection due to arcing and overheating. On a TN-C-S (PME) earthing system, the danger is even greater: the combined neutral-earth conductor (PEN conductor) provides both the neutral return path and the main earthing terminal. If this conductor becomes open-circuit (a "lost neutral"), the voltage on the earthing system rises to a potentially lethal level. Exposed metalwork connected to the earthing system — taps, radiators, gas pipes, boiler casings — can become live at up to 230V with respect to true earth. This is why BS 7671 requires extraneous-conductive-parts to be connected to the main earthing terminal by protective bonding conductors (Regulation 411.3.1.2) and, where PME conditions apply, requires the main protective bonding conductor to be sized against the PEN conductor of the supply using Table 54.8 (Regulation 544.1.1) — and why a lost neutral on PME is treated as a life-threatening emergency.',
   },
   {
     question: 'Who is responsible for fixing a loose neutral — the electrician or the DNO?',
@@ -320,9 +320,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Neutral carries fault current:</strong> On a TN-C-S system, the neutral
-                conductor serves as both the neutral return path and the earth fault path. A lost
-                neutral means earth faults may not be cleared properly by protective devices.
+                <strong>Neutral carries fault current:</strong> On a TN-C-S system, the supply-side
+                PEN conductor serves as both the neutral return path and the earth fault path. A
+                lost neutral means earth faults may not be cleared properly by protective devices.
               </span>
             </li>
           </ul>
@@ -370,10 +370,16 @@ const sections = [
         <p>
           This is why{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-          requires specific precautions for TN-C-S systems, including main protective bonding to
-          gas, water, and oil pipework (Regulation 544.1.2) and restrictions on using PME earthing
-          for certain installations such as petrol stations, caravan parks, and construction sites
-          where the risk is considered too high.
+          requires specific precautions where PME conditions apply. Extraneous-conductive-parts —
+          metallic water and gas installation pipes, other metallic pipework and ducting, central
+          heating systems, and exposed metallic structural parts — must be connected to the main
+          earthing terminal by protective bonding conductors (Regulation 411.3.1.2), and under PME
+          the main protective bonding conductor must be sized against the PEN conductor of the
+          supply using Table 54.8 (Regulation 544.1.1), which gives a larger conductor than a TN-S
+          or TT supply would need. BS 7671 also restricts the use of a PME earthing facility in
+          higher-risk locations — caravan and camping parks (Regulation 708.553.1.14), construction
+          sites (Regulation 704.411.3.1), marinas and boats (Regulation 709.411.4), and outdoor EV
+          charging points (Regulation 722.411.4.1).
         </p>
       </>
     ),
@@ -551,11 +557,14 @@ const sections = [
               <p className="text-white/80 text-sm">
                 Arcing at a loose or degraded neutral terminal is precisely the scenario that arc
                 fault detection devices (AFDDs) are designed to detect. BS 7671:2018+A4:2026
-                Regulation 421.1.7 recommends the installation of AFDDs in AC final circuits of a
-                fixed installation to mitigate the risk of fire due to arc fault currents. Where an
-                installation has experienced arcing at a neutral connection and does not already
-                have AFDD protection, this is an appropriate Code C3 improvement recommendation on
-                an EICR — noting the existing regulatory recommendation and the arc event history.
+                Regulation 421.1.7 requires AFDDs conforming to BS EN 62606 on single-phase AC final
+                circuits supplying socket-outlets with a rated current not exceeding 32 A in high
+                rise residential buildings (HRRBs), houses in multiple occupation (HMOs),
+                purpose-built student accommodation and care homes. For all other premises the same
+                regulation recommends AFDDs on those circuits. Where an installation has experienced
+                arcing at a neutral connection and does not already have AFDD protection, this is an
+                appropriate Code C3 improvement recommendation on an EICR — noting the applicable
+                requirement or recommendation and the arc event history.
               </p>
             </div>
           </div>
@@ -577,8 +586,8 @@ const sections = [
 export default function LooseNeutralSymptomsPage() {
   return (
     <GuideTemplate
-      title="Loose Neutral | Symptoms, Dangers & How to Fix"
-      description="Loose neutral symptoms: flickering lights, voltage fluctuations, tingling from metalwork, dim/bright cycle. How to diagnose, fix, and stay safe."
+      title="Loose Neutral Symptoms: Flicker, 200-260V + Fix"
+      description="Flickering lights and 200-260V swings point to a loose neutral. Neutral-to-earth above 2-3V confirms it. How to trace the fault, fix it, or call the DNO."
       datePublished="2025-09-12"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

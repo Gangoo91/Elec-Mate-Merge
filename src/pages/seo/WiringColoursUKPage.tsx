@@ -20,7 +20,7 @@ export default function WiringColoursUKPage() {
   return (
     <GuideTemplate
       title="Wiring Colours UK | Cable Colour Codes Explained"
-      description="Complete guide to UK wiring colours. Current harmonised colours (brown, blue, green/yellow), old colours (red, black, green), three-phase identification…"
+      description="Complete guide to UK wiring colours. Current harmonised colours (brown, blue, green/yellow), old colours (red, black, green), three-phase identification."
       datePublished="2025-04-01"
       dateModified="2026-05-18"
       breadcrumbs={[

@@ -150,8 +150,8 @@ const StandardsReference = () => {
 
       <p className="text-[12px] text-white/55 leading-relaxed">
         These calculators are based on current UK electrical standards but should not replace
-        professional electrical design. Always consult qualified personnel for critical installations
-        and verify against the latest editions of relevant standards.
+        professional electrical design. Always consult qualified personnel for critical
+        installations and verify against the latest editions of relevant standards.
       </p>
     </div>
   );

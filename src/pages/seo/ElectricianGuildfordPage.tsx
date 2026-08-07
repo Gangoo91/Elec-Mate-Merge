@@ -469,7 +469,7 @@ export default function ElectricianGuildfordPage() {
       noindex={true}
       localArea="Guildford"
       title="Electrician in Guildford | Local Electricians 2026"
-      description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work…"
+      description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -307,8 +307,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Base hourly rate</strong> — either JIB rates (published annually) or your
-                own employment contracts. The JIB 2026 rate for an Approved Electrician is £20.12
-                per hour. For self-employed labour-only subcontractors, agree the rate before the
+                own employment contracts. The JIB National Standard rate for an Approved
+                Electrician, effective 5 January 2026, is £20.08 per hour (Transport Provided).
+                For self-employed labour-only subcontractors, agree the rate before the
                 job, ensure CIS deductions are applied (20 per cent for registered, 30 per cent for
                 unregistered), and issue a subcontract agreement.
               </span>
@@ -668,7 +669,7 @@ export default function TenderWritingElectricianPage() {
   return (
     <GuideTemplate
       title="How to Write Electrical Tenders UK | Winning Tender Guide"
-      description="How to price and write winning tenders for commercial electrical contracts. Prelims, labour rates, materials markup, programme, H&S documentation…"
+      description="How to price and write winning tenders for commercial electrical contracts. Prelims, labour rates, materials markup, programme, H&S documentation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

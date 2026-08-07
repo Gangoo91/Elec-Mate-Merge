@@ -712,7 +712,7 @@ export default function EICRLondonPage() {
   return (
     <GuideTemplate
       title="EICR London | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in London for 2026. Landlord legal requirements, London borough enforcement, Victorian wiring challenges, observation codes explained…"
+      description="EICR costs in London for 2026. Landlord legal requirements, London borough enforcement, Victorian wiring challenges, observation codes explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

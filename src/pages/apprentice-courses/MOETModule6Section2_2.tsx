@@ -43,7 +43,7 @@ const quickCheckQuestions = [
     options: [
       'A tabulated list of all connected loads showing their ratings, circuit references, cable sizes, and protective device details',
       'A scaled drawing of the physical layout of every cable tray across the building',
-      'A graphical representation of the switchgear symbols defined in BS EN 60617',
+      'A graphical representation of the switchgear symbols defined in IEC 60617',
       'A record of the periodic inspection and test results for the installation',
     ],
     correctIndex: 0,
@@ -204,7 +204,7 @@ const quizQuestions = [
     options: [
       'The connections within a single panel, terminal by terminal',
       'The simplified single-line overview of the whole distribution system',
-      'The graphical symbols for switchgear defined in BS EN 60617',
+      'The graphical symbols for switchgear defined in IEC 60617',
       'The cabling between separate items of equipment, with terminal references at each end',
     ],
     correctAnswer: 3,
@@ -342,7 +342,7 @@ const MOETModule6Section2_2 = () => {
           <div className="grid sm:grid-cols-2 gap-2">
             {[
               'Explain the purpose and conventions of single-line diagrams for power distribution',
-              'Interpret switchgear symbols and their ratings on SLDs to BS EN 60617',
+              'Interpret switchgear symbols and their ratings on SLDs to IEC 60617',
               'Trace power flow from supply source through distribution to loads',
               'Read and use load schedules as companion documents to SLDs',
               'Interpret interconnection wiring diagrams for cable routes between equipment',
@@ -381,7 +381,7 @@ const MOETModule6Section2_2 = () => {
             </p>
             <p>
               SLDs are prepared in accordance with BS EN 61082 (Preparation of documents used in
-              electrotechnology) and use symbols from BS EN 60617. The layout follows the power flow
+              electrotechnology) and use symbols from IEC 60617. The layout follows the power flow
               hierarchy: incoming supply at the top, flowing downward through each level of
               distribution to the loads at the bottom.
             </p>
@@ -743,7 +743,7 @@ const MOETModule6Section2_2 = () => {
                 <p className="font-medium text-white mb-1">Key Standards</p>
                 <ul className="space-y-0.5">
                   <li>BS EN 61082 — document preparation</li>
-                  <li>BS EN 60617 — graphical symbols</li>
+                  <li>IEC 60617 — graphical symbols</li>
                   <li>BS EN 81346 — reference designations</li>
                   <li>BS 7671 — wiring regulations</li>
                   <li>ST1426 — technician competence</li>

@@ -627,7 +627,7 @@ export default function ApprenticeToolboxGuidePage() {
   return (
     <GuideTemplate
       title="Apprentice Toolbox Guide | Essential Tools List UK"
-      description="Complete guide to essential tools for UK electrical apprentices. Hand tools, VDE insulated tools, test equipment, tool bag vs tool box, budget guide…"
+      description="Complete guide to essential tools for UK electrical apprentices. Hand tools, VDE insulated tools, test equipment, tool bag vs tool box, budget guide."
       datePublished="2025-09-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

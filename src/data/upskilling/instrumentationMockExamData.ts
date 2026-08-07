@@ -92,9 +92,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: 'Which type of temperature sensor generally provides the highest accuracy and stability?',
     options: [
       'RTD (Resistance Temperature Detector)',
-      'Thermocouple',
-      'Bimetallic strip',
-      'Thermistor',
+      'Thermocouple (Type K base-metal)',
+      'Bimetallic strip (dial gauge)',
+      'Thermistor (NTC bead type)',
     ],
     correctAnswer: 0,
     explanation:
@@ -1313,9 +1313,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     id: 75,
     question: 'What documentation is essential for instrument maintenance?',
     options: [
-      'Only the manufacturer original purchase invoice',
-      'Only the latest process flow diagram for the plant',
-      'Only the operator shift logs for the unit',
+      'Only the manufacturer\'s original purchase invoice',
+      'The latest process and instrumentation diagram alone',
+      'The operator shift logs kept for the unit',
       'Calibration certificates, maintenance records and configuration data',
     ],
     correctAnswer: 3,
@@ -1675,9 +1675,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What causes 'ground loops' in instrumentation systems?",
     options: [
       'Multiple earth connections at different potentials causing circulating current',
-      'The screen left unconnected at both ends of the cable',
-      'A burden resistor value set too high for the loop',
-      'Excessive damping configured within the transmitter',
+      'The cable screen left disconnected at both ends of the run',
+      'A burden resistor value set too high for the loop supply voltage',
+      'Excessive damping configured within the transmitter software',
     ],
     correctAnswer: 0,
     explanation:
@@ -1947,9 +1947,9 @@ export const instrumentationMockExamQuestions: StandardMockQuestion[] = [
     question: "What is 'purging' in instrumentation installations?",
     options: [
       'Introducing clean fluid to protect instruments from process contamination',
-      'Bleeding trapped air from a filled impulse line',
-      'Flushing a transmitter back to its zero reading',
-      'Venting a vessel to atmosphere before maintenance',
+      'Bleeding trapped air out of a filled impulse line',
+      'Flushing a transmitter back to its zero reading before use',
+      'Venting a vessel down to atmosphere before maintenance work',
     ],
     correctAnswer: 0,
     explanation:

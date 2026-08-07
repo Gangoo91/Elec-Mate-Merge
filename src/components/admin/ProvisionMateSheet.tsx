@@ -149,7 +149,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
             <SheetTitle className="text-white text-[18px] font-semibold tracking-tight">
               {picked ? 'Provision Mate' : 'Pick a user'}
             </SheetTitle>
-            <p className="text-[12.5px] text-white/60">
+            <p className="text-[12.5px] text-white">
               {picked
                 ? 'Confirm phone and role, then provision the agent.'
                 : 'Choose an existing profile to enable Mate for.'}
@@ -161,7 +161,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
             <>
               <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06]">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     autoFocus
                     placeholder="Search name, email, role…"
@@ -174,7 +174,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
               <div className="flex-1 overflow-y-auto">
                 {usersLoading ? (
                   <div className="flex items-center justify-center py-20">
-                    <Loader2 className="h-5 w-5 text-white/40 animate-spin" />
+                    <Loader2 className="h-5 w-5 text-white animate-spin" />
                   </div>
                 ) : filtered.length === 0 ? (
                   <EmptyState
@@ -222,7 +222,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
                       <div className="text-[14px] font-medium text-white truncate">
                         {picked.full_name ?? 'Unknown'}
                       </div>
-                      <div className="text-[12px] text-white/60 truncate">
+                      <div className="text-[12px] text-white truncate">
                         {picked.email ?? '—'}
                       </div>
                     </div>
@@ -232,7 +232,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
 
                 <div className="px-5 sm:px-6 space-y-4 pb-6">
                   <div>
-                    <label className="block text-[11px] font-semibold text-white/70 uppercase tracking-[0.14em] mb-1.5">
+                    <label className="block text-[11px] font-semibold text-white uppercase tracking-[0.14em] mb-1.5">
                       WhatsApp number (E.164)
                     </label>
                     <Input
@@ -254,7 +254,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-semibold text-white/70 uppercase tracking-[0.14em] mb-1.5">
+                    <label className="block text-[11px] font-semibold text-white uppercase tracking-[0.14em] mb-1.5">
                       Role
                     </label>
                     <Select value={role} onValueChange={setRole}>
@@ -269,9 +269,9 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
                     </Select>
                   </div>
 
-                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-[12.5px] text-white/70 leading-relaxed">
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-[12.5px] text-white leading-relaxed">
                     Provisioning will:
-                    <ul className="mt-2 space-y-1 list-disc list-inside text-white/80">
+                    <ul className="mt-2 space-y-1 list-disc list-inside text-white">
                       <li>Enable Business AI on the profile</li>
                       <li>Verify the phone and add to the routing table</li>
                       <li>Create the workspace, mint a 90-day JWT, bind WhatsApp</li>
@@ -285,7 +285,7 @@ export default function ProvisionMateSheet({ open, onOpenChange, onProvisioned }
                   variant="ghost"
                   onClick={handleClose}
                   disabled={submitting}
-                  className="text-white/70 hover:text-white touch-manipulation"
+                  className="text-white hover:text-white touch-manipulation"
                 >
                   Cancel
                 </Button>

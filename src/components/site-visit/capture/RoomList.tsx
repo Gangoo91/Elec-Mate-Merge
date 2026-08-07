@@ -42,12 +42,12 @@ export const RoomList = ({
     return (
       <div className="space-y-1.5">
         <div className="flex items-center justify-between mb-1">
-          <p className="text-[11.5px] font-medium text-white/65">Reorder Rooms</p>
+          <p className="text-[11.5px] font-medium text-white">Reorder Rooms</p>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setReorderMode(false)}
-            className="h-9 px-2.5 text-xs text-elec-yellow touch-manipulation"
+            className="h-11 px-3 text-[13px] font-semibold text-elec-yellow touch-manipulation"
           >
             <Check className="h-3.5 w-3.5 mr-1" />
             Done
@@ -63,7 +63,7 @@ export const RoomList = ({
             <button
               onClick={() => handleMoveUp(index)}
               disabled={index === 0}
-              className="h-9 w-9 flex items-center justify-center rounded-lg touch-manipulation active:bg-white/10 disabled:opacity-30"
+              className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:bg-white/10 disabled:opacity-30"
               aria-label="Move up"
             >
               <ChevronUp className="h-4 w-4 text-white" />
@@ -71,7 +71,7 @@ export const RoomList = ({
             <button
               onClick={() => handleMoveDown(index)}
               disabled={index >= rooms.length - 1}
-              className="h-9 w-9 flex items-center justify-center rounded-lg touch-manipulation active:bg-white/10 disabled:opacity-30"
+              className="h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation active:bg-white/10 disabled:opacity-30"
               aria-label="Move down"
             >
               <ChevronDown className="h-4 w-4 text-white" />
@@ -92,7 +92,7 @@ export const RoomList = ({
             'relative flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl border transition-all touch-manipulation min-h-[44px]',
             activeRoomId === room.id
               ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-              : 'border-white/[0.1] bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
+              : 'border-white/[0.1] bg-white/[0.04] text-white hover:bg-white/[0.08]'
           )}
         >
           <span className="text-sm font-medium whitespace-nowrap">{room.roomName}</span>

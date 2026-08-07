@@ -32,6 +32,9 @@ import { useToast } from '@/hooks/use-toast';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { getIrMaxForVoltage, isBlankReading } from '@/utils/irDefaults';
+import { buildCellWarnings } from '@/utils/cellWarnings';
+import { isRealCircuit } from '@/utils/validation/applicability';
+import type { ZsBasis } from '@/utils/autoRegChecker';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import EnhancedRegulationWarningDialog from '@/components/EnhancedRegulationWarningDialog';
 import CircuitDescriptionInput from '@/components/table-cells/CircuitDescriptionInput';
@@ -44,6 +47,17 @@ interface MobileHorizontalScrollTableRowProps {
   onDuplicate?: (id: string) => void;
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
+  /**
+   * Opens the Validate sheet on this circuit from a flagged cell.
+   *
+   * Mobile is where the schedule is actually filled in — on the board, on a
+   * phone. Leaving the flags desktop-only put the check where the electrician
+   * is not. Absent (the EIC schedule) means no flags render at all rather than
+   * flags that lead nowhere.
+   */
+  onOpenWarning?: (circuitId: string) => void;
+  zsBasis?: ZsBasis;
+  showChecks?: boolean;
   canMoveUp?: boolean;
   canMoveDown?: boolean;
 }
@@ -58,6 +72,9 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   canMoveUp = false,
   canMoveDown = false,
   earthingArrangement,
+  onOpenWarning,
+  zsBasis,
+  showChecks = true,
 }) => {
   // ELE-1438/1467 — same one-tap max fill as the desktop cells. This app is
   // used on a phone on site, which is exactly where retyping ">1049" twenty
@@ -78,9 +95,20 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   // ELE-1505 — without the earthing arrangement a TT circuit is judged against
   // the TN tables, so a normal electrode reading reads as a critical failure.
   const regulationCompliance = useMemo(
-    () => checkRegulationCompliance(result, earthingArrangement),
-    [result, earthingArrangement]
+    () => checkRegulationCompliance(result, earthingArrangement, zsBasis),
+    [result, earthingArrangement, zsBasis]
   );
+
+  /** Which cells the findings name — same lookup the desktop grid uses. */
+  const cellWarnings = useMemo(
+    () =>
+      showChecks && isRealCircuit(result)
+        ? buildCellWarnings(regulationCompliance.warnings)
+        : {},
+    [regulationCompliance, result, showChecks]
+  );
+
+  const openWarning = onOpenWarning ? () => onOpenWarning(result.id) : undefined;
 
   const { toast } = useToast();
 
@@ -204,6 +232,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.typeOfWiring}
+          onOpenWarning={openWarning}
           value={result.typeOfWiring || ''}
           onChange={(v) => onUpdate(result.id, 'typeOfWiring', v)}
           options={wiringTypeOptions}
@@ -215,6 +245,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.referenceMethod}
+          onOpenWarning={openWarning}
           value={result.referenceMethod || ''}
           onChange={(v) => onUpdate(result.id, 'referenceMethod', v)}
           options={referenceMethodOptions}
@@ -238,6 +270,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       {/* Conductor Details Group */}
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.liveSize}
+          onOpenWarning={openWarning}
           value={result.liveSize || ''}
           onChange={(v) => onUpdate(result.id, 'liveSize', v)}
           options={cableSizeOptions}
@@ -249,6 +283,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.cpcSize}
+          onOpenWarning={openWarning}
           value={result.cpcSize || ''}
           onChange={(v) => onUpdate(result.id, 'cpcSize', v)}
           options={cableSizeOptions}
@@ -262,6 +298,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       {/* Protection Group */}
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.bsStandard}
+          onOpenWarning={openWarning}
           value={result.bsStandard || ''}
           onChange={handleBsStandardChange}
           options={bsStandardOptions}
@@ -291,6 +329,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.protectiveDeviceRating}
+          onOpenWarning={openWarning}
           value={result.protectiveDeviceRating || ''}
           onChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
@@ -322,6 +362,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       {/* RCD Details Group */}
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.rcdBsStandard}
+          onOpenWarning={openWarning}
           value={result.rcdBsStandard || ''}
           onChange={(v) => onUpdate(result.id, 'rcdBsStandard', v)}
           options={rcdBsStandardOptions}
@@ -333,6 +375,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.rcdType}
+          onOpenWarning={openWarning}
           value={result.rcdType || ''}
           onChange={(v) => onUpdate(result.id, 'rcdType', v)}
           options={rcdTypeOptions}

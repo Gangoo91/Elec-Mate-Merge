@@ -1349,7 +1349,7 @@ export default function AdminTrials() {
                 <span className="font-semibold text-white tabular-nums">{flatUsers.length}</span> shown
                 {notEmailedCount > 0 && (
                   <>
-                    <span className="text-white/30 mx-2">&middot;</span>
+                    <span className="text-white mx-2">&middot;</span>
                     <span className="font-semibold text-elec-yellow tabular-nums">
                       {notEmailedCount}
                     </span>{' '}

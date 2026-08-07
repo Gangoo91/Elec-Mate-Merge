@@ -510,7 +510,7 @@ export default function ElectricalProjectHandoverPage() {
   return (
     <GuideTemplate
       title="Electrical Project Handover Guide UK 2026 | Documentation"
-      description="Complete guide to electrical project handover. EIC certificates, O&M manuals, as-built drawings, client walkthrough, warranty…"
+      description="Complete guide to electrical project handover. EIC certificates, O&M manuals, as-built drawings, client walkthrough, warranty."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

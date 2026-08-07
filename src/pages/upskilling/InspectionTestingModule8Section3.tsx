@@ -117,7 +117,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Column 30 records the manual test button operation of any AFDD installed on the circuit. The footnote on the schedule reads "Not all AFDDs have a test button" — so the column may legitimately be left blank or marked N/A on a circuit fitted with a test-button-less AFDD. The column was added at A4:2026 to align with the new Reg 421.1.7 AFDD requirement and item 4.23 of the Schedule of Inspection.',
+      'Column 30 records the manual test button operation of any AFDD installed on the circuit. The footnote on the schedule reads "Not all AFDDs have a test button" — so the column may legitimately be left blank or marked N/A on a circuit fitted with a test-button-less AFDD. The column was introduced by Amendment 2:2022 to align with the new Reg 421.1.7 AFDD requirement and item 4.23 of the Schedule of Inspection.',
   },
   {
     id: 4,
@@ -250,7 +250,7 @@ const InspectionTestingModule8Section3 = () => {
           <TLDR
             points={[
               'Two schedules work as a pair: the Schedule of Circuit Details holds the design data (columns 1-16 inc. column 12 max-permitted Zs); the Schedule of Test Results holds the measured values (columns 17-31 inc. column 28 RCD time and column 30 AFDD manual test).',
-              'The A4:2026 amendment renumbered and reorganised both schedules. Column 30 (AFDD manual test button operation) is new at A4 and pairs with item 4.23 of the Schedule of Inspection and Reg 421.1.7.',
+              'The A4:2026 amendment renumbered and reorganised both schedules. Column 30 (AFDD manual test button operation) is introduced by Amendment 2:2022 and pairs with item 4.23 of the Schedule of Inspection and Reg 421.1.7.',
               'Column 27 ("Maximum measured Zₛ (Ω)") records the live-test Zs at the furthest point of the circuit. It is judged against column 12 of the Schedule of Circuit Details ("Maximum permitted Zₛ"), not against BS 7671 Table 41.3 directly — column 12 may already incorporate a tighter design limit.',
               'Column 28 ("Disconnection time (ms)") records the longest RCD trip time at rated IΔn. The footnote ** clarifies: "RCD Effectiveness is verified using an alternating-current test at rated residual operating current (IΔn)" — that is the test that goes in column 28.',
               'Polarity (column 26) cannot be recorded as X on a schedule attached to an EIC — non-compliances must be corrected before the EIC is issued. X is permitted on an EICR schedule, where existing defects are the point.',
@@ -847,7 +847,7 @@ const InspectionTestingModule8Section3 = () => {
 
           <ConceptBlock
             title="Why column 30 was added at A4:2026"
-            plainEnglish="Reg 421.1.7 was introduced into A4:2026 recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits. The Schedule of Inspection gained item 4.23 (Confirmation of indication that AFDD(s) are operational, ref. 421.1.7; 532.6; 651.2(e)). The Schedule of Test Results gained column 30 (Manual test button operation) to record the functional test."
+            plainEnglish="Reg 421.1.7 was redrafted at Amendment 2:2022 recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits. The Schedule of Inspection gained item 4.23 (Confirmation of indication that AFDD(s) are operational, ref. 421.1.7; 532.6; 651.2(e)). The Schedule of Test Results gained column 30 (Manual test button operation) to record the functional test."
             onSite="The †† footnote — &ldquo;Not all AFDDs have a test button&rdquo; — is essential. The column may be left blank or marked N/A for a test-button-less device. That is a correct entry, not an oversight. What is not acceptable is leaving column 30 blank on a circuit where the AFDD does have a test button and you simply did not press it."
           >
             <p>

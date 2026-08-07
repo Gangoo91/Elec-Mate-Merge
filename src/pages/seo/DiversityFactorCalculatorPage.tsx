@@ -127,7 +127,7 @@ export default function DiversityFactorCalculatorPage() {
   useSEO({
     title: 'Diversity Factor Calculator | Maximum Demand BS 7671',
     description:
-      'Calculate diversity factors for electrical installations to BS 7671:2018+A4:2026. Reduce maximum demand calculations with IET-approved diversity…',
+      'Calculate diversity factors for electrical installations to BS 7671:2018+A4:2026. Reduce maximum demand calculations with IET-approved diversity.',
   });
 
   return (

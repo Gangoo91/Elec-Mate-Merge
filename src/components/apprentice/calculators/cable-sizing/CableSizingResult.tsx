@@ -311,9 +311,7 @@ const CableSizingResult = ({
                             <span className="text-white font-medium whitespace-nowrap">
                               Overall:
                             </span>
-                            <span className="font-mono text-white">
-                              {totalDerating.toFixed(3)}
-                            </span>
+                            <span className="font-mono text-white">{totalDerating.toFixed(3)}</span>
                           </div>
                         </div>
                       </div>
@@ -331,8 +329,8 @@ const CableSizingResult = ({
                           Required Tabulated Current (It)
                         </h4>
                         <p className="text-xs text-white mb-1">
-                          Appendix 4 §5.1.1 — divide the rated current of the protective
-                          device, not the design current
+                          Appendix 4 §5.1.1 — divide the rated current of the protective device, not
+                          the design current
                         </p>
                         <p className="text-sm text-white mt-1">
                           It ≥ In ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}

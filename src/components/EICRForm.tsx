@@ -461,7 +461,22 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         <div
           key={currentTab}
           className={cn(
-            'lg:max-w-[1600px]',
+            /*
+             * The schedule of tests is a 34-column table around 3,700px wide.
+             * Capping its step at 1,600px on a wide monitor left it scrolling
+             * horizontally with several hundred pixels sitting empty beside it
+             * — the reading you get is "this table does not fit", when the
+             * screen had the room and the cap was refusing it.
+             *
+             * Every other step is a form, and those keep the cap: an unbounded
+             * line length across a 2,500px display is worse than a narrow one.
+             */
+            currentTab !== 'testing' && 'lg:max-w-[1600px]',
+            // …and let it out of the page gutter too. The step sits inside a
+            // <main> carrying lg:px-8, so even uncapped the table gave up 64px
+            // to padding it does not need — the schedule is its own bordered
+            // surface and reads better flush.
+            currentTab === 'testing' && 'lg:-mx-8',
             isNavigatingBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
           )}
         >

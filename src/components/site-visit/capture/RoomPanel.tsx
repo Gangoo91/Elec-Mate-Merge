@@ -6,6 +6,8 @@ import { RoomPhotoCapture } from './RoomPhotoCapture';
 import { RoomSmartPrompts } from './RoomSmartPrompts';
 import { AddItemButton } from './AddItemButton';
 import type { SiteVisitRoom, SiteVisitItem, SiteVisitPhoto } from '@/types/siteVisit';
+import { cn } from '@/lib/utils';
+import { textareaCn, labelCn } from '@/components/forms/fieldStyles';
 
 interface RoomPanelProps {
   room: SiteVisitRoom;
@@ -85,7 +87,7 @@ export const RoomPanel = ({
       <div className="sticky top-14 z-20 -mx-1 flex items-center gap-2 rounded-lg bg-background/95 px-1 py-2 backdrop-blur-sm">
         <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
         <h3 className="text-base font-semibold text-white">{room.roomName}</h3>
-        <span className="text-xs text-white/60">
+        <span className="text-xs text-white">
           {room.items.length} item{room.items.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -97,7 +99,7 @@ export const RoomPanel = ({
             <button
               type="button"
               onClick={() => setReorderMode((m) => !m)}
-              className="flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[12px] font-medium text-white/65 touch-manipulation active:bg-white/10"
+              className="flex h-11 items-center gap-1.5 rounded-xl px-3 text-[13px] font-semibold text-white touch-manipulation active:bg-white/10"
             >
               {reorderMode ? (
                 <>
@@ -120,18 +122,18 @@ export const RoomPanel = ({
               key={item.id}
               className="flex min-h-[44px] items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2"
             >
-              <GripVertical className="h-4 w-4 flex-shrink-0 text-white/50" />
+              <GripVertical className="h-4 w-4 flex-shrink-0 text-white" />
               <span className="flex-1 truncate text-sm text-white">
                 {item.itemDescription || item.itemType || 'Item'}
               </span>
-              <span className="text-[11px] tabular-nums text-white/45">
+              <span className="text-[11px] tabular-nums text-white">
                 {item.quantity} {item.unit}
               </span>
               <button
                 onClick={() => moveItem(index, -1)}
                 disabled={index === 0}
                 aria-label="Move up"
-                className="flex h-9 w-9 items-center justify-center rounded-lg touch-manipulation active:bg-white/10 disabled:opacity-30"
+                className="flex h-11 w-11 items-center justify-center rounded-xl touch-manipulation active:bg-white/10 disabled:opacity-30"
               >
                 <ChevronUp className="h-4 w-4 text-white" />
               </button>
@@ -139,7 +141,7 @@ export const RoomPanel = ({
                 onClick={() => moveItem(index, 1)}
                 disabled={index >= room.items.length - 1}
                 aria-label="Move down"
-                className="flex h-9 w-9 items-center justify-center rounded-lg touch-manipulation active:bg-white/10 disabled:opacity-30"
+                className="flex h-11 w-11 items-center justify-center rounded-xl touch-manipulation active:bg-white/10 disabled:opacity-30"
               >
                 <ChevronDown className="h-4 w-4 text-white" />
               </button>
@@ -163,12 +165,12 @@ export const RoomPanel = ({
 
       {/* Room notes */}
       <div className="space-y-1">
-        <label className="text-[11.5px] font-medium text-white/65">Room Notes</label>
+        <label className={labelCn}>Room notes</label>
         <Textarea
           value={room.notes || ''}
           onChange={(e) => onUpdateRoomNotes(room.id, e.target.value)}
-          placeholder="Any notes about this room..."
-          className="min-h-[60px] touch-manipulation text-base rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          placeholder="Access, condition, anything the quote should account for"
+          className={cn(textareaCn, 'min-h-[60px]')}
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"

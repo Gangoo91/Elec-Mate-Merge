@@ -20,7 +20,7 @@ export default function UPSInstallationGuidePage() {
   return (
     <GuideTemplate
       title="UPS Installation Guide | Uninterruptible Power Supply"
-      description="Complete guide to UPS installation for electricians. Covers online, offline, and line-interactive UPS types, sizing calculations…"
+      description="Complete guide to UPS installation for electricians. Covers online, offline, and line-interactive UPS types, sizing calculations."
       datePublished="2025-09-01"
       dateModified="2026-06-10"
       breadcrumbs={[

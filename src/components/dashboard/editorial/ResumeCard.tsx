@@ -17,27 +17,18 @@
  */
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { formatDistanceToNow } from 'date-fns';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { compactAge } from '@/lib/notificationCategory';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
 
 const RESUMABLE_STATUSES = ['draft', 'auto-draft', 'in-progress'];
-
-// Only route types with a confirmed /{type}/{id} edit route; anything else
-// falls back to the My Reports list rather than a guessed URL.
-const ROUTED_REPORT_TYPES = new Set(['eicr', 'eic', 'minor-works', 'testing-only', 'pat-testing']);
-
-const TYPE_LABELS: Record<string, string> = {
-  eicr: 'EICR',
-  eic: 'EIC',
-  'minor-works': 'Minor Works',
-  'testing-only': 'Testing Only',
-  'pat-testing': 'PAT Testing',
-};
 
 interface ResumeItem {
   kind: 'cert' | 'quote' | 'invoice';
@@ -129,18 +120,16 @@ export function ResumeCard() {
         ? {
             kind: 'cert',
             id: cert.id,
-            tag: `${TYPE_LABELS[cert.report_type] || 'Certificate'} · In progress`,
+            tag: `${certificateTypeLabel(cert.report_type)} · In progress`,
             headline: certAddress || cert.client_name || 'Unnamed job',
             detail: certAddress && cert.client_name ? cert.client_name : null,
             updatedAt: cert.updated_at,
-            // Query-param sections for eicr/eic/minor-works, path routes for
-            // pat/testing-only — both keyed on the report_id STRING. The old
-            // path-with-uuid form fell through to the I&T dashboard.
-            path: ['eicr', 'eic', 'minor-works'].includes(cert.report_type)
-              ? `/electrician/inspection-testing?section=${cert.report_type}&reportId=${encodeURIComponent(cert.report_id)}`
-              : ROUTED_REPORT_TYPES.has(cert.report_type)
-                ? `/electrician/inspection-testing/${cert.report_type}/${encodeURIComponent(cert.report_id)}`
-                : '/electrician/inspection-testing?section=my-reports',
+            // The shared route builder. This was a THIRD hand-maintained copy
+            // of the convention, and its list of path-routed types held five
+            // of the twenty-five that exist — so a half-finished EV charging,
+            // solar PV, emergency lighting or fire alarm cert dropped you on
+            // the reports list instead of the document you were editing.
+            path: certificateHref(cert.report_type, cert.report_id),
           }
         : null;
 
@@ -222,53 +211,74 @@ export function ResumeCard() {
 
   if (!item) return null;
 
-  const edited = formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true }).replace(
-    'about ',
-    ''
-  );
-
   return (
     <motion.section
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-4"
+      className="space-y-3"
     >
-      <motion.div variants={itemVariants}>
-        <Eyebrow>PICK UP WHERE YOU LEFT OFF</Eyebrow>
-      </motion.div>
+      <motion.h2
+        variants={itemVariants}
+        className="text-[15px] font-semibold tracking-tight text-elec-yellow"
+      >
+        Pick up where you left off
+      </motion.h2>
 
+      {/*
+       * One row, not a panel.
+       *
+       * This was ~200px: an eyebrow, a card with a 26px headline, a detail
+       * line and a full-width volt Resume button — on a dashboard whose job is
+       * to get you moving. It also nested a <button> inside a <button>, which
+       * is invalid and gives screen readers two overlapping controls for one
+       * action, and it was painted with `from-elec-yellow/[0.16]`: a
+       * translucent volt fill, the muddy-brown case the card recipe warns
+       * about. The whole row is the target now, and volt is the edge and the
+       * arrow rather than a wash.
+       */}
       <motion.button
         variants={itemVariants}
         type="button"
         onClick={() => navigate(item.path)}
-        className="group relative block w-full touch-manipulation overflow-hidden rounded-2xl border border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/[0.16] via-elec-yellow/[0.05] to-transparent text-left transition-colors hover:from-elec-yellow/[0.22]"
+        className={cn(
+          'group relative flex w-full items-center gap-3 overflow-hidden rounded-2xl border text-left',
+          'border-elec-yellow/35 px-4 py-3 sm:px-5',
+          CARD_SURFACE,
+          'transition-[background-image,border-color,transform] duration-150 ease-out',
+          'hover:border-elec-yellow/60 active:scale-[0.99] touch-manipulation',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+        )}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/90 to-elec-yellow/0" />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0"
+        />
 
-        <div className="px-4 pt-4 sm:px-6 sm:pt-5">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+        <span className="min-w-0 flex-1">
+          <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
               {item.tag}
             </span>
-            <span className="shrink-0 text-[11px] text-white/60">Edited {edited}</span>
-          </div>
-          <h3 className="mt-2.5 line-clamp-2 text-[22px] font-bold leading-tight tracking-tight text-white tabular-nums sm:text-[26px]">
-            {item.headline}
-          </h3>
-          {item.detail && (
-            <p className="mt-1 text-[13.5px] leading-snug text-white/70 tabular-nums">
-              {item.detail}
-            </p>
-          )}
-        </div>
-
-        <div className="px-4 pb-4 pt-4 sm:px-6 sm:pb-5">
-          <span className="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors group-hover:bg-yellow-400">
-            Resume
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            <span className="text-[11px] tabular-nums text-white">
+              · edited {compactAge(item.updatedAt)}
+            </span>
           </span>
-        </div>
+          <span className="mt-1 block truncate text-[15px] font-semibold leading-tight tracking-tight text-white">
+            {item.headline}
+          </span>
+          {item.detail && (
+            <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+              {item.detail}
+            </span>
+          )}
+        </span>
+
+        {/* Not a nested button — a label on the row's own target. */}
+        <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-semibold text-elec-yellow">
+          <span className="hidden sm:inline">Resume</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        </span>
       </motion.button>
     </motion.section>
   );

@@ -475,7 +475,7 @@ export default function CopperVsAluminiumCablePage() {
   return (
     <GuideTemplate
       title="Copper vs Aluminium Cable | BS 7671 Current Ratings UK Guide"
-      description="Complete guide to copper vs aluminium electrical cable for UK electricians. BS 7671 Appendix 4 current ratings…"
+      description="Complete guide to copper vs aluminium electrical cable for UK electricians. BS 7671 Appendix 4 current ratings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

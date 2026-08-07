@@ -35,11 +35,7 @@ export const cableDeratingContent: CalculatorContent = {
       { label: 'Ca (35 °C)', value: '0.94' },
       { label: 'Cg (3 circuits)', value: '0.70' },
     ],
-    steps: [
-      'Iz = It × Ca × Cg × Ci × Cs',
-      'Iz = 27 × 0.94 × 0.70 × 1 × 1',
-      'Iz ≈ 17.8 A',
-    ],
+    steps: ['Iz = It × Ca × Cg × Ci × Cs', 'Iz = 27 × 0.94 × 0.70 × 1 × 1', 'Iz ≈ 17.8 A'],
     result: 'Derated Iz ≈ 17.8 A — the device rating In must not exceed this.',
   },
 

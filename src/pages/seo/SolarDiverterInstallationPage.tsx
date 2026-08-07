@@ -487,7 +487,7 @@ export default function SolarDiverterInstallationPage() {
   return (
     <GuideTemplate
       title="Solar PV Diverter Installation UK | Immersion Diverter Guide"
-      description="Complete guide to solar diverter installation in the UK. What a solar diverter does, popular brands (iBoost, Eddi, Immersun), installation requirements…"
+      description="Complete guide to solar diverter installation in the UK. What a solar diverter does, popular brands (iBoost, Eddi, Immersun), installation requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

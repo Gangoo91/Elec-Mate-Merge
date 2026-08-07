@@ -209,13 +209,13 @@ export default function PracticalWorkEnrichmentConsole() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-sm text-muted-foreground">Canonical Records</div>
+                  <div className="text-sm text-white">Canonical Records</div>
                   <div className="text-2xl font-bold">
                     {stats.canonical_records.toLocaleString()}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Duplicates Removed</div>
+                  <div className="text-sm text-white">Duplicates Removed</div>
                   <div className="text-2xl font-bold">
                     {(stats.total_records - stats.canonical_records).toLocaleString()}
                   </div>
@@ -247,7 +247,7 @@ export default function PracticalWorkEnrichmentConsole() {
               </MobileButton>
 
               {stats.canonical_records === 0 && (
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-white">
                   ⚠️ Run unification first before primary enrichment
                 </div>
               )}
@@ -370,8 +370,8 @@ function StatCard({ label, value, icon: Icon, highlight }: any) {
       className={`p-4 rounded-lg border ${highlight ? 'border-elec-yellow/30 bg-elec-yellow/5' : 'border-white/10'}`}
     >
       <div className="flex items-center gap-2 mb-1">
-        <Icon className="h-4 w-4 text-muted-foreground" />
-        <div className="text-xs text-muted-foreground">{label}</div>
+        <Icon className="h-4 w-4 text-white" />
+        <div className="text-xs text-white">{label}</div>
       </div>
       <div className={`text-2xl font-bold ${highlight ? 'text-elec-yellow' : ''}`}>{value}</div>
     </div>
@@ -385,7 +385,7 @@ function EnrichmentProgress({ completed, total, label }: any) {
     <div>
       <div className="flex justify-between text-sm mb-2">
         <span>{label}</span>
-        <span className="text-muted-foreground">
+        <span className="text-white">
           {completed.toLocaleString()} / {total.toLocaleString()}
         </span>
       </div>
@@ -395,7 +395,7 @@ function EnrichmentProgress({ completed, total, label }: any) {
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <div className="text-xs text-muted-foreground mt-1">{percentage}% complete</div>
+      <div className="text-xs text-white mt-1">{percentage}% complete</div>
     </div>
   );
 }
@@ -416,7 +416,7 @@ function SpecialistJobCard({
       <div className="flex items-start justify-between">
         <div>
           <div className="font-medium">{label}</div>
-          <div className="text-sm text-muted-foreground">{description}</div>
+          <div className="text-sm text-white">{description}</div>
         </div>
         <Badge variant={percentage === 100 ? 'default' : 'outline'}>{percentage}%</Badge>
       </div>

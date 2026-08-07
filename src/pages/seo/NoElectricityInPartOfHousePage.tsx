@@ -648,7 +648,7 @@ export default function NoElectricityInPartOfHousePage() {
   return (
     <GuideTemplate
       title="No Electricity in Part of House | Causes & Fixes"
-      description="Lost electricity in part of your house? Learn the causes — tripped MCB, loose connections, damaged cables, shared neutral faults, ring main breaks…"
+      description="Lost electricity in part of your house? Learn the causes — tripped MCB, loose connections, damaged cables, shared neutral faults, ring main breaks."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

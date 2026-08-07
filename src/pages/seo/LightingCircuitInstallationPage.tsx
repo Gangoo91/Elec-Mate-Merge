@@ -530,7 +530,7 @@ export default function LightingCircuitInstallationPage() {
   return (
     <GuideTemplate
       title="Lighting Circuit Installation Guide — LED, Dimmers,"
-      description="Complete UK guide to lighting circuit installation. Loop-in vs junction box wiring, LED compatibility, trailing-edge dimmers for LED…"
+      description="Complete UK guide to lighting circuit installation. Loop-in vs junction box wiring, LED compatibility, trailing-edge dimmers for LED."
       datePublished="2024-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

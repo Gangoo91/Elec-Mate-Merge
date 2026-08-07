@@ -194,7 +194,7 @@ export default function AdminPanel() {
         onMouseEnter={() => onPrefetch(item.path)}
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
-          'shrink-0 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+          'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
           active ? 'bg-elec-yellow text-black' : 'text-white hover:text-white hover:bg-white/[0.05]'
         )}
       >
@@ -235,7 +235,13 @@ export default function AdminPanel() {
             </button>
           </div>
 
-          {/* Navigation rail */}
+          {/* Navigation rail.
+
+              Twelve destinations never fit, so it scrolls — but with nothing
+              at the edge the last tab looked truncated rather than scrollable.
+              The fade is the affordance; it is pointer-events-none so it can
+              never swallow a tap on the tab beneath it. */}
+          <div className="relative">
           <nav
             ref={dropdownRef}
             className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar"
@@ -254,7 +260,7 @@ export default function AdminPanel() {
                   <button
                     onClick={() => setOpenGroup(isOpen ? null : g.key)}
                     className={cn(
-                      'shrink-0 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
+                      'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
                       isOpen || isActive
                         ? 'bg-white/[0.08] text-white'
                         : 'text-white hover:text-white hover:bg-white/[0.05]'
@@ -269,6 +275,11 @@ export default function AdminPanel() {
               );
             })}
           </nav>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent"
+            />
+          </div>
 
           {/* Dropdown panel */}
           <AnimatePresence>

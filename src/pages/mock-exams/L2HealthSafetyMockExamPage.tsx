@@ -17,8 +17,8 @@ export default function L2HealthSafetyMockExamPage() {
       questionBank={
         module1Questions as unknown as Parameters<typeof PublicMockExamPage>[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={30}
+      questionsPerExam={30}
+      timeLimitMinutes={35}
       passThreshold={70}
       breadcrumbLabel="Level 2 Health & Safety"
     />

@@ -505,7 +505,7 @@ export default function WarehouseLightingCostPage() {
   return (
     <GuideTemplate
       title="Warehouse Lighting Cost 2026 | LED High Bay UK Price Guide"
-      description="How much does warehouse LED lighting cost in 2026? UK guide covering high bay LED fittings at £15-40 per fitting installed, lux levels…"
+      description="How much does warehouse LED lighting cost in 2026? UK guide covering high bay LED fittings at £15-40 per fitting installed, lux levels."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

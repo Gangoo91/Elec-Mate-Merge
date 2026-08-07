@@ -570,7 +570,7 @@ export default function NewBuildElectricalPage() {
   return (
     <GuideTemplate
       title="New Build Electrical Installation | Requirements UK"
-      description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022…"
+      description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

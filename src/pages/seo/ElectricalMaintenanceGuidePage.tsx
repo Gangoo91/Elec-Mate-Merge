@@ -607,7 +607,7 @@ export default function ElectricalMaintenanceGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Maintenance Guide | Planned & Reactive UK"
-      description="Complete guide to electrical maintenance in the UK. PPM vs reactive maintenance, testing intervals from BS 7671 and GN3, documentation requirements…"
+      description="Complete guide to electrical maintenance in the UK. PPM vs reactive maintenance, testing intervals from BS 7671 and GN3, documentation requirements."
       datePublished="2025-04-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

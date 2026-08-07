@@ -21,7 +21,7 @@ export default function CapacityPlanningCalculatorPage() {
   return (
     <BusinessTemplate
       title="Capacity Planning Calculator for Electricians"
-      description="Plan your workforce capacity, schedule jobs efficiently, and maximise utilisation rates. Know exactly how many jobs you can take, when to hire…"
+      description="Plan your workforce capacity, schedule jobs efficiently, and maximise utilisation rates. Know exactly how many jobs you can take, when to hire."
       datePublished="2025-09-01"
       dateModified="2026-05-18"
       breadcrumbs={[

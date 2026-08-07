@@ -44,9 +44,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Section 702 of BS 7671 applies to swimming pools, paddling pools, hot tubs, fountains, and their surrounding zones — any location with a basin intended for immersion or wading.',
-  'Zone 0 (inside the pool) permits only SELV at 12 V AC RMS or 30 V ripple-free DC. Equipment must be rated IPX8. The safety source must be located outside Zones 0, 1 and 2 (Reg 702.410.3.4.2).',
+  'Zone 0 (inside the pool) permits only SELV at 12 V AC RMS or 30 V ripple-free DC. Equipment must be rated IPX8. The safety source must be located outside Zones 0, 1 and 2 (Reg 702.410.3.4.1).',
   'Supplementary equipotential bonding is mandatory — all extraneous conductive parts in Zones 0, 1, and 2 must be bonded together and to the protective conductor.',
-  'Hot tubs installed outdoors follow Section 702 zones. BS 7671 does not ban PME earthing here — Regulation 702.410.3.4 recommends that where PME is used, an earth mat or electrode of suitably low resistance (20 ohms or less is the example given) is connected to the supplementary bonding. Converting to TT is a common design choice, not a Regulation requirement.',
+  'Regulation 702.1.1 says the requirements of Section 702 "may also be applied" to the installation of hot tubs outdoors — permissive wording, and near-universal practice. BS 7671 does not ban PME earthing here either: the NOTE to Regulation 702.410.3.4 recommends that where PME is used, an earth mat or electrode of suitably low resistance (20 ohms or less is the example given) is connected to the supplementary bonding. Converting to TT is a common design choice, not a Regulation requirement.',
   'Elec-Mate AI regulations lookup gives instant answers on Section 702 requirements, and the EICR certificate app handles swimming pool inspections with all the zone-specific fields.',
 ];
 
@@ -54,12 +54,12 @@ const faqs = [
   {
     question: 'Does Section 702 apply to domestic hot tubs?',
     answer:
-      'Yes. Section 702 applies to all locations containing a basin designed for immersion or wading, which includes domestic hot tubs, swim spas, and paddling pools. The zone dimensions for hot tubs are the same as for swimming pools — Zone 0 is the interior of the tub, Zone 1 extends 2 m from the edge, and Zone 2 extends a further 1.5 m. On earthing, be careful with the common claim that PME is banned outdoors — it is not. Regulation 702.410.3.4 contemplates a PME earthing facility being used and recommends that where it is, an earth mat or earth electrode of suitably low resistance (20 ohms or less is the example given) is installed and connected to the supplementary protective equipotential bonding, because a wet barefoot person may perceive a shock from voltage imported on the PEN conductor. Converting the hot tub circuit to TT with its own electrode, or taking a confirmed TN-S supply, is a widely used and sensible design response to that risk — but it is a design decision rather than a Regulation requirement. The supply circuit must be protected by a 30 mA RCD and must include a means of isolation within sight of the hot tub. An IP-rated rotary isolator mounted on a post or wall is the standard solution. Indoor hot tubs in a purpose-built room follow the same Section 702 zone requirements.',
+      'In practice, yes — but be precise about how. Regulation 702.1.1 lists the basins the section applies to (swimming pools, fountains, paddling pools, and pools for religious or ceremonial purposes) and then adds that the requirements "may also be applied to the installation of hot tubs outdoors". That is permissive wording rather than an absolute duty, and applying Section 702 to a domestic hot tub or swim spa is the near-universal design choice. Note also that Regulation 702.55.5 requires hot tubs themselves to conform to BS EN 60335-2-60. The zone dimensions for hot tubs are the same as for swimming pools — Zone 0 is the interior of the tub, Zone 1 extends 2 m from the edge, and Zone 2 extends a further 1.5 m. On earthing, be careful with the common claim that PME is banned outdoors — it is not. Regulation 702.410.3.4 contemplates a PME earthing facility being used and recommends that where it is, an earth mat or earth electrode of suitably low resistance (20 ohms or less is the example given) is installed and connected to the supplementary protective equipotential bonding, because a wet barefoot person may perceive a shock from voltage imported on the PEN conductor. Converting the hot tub circuit to TT with its own electrode, or taking a confirmed TN-S supply, is a widely used and sensible design response to that risk — but it is a design decision rather than a Regulation requirement. The supply circuit must be protected by a 30 mA RCD and must include a means of isolation within sight of the hot tub. An IP-rated rotary isolator mounted on a post or wall is the standard solution. Indoor hot tubs in a purpose-built room follow the same Section 702 zone requirements.',
   },
   {
     question: 'What is SELV and why is it required in Zone 0?',
     answer:
-      'SELV stands for Separated Extra-Low Voltage. In Zone 0 the voltage is limited to 12 V AC RMS or 30 V ripple-free DC; in Zone 1 the limits are 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.2). The circuit is electrically separated from all other circuits and from earth. The separation is achieved by a safety isolating transformer complying with BS EN 61558-2-6. In Zone 0 (inside the pool basin), the body is fully immersed in water, skin resistance is at its lowest, and there is no possibility of escape. At these voltages, even with zero skin resistance, the current flowing through the body cannot reach a dangerous level. This is why SELV is the only acceptable form of electrical supply in Zone 0. The safety source (transformer) must be located outside Zones 0, 1 and 2 — unless the supply to the source is protected by an RCD meeting Reg 415.1.1, in which case the source may be in Zone 2.',
+      'SELV stands for Separated Extra-Low Voltage. In Zone 0 the voltage is limited to 12 V AC RMS or 30 V ripple-free DC; in Zone 1 the limits are 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.1 — note that 702.410.3.4.2 covers Zones 0 and 1 of fountains, and 702.410.3.4.3 covers Zone 2). The circuit is electrically separated from all other circuits and from earth. The separation is normally achieved by a safety isolating transformer complying with BS EN 61558-2-6 or BS EN 61558-2-8 (Reg 414.3(a)); Regulation 702.414.3 additionally bars the electronic sources of Regulation 414.3(d) from use in Zones 0, 1 and 2. In Zone 0 (inside the pool basin), the body is fully immersed in water, skin resistance is at its lowest, and there is no possibility of escape. At these voltages, even with zero skin resistance, the current flowing through the body cannot reach a dangerous level. This is why SELV is the only acceptable form of electrical supply in Zone 0. The safety source (transformer) must be located outside Zones 0, 1 and 2. The often-quoted exception — that the source may sit in Zone 2 where its supply circuit is protected by an RCD meeting Reg 415.1.1 — does not apply to the SELV protecting Zone 0 or Zone 1 itself. BS 7671 allows it only for the specific cases it names: basin-interior equipment intended to operate when the pool is unoccupied, Zone 2 equipment (Reg 702.410.3.4.3), and Zone 2 socket-outlets and switches (Reg 702.53).',
   },
   {
     question: 'What IP rating is required for each swimming pool zone?',
@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'Is supplementary bonding always required for swimming pools?',
     answer:
-      'Yes. Regulation 702.415.2 requires supplementary equipotential bonding in all swimming pool locations. All extraneous conductive parts within Zones 0, 1, and 2 must be connected together and to the protective conductor of every circuit serving those zones. This includes metallic pool structures, ladders, handrails, diving boards, water pipes, heating pipes, reinforcing steel in the pool surround (if accessible), and any other metallic components. The bonding conductor must be at least 4 mm squared copper. The purpose is to ensure that if a fault occurs, all metallic parts rise to the same potential simultaneously, preventing a potential difference that could drive current through a person in contact with two different metallic surfaces. This bonding is in addition to any main protective bonding at the consumer unit.',
+      'Yes. Regulation 702.415.2 requires supplementary equipotential bonding in all swimming pool locations. All extraneous conductive parts within Zones 0, 1, and 2 must be connected together and to the protective conductor of every circuit serving those zones. This includes metallic pool structures, ladders, handrails, diving boards, water pipes, heating pipes, reinforcing steel in the pool surround (if accessible), and any other metallic components. Section 702 does not itself state a conductor size — sizing comes from Regulation 544.2, which for a conductor between two extraneous-conductive-parts calls for not less than 2.5 mm squared copper where it is sheathed or otherwise mechanically protected, or 4 mm squared where it is not. Where the conductor connects to an exposed-conductive-part, Regulation 544.2.2 applies instead: not less than half the conductance of the associated protective conductor, again with a 4 mm squared floor if unprotected. The purpose is to ensure that if a fault occurs, all metallic parts rise to the same potential simultaneously, preventing a potential difference that could drive current through a person in contact with two different metallic surfaces. This bonding is in addition to any main protective bonding at the consumer unit.',
   },
   {
     question: 'Can I install a socket outlet near a swimming pool?',
@@ -162,8 +162,12 @@ const sections = [
         </p>
         <p>
           Section 702 applies to both indoor and outdoor pools, domestic and commercial
-          installations, permanent and temporary structures. It also covers hot tubs, swim spas,
-          hydrotherapy pools, paddling pools, and decorative water features with basins. The
+          installations, permanent and temporary structures. Regulation 702.1.1 names the basins of
+          swimming pools, fountains, paddling pools, and pools for religious or ceremonial purposes,
+          and adds that the requirements may also be applied to hot tubs installed outdoors — which
+          is how hot tubs, swim spas and hydrotherapy pools are handled in practice. Pools that fall
+          within the scope of an equipment standard, and natural waters such as lakes in gravel pits
+          or coastal areas, are outside the scope unless specially designated as swimming pools. The
           regulations work alongside the{' '}
           <SEOInternalLink href="/guides/special-locations-part-7-bs-7671">
             general Part 7 framework
@@ -218,8 +222,9 @@ const sections = [
           These dimensions are measured from the finished floor level in indoor pools and from the
           finished ground level in outdoor pools. For pools with irregular shapes, the zones follow
           the contour of the pool edge. Where walls, partitions, or fixed barriers prevent direct
-          access from the pool area to adjacent rooms, the zones do not extend through the barriers
-          — but only if the barriers are permanent and provide effective separation.
+          access from the pool area to adjacent rooms, the zones do not extend through the barriers.
+          Regulation 702.32 is specific about this: Zones 1 and 2 may be limited by fixed partitions
+          having a minimum height of 2.50 m.
         </p>
         <SEOInternalLink href="/consumer-unit-regulations">
           Consumer unit regulations
@@ -245,7 +250,7 @@ const sections = [
               <span>
                 <strong>Only SELV is permitted</strong> — at a maximum of 12 V AC RMS or 30 V
                 ripple-free DC. The safety source (isolating transformer) must be located outside
-                Zones 0, 1 and 2 (Reg 702.410.3.4.2).
+                Zones 0, 1 and 2 (Reg 702.410.3.4.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,9 +279,11 @@ const sections = [
         </div>
         <p>
           Underwater pool lighting is the most common electrical equipment in Zone 0. These
-          luminaires must be rated IPX8, supplied by SELV at 12 V AC RMS, and the transformer must
-          be located outside Zone 2 (i.e. beyond 3.5 m from the pool edge). The cable from the
-          transformer to the luminaire must be continuous without joints inside Zones 0 or 1.
+          luminaires must be fixed, must comply with BS EN 60598-2-18 (Reg 702.55.2), must be rated
+          IPX8, must be supplied by SELV at 12 V AC RMS, and the transformer must be located outside
+          Zone 2 (i.e. beyond 3.5 m from the pool edge). On the cable run, Regulation 702.522.24
+          prohibits a junction box in Zone 0 or Zone 1 — with one exception, that junction boxes for
+          SELV circuits are permitted in Zone 1.
         </p>
       </>
     ),
@@ -296,9 +303,11 @@ const sections = [
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SELV at 25 V AC RMS or 60 V ripple-free DC maximum</strong> — a higher limit
-                than Zone 0 (which is restricted to 12 V AC RMS). Mains voltage equipment is not
-                permitted. The SELV source must be located outside Zones 0, 1 and 2 (Reg
-                702.410.3.4.2).
+                than Zone 0 (which is restricted to 12 V AC RMS). As the general protective measure
+                for the zone, only SELV is permitted, and the SELV source must be located outside
+                Zones 0, 1 and 2 (Reg 702.410.3.4.1). Regulations 702.55.1 and 702.55.4 then set out
+                the narrow cases in which specific fixed low-voltage equipment is nonetheless
+                allowed in Zone 1 — see below.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,16 +320,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No socket outlets or switches</strong> (other than SELV) are permitted in
-                Zone 1.
+                <strong>No socket outlets, switchgear or controlgear</strong> are permitted in Zone
+                1. Regulation 702.53 states this flatly for Zones 0 and 1 — there is no SELV
+                carve-out for switches or socket-outlets, unlike the one Regulation 702.522.24 gives
+                for SELV junction boxes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Current-using equipment</strong> such as pool filtration pumps, heat pumps,
-                and cover motors may be installed in Zone 1 only if specifically designed for this
-                purpose and protected by SELV.
+                <strong>Current-using equipment</strong> such as filtration systems and jet stream
+                pumps may be installed in Zone 1 at low voltage, but only under Regulation 702.55.4
+                and only if <em>every</em> one of its conditions is met: the equipment sits inside an
+                insulating enclosure giving at least Class II or equivalent insulation and AG2
+                mechanical impact protection; it is accessible only through a hatch or door opened by
+                key or tool, the opening of which disconnects all live conductors; and the supply
+                circuit is protected by SELV not exceeding 25 V AC RMS or 60 V ripple-free DC, or by
+                an RCD to Reg 415.1.1, or by electrical separation feeding a single fixed item.
               </span>
             </li>
           </ul>
@@ -334,7 +350,7 @@ const sections = [
         </p>
         <p>
           <strong>
-            Special case — diving boards, springboards, and starting blocks (Reg 702.4):
+            Special case — diving boards, springboards, and starting blocks (Reg 702.32):
           </strong>{' '}
           Where the pool contains diving boards, springboards, starting blocks, chutes, or other
           structures expected to be occupied by persons, Zone 1 extends 1.5 m horizontally from the
@@ -353,18 +369,21 @@ const sections = [
         <p>
           Zone 2 extends a further 1.5 m beyond Zone 1, giving a total distance of 3.5 m from the
           pool edge. This zone provides a buffer between the high-restriction pool area and the
-          normal installation rules.
+          normal installation rules. One exception worth knowing: Regulation 702.410.3.4.3 states
+          that there is no Zone 2 for a fountain.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlets are permitted</strong> but must be protected by at least one
-                of: automatic disconnection of supply (ADS) via a 30 mA RCD; SELV; or electrical
-                separation (Section 413) supplying a single item of equipment with the source
-                outside Zones 0, 1 and 2 (Reg 702.410.3.4.3). In practice, 30 mA RCD protection is
-                the most common approach.
+                <strong>Socket outlets and switches are permitted</strong> but only where the supply
+                circuit is protected by one of: automatic disconnection of supply (ADS) using an RCD
+                to Reg 415.1.1 (i.e. rated residual operating current not exceeding 30 mA); SELV; or
+                electrical separation (Section 413) supplying a single item of current-using
+                equipment or one socket-outlet, with the source outside Zones 0, 1 and 2 (Reg
+                702.53; the general Zone 2 protective measures are at Reg 702.410.3.4.3). In
+                practice, 30 mA RCD protection is the most common approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -401,7 +420,7 @@ const sections = [
         <p>
           Separated Extra-Low Voltage (SELV) is the primary protective measure for swimming pool
           Zones 0 and 1. In Zone 0, SELV is limited to 12 V AC RMS or 30 V ripple-free DC. In Zone
-          1, the limit is 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.2). SELV provides
+          1, the limit is 25 V AC RMS or 60 V ripple-free DC (Reg 702.410.3.4.1). SELV provides
           electrical separation from all other circuits and from earth.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -409,19 +428,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The safety source</strong> must be a safety isolating transformer complying
-                with BS EN 61558-2-6. Standard transformers are not acceptable — the construction of
-                a safety isolating transformer provides reinforced insulation between primary and
-                secondary windings.
+                <strong>The safety source</strong> is normally a safety isolating transformer
+                complying with BS EN 61558-2-6 or BS EN 61558-2-8 (Reg 414.3(a)). Standard
+                transformers are not acceptable — the construction of a safety isolating transformer
+                provides reinforced insulation between primary and secondary windings. Regulation
+                702.414.3 further prohibits the electronic sources described in Regulation 414.3(d)
+                wherever SELV or PELV is used in Zones 0, 1 or 2.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The transformer must be located outside Zones 0, 1 and 2</strong> (Reg
-                702.410.3.4.2) — beyond 3.5 m from the pool edge. It cannot be in Zone 2 unless the
-                supply circuit is protected by an RCD with the characteristics specified in Reg
-                415.1.1.
+                702.410.3.4.1) — beyond 3.5 m from the pool edge. The commonly quoted relaxation
+                that lets the source sit in Zone 2 where its own supply circuit is protected by an
+                RCD to Reg 415.1.1 does <em>not</em> apply to the SELV protecting Zone 0 or Zone 1.
+                BS 7671 offers it only for basin-interior equipment intended to run when the pool is
+                unoccupied (Reg 702.410.3.4.1), Zone 2 equipment (Reg 702.410.3.4.3), and Zone 2
+                socket-outlets and switches (Reg 702.53).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,8 +501,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The bonding conductor</strong> must be at least 4 mm squared copper and must
-                be connected to the protective conductor of every circuit serving Zones 0, 1, and 2.
+                <strong>The bonding conductor</strong> is sized to Regulation 544.2, not to Section
+                702 — between two extraneous-conductive-parts, not less than 2.5 mm squared copper
+                where sheathed or otherwise mechanically protected, or 4 mm squared where it is not.
+                It must be connected to the protective conductors of exposed-conductive-parts of
+                equipment situated in Zones 0, 1 and 2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -569,8 +596,11 @@ const sections = [
       <>
         <p>
           Hot tubs have become increasingly popular in domestic gardens, and every electrician needs
-          to know how Section 702 applies to them. A hot tub is classified the same as a swimming
-          pool under BS 7671 — the same zone system applies.
+          to know how Section 702 applies to them. Be precise about the wording: Regulation 702.1.1
+          says the requirements of the section "may also be applied to the installation of hot tubs
+          outdoors" — permissive rather than absolute — and applying the same zone system is the
+          near-universal design choice. The tub itself must conform to BS EN 60335-2-60 (Reg
+          702.55.5).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -643,9 +673,12 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Continuity of supplementary bonding</strong> — test the resistance of the
-                supplementary bonding between all extraneous conductive parts. The maximum
-                resistance depends on the touch voltage limit and the characteristics of the
-                protective device, but typically should not exceed 0.05 ohms.
+                supplementary bonding between all extraneous conductive parts. The acceptance
+                criterion is the one in Regulation 415.2.2 — the resistance R between simultaneously
+                accessible parts must satisfy R ≤ 50 V / Ia in AC systems, where Ia is the operating
+                current of the protective device (IΔn for an RCD). Separately, readings taken across
+                a joint made by an earth clamp should approach 0.05 ohms; substantially more than
+                that points to a poor connection rather than to a non-compliant bond.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -653,9 +686,11 @@ const sections = [
               <span>
                 <strong>RCD testing</strong> — verify that all RCDs protecting pool circuits
                 operate within the required time. Amendment 4 changed this: Table 3A of Appendix 3
-                has been deleted, and Regulation 643.3 now calls for a single alternating current
-                test at the rated residual operating current (IΔn), whatever the RCD type. The
-                old 1× and 5× sequence is no longer what BS 7671 asks for.
+                has been deleted, and Regulation 643.8 (additional protection) now deems
+                effectiveness verified by a single alternating current test at the rated residual
+                operating current (IΔn), whatever the RCD type — 300 ms maximum for a general
+                non-delay device, and between 130 ms and 500 ms for a delay Type S device. The old
+                1× and 5× sequence is no longer what BS 7671 asks for.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -669,9 +704,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode resistance</strong> — if a TT system is used (as required
-                for outdoor pools with PME supply), test the earth electrode resistance to ensure
-                the RCD will operate within the required disconnection time.
+                <strong>Earth electrode resistance</strong> — where a TT arrangement has been
+                chosen, or where an earth mat or electrode has been installed alongside a PME supply
+                as the NOTE to Regulation 702.410.3.4 recommends, measure the electrode resistance
+                (Reg 643.7.2) and confirm the RCD will still operate within the required
+                disconnection time.
               </span>
             </li>
           </ul>
@@ -764,8 +801,8 @@ const sections = [
 export default function SwimmingPoolElectricalPage() {
   return (
     <GuideTemplate
-      title="Swimming Pool + Hot Tub Electrics: BS 7671 Section 702"
-      description="Swimming pool + hot tub electrics under BS 7671 Section 702: zones 0/1/2, SELV in Zone 0, IP ratings, supplementary bonding, 30mA RCD. Indoor + outdoor."
+      title="Swimming Pool Zones: Zone 1 = 2m, Zone 2 = 3.5m"
+      description="Swimming pool zones to BS 7671 Section 702: Zone 1 extends 2m from the pool edge, Zone 2 to 3.5m. IP rating per zone, SELV 12V in Zone 0, bonding."
       datePublished="2025-04-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

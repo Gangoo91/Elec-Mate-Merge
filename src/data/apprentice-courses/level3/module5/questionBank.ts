@@ -73,9 +73,9 @@ export const module5Questions: Question[] = [
     question: 'Why must the voltage indicator be proved on a known live source both before and after testing the circuit?',
     options: [
       'To confirm the indicator was working immediately before AND immediately after the dead test, eliminating the risk of a faulty indicator giving a false dead reading',
-      'To allow the battery in the indicator to be calibrated against the supply voltage before relying on the dead reading',
-      'To satisfy the manufacturer warranty condition that the indicator is checked against a live source at the start of each working day',
-      'To confirm the proving unit output matches the nominal supply voltage so the dead reading can be quantified accurately',
+      'To allow the battery in the indicator to be calibrated against the supply voltage before any reliance is placed on the dead reading at the point of work',
+      'To satisfy the manufacturer warranty condition that the indicator is checked against a live source at the start of each working day before it is used',
+      'To confirm the proving unit output matches the nominal supply voltage so that the dead reading obtained can be quantified accurately afterwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -104,10 +104,10 @@ export const module5Questions: Question[] = [
     question:
       'When isolating a single circuit at a domestic consumer unit, the most secure method of preventing inadvertent re-energisation is:',
     options: [
-      'Place a clearly written warning label over the MCB toggle instructing others not to switch it on',
-      'Switch the MCB to the off position and inform the householder verbally that work is in progress',
+      'Place a clearly written warning label over the MCB toggle instructing others not to switch it back on while work continues',
+      'Switch the MCB to the off position and inform the householder verbally that work on the circuit is in progress and it must be left alone',
       'Use a single-pole MCB lock-off device with a personal padlock, the only key retained by the person doing the work, plus a caution notice',
-      'Remove the circuit fuse carrier and keep it in your pocket while working on the circuit',
+      'Remove the circuit fuse carrier from the board and keep it in your pocket for the whole time you are working on the circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,9 +137,9 @@ export const module5Questions: Question[] = [
       'Under the Health and Safety at Work etc Act 1974 (HASAWA), the duty to provide a safe system of work for inspection and testing rests primarily with:',
     options: [
       'The employer (with co-operation duties on the employee under s.7)',
-      'The individual employee, since s.7 makes each worker solely responsible for their own safe system of work',
-      'The Health and Safety Executive, as the enforcing authority that approves each method statement',
-      'The client/duty holder commissioning the work, who carries the primary duty under s.3',
+      'The individual employee, since s.7 makes each worker responsible for themselves',
+      'The Health and Safety Executive, as the authority approving each method statement',
+      'The client/duty holder commissioning the work, under s.3 of the same Act',
     ],
     correctAnswer: 0,
     explanation:
@@ -168,10 +168,10 @@ export const module5Questions: Question[] = [
     question:
       'A risk assessment for inspection and testing of an occupied commercial unit must consider:',
     options: [
-      'Only the electrical shock and arc-flash hazards, since other risks are covered by the building occupier',
-      'Only the prospective fault current and earth loop impedance values measured at the origin',
+      'The electrical shock and arc-flash hazards alone, since other risks are covered by the building occupier own assessment',
+      'The prospective fault current and earth fault loop impedance values measured at the origin before any work starts',
       'Electrical hazards, working at height, manual handling, slips/trips, lone working, occupant disruption, and emergency arrangements',
-      'Only the competence and qualifications of the personnel carrying out the testing work',
+      'The competence and qualifications of the personnel carrying out the testing, which the client verifies before granting access',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,10 +216,10 @@ export const module5Questions: Question[] = [
     question:
       'A permit-to-work for HV inspection differs from a sanction-to-test in that a permit:',
     options: [
-      'Authorises defined live testing on equipment that must remain energised under controlled conditions',
+      'Authorises defined live testing on equipment kept energised',
       'Authorises work on equipment confirmed dead and earthed',
-      'Is issued verbally for short-duration tasks, whereas a sanction-to-test must always be in writing',
-      'Allows any competent person to remove the earths without the issuing authority being notified',
+      'Is issued verbally, whereas a sanction-to-test is in writing',
+      'Lets any competent person remove the earths unsupervised',
     ],
     correctAnswer: 1,
     explanation:
@@ -248,9 +248,9 @@ export const module5Questions: Question[] = [
     question:
       'Why is testing carried out before energising any new installation?',
     options: [
-      'To allow the test instrument batteries to be conditioned against the supply before live testing begins',
-      'To satisfy the DNO requirement that the installation is proven before they connect the service cut-out',
-      'To warm the conductors to operating temperature so that loop impedance readings are accurate',
+      'To allow the test instrument batteries to be conditioned against the supply before any live testing on the installation begins',
+      'To satisfy the requirement of the distributor that the installation is proven before they connect the service cut-out and meter',
+      'To warm the conductors up to their normal operating temperature so that the loop impedance readings obtained are accurate',
       'To detect faults (short circuits, mis-wiring, low IR, missing CPC) BEFORE applying voltage that could cause shock, fire, or equipment damage',
     ],
     correctAnswer: 3,
@@ -265,9 +265,9 @@ export const module5Questions: Question[] = [
       'A pre-job survey before initial verification typically includes:',
     options: [
       'Confirming scope, supply characteristics, design data availability, accessibility, occupancy, and previous certification',
-      'Measuring earth fault loop impedance and prospective fault current at every accessory in advance',
-      'Completing the full Schedule of Test Results before any inspection or testing is carried out',
-      'Energising the installation and recording RCD trip times to establish a baseline before work begins',
+      'Measuring earth fault loop impedance and prospective fault current at every accessory in the installation in advance',
+      'Completing the full Schedule of Test Results from the design data before any inspection or testing is carried out',
+      'Energising the installation and recording RCD trip times to establish a baseline before any other work begins',
     ],
     correctAnswer: 0,
     explanation:
@@ -296,10 +296,10 @@ export const module5Questions: Question[] = [
     question:
       'When working in a domestic property with vulnerable occupants (e.g. medical equipment, elderly), pre-isolation actions include:',
     options: [
-      'Isolate the supply without warning so the work can be completed as quickly as possible to minimise disruption',
-      'Rely on the occupant to notice the loss of supply and contact their care provider if needed',
+      'Isolate the supply without warning so the work can be completed as quickly as possible and disruption to the occupant is minimised overall',
+      'Rely on the occupant to notice the loss of supply and to contact their own care provider if they need help with equipment during the works',
       'Notify the occupant in advance, agree timings, identify life-safety equipment dependent on supply, plan temporary arrangements where required, document agreement',
-      'Leave the medical equipment energised on a separate circuit while isolating the rest of the installation',
+      'Leave the medical equipment energised on its own separate circuit while isolating the rest of the installation for the testing work, without telling anyone',
     ],
     correctAnswer: 2,
     explanation:
@@ -312,9 +312,9 @@ export const module5Questions: Question[] = [
     question:
       'A near-miss (e.g. discovering an isolated circuit is actually live) must be:',
     options: [
-      'Ignored if no injury resulted, since RIDDOR only applies where a person is actually harmed',
-      'Recorded informally in the engineer notebook but not escalated unless it happens a second time',
-      'Reported only to the DNO, who are responsible for investigating all supply-related incidents',
+      'Logged as a training point at the next team meeting, since RIDDOR applies only where a person is actually harmed',
+      'Recorded informally in the engineer own notebook but not escalated unless the same thing happens a second time',
+      'Reported only to the distributor, who are responsible for investigating all supply-related incidents of this kind',
       'Stopped, made safe, investigated for root cause, and reported per the company H&S policy and (if a dangerous occurrence) RIDDOR',
     ],
     correctAnswer: 3,
@@ -329,9 +329,9 @@ export const module5Questions: Question[] = [
       'On a TN-C-S supply, before disconnecting the main earthing conductor for testing (e.g. Ze), the inspector must:',
     options: [
       'Switch off and lock off the main switch first to prevent the touch-voltage hazard arising if a fault develops while the earth is removed',
-      'Disconnect the main protective bonding conductors first so they do not affect the Ze reading',
-      'Leave the installation energised and loaded so the Ze reading reflects normal operating conditions',
-      'Connect a temporary earth electrode at the MET to maintain a fault path while the conductor is removed',
+      'Disconnect the main protective bonding conductors first so that they do not affect the value of the Ze reading obtained',
+      'Leave the installation energised and under load so that the Ze reading reflects normal operating conditions on site',
+      'Connect a temporary earth electrode at the MET to maintain a fault path while the earthing conductor is removed for the test',
     ],
     correctAnswer: 0,
     explanation:
@@ -346,8 +346,8 @@ export const module5Questions: Question[] = [
     options: [
       'BS 7671:2018 Regulation 642.1 — the requirement to verify before putting into service',
       'EAWR 1989 Regulation 4(2) — "as may be necessary to prevent danger"',
-      'The Building Regulations Part P — covering the maintenance of domestic electrical systems',
-      'The Electricity Safety, Quality and Continuity Regulations 2002 — the DNO maintenance duty',
+      'The Building Regulations Part P — covering domestic electrical work',
+      'The Electricity Safety, Quality and Continuity Regulations 2002 — DNO duties',
     ],
     correctAnswer: 1,
     explanation:
@@ -363,7 +363,7 @@ export const module5Questions: Question[] = [
       'BS EN 61557 (the standard for low-voltage test instruments)',
       'BS EN 60529 (the IP-rating standard for enclosures)',
       'BS EN IEC 60900 (1000V AC / 1500V DC rated)',
-      'BS EN 60898 (the standard for circuit-breakers for household use)',
+      'BS EN 60898 (circuit-breakers for household use)',
     ],
     correctAnswer: 2,
     explanation:
@@ -408,10 +408,10 @@ export const module5Questions: Question[] = [
     question:
       'A method statement for inspection and testing should include:',
     options: [
-      'Only the names and signatures of the design, construction, and inspection personnel',
+      'The names and signatures of the design, construction and inspection personnel involved in the project',
       'Scope, sequence, hazards/controls, isolation strategy, PPE, instruments, competence of personnel, emergency arrangements',
-      'Only the test results required on the Schedule of Test Results for each circuit',
-      'Only the supply characteristics and earthing arrangement recorded on the certificate',
+      'The test results required on the Schedule of Test Results for each circuit in the installation, and nothing more',
+      'The supply characteristics and the earthing arrangement to be recorded on the certificate at the end of the job',
     ],
     correctAnswer: 1,
     explanation:
@@ -440,9 +440,9 @@ export const module5Questions: Question[] = [
     question:
       'Locking off using a multi-lock hasp allows multiple workers to:',
     options: [
-      'Share a single padlock, with the key held by the most senior person on site',
-      'Isolate several circuits at once using one lock-off device on the main switch',
-      'Re-energise the circuit individually once their own portion of the work is complete',
+      'Share a single padlock on the hasp, with the only key held by the most senior person on the site that day',
+      'Isolate several circuits at once using one lock-off device fitted to the main switch of the board instead',
+      'Re-energise the circuit individually as soon as their own portion of the work has been completed and checked',
       'Each apply their own personal padlock so the isolation cannot be removed until ALL workers have removed their padlocks',
     ],
     correctAnswer: 3,
@@ -488,10 +488,10 @@ export const module5Questions: Question[] = [
     question:
       'If during inspection an inspector identifies an immediately dangerous condition (e.g. exposed live conductor), the FIRST action is to:',
     options: [
-      'Complete the remaining inspection items first, then record the defect as a C1 on the report',
-      'Photograph the defect and email the client a quotation for the remedial work before doing anything else',
+      'Complete all of the remaining inspection items first, then record the defect as a C1 observation on the report afterwards',
+      'Photograph the defect and email the client a quotation for the remedial work before taking any other action at all',
       'Make safe (isolate, barrier, warn), then notify the duty holder in writing, then document on certification (Code C1 on EICR if applicable)',
-      'Finish testing the circuit to establish the cause before deciding whether the condition is dangerous',
+      'Finish testing the circuit to establish the cause of the defect before deciding whether the condition is actually dangerous',
     ],
     correctAnswer: 2,
     explanation:
@@ -525,10 +525,10 @@ export const module5Questions: Question[] = [
     question:
       "Information required by the inspector before initial verification includes (Reg 641.1 / GN3 Ch 2):",
     options: [
-      "Maximum demand, supply characteristics (Ze, Ipf, U0), earthing arrangement, circuit composition and design data",
-      "Only the supply voltage and frequency, as all other data is derived during the testing process on site",
-      "Only the previous EICR, since a brand-new installation requires no separate design information at all",
-      "Only the manufacturer instructions for the consumer unit and the outgoing protective devices fitted",
+      'Maximum demand, supply characteristics (Ze, Ipf, U0), earthing arrangement, circuit composition and design data',
+      'The supply voltage and frequency alone, as all other data is derived during the testing process on site',
+      'The previous EICR alone, since a brand-new installation requires no separate design information at all',
+      'The manufacturer instructions for the consumer unit and the outgoing protective devices that are fitted',
     ],
     correctAnswer: 0,
     explanation:
@@ -621,10 +621,10 @@ export const module5Questions: Question[] = [
     question:
       "The PRIMARY purpose of initial verification is to confirm:",
     options: [
-      "That the installation will not require any periodic inspection for at least ten years",
-      "That the maximum demand of the installation does not exceed the supply capacity",
-      "The installation has been designed, constructed, inspected and tested in accordance with BS 7671 and is safe to be energised and put into service",
-      "That the cost of the installation matches the original quotation provided to the client",
+      'That the installation will not require any further periodic inspection and testing for at least ten years from first energisation',
+      'That the maximum demand of the completed installation does not exceed the capacity of the supply provided by the distributor at the origin',
+      'The installation has been designed, constructed, inspected and tested in accordance with BS 7671 and is safe to be energised and put into service',
+      'That the final cost of the installation matches the original quotation that was provided to the client before the work started',
     ],
     correctAnswer: 2,
     explanation:
@@ -669,10 +669,10 @@ export const module5Questions: Question[] = [
     question:
       "Per Reg 643.1, inspection and testing during initial verification must be carried out:",
     options: [
-      "Only after the installation has been energised and is in normal service",
-      "DURING erection where appropriate, AND on completion BEFORE the installation is put into service",
-      "Only at the design stage, before any conductors are installed",
-      "Only once the client has signed off the as-installed drawings",
+      'Following energisation, once the installation has been in normal service for a period',
+      'DURING erection where appropriate, AND on completion BEFORE the installation is put into service',
+      'At the design stage only, before any of the conductors have been installed on site',
+      'Once the client has signed off the as-installed drawings and the work is complete',
     ],
     correctAnswer: 1,
     explanation:
@@ -685,10 +685,10 @@ export const module5Questions: Question[] = [
     question:
       "Documents the inspector should consult before starting initial verification include:",
     options: [
-      "Only BS 7671, since all of the other information is derived during the on-site testing process",
-      "Only the manufacturer instructions for the consumer unit, with nothing else being relevant here",
-      "Drawings, specs, BS 7671, GN3, manufacturer data, any previous EICR, and the RAMS",
-      "Only the client's verbal description of what electrical work has been carried out so far",
+      'BS 7671 alone, since all of the other information is derived during on-site testing',
+      'The manufacturer instructions for the consumer unit and its protective devices',
+      'Drawings, specs, BS 7671, GN3, manufacturer data, any previous EICR, and the RAMS',
+      'The client verbal description of what electrical work has been carried out so far',
     ],
     correctAnswer: 2,
     explanation:
@@ -733,10 +733,10 @@ export const module5Questions: Question[] = [
     question:
       "EICR Code C3 means:",
     options: [
-      "Danger present — risk of injury — immediate remedial action required",
-      "Improvement recommended — does not represent immediate or potential danger but improvement would contribute to safety",
-      "Potentially dangerous — urgent remedial action required",
-      "Further investigation required without delay to determine whether danger exists",
+      'Danger present — a risk of injury exists, so immediate remedial action is required by the duty holder',
+      'Improvement recommended — does not represent immediate or potential danger but improvement would contribute to safety',
+      'Potentially dangerous — urgent remedial action is required to remove the risk to persons on site',
+      'Further investigation is required without delay to determine whether a danger actually exists',
     ],
     correctAnswer: 1,
     explanation:
@@ -749,10 +749,10 @@ export const module5Questions: Question[] = [
     question:
       "EICR Code FI means:",
     options: [
-      "Fault Identified — the defect has been located and rectified during the inspection",
-      "Failed Inspection — the whole installation must be condemned and replaced",
-      "Further Investigation required without delay — inspector cannot conclude on safety without more information",
-      "Fault Isolated — the affected circuit has been disconnected pending repair",
+      'Fault Identified — the defect has been located and rectified during the course of the inspection',
+      'Failed Inspection — the whole installation must be condemned and replaced before re-energising',
+      'Further Investigation required without delay — inspector cannot conclude on safety without more information',
+      'Fault Isolated — the affected circuit has been disconnected and left dead pending repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -765,10 +765,10 @@ export const module5Questions: Question[] = [
     question:
       "An overall EICR outcome is recorded as UNSATISFACTORY if any of the following are present:",
     options: [
-      "Any C3 observation only, regardless of whether C1 or C2 are present",
-      "Three or more C3 observations on the same circuit",
-      "Any departure from the previous EICR recommendations",
-      "Any C1, any C2, OR any FI observation",
+      'Any C3 observation, whether or not C1 or C2 exist',
+      'Three or more C3 observations on one circuit',
+      'Any departure from the previous EICR advice',
+      'Any C1, any C2, OR any FI observation',
     ],
     correctAnswer: 3,
     explanation:
@@ -781,10 +781,10 @@ export const module5Questions: Question[] = [
     question:
       "Information that the EIC must record about the supply (per Reg 644 + Form) includes:",
     options: [
-      "Earthing arrangement, nominal voltage U/U0, frequency, Ipf, Ze, and the supply protective device rating",
-      "Only the nominal voltage and frequency, all other characteristics being fixed at the design stage off-site",
-      "Only the prospective fault current at the origin and the type of supply protective device that is fitted",
-      "Only the earthing arrangement and the assessed maximum demand of the whole installation at the origin",
+      'Earthing arrangement, nominal voltage U/U0, frequency, Ipf, Ze, and the supply protective device rating',
+      'The nominal voltage and frequency alone, all other characteristics being fixed at the design stage',
+      'The prospective fault current at the origin and the type of supply protective device that is fitted',
+      'The earthing arrangement and the assessed maximum demand of the whole installation at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -797,10 +797,10 @@ export const module5Questions: Question[] = [
     question:
       "The Schedule of Inspections must record an outcome for each item as:",
     options: [
-      "A numerical resistance value in ohms for each inspection item",
-      "Tick (acceptable), N/A (not applicable), LIM (limitation), or appropriate code — accompanied by an overall declaration",
-      "Pass or fail only, with no provision for items that are not applicable",
-      "A percentage compliance score against the BS 7671 requirements",
+      'A numerical resistance value in ohms recorded against every individual item listed on the schedule',
+      'Tick (acceptable), N/A (not applicable), LIM (limitation), or appropriate code — accompanied by an overall declaration',
+      'Pass or fail only, with no provision for items that are not applicable to the installation concerned',
+      'A percentage compliance score assessed against the requirements of BS 7671 for each item inspected',
     ],
     correctAnswer: 1,
     explanation:
@@ -813,10 +813,10 @@ export const module5Questions: Question[] = [
     question:
       "On the Schedule of Test Results, a circuit-by-circuit record must include as a minimum:",
     options: [
-      "Only the circuit ID and whether each individual circuit passed or failed the test overall",
-      "Only the insulation resistance and earth fault loop impedance recorded for the whole board",
-      "Circuit ID, conductor csa, reference method, OCPD, R1+R2/R2, IR, polarity, Zs, RCD time, AFDD",
-      "Only the supply characteristics (Ze, Ipf) measured once at the origin of the installation",
+      'The circuit ID and whether each individual circuit passed or failed the test overall',
+      'The insulation resistance and earth fault loop impedance recorded for the whole board',
+      'Circuit ID, conductor csa, reference method, OCPD, R1+R2/R2, IR, polarity, Zs, RCD time, AFDD',
+      'The supply characteristics (Ze, Ipf) measured once at the origin of the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -829,10 +829,10 @@ export const module5Questions: Question[] = [
     question:
       "Under Building Regulations Part P (England) and notifiable work, the installer must:",
     options: [
-      "Notify the DNO before any new circuit is energised in a dwelling",
-      "Obtain written planning permission from the local authority for all electrical work",
-      "Submit the EIC to the HSE within 30 days of completing notifiable work",
-      "Notify Building Control (or use a Competent Person Scheme) for new circuits, consumer unit replacements, and special-location work",
+      'Notify the electricity distributor before any new circuit in a dwelling is energised by the installer',
+      'Obtain written planning permission from the local authority before carrying out any electrical work in a dwelling',
+      'Submit the completed EIC to the Health and Safety Executive within 30 days of finishing any notifiable work',
+      'Notify Building Control (or use a Competent Person Scheme) for new circuits, consumer unit replacements, and special-location work',
     ],
     correctAnswer: 3,
     explanation:
@@ -861,10 +861,10 @@ export const module5Questions: Question[] = [
     question:
       "Limitations agreed with the client on an EICR (e.g. fitted furniture preventing inspection of sockets) must be:",
     options: [
-      "Coded as C1 on the report, since any area not inspected represents a present danger",
-      "Recorded explicitly on the report so the reader understands the scope of what was NOT inspected and the implications",
-      "Omitted from the report so as not to alarm the client about un-inspected areas",
-      "Recorded only in the inspector's own notes and not shared with the client",
+      'Coded as C1 on the report, since any area that has not been inspected represents a present danger',
+      'Recorded explicitly on the report so the reader understands the scope of what was NOT inspected and the implications',
+      'Omitted from the report so as not to alarm the client about the areas that were not inspected',
+      'Recorded only in the inspector own site notes and not shared with the client or the duty holder',
     ],
     correctAnswer: 1,
     explanation:
@@ -877,10 +877,10 @@ export const module5Questions: Question[] = [
     question:
       "Per Reg 644.4 / GN3, certificates and reports must be retained:",
     options: [
-      "For a maximum of 12 months, after which they may be destroyed",
-      "Only until the next periodic inspection, then superseded and discarded",
-      "For the lifetime of the installation, by both the issuer and the recipient — and made available to subsequent inspectors",
-      "By the issuer only, with no obligation on the recipient to keep a copy",
+      'For a maximum of 12 months from issue, after which they may be destroyed by the issuer and the client',
+      'Only until the next periodic inspection, when they are superseded and may be discarded by both parties',
+      'For the lifetime of the installation, by both the issuer and the recipient — and made available to subsequent inspectors',
+      'By the issuer alone, since the recipient has no obligation to retain a copy of the certificate issued',
     ],
     correctAnswer: 2,
     explanation:
@@ -893,10 +893,10 @@ export const module5Questions: Question[] = [
     question:
       "The inspector preparing for a verification job should review the previous EICR (if any) primarily to:",
     options: [
-      "Copy across the previous test results so that re-testing is not needed",
-      "Confirm the previous inspector's registration is still valid before starting",
-      "Establish the exact date the installation must next be inspected",
-      "Identify previously coded defects, recommended improvements, and any limitations — to inform scope and expected condition",
+      'Copy across the previous test results so that the circuits do not have to be re-tested during this visit',
+      'Confirm that the previous inspector scheme registration is still valid before starting any work on site',
+      'Establish the exact date on which the installation must next be inspected by the duty holder',
+      'Identify previously coded defects, recommended improvements, and any limitations — to inform scope and expected condition',
     ],
     correctAnswer: 3,
     explanation:
@@ -914,10 +914,10 @@ export const module5Questions: Question[] = [
     question:
       "Visual inspection per Reg 642.3 is carried out:",
     options: [
-      "Preferably before, but in any case prior to, testing — and as far as reasonably practicable with the installation isolated",
-      "After all dead and live testing is complete, as a final check before handover",
-      "Only on the energised installation, so that indicator lamps and displays can be observed",
-      "At the same time as live testing, so faults can be confirmed immediately",
+      'Preferably before, but in any case prior to, testing — and as far as reasonably practicable with the installation isolated',
+      'After all of the dead and live testing has been completed, as a final check before handover to the client',
+      'Only on the energised installation, so that indicator lamps and displays can be observed working correctly',
+      'At the same time as the live testing, so that any faults found can be confirmed there and then',
     ],
     correctAnswer: 0,
     explanation:
@@ -930,10 +930,10 @@ export const module5Questions: Question[] = [
     question:
       "Items that must be inspected per Reg 642.3 include (sample):",
     options: [
-      "Only the consumer unit enclosure and the main switch, all other items being tested rather than inspected",
-      "Conductor connections and identification, cable routing and selection, protective devices, and fire barriers",
-      "Only the earthing and bonding arrangements, since these are the only genuinely safety-critical items present",
-      "Only those items that cannot be verified by testing, such as the manufacturer labels and warning notices",
+      'The consumer unit enclosure and the main switch alone, all other items being tested rather than inspected',
+      'Conductor connections and identification, cable routing and selection, protective devices, and fire barriers',
+      'The earthing and bonding arrangements alone, since these are the only genuinely safety-critical items present',
+      'Those items that cannot be verified by testing, such as the manufacturer labels and warning notices',
     ],
     correctAnswer: 1,
     explanation:
@@ -946,10 +946,10 @@ export const module5Questions: Question[] = [
     question:
       "Human senses used during visual inspection (Reg 642.3 / GN3) include:",
     options: [
-      "Sight only — physical contact with any part of the installation is prohibited during inspection",
-      "Sight and touch only, since hearing and smell give no useful diagnostic information",
-      "Sight, hearing (e.g. arcing/buzzing), smell (e.g. burning insulation), touch (carefully — for excessive temperature) — never taste",
-      "Sight, hearing, smell, touch AND taste, to detect chemical contamination of conductors",
+      'Sight only — any physical contact with parts of the installation is prohibited during the inspection work on site',
+      'Sight and touch only, since hearing and smell give the inspector no useful diagnostic information on site',
+      'Sight, hearing (e.g. arcing/buzzing), smell (e.g. burning insulation), touch (carefully — for excessive temperature) — never taste',
+      'Sight, hearing, smell, touch AND taste, to detect chemical contamination of the conductors concerned',
     ],
     correctAnswer: 2,
     explanation:
@@ -994,10 +994,10 @@ export const module5Questions: Question[] = [
     question:
       "Main protective bonding conductors per Reg 411.3.1.2 / Reg 544 must be:",
     options: [
-      "A minimum of 16mm copper on all earthing arrangements regardless of supply neutral size",
-      "Sized per Table 54.8 (TN-C-S 10mm minimum, TN-S/TT half csa of earthing conductor, with absolute minimum 6mm copper)",
-      "The same csa as the largest final circuit line conductor in the installation",
-      "Always 4mm copper, matching the cpc of a typical ring final circuit",
+      'A minimum of 16mm copper on every earthing arrangement, regardless of the size of the supply neutral',
+      'Sized per Table 54.8 (TN-C-S 10mm minimum, TN-S/TT half csa of earthing conductor, with absolute minimum 6mm copper)',
+      'The same csa as the largest final circuit line conductor in the installation being bonded at the board',
+      'Always 4mm copper, matching the cpc of a typical ring final circuit wired in flat twin cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -1010,10 +1010,10 @@ export const module5Questions: Question[] = [
     question:
       "Supplementary equipotential bonding conductors in a Section 701 location bath/shower must:",
     options: [
-      "Be a minimum of 10mm copper and connected directly to the main earthing terminal",
-      "Connect only the exposed-conductive-parts to each other, extraneous parts being excluded",
-      "Connect simultaneously-accessible exposed and extraneous conductive parts AND have continuity-test resistance per Reg 415.2.2: R <= 50V/Ia",
-      "Be run in green-and-yellow sheathing and bonded to the water supply pipe only",
+      'Be a minimum of 10mm copper and connected directly back to the main earthing terminal of the installation',
+      'Connect only the exposed-conductive-parts to one another, extraneous-conductive-parts being excluded from the bonding',
+      'Connect simultaneously-accessible exposed and extraneous conductive parts AND have continuity-test resistance per Reg 415.2.2: R <= 50V/Ia',
+      'Be run in green-and-yellow sheathing and bonded to the incoming water supply pipe only, with no other connections made',
     ],
     correctAnswer: 2,
     explanation:
@@ -1026,10 +1026,10 @@ export const module5Questions: Question[] = [
     question:
       "Inspection of overcurrent protective devices must verify:",
     options: [
-      "Only the colour of the toggle and the manufacturer's name printed on the front of the device",
-      "Only that the device trips correctly when its integral test button is pressed at the board",
-      "Only that the device is the same brand as the consumer unit into which it is actually fitted",
-      "Type, rated current In, breaking capacity (Icn/Icu) suitable for Ipf, and selectivity with upstream",
+      'The colour of the toggle and the manufacturer name printed on the front of the device',
+      'That the device trips correctly when its integral test button is pressed at the board',
+      'That the device is the same brand as the consumer unit into which it is actually fitted',
+      'Type, rated current In, breaking capacity (Icn/Icu) suitable for Ipf, and selectivity with upstream',
     ],
     correctAnswer: 3,
     explanation:
@@ -1081,7 +1081,7 @@ export const module5Questions: Question[] = [
     ],
     correctAnswer: 2,
     explanation:
-      "Reg 421.1.7 was redrafted in A4:2026: AFDDs on socket-outlet final circuits not exceeding 32 A are now a REQUIREMENT in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and RECOMMENDED for all other premises.",
+      "Reg 421.1.7 was redrafted at Amendment 2:2022 (A4:2026 then changed item (a) to High rise residential buildings): AFDDs on socket-outlet final circuits not exceeding 32 A are now a REQUIREMENT in Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and RECOMMENDED for all other premises.",
     section: "3.4",
     difficulty: "advanced",
   },
@@ -1106,10 +1106,10 @@ export const module5Questions: Question[] = [
     question:
       "Inspection of cable supports and containment must verify:",
     options: [
-      "Support spacing, mechanical protection at penetrations, fire-stopping (Reg 527.2), and grommets at entries",
-      "Only that the cable colours match the harmonised colour code consistently along the whole cable run",
-      "Only the insulation resistance of each individually supported cable length measured at 500V DC",
-      "Only that the cable csa is large enough to carry the design current of the circuit it supplies",
+      'Support spacing, mechanical protection at penetrations, fire-stopping (Reg 527.2), and grommets at entries',
+      'That the cable colours match the harmonised colour code consistently along the whole cable run',
+      'The insulation resistance of each individually supported cable length measured at 500V DC',
+      'That the cable csa is large enough to carry the design current of the circuit it supplies',
     ],
     correctAnswer: 0,
     explanation:
@@ -1122,10 +1122,10 @@ export const module5Questions: Question[] = [
     question:
       "Cables installed in a wall under 50mm depth that are NOT in safe zones (Reg 522.6.202/.203) must be:",
     options: [
-      "Run only in plastic capping with no other protection required",
-      "Mechanically protected (capping/conduit), OR enclosed in earthed metallic covering, OR provided with 30mA RCD additional protection",
-      "Sleeved in green-and-yellow along the concealed section to indicate a hazard",
-      "Increased in csa by one size to compensate for the shallow burial depth",
+      'Run in plastic capping only, with no other mechanical protection and no additional RCD protection required at all',
+      'Mechanically protected (capping/conduit), OR enclosed in earthed metallic covering, OR provided with 30mA RCD additional protection',
+      'Sleeved in green-and-yellow along the whole of the concealed section so the run is clearly identified as a hazard',
+      'Increased in csa by one size to compensate for the reduced burial depth and for the risk of mechanical damage in the wall',
     ],
     correctAnswer: 1,
     explanation:
@@ -1138,10 +1138,10 @@ export const module5Questions: Question[] = [
     question:
       "Inspection of the consumer unit per Reg 421.1.201 in domestic premises (single dwellings) must verify the enclosure is:",
     options: [
-      "Of transparent material so the protective devices can be read without opening it",
-      "Fitted with at least IP65 rating to prevent moisture ingress in domestic locations",
-      "Of non-combustible material (e.g. metal) OR enclosed in a non-combustible cabinet — to limit fire spread from the consumer unit",
-      "Bonded to the gas and water services to provide supplementary equipotential bonding",
+      'Of transparent material so that the protective devices inside can be read without opening it at all',
+      'Fitted with an enclosure rated at least IP65 to prevent moisture ingress in a domestic location',
+      'Of non-combustible material (e.g. metal) OR enclosed in a non-combustible cabinet — to limit fire spread from the consumer unit',
+      'Bonded directly to the incoming gas and water services so as to provide supplementary equipotential bonding',
     ],
     correctAnswer: 2,
     explanation:
@@ -1170,10 +1170,10 @@ export const module5Questions: Question[] = [
     question:
       "Section 722 (electric vehicle charging points) requires that each EV connection point be supplied by:",
     options: [
-      "An individual circuit with Type B RCD (or Type A + RDC-DD) per Reg 722.531.3.101 to detect smooth DC residual currents",
-      "A shared ring final circuit with a single Type AC RCD covering all charge points",
-      "A spur taken from the nearest socket-outlet ring with a 13A fused connection unit",
-      "A circuit protected by a Type AC 100mA time-delayed RCD for selectivity",
+      'An individual circuit with Type B RCD (or Type A + RDC-DD) per Reg 722.531.3.101 to detect smooth DC residual currents',
+      'A shared ring final circuit protected by a single Type AC RCD covering all of the charge points',
+      'A spur taken from the nearest socket-outlet ring through a 13A fused connection unit and isolator',
+      'A circuit protected by a Type AC 100mA time-delayed RCD to give selectivity with the upstream device',
     ],
     correctAnswer: 0,
     explanation:
@@ -1218,10 +1218,10 @@ export const module5Questions: Question[] = [
     question:
       "Section 753 (heating cables/embedded heating systems) requires:",
     options: [
-      "100mA time-delayed RCD protection only, to avoid nuisance tripping of the heating element",
-      "Supplementary bonding of the heating element to the building structural steel",
-      "A Type B RCD to detect smooth DC currents produced by the heating controller",
-      "30mA RCD additional protection per Reg 753.415.1, and floor-temperature limiter to prevent damage to floor coverings",
+      '100mA time-delayed RCD protection only, so as to avoid nuisance tripping of the heating element in use',
+      'Supplementary bonding of the heating element to the structural steelwork of the building throughout',
+      'A Type B RCD to detect the smooth DC residual currents produced by the electronic heating controller',
+      '30mA RCD additional protection per Reg 753.415.1, and floor-temperature limiter to prevent damage to floor coverings',
     ],
     correctAnswer: 3,
     explanation:
@@ -1234,10 +1234,10 @@ export const module5Questions: Question[] = [
     question:
       "Diagrams, charts and similar information per Reg 514.9 must be displayed:",
     options: [
-      "At the origin, identifying every circuit, its composition, the OCPD and the test characteristics",
-      "Only at the local authority Building Control office where the installation work was originally notified",
-      "Only on the certificate handed to the client, and not on or anywhere near the installation itself",
-      "At every accessory throughout the installation, repeated in full for each socket-outlet and switch",
+      'At the origin, identifying every circuit, its composition, the OCPD and the test characteristics',
+      'At the local authority Building Control office where the installation work was notified',
+      'On the certificate handed to the client, and not on or anywhere near the installation',
+      'At every accessory throughout the installation, repeated in full for each socket-outlet and switch',
     ],
     correctAnswer: 0,
     explanation:
@@ -1266,10 +1266,10 @@ export const module5Questions: Question[] = [
     question:
       "Inspection of segregation between Band I (ELV/SELV) and Band II (LV mains) circuits per Reg 528.1 requires:",
     options: [
-      "That all Band I and Band II conductors share the same colour code for ease of identification",
-      "That Band I circuits are run at a higher level than Band II circuits in any common containment",
-      "Physical separation OR equivalent insulation OR an earthed metallic screen — to prevent transfer of mains potential into ELV circuits",
-      "That Band I and Band II circuits are protected by a common 30mA RCD",
+      'That all of the Band I and Band II conductors share a common colour code so that they can be easily identified later',
+      'That the Band I circuits are run at a higher level than the Band II circuits within any shared containment system',
+      'Physical separation OR equivalent insulation OR an earthed metallic screen — to prevent transfer of mains potential into ELV circuits',
+      'That the Band I and the Band II circuits are both protected by a common 30mA RCD at the distribution board supplying them',
     ],
     correctAnswer: 2,
     explanation:
@@ -1282,10 +1282,10 @@ export const module5Questions: Question[] = [
     question:
       "When inspecting the methods of basic protection (Reg 416), the inspector verifies:",
     options: [
-      "Presence of a cpc throughout, main equipotential bonding, and ADS within the disconnection time",
-      "A 30mA RCD on every final circuit to provide automatic disconnection of supply",
-      "Earth fault loop impedance at every point below the Table 41.3 maximum value",
-      "Insulation of live parts (Reg 416.1), barriers/enclosures to at least IPXXB/IP2X (Reg 416.2), and obstacles/placing out of reach where applicable",
+      'Presence of a cpc throughout, main protective bonding, and automatic disconnection of supply within the time allowed for the circuit',
+      'A 30mA RCD fitted on every final circuit in the installation to provide automatic disconnection of the supply, whatever the load',
+      'Earth fault loop impedance measured at every point on the circuit and found to be below the tabulated maximum for the device',
+      'Insulation of live parts (Reg 416.1), barriers/enclosures to at least IPXXB/IP2X (Reg 416.2), and obstacles/placing out of reach where applicable',
     ],
     correctAnswer: 3,
     explanation:
@@ -1319,10 +1319,10 @@ export const module5Questions: Question[] = [
     question:
       "The dead-test sequence per Reg 643.2 / GN3 Section 2 is:",
     options: [
-      "Insulation resistance -> continuity of protective conductors -> polarity (dead) -> earth electrode resistance (TT)",
-      "Continuity of protective conductors -> continuity of ring final conductors -> insulation resistance -> polarity (dead) -> earth electrode resistance (TT)",
-      "Earth fault loop impedance -> insulation resistance -> continuity -> polarity (dead)",
-      "Polarity (dead) -> insulation resistance -> continuity of protective conductors -> RCD operation",
+      'Insulation resistance -> continuity of protective conductors -> continuity of ring final conductors -> polarity (dead) -> earth electrode resistance (TT)',
+      'Continuity of protective conductors -> continuity of ring final conductors -> insulation resistance -> polarity (dead) -> earth electrode resistance (TT)',
+      'Earth fault loop impedance -> insulation resistance -> continuity of protective conductors -> continuity of ring final conductors -> polarity (dead)',
+      'Polarity (dead) -> insulation resistance -> continuity of protective conductors -> RCD operation -> earth electrode resistance (TT)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1381,7 +1381,7 @@ export const module5Questions: Question[] = [
   {
     id: 85,
     question:
-      "Per BS 7671 Reg 643.7.3 (A4:2026), the RCD test sequence is:",
+      "Under BS 7671:2018+A4:2026, the RCD test sequence is:",
     options: [
       "Tests at both 1×IΔn and 5×IΔn, with the half-rated no-trip test newly added in A4:2026",
       "A single AC test at 1×IΔn, the 5×IΔn test having been deleted in A4:2026 as redundant",
@@ -1445,12 +1445,17 @@ export const module5Questions: Question[] = [
   {
     id: 89,
     question:
-      "If an insulation resistance test result is below 1 MΩ but above the minimum 1 MΩ value (e.g. 1.5 MΩ on a long circuit), the inspector should:",
+      // Stem was self-contradictory — "below 1 MΩ but above the minimum 1 MΩ
+      // value (e.g. 1.5 MΩ)". 1.5 MΩ is not below 1 MΩ, so the question could
+      // not be answered as written. Reworded to the case the explanation and
+      // the key both describe: a result that passes Table 64 but sits close to
+      // the limit. Table 64 minimum for a 500 V DC test is 1.0 MΩ.
+      'If an insulation resistance test result is above the 1 MΩ minimum but close to it (e.g. 1.5 MΩ on a long circuit), the inspector should:',
     options: [
-      "Fail the circuit outright, since any value below 2MΩ is non-compliant under BS 7671",
-      "Investigate further — record the value, isolate sub-circuits, and verify whether the low value reflects normal cable length or a developing fault",
-      "Accept the value without comment, as it exceeds the 1MΩ minimum and needs no further action",
-      "Re-test at 250V instead of 500V to obtain a higher reading before recording the result",
+      'Fail the circuit outright and code the defect, since any value measured below 2MΩ is treated as non-compliant on site',
+      'Investigate further — record the value, isolate sub-circuits, and verify whether the low value reflects normal cable length or a developing fault',
+      'Accept the value without further comment on the report, as it exceeds the 1MΩ minimum and so needs no further action',
+      'Re-test the circuit at 250V instead of 500V so as to obtain a higher reading before recording the result on the schedule of tests',
     ],
     correctAnswer: 1,
     explanation:
@@ -1479,10 +1484,10 @@ export const module5Questions: Question[] = [
     question:
       "Test instruments must be checked before use for:",
     options: [
-      "Only the calibration certificate date, with all other aspects being covered by annual calibration",
-      "Only that the instrument is the correct CAT rating for the particular work being undertaken on site",
-      "Only that the instrument display is set to the correct units of measurement before each reading",
-      "Battery, lead/probe integrity, the zero/null function, calibration date, and a known reference",
+      'The calibration certificate date, with all other aspects covered by the annual calibration',
+      'That the instrument carries the correct CAT rating for the work being undertaken on site',
+      'That the instrument display is set to the correct units of measurement before each reading',
+      'Battery, lead/probe integrity, the zero/null function, calibration date, and a known reference',
     ],
     correctAnswer: 3,
     explanation:
@@ -1511,10 +1516,10 @@ export const module5Questions: Question[] = [
     question:
       "Continuity test instruments must have a no-load voltage between:",
     options: [
-      "50V and 250V, with a minimum short-circuit current of 1mA to protect sensitive electronics",
-      "4V and 24V (per BS EN 61557-4) and a minimum short-circuit current of 200mA — to break through any film of oxide on connections",
-      "230V and 400V, matching the nominal single- and three-phase supply voltages",
-      "100V and 500V DC, the same test voltages used for insulation resistance testing",
+      '50V and 250V, with a minimum short-circuit current of 1mA so that sensitive electronic components are protected',
+      '4V and 24V (per BS EN 61557-4) and a minimum short-circuit current of 200mA — to break through any film of oxide on connections',
+      '230V and 400V, matching the nominal single-phase and three-phase supply voltages of the installation under test',
+      '100V and 500V DC, the same two test voltages that are used for insulation resistance testing of the conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1559,10 +1564,10 @@ export const module5Questions: Question[] = [
     question:
       "Maximum DNO-declared Ze values commonly assumed (per BPG3) are:",
     options: [
-      "TN-S: 0.8Ω; TN-C-S: 0.35Ω (these are ASSUMED maxima — actual values must be measured or confirmed from DNO)",
-      "TN-S: 0.35Ω; TN-C-S: 0.8Ω (the higher value applying to the combined PEN supply)",
-      "TN-S: 21Ω; TN-C-S: 200Ω (the same maxima as for a TT earth electrode)",
-      "TN-S: 1.0Ω; TN-C-S: 1.0Ω (a single common value for all earthing arrangements)",
+      'TN-S: 0.8Ω; TN-C-S: 0.35Ω (these are ASSUMED maxima — actual values must be measured or confirmed from DNO)',
+      'TN-S: 0.35Ω; TN-C-S: 0.8Ω (the higher value applying to the combined PEN conductor supply)',
+      'TN-S: 21Ω; TN-C-S: 200Ω (the same maxima that apply to a TT earth electrode arrangement)',
+      'TN-S: 1.0Ω; TN-C-S: 1.0Ω (a single common value applying to all earthing arrangements alike)',
     ],
     correctAnswer: 0,
     explanation:
@@ -1591,10 +1596,10 @@ export const module5Questions: Question[] = [
     question:
       "Functional testing per Reg 643.10 covers:",
     options: [
-      "Only the insulation resistance of every functional circuit measured at 500V DC before handover",
-      "Only the earth fault loop impedance of each switched circuit measured at its furthest point",
-      "Switchgear, controlgear, drives, controls, interlocks and monitoring devices operating as intended",
-      "Only the polarity of every functional switch on the installation verified at the dead-test stage",
+      'The insulation resistance of every functional circuit measured at 500V DC before handover',
+      'The earth fault loop impedance of each switched circuit measured at its furthest point',
+      'Switchgear, controlgear, drives, controls, interlocks and monitoring devices operating as intended',
+      'The polarity of every functional switch on the installation verified at the dead-test stage',
     ],
     correctAnswer: 2,
     explanation:
@@ -1607,10 +1612,10 @@ export const module5Questions: Question[] = [
     question:
       "Test instrument leads with crocodile/probe combinations should:",
     options: [
-      "Be at least 3m long with unshrouded clips so connection to busbars is easier",
-      "Be replaced annually regardless of condition, the same interval as instrument calibration",
-      "Carry a lower CAT rating than the instrument so they fuse first under fault",
-      "Be CAT-rated equal to or greater than the instrument, GS38 compliant, with shroud, fused tips and clearly visible insulation integrity",
+      'Be at least 3m long and fitted with unshrouded clips so connection to exposed busbars is easier for the tester',
+      'Be replaced annually regardless of their condition, at the same interval as the instrument calibration is carried out',
+      'Carry a lower CAT rating than the instrument itself so that the leads fuse first under fault conditions arising',
+      'Be CAT-rated equal to or greater than the instrument, GS38 compliant, with shroud, fused tips and clearly visible insulation integrity',
     ],
     correctAnswer: 3,
     explanation:
@@ -1639,10 +1644,10 @@ export const module5Questions: Question[] = [
     question:
       "Per Table 41.3 (A4:2026), the maximum Zs for a 32A Type B BS EN 60898 MCB at 230V (0.4s disconnection time) is:",
     options: [
-      "1.44Ω (the pre-Cmin value, calculated as 230/(5×32) without the 0.95 multiplier)",
-      "1.37Ω (the value moved to 1.37Ω with the introduction of the Cmin = 0.95 multiplier; 1.44Ω is the old pre-Cmin value)",
-      "0.68Ω (calculated using the Type C 10×In multiplier rather than Type B 5×In)",
-      "7.28Ω (the value for a 6A Type B device, not a 32A device)",
+      '1.44Ω (the pre-Cmin value, calculated as 230/(5×32) without applying the Cmin 0.95 multiplier to it)',
+      '1.37Ω (the value moved to 1.37Ω with the introduction of the Cmin = 0.95 multiplier; 1.44Ω is the old pre-Cmin value)',
+      '0.68Ω (calculated using the Type C 10×In multiplier rather than the Type B 5×In for the device)',
+      '7.28Ω (the value that applies to a 6A Type B device rather than to a 32A device of the same type)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1655,10 +1660,10 @@ export const module5Questions: Question[] = [
     question:
       "Maximum Zs for a 6A Type B MCB (final circuit, 0.4s) per Table 41.3 is approximately:",
     options: [
-      "1.37Ω (the value for a 32A Type B device, not a 6A device)",
-      "7.67Ω (Zs = 230 / 30, omitting the Cmin = 0.95 multiplier)",
-      "7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)",
-      "3.64Ω (Zs = 0.95 × 230 / (10 × 6), using the Type C multiplier)",
+      '1.37Ω (the value for a 32A Type B device, not a 6A device)',
+      '7.67Ω (Zs = 230 / 30, omitting the Cmin = 0.95 multiplier)',
+      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
+      '3.64Ω (Zs = 0.95 × 230 / (10 × 6), Type C multiplier)',
     ],
     correctAnswer: 2,
     explanation:
@@ -1671,10 +1676,10 @@ export const module5Questions: Question[] = [
     question:
       "Maximum Zs for a 32A Type C MCB (Ia = 10×In = 320A) per Table 41.3 at 0.4s is approximately:",
     options: [
-      "1.37Ω (Zs = 0.95 × 230 / 160, using the Type B 5×In multiplier by mistake)",
-      "0.72Ω (Zs = 230 / 320, omitting the Cmin = 0.95 multiplier)",
-      "0.34Ω (Zs = 0.95 × 230 / 640, using a 20×In multiplier)",
-      "0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)",
+      '1.37Ω (using the Type B 5×In multiplier by mistake)',
+      '0.72Ω (Zs = 230 / 320, omitting the Cmin factor)',
+      '0.34Ω (using a 20×In multiplier by mistake)',
+      '0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)',
     ],
     correctAnswer: 3,
     explanation:
@@ -1767,10 +1772,10 @@ export const module5Questions: Question[] = [
     question:
       "Selecting the correct instrument scale (e.g. continuity 0-200Ω, IR 500V, loop high-current/no-trip mode) is necessary to:",
     options: [
-      "Reduce the time the test takes by skipping ranges that are unlikely to be needed",
-      "Achieve appropriate resolution and accuracy for the value being measured, AND avoid false trip/damage to RCD-protected circuits",
-      "Extend the battery life of the instrument by using the lowest power range available",
-      "Match the instrument range to the colour code of the conductor being tested",
+      'Reduce the time each test takes by skipping over the instrument ranges that are unlikely to be needed on site',
+      'Achieve appropriate resolution and accuracy for the value being measured, AND avoid false trip/damage to RCD-protected circuits',
+      'Extend the battery life of the instrument by always selecting the lowest power range that is available to it',
+      'Match the selected instrument range to the colour code of the conductor being tested at the time of the test',
     ],
     correctAnswer: 1,
     explanation:
@@ -1783,10 +1788,10 @@ export const module5Questions: Question[] = [
     question:
       "When recording test results on the Schedule of Test Results, values should be:",
     options: [
-      "Rounded to the nearest whole ohm to keep the certificate tidy and easy to read",
-      "Recorded only if they fail, passing values being left blank on the schedule",
-      "Recorded to the resolution displayed by the instrument and compared against design values (and BS 7671 maxima) BEFORE leaving site",
-      "Averaged across all circuits on the board and a single figure entered for the installation",
+      'Rounded to the nearest whole ohm so that the certificate is kept tidy and easy for the client to read afterwards',
+      'Recorded only where a value fails, passing values being left blank on the schedule of test results for clarity',
+      'Recorded to the resolution displayed by the instrument and compared against design values (and BS 7671 maxima) BEFORE leaving site',
+      'Averaged across all of the circuits on the board and a single representative figure entered for the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -1852,10 +1857,10 @@ export const module5Questions: Question[] = [
     question:
       "On a healthy 32A 2.5/1.5mm² ring final circuit ~50m long, expected r1 (end-to-end of one line conductor) is approximately:",
     options: [
-      "About 0.05Ω (assuming the resistance of copper is negligible over 50m)",
-      "About 0.60Ω (using the 1.5mm cpc figure of 12.10 mΩ/m instead of the 2.5mm line figure)",
-      "About 0.36-0.40Ω (50m × ~7.41mΩ/m ≈ 0.37Ω at 20°C; OSG mΩ/m table)",
-      "About 0.74Ω (taking the full ring length of 100m rather than one 50m leg)",
+      'About 0.05Ω (assuming the resistance of copper is negligible over 50m)',
+      'About 0.60Ω (using the 1.5mm cpc figure instead of the 2.5mm line figure)',
+      'About 0.36-0.40Ω (50m × ~7.41mΩ/m ≈ 0.37Ω at 20°C; OSG mΩ/m table)',
+      'About 0.74Ω (taking the full ring length of 100m rather than one 50m leg)',
     ],
     correctAnswer: 2,
     explanation:
@@ -1900,10 +1905,10 @@ export const module5Questions: Question[] = [
     question:
       "Insulation resistance test should be conducted between:",
     options: [
-      "Line and earth only, the neutral being excluded because it is already bonded to earth",
-      "Live conductors connected together to earth (preferred when SPDs present), AND between live and neutral with loads disconnected",
-      "Cpc and the main earthing terminal only, to confirm the earthing path is intact",
-      "Line and neutral only, since insulation to earth is verified by the loop impedance test",
+      'Line and earth only, the neutral being excluded because it is already bonded to earth at the origin of the supply',
+      'Live conductors connected together to earth (preferred when SPDs present), AND between live and neutral with loads disconnected',
+      'Cpc and the main earthing terminal only, so as to confirm that the earthing path through the circuit is intact',
+      'Line and neutral only, since the insulation to earth is verified by the earth fault loop impedance test instead',
     ],
     correctAnswer: 1,
     explanation:
@@ -1932,10 +1937,10 @@ export const module5Questions: Question[] = [
     question:
       "Effect of cable LENGTH on insulation resistance:",
     options: [
-      "Longer cable = LESS insulation surface to leak through = HIGHER measured IR, proportional to length",
-      "Cable length has no effect on insulation resistance because IR depends only on the insulation material",
-      "Longer cable = HIGHER conductor resistance, which the IR tester reads as a higher insulation value",
-      "Longer cable = MORE insulation surface in parallel = LOWER measured IR. Test result expected to be inversely proportional to length",
+      'Longer cable = LESS insulation surface to leak through = HIGHER measured IR, in direct proportion to the length',
+      'Cable length has no effect at all on insulation resistance, because IR depends only on the insulation material used',
+      'Longer cable = HIGHER conductor resistance, which the IR tester then reads as a higher insulation value overall',
+      'Longer cable = MORE insulation surface in parallel = LOWER measured IR. Test result expected to be inversely proportional to length',
     ],
     correctAnswer: 3,
     explanation:
@@ -1948,10 +1953,10 @@ export const module5Questions: Question[] = [
     question:
       "Reasons for verifying polarity per Reg 643.6 include:",
     options: [
-      "To ensure single-pole devices (switches, fuses, MCBs) are connected in the LINE conductor only (not neutral), preventing equipment remaining live when switched off",
-      "To confirm the line and neutral conductors are the same cross-sectional area at every accessory",
-      "To verify the supply frequency is correct before any equipment is connected to the circuit",
-      "To check the phase rotation is clockwise so that single-phase motors run in the correct direction",
+      'To ensure single-pole devices (switches, fuses, MCBs) are connected in the LINE conductor only (not neutral), preventing equipment remaining live when switched off',
+      'To confirm that the line and neutral conductors are of the same cross-sectional area at every accessory on the final circuit',
+      'To verify that the supply frequency is correct before any item of equipment is connected to the circuit and energised for the first time in service',
+      'To check that the phase rotation is clockwise so that the single-phase motors on the installation run in the correct direction when first started',
     ],
     correctAnswer: 0,
     explanation:
@@ -1964,10 +1969,10 @@ export const module5Questions: Question[] = [
     question:
       "Polarity must additionally be verified at:",
     options: [
-      "Only at the consumer unit, since polarity cannot change between the board and the accessories",
-      "Origin of the supply, every accessory (sockets, switches), and every Edison-screw lampholder (centre contact must be LINE)",
-      "Only at the furthest point of each circuit, where polarity errors are most likely",
-      "Only at bayonet-cap lampholders, Edison-screw types being inherently safe",
+      'At the consumer unit alone, since the polarity cannot change between the board and the accessories on a circuit',
+      'Origin of the supply, every accessory (sockets, switches), and every Edison-screw lampholder (centre contact must be LINE)',
+      'At the furthest point of each circuit alone, where any polarity error is most likely to occur in practice',
+      'At bayonet-cap lampholders alone, since Edison-screw types are inherently safe in this respect on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2044,10 +2049,10 @@ export const module5Questions: Question[] = [
     question:
       "Factors affecting conductor resistance (Reg 524 + Appendix 4) include:",
     options: [
-      "Only the cross-sectional area, length being irrelevant because resistance is a material property",
-      "The supply voltage, frequency, and the prospective fault current at the origin",
-      "Cross-sectional area, length, conductor material (copper vs aluminium ≈1.6×), and temperature (~0.4%/K rise above 20°C)",
-      "Only the insulation type and the ambient humidity around the cable",
+      'The cross-sectional area alone, length being irrelevant because resistance is a property of the material',
+      'The supply voltage, the frequency, and the prospective fault current measured at the origin of the installation',
+      'Cross-sectional area, length, conductor material (copper vs aluminium ≈1.6×), and temperature (~0.4%/K rise above 20°C)',
+      'The insulation type and the ambient humidity around the cable at the time of the testing work on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -2172,10 +2177,10 @@ export const module5Questions: Question[] = [
     question:
       "Continuity of main protective bonding to extraneous conductive parts (gas, water, steel) should be verified by:",
     options: [
-      "Insulation resistance test at 500V DC between the bonding conductor and the service pipe",
-      "Earth fault loop impedance test between the bonded part and the supply line conductor",
-      "Low-resistance ohmmeter (R2 method) from MET to the bonded service entry point — typically <0.05Ω; values significantly higher indicate poor connection",
-      "A visual check of the clamp tightness, which is sufficient without any electrical test",
+      'An insulation resistance test at 500V DC taken between the bonding conductor and the incoming service pipe at the clamp position itself',
+      'An earth fault loop impedance test taken between the bonded metalwork and the line conductor of the supply at the origin of the installation',
+      'Low-resistance ohmmeter (R2 method) from MET to the bonded service entry point — typically <0.05Ω; values significantly higher indicate poor connection',
+      'A visual check of the tightness of the clamp, which is sufficient on its own without any electrical test being carried out on it at all',
     ],
     correctAnswer: 2,
     explanation:
@@ -2188,10 +2193,10 @@ export const module5Questions: Question[] = [
     question:
       "If continuity of a circuit cpc gives an unexpectedly high resistance (e.g. 4Ω on a short circuit), the inspector should:",
     options: [
-      "Accept the value, since 4Ω is well within the maximum permitted cpc resistance",
-      "Add the 4Ω to the measured Ze and record the total as the circuit Zs without further action",
-      "Re-test at a higher instrument current to force the reading lower before recording it",
-      "Investigate: check for loose terminations, broken cpc, damaged cable, parallel paths via metalwork — rectify before any live testing",
+      'Accept the measured value, since 4Ω is well within the maximum resistance permitted for a circuit cpc of this size',
+      'Add the 4Ω to the measured Ze and record the total as the circuit Zs without taking any further action on site',
+      'Re-test at a higher instrument test current so as to force the reading lower before it is recorded on the schedule',
+      'Investigate: check for loose terminations, broken cpc, damaged cable, parallel paths via metalwork — rectify before any live testing',
     ],
     correctAnswer: 3,
     explanation:
@@ -2220,10 +2225,10 @@ export const module5Questions: Question[] = [
     question:
       "Test instruments for continuity testing must have the LIMP (low impedance) setting ON when testing:",
     options: [
-      "Through any circuit longer than 50m, to compensate for the higher conductor resistance",
-      "Through devices that may give nuisance trips on standard test current — and the reading interpreted with awareness of the test current limit",
-      "On every continuity test, since the low-impedance mode is always the most accurate",
-      "Only when testing insulation resistance on circuits that contain surge protective devices",
+      'Through any circuit longer than 50m, so as to compensate for the higher resistance of the conductors being tested on site',
+      'Through devices that may give nuisance trips on standard test current — and the reading interpreted with awareness of the test current limit',
+      'On every continuity test that is carried out, since the low-impedance mode is always the most accurate setting available',
+      'Only when testing insulation resistance on circuits that contain surge protective devices at the board or elsewhere on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -2252,10 +2257,10 @@ export const module5Questions: Question[] = [
     question:
       "Polarity of an AC-supplied USB charging socket installed by another contractor is verified by:",
     options: [
-      "Measuring the DC output voltage of the USB port and checking it against polarity markings",
-      "An insulation resistance test between the USB terminals and earth at 500V DC",
-      "A phase rotation test at the socket to confirm the line conductor is correctly placed",
-      "Same dead-polarity test as a standard socket (line at LINE terminal); functional check via charging a known device confirms output polarity",
+      'Measuring the DC output voltage of the USB port and checking it against the polarity markings printed on the front plate',
+      'An insulation resistance test taken between the USB output terminals and earth at a test voltage of 500V DC at the socket',
+      'A phase rotation test carried out at the socket to confirm that the line conductor has been correctly placed in its terminal',
+      'Same dead-polarity test as a standard socket (line at LINE terminal); functional check via charging a known device confirms output polarity',
     ],
     correctAnswer: 3,
     explanation:
@@ -2284,10 +2289,10 @@ export const module5Questions: Question[] = [
     question:
       "If polarity is incorrect at a single-pole switch on a lighting circuit (switch in neutral), the symptom would be:",
     options: [
-      "The light fails to come on at all because the switch interrupts the line conductor",
-      "Light works but lampholder/luminaire body remains at line potential when switch is OFF — major shock risk during lamp change",
-      "The lighting MCB trips every time the switch is operated because of the reversed connection",
-      "The light flickers continuously because the neutral is being switched rather than the line",
+      'The light fails to come on at all, because the switch is interrupting the line conductor of the circuit instead',
+      'Light works but lampholder/luminaire body remains at line potential when switch is OFF — major shock risk during lamp change',
+      'The lighting circuit MCB trips every time that the switch is operated, because of the reversed connection at the switch',
+      'The light flickers continuously, because the neutral is being switched rather than the line conductor itself',
     ],
     correctAnswer: 1,
     explanation:
@@ -2300,10 +2305,10 @@ export const module5Questions: Question[] = [
     question:
       "On a 4mm² SWA cable 80m long supplying a TT outbuilding, expected R1+R2 (using armour as cpc, OSG/manufacturer mΩ/m data) is approximately:",
     options: [
-      "About 0.37Ω (counting only the 4mm copper line conductor and ignoring the armour)",
-      "About 1.57Ω (taking 160m there-and-back instead of the 80m run length)",
-      "About 0.79Ω (R1: 80m × 4.61mΩ = 0.369Ω; R2 of armour for 4mm² SWA ~ 5.20 mΩ/m × 80m = 0.416Ω; total ~0.785Ω)",
-      "About 0.42Ω (counting only the armour cpc and ignoring the line conductor)",
+      'About 0.37Ω (counting only the 4mm copper line conductor and ignoring the steel wire armour entirely)',
+      'About 1.57Ω (taking 160m there-and-back instead of the 80m run length of the cable installed)',
+      'About 0.79Ω (R1: 80m × 4.61mΩ = 0.369Ω; R2 of armour for 4mm² SWA ~ 5.20 mΩ/m × 80m = 0.416Ω; total ~0.785Ω)',
+      'About 0.42Ω (counting only the armour used as the cpc and ignoring the line conductor entirely)',
     ],
     correctAnswer: 2,
     explanation:
@@ -2332,10 +2337,10 @@ export const module5Questions: Question[] = [
     question:
       "Reason for testing IR between L+N joined to earth (rather than L-N separately) when SPDs are present:",
     options: [
-      "Avoids the test voltage appearing across the SPD (which is L-N or L-PE) potentially triggering or damaging it",
-      "Speeds up the test by allowing line and neutral to be measured in a single operation",
-      "Provides a higher insulation reading by halving the number of conductors under test",
-      "Allows the SPD status indicator to be checked at the same time as the insulation test",
+      'Avoids the test voltage appearing across the SPD (which is L-N or L-PE) potentially triggering or damaging it',
+      'Speeds up the test by allowing the line and the neutral to be measured in a single operation',
+      'Provides a higher insulation reading by halving the number of conductors that are under test',
+      'Allows the SPD status indicator to be checked at the same time as the insulation test itself',
     ],
     correctAnswer: 0,
     explanation:
@@ -2367,10 +2372,10 @@ export const module5Questions: Question[] = [
     id: 146,
     question: "Live polarity test (Reg 643.6) is conducted to confirm:",
     options: [
-      "That the supply voltage is within +/- 10% of the nominal 230V at every accessory",
-      "That the RCD trips within 300ms at 1×IΔn once the installation is energised",
-      "After energising, that the supply polarity (line vs neutral) is as expected and consistent with dead-test polarity verification at all accessories",
-      "That the earth fault loop impedance is below the Table 41.3 maximum at the furthest point",
+      'That the supply voltage remains within +/- 10% of the nominal 230V at every accessory on the installation under normal load conditions',
+      'That the RCD trips within 300ms at 1×IΔn once the installation has been energised and put properly into service for the first time',
+      'After energising, that the supply polarity (line vs neutral) is as expected and consistent with dead-test polarity verification at all accessories',
+      'That the earth fault loop impedance is below the tabulated maximum at the furthest point of every final circuit that has been tested',
     ],
     correctAnswer: 2,
     explanation: "Live polarity catches any wiring fault that might have been missed at dead-test, including supply-side issues from the DNO.",
@@ -2381,10 +2386,10 @@ export const module5Questions: Question[] = [
     id: 147,
     question: "Earth fault loop impedance Zs at the furthest point of a circuit is the sum of:",
     options: [
-      "Ze minus (R1+R2), since the internal resistance reduces the external loop value",
-      "R1 + R2 only, the external loop impedance being excluded from Zs",
-      "Ze + Rn (line plus neutral), the cpc not forming part of the loop",
-      "Ze (external loop) + R1 (line cpc to fault) + R2 (cpc to MET) at operating temperature — abbreviated Zs = Ze + (R1+R2)cor",
+      'Ze minus (R1+R2), since the internal resistance of the installation reduces the external loop value measured',
+      'R1 + R2 only, the external loop impedance of the supply being excluded from the value of Zs altogether',
+      'Ze + Rn (the line plus the neutral conductor), the cpc not forming any part of the earth fault loop path',
+      'Ze (external loop) + R1 (line cpc to fault) + R2 (cpc to MET) at operating temperature — abbreviated Zs = Ze + (R1+R2)cor',
     ],
     correctAnswer: 3,
     explanation: "Zs is the total loop impedance for an L-PE fault at the most-disconnect-difficult point.",
@@ -2449,7 +2454,7 @@ export const module5Questions: Question[] = [
   },
   {
     id: 152,
-    question: "The RCD test per BS 7671 Reg 643.7.3 (A4:2026) requires:",
+    question: "RCD testing under BS 7671:2018+A4:2026 requires:",
     options: [
       "A single AC test at 1×IΔn, within the published maximum; the 5×IΔn test was deleted",
       "Tests at 1×IΔn, 5×IΔn and 0.5×IΔn together, exactly as required by previous amendments",
@@ -2493,10 +2498,10 @@ export const module5Questions: Question[] = [
     id: 155,
     question: "Type AC RCDs detect:",
     options: [
-      "Sinusoidal AC and pulsating DC residual currents, the same as a Type A device",
-      "Smooth DC residual currents, making them suitable for EV charger circuits",
-      "Sinusoidal AC, pulsating DC and smooth DC residual currents of all waveforms",
-      "Only sinusoidal AC residual currents — UNSUITABLE for circuits with electronic loads producing pulsating DC (most modern loads)",
+      'Sinusoidal AC and pulsating DC residual currents, in exactly the same way as a Type A device would on a circuit',
+      'Smooth DC residual currents, which makes them suitable for use on EV charger circuits in a dwelling or workplace',
+      'Sinusoidal AC, pulsating DC and smooth DC residual currents of every waveform likely to occur on a circuit',
+      'Only sinusoidal AC residual currents — UNSUITABLE for circuits with electronic loads producing pulsating DC (most modern loads)',
     ],
     correctAnswer: 3,
     explanation: "Type AC is increasingly inadequate for modern loads. BS 7671 (post-Amendment 2) prefers Type A as the default.",
@@ -2555,7 +2560,7 @@ export const module5Questions: Question[] = [
       "A requirement in HRRBs, HMOs, student accommodation and care homes; recommended elsewhere",
     ],
     correctAnswer: 3,
-    explanation: "Reg 421.1.7 (A4:2026) makes AFDDs on socket-outlet final circuits not exceeding 32 A a REQUIREMENT in HRRBs, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a RECOMMENDATION for all other premises.",
+    explanation: "Reg 421.1.7, redrafted at Amendment 2:2022, makes AFDDs on socket-outlet final circuits not exceeding 32 A a REQUIREMENT in HRRBs, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a RECOMMENDATION for all other premises.",
     section: "6.4",
     difficulty: "advanced",
   },
@@ -2605,10 +2610,10 @@ export const module5Questions: Question[] = [
     id: 163,
     question: "Methods for determining PFC where instrument testing is impractical (e.g. high-current supplies):",
     options: [
-      "Measuring the earth electrode resistance and applying the formula Ipf = U0/Ra",
-      "Reading the breaking capacity printed on the consumer unit and taking that as the PFC",
-      "Multiplying the measured Zs at the furthest point by the rated current of the device",
-      "Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)",
+      'Measurement of the earth electrode resistance and application of the formula Ipf = U0/Ra at the origin of the installation',
+      'The breaking capacity printed on the consumer unit, taken as the prospective fault current at the origin of the installation',
+      'Multiplication of the measured Zs at the furthest point by the rated current of the protective device fitted at the board',
+      'Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)',
     ],
     correctAnswer: 3,
     explanation: "DNO declared values are the design fallback; calculations using transformer Zk and cable Z give site-specific results.",
@@ -2689,10 +2694,10 @@ export const module5Questions: Question[] = [
     id: 169,
     question: "For confirming polarity of an incoming supply at a TT installation, the inspector must:",
     options: [
-      "Confirm L-PE = small voltage (<5V), N-PE = nominal (~230V), and L-N = zero at the cut-out",
-      "Confirm L-PE = nominal voltage (~230V), N-PE = small voltage (typically <5V), and L-N = nominal — using approved voltage indicator at the cut-out or main switch",
-      "Measure the earth electrode resistance and confirm it is below 200Ω before checking polarity",
-      "Carry out a phase-rotation test at the cut-out to confirm the line conductor is correctly placed",
+      'Confirm that L-PE = a small voltage (<5V), N-PE = nominal (~230V), and L-N = zero when measured at the cut-out using an approved indicator',
+      'Confirm L-PE = nominal voltage (~230V), N-PE = small voltage (typically <5V), and L-N = nominal — using approved voltage indicator at the cut-out or main switch',
+      'Measure the earth electrode resistance and confirm that it is below 200Ω before checking the polarity of the incoming supply at the cut-out',
+      'Carry out a phase-rotation test at the cut-out to confirm that the line conductor has been correctly placed in the main switch terminal on site',
     ],
     correctAnswer: 1,
     explanation: "Even on TT, supply polarity must be verified — a supply-side neutral break can leave neutral at line potential.",
@@ -2703,10 +2708,10 @@ export const module5Questions: Question[] = [
     id: 170,
     question: "RCD tested with a measured trip time of 250ms at 1×IΔn (30mA) is:",
     options: [
-      "Fail — exceeds the 40ms maximum that applies to a 30mA RCD at 1×IΔn",
-      "Fail — exceeds the 200ms maximum permitted under Reg 643.7.3 verification",
-      "Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and Reg 643.7.3 verification)",
-      "Fail — a general-purpose RCD must trip within 100ms at 1×IΔn to be acceptable",
+      'Fail — the reading exceeds the 40ms maximum that applies to a 30mA RCD tested at 1×IΔn on site',
+      'Fail — the reading exceeds the 200ms maximum permitted for verification of the device on an EICR',
+      'Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and the BS 7671 verification requirement)',
+      'Fail — a general-purpose RCD must trip within 100ms at 1×IΔn for the result to be acceptable',
     ],
     correctAnswer: 2,
     explanation: "300ms is the maximum at 1×IΔn for general-purpose 30mA. 250ms is acceptable.",
@@ -2717,10 +2722,10 @@ export const module5Questions: Question[] = [
     id: 171,
     question: "If RCD trips on the test-button check but fails to trip during instrument test at 1×IΔn:",
     options: [
-      "PASS — the test button trip is sufficient proof that the RCD operates correctly",
-      "Re-test using a higher instrument current of 5×IΔn, accepting the device if it then trips",
-      "Record it as a C3 improvement and recommend replacement at the next inspection",
-      "FAIL — replace device. Test button only verifies the mechanical trip; instrument test verifies electrical detection of residual current",
+      'PASS — the trip on the test button is sufficient proof that the RCD is operating correctly in service that day',
+      'Re-test the device using a higher instrument current of 5×IΔn, and accept it if it then trips on the second test',
+      'Record it as a C3 improvement recommended and advise replacement at the time of the next inspection of the installation',
+      'FAIL — replace device. Test button only verifies the mechanical trip; instrument test verifies electrical detection of residual current',
     ],
     correctAnswer: 3,
     explanation: "Test button is mechanical only. Failure under instrument test = the detection circuitry has degraded — RCD must be replaced.",
@@ -2745,10 +2750,10 @@ export const module5Questions: Question[] = [
     id: 173,
     question: "The 80% rule for measured Zs (Reg 643.7.3 informative) suggests measured Zs should be:",
     options: [
-      ">= 80% of Table 41.3 maximum, so that the circuit uses the full available impedance margin",
-      "<= 80% of Table 41.3 maximum to allow for instrument uncertainty (typically +/- 30% for loop testers) and temperature rise above test temperature",
-      "Exactly 80% of the measured Ze, regardless of the protective device rating",
-      "<= 120% of Table 41.3 maximum, allowing for the cable being tested while cold",
+      '>= 80% of the Table 41.3 maximum, so that the circuit makes use of the full impedance margin available in the design',
+      '<= 80% of Table 41.3 maximum to allow for instrument uncertainty (typically +/- 30% for loop testers) and temperature rise above test temperature',
+      'Exactly 80% of the measured Ze at the origin, regardless of the rating of the protective device fitted to the circuit concerned',
+      '<= 120% of the Table 41.3 maximum, which allows for the cable being tested while it is still cold and unloaded at the time of test',
     ],
     correctAnswer: 1,
     explanation: "80% rule provides margin for instrument tolerance and conductor temperature rise. Some MFTs apply this automatically.",
@@ -2759,10 +2764,10 @@ export const module5Questions: Question[] = [
     id: 174,
     question: "If during functional testing a contactor operates but with abnormal noise/heat:",
     options: [
-      "PASS — the contactor operates, and noise or heat is normal during the first hour of running",
-      "Record the noise as a C3 improvement and leave the contactor in service",
-      "FAIL — contactor showing signs of distress (worn contacts, coil insulation degrading); investigate and rectify before energising in service",
-      "Increase the supply voltage to the coil so the contactor seats more firmly and the noise stops",
+      'PASS — the contactor still operates, and noise or heat is normal during the first hour of running after installation',
+      'Record the noise as a C3 improvement recommended and leave the contactor in service until the next inspection of the site',
+      'FAIL — contactor showing signs of distress (worn contacts, coil insulation degrading); investigate and rectify before energising in service',
+      'Increase the supply voltage to the coil so that the contactor seats more firmly and the noise then stops completely',
     ],
     correctAnswer: 2,
     explanation: "Operation is necessary but not sufficient — abnormal indicators predict failure. Replace.",
@@ -2773,10 +2778,10 @@ export const module5Questions: Question[] = [
     id: 175,
     question: "During EICR live tests, if RCD-protected circuit Zs measurement causes nuisance trip:",
     options: [
-      "Temporarily link out the RCD so a full-current loop test can be carried out, then reconnect it",
-      "Calculate Zs as Ze + (R1+R2) from the dead tests instead, since a live Zs cannot be obtained",
-      "Bridge the RCD test terminals to bypass the residual detection during the loop test",
-      "Use the no-trip / 15mA / lower-current loop test mode (modern MFTs have this), accepting slightly reduced accuracy in exchange for non-tripping",
+      'Temporarily link out the RCD so that a full-current loop test can be carried out, then reconnect it to the circuit',
+      'Calculate Zs as Ze + (R1+R2) from the dead test results instead, since a live Zs value cannot be obtained at all',
+      'Bridge the RCD test terminals so as to bypass the residual current detection while the loop test is carried out on the circuit',
+      'Use the no-trip / 15mA / lower-current loop test mode (modern MFTs have this), accepting slightly reduced accuracy in exchange for non-tripping',
     ],
     correctAnswer: 3,
     explanation: "No-trip loop test injects current too low to trip the RCD. Accuracy reduces (~30% tolerance) but result is still useful for compliance.",
@@ -2801,10 +2806,10 @@ export const module5Questions: Question[] = [
     id: 177,
     question: "Phase sequence reversal on a 3-phase induction motor will cause:",
     options: [
-      "The motor to fail to start at all, drawing no current until the phases are corrected",
-      "Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow",
-      "The motor to run at double speed, overheating the windings within seconds",
-      "The motor to run normally, since three-phase induction motors are insensitive to phase order",
+      'The motor to fail to start at all, drawing no current whatever until the phases have been corrected at the panel',
+      'Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow',
+      'The motor to run at double its rated speed, overheating the windings within a matter of seconds of starting',
+      'The motor to run normally, since three-phase induction motors are insensitive to the order of the phases applied',
     ],
     correctAnswer: 1,
     explanation: "Wrong rotation = wrong direction. On centrifugal loads (pump impellers, lift gear) destructive within minutes.",
@@ -2815,10 +2820,10 @@ export const module5Questions: Question[] = [
     id: 178,
     question: "Per Reg 415.1.1, 30mA RCD additional protection is required for:",
     options: [
-      "Distribution circuits and sub-mains only, with all final circuits specifically excluded here",
-      "Only circuits supplying fixed equipment such as immersion heaters, boilers and storage heaters",
-      "General-use socket-outlets up to 32A, outdoor mobile equipment, and shallow concealed cables",
-      "Only circuits located within bathrooms and shower rooms in domestic and similar premises",
+      'Distribution circuits and sub-mains only, with all final circuits specifically excluded here',
+      'Circuits supplying fixed equipment such as immersion heaters, boilers and storage heaters',
+      'General-use socket-outlets up to 32A, outdoor mobile equipment, and shallow concealed cables',
+      'Circuits located within bathrooms and shower rooms in domestic and similar premises',
     ],
     correctAnswer: 2,
     explanation: "Reg 415.1.1 requires 30mA additional protection for typical user-touched circuits: socket-outlets up to 32A for general use, mobile equipment up to 32A used outdoors, and cables concealed in walls below 50mm without other protection. A4:2026 retains this.",
@@ -2829,10 +2834,10 @@ export const module5Questions: Question[] = [
     id: 179,
     question: "Test sequence for an RCBO (combined RCD + MCB) verifies:",
     options: [
-      "Only the RCD function (1×IΔn trip time), the MCB function being assumed from the rating",
-      "Only the MCB function (Zs at the furthest point), the residual function being covered by the test button",
-      "Only the insulation resistance of the device measured at 500V before energising",
-      "RCD function (1×IΔn trip time) AND MCB function (continuity, polarity, Zs to verify magnetic trip operates within disc time on L-PE faults beyond RCD coverage)",
+      'The RCD function alone (1×IΔn trip time), with the MCB function assumed from the rating marked on the front of the device by the inspector',
+      'The MCB function alone (Zs at the furthest point), with the residual current function being covered by the integral test button on the device itself',
+      'The insulation resistance of the device alone, measured at 500V DC before the circuit is energised for the first time and put into service',
+      'RCD function (1×IΔn trip time) AND MCB function (continuity, polarity, Zs to verify magnetic trip operates within disc time on L-PE faults beyond RCD coverage)',
     ],
     correctAnswer: 3,
     explanation: "RCBO combines two devices in one — both must be verified independently.",
@@ -2857,10 +2862,10 @@ export const module5Questions: Question[] = [
     id: 181,
     question: "When the inspector identifies that the supply earthing is unsuitable (e.g. PME prohibited area like marina, EV charger without RCBO/protection):",
     options: [
-      "Accept the PME earth and fit a 30mA RCD, which removes the need for a TT conversion",
-      "Code C2 / refuse certification + recommend conversion to TT supply with RCD additional protection AND notification to dutyholder/installer",
-      "Increase the main bonding conductor to 25mm to compensate for the prohibited PME supply",
-      "Connect the installation earth directly to the supply neutral to lower the loop impedance",
+      'Accept the PME earth and fit a 30mA RCD, which removes the need for any conversion to a TT supply at the origin of the installation',
+      'Code C2 / refuse certification + recommend conversion to TT supply with RCD additional protection AND notification to dutyholder/installer',
+      'Increase the main protective bonding conductor to 25mm so as to compensate for the prohibited PME supply type in that location',
+      'Connect the installation earth directly to the supply neutral so as to lower the earth fault loop impedance measured at the origin',
     ],
     correctAnswer: 1,
     explanation: "TN-C-S earthing in prohibited zones is potentially dangerous (broken PEN can transfer line voltage to earthed metalwork). Section 722 + DNO ENA EREC G12 cover.",
@@ -2871,10 +2876,10 @@ export const module5Questions: Question[] = [
     id: 182,
     question: "For commissioning a control panel with PLC and contactors, functional testing must verify:",
     options: [
-      "Only the insulation resistance of all the control wiring measured at 500V DC before energising",
-      "Only the earth fault loop impedance measured at the incoming supply terminals of the panel",
-      "Each I/O operates, interlocks and the emergency stop function, and timing matches the spec",
-      "Only the polarity of the incoming three-phase supply checked at the panel's main isolator",
+      'The insulation resistance of all the control wiring measured at 500V DC before energising',
+      'The earth fault loop impedance measured at the incoming supply terminals of the panel',
+      'Each I/O operates, interlocks and the emergency stop function, and timing matches the spec',
+      'The polarity of the incoming three-phase supply checked at the main isolator of the panel',
     ],
     correctAnswer: 2,
     explanation: "Modern control systems are software plus hardware; functional commissioning is structured against the design specification — each input/output, interlock, the emergency stop with safety-rated contactors, and the timing/sequencing.",
@@ -2899,10 +2904,10 @@ export const module5Questions: Question[] = [
     id: 184,
     question: "On an EICR, an installation on TN-C-S supply but connected to a swimming pool/marina/agricultural building violating Section 705/709/721 is coded:",
     options: [
-      "C2 (potentially dangerous) — broken PEN risk in prohibited environments creates touch voltage hazard; inspector recommends conversion to TT",
-      "C3 (improvement recommended) — acceptable in service but ideally converted to TT in future",
-      "Satisfactory — a PME supply is permitted in any location provided a 30mA RCD is fitted",
-      "C1 (danger present) in every case, requiring the installation to be isolated immediately",
+      'C2 (potentially dangerous) — broken PEN risk in prohibited environments creates touch voltage hazard; inspector recommends conversion to TT',
+      'C3 (improvement recommended) — acceptable in service but ideally converted to a TT arrangement at some point in the future',
+      'Satisfactory — a PME supply is permitted in any location provided that a 30mA RCD has been fitted to the final circuit concerned',
+      'C1 (danger present) in every case, requiring that the whole installation is isolated immediately by the inspector on site',
     ],
     correctAnswer: 0,
     explanation: "C2 = potentially dangerous. PEN faults under specific environmental conditions of the special location could electrify exposed metalwork.",
@@ -2951,7 +2956,7 @@ export const module5Questions: Question[] = [
       "Required on 32A socket-outlet circuits in HRRBs, HMOs, student accommodation and care homes",
     ],
     correctAnswer: 3,
-    explanation: "Reg 421.1.7 was redrafted in A4:2026: AFDDs on socket-outlet final circuits not exceeding 32 A are now a REQUIREMENT in BS 7671 itself for Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a RECOMMENDATION for all other premises.",
+    explanation: "Reg 421.1.7 was redrafted at Amendment 2:2022 (A4:2026 then changed item (a) to High rise residential buildings): AFDDs on socket-outlet final circuits not exceeding 32 A are now a REQUIREMENT in BS 7671 itself for Higher Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes, and a RECOMMENDATION for all other premises.",
     section: "1.6",
     difficulty: "intermediate",
   },
@@ -2987,10 +2992,10 @@ export const module5Questions: Question[] = [
     id: 190,
     question: "An EIC issued under BS 7671 Amendment 4:2026 must show, in the new schedule columns, which of the following?",
     options: [
-      "The arc-flash incident energy and the PPE category required at each distribution board",
-      "The carbon footprint of the cable runs and the recycled content of the consumer unit",
-      "Loop impedance, RCD trip time at 1×IΔn, AFDD presence (Y/N) and earthing arrangement (TN-S, TN-C-S/PNB, TT)",
-      "The cost of each circuit and the labour hours recorded against the installation",
+      'The arc-flash incident energy and the PPE category required at each distribution board on site',
+      'The carbon footprint of the cable runs and the recycled content of the consumer unit enclosure',
+      'Loop impedance, RCD trip time at 1×IΔn, AFDD presence (Y/N) and earthing arrangement (TN-S, TN-C-S/PNB, TT)',
+      'The cost of each circuit and the labour hours recorded against the installation work on site',
     ],
     correctAnswer: 2,
     explanation: "A4:2026 model schedules added explicit columns for AFDD presence and updated the earthing arrangement to distinguish TN-C-S from PNB. Loop impedance, single-test RCD time, and earthing arrangement remain core entries.",
@@ -3113,10 +3118,10 @@ export const module5Questions: Question[] = [
     id: 199,
     question: "When commissioning a new installation, the order of dead tests should be:",
     options: [
-      "Insulation resistance, continuity of CPCs, polarity, then earth fault loop impedance — all before energising",
-      "Earth fault loop impedance, RCD trip time, polarity, then insulation resistance — before energising",
-      "Polarity, RCD operation, continuity of CPCs, then insulation resistance — before energising",
-      "Continuity of CPCs and ring conductors, insulation resistance, polarity, earth electrode resistance (TT) — completed BEFORE energising",
+      'Insulation resistance, continuity of CPCs, polarity, then earth fault loop impedance — all completed before energising',
+      'Earth fault loop impedance, RCD trip time, polarity, then insulation resistance — all completed before energising',
+      'Polarity, RCD operation, continuity of CPCs, then insulation resistance — all completed before energising the board',
+      'Continuity of CPCs and ring conductors, insulation resistance, polarity, earth electrode resistance (TT) — completed BEFORE energising',
     ],
     correctAnswer: 3,
     explanation: "GN3 sets the dead-test sequence: continuity (R1+R2 / ring step 1+2), insulation resistance, polarity, then earth electrode resistance for TT. Loop impedance and RCD trip times are live tests done after energising.",

@@ -453,7 +453,7 @@ export default function AdminRevenue() {
                         <span
                           className={cn(
                             'text-[15px] font-semibold tabular-nums',
-                            count > 0 ? 'text-white' : 'text-white'
+                            count > 0 ? 'text-elec-yellow' : 'text-white'
                           )}
                         >
                           {count}

@@ -38,10 +38,10 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An air source heat pump (ASHP) requires a dedicated circuit sized to the compressor electrical input — typically 32A to 63A single-phase for a 5kW to 16kW output heat pump.',
+  'An air source heat pump (ASHP) requires a dedicated circuit sized to the compressor electrical input — typically 16A single-phase for a 5kW to 8kW output heat pump, rising to 32A to 40A for a 16kW to 20kW output unit.',
   'Heat pumps do not export to the grid, so DNO G99 approval (for export above 3.68kW) does not apply. However, some DNOs require notification for large single-phase loads — check with the relevant DNO.',
   'An immersion heater backup circuit (typically 16A on a 2.5mm cable) is often included in the heat pump installation to provide domestic hot water when the heat pump is in defrost mode or under service.',
-  'UFH (underfloor heating) manifold wiring for a heat pump system involves low-voltage wiring between zone valves, room thermostats, and the heat pump controller — a task that requires careful coordination with the plumber.',
+  'UFH (underfloor heating) manifold wiring for a heat pump system runs control wiring between zone valves, room thermostats, and the heat pump controller — 24V (extra-low voltage) or 230V depending on the kit, and inside the scope of BS 7671 either way. It requires careful coordination with the plumber.',
   'MCS (Microgeneration Certification Scheme) certification is required for the heat pump installer for the homeowner to access the Boiler Upgrade Scheme (BUS) grant — currently up to £7,500 for an ASHP.',
 ];
 
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What size circuit does an air source heat pump need?',
     answer:
-      "The circuit size depends on the heat pump compressor electrical input, not the thermal output. A 5kW output ASHP with a COP of 3 has an electrical input of approximately 1.7kW — a 10A circuit is sufficient. A 12kW output ASHP with a COP of 3 has an electrical input of approximately 4kW — a 20A or 25A circuit is required. Larger ASHPs (16kW to 20kW output) may have electrical inputs of 5kW to 8kW, requiring a 32A or 40A single-phase circuit, or a three-phase connection. Always check the heat pump manufacturer's electrical specification before designing the circuit — the compressor rated current and the starting current (which may be significantly higher) are both relevant. Cable sizing must account for both the rated current and the voltage drop over the cable run from the consumer unit to the outdoor unit location.",
+      "The circuit size depends on the heat pump compressor electrical input, not the thermal output. A 5kW output ASHP with a COP of 3 has an electrical input of approximately 1.7kW — a 16A circuit is typically used. A 12kW output ASHP with a COP of 3 has an electrical input of approximately 4kW — a 20A or 25A circuit is required. Larger ASHPs (16kW to 20kW output) may have electrical inputs of 5kW to 8kW, requiring a 32A or 40A single-phase circuit, or a three-phase connection. Always check the heat pump manufacturer's electrical specification before designing the circuit — the compressor rated current and the starting current (which may be significantly higher) are both relevant. Cable sizing must account for both the rated current and the voltage drop over the cable run from the consumer unit to the outdoor unit location.",
   },
   {
     question: 'Do I need to notify the DNO before installing an air source heat pump?',
@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'How are UFH zone valves wired for a heat pump system?',
     answer:
-      'A heat pump system with underfloor heating typically uses wet UFH (warm water circulated through pipes in the floor) rather than electric UFH. The wiring involved is low-voltage controls wiring — room thermostats (typically 24V or 230V), zone valve actuators on the UFH manifold, and wiring back to the heat pump controller or a separate heating controls hub. The electrician installs the wiring between room thermostats and the manifold, and from the manifold to the heat pump controller. The zone valves are typically 24V or 230V motorised valves that open and close based on the room thermostat demand signal. The wiring diagram for the heat pump controls is supplied by the heat pump manufacturer — follow it precisely and commission the controls according to the manufacturer procedure.',
+      'A heat pump system with underfloor heating typically uses wet UFH (warm water circulated through pipes in the floor) rather than electric UFH. The wiring involved is controls wiring — room thermostats (typically 24V extra-low voltage, or 230V low voltage), zone valve actuators on the UFH manifold, and wiring back to the heat pump controller or a separate heating controls hub. The electrician installs the wiring between room thermostats and the manifold, and from the manifold to the heat pump controller. The zone valves are typically 24V or 230V motorised valves that open and close based on the room thermostat demand signal. The wiring diagram for the heat pump controls is supplied by the heat pump manufacturer — follow it precisely and commission the controls according to the manufacturer procedure.',
   },
   {
     question: 'What certificates are required for a heat pump electrical installation?',
@@ -260,8 +260,9 @@ const sections = [
               <span>
                 <strong>DNO load notification</strong> — some DNOs require notification of new large
                 loads connected to the LV network. Check the relevant DNO's guidance for your
-                region. EDF Energy, National Grid, and UKPN all have self-connection criteria —
-                large single-phase loads over 11kVA may require notification.
+                region — UK Power Networks, National Grid Electricity Distribution, SP Energy
+                Networks, SSEN, Electricity North West and Northern Powergrid each publish their own
+                connect-and-notify criteria, and thresholds differ between them.
               </span>
             </li>
           </ul>
@@ -352,9 +353,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          The controls wiring for a heat pump UFH system is low-voltage and is excluded from the BS
-          7671 EIC scope in terms of circuit testing, but the mains supply to the controls hub or
-          room thermostats (if mains-powered) is included in the EIC scope.
+          Get the voltage terminology right. Under the BS 7671 Part 2 definitions, extra-low voltage
+          is anything not exceeding 50V AC, so 24V thermostats and actuators are extra-low voltage —
+          230V ones are low voltage. Neither sits outside the standard: Regulation 110.1.2 brings
+          fixed wiring for signalling and control within the scope of BS 7671, so the control wiring
+          is certificated alongside the mains supply to the controls hub. Apply the insulation
+          resistance test voltage appropriate to the circuit — Table 64 gives 250V DC with a minimum
+          of 0.5 MΩ for SELV and PELV circuits.
         </p>
       </>
     ),
@@ -366,7 +371,8 @@ const sections = [
       <>
         <p>
           The Boiler Upgrade Scheme (BUS) provides a grant of up to £7,500 for an ASHP installation
-          (2024/25 rates — check GOV.UK for current rates). To access the grant:
+          — check GOV.UK for the current rate before quoting a figure to a customer. To access the
+          grant:
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -552,8 +558,8 @@ const sections = [
 export default function HeatPumpElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Heat Pump Electrical Requirements UK | ASHP Circuit Sizing"
-      description="Complete guide to air source heat pump electrical requirements in the UK. ASHP circuit sizing (32A–63A), DNO notification, immersion backup circuit…"
+      title="Heat Pump Electrical Requirements: 16–40A, 230V"
+      description="Air source heat pump circuit sizing: 16A on 2.5mm² for 5–8kW, 20–25A on 4mm² for 10–12kW, 32–40A on 6mm² for 16–20kW — single-phase 230V, plus immersion."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -573,7 +579,7 @@ export default function HeatPumpElectricalRequirementsPage() {
           <span className="text-yellow-400">ASHP Circuits, Controls and MCS</span>
         </>
       }
-      heroSubtitle="Air source heat pumps require a dedicated circuit sized to the compressor input, typically 32A to 63A. This guide covers ASHP circuit sizing, DNO notification, immersion backup circuits, UFH zone controls wiring, MCS certification, and the Boiler Upgrade Scheme grant."
+      heroSubtitle="Air source heat pumps require a dedicated circuit sized to the compressor input, typically 16A to 40A single-phase. This guide covers ASHP circuit sizing, DNO notification, immersion backup circuits, UFH zone controls wiring, MCS certification, and the Boiler Upgrade Scheme grant."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

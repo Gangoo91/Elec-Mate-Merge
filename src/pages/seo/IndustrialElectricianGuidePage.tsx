@@ -806,7 +806,7 @@ export default function IndustrialElectricianGuidePage() {
   return (
     <GuideTemplate
       title="Industrial Electrician Guide | Skills & Career UK"
-      description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives…"
+      description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives."
       datePublished="2025-06-25"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

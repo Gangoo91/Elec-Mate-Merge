@@ -607,7 +607,7 @@ export default function FactoryElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Factory Electrical Installation UK | Industrial Wiring Guide"
-      description="Complete guide to factory electrical installation in the UK. Three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings…"
+      description="Complete guide to factory electrical installation in the UK. Three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

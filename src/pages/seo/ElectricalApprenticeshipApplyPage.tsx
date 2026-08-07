@@ -481,7 +481,7 @@ export default function ElectricalApprenticeshipApplyPage() {
   return (
     <GuideTemplate
       title="How to Apply for an Electrical Apprenticeship UK — Level 2,"
-      description="Complete guide to applying for an electrical apprenticeship in the UK: Level 2 vs Level 3 pathways, ECS card, CSCS card, finding employers through JTL…"
+      description="Complete guide to applying for an electrical apprenticeship in the UK: Level 2 vs Level 3 pathways, ECS card, CSCS card, finding employers through JTL."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

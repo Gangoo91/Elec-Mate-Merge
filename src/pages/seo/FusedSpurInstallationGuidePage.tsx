@@ -506,8 +506,8 @@ const sections = [
 export default function FusedSpurInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Fused Spur Installation Guide — UK FCU Wiring Guide 2026"
-      description="Complete guide to installing fused connection units (FCUs): types, fuse ratings, when to use a fused spur, BS 7671 requirements…"
+      title="Fused Spur Wiring: 3A, 5A or 13A Fuse Ratings"
+      description="Fuse to the appliance flex, not the ring: 3A up to 720W, 5A to 1,150W, 13A to 3,000W. Wiring a 2.5mm² FCU spur, BS 7671 rules and how to certify it."
       datePublished="2024-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

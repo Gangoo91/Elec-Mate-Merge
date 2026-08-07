@@ -626,7 +626,7 @@ export default function IndustrialEarthingSystemsPage() {
   return (
     <GuideTemplate
       title="Industrial Earthing Systems UK | Factory Earthing Guide"
-      description="Complete guide to industrial earthing systems in the UK. TN-S, TN-C-S (PME), and TT systems for factories and process plant — supplementary bonding…"
+      description="Complete guide to industrial earthing systems in the UK. TN-S, TN-C-S (PME), and TT systems for factories and process plant — supplementary bonding."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

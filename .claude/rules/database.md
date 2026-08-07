@@ -11,7 +11,9 @@ paths:
 
 ## URL: https://jtwygbeceundfgnkirof.supabase.co
 
-## 277 tables, 316 edge functions, 683+ users
+## 663 tables (+36 views), 476 deployed edge functions, 1,473 users
+
+_Verified 2026-08-07 — re-query before quoting; these drift fast._
 
 ## When querying Supabase:
 

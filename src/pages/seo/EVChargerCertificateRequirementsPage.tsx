@@ -27,7 +27,7 @@ const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
   {
     label: 'EV Charger Certificate Requirements',
-    href: '/ev-charger-certificate-requirements',
+    href: '/guides/ev-charger-certificate-requirements',
   },
 ];
 
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Do I need a separate earth electrode for an EV charger?',
     answer:
-      'It depends on the earthing arrangement of the supply. On a PME (Protective Multiple Earthing) supply — which is the most common arrangement in the UK (TN-C-S) — the IET Code of Practice recommends additional precautions because of the risk of an open PEN conductor. If the PEN conductor is lost, the metalwork of the EV charger (and the vehicle connected to it) could rise to a dangerous voltage. The Code of Practice recommends one of several mitigation strategies: installing a separate earth electrode and using it as the earth reference for the EV charger circuit; using a charge point with built-in PEN fault detection; or using a Type B or Type EV RCD with additional earth monitoring. The specific approach depends on the charger model, the supply characteristics, and the site conditions. The key point is that you cannot simply connect an EV charger to a PME earth without considering this issue — it must be assessed and documented as part of the installation.',
+      'It depends on the earthing arrangement of the supply. On a PME (Protective Multiple Earthing) supply — which is the most common arrangement in the UK (TN-C-S) — the IET Code of Practice recommends additional precautions because of the risk of an open PEN conductor. If the PEN conductor is lost, the metalwork of the EV charger (and the vehicle connected to it) could rise to a dangerous voltage. The Code of Practice recommends one of several mitigation strategies: installing a separate earth electrode and using it as the earth reference for the EV charger circuit; or using a charge point with built-in PEN fault detection (a voltage monitoring device of the kind described in Regulation 722.411.4.1(c), with guidance in Annex A722). The specific approach depends on the charger model, the supply characteristics, and the site conditions. The key point is that you cannot simply connect an EV charger to a PME earth without considering this issue — it must be assessed and documented as part of the installation.',
   },
   {
     question: 'Is the OZEV grant still available?',
@@ -87,7 +87,7 @@ const faqs = [
   {
     question: 'What RCD protection is required for an EV charger?',
     answer:
-      "BS 7671 Regulation 722.531.3 requires that the circuit supplying an EV charging point is protected by an RCD with a rated residual operating current not exceeding 30mA. The type of RCD is governed by BS 7671 Reg 570.6.2.2: where a power conversion equipment (PCE) such as an EV charger does not provide at least simple separation between its AC and DC sides, a Type B RCD (to BS EN 62423 or BS EN 60947-2) is required. There are three exceptions: (a) a transformer provides winding separation; (b) equivalent protection by other means; or (c) the charger manufacturer explicitly states in their installation instructions that a Type B RCD is not required — in which case a Type A RCD may be used. GN3 confirms that inverter-type and EV charger equipment that produces DC components in fault currents requires a Type B device because Type AC devices will not operate correctly with DC-containing residual currents. The practical rule: always check the manufacturer's installation manual first — if it states a Type B is not required, a Type A ≥30mA is acceptable and you must retain that manufacturer's statement in the installation records. If no such statement exists, fit a Type B. Document the RCD type selected and the basis for that selection in the EIC.",
+      "BS 7671 Regulation 722.531.3 requires RCD protection for the circuit supplying an EV charging point, with a rated residual operating current (IΔn) not exceeding 30mA. The device type is dealt with by Regulation 722.531.3.101, which also requires protection against DC fault current. That protection is provided either by an RCD of Type B (to BS EN 62423 or BS EN 60947-2), or — under indents (b) and (c) of that regulation — by an RCD of at least Type A used in conjunction with a residual direct current detecting device (RDC-DD) to BS IEC 62955. BS 7671 defines an RDC-DD as a device having at least the functionality of detection and evaluation of 6mA DC residual currents and switching of the monitored circuit; many charge points have this function built in, which is why a Type A device is often acceptable in front of them. Note that BS 7671 recognises only Types AC, A, F and B — there is no BS 7671 'Type EV' RCD, although several manufacturers market a Type A RCBO with integral 6mA DC detection under that name. GN3 confirms that inverter-type and EV charger equipment producing DC components in fault currents requires a Type B device, or equivalent DC-fault detection, because a Type AC device will not operate correctly with DC-containing residual currents. The practical rule: read the manufacturer's installation manual first, because it states whether the charge point already provides the 6mA DC detection. If it does, a Type A RCD with IΔn not exceeding 30mA is acceptable and you must retain that manufacturer's statement in the installation records. If it does not, fit a Type B RCD or add a separate RDC-DD. Document the RCD type selected and the basis for that selection in the EIC.",
   },
 ];
 
@@ -213,8 +213,12 @@ const sections = [
               <span>
                 <strong>Inspection and testing section:</strong> visual inspection results,
                 continuity of protective conductors (R1+R2), insulation resistance, polarity, earth
-                fault loop impedance (Zs), prospective fault current (PFC), and RCD operation (trip
-                time at 1x and 5x rated residual current). Measured Zs values must be compared
+                fault loop impedance (Zs), prospective fault current (PFC), and RCD operation. The
+                RCD test is a single alternating-current test at the rated residual operating
+                current (IΔn) — a general, non-delay type must disconnect within 300 ms. (The old
+                ½x / 1x / 5x sequence came from Appendix 3 Table 3A, which has been deleted from BS
+                7671; the 40 ms at 5x figure is product testing to BS EN 61008, not an installation
+                test.) Measured Zs values must be compared
                 against the maximum permissible values in GN3 Appendix A (Guidance Note 3:
                 Inspection &amp; Testing) for the relevant protective device — EV charger circuits
                 with long cable runs frequently have Zs values near the limit and must be verified
@@ -254,18 +258,24 @@ const sections = [
             <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold text-yellow-300 mb-1">
-                BS 7671:2018+A4:2026 — Significant Changes to Section 722
+                BS 7671:2018+A4:2026 — Section 722 Electric Vehicle Charging Installations
               </p>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 introduced significant changes to Section 722 (Electric Vehicle
-                Charging Installations). Key updates include: <strong>Reg 722.311.201</strong> —
-                load curtailment (automatic or manual load reduction or disconnection) may now be
-                taken into account when determining maximum demand, enabling dynamic load management
-                to be formally documented in the installation design; updated PME protective
-                measures; and Appendix 6 model certification forms have been amended to include
-                fields for SPDs (surge protective devices) and AFDDs (arc fault detection devices) —
-                Reg 722.826.3.201 requires these to be recorded on the EIC where installed.
-                Installers and certifiers must work to the current edition.
+                BS 7671:2018+A4:2026 is the current edition. It was issued on 15 April 2026 and the
+                previous edition (BS 7671:2018+A2:2022 + A3:2024) is withdrawn on 15 October 2026.
+                Section 722 (Electric Vehicle Charging Installations) is the section that governs
+                the work. The regulations that bear most directly on certification are:{' '}
+                <strong>Reg 722.311.201</strong> — load curtailment (load reduction or
+                disconnection, either automatically or manually) may be taken into account when
+                determining the maximum demand of the installation or part of it, so a dynamic load
+                management scheme can be relied on in the design provided the basis is documented;{' '}
+                <strong>Reg 722.411.4.1</strong> — the conditions under which a PME earthing
+                facility may not be used as the means of earthing for the protective conductor of
+                the charging equipment; and <strong>Reg 722.531.3</strong> — RCD protection for the
+                charging point. The Appendix 6 model forms also carry fields for recording SPDs
+                (surge protective devices) and AFDDs (arc fault detection devices), which must be
+                completed where such devices are installed. Installers and certifiers must work to
+                the current edition.
               </p>
             </div>
           </div>
@@ -278,7 +288,8 @@ const sections = [
               <span>
                 <strong>PME earthing considerations.</strong> On a PME (TN-C-S) supply, additional
                 precautions are required to address the risk of a lost PEN conductor. Options
-                include a separate earth electrode, PEN fault detection, or a Type B/Type EV RCD.
+                include a separate earth electrode or a charge point with built-in PEN fault
+                detection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -302,7 +313,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD selection.</strong> The correct RCD type depends on the charger model
-                and its DC fault characteristics. Type A, Type B, or Type EV may be required.
+                and its DC fault characteristics. BS 7671 recognises Types AC, A, F and B — for a
+                charge point this means either a Type B RCD, or a Type A RCD together with an
+                RDC-DD to BS IEC 62955 (Reg 722.531.3.101).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -562,9 +575,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Incorrect RCD type.</strong> Using a Type AC or Type A RCD when a Type B or
-                Type EV is required for the specific charger model. Check the manufacturer
-                instructions.
+                <strong>Incorrect RCD type.</strong> Fitting a Type AC RCD, or a plain Type A with
+                no DC fault detection, where the charge point does not itself provide the 6mA DC
+                detection. Check the manufacturer instructions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -660,8 +673,8 @@ const sections = [
 export default function EVChargerCertificateRequirementsPage() {
   return (
     <GuideTemplate
-      title="EV Charger Certificate Requirements UK | What to Issue"
-      description="Complete guide to EV charger certification in the UK. EIC required, IET Code of Practice compliance, Part P notification, load assessment, PME earthing…"
+      title="EV Charger Certificate UK: EIC, Not Minor Works"
+      description="An EV charger needs a full EIC, not a Minor Works — it is a new circuit. Plus Part P notification, load assessment, test results and IET CoP compliance."
       datePublished="2025-05-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

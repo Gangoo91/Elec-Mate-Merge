@@ -22,7 +22,7 @@ export default function PricingStrategyElectricianPage() {
   return (
     <BusinessTemplate
       title="Pricing Strategy for Electricians | Maximise Profit"
-      description="Master pricing for your electrical business. Fixed price vs day rate vs hourly — learn when to use each, pricing psychology for electricians…"
+      description="Master pricing for your electrical business. Fixed price vs day rate vs hourly — learn when to use each, pricing psychology for electricians."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={[

@@ -21,6 +21,18 @@ import { generatePreStartChecklist } from '@/utils/preStartChecklistGenerator';
 
 export interface EnrichedSiteVisit extends SiteVisit {
   customerName?: string;
+  /*
+   * How much has actually been captured.
+   *
+   * `listSiteVisits` returns `rooms: []` and `photos: []` hardcoded — it only
+   * ever selected from `site_visits`. Anything reading `visit.rooms.length` on
+   * a listed visit therefore counted zero, which is why the hub's "7 rooms /
+   * 22 items" chips never appeared on a visit that had 7 rooms and 22 items.
+   * These are counted separately rather than hydrating the whole tree.
+   */
+  roomCount?: number;
+  itemCount?: number;
+  photoCount?: number;
   quoteAcceptanceStatus?: string;
   quoteTags?: string[];
   quoteInvoiceRaised?: boolean;
@@ -242,6 +254,46 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
         }
       }
 
+      // Batch-count captured work. Three small queries beat hydrating every
+      // room, item and photo just to render two chips.
+      const visitIds = rows.map((r: Record<string, unknown>) => r.id as string);
+      const roomCount: Record<string, number> = {};
+      const itemCount: Record<string, number> = {};
+      const photoCount: Record<string, number> = {};
+
+      const { data: roomRows } = await supabase
+        .from('site_visit_rooms')
+        .select('id, site_visit_id')
+        .in('site_visit_id', visitIds);
+
+      const roomToVisit: Record<string, string> = {};
+      for (const r of roomRows || []) {
+        roomToVisit[r.id] = r.site_visit_id;
+        roomCount[r.site_visit_id] = (roomCount[r.site_visit_id] || 0) + 1;
+      }
+
+      // Items hang off rooms, not off the visit — there is no site_visit_id
+      // on site_visit_items, so they have to be mapped back through the room.
+      const roomIds = Object.keys(roomToVisit);
+      if (roomIds.length > 0) {
+        const { data: itemRows } = await supabase
+          .from('site_visit_items')
+          .select('id, room_id')
+          .in('room_id', roomIds);
+        for (const i of itemRows || []) {
+          const visitId = roomToVisit[i.room_id];
+          if (visitId) itemCount[visitId] = (itemCount[visitId] || 0) + 1;
+        }
+      }
+
+      const { data: photoRows } = await supabase
+        .from('site_visit_photos')
+        .select('id, site_visit_id')
+        .in('site_visit_id', visitIds);
+      for (const ph of photoRows || []) {
+        photoCount[ph.site_visit_id] = (photoCount[ph.site_visit_id] || 0) + 1;
+      }
+
       // Batch-fetch linked quote statuses
       const quoteIds = [
         ...new Set(rows.map((r: Record<string, unknown>) => r.quote_id).filter(Boolean)),
@@ -281,6 +333,9 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
         updatedAt: row.updated_at,
         rooms: [],
         photos: [],
+        roomCount: roomCount[row.id as string] || 0,
+        itemCount: itemCount[row.id as string] || 0,
+        photoCount: photoCount[row.id as string] || 0,
         prompts: [],
         customerName: row.customer_id ? customerMap[row.customer_id] : undefined,
         quoteAcceptanceStatus: row.quote_id ? quoteMap[row.quote_id]?.acceptance_status : undefined,

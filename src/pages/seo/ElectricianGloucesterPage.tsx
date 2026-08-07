@@ -438,7 +438,7 @@ export default function ElectricianGloucesterPage() {
       noindex={true}
       localArea="Gloucester"
       title="Electrician in Gloucester | Local Electricians 2026"
-      description="Find qualified electricians in Gloucester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
+      description="Find qualified electricians in Gloucester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

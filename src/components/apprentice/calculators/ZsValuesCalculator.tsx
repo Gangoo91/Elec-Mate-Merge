@@ -19,6 +19,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { zsValuesContent } from './content/zs-values';
@@ -121,7 +122,7 @@ const ZsValuesCalculator = () => {
 
     if (protectionType === 'rcd') {
       const rating = parseInt(rcdRating);
-      maxZs = rcdZsValues[rating as keyof typeof rcdZsValues];
+      maxZs = rcdZsValues[rating as unknown as keyof typeof rcdZsValues];
       deviceDescription = `${rating}mA RCD`;
     } else if (protectionType === 'mcb' || protectionType === 'rcbo') {
       if (!curveType || !deviceRating) return null;
@@ -207,421 +208,443 @@ const ZsValuesCalculator = () => {
       title="Maximum Zs Values Calculator"
       description="Look up maximum earth fault loop impedance per BS 7671"
     >
-      {/* Protection device type */}
-      <CalculatorSelect
-        label="Protection Device Type"
-        value={protectionType}
-        onChange={(v) => {
-          setProtectionType(v);
-          setDeviceRating('');
-          setCurveType('');
-          setFuseType('');
-        }}
-        options={PROTECTION_TYPE_OPTIONS}
-        placeholder="Select device type"
-      />
-
-      {/* Disconnection time — for MCB, RCBO, Fuse */}
-      {(protectionType === 'mcb' || protectionType === 'rcbo' || protectionType === 'fuse') && (
-        <CalculatorSelect
-          label="Disconnection Time"
-          value={disconnectionTime}
-          onChange={setDisconnectionTime}
-          options={DISCONNECTION_TIME_OPTIONS}
-        />
-      )}
-
-      {/* MCB / RCBO: curve type + rating */}
-      {(protectionType === 'mcb' || protectionType === 'rcbo') && (
-        <div className="grid grid-cols-2 gap-3">
-          <CalculatorSelect
-            label="Curve Type"
-            value={curveType}
-            onChange={setCurveType}
-            options={CURVE_TYPE_OPTIONS}
-            placeholder="Select curve"
-          />
-          <CalculatorSelect
-            label="Rating"
-            value={deviceRating}
-            onChange={setDeviceRating}
-            options={MCB_RATING_OPTIONS}
-            placeholder="Select rating"
-          />
-        </div>
-      )}
-
-      {/* Fuse: fuse type + rating */}
-      {protectionType === 'fuse' && (
-        <>
-          <CalculatorSelect
-            label="Fuse Type"
-            value={fuseType}
-            onChange={(v) => {
-              setFuseType(v);
-              setDeviceRating('');
-            }}
-            options={FUSE_TYPE_OPTIONS}
-            placeholder="Select fuse type"
-          />
-          {fuseType && (
+      <CalculatorPanes
+        form={
+          <>
+            {/* Protection device type */}
             <CalculatorSelect
-              label="Fuse Rating"
-              value={deviceRating}
-              onChange={setDeviceRating}
-              options={fuseRatingOptions}
-              placeholder="Select rating"
+              label="Protection Device Type"
+              value={protectionType}
+              onChange={(v) => {
+                setProtectionType(v);
+                setDeviceRating('');
+                setCurveType('');
+                setFuseType('');
+              }}
+              options={PROTECTION_TYPE_OPTIONS}
+              placeholder="Select device type"
             />
-          )}
-        </>
-      )}
 
-      {/* RCD: rating */}
-      {protectionType === 'rcd' && (
-        <CalculatorSelect
-          label="RCD Rated Residual Current"
-          value={rcdRating}
-          onChange={setRcdRating}
-          options={RCD_RATING_OPTIONS}
-        />
-      )}
-
-      <CalculatorDivider category="testing" />
-
-      {/* Circuit impedance inputs (optional) */}
-      <div className="grid grid-cols-2 gap-3">
-        <CalculatorInput
-          label="Ze (External)"
-          unit="Ω"
-          type="text"
-          inputMode="decimal"
-          value={ze}
-          onChange={setZe}
-          placeholder="e.g. 0.35"
-          hint="External earth loop impedance"
-        />
-        <CalculatorInput
-          label="R1+R2"
-          unit="Ω"
-          type="text"
-          inputMode="decimal"
-          value={r1r2}
-          onChange={setR1R2}
-          placeholder="e.g. 0.23"
-          hint="From continuity test or calculation"
-        />
-      </div>
-
-      <CalculatorActions
-        category="testing"
-        onCalculate={() => {}}
-        onReset={reset}
-        isDisabled={!protectionType}
-        calculateLabel="Live Results Below"
-      />
-
-      {/* Results */}
-      {result && (
-        <>
-          <CalculatorDivider category="testing" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Device chip */}
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
-                style={{
-                  backgroundColor: `${config.gradientFrom}15`,
-                  border: `1px solid ${config.gradientFrom}30`,
-                  color: config.gradientFrom,
-                }}
-              >
-                {result.deviceDescription}
-              </span>
-              <span className="text-xs text-white">
-                BS 7671 {result.tableRef} — {disconnectionTime}s
-              </span>
-            </div>
-
-            {/* Hero: max Zs */}
-            <div className="rounded-xl p-4 bg-white/[0.04] text-center">
-              <p className="text-sm text-white mb-1">Maximum Zs (BS 7671)</p>
-              <div
-                className="text-4xl font-bold font-mono bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.maxZs.toFixed(2)} Ω
-              </div>
-              <p className="text-sm text-white mt-2">
-                80% test limit:{' '}
-                <span className="font-semibold font-mono">{result.testLimit.toFixed(2)} Ω</span>
-              </p>
-            </div>
-
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Tabulated (100%)"
-                value={result.maxZs.toFixed(2)}
-                unit="Ω"
-                category="testing"
-                size="sm"
+            {/* Disconnection time — for MCB, RCBO, Fuse */}
+            {(protectionType === 'mcb' ||
+              protectionType === 'rcbo' ||
+              protectionType === 'fuse') && (
+              <CalculatorSelect
+                label="Disconnection Time"
+                value={disconnectionTime}
+                onChange={setDisconnectionTime}
+                options={DISCONNECTION_TIME_OPTIONS}
               />
-              <ResultValue
-                label="Test Limit (80%)"
-                value={result.testLimit.toFixed(2)}
-                unit="Ω"
-                category="testing"
-                size="sm"
-              />
-            </ResultsGrid>
+            )}
 
-            {/* Circuit Zs comparison */}
-            {result.calculatedZs !== null && (
-              <div
-                className={cn(
-                  'p-4 rounded-xl border',
-                  result.passesTest
-                    ? 'bg-emerald-500/10 border-emerald-500/20'
-                    : 'bg-red-500/10 border-red-500/20'
-                )}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  {result.passesTest ? (
-                    <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                  ) : (
-                    <XCircle className="h-5 w-5 text-red-400" />
-                  )}
-                  <span
-                    className={cn(
-                      'font-semibold text-sm',
-                      result.passesTest ? 'text-emerald-300' : 'text-red-300'
-                    )}
-                  >
-                    {result.passesTest
-                      ? 'PASS — Within 80% Test Limit'
-                      : 'FAIL — Exceeds 80% Test Limit'}
-                  </span>
-                </div>
-                <div className="text-sm space-y-1">
-                  <div className="flex justify-between">
-                    <span className="text-white">Your circuit Zs:</span>
-                    <span className="text-white font-mono font-medium">
-                      {result.calculatedZs.toFixed(2)} Ω
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white">Ze + (R1+R2):</span>
-                    <span className="text-white font-mono">
-                      {ze} + {r1r2} = {result.calculatedZs.toFixed(2)} Ω
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white">80% test limit:</span>
-                    <span className="text-white font-mono font-medium">
-                      {result.testLimit.toFixed(2)} Ω
-                    </span>
-                  </div>
-                  {result.headroom !== null && (
-                    <div className="flex justify-between">
-                      <span className="text-white">Headroom:</span>
-                      <span
-                        className={cn(
-                          'font-mono font-medium',
-                          result.passesTest ? 'text-emerald-400' : 'text-red-400'
-                        )}
-                      >
-                        {result.headroom >= 0
-                          ? `${result.headroom.toFixed(1)}% below limit`
-                          : `${Math.abs(result.headroom).toFixed(1)}% over limit`}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Tabulated check if different from test check */}
-                {result.passesTest === false && result.passesTabulated === true && (
-                  <div className="mt-2 p-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
-                    <p className="text-xs text-white">
-                      <strong>Note:</strong> Circuit passes the 100% tabulated value (
-                      {result.maxZs.toFixed(2)} Ω) but fails the 80% test limit. The 80% rule
-                      accounts for temperature rise — this circuit may fail testing at ambient
-                      temperature.
-                    </p>
-                  </div>
-                )}
+            {/* MCB / RCBO: curve type + rating */}
+            {(protectionType === 'mcb' || protectionType === 'rcbo') && (
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorSelect
+                  label="Curve Type"
+                  value={curveType}
+                  onChange={setCurveType}
+                  options={CURVE_TYPE_OPTIONS}
+                  placeholder="Select curve"
+                />
+                <CalculatorSelect
+                  label="Rating"
+                  value={deviceRating}
+                  onChange={setDeviceRating}
+                  options={MCB_RATING_OPTIONS}
+                  placeholder="Select rating"
+                />
               </div>
             )}
 
-            {/* Copy button */}
-            <button
-              onClick={copyResults}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors touch-manipulation"
-            >
-              <Copy className="h-4 w-4" />
-              Copy Results
-            </button>
-          </div>
-
-          <CalculatorDivider category="testing" />
-
-          {/* How It Worked Out */}
-          <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Calculator className="h-4 w-4 text-purple-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  How It Worked Out
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showWorkings && 'rotate-180'
+            {/* Fuse: fuse type + rating */}
+            {protectionType === 'fuse' && (
+              <>
+                <CalculatorSelect
+                  label="Fuse Type"
+                  value={fuseType}
+                  onChange={(v) => {
+                    setFuseType(v);
+                    setDeviceRating('');
+                  }}
+                  options={FUSE_TYPE_OPTIONS}
+                  placeholder="Select fuse type"
+                />
+                {fuseType && (
+                  <CalculatorSelect
+                    label="Fuse Rating"
+                    value={deviceRating}
+                    onChange={setDeviceRating}
+                    options={fuseRatingOptions}
+                    placeholder="Select rating"
+                  />
                 )}
+              </>
+            )}
+
+            {/* RCD: rating */}
+            {protectionType === 'rcd' && (
+              <CalculatorSelect
+                label="RCD Rated Residual Current"
+                value={rcdRating}
+                onChange={setRcdRating}
+                options={RCD_RATING_OPTIONS}
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                {/* Step 1 */}
-                <div>
-                  <p className="text-xs text-purple-400 mb-1">
-                    Step 1: Look up maximum Zs from BS 7671
-                  </p>
-                  <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
-                    <p>Device: {result.deviceDescription}</p>
-                    <p>Disconnection time: {disconnectionTime}s</p>
-                    <p>
-                      {result.tableRef}: Max Zs ={' '}
-                      <span className="font-bold">{result.maxZs.toFixed(2)} Ω</span>
-                    </p>
-                  </div>
-                </div>
+            )}
 
-                {/* Step 2 */}
-                <div className="pt-2 border-t border-purple-500/20">
-                  <p className="text-xs text-purple-400 mb-1">Step 2: Calculate 80% test limit</p>
-                  <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
-                    <p>
-                      Test limit = {result.maxZs.toFixed(2)} × 0.8 ={' '}
-                      <span className="font-bold">{result.testLimit.toFixed(2)} Ω</span>
-                    </p>
-                    <p className="text-xs text-white mt-1">
-                      80% accounts for temperature rise from ~20°C test to 70°C operating
-                    </p>
-                  </div>
-                </div>
+            <CalculatorDivider category="testing" />
 
-                {/* Step 3 — if calculated */}
-                {result.calculatedZs !== null && (
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 3: Calculate circuit Zs</p>
-                    <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
-                      <p>Zs = Ze + (R1+R2)</p>
-                      <p>
-                        Zs = {ze} + {r1r2} ={' '}
-                        <span className="font-bold">{result.calculatedZs.toFixed(2)} Ω</span>
-                      </p>
+            {/* Circuit impedance inputs (optional) */}
+            <div className="grid grid-cols-2 gap-3">
+              <CalculatorInput
+                label="Ze (External)"
+                unit="Ω"
+                type="text"
+                inputMode="decimal"
+                value={ze}
+                onChange={setZe}
+                placeholder="e.g. 0.35"
+                hint="External earth loop impedance"
+              />
+              <CalculatorInput
+                label="R1+R2"
+                unit="Ω"
+                type="text"
+                inputMode="decimal"
+                value={r1r2}
+                onChange={setR1R2}
+                placeholder="e.g. 0.23"
+                hint="From continuity test or calculation"
+              />
+            </div>
+
+            <CalculatorActions
+              category="testing"
+              onCalculate={() => {}}
+              onReset={reset}
+              isDisabled={!protectionType}
+              calculateLabel="Live Results Below"
+            />
+          </>
+        }
+        result={
+          <>
+            {/* Results */}
+            {result && (
+              <>
+                <CalculatorDivider category="testing" />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Device chip */}
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+                      style={{
+                        backgroundColor: `${config.gradientFrom}15`,
+                        border: `1px solid ${config.gradientFrom}30`,
+                        color: config.gradientFrom,
+                      }}
+                    >
+                      {result.deviceDescription}
+                    </span>
+                    <span className="text-xs text-white">
+                      BS 7671 {result.tableRef} — {disconnectionTime}s
+                    </span>
+                  </div>
+
+                  {/* Hero: max Zs */}
+                  <div className="rounded-xl p-4 bg-white/[0.04] text-center">
+                    <p className="text-sm text-white mb-1">Maximum Zs (BS 7671)</p>
+                    <div
+                      className="text-4xl font-bold font-mono bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {result.maxZs.toFixed(2)} Ω
                     </div>
+                    <p className="text-sm text-white mt-2">
+                      80% test limit:{' '}
+                      <span className="font-semibold font-mono">
+                        {result.testLimit.toFixed(2)} Ω
+                      </span>
+                    </p>
                   </div>
-                )}
 
-                {/* Step 4 — compliance check */}
-                {result.calculatedZs !== null && (
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <p className="text-xs text-purple-400 mb-1">Step 4: Compliance check</p>
-                    <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
-                      <p>
-                        {result.calculatedZs.toFixed(2)} {result.passesTest ? '≤' : '>'}{' '}
-                        {result.testLimit.toFixed(2)} (80% limit)
-                      </p>
-                      <p>
-                        Result:{' '}
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Tabulated (100%)"
+                      value={result.maxZs.toFixed(2)}
+                      unit="Ω"
+                      category="testing"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Test Limit (80%)"
+                      value={result.testLimit.toFixed(2)}
+                      unit="Ω"
+                      category="testing"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Circuit Zs comparison */}
+                  {result.calculatedZs !== null && (
+                    <div
+                      className={cn(
+                        'p-4 rounded-xl border',
+                        result.passesTest
+                          ? 'bg-emerald-500/10 border-emerald-500/20'
+                          : 'bg-red-500/10 border-red-500/20'
+                      )}
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        {result.passesTest ? (
+                          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                        ) : (
+                          <XCircle className="h-5 w-5 text-red-400" />
+                        )}
                         <span
                           className={cn(
-                            'font-bold',
-                            result.passesTest ? 'text-emerald-400' : 'text-red-400'
+                            'font-semibold text-sm',
+                            result.passesTest ? 'text-emerald-300' : 'text-red-300'
                           )}
                         >
-                          {result.passesTest ? 'PASS' : 'FAIL'}
+                          {result.passesTest
+                            ? 'PASS — Within 80% Test Limit'
+                            : 'FAIL — Exceeds 80% Test Limit'}
                         </span>
-                      </p>
+                      </div>
+                      <div className="text-sm space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-white">Your circuit Zs:</span>
+                          <span className="text-white font-mono font-medium">
+                            {result.calculatedZs.toFixed(2)} Ω
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white">Ze + (R1+R2):</span>
+                          <span className="text-white font-mono">
+                            {ze} + {r1r2} = {result.calculatedZs.toFixed(2)} Ω
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white">80% test limit:</span>
+                          <span className="text-white font-mono font-medium">
+                            {result.testLimit.toFixed(2)} Ω
+                          </span>
+                        </div>
+                        {result.headroom !== null && (
+                          <div className="flex justify-between">
+                            <span className="text-white">Headroom:</span>
+                            <span
+                              className={cn(
+                                'font-mono font-medium',
+                                result.passesTest ? 'text-emerald-400' : 'text-red-400'
+                              )}
+                            >
+                              {result.headroom >= 0
+                                ? `${result.headroom.toFixed(1)}% below limit`
+                                : `${Math.abs(result.headroom).toFixed(1)}% over limit`}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Tabulated check if different from test check */}
+                      {result.passesTest === false && result.passesTabulated === true && (
+                        <div className="mt-2 p-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                          <p className="text-xs text-white">
+                            <strong>Note:</strong> Circuit passes the 100% tabulated value (
+                            {result.maxZs.toFixed(2)} Ω) but fails the 80% test limit. The 80% rule
+                            accounts for temperature rise — this circuit may fail testing at ambient
+                            temperature.
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+                  )}
 
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Zs (Earth Fault Loop Impedance):</strong> The total impedance of the
-                    fault current path — from supply transformer, through line conductor, fault,
-                    protective conductor, and back to the transformer.
-                  </p>
+                  {/* Copy button */}
+                  <button
+                    onClick={copyResults}
+                    className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors touch-manipulation"
+                  >
+                    <Copy className="h-4 w-4" />
+                    Copy Results
+                  </button>
                 </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Why it matters:</strong> If Zs is too high, the fault current is too low
-                    to trip the protective device fast enough, risking electric shock or fire.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>80% vs 100%:</strong> BS 7671 tabulated values are at operating
-                    temperature (70°C). When testing at ambient (~20°C), use 80% of the tabulated
-                    value because conductor resistance will rise when the circuit is loaded.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>0.4s vs 5s:</strong> Final circuits ≤32A must disconnect within 0.4s
-                    (Reg 411.3.2.2). Distribution circuits can have up to 5s (Reg 411.3.2.3).
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong>Curve types:</strong> Type B (3-5×In) — most sensitive, highest Zs
-                    allowed. Type C (5-10×In) — general purpose. Type D (10-20×In) — least
-                    sensitive, lowest Zs allowed.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* Grounded standards + worked example */}
-          <CalculatorEditorial content={zsValuesContent} category="testing" />
-        </>
-      )}
+                <CalculatorDivider category="testing" />
 
-      {/* Formula reference — always visible */}
-      <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-        <div className="flex items-start gap-2">
-          <Zap className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white">
-            <strong>Zs</strong> = Ze + (R1+R2). Must be ≤ tabulated maximum for disconnection within{' '}
-            {disconnectionTime || '0.4'}s. Use 80% for testing at ambient temperature.
-          </p>
-        </div>
-      </div>
+                {/* How It Worked Out */}
+                <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Calculator className="h-4 w-4 text-purple-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        How It Worked Out
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showWorkings && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                      {/* Step 1 */}
+                      <div>
+                        <p className="text-xs text-purple-400 mb-1">
+                          Step 1: Look up maximum Zs from BS 7671
+                        </p>
+                        <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
+                          <p>Device: {result.deviceDescription}</p>
+                          <p>Disconnection time: {disconnectionTime}s</p>
+                          <p>
+                            {result.tableRef}: Max Zs ={' '}
+                            <span className="font-bold">{result.maxZs.toFixed(2)} Ω</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Step 2 */}
+                      <div className="pt-2 border-t border-purple-500/20">
+                        <p className="text-xs text-purple-400 mb-1">
+                          Step 2: Calculate 80% test limit
+                        </p>
+                        <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
+                          <p>
+                            Test limit = {result.maxZs.toFixed(2)} × 0.8 ={' '}
+                            <span className="font-bold">{result.testLimit.toFixed(2)} Ω</span>
+                          </p>
+                          <p className="text-xs text-white mt-1">
+                            80% accounts for temperature rise from ~20°C test to 70°C operating
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Step 3 — if calculated */}
+                      {result.calculatedZs !== null && (
+                        <div className="pt-2 border-t border-purple-500/20">
+                          <p className="text-xs text-purple-400 mb-1">
+                            Step 3: Calculate circuit Zs
+                          </p>
+                          <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
+                            <p>Zs = Ze + (R1+R2)</p>
+                            <p>
+                              Zs = {ze} + {r1r2} ={' '}
+                              <span className="font-bold">{result.calculatedZs.toFixed(2)} Ω</span>
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 4 — compliance check */}
+                      {result.calculatedZs !== null && (
+                        <div className="pt-2 border-t border-purple-500/20">
+                          <p className="text-xs text-purple-400 mb-1">Step 4: Compliance check</p>
+                          <div className="pl-3 border-l-2 border-purple-500/30 space-y-0.5">
+                            <p>
+                              {result.calculatedZs.toFixed(2)} {result.passesTest ? '≤' : '>'}{' '}
+                              {result.testLimit.toFixed(2)} (80% limit)
+                            </p>
+                            <p>
+                              Result:{' '}
+                              <span
+                                className={cn(
+                                  'font-bold',
+                                  result.passesTest ? 'text-emerald-400' : 'text-red-400'
+                                )}
+                              >
+                                {result.passesTest ? 'PASS' : 'FAIL'}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* What This Means */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Zs (Earth Fault Loop Impedance):</strong> The total impedance of
+                          the fault current path — from supply transformer, through line conductor,
+                          fault, protective conductor, and back to the transformer.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Why it matters:</strong> If Zs is too high, the fault current is
+                          too low to trip the protective device fast enough, risking electric shock
+                          or fire.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>80% vs 100%:</strong> BS 7671 tabulated values are at operating
+                          temperature (70°C). When testing at ambient (~20°C), use 80% of the
+                          tabulated value because conductor resistance will rise when the circuit is
+                          loaded.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>0.4s vs 5s:</strong> Final circuits ≤32A must disconnect within
+                          0.4s (Reg 411.3.2.2). Distribution circuits can have up to 5s (Reg
+                          411.3.2.3).
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong>Curve types:</strong> Type B (3-5×In) — most sensitive, highest Zs
+                          allowed. Type C (5-10×In) — general purpose. Type D (10-20×In) — least
+                          sensitive, lowest Zs allowed.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Grounded standards + worked example */}
+              </>
+            )}
+
+            {/* Formula reference — always visible */}
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.12]">
+              <div className="flex items-start gap-2">
+                <Zap className="h-4 w-4 text-white mt-0.5 shrink-0" />
+                <p className="text-sm text-white">
+                  <strong>Zs</strong> = Ze + (R1+R2). Must be ≤ tabulated maximum for disconnection
+                  within {disconnectionTime || '0.4'}s. Use 80% for testing at ambient temperature.
+                </p>
+              </div>
+            </div>
+          </>
+        }
+        footer={<CalculatorEditorial content={zsValuesContent} category="testing" />}
+      />
     </CalculatorCard>
   );
 };

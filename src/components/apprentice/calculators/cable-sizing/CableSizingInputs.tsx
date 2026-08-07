@@ -2,11 +2,7 @@ import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { CableSizingInputs, CableSizingErrors, CableType } from './useCableSizing';
-import {
-  DeviceType,
-  deviceTypeOptions,
-  ratingsByDevice,
-} from './useProtectiveDeviceCheck';
+import { DeviceType, deviceTypeOptions, ratingsByDevice } from './useProtectiveDeviceCheck';
 import {
   installationCategories,
   getMethodsByCategory,
@@ -352,8 +348,8 @@ const CableSizingForm = ({
           />
         </CalculatorInputGrid>
         <p className="text-[12px] text-white">
-          The cable is sized on In, not on Ib (Reg 433.1.1: Ib ≤ In ≤ Iz). A BS 3036
-          semi-enclosed fuse also applies Cf = 0.725 per Appendix 4 §5.1.1(c)(i).
+          The cable is sized on In, not on Ib (Reg 433.1.1: Ib ≤ In ≤ Iz). A BS 3036 semi-enclosed
+          fuse also applies Cf = 0.725 per Appendix 4 §5.1.1(c)(i).
         </p>
       </div>
 

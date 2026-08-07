@@ -1,7 +1,7 @@
 /**
  * Solar PV single-line diagram — generated from the design, not drawn.
  *
- * Deliberately schematic (BS EN 60617-style blocks): array strings → DC
+ * Deliberately schematic (IEC 60617-style blocks): array strings → DC
  * isolator → inverter → AC isolator → generation meter → consumer unit.
  * Renders real design values (string config, voltages, inverter rating) so the
  * diagram is evidence, not decoration. Pure SVG — scales, prints, exports.

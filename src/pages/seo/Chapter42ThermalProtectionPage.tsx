@@ -603,7 +603,7 @@ export default function Chapter42ThermalProtectionPage() {
   return (
     <GuideTemplate
       title="Chapter 42 BS 7671 | Protection Against Thermal Effects"
-      description="Complete guide to Chapter 42 of BS 7671 — protection against thermal effects. Fire protection from electrical equipment…"
+      description="Complete guide to Chapter 42 of BS 7671 — protection against thermal effects. Fire protection from electrical equipment."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

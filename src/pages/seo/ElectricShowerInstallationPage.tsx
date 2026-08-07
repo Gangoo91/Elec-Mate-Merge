@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -17,6 +19,7 @@ const tocItems = [
   { id: 'shower-circuit-basics', label: 'Electric Shower Circuit Basics' },
   { id: 'kw-ratings', label: 'kW Ratings and Current Demand' },
   { id: 'cable-sizing', label: 'Cable Sizing by kW Rating' },
+  { id: 'calculator', label: 'Size the Cable for Your Shower' },
   { id: 'mcb-rating', label: 'MCB Rating and Type' },
   { id: 'isolation-switching', label: 'Pull Cord vs Ceiling Switch' },
   { id: 'rcd-protection', label: 'RCD and Additional Protection' },
@@ -30,7 +33,7 @@ const tocItems = [
 const keyTakeaways = [
   'Electric showers range from 7.5kW to 10.8kW (and some models up to 12kW), with cable sizes ranging from 6mm\u00B2 to 16mm\u00B2 depending on the kW rating and installation conditions.',
   'A dedicated radial circuit from the distribution board is mandatory — electric showers must never share a circuit with other equipment.',
-  'A double-pole isolator must be installed adjacent to the shower, typically a ceiling-mounted pull-cord switch rated at 45A or 50A — this provides local isolation as required by BS 7671.',
+  'Reg 462.2 requires isolation of all live conductors for every circuit, and Reg 462.3(c) gives siting the device adjacent to the equipment as a way of preventing inadvertent closure — hence the ceiling-mounted double-pole pull-cord switch rated at 45A or 50A that is standard for UK shower circuits.',
   'Electric shower installation in a bathroom is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or notified to Building Control.',
   "Elec-Mate's cable sizing calculator handles shower circuit design including correction factors, voltage drop, and Zs verification against BS 7671 tables.",
   'Typical UK installation cost (2026): £180–£500 per job depending on region — £270 average in the North West / Yorkshire, £285 in the West Midlands, £315 in Scotland, £375 in London. Labour time 1.5–2 hours on a straightforward swap.',
@@ -46,7 +49,7 @@ const faqs = [
   {
     question: 'Can I use 6mm\u00B2 cable for an electric shower?',
     answer:
-      "Yes, but only for lower-rated showers. A 6mm\u00B2 cable on a 32A MCB is suitable for showers up to approximately 7.2kW (31.3A at 230V). This covers some basic 7.5kW showers, but only if the actual current draw is within 32A — always check the manufacturer's data for the actual current rating, as some 7.5kW showers draw slightly more than 32A at the declared supply voltage. For any shower rated at 8.5kW or above, 6mm\u00B2 cable is not adequate. The most common shower ratings installed today are 8.5kW and 9.5kW, which require 10mm\u00B2 cable. If in doubt, size up — the additional cost of 10mm\u00B2 versus 6mm\u00B2 cable is small compared to the cost of having to replace the cable later if the homeowner upgrades the shower.",
+      "Yes, but only for lower-rated showers. A 6mm\u00B2 cable on a 32A MCB is suitable for showers up to approximately 7.2kW (31.3A at 230V). Reg 433.1.1 requires Ib \u2264 In \u2264 Iz, so the design current must not exceed the device rating: a 7.5kW shower is 32.6A at BS 7671's nominal 230V, which is above a 32A device. Many manufacturers declare 7.5kW at 240V (31.3A), so always work from the manufacturer's declared current — where it exceeds 32A a 40A device is required and the cable must have an Iz of at least 40A after correction factors. For any shower rated at 8.5kW or above, 6mm\u00B2 cable is not adequate. The most common shower ratings installed today are 8.5kW and 9.5kW, which require 10mm\u00B2 cable. If in doubt, size up — the additional cost of 10mm\u00B2 versus 6mm\u00B2 cable is small compared to the cost of having to replace the cable later if the homeowner upgrades the shower.",
   },
   {
     question: 'Do I need Part P notification for a shower installation?',
@@ -56,12 +59,12 @@ const faqs = [
   {
     question: 'What type of isolator switch do I need for a shower?',
     answer:
-      'BS 7671 requires a means of local isolation for the shower circuit. This is typically a ceiling-mounted pull-cord switch rated at 45A or 50A (double-pole). The switch must be accessible from the shower position and must isolate both the line and neutral conductors (double-pole). A wall-mounted switch is acceptable if it is outside the bathroom zones (outside zones 0, 1, and 2 — typically outside the room or at least 0.6m horizontally from the bath or shower tray). In practice, the ceiling-mounted pull-cord switch is the standard solution for UK bathrooms because it can be positioned inside the room without violating the zone requirements (ceiling-mounted switches are considered outside zone 2 provided they are at ceiling level). The switch must be rated for the full load current of the shower circuit.',
+      'BS 7671 requires a means of local isolation for the shower circuit. This is typically a ceiling-mounted pull-cord switch rated at 45A or 50A (double-pole). The switch must be accessible from the shower position and must isolate both the line and neutral conductors (double-pole). A wall-mounted switch is acceptable if it is outside the bathroom zones (outside zones 0, 1, and 2 — typically outside the room or at least 0.6m horizontally from the bath or shower tray). In practice, the ceiling-mounted pull-cord switch is the standard solution for UK bathrooms because it can be positioned inside the room above the zones. Zones 1 and 2 extend up to 2.25m above finished floor level or to the highest fixed shower head or water outlet, whichever is higher (Regs 701.32.3 and 701.32.4), so a ceiling mounting is only outside the zones where it is above that plane. Note also that the switchgear restrictions of Reg 701.512.3 do not apply to the insulating pull cord of a cord-operated switch. The switch must be rated for the full load current of the shower circuit.',
   },
   {
     question: 'Can I replace a shower with a higher kW model on the same cable?',
     answer:
-      'Only if the existing cable is rated to carry the higher current. For example, if the existing circuit uses 10mm\u00B2 cable on a 45A MCB, you can safely upgrade from a 9.5kW shower (41.3A) to a 10.5kW shower (45.7A) — but you would need to check that the MCB rating and cable capacity (after correction factors) still cover the higher current. Upgrading from a 7.5kW shower on 6mm\u00B2 cable to a 9.5kW shower is not possible without replacing the cable and MCB. Always verify the existing cable size, MCB rating, and cable condition before upgrading. If the cable is old or shows signs of degradation, it is good practice to install a new cable regardless of the size.',
+      'Only if the existing cable and protective device are rated to carry the higher current. For example, a circuit with 10mm\u00B2 cable on a 45A MCB will run a 9.5kW shower (41.3A), but a 10.5kW shower draws 45.7A at 230V — above the 45A device, so Reg 433.1.1 (Ib \u2264 In \u2264 Iz) is not satisfied and the device must go up to 50A, with the cable\u2019s Iz after correction factors checked against the new rating. Upgrading from a 7.5kW shower on 6mm\u00B2 cable to a 9.5kW shower is not possible without replacing the cable and MCB. Always verify the existing cable size, MCB rating, and cable condition before upgrading. If the cable is old or shows signs of degradation, it is good practice to install a new cable regardless of the size.',
   },
   {
     question: 'Where should the shower unit be positioned relative to the bathroom zones?',
@@ -131,6 +134,12 @@ const sections = [
     heading: 'Electric Shower Circuit Basics',
     content: (
       <>
+        <a
+          href="#calculator"
+          className="inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:bg-elec-yellow/20"
+        >
+          Size the cable for your shower — free calculator
+        </a>
         <p>
           An electric shower heats cold mains water instantaneously using a high-power heating
           element. Because of the power required, electric showers are among the highest-current
@@ -178,9 +187,11 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>7.5kW</strong> — approximately 32.6A. Budget models, suitable for small
-                bathrooms and low water flow. Cable: 6mm{'\u00B2'} on 32A MCB (tight) or 10mm
-                {'\u00B2'} on 40A MCB (preferred).
+                <strong>7.5kW</strong> — approximately 32.6A at 230V. Budget models, suitable for
+                small bathrooms and low water flow. 32.6A exceeds a 32A device, so Reg 433.1.1 (Ib
+                &le; In &le; Iz) rules out a 32A MCB on the 230V figure — use a 40A device unless
+                the manufacturer&rsquo;s declared current is at or below 32A (many units are rated
+                at 240V, where 7.5kW is 31.3A). Cable: 10mm{'\u00B2'} on 40A MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -197,16 +208,19 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>10.5kW</strong> — approximately 45.7A. Premium models, best flow rate.
-                Cable: 10mm{'\u00B2'} on 45A MCB (check correction factors) or 16mm{'\u00B2'} on 50A
-                MCB.
+                <strong>10.5kW</strong> — approximately 45.7A. Premium models, best flow rate. 45.7A
+                exceeds a 45A device, so Reg 433.1.1 requires a 50A device on the 230V figure. Cable
+                sized so that Iz after correction factors is not less than 50A — commonly 10mm
+                {'\u00B2'} where the reference method allows it, otherwise 16mm{'\u00B2'}.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>10.8kW to 12kW</strong> — approximately 47A to 52A. High-end models. Cable:
-                16mm{'\u00B2'} on 50A MCB. These require larger cable and may need a supply capacity
-                check.
+                <strong>10.8kW to 12kW</strong> — approximately 47A to 52A. High-end models. A 50A
+                device covers 10.8kW (47A), but a 12kW unit draws 52.2A at 230V, which exceeds 50A —
+                Reg 433.1.1 then requires the next device rating up (63A) and a cable whose Iz after
+                correction factors is not less than that. These require larger cable and may need a
+                supply capacity check.
               </span>
             </li>
           </ul>
@@ -237,7 +251,8 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">Quick Reference: Shower Cable Sizes</h3>
           <div className="space-y-3 text-white text-sm">
             <p>
-              <strong>7.5kW (32.6A):</strong> 6mm{'\u00B2'} on 32A MCB or 10mm{'\u00B2'} on 40A MCB
+              <strong>7.5kW (32.6A):</strong> 10mm{'\u00B2'} on 40A MCB — 32.6A is above a 32A
+              device, so Ib &le; In fails on a 32A MCB at 230V
             </p>
             <p>
               <strong>8.5kW (37A):</strong> 10mm{'\u00B2'} on 40A MCB
@@ -246,11 +261,12 @@ const sections = [
               <strong>9.5kW (41.3A):</strong> 10mm{'\u00B2'} on 45A MCB
             </p>
             <p>
-              <strong>10.5kW (45.7A):</strong> 10mm{'\u00B2'} on 45A MCB or 16mm{'\u00B2'} on 50A
-              MCB
+              <strong>10.5kW (45.7A):</strong> 50A device (45.7A is above a 45A MCB) — 10mm
+              {'\u00B2'} or 16mm{'\u00B2'} depending on the reference method and correction factors
             </p>
             <p>
-              <strong>10.8kW+ (47A+):</strong> 16mm{'\u00B2'} on 50A MCB
+              <strong>10.8kW (47A):</strong> 16mm{'\u00B2'} on 50A MCB. A 12kW unit (52.2A) needs a
+              63A device
             </p>
           </div>
         </div>
@@ -277,6 +293,29 @@ const sections = [
           description="Electric shower wiring guide: cable and MCB size by kW rating, RCD and bathroom zone requirements, and isolator placement to BS 7671."
           icon={Calculator}
         />
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Size the Cable for Your Shower Circuit',
+    content: (
+      <>
+        <p className="text-white">
+          Free to use, no sign-up and no email required. Enter the shower&rsquo;s design current,
+          the run length and the installation method, and the calculator returns the cable size,
+          the corrected current-carrying capacity and the voltage drop.
+        </p>
+        <p className="text-white">
+          For the design current, divide the shower rating by the voltage: a 9.5kW shower is
+          9500 &divide; 230 = 41.3A. Use the manufacturer&rsquo;s declared current where it differs
+          — many units are rated at 240V. The quick-reference sizes above assume no adverse
+          correction factors; use the calculator where the cable is grouped, runs through thermal
+          insulation, or sits in a warm loft.
+        </p>
+        <CalculatorSurface>
+          <CableSizingCalculator />
+        </CalculatorSurface>
       </>
     ),
   },
@@ -308,11 +347,16 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>Disconnection time</strong> — the shower circuit supplies fixed equipment
-                (not socket outlets), so the maximum disconnection time is 5 seconds. However, if
-                the circuit is protected by a 30mA RCD (which it should be for a bathroom circuit),
-                the RCD provides the primary protection against earth faults and the disconnection
-                time is effectively instantaneous.
+                <strong>Disconnection time</strong> — Reg 411.3.2.2 applies the Table 41.1 times
+                (0.4s at 230V TN, 0.2s TT) to final circuits rated up to 63A with one or more
+                socket-outlets and to final circuits rated up to 32A supplying only fixed connected
+                current-using equipment. A shower circuit protected at 40A or above supplies fixed
+                equipment but exceeds 32A, so it falls outside Reg 411.3.2.2: Reg 411.3.2.3 permits
+                5s on a TN system, and Reg 411.3.2.4 permits 1s on a TT system. A 6mm{'\u00B2'}{' '}
+                circuit on a 32A device is inside Reg 411.3.2.2 and must meet 0.4s. Where a 30mA RCD
+                protects the circuit it may be used to satisfy those disconnection times — but that
+                is not instantaneous: verification is a single AC test at I&Delta;n with a maximum
+                of 300ms.
               </span>
             </li>
           </ul>
@@ -331,9 +375,14 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 requires a means of local isolation for the shower circuit — a double-pole switch
-          that disconnects both the line and neutral conductors. This switch must be accessible to
-          the person using the shower and must be clearly identifiable.
+          Reg 462.2 requires every circuit to be provided with a means of isolation for all live
+          conductors, and Reg 537.2.7 requires each isolating device to be clearly identified by
+          position or durable marking. Reg 462.3(c) gives location adjacent to the associated
+          equipment as one way of guarding against inadvertent closure, which is why a local
+          double-pole switch is the normal arrangement for a shower. Note the exception in Reg
+          461.2: on a TN-S or TN-C-S system, isolation of the neutral is not required where
+          protective equipotential bonding is installed and the neutral is reliably connected to
+          Earth — but double-pole remains the UK norm and is required on a TT system.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -382,9 +431,11 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>Regulation 701.411.3.3</strong> — all circuits in locations containing a
-                bath or shower (Section 701) must be protected by a 30mA RCD, regardless of whether
-                they supply socket outlets or fixed equipment.
+                <strong>Regulation 701.411.3.3</strong> — additional protection by one or more RCDs
+                having the characteristics of Reg 415.1.1 (30mA) is required for low voltage
+                circuits serving the location, and also for circuits merely passing through zones 1
+                and/or 2 without serving the location. It applies regardless of whether the circuit
+                supplies socket-outlets or fixed equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,9 +464,14 @@ const sections = [
         </div>
         <p>
           When testing the completed installation, the{' '}
-          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
-          residual operating current (30mA) and at 5x (150mA). The trip times must be within 300ms
-          at 1x and 40ms at 5x.
+          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> with a
+          single alternating current test at its rated residual operating current (I&Delta;n =
+          30mA). BS 7671:2018+A4:2026 deleted Appendix 3 Table 3A, so the old &frac12;x / 1x / 5x
+          sequence is no longer the verification basis. Regardless of RCD Type, effectiveness is
+          deemed verified where the device disconnects within 300ms at I&Delta;n (Reg 643.8 for
+          additional protection; Reg 643.7.1 for automatic disconnection). A delay &lsquo;S&rsquo;
+          type RCD must operate between 130ms and 500ms. The 40ms figure comes from BS EN 61008
+          product testing, not from BS 7671.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <p className="text-white text-sm">
@@ -494,25 +550,35 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>Zone 0</strong> — inside the bath or shower tray itself. Only SELV (12V)
-                equipment rated IPX7 can be installed here. No electric shower components are placed
-                in Zone 0.
+                <strong>Zone 0</strong> — inside the bath or shower tray itself. Equipment must be
+                at least IPX7 (Reg 701.512.2) and, per Reg 701.55, current-using equipment is only
+                permitted if it is fixed, permanently connected, suitable for the zone, and
+                protected by SELV not exceeding 12V AC RMS or 30V ripple-free DC with the safety
+                source outside zones 0, 1 and 2. No electric shower components are placed in Zone 0.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>Zone 1</strong> — directly above the bath or shower tray to a height of
-                2.25m from the floor. Electric shower units are typically installed in Zone 1.
-                Equipment must be rated at least IPX4 (splash-proof) and must be suitable for the
-                zone. Current-using equipment (like the shower itself) is permitted if specifically
-                designed for Zone 1 installation.
+                <strong>Zone 1</strong> — the volume circumscribing the bath tub or shower basin, up
+                to 2.25m above finished floor level or the horizontal plane of the highest fixed
+                shower head or water outlet, whichever is higher (Reg 701.32.3). Electric shower
+                units are typically installed in Zone 1. Equipment must be rated at least IPX4 (Reg
+                701.512.2). Reg 701.55 lists electric showers and shower pumps among the
+                current-using equipment permitted in Zone 1, provided it is fixed, permanently
+                connected and suitable for the zone according to the manufacturer&rsquo;s
+                instructions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>Zone 2</strong> — extends 0.6m horizontally from the edge of Zone 1, up to
-                2.25m from the floor. Switches and accessories rated at least IPX4 are permitted.
-                The pull-cord switch is typically ceiling-mounted (above Zone 2).
+                <strong>Zone 2</strong> — extends 0.6m horizontally from the boundary of Zone 1, up
+                to the same upper limit (2.25m from the floor, or the highest fixed shower head or
+                water outlet if that is higher). Equipment installed here must be at least IPX4 (Reg
+                701.512.2), but Reg 701.512.3 does not permit switchgear, accessories incorporating
+                switches, or socket-outlets in Zone 2 — the only exceptions are switches and
+                socket-outlets of SELV circuits (safety source outside zones 0, 1 and 2) and shaver
+                supply units to BS EN 61558-2-5. The pull-cord switch is therefore ceiling-mounted,
+                above the zones.
               </span>
             </li>
           </ul>
@@ -569,8 +635,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <span>
                 <strong>Single-pole switch instead of double-pole.</strong> A single-pole switch
-                only disconnects the line conductor, leaving the neutral connected. The isolator
-                must be double-pole to disconnect both conductors.
+                only disconnects the line conductor, leaving the neutral connected. Reg 462.2
+                requires isolation of all live conductors, subject only to the Reg 461.2 exception
+                for a TN-S/TN-C-S system with protective equipotential bonding and a reliably
+                earthed neutral; on a TT system double-pole isolation is required outright.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -606,8 +674,8 @@ const sections = [
 export default function ElectricShowerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Shower Cable Size: 7.5kW-12kW (UK Install Guide)"
-      description="Cable + MCB size for UK electric showers by kW: 7.5kW→6mm²/32A, 8.5kW→10mm²/40A, 9.5kW→10mm²/45A, 10.5kW→16mm²/50A, 12kW→16mm²/50A. RCD, pull-cord, Section 701 zoning."
+      title="Electric Shower Cable Size: 8.5 & 9.5kW = 10mm²"
+      description="8.5kW: 10mm² on 40A. 9.5kW: 10mm² on 45A. 10.8–12kW: 16mm² on 50A. Cable and MCB size for every shower rating from 7.5kW, plus RCD, isolator and zones."
       datePublished="2025-06-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

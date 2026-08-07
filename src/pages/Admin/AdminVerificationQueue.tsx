@@ -408,7 +408,7 @@ export default function AdminVerificationQueue() {
                     <div className="w-full space-y-3">
                       <div>
                         <p className="text-[13px] font-semibold text-white">Reject verification?</p>
-                        <p className="text-[12px] text-white/70 mt-0.5">
+                        <p className="text-[12px] text-white mt-0.5">
                           The reason is sent to the user so they can fix it and resubmit.
                         </p>
                       </div>
@@ -417,7 +417,7 @@ export default function AdminVerificationQueue() {
                         onChange={(e) => setRejectReason(e.target.value)}
                         placeholder="Enter rejection reason…"
                         autoFocus
-                        className="min-h-[90px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/50 focus:border-elec-yellow/60"
+                        className="min-h-[90px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/25 focus:border-elec-yellow/60"
                       />
                       <div className="flex gap-3 w-full">
                         <button

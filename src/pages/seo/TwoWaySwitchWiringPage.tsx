@@ -529,7 +529,7 @@ export default function TwoWaySwitchWiringPage() {
   return (
     <GuideTemplate
       title="Two-Way Switch Wiring — Complete UK Electrician Guide 2024"
-      description="Complete guide to two-way and intermediate switch wiring: old and new colour codes, strappers, intermediate switches for three-point control…"
+      description="Complete guide to two-way and intermediate switch wiring: old and new colour codes, strappers, intermediate switches for three-point control."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

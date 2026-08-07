@@ -604,7 +604,7 @@ export default function RewireCostManchesterPage() {
   return (
     <GuideTemplate
       title="Rewire Cost Manchester 2026 | Manchester House Rewire Prices"
-      description="How much does a house rewire cost in Manchester in 2026? Complete Manchester rewire pricing guide covering terraces, semis, flats, Part P notification…"
+      description="How much does a house rewire cost in Manchester in 2026? Complete Manchester rewire pricing guide covering terraces, semis, flats, Part P notification."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

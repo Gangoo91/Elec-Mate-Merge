@@ -667,7 +667,7 @@ export default function RestaurantKitchenElectricalCostPage() {
   return (
     <GuideTemplate
       title="Restaurant Kitchen Electrical Cost 2026 | UK Commercial"
-      description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings…"
+      description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

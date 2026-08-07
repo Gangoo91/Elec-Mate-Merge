@@ -23,7 +23,7 @@ export default function StudyCentreOnlineCoursesPage() {
   return (
     <ToolTemplate
       title="Online Electrical Courses | Study Centre UK"
-      description="Elec-Mate Study Centre — 46+ online electrical courses for UK electricians and apprentices. Video lessons, interactive quizzes, flashcards, mock exams…"
+      description="Elec-Mate Study Centre — 46+ online electrical courses for UK electricians and apprentices. Video lessons, interactive quizzes, flashcards, mock exams."
       datePublished="2026-01-14"
       dateModified="2026-05-18"
       breadcrumbs={[

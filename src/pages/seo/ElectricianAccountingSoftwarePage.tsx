@@ -20,7 +20,7 @@ export default function ElectricianAccountingSoftwarePage() {
   return (
     <GuideTemplate
       title="Accounting Software for Electricians | Best Options 2026"
-      description="Compare the best accounting software for UK electricians in 2026. Covers QuickBooks, Xero, and FreeAgent features, MTD for VAT compliance…"
+      description="Compare the best accounting software for UK electricians in 2026. Covers QuickBooks, Xero, and FreeAgent features, MTD for VAT compliance."
       datePublished="2026-01-08"
       dateModified="2026-06-10"
       breadcrumbs={[

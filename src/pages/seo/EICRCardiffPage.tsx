@@ -743,7 +743,7 @@ export default function EICRCardiffPage() {
   return (
     <GuideTemplate
       title="EICR Cardiff | Electrical Inspection Certificate 2026"
-      description="EICR costs in Cardiff for 2026. Rent Smart Wales requirements, Welsh landlord obligations, Victorian terrace challenges, HMO licensing…"
+      description="EICR costs in Cardiff for 2026. Rent Smart Wales requirements, Welsh landlord obligations, Victorian terrace challenges, HMO licensing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

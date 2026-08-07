@@ -615,7 +615,7 @@ export default function ElectricianRatesPerHourPage() {
     <GuideTemplate
       localArea="Rates Per Hour Uk"
       title="Electrician Rates Per Hour UK 2026 | Pricing Guide"
-      description="Complete guide to electrician hourly rates in the UK. Average rates by region, callout charges, emergency rates, weekend and evening pricing…"
+      description="Complete guide to electrician hourly rates in the UK. Average rates by region, callout charges, emergency rates, weekend and evening pricing."
       datePublished="2025-07-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

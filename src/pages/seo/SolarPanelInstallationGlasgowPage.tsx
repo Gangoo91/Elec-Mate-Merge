@@ -725,7 +725,7 @@ export default function SolarPanelInstallationGlasgowPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Glasgow 2025 | Solar PV Scotland"
-      description="Solar panel installation in Glasgow 2025: Scottish Building Standards, conservation area planning rules, costs £5,500–£8,000…"
+      description="Solar panel installation in Glasgow 2025: Scottish Building Standards, conservation area planning rules, costs £5,500–£8,000."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

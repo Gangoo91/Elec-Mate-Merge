@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
 import { useCustomers, type Customer } from '@/hooks/inspection/useCustomers';
 import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
@@ -41,8 +42,9 @@ const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
   { value: 'industrial', label: 'Industrial' },
 ];
 
-const inputClass =
-  'h-11 touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20';
+/* Was a local boxed recipe — rounded-xl, filled background, focus ring. The
+   house language is an underline on transparent; `inputCn` carries it. */
+const inputClass = inputCn;
 
 /** ISO string → the local `YYYY-MM-DDTHH:mm` a datetime-local input expects. */
 const isoToLocalInput = (iso?: string): string => {
@@ -173,7 +175,7 @@ export const SiteVisitJobStep = ({
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
             1
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             · CLIENT
           </span>
         </div>
@@ -189,7 +191,7 @@ export const SiteVisitJobStep = ({
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-medium text-white">{selectedCustomer.name}</p>
-              <p className="truncate text-[12px] text-white/65">
+              <p className="truncate text-[12px] text-white">
                 {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
               </p>
             </div>
@@ -205,7 +207,7 @@ export const SiteVisitJobStep = ({
                   customerPhone: '',
                 });
               }}
-              className="h-9 rounded-full text-[12px] text-white/65 hover:text-white touch-manipulation"
+              className="h-11 rounded-full text-[12px] text-white hover:text-white touch-manipulation"
             >
               Change
             </Button>
@@ -216,7 +218,7 @@ export const SiteVisitJobStep = ({
           <div className="space-y-3">
             <div className="flex flex-col gap-2 sm:flex-row">
               <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -244,7 +246,7 @@ export const SiteVisitJobStep = ({
                   </div>
                 )}
                 {!isLoading && customers.length === 0 && (
-                  <p className="py-4 text-center text-sm text-white/60">
+                  <p className="py-4 text-center text-sm text-white">
                     No customers found — add them below
                   </p>
                 )}
@@ -259,7 +261,7 @@ export const SiteVisitJobStep = ({
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-white">{customer.name}</p>
-                      <p className="truncate text-xs text-white/60">
+                      <p className="truncate text-xs text-white">
                         {customer.email || customer.phone || 'No contact details'}
                       </p>
                     </div>
@@ -271,7 +273,7 @@ export const SiteVisitJobStep = ({
         )}
 
         {showCreate && (
-          <div className="space-y-3 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+          <div className="space-y-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
             <div className="flex items-center justify-between">
               <h3 className="text-[14px] font-semibold tracking-tight text-white">New client</h3>
               <Button
@@ -283,13 +285,13 @@ export const SiteVisitJobStep = ({
                   setNewEmail('');
                   setNewPhone('');
                 }}
-                className="h-9 text-xs text-white/65 touch-manipulation"
+                className="h-11 text-xs text-white touch-manipulation"
               >
                 Search instead
               </Button>
             </div>
             <div className="space-y-1">
-              <label className="text-[11.5px] font-medium text-white/65">Name *</label>
+              <label className="text-[11.5px] font-medium text-white">Name *</label>
               <Input
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
@@ -302,7 +304,7 @@ export const SiteVisitJobStep = ({
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-1">
-                <label className="text-[11.5px] font-medium text-white/65">Phone</label>
+                <label className="text-[11.5px] font-medium text-white">Phone</label>
                 <Input
                   type="tel"
                   inputMode="tel"
@@ -316,7 +318,7 @@ export const SiteVisitJobStep = ({
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[11.5px] font-medium text-white/65">Email</label>
+                <label className="text-[11.5px] font-medium text-white">Email</label>
                 <Input
                   type="email"
                   inputMode="email"
@@ -357,13 +359,13 @@ export const SiteVisitJobStep = ({
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
             2
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             · PROPERTY
           </span>
         </div>
 
         <div className="space-y-1">
-          <label className="text-[11.5px] font-medium text-white/65">Address *</label>
+          <label className="text-[11.5px] font-medium text-white">Address *</label>
           <PlacesAutocomplete
             value={visit.propertyAddress || ''}
             onChange={(value) => onUpdateProperty({ propertyAddress: value })}
@@ -375,7 +377,7 @@ export const SiteVisitJobStep = ({
           {previousVisits.length > 0 && (
             <div className="mt-1 overflow-hidden rounded-xl border border-white/10">
               <div className="bg-white/[0.02] px-3 py-1.5">
-                <p className="text-[11px] font-medium text-white/70">
+                <p className="text-[11px] font-medium text-white">
                   Previous visits at this address
                 </p>
               </div>
@@ -389,10 +391,10 @@ export const SiteVisitJobStep = ({
                     onClick={() => navigate(`/electrician/site-visit/${pv.id}`)}
                     className="flex min-h-[44px] w-full items-center gap-2 px-3 py-2 text-left touch-manipulation active:bg-white/[0.05]"
                   >
-                    <Clock className="h-3.5 w-3.5 flex-shrink-0 text-white/60" />
+                    <Clock className="h-3.5 w-3.5 flex-shrink-0 text-white" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-xs text-white">{pv.propertyAddress}</p>
-                      <p className="text-[11px] text-white/60">
+                      <p className="text-[11px] text-white">
                         {new Date(pv.updatedAt).toLocaleDateString('en-GB')} ·{' '}
                         {pv.status.replace('_', ' ')}
                       </p>
@@ -406,7 +408,7 @@ export const SiteVisitJobStep = ({
 
         <div className="grid gap-3 sm:grid-cols-[160px_1fr]">
           <div className="space-y-1">
-            <label className="text-[11.5px] font-medium text-white/65">Postcode</label>
+            <label className="text-[11.5px] font-medium text-white">Postcode</label>
             <Input
               value={visit.propertyPostcode || ''}
               // Uppercase on blur, not per keystroke — mid-input casing makes
@@ -425,7 +427,7 @@ export const SiteVisitJobStep = ({
           </div>
 
           <div className="space-y-1">
-            <label className="text-[11.5px] font-medium text-white/65">Property type</label>
+            <label className="text-[11.5px] font-medium text-white">Property type</label>
             <div className="grid grid-cols-3 gap-2">
               {PROPERTY_TYPES.map((pt) => {
                 const active = visit.propertyType === pt.value;
@@ -438,7 +440,7 @@ export const SiteVisitJobStep = ({
                       'h-11 rounded-xl border text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.98]',
                       active
                         ? 'border-elec-yellow/60 bg-elec-yellow/[0.12] text-elec-yellow'
-                        : 'border-white/[0.1] bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
+                        : 'border-white/[0.1] bg-white/[0.04] text-white hover:bg-white/[0.08]'
                     )}
                   >
                     {pt.label}
@@ -450,12 +452,12 @@ export const SiteVisitJobStep = ({
         </div>
 
         <div className="space-y-1">
-          <label className="text-[11.5px] font-medium text-white/65">Access notes</label>
+          <label className="text-[11.5px] font-medium text-white">Access notes</label>
           <Textarea
             value={visit.accessNotes || ''}
             onChange={(e) => onUpdateProperty({ accessNotes: e.target.value })}
             placeholder="Gate code, parking, key safe location…"
-            className="min-h-[80px] touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+            className={cn(textareaCn, 'min-h-[80px]')}
             autoCapitalize="sentences"
             spellCheck
             enterKeyHint="done"
@@ -466,9 +468,9 @@ export const SiteVisitJobStep = ({
             own update (the atomic save doesn't carry it); a blank value clears
             it. The row exists once the visit has cloud-synced its first edit. */}
         <div className="space-y-1">
-          <label className="text-[11.5px] font-medium text-white/65">
+          <label className="text-[11.5px] font-medium text-white">
             Scheduled date &amp; time{' '}
-            <span className="font-normal text-white/40">(optional)</span>
+            <span className="font-normal text-white">(optional)</span>
           </label>
           <Input
             type="datetime-local"
@@ -480,7 +482,7 @@ export const SiteVisitJobStep = ({
             }}
             className={cn(inputClass, 'block w-full')}
           />
-          <p className="text-[11px] text-white/45">
+          <p className="text-[11px] text-white">
             Book this visit to show it on your calendar. Leave blank to skip.
           </p>
         </div>

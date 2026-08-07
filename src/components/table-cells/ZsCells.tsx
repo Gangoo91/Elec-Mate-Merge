@@ -8,20 +8,27 @@ import {
 } from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
+import type { CellWarning } from '@/utils/cellWarnings';
+import { CellWarningMarker } from './CellWarningMarker';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import { TestValidationResults } from '@/utils/testValidation';
 
 interface ZsCellsProps {
+  /** BS 7671 findings that name a cell in this group, keyed by field. */
+  cellWarnings?: Partial<Record<keyof TestResult, CellWarning>>;
+  /** Opens the finding in the Validate sheet. */
+  onOpenWarning?: () => void;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   validation: TestValidationResults;
 }
 
-const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation }) => {
+const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation, cellWarnings, onOpenWarning }) => {
   return (
     <>
       {/* Column 24: Polarity# */}
-      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="relative p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+        <CellWarningMarker warning={cellWarnings?.polarity} onOpen={onOpenWarning} />
         <Select
           value={result.polarity || ''}
           onValueChange={(value) => onUpdate(result.id, 'polarity', value)}
@@ -46,6 +53,8 @@ const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation
       {/* Column 25: Maximum measured (Zs) — format to 2 dp on blur for neat display */}
       <TableCell className="p-0 h-8 align-middle w-24 min-w-[85px] max-w-[85px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.zs}
+          onOpenWarning={onOpenWarning}
           value={result.zs || ''}
           onChange={(value) => onUpdate(result.id, 'zs', value)}
           onCommit={(value) => {

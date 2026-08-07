@@ -51,7 +51,7 @@ export const CashFlowSettings = ({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-2">
-        <Settings className="h-4 w-4 text-blue-400" />
+        <Settings className="h-4 w-4 text-elec-yellow" />
         <span className="text-sm font-medium text-white">Settings & Assumptions</span>
       </div>
 

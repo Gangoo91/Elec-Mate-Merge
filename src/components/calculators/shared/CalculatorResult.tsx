@@ -19,10 +19,15 @@ export const CalculatorResult = ({
 }: CalculatorResultProps) => {
   void category;
 
+  // The answer panel sits INSIDE the card, so it goes darker rather than
+  // brighter — a well is what makes it read as the output rather than more
+  // input. It previously used the identical surface to its own parent and to
+  // the values nested inside it, so all three levels were the same grey and
+  // nothing looked like the result.
   const variantClasses =
     variant === 'warning'
-      ? 'border-red-500/30 bg-red-500/[0.04]'
-      : 'border-white/[0.06] bg-white/[0.02]';
+      ? 'border-red-500/30 bg-red-500/[0.06]'
+      : 'border-white/[0.10] bg-black/25';
 
   return (
     <div className={cn('rounded-xl p-4 sm:p-5 border animate-fade-in', variantClasses, className)}>
@@ -61,24 +66,86 @@ export const ResultValue = ({
   return (
     <div
       className={cn(
-        'rounded-xl p-3.5 sm:p-4 bg-white/[0.02] border border-white/[0.06] min-w-0 space-y-1',
+        'min-w-0 space-y-1 rounded-xl border border-white/[0.10] bg-white/[0.06] p-3.5 sm:p-4',
         className
       )}
     >
-      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white truncate">
+      {/* Wraps rather than truncates. At 10px with 0.18em tracking in a
+          half-width cell, "Capacitor needed" rendered as "CAPACITOR…" — a label
+          clipped to one word tells you nothing, and a second line costs 12px. */}
+      <p className="text-[10px] font-medium uppercase leading-tight tracking-[0.18em] text-white">
         {label}
       </p>
       <div className="flex items-baseline gap-1.5 min-w-0">
-        <span className={cn('font-mono font-semibold text-white break-words min-w-0', sizes.value)}>
+        {/* `tabular-nums`, not `font-mono`. Monospace reads as code; money on a
+            financial screen wants the page typeface with figures locked to a
+            common width so columns line up and a changing value does not make
+            the row jump. */}
+        <span
+          className={cn('min-w-0 break-words font-semibold tabular-nums text-white', sizes.value)}
+        >
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
-        {unit && (
-          <span className={cn('text-white font-mono shrink-0', sizes.unit)}>{unit}</span>
-        )}
+        {unit && <span className={cn('shrink-0 tabular-nums text-white', sizes.unit)}>{unit}</span>}
       </div>
     </div>
   );
 };
+
+interface ResultHeadlineProps {
+  /** What the number is, e.g. "Minimum hourly rate". */
+  label: string;
+  /** The answer itself, pre-formatted. */
+  value: string;
+  /** One line of plain English — what it means, or what to do with it. */
+  caption?: string;
+  /** Optional secondary figure, e.g. "£468.00 a day". */
+  aside?: string;
+  /**
+   * `negative` renders the figure red. A loss, or an investment that never
+   * pays back, must not appear in volt — volt reads as the good answer, and a
+   * £-3,000 profit shown in the same colour as a £3,000 one is worse than no
+   * colour at all.
+   */
+  tone?: 'default' | 'negative';
+  className?: string;
+}
+
+/**
+ * The one number the calculator exists to produce.
+ *
+ * Every result value across the suite was rendered at `size="sm"` — forty of
+ * them, none larger — so a results panel was a grid of equally-weighted boxes
+ * and nothing in it read as the answer. The user had to work out which figure
+ * they had come for.
+ *
+ * This is deliberately the only place volt appears at display size: one answer,
+ * stated once, with the supporting figures kept quiet beneath it.
+ */
+export const ResultHeadline = ({
+  label,
+  value,
+  caption,
+  aside,
+  tone = 'default',
+  className,
+}: ResultHeadlineProps) => (
+  <div className={cn('border-b border-white/[0.10] pb-4', className)}>
+    <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{label}</p>
+    <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <span
+        className={cn(
+          'text-[34px] font-semibold leading-none tabular-nums tracking-tight sm:text-[42px]',
+          tone === 'negative' ? 'text-red-400' : 'text-elec-yellow'
+        )}
+      >
+        {value}
+      </span>
+      {aside && <span className="text-[13px] tabular-nums text-white">{aside}</span>}
+    </div>
+    {caption && <p className="mt-2 text-[12.5px] leading-relaxed text-white">{caption}</p>}
+  </div>
+);
 
 interface ResultsGridProps {
   children: ReactNode;
@@ -122,11 +189,14 @@ export const ResultDetails = ({
           {title}
         </span>
         <ChevronDown
-          className={cn('h-4 w-4 text-white transition-transform duration-200', isOpen && 'rotate-180')}
+          className={cn(
+            'h-4 w-4 text-white transition-transform duration-200',
+            isOpen && 'rotate-180'
+          )}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-2">
-        <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+        <div className="p-3 sm:p-4 rounded-xl border border-white/[0.10] bg-white/[0.04]">
           {children}
         </div>
       </CollapsibleContent>
@@ -143,10 +213,10 @@ interface ResultBadgeProps {
 export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
   const statusClasses =
     status === 'pass'
-      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+      ? 'border-elec-yellow/40 bg-transparent text-elec-yellow'
       : status === 'fail'
-        ? 'border-red-500/30 bg-red-500/[0.06] text-red-300'
-        : 'border-white/[0.08] bg-white/[0.03] text-white';
+        ? 'border-red-400/40 bg-red-500/[0.10] text-red-300'
+        : 'border-white/[0.14] bg-white/[0.06] text-white';
 
   return (
     <span

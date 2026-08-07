@@ -18,7 +18,9 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
   const Pill = ({ label, ok }: { label: string; ok: boolean }) => (
     <span
       className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border ${
-        ok ? 'border-white/10 bg-white/[0.03] text-white/85' : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
+        ok
+          ? 'border-white/10 bg-white/[0.03] text-white/85'
+          : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
       }`}
     >
       {ok ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}

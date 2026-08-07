@@ -15,7 +15,7 @@ export default function ToolsMarketplace() {
       productType="tools"
       title="Tools Marketplace"
       icon={Wrench}
-      accentColor="orange"
+      accentColor="yellow"
       searchPlaceholder="Search tools, brands..."
       categories={TOOLS_CATEGORIES}
       supplierLabel="UK suppliers"

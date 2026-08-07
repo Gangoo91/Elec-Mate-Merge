@@ -400,7 +400,7 @@ export default function AIMaintenanceSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Maintenance Specialist | Electrical Systems"
-      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring…"
+      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

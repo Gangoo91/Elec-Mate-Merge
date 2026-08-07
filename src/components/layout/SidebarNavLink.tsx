@@ -35,13 +35,27 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          'group flex items-center justify-between px-4 py-3 rounded-2xl text-[15px] touch-manipulation',
-          'transition-all duration-200 ease-out active:scale-[0.98]',
+          'group relative flex items-center justify-between overflow-hidden rounded-2xl py-3 pl-4 pr-3 text-[15px] touch-manipulation',
+          'transition-[background-color,border-color] duration-200 ease-out active:scale-[0.98]',
+          // Border on BOTH states. It was only on the active item, so every
+          // item grew 2px the moment you navigated to it and the whole list
+          // shifted under the cursor.
+          'border',
           isActive
-            ? 'bg-white/[0.08] border border-white/[0.1]'
-            : 'hover:bg-white/[0.03]'
+            ? 'border-elec-yellow/35 bg-white/[0.09]'
+            : 'border-transparent hover:border-white/[0.10] hover:bg-white/[0.06]'
         )}
       >
+        {/* "You are here" on the LEFT edge, which is where every other list in
+            the app puts it — the work list, the notification rows. It was a
+            floating pill on the right, reading more like a scrollbar than a
+            position marker. */}
+        {isActive && (
+          <span
+            aria-hidden
+            className="absolute inset-y-1.5 left-0 w-[3px] rounded-r-full bg-elec-yellow"
+          />
+        )}
         <span className={cn(
           'flex items-center gap-2 transition-colors duration-200',
           isActive ? 'text-elec-yellow font-semibold tracking-tight' : 'text-white font-medium'
@@ -50,26 +64,25 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
           {item.badge && (
             <span
               className={cn(
-                'text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded',
+                // Outline + text, no fill. A translucent volt or amber fill
+                // goes muddy brown on this ground; a border does not.
+                'rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                 item.badgeVariant === 'early'
-                  ? 'bg-amber-500/15 border border-amber-500/40 text-amber-400'
-                  : 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
+                  ? 'border border-white/[0.30] text-white'
+                  : 'border border-elec-yellow/50 text-elec-yellow'
               )}
             >
               {item.badge}
             </span>
           )}
         </span>
-        {isActive && (
-          <span className="w-1.5 h-5 rounded-full bg-elec-yellow" />
-        )}
       </SafeLink>
     );
   } catch (error) {
     console.warn('SidebarNavLink: Router context not available', error);
     // Fallback: render without Link functionality
     return (
-      <div className="flex items-center px-4 py-3 rounded-2xl text-[15px] font-medium text-white">
+      <div className="flex items-center rounded-2xl border border-transparent py-3 pl-4 pr-3 text-[15px] font-medium text-white">
         <span>{item.name}</span>
       </div>
     );

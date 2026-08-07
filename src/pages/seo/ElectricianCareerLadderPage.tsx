@@ -501,7 +501,7 @@ export default function ElectricianCareerLadderPage() {
     <GuideTemplate
       localArea="Career Ladder Uk"
       title="Electrician Career Ladder UK 2026 | Apprentice to"
-      description="Complete guide to the UK electrician career ladder — apprentice, qualified electrician, senior electrician, contracts supervisor, contracts manager…"
+      description="Complete guide to the UK electrician career ladder — apprentice, qualified electrician, senior electrician, contracts supervisor, contracts manager."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

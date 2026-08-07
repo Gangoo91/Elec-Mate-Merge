@@ -42,8 +42,8 @@ const tocItems = [
 const keyTakeaways = [
   'Protective earthing connects all exposed-conductive-parts to the main earthing terminal, ensuring that fault current can flow and protective devices can operate within the required disconnection time.',
   'Main protective bonding conductors connect extraneous-conductive-parts (water pipes, gas pipes, oil pipes, structural steelwork) to the main earthing terminal — typically 10 mm or 6 mm copper depending on the supply.',
-  'The main earthing terminal is the central connection point where all earthing and bonding conductors meet — it must be accessible and labelled with a permanent BS 951 safety label.',
-  'Regulation 411.3.1.2 and Table 41.1 require disconnection within 0.4 seconds for final circuits up to 32 A (fixed equipment) or up to 63 A (with socket outlets) in TN systems — earthing must be adequate to achieve these times.',
+  'The main earthing terminal is the central connection point where all earthing and bonding conductors meet — it must be accessible and, where separate from the main switchgear, carry the permanent "Safety Electrical Connection — Do Not Remove" warning notice required by Regulation 514.13.1.',
+  'Regulation 411.3.2.2 and Table 41.1 require disconnection within 0.4 seconds for final circuits up to 32 A (fixed equipment) or up to 63 A (with socket outlets) in TN systems — earthing must be adequate to achieve these times.',
   'Elec-Mate includes calculators for earth fault loop impedance, protective conductor sizing, and bonding requirements to help electricians verify compliance on site.',
 ];
 
@@ -56,22 +56,22 @@ const faqs = [
   {
     question: 'What size bonding conductor do I need?',
     answer:
-      "The size of the main protective bonding conductor depends on the earthing arrangement. For TN-C-S (PME) supplies — the most common arrangement in the UK — Regulation 544.1.1 requires selection in accordance with Table 54.8 based on the cross-sectional area of the supply PEN conductor. Where the PEN conductor is 35 mm² or less (which covers virtually all single-phase domestic PME supplies), the minimum bonding conductor is 10 mm² copper. For larger PEN conductors, Table 54.8 gives increasing minimum sizes. For non-PME supplies (TN-S or TT), Regulation 544.1.1 requires the bonding conductor to be not less than half the cross-sectional area of the installation's earthing conductor, with a minimum of 6 mm² copper (and need not exceed 25 mm² copper). In practice, for a typical domestic PME installation with 25 mm² tails, a 10 mm² copper bonding conductor is the standard requirement. The bonding conductor must run in a continuous length from the main earthing terminal to the point of connection on the service pipe — it must not pass through any intermediate connection or junction box. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.",
+      "The size of the main protective bonding conductor depends on the earthing arrangement. For TN-C-S (PME) supplies — the most common arrangement in the UK — Regulation 544.1.1 requires selection in accordance with Table 54.8 based on the cross-sectional area of the supply PEN conductor. Where the PEN conductor is 35 mm² or less (which covers virtually all single-phase domestic PME supplies), the minimum bonding conductor is 10 mm² copper. For larger PEN conductors, Table 54.8 gives increasing minimum sizes. For non-PME supplies (TN-S or TT), Regulation 544.1.1 requires the bonding conductor to be not less than half the cross-sectional area of the installation's earthing conductor, with a minimum of 6 mm² copper (and need not exceed 25 mm² copper). In practice, for a typical domestic PME installation with 25 mm² tails, a 10 mm² copper bonding conductor is the standard requirement. Run the bonding conductor unbroken from the main earthing terminal to the point of connection on the service pipe wherever practicable. BS 7671 does not prohibit a joint, but Regulation 543.3.2 requires every connection and joint to be accessible for inspection, testing and maintenance, so a concealed or buried joint is not acceptable. Where the conductor is liable to mechanical damage, it must be protected with conduit, trunking, or mechanical protection.",
   },
   {
     question: 'Where should the main bonding connection be made on a water pipe?',
     answer:
-      'The main bonding connection to a water pipe should be made as close as practicable to the point of entry of the pipe into the building — and on the consumer side of the stopcock and any meter. This ensures that the bonding is effective regardless of whether the meter or stopcock is removed for maintenance. The connection is typically made using a BS 951 bonding clamp (the green and yellow type with a permanent safety label). The clamp must make a reliable, gas-tight connection to the pipe. If the water supply includes a section of plastic pipe (which is increasingly common with modern installations using plastic service pipes), the bonding may not be required for that service if there is no metal pipe entering the building. However, if there are internal copper pipes (even if the service pipe is plastic), these pipes may need to be bonded if they are classed as extraneous-conductive-parts — this requires assessment of whether they introduce an earth potential from outside the equipotential zone. In practice, if in doubt, bond it. The cost of a bonding clamp and a short run of 10 mm cable is negligible compared to the risk of not bonding a service that should be bonded.',
+      "Regulation 544.1.2 requires the connection to be made as near as practicable to the point of entry of the pipe into the premises, to the consumer's hard metal pipework and before any branch pipework. Where there is a meter, isolation point or union, make the connection where practicable within 600 mm of the meter outlet union, or at the point of entry to the building if the meter is external. This ensures that the bonding is effective regardless of whether the meter or stopcock is removed for maintenance. The connection is typically made using a BS 951 bonding clamp carrying the permanent \"Safety Electrical Connection — Do Not Remove\" warning notice required by Regulation 514.13.1. The clamp must make a reliable, gas-tight connection to the pipe. If the water service pipe is plastic, there is no metallic service to bond. The note to Regulation 411.3.1.2 states that where non-metallic pipes enter the building and are then connected to metallic pipes within the building, those internal metallic pipes do not normally require protective bonding, as they are unlikely to be extraneous-conductive-parts. Assess and confirm this rather than bonding by default, and record the reasoning behind the decision.",
   },
   {
     question: 'Do I need to bond the gas pipe?',
     answer:
-      'Yes. Gas pipes are extraneous-conductive-parts and must be connected to the main earthing terminal via a main protective bonding conductor. The bonding connection should be made within 600 mm of the gas meter on the consumer side — this is a requirement set by the gas industry (IGEM/UP/7) as well as BS 7671. The bonding must be on the consumer side of the meter so that the bonding is not broken when the meter is removed or replaced. Use a BS 951 bonding clamp fitted to a clean section of pipe, with the permanent safety label attached. The bonding conductor runs from this clamp to the main earthing terminal in a continuous length. Do not remove or disconnect the gas bonding for any reason without providing alternative protective measures — removing the gas bonding from a live installation can create a dangerous situation where the gas pipe rises to the supply voltage in the event of a neutral fault (particularly in TN-C-S systems where the neutral carries the earth return current).',
+      'Yes. Metallic gas installation pipes are listed in Regulation 411.3.1.2 as an example of an extraneous-conductive-part and must be connected to the main earthing terminal via a main protective bonding conductor. Regulation 544.1.2 requires the connection to be made as near as practicable to the point of entry into the premises, to the consumer’s hard metal pipework and before any branch pipework — where practicable within 600 mm of the meter outlet union, or at the point of entry to the building if the meter is external. Making it on the consumer side means the bonding is not broken when the meter is removed or replaced. Use a BS 951 bonding clamp fitted to a clean section of pipe, with the permanent "Safety Electrical Connection — Do Not Remove" warning notice required by Regulation 514.13.1. The bonding conductor runs from this clamp to the main earthing terminal in a continuous length. Do not remove or disconnect the gas bonding for any reason without providing alternative protective measures — removing the gas bonding from a live installation can create a dangerous situation where the gas pipe rises to the supply voltage in the event of a neutral fault (particularly in TN-C-S systems where the neutral carries the earth return current).',
   },
   {
     question: 'What is a TN-C-S supply and why does earthing matter more?',
     answer:
-      'A TN-C-S (also called Protective Multiple Earthing or PME) supply is the most common earthing arrangement in the UK. In this system, the supply neutral conductor also serves as the earth return path — the combined neutral and earth conductor is called the PEN (Protective Earth and Neutral) conductor. At the consumer intake point, the PEN is split into separate neutral and earth connections. The advantage of TN-C-S is that it provides a reliable, low-impedance earth without needing a separate earth electrode at the property. However, there is a specific risk: if the PEN conductor breaks (an open PEN fault), the metalwork of the installation — and any bonded services — could rise to a dangerous voltage. This is why main bonding is so critical in TN-C-S systems. The bonding ensures that all metallic services are at the same potential, reducing the touch voltage in the event of an open PEN fault. BS 7671 and the Electricity Safety, Quality and Continuity Regulations (ESQCR) 2002 set specific requirements for TN-C-S earthing, including bonding conductor sizes and restrictions on using TN-C-S earthing for certain applications (such as caravans, petrol stations, and construction sites).',
+      'A TN-C-S (also called Protective Multiple Earthing or PME) supply is the most common earthing arrangement in the UK. In this system, the supply neutral conductor also serves as the earth return path — the combined neutral and earth conductor is called the PEN (Protective Earth and Neutral) conductor. At the consumer intake point, the PEN is split into separate neutral and earth connections. The advantage of TN-C-S is that it provides a reliable, low-impedance earth without needing a separate earth electrode at the property. However, there is a specific risk: if the PEN conductor breaks (an open PEN fault), the metalwork of the installation — and any bonded services — could rise to a dangerous voltage. This is why main bonding is so critical in TN-C-S systems. The bonding ensures that all metallic services are at the same potential, reducing the touch voltage in the event of an open PEN fault. BS 7671 and the Electricity Safety, Quality and Continuity Regulations (ESQCR) set specific requirements for TN-C-S earthing, including bonding conductor sizes (Table 54.8) and restrictions on using a PME earthing facility for certain installations. Socket-outlet protective conductors on caravan and camping park pitches shall not be connected to a PME earthing facility (Regulation 708.553.1.14); ESQCR prohibits connecting PME to any metalwork in a boat (709.411.4); PME shall not be used as the means of earthing for mobile and transportable units (717.411.4) or for fairgrounds, amusement parks and circuses (740.411.4.1); on construction and demolition sites PME may only be used where all extraneous-conductive-parts are reliably connected to the main earthing terminal (704.411.3.1); and for an outdoor EV charging point PME is only permitted where an earth electrode holds the open-PEN touch voltage below 70 V RMS or an open-PEN detection device disconnects the vehicle (722.411.4.1).',
   },
   {
     question: 'Can I use the water pipe as the sole means of earthing?',
@@ -154,7 +154,7 @@ const sections = [
           transformer. This fault current must be high enough to trip the protective device within
           the required disconnection time (0.4 seconds for final circuits up to 32 A supplying fixed
           equipment, or up to 63 A where socket outlets are present, in TN systems — per Regulation
-          411.3.1.2 and Table 41.1). If the earthing path has too much impedance (resistance), the
+          411.3.2.2 and Table 41.1). If the earthing path has too much impedance (resistance), the
           fault current will be too low to trip the device quickly, and the metalwork will remain
           live — creating a risk of electric shock.
         </p>
@@ -298,10 +298,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labelling.</strong> The MET must bear a permanent safety label stating:
-                "Safety Electrical Connection — Do Not Remove." This is a BS 951 requirement and
-                ensures that anyone working near the MET understands that the connection is safety
-                critical.
+                <strong>Labelling.</strong> Regulation 514.13.1 requires a permanent warning notice
+                marked "Safety Electrical Connection — Do Not Remove" at the connection of every
+                earthing conductor to an earth electrode, at the connection of every bonding
+                conductor to an extraneous-conductive-part, and at the main earthing terminal where
+                it is separate from the main switchgear. The notice may be provided on the BS 951
+                clamp itself or on the warning label supplied with it, and ensures that anyone
+                working near the MET understands that the connection is safety critical.
               </span>
             </li>
           </ul>
@@ -343,9 +346,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Gas service pipe.</strong> Bond within 600 mm of the gas meter, on the
-                consumer side. This is both a BS 7671 requirement and a gas industry requirement
-                (IGEM/UP/7).
+                <strong>Gas service pipe.</strong> Regulation 544.1.2 requires the connection to be
+                made as near as practicable to the point of entry into the premises, to the
+                consumer's hard metal pipework and before any branch pipework — where practicable
+                within 600 mm of the meter outlet union, or at the point of entry to the building if
+                the meter is external. Gas industry guidance carries the same requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,9 +383,11 @@ const sections = [
         </div>
         <p>
           Each bonding connection must be made with a BS 951 bonding clamp, fitted to a clean
-          section of pipe, and bear a permanent safety label: "Safety Electrical Connection — Do Not
-          Remove." The conductor must run in a continuous length from the MET to the bonding clamp —
-          no intermediate joints.
+          section of pipe, and bear a permanent warning notice: "Safety Electrical Connection — Do
+          Not Remove" (Regulation 514.13.1). Run the conductor unbroken from the MET to the bonding
+          clamp wherever practicable; BS 7671 does not prohibit a joint, but Regulation 543.3.2
+          requires every connection and joint in a protective conductor to remain accessible for
+          inspection, testing and maintenance, so a buried or concealed joint is not acceptable.
         </p>
         <SEOAppBridge
           title="Verify bonding requirements with AI"
@@ -440,9 +447,12 @@ const sections = [
         <p>
           For larger PME installations (three-phase supplies, commercial premises), refer to Table
           54.8 and select the bonding conductor size based on the supply PEN conductor
-          cross-sectional area. The minimum is always 6 mm&sup2; copper, and where the local
-          distributor's network conditions require it, a larger size than the Table 54.8 minimum may
-          be necessary — always check with the DNO for very large supplies.
+          cross-sectional area: 35 mm&sup2; or less &rarr; 10 mm&sup2;; over 35 up to 50 mm&sup2;
+          &rarr; 16 mm&sup2;; over 50 up to 95 mm&sup2; &rarr; 25 mm&sup2;; over 95 up to 150
+          mm&sup2; &rarr; 35 mm&sup2;; over 150 mm&sup2; &rarr; 50 mm&sup2;. These are copper
+          equivalent areas — another metal may be used where it affords equivalent conductance. The
+          note to Table 54.8 warns that the local distributor's network conditions may require a
+          larger conductor, so always check with the DNO for very large supplies.
         </p>
       </>
     ),
@@ -488,10 +498,12 @@ const sections = [
         </div>
         <p>
           The practical test is: can this metallic part introduce a potential from outside the
-          equipotential zone? If the service pipe is plastic from the street to the house, the
-          internal copper pipework is not connected to external earth and may not be an
-          extraneous-conductive-part. However, this requires careful assessment — if there is any
-          doubt, bond it. The cost is minimal and the safety benefit is significant.
+          equipotential zone? BS 7671 answers this directly. The note to Regulation 411.3.1.2 states
+          that where non-metallic pipes — plastic, for example — enter the building and are then
+          connected to metallic pipes within the building, the metallic pipes within the building do
+          not normally require protective bonding, as they are unlikely to be
+          extraneous-conductive-parts. Confirm it by assessment or measurement rather than bonding
+          by default, and record the basis of your decision.
         </p>
         <p>
           During an{' '}
@@ -588,8 +600,11 @@ const sections = [
               <span>
                 <strong>Continuity of main bonding conductors.</strong> Verify that each main
                 bonding conductor provides a continuous, low-resistance path from the MET to the
-                bonding clamp on the service pipe. The resistance should be very low (typically less
-                than 0.05 ohms for 10 mm copper over a short run).
+                bonding clamp on the service pipe. Guidance Note 3 gives a guideline acceptable
+                value of not exceeding 0.1 &Omega; for a bonding conductor, and readings across a
+                joint made by an earth clamp should approach 0.05 &Omega;, allowing for instrument
+                resolution and contact resistance. For reference, 25 m of single-core 10 mm&sup2;
+                copper is about 0.05 &Omega;.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -639,8 +654,8 @@ const sections = [
 export default function ProtectiveEarthingBondingPage() {
   return (
     <GuideTemplate
-      title="Protective Earthing + Bonding | BS 7671 Chapter 54"
-      description="Protective earthing + main bonding under BS 7671:2018+A4:2026 Chapter 54. MET sizing, 10mm/6mm rules, water/gas/oil bonds + when supplementary applies."
+      title="Main Protective Bonding Conductor: 10mm or 6mm"
+      description="Main protective bonding: 10mm² copper for TN-C-S (PME) with a PEN up to 35mm², 6mm² minimum for TN-S/TT. Table 54.8 sizes plus where to bond gas and water."
       datePublished="2025-05-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

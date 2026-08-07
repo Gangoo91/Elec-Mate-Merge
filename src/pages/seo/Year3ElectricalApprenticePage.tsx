@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Your employer will expect you to take on more responsibility: running jobs with less supervision, managing materials, and mentoring year 1 and 2 apprentices on site.',
   'AM2 preparation should start in year 3. Familiarise yourself with the assessment format, practise timed installations, and book a practice session at your local assessment centre if available.',
   'The 18th Edition (BS 7671) exam is a key milestone — many apprentices sit it during year 3 so they are qualified before their end-point assessment.',
-  'JIB year 3 apprentice rates are significantly higher than year 1 and 2 — you should be earning a wage that reflects your growing competence and value to the business.',
+  'The JIB Stage 3 apprentice rate (year 3 maps to Stage 3) is £13.05 per hour from 5 January 2026, well above Stage 2 at £10.60 — you should be earning a wage that reflects your growing competence and value to the business.',
 ];
 
 const faqs = [
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'How much does a year 3 electrical apprentice earn in 2026?',
     answer:
-      'Under the JIB (Joint Industry Board) grading structure, a year 3 apprentice in 2026 earns approximately £13.00 to £14.50 per hour depending on the employer and region. This is a significant step up from year 2 rates. Some employers pay above JIB rates for year 3 apprentices, particularly in London and the South East where labour demand is high. If your employer is not JIB-registered, negotiate based on the JIB rate as a benchmark — you are delivering productive work and should be compensated accordingly. Overtime rates, travel allowances, and tool allowances may also apply.',
+      'The JIB (Joint Industry Board) grades apprentices by stage rather than year, and year 3 of an apprenticeship normally corresponds to Stage 3. From 5 January 2026 the JIB Stage 3 apprentice rate is £13.05 per hour, rising to £14.62 per hour in the London Zone. That is a clear step up from Stage 2 at £10.60 per hour. The apprentice rate is a single rate covering all hours, including off-the-job training — the separate lower "at college" rate no longer applies in England, Wales and Northern Ireland. Some employers pay above the JIB rate, particularly in London and the South East where labour demand is high. If your employer is not JIB-registered, negotiate based on the JIB rate as a benchmark — you are delivering productive work and should be compensated accordingly. Overtime rates, travel allowances, and tool allowances may also apply.',
   },
   {
     question: 'When should I start preparing for the AM2 assessment?',
@@ -481,17 +481,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>JIB year 3 rate (2026)</strong> — approximately £14.50 to £16.00 per hour.
-                JIB rates are reviewed annually and represent the industry standard for directly
-                employed apprentices.
+                <strong>JIB Stage 3 apprentice rate (2026)</strong> — £13.05 per hour, effective
+                5 January 2026 (£14.62 per hour in the London Zone). The JIB grades apprentices by
+                Stage 1 to Stage 4 rather than by year, and year 3 normally corresponds to Stage 3.
+                It is a single rate covering all hours, including off-the-job training. JIB rates are
+                reviewed annually and represent the industry standard for directly employed
+                apprentices.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-JIB employers</strong> — rates vary but should be at least in line with
-                the JIB benchmark. If your employer is paying significantly below JIB rates for a
-                year 3 apprentice, this is worth raising. You are delivering skilled work and your
+                the JIB benchmark. If your employer is paying significantly below the JIB Stage 3
+                apprentice rate, this is worth raising. You are delivering skilled work and your
                 pay should reflect that.
               </span>
             </li>
@@ -653,7 +656,7 @@ export default function Year3ElectricalApprenticePage() {
   return (
     <GuideTemplate
       title="Year 3 Electrical Apprentice | What to Expect 2026"
-      description="Complete guide to year 3 of an electrical apprenticeship in the UK. Level 3 diploma, increased site responsibility, AM2 preparation, 18th Edition exam…"
+      description="Complete guide to year 3 of an electrical apprenticeship in the UK. Level 3 diploma, increased site responsibility, AM2 preparation, 18th Edition exam."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

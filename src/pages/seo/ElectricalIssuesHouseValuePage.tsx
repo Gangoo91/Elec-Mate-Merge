@@ -632,7 +632,7 @@ export default function ElectricalIssuesHouseValuePage() {
   return (
     <GuideTemplate
       title="How Electrical Issues Affect House Value UK | Rewire Effect"
-      description="How rewires, consumer unit upgrades, and EICR failures affect property value in the UK. What mortgage surveyors flag…"
+      description="How rewires, consumer unit upgrades, and EICR failures affect property value in the UK. What mortgage surveyors flag."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

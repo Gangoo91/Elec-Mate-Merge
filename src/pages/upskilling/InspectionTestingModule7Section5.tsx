@@ -319,7 +319,7 @@ const InspectionTestingModule7Section5 = () => {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 421.1.7 (A4:2026 introduction)"
+            source="BS 7671:2018+A4:2026 · Reg 421.1.7 (redrafted at A2:2022)"
             clause={
               <>
                 Regulation 421.1.7 has been introduced recommending the installation of arc fault

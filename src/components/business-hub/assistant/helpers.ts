@@ -14,16 +14,23 @@ export const PRIORITY_CHOICES: Array<'low' | 'normal' | 'high' | 'urgent'> = [
   'urgent',
 ];
 
+/**
+ * Surface for a proposed action card.
+ *
+ * This was a seven-colour rainbow — orange for a snag, purple for a project,
+ * cyan for a customer, indigo for a message, blue for anything else — all as
+ * translucent washes. None of it carried meaning: the card already says what
+ * the action is, in words. What it cost was the one distinction that DOES
+ * matter, because "delete a project" in red looked like just another colour in
+ * a set rather than a warning.
+ *
+ * So: red when the action destroys something, neutral otherwise. Volt is not
+ * used here at all — a translucent volt goes muddy brown on this ground, and
+ * solid volt belongs to the approve button, not the card behind it.
+ */
 export function accentForAction(action: ProposedAction): string {
-  if (isDestructive(action)) return 'border-red-500/30 bg-red-500/[0.05]';
-  if (action.type === 'create-snag') return 'border-orange-500/30 bg-orange-500/[0.05]';
-  if (action.type === 'create-project') return 'border-purple-500/30 bg-purple-500/[0.05]';
-  if (action.type === 'create-customer') return 'border-cyan-500/30 bg-cyan-500/[0.05]';
-  if (action.type === 'create-task') return 'border-elec-yellow/30 bg-elec-yellow/[0.04]';
-  if (action.type === 'add-material') return 'border-emerald-500/30 bg-emerald-500/[0.05]';
-  if (action.type === 'draft-invoice') return 'border-elec-yellow/30 bg-elec-yellow/[0.04]';
-  if (action.type === 'draft-message') return 'border-indigo-400/30 bg-indigo-500/[0.05]';
-  return 'border-blue-400/30 bg-blue-500/[0.05]';
+  if (isDestructive(action)) return 'border-red-400/40 bg-red-500/[0.10]';
+  return 'border-white/[0.18] bg-white/[0.06]';
 }
 
 export function isDestructive(action: ProposedAction): boolean {

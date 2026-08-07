@@ -1,4 +1,5 @@
 import { TestResult } from '@/types/testResult';
+import { hasReading } from '@/utils/validation/applicability';
 import { RegulationWarning } from './types';
 import {
   getZsLimitFromDeviceString,
@@ -40,13 +41,102 @@ const shouldHaveRCD = (result: TestResult): boolean => {
   return false;
 };
 
+/**
+ * A final circuit supplying luminaires.
+ *
+ * Emergency lighting is deliberately excluded — it is a safety service, and the
+ * regulations treat it separately. Demanding a 30 mA RCD on an emergency
+ * lighting circuit would be a wrong finding on a circuit that is often
+ * intentionally not RCD-protected.
+ */
+const isLightingCircuit = (result: TestResult): boolean => {
+  const description = result.circuitDescription?.toLowerCase() || '';
+  const type = result.type?.toLowerCase() || '';
+  if (description.includes('emergency')) return false;
+  return /light|luminaire|downlight/.test(description) || /light/.test(type);
+};
+
+/**
+ * Which maximum a measured Zs is judged against.
+ *
+ * `100` — the tabulated maximum from Tables 41.2–41.4 as printed.
+ *
+ * `80` — 0.8 × that maximum. This is not a safety margin someone invented: BS
+ * 7671 Reg 411.4.4 states the requirement is met when the measured earth fault
+ * loop impedance satisfies Zs(m) < 0.8 × (Up / (I × Cmin)), and GN3 Appendix 3
+ * repeats it. The factor corrects for the fact that the tabulated values assume
+ * conductors at operating temperature while the reading is taken cold, so a
+ * circuit measured at ambient can sit under the printed figure and still fail
+ * once warm.
+ *
+ * The schedule records measured values, so 80 is arguably the truer test.
+ * 100 remains the default because changing it silently would re-judge every
+ * certificate already written — this is the electrician's call, made on the
+ * toolbar, not ours made for them.
+ */
+export type ZsBasis = 100 | 80;
+
 // Enhanced Zs validation using correct BS 7671 Tables 41.2, 41.3, 41.4
 // Optional earthingArrangement param — when 'TT', use RCD-based Zs limits instead of fuse/MCB tables
 export const checkZsCompliance = (
   result: TestResult,
-  earthingArrangement?: string
+  earthingArrangement?: string,
+  zsBasis: ZsBasis = 100
 ): RegulationWarning[] => {
   const warnings: RegulationWarning[] = [];
+
+  /*
+   * Whether a circuit needs an RCD has nothing to do with its Zs.
+   *
+   * These checks used to sit below the `if (!result.zs) return` guard, so a
+   * circuit with no loop reading recorded produced no RCD finding at all —
+   * including the TT case, which is a critical. That is exactly backwards for
+   * an EICR: a circuit you have not yet tested is precisely when you are
+   * writing down what is installed, and "no RCD on the sockets" is a finding
+   * whether or not anyone has put a meter on it yet. Hoisted above the guard.
+   */
+  const isTTSystem = earthingArrangement === 'TT';
+  if (isTTSystem && !hasReading(result.rcdRating)) {
+    warnings.push({
+      severity: 'critical',
+      title: 'TT System Requires RCD Protection',
+      fields: ['rcdRating'],
+      description:
+        'TT earthing arrangements require RCD protection on all circuits (Reg 411.5.2). No RCD detected on this circuit.',
+      regulation: 'BS 7671 Regulation 411.5.2',
+      suggestion: 'Install RCD protection (typically 30mA) for all circuits on TT systems.',
+    });
+  }
+
+  if (isLightingCircuit(result) && !hasReading(result.rcdRating)) {
+    warnings.push({
+      severity: 'warning',
+      title: 'Lighting Circuit Without RCD Protection',
+      fields: ['rcdRating'],
+      description:
+        `No RCD is recorded for "${result.circuitDescription}". Since A4:2026, AC final ` +
+        `circuits supplying luminaires in domestic premises require additional protection ` +
+        `by an RCD not exceeding 30 mA.`,
+      regulation: 'BS 7671 Regulation 411.3.4',
+      suggestion:
+        'If these are domestic premises, record the RCD or consider an observation — ' +
+        'typically C3, as the circuit will have complied when installed.',
+    });
+  }
+
+
+  // Check RCD requirements
+  if (shouldHaveRCD(result) && !result.rcdRating) {
+    warnings.push({
+      severity: 'warning',
+      title: 'RCD Protection Required',
+      fields: ['rcdRating'],
+      description: `Circuit "${result.circuitDescription}" requires RCD protection but none detected.`,
+      regulation: 'BS 7671 Regulation 411.3.3',
+      suggestion: 'Install 30mA RCD protection for this circuit type.',
+    });
+  }
+
 
   if (!result.zs) return warnings;
 
@@ -62,6 +152,7 @@ export const checkZsCompliance = (
     warnings.push({
       severity: 'warning',
       title: 'Maximum Zs Not Verified',
+      fields: ['zs', 'protectiveDeviceRating'],
       description:
         `Zs of ${result.zs}Ω has not been checked against a limit — no protective device ` +
         `rating is recorded for this circuit.`,
@@ -108,16 +199,11 @@ export const checkZsCompliance = (
         return warnings;
       }
     }
-    // TT system without RCD — warn
-    if (!result.rcdRating || result.rcdRating === 'N/A') {
-      warnings.push({
-        severity: 'critical',
-        title: 'TT System Requires RCD Protection',
-        description:
-          'TT earthing arrangements require RCD protection on all circuits (Reg 411.5.2). No RCD detected on this circuit.',
-        regulation: 'BS 7671 Regulation 411.5.2',
-        suggestion: 'Install RCD protection (typically 30mA) for all circuits on TT systems.',
-      });
+    // The TT-without-RCD finding is raised above, before the Zs guard, so that
+    // it still appears on a circuit with no loop reading. Returning here keeps
+    // the original behaviour of not judging Zs against the TN tables on a TT
+    // circuit that has no RCD to derive a limit from.
+    if (!hasReading(result.rcdRating)) {
       return warnings;
     }
   }
@@ -131,6 +217,7 @@ export const checkZsCompliance = (
     warnings.push({
       severity: 'warning',
       title: 'Device Curve Not Recorded — Zs Not Verified',
+      fields: ['protectiveDeviceCurve', 'zs'],
       description:
         `Zs of ${result.zs}Ω has not been checked: the breaker curve is missing. Type B, C ` +
         `and D have different maximum Zs values — a Type C limit is around half the Type B ` +
@@ -154,6 +241,7 @@ export const checkZsCompliance = (
     warnings.push({
       severity: 'warning',
       title: 'Maximum Zs Not Verified',
+      fields: ['zs', 'protectiveDeviceRating'],
       description:
         `Zs of ${result.zs}Ω has not been checked against a limit — there is no published ` +
         `maximum Zs for ${deviceType ? `"${deviceType}"` : 'this device'} at ${rating}A.`,
@@ -164,7 +252,12 @@ export const checkZsCompliance = (
     });
   }
 
-  if (zsLookup && zsValue > zsLookup.maxZs) {
+  // The limit actually applied. Named separately from the tabulated value so
+  // the message below can quote both — being told you failed against 0.35 Ω
+  // when the book says 0.44 Ω is confusing unless the working is shown.
+  const appliedMaxZs = zsLookup ? zsLookup.maxZs * (zsBasis / 100) : null;
+
+  if (zsLookup && appliedMaxZs !== null && zsValue > appliedMaxZs) {
     const disconnectionTime = getDisconnectionTimeForCircuit(circuitDescription);
     const regulation =
       disconnectionTime === '0.4s'
@@ -174,31 +267,51 @@ export const checkZsCompliance = (
     warnings.push({
       severity: 'critical',
       title: 'Zs Exceeds Maximum Limit',
-      description: `Zs of ${result.zs}Ω exceeds maximum ${zsLookup.maxZs}Ω for ${deviceType} ${rating}A (${disconnectionTime} disconnection, ${zsLookup.source}).`,
-      regulation,
+      fields: ['zs', 'maxZs'],
+      description:
+        zsBasis === 80
+          ? `Zs of ${result.zs}Ω exceeds ${appliedMaxZs.toFixed(2)}Ω for ${deviceType} ${rating}A ` +
+            `(${disconnectionTime} disconnection, ${zsLookup.source}). That is 0.8 × the tabulated ` +
+            `${zsLookup.maxZs}Ω — the correction Reg 411.4.4 applies to a value measured at ambient ` +
+            `temperature.`
+          : `Zs of ${result.zs}Ω exceeds maximum ${zsLookup.maxZs}Ω for ${deviceType} ${rating}A (${disconnectionTime} disconnection, ${zsLookup.source}).`,
+      // At the 80% basis the circuit may well be inside the printed table, so
+      // citing 411.3.2.2 alone would send the reader to a figure it passes.
+      regulation: zsBasis === 80 ? `${regulation} (via 411.4.4)` : regulation,
       suggestion: `Consider: • Improving earthing arrangement • Checking connections for high resistance • Upgrading cable size • Adding supplementary bonding • Using alternative protective device`,
     });
   }
 
-  // Check RCD requirements
-  if (shouldHaveRCD(result) && !result.rcdRating) {
-    warnings.push({
-      severity: 'warning',
-      title: 'RCD Protection Required',
-      description: `Circuit "${result.circuitDescription}" requires RCD protection but none detected.`,
-      regulation: 'BS 7671 Regulation 411.3.3',
-      suggestion: 'Install 30mA RCD protection for this circuit type.',
-    });
-  }
-
+  /*
+   * Lighting circuits in domestic premises — new at A4:2026.
+   *
+   * Reg 411.3.4 requires additional protection by a 30 mA RCD for AC final
+   * circuits supplying luminaires within domestic (household) premises. Until
+   * A4 this applied to sockets and specific locations, so the overwhelming
+   * majority of existing domestic lighting circuits do not have it — which is
+   * precisely why an EICR assessed against the current standard should raise
+   * it, and precisely why the checker staying silent was a real gap.
+   *
+   * A warning, not a failure: on an EICR this is normally a C3 (improvement
+   * recommended) because the circuit complied when it was installed. The code
+   * stays the electrician's — the checker's job is to make sure they saw it.
+   */
   // Check if Zs is close to limit (within 10%)
-  if (zsLookup && zsValue <= zsLookup.maxZs) {
-    const margin = ((zsLookup.maxZs - zsValue) / zsLookup.maxZs) * 100;
+  if (zsLookup && appliedMaxZs !== null && zsValue <= appliedMaxZs) {
+    const margin = ((appliedMaxZs - zsValue) / appliedMaxZs) * 100;
     if (margin < 10) {
       warnings.push({
         severity: 'warning',
         title: 'Zs Close to Maximum Limit',
-        description: `Zs of ${result.zs}Ω is within 10% of maximum ${zsLookup.maxZs}Ω. Consider temperature correction.`,
+        fields: ['zs', 'maxZs'],
+        // "Consider temperature correction" is the wrong advice at the 80%
+        // basis — that correction is already applied, and repeating it reads as
+        // though the reading has not been adjusted when it has.
+        description:
+          zsBasis === 80
+            ? `Zs of ${result.zs}Ω is within 10% of the ${appliedMaxZs.toFixed(2)}Ω limit ` +
+              `(0.8 × the tabulated ${zsLookup.maxZs}Ω). Little margin left.`
+            : `Zs of ${result.zs}Ω is within 10% of maximum ${zsLookup.maxZs}Ω. Consider temperature correction.`,
         regulation: 'Elec-Mate check — a 10% margin is ours, not a BS 7671 limit',
         suggestion:
           'Verify Zs value with temperature correction applied. Operating temperature may increase impedance.',

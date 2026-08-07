@@ -511,7 +511,7 @@ export default function ElectricianToContractorPage() {
     <GuideTemplate
       localArea="Career Ladder Uk"
       title="From Electrician to Electrical Contractor UK | Complete"
-      description="How UK electricians go self-employed and build a contracting business — Part P registration, pricing, essential insurance (PLI £2m min…"
+      description="How UK electricians go self-employed and build a contracting business — Part P registration, pricing, essential insurance (PLI £2m min."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

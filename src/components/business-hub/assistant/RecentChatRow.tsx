@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 import { Pencil, Trash2 } from 'lucide-react';
 import type { RecentChat } from './types';
@@ -23,17 +24,25 @@ export function RecentChatRow({
 
   return (
     <div
+      // Brightness to the shared card recipe: a /[0.18] border over a
+      // /[0.12]→/[0.06] gradient. These rows sat at /[0.03] over /[0.06] and
+      // were effectively invisible on a phone in daylight.
+      //
+      // The most-recent row marks itself with a VOLT BORDER, not a volt wash.
+      // `bg-elec-yellow/[0.06]` goes muddy brown on this ground — every
+      // translucent volt does, which is why that row read as olive.
       className={cn(
-        'group flex items-center gap-2 rounded-xl px-3 py-2.5 transition-colors',
+        'group flex items-center gap-2 rounded-xl border px-3 py-2.5 transition-colors',
+        CARD_SURFACE,
         emphasis
-          ? 'bg-elec-yellow/[0.06] border border-elec-yellow/20 hover:border-elec-yellow/35'
-          : 'bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05]'
+          ? 'border-elec-yellow/50 hover:border-elec-yellow'
+          : 'border-white/[0.18] hover:border-elec-yellow/40 hover:from-white/[0.16]'
       )}
     >
       <button
         type="button"
         onClick={editing ? undefined : onResume}
-        className="flex-1 min-w-0 text-left touch-manipulation"
+        className="min-h-11 flex-1 min-w-0 text-left touch-manipulation"
       >
         {editing ? (
           <input
@@ -54,26 +63,21 @@ export function RecentChatRow({
                 setEditing(false);
               }
             }}
-            className="w-full bg-white/[0.06] border border-white/[0.12] rounded-md px-2 py-0.5 text-[13px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
+            className="h-11 w-full rounded-lg border border-white/[0.18] bg-white/[0.08] px-2.5 text-[16px] text-white focus:border-elec-yellow focus:outline-none focus:ring-0"
           />
         ) : (
-          <p
-            className={cn(
-              'text-[13px] font-semibold leading-snug truncate',
-              emphasis ? 'text-white' : 'text-white/85'
-            )}
-          >
+          <p className="truncate text-[13px] font-semibold leading-snug text-white">
             {chat.title || 'Untitled chat'}
           </p>
         )}
-        <p className="text-[10px] text-white/40 mt-0.5">{ago}</p>
+        <p className="mt-0.5 text-[11px] text-white">{ago}</p>
       </button>
       {!editing && (
-        <div className="flex items-center gap-0.5 opacity-40 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+        <div className="flex shrink-0 items-center gap-0.5">
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="h-7 w-7 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.08] touch-manipulation"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/[0.10] touch-manipulation"
             aria-label="Rename"
           >
             <Pencil className="h-3.5 w-3.5" />
@@ -85,7 +89,7 @@ export function RecentChatRow({
                 onDelete();
                 setConfirmingDelete(false);
               }}
-              className="h-7 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-500/90 text-white touch-manipulation"
+              className="h-11 rounded-lg bg-red-500/90 px-3 text-[11px] font-bold uppercase tracking-wider text-white touch-manipulation"
             >
               Sure?
             </button>
@@ -94,7 +98,7 @@ export function RecentChatRow({
               type="button"
               onClick={() => setConfirmingDelete(true)}
               onBlur={() => setConfirmingDelete(false)}
-              className="h-7 w-7 rounded-md flex items-center justify-center text-white/40 hover:text-red-300 hover:bg-red-500/10 touch-manipulation"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-red-500/15 hover:text-red-300 touch-manipulation"
               aria-label="Delete"
             >
               <Trash2 className="h-3.5 w-3.5" />

@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -185,7 +186,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
         */}
         <motion.div
           variants={itemVariants}
-          className="overflow-hidden rounded-2xl border border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06]"
+          className={cn('overflow-hidden rounded-2xl border border-white/[0.18]', CARD_SURFACE)}
         >
           <button
             type="button"

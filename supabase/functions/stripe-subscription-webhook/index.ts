@@ -1228,38 +1228,30 @@ serve(async (req) => {
                   // Calculate reward — 1 free month, one-time only
                   const successfulReferrals = (referrerProfile.successful_referrals || 0) + 1;
 
-                  if (successfulReferrals > 1) {
-                    // Already claimed free month — update stats only, no more credit
-                    logger.info('Referrer already claimed free month, updating stats only', {
-                      referrerId: profile.referred_by,
-                      successfulReferrals,
-                    });
-                    await supabase
-                      .from('referrals')
-                      .update({ status: 'rewarded', updated_at: new Date().toISOString() })
-                      .eq('id', referralRow.id);
-                    await supabase
-                      .from('profiles')
-                      .update({
-                        successful_referrals: successfulReferrals,
-                        total_referrals: successfulReferrals,
-                      })
-                      .eq('id', profile.referred_by);
-                  } else {
-                    // 1 month credit based on referrer's subscription tier
+                  // No cap. The August Referral Race promises a free month for
+                  // EVERY mate who subscribes; this path previously paid only
+                  // the FIRST referral on web — the biggest channel — so someone
+                  // who referred five mates was credited once and silently got
+                  // nothing for the rest.
+                  //
+                  // Prices: source of truth is src/data/stripePrices.ts. These
+                  // were stale at pre-June-2026 values, so a "free month"
+                  // credited £12.99 against a £19.99 charge and the referrer was
+                  // still billed the difference.
+                  {
                     const tierPrices: Record<string, number> = {
-                      apprentice: 599,
-                      apprentice_yearly: 599,
-                      electrician: 1299,
-                      electrician_yearly: 1299,
-                      business_ai: 2999,
-                      business_ai_yearly: 2999,
-                      employer: 2999,
-                      employer_yearly: 2999,
+                      apprentice: 699, // £6.99
+                      apprentice_yearly: 583, // £69.99/yr ÷ 12
+                      electrician: 1999, // £19.99
+                      electrician_yearly: 1667, // £199.99/yr ÷ 12
+                      business_ai: 3999, // £39.99
+                      business_ai_yearly: 3999,
+                      employer: 4999, // £49.99
+                      employer_yearly: 4999,
                     };
                     const creditPence =
                       tierPrices[referrerProfile.subscription_tier || ''] ||
-                      (priceId ? await getMonthlyPrice(stripe, priceId) : 1299);
+                      (priceId ? await getMonthlyPrice(stripe, priceId) : 1999);
 
                     // Apply Stripe balance credit (negative amount = credit to customer)
                     try {
@@ -1329,7 +1321,7 @@ serve(async (req) => {
                         error: (balanceErr as Error)?.message,
                       });
                     }
-                  } // end else (under cap)
+                  } // end reward block (uncapped)
                 }
               }
             }

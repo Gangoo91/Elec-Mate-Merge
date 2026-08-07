@@ -2,7 +2,7 @@
  * Module 4 · Section 6 · Subsection 2 — Electrical Drawings
  * HNC Electrical Engineering for Building Services (Building Services Specialist)
  *   Single-line / schematic / wiring / layout / reflected ceiling plan drawings, BS EN 61082
- *   documentation, BS EN 60617 graphical symbols, BS EN 81346 reference designations and
+ *   documentation, IEC 60617 graphical symbols, BS EN 81346 reference designations and
  *   BS 1192 / AEC (UK) CAD layer naming for coordinated multi-discipline drawing sets.
  */
 
@@ -103,12 +103,12 @@ const quizQuestions = [
     options: [
       'BS 5266',
       'BS 7671',
-      'BS EN 60617',
+      'IEC 60617',
       'BS EN 12464',
     ],
     correctAnswer: 2,
     explanation:
-      'BS EN 60617 (IEC 60617) provides graphical symbols for use in electrical diagrams, ensuring consistent representation across the industry.',
+      'IEC 60617 (IEC 60617) provides graphical symbols for use in electrical diagrams, ensuring consistent representation across the industry.',
   },
   {
     id: 3,
@@ -269,7 +269,7 @@ const HNCModule4Section6_2 = () => {
           <LearningOutcomes
             outcomes={[
               'Identify different types of electrical drawings and their purposes',
-              'Apply BS EN 61082 and BS EN 60617 standards',
+              'Apply BS EN 61082 and IEC 60617 standards',
               'Create single-line diagrams showing distribution hierarchy',
               'Develop layout drawings coordinated with architecture',
               'Apply CAD standards and layer management',
@@ -281,7 +281,7 @@ const HNCModule4Section6_2 = () => {
           <TLDR
             points={[
               'Drawing types: single-line (distribution hierarchy), schematics (controls/interlocks), layouts (containment, equipment positions), block (system overview).',
-              'BS EN 61082-1 = preparation of documents. BS EN 60617 = graphical symbols. Use the standard libraries; bespoke symbols cause confusion at handover.',
+              'BS EN 61082-1 = preparation of documents. IEC 60617 = graphical symbols. Use the standard libraries; bespoke symbols cause confusion at handover.',
               'Single-line shows: incomer, transformers, switchgear, busbars, cable size and length, protective device rating, fault level at each board.',
               'Layout drawings xref the architectural model — reload xrefs before every issue or you’re drawing on stale walls.',
               'Reg 514.9.2 (introduced A4:2026) requires that all diagrams, charts, and information or instruction notices comply with the applicable specified standards. Your drawings are now an explicit BS 7671 deliverable.',
@@ -296,7 +296,7 @@ const HNCModule4Section6_2 = () => {
                 A4:2026 added Reg 514.9.2 specifically to bring drawings, charts and notices under
                 a documented standards regime. For the HNC designer that means single-line
                 diagrams, schematics, schedules and on-board notices reference and follow BS EN
-                61082-1, BS EN 60617 (symbols), BS 1192 / AEC (layers), and the BS 7671 schedule
+                61082-1, IEC 60617 (symbols), BS 1192 / AEC (layers), and the BS 7671 schedule
                 pro-formas in Appendix 6. Hand-drawn diagrams or non-standard symbols on a
                 modern installation now carry an explicit non-compliance against Reg 514.9.2.
               </>
@@ -363,7 +363,7 @@ const HNCModule4Section6_2 = () => {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Shows circuit logic and operation</li>
-              <li>Uses standard symbols (BS EN 60617)</li>
+              <li>Uses standard symbols (IEC 60617)</li>
               <li>Components arranged for clarity</li>
               <li>Includes interlocks and controls</li>
               <li>Essential for commissioning</li>
@@ -474,7 +474,7 @@ const HNCModule4Section6_2 = () => {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Document identification and structure</li>
               <li>Reference designation systems (BS EN 81346)</li>
-              <li>Graphical symbols (BS EN 60617)</li>
+              <li>Graphical symbols (IEC 60617)</li>
               <li>Signal and connection presentation</li>
               <li>Documentation classification</li>
             </ul>
@@ -554,7 +554,7 @@ const HNCModule4Section6_2 = () => {
                 <strong>BS EN 61082</strong> — documentation
               </li>
               <li>
-                <strong>BS EN 60617</strong> — symbols
+                <strong>IEC 60617</strong> — symbols
               </li>
               <li>
                 <strong>BS EN 81346</strong> — designations
@@ -583,7 +583,7 @@ const HNCModule4Section6_2 = () => {
                 </li>
               </ul>
             }
-            doInstead="Always reload the current architectural xref before issue, set up cross-references between single-line, schematics and layouts (and matching tags on schedules), use the BS EN 60617 symbol library, and enforce BS 1192 / AEC layer naming with a CAD standards check."
+            doInstead="Always reload the current architectural xref before issue, set up cross-references between single-line, schematics and layouts (and matching tags on schedules), use the IEC 60617 symbol library, and enforce BS 1192 / AEC layer naming with a CAD standards check."
           />
 
           <SectionRule />
@@ -601,7 +601,7 @@ const HNCModule4Section6_2 = () => {
             }
             whatToDo={
               <>
-                Reload the architectural xref before opening any drawing. Run a BS EN 60617
+                Reload the architectural xref before opening any drawing. Run a IEC 60617
                 symbol audit (most CAD systems offer a "non-standard symbol" report). Verify
                 every layer matches BS 1192 / AEC standards. On the single-line: tag every board
                 with its load schedule reference, every cable with size + length + protective
@@ -609,7 +609,7 @@ const HNCModule4Section6_2 = () => {
                 the floor layouts: every luminaire, socket and switch tagged to the schedule.
                 On the schematic schedules: cross-reference single-line tags. Issue a coordination
                 check report (RFI clashes, xref staleness, layer breaches resolved). Add a "Notes
-                to Reader" panel citing BS EN 61082-1, BS EN 60617, BS 1192/AEC and Reg 514.9.2
+                to Reader" panel citing BS EN 61082-1, IEC 60617, BS 1192/AEC and Reg 514.9.2
                 — explicit standards compliance baked into the title block.
               </>
             }
@@ -627,7 +627,7 @@ const HNCModule4Section6_2 = () => {
 
           <KeyTakeaways
             points={[
-              'BS EN 61082-1 (document preparation) and BS EN 60617 (symbols) are the baseline standards — both now reinforced by Reg 514.9.2.',
+              'BS EN 61082-1 (document preparation) and IEC 60617 (symbols) are the baseline standards — both now reinforced by Reg 514.9.2.',
               'Single-line: incomer, switchgear, busbars, cables (size + length), protective devices (rating + setting), fault level at every board.',
               'Schematics: controls, interlocks, ATS sequence-of-operation, BMS interfaces — anything time-or-state dependent.',
               'Layout drawings xref the architectural model — reload before issue, every time.',

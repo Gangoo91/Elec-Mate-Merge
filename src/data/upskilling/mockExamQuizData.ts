@@ -97,7 +97,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Amendment 4 deleted Table 3A (time/current performance criteria for RCDs) from Appendix 3. Regulation 643.7.3.201 now calls for a single alternating current test at the rated residual operating current, IΔn, regardless of RCD type — AC, A, F or B. A general non-delay device must operate within 300ms. The 5x IΔn test still has a place in fault-finding, but it is no longer part of the required verification.',
+      'Amendment 4 deleted Table 3A (time/current performance criteria for RCDs) from Appendix 3. Regulation 643.8 now calls for a single alternating current test at the rated residual operating current, IΔn, regardless of RCD type — AC, A, F or B. A general non-delay device must operate within 300ms. The 5x IΔn test still has a place in fault-finding, but it is no longer part of the required verification.',
     category: 'Protection & Devices',
     difficulty: 'advanced'
   },
@@ -1073,10 +1073,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 81,
     question: 'Class II equipment is characterized by:',
     options: [
-      'A protective conductor connected to its metal casing',
+      'An earth connection to its metal casing',
       'Double or reinforced insulation',
-      'A dedicated earth electrode at the appliance',
-      'A reliance on supplementary bonding for safety',
+      'A dedicated earth electrode',
+      'Reliance on supplementary bonding',
     ],
     correctAnswer: 1,
     explanation:
@@ -1839,9 +1839,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'How often does the BS 7671 RCD notice advise the user to operate the test button?',
     options: [
       'Six-monthly by the user',
-      'Annually, at the time of the periodic inspection',
-      'Quarterly, in line with the duty holder\'s fire log',
-      'Whenever the occupant suspects a fault has developed',
+      'Annually, at the periodic inspection',
+      'Quarterly, with the fire log',
+      'Only when a fault is suspected',
     ],
     correctAnswer: 0,
     explanation:
@@ -2001,10 +2001,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 150,
     question: 'In a TT system, the earth fault loop impedance comprises mainly:',
     options: [
-      'The supply PEN conductor back to the transformer',
-      'The line conductor and the neutral return only',
+      'The supply PEN conductor running back to the supply transformer',
+      'The line conductor and the neutral return conductor only',
       'The installation electrode, the mass of earth and the supply electrode',
-      'The protective device internal resistance',
+      'The internal resistance of the protective device only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2261,7 +2261,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       'Not less than 200mA',
       'Not less than 10mA',
-      'Not less than 1.5 times the design current',
+      'Not less than the design current',
       'Not less than 10A',
     ],
     correctAnswer: 0,
@@ -2463,10 +2463,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 182,
     question: "The 'Summary of the Installation' section must include:",
     options: [
-      'The full schedule of every test result obtained',
-      'The cost of any recommended remedial works',
+      'The full schedule of every circuit test result obtained on site',
+      'The cost and programme for any recommended remedial works',
       'Earthing arrangements, supply characteristics and main protective devices',
-      'The names of all previous owners of the property',
+      'The names of all previous owners and occupiers of the property',
     ],
     correctAnswer: 2,
     explanation:
@@ -2477,9 +2477,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 183,
     question: 'Distribution circuit details in Schedule of Test Results should show:',
     options: [
-      'Only a pass or fail result for each circuit',
-      'The name of the manufacturer of each cable',
-      'The estimated remaining life of each circuit',
+      'Only a pass or fail result recorded for each circuit',
+      'The name of the manufacturer of each cable installed',
+      'The estimated remaining service life of each circuit',
       'Circuit designation, cable details and protection characteristics',
     ],
     correctAnswer: 3,
@@ -2536,9 +2536,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 187,
     question: 'Records of electrical maintenance should be kept for:',
     options: [
-      'A maximum of twelve months',
-      'Until the next inspection only',
-      'No longer than is convenient',
+      'A maximum of twelve months after issue',
+      'Until the next periodic inspection only',
+      'No longer than is convenient for the duty holder',
       'The life of the installation plus a reasonable period',
     ],
     correctAnswer: 3,
@@ -2666,9 +2666,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'Voltage readings that fall significantly under load suggest:',
     options: [
       'High-resistance connections or undersized conductors',
-      'An oversized protective device',
-      'Excellent insulation resistance',
-      'A correctly sized supply cable',
+      'An oversized protective device for the load',
+      'Excellent insulation resistance throughout',
+      'A correctly sized supply cable and tight terminations',
     ],
     correctAnswer: 0,
     explanation:
@@ -2722,7 +2722,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     question: 'When fault symptoms appear only under specific operating conditions:',
     options: [
       'Attempt to replicate those conditions during testing',
-      'Ignore them as they cannot be diagnosed',
+      'Rely on the client\'s description without further testing',
       'Replace the consumer unit as a precaution',
       'Test only when the circuit is cold and unloaded',
     ],
@@ -3632,10 +3632,10 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 262,
     question: 'When is it acceptable to work live on electrical equipment?',
     options: [
-      'Whenever it is quicker than isolating',
-      'On any circuit below 230V',
+      'Whenever it is quicker than isolating and proving dead',
+      'On any circuit operating below 230V to earth',
       'Only when dead working is not practicable and it is properly risk assessed',
-      'When the client requests it to avoid downtime',
+      'When the client requests it in order to avoid downtime on site',
     ],
     correctAnswer: 2,
     explanation:
@@ -4234,7 +4234,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 304,
     question: 'Under Amendment 4, what happened to Table 3A of Appendix 3?',
     options: [
-      'It was expanded to cover Type F and Type B devices',
+      'It now covers Type F devices',
       'It was moved into Appendix 14',
       'It was renumbered as Table 3B',
       'It was deleted',
@@ -4299,6 +4299,225 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Part 6 covers inspection and testing, including Chapter 64 on initial verification. Part 4 is protection for safety, Part 5 is selection and erection of equipment, and Part 7 covers special installations or locations.',
     difficulty: 'basic'
+  },
+
+  // ── Part 7 special locations (added 2026-08-07) ──────────────────────────
+  // The category held ONE question, below the 5-question threshold for a topic
+  // landing, on the site's highest-demand exam. Every figure is read off the
+  // printed BS 7671:2018+A4:2026 — 702.410.3.4.1 zone SELV limits (and the
+  // 702.410.3.4.2 fountain exception), 701.415.2 bonding, 705.411.1 RCDs.
+  {
+    id: 309,
+    question: 'In zone 0 of a swimming pool, which protective measure is permitted?',
+    options: [
+      'SELV at not more than 12 V AC RMS or 30 V ripple-free DC, the source being outside zones 0, 1 and 2',
+      'SELV at not more than 25 V AC RMS or 60 V ripple-free DC, the source being outside zones 0 and 1',
+      'Automatic disconnection of supply with a 30 mA RCD and supplementary bonding throughout',
+      'Electrical separation supplied by an isolating transformer mounted within zone 2 of the pool',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 702.410.3.4.1 states that, except for fountains, in zone 0 only protection by SELV at a nominal voltage not exceeding 12 V AC RMS or 30 V ripple-free DC is permitted, with the SELV source installed outside zones 0, 1 and 2.',
+    difficulty: 'advanced',
+    topic: 'Swimming Pools',
+    category: 'Special Locations',
+  },
+  {
+    id: 310,
+    question: 'In zone 1 of a swimming pool, what is the maximum SELV voltage permitted?',
+    options: [
+      '12 V AC RMS or 30 V ripple-free DC, matching the limit that applies in zone 0',
+      '50 V AC RMS or 120 V ripple-free DC, the general SELV limit for dry locations',
+      '25 V AC RMS or 60 V ripple-free DC, with the source installed outside zones 0, 1 and 2',
+      '230 V, provided the circuit is protected by a 30 mA residual current device',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 702.410.3.4.1 states that, except for fountains, in zone 1 only protection by SELV at a nominal voltage not exceeding 25 V AC RMS or 60 V ripple-free DC is permitted, with the source installed outside zones 0, 1 and 2.',
+    difficulty: 'advanced',
+    topic: 'Swimming Pools',
+    category: 'Special Locations',
+  },
+  {
+    id: 311,
+    question: 'Which regulation covers fountains, as distinct from the general swimming pool zone requirements?',
+    options: [
+      '702.410.3.4.1, which sets the requirements for zones 0 and 1 generally',
+      '702.410.3.4.2, which is the exception referred to for fountains',
+      '702.55, which deals with the selection of equipment for pool areas',
+      '702.410.3.4.3, which covers zone 2 and the surrounding area',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 702.410.3.4.1 sets the zone 0 and zone 1 requirements \'except for fountains as stated in Regulation 702.410.3.4.2\'. Fountains are therefore dealt with separately at 702.410.3.4.2.',
+    difficulty: 'advanced',
+    topic: 'Swimming Pools',
+    category: 'Special Locations',
+  },
+  {
+    id: 312,
+    question: 'In a room containing a bath or shower, what must supplementary protective equipotential bonding connect together?',
+    options: [
+      'The protective conductor terminals of each circuit supplying Class I and Class II equipment to accessible extraneous-conductive-parts',
+      'The line and neutral conductors of every circuit entering the room, back to the main earthing terminal at the origin',
+      'The metallic pipework only, since circuit protective conductors are already bonded at the board',
+      'Every exposed-conductive-part in the room to a local earth electrode installed immediately outside the building',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 701.415.2 requires local supplementary protective equipotential bonding connecting together the terminals of the protective conductor of each circuit supplying Class I and Class II equipment to the accessible extraneous-conductive-parts, including metallic service and waste pipes and metallic central heating and air conditioning systems.',
+    difficulty: 'intermediate',
+    topic: 'Bathrooms',
+    category: 'Special Locations',
+  },
+  {
+    id: 313,
+    question: 'In agricultural premises, what protection is required for final circuits supplying socket-outlets rated at not more than 32 A?',
+    options: [
+      'An RCD with a rated residual operating current not exceeding 100 mA',
+      'An RCD with the characteristics specified for additional protection',
+      'A residual current monitor with an alarm, whatever the earthing system',
+      'Overcurrent protection alone, provided supplementary bonding is installed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 705.411.1 requires that, whatever the type of earthing system, final circuits supplying socket-outlets with a rated current not exceeding 32 A are provided with an RCD having the characteristics specified in Regulation 415.1.1.',
+    difficulty: 'intermediate',
+    topic: 'Agricultural',
+    category: 'Special Locations',
+  },
+  {
+    id: 314,
+    question: 'In agricultural premises, what applies to final circuits supplying socket-outlets rated at more than 32 A?',
+    options: [
+      'An RCD with a rated residual operating current not exceeding 100 mA',
+      'An RCD with a rated residual operating current not exceeding 30 mA',
+      'An RCD with a rated residual operating current not exceeding 300 mA',
+      'No residual current device, provided the circuit is monitored continuously',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 705.411.1 requires that final circuits supplying socket-outlets with a rated current of more than 32 A are protected by an RCD with a rated residual operating current not exceeding 100 mA, whatever the type of earthing system.',
+    difficulty: 'advanced',
+    topic: 'Agricultural',
+    category: 'Special Locations',
+  },
+  {
+    id: 315,
+    question: 'Which Part 7 section covers conducting locations with restricted movement?',
+    options: [
+      'Section 704',
+      'Section 706',
+      'Section 708',
+      'Section 709',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Part 7 Section 706 covers conducting locations with restricted movement. Section 704 is construction and demolition sites, 708 caravan and camping parks, and 709 marinas.',
+    difficulty: 'intermediate',
+    topic: 'Special Locations',
+    category: 'Special Locations',
+  },
+
+  // ── Part 3, assessment of general characteristics (added 2026-08-07) ─────
+  // The bank carried 3 Part 3 questions out of 315 on an exam covering the
+  // whole of BS 7671. Read off the printed standard: 311.1 maximum demand and
+  // diversity, 314.1 to 314.3 division of the installation.
+  {
+    id: 316,
+    question: 'Why does BS 7671 require the maximum demand of an installation to be determined?',
+    options: [
+      'For economic and reliable design within thermal limits and admissible voltage drop',
+      'To fix the size of the distributor\'s cut-out fuse and the metering equipment used',
+      'To establish the prospective fault current at the origin of the installation',
+      'To decide how many final circuits the consumer unit will need to accommodate',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 311.1 requires the maximum demand to be determined for economic and reliable design of an installation within thermal limits and admissible voltage drop.',
+    difficulty: 'intermediate',
+    topic: 'Maximum Demand',
+    category: 'Design & Selection',
+  },
+  {
+    id: 317,
+    question: 'When determining the maximum demand of an installation, what does Regulation 311.1 permit?',
+    options: [
+      'Diversity may be taken into account',
+      'Only the connected load may be used',
+      'A fixed 20 per cent margin must be added',
+      'The distributor\'s declared figure must be used',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 311.1 states that in determining the maximum demand of an installation or part thereof, diversity may be taken into account.',
+    difficulty: 'basic',
+    topic: 'Maximum Demand',
+    category: 'Design & Selection',
+  },
+  {
+    id: 318,
+    question: 'Regulation 314.1 requires every installation to be divided into circuits. For what two purposes?',
+    options: [
+      'To balance the load evenly across the three phases and to reduce the prospective fault current at the origin',
+      'To avoid danger and minimize inconvenience on a fault, and to facilitate safe inspection, testing and maintenance',
+      'To allow each circuit to be metered separately and to simplify the billing arrangements for the occupier',
+      'To keep every final circuit under 100 A and to limit the number of points on each one',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 314.1 requires every installation to be divided into circuits, as necessary, to avoid danger and minimize inconvenience in the event of a fault, and to facilitate safe inspection, testing and maintenance.',
+    difficulty: 'intermediate',
+    topic: 'Division of Installation',
+    category: 'Design & Selection',
+  },
+  {
+    id: 319,
+    question: 'Under Regulation 314.2, separate circuits must be provided for parts of an installation needing separate control. In what way?',
+    options: [
+      'So that each part can be isolated by its own lockable main switch at the origin',
+      'So that those circuits are not affected by the failure of other circuits',
+      'So that each part can be metered and its consumption recorded independently',
+      'So that the load on each part never exceeds half the rating of its protective device',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 314.2 requires separate circuits to be provided for parts of the installation which need to be separately controlled, in such a way that those circuits are not affected by the failure of other circuits, with due account taken of the consequences of operation of any single protective device.',
+    difficulty: 'intermediate',
+    topic: 'Division of Installation',
+    category: 'Design & Selection',
+  },
+  {
+    id: 320,
+    question: 'What governs the number of final circuits required and the number of points supplied by each?',
+    options: [
+      'The floor area of the premises and the number of rooms to be served from the distribution board',
+      'The rating of the distributor\'s cut-out and the size of the supply tails installed',
+      'Compliance with the requirements for overcurrent protection, isolation and switching, and current-carrying capacity',
+      'The manufacturer\'s stated maximum for the consumer unit and the rating of its busbar arrangement',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 314.3 requires the number of final circuits, and the number of points supplied by any final circuit, to be such as to facilitate compliance with Chapter 43 for overcurrent protection, Chapter 46 and Section 537 for isolation and switching, and Chapter 52 as regards current-carrying capacities of conductors.',
+    difficulty: 'advanced',
+    topic: 'Division of Installation',
+    category: 'Design & Selection',
+  },
+  {
+    id: 321,
+    question: 'Regulation 314.1(b) requires division into circuits to facilitate safe inspection, testing and maintenance. Which provisions does it cross-refer to?',
+    options: [
+      'Chapter 41 and Section 411, dealing with automatic disconnection of supply',
+      'Chapter 52 and Section 523, dealing with current-carrying capacity',
+      'Chapter 46 and Section 537, dealing with isolation and switching',
+      'Chapter 44 and Section 443, dealing with overvoltage protection',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 314.1(b) requires division into circuits to facilitate safe inspection, testing and maintenance, and cross-refers to Chapter 46 and Section 537, which deal with isolation and switching.',
+    difficulty: 'advanced',
+    topic: 'Division of Installation',
+    category: 'Design & Selection',
   },
 ];
 

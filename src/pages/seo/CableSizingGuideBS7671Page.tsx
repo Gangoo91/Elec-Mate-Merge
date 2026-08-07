@@ -18,7 +18,7 @@ import {
 export default function CableSizingGuideBS7671Page() {
   return (
     <GuideTemplate
-      title="Cable Sizing Guide BS 7671 | How to Size Cables | Elec-Mate"
+      title="Cable Sizing Guide BS 7671 | How to Size Cables"
       description="Complete cable sizing guide to BS 7671:2018+A4:2026. Master the 5-step process: design current, correction factors, Appendix 4 tables, and voltage drop — with worked examples."
       datePublished="2025-06-20"
       dateModified="2026-06-10"

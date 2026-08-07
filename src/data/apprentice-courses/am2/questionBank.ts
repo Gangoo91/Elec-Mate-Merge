@@ -135,7 +135,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'No, consultation is entirely at the employer’s discretion',
       'Only where a recognised trade union is present on site',
-      'Only for companies employing more than 50 people',
+      'Consultation is only required after a reportable incident',
       'Yes, either directly or through safety representatives',
     ],
     correctAnswer: 3,
@@ -257,10 +257,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 14,
     question: 'What are the five steps to risk assessment?',
     options: [
-      'Inspect, test, certify, document and review the installation',
-      'Plan, do, check, act and report to the enforcing authority',
+      'Inspect the workplace, test the equipment, certify it safe, record and review',
+      'Plan the work, do the work, check the outcome, act on findings, report to the HSE',
       'Identify hazards, decide who might be harmed, evaluate risks, record findings, review',
-      'Assess, isolate, lock off, prove dead and label the circuit',
+      'Assess the circuit, isolate it, lock off, prove dead and label the point of isolation',
     ],
     correctAnswer: 2,
     explanation:
@@ -274,9 +274,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 15,
     question: 'What is the difference between a hazard and a risk?',
     options: [
-      'A hazard is a minor issue; a risk is a serious issue',
-      'A hazard applies to people; a risk applies to equipment',
-      'A hazard is the likelihood of harm; risk is the source of harm',
+      'A hazard is a minor issue that can be tolerated; a risk is a serious issue needing action',
+      'A hazard applies only to people at work; a risk applies only to plant and equipment',
+      'A hazard is the likelihood that harm occurs; a risk is the source of that harm',
       'A hazard is something with potential to cause harm; risk is the likelihood of harm occurring',
     ],
     correctAnswer: 3,
@@ -293,7 +293,7 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'When circumstances change, after incidents, or periodically',
       'Only once, before the work first begins',
-      'Only when requested by an HSE inspector',
+      'At the request of an HSE inspector, and at no other time',
       'Every ten years, in line with periodic inspection',
     ],
     correctAnswer: 0,
@@ -362,9 +362,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Under RIDDOR, which electrical incidents must be reported?',
     options: [
       'Electric shock or burn causing death, specified injury, or incapacity for more than 7 days',
-      'Any electric shock, however minor, felt by an employee',
-      'Any circuit that trips its protective device more than once',
-      'Any installation found to be non-compliant with BS 7671',
+      'Any electric shock felt by an employee, however minor, including a static discharge',
+      'Any circuit that trips its protective device more than once during commissioning',
+      'Any installation found to be non-compliant with BS 7671 at periodic inspection',
     ],
     correctAnswer: 0,
     explanation:
@@ -518,10 +518,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 29,
     question: 'What do CDM Regulations apply to?',
     options: [
-      'Only large commercial building projects',
+      'Large commercial building projects, but not refurbishment work',
       'All construction work including electrical installation',
       'Only projects lasting more than 30 working days',
-      'Only work carried out on domestic dwellings',
+      'Work carried out on domestic dwellings but not on commercial sites',
     ],
     correctAnswer: 1,
     explanation:
@@ -535,10 +535,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 30,
     question: 'Under CDM, who has duties for construction projects?',
     options: [
-      'Only the principal contractor on site',
-      'Only the client funding the project',
+      'Only the principal contractor, who must manage every duty on site',
+      'The client funding the project, who then passes the duties to others',
       'Clients, principal designers, principal contractors, designers and contractors',
-      'Only the architect and structural engineer',
+      'The architect and structural engineer who prepare the design',
     ],
     correctAnswer: 2,
     explanation:
@@ -553,7 +553,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'When is a principal contractor required under CDM?',
     options: [
       'Only on projects worth more than £100,000',
-      'Only when the client requests one in writing',
+      'When the client requests one in writing',
       'On every construction project without exception',
       'When there is more than one contractor on site',
     ],
@@ -573,8 +573,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'Work at any place where a person could fall and be injured',
       'Only work carried out above two metres from the ground',
-      'Only work undertaken on a scaffold or MEWP',
-      'Only work performed on a roof or other elevated structure',
+      'Work undertaken on a scaffold, tower or MEWP platform',
+      'Work performed on a roof or other elevated structure',
     ],
     correctAnswer: 0,
     explanation:
@@ -1175,8 +1175,8 @@ export const am2QuestionBank: AM2Question[] = [
     options: [
       'For socket outlets up to 32A and mobile equipment outdoors',
       'Only for circuits supplying fixed heating appliances',
-      'Only for three-phase distribution circuits',
-      'Only where the earthing system is TT',
+      'For three-phase distribution circuits feeding sub-boards',
+      'Where the earthing arrangement is TT rather than TN-S',
     ],
     correctAnswer: 0,
     explanation:
@@ -1207,10 +1207,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 142,
     question: 'What is a Type D MCB used for?',
     options: [
-      'Purely resistive circuits such as immersion heaters',
-      'General lighting and socket-outlet final circuits',
+      'Purely resistive circuits such as immersion heaters and storage heating',
+      'General lighting and socket-outlet final circuits in domestic premises',
       'Circuits with very high inrush currents like transformers and X-ray equipment',
-      'Circuits requiring residual current protection',
+      'Circuits requiring additional protection by residual current device',
     ],
     correctAnswer: 2,
     explanation:
@@ -1261,10 +1261,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 145,
     question: 'What extraneous-conductive-parts require main protective bonding?',
     options: [
-      'Only metal water pipes within the bathroom',
+      'Only metal water pipes within the bathroom, where supplementary bonding applies',
       'Gas, water, oil pipes, structural steel, central heating and air conditioning systems',
-      'Only the consumer unit enclosure and meter tails',
-      'All plastic service pipes entering the building',
+      'The consumer unit enclosure and meter tails at the origin of the installation',
+      'All plastic service pipes entering the building below ground level',
     ],
     correctAnswer: 1,
     explanation:
@@ -1475,10 +1475,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 197,
     question: 'Why must measured Zs values be lower than tabulated maximum values?',
     options: [
-      'To allow for the tolerance of the test instrument',
+      'To allow for the stated accuracy tolerance of the test instrument',
       'To allow for increased resistance when conductors are at operating temperature',
-      'To allow for additional circuits being added later',
-      'To allow for the supply voltage rising above nominal',
+      'To allow for additional circuits being added to the board later',
+      'To allow for the supply voltage rising above its nominal value',
     ],
     correctAnswer: 1,
     explanation:
@@ -1509,9 +1509,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 199,
     question: 'How can R1+R2 be measured for a circuit?',
     options: [
-      'By applying 500V DC between line and earth conductors',
-      'By measuring the loop impedance at the origin only',
-      'By energising the circuit and measuring the load current',
+      'By applying a 500V DC test between the line and earth conductors at the board',
+      'By measuring the earth fault loop impedance at the origin of the circuit only',
+      'By energising the circuit and measuring the load current with a clamp meter',
       'By measuring at the origin with line and cpc connected and measuring at the furthest point',
     ],
     correctAnswer: 3,
@@ -1545,10 +1545,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 201,
     question: 'At what current should a 30mA RCD trip when tested between 50% and 100% of its rating?',
     options: [
-      'Between 5mA and 15mA',
+      'Between 5mA and 15mA (up to 50% of rated current)',
       'Between 15mA and 30mA (50-100% of rated current)',
-      'Between 30mA and 60mA',
-      'Between 60mA and 150mA',
+      'Between 30mA and 60mA (100-200% of rated current)',
+      'Between 60mA and 150mA (200-500% of rated current)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1577,16 +1577,17 @@ export const am2QuestionBank: AM2Question[] = [
   },
   {
     id: 203,
-    question: 'What is the maximum trip time for additional protection RCDs at 5×IΔn?',
+    question:
+      'Under BS 7671:2018+A4:2026, how is the effectiveness of a 30 mA RCD verified?',
     options: [
-      '150ms',
-      '1000ms',
-      '300ms',
-      '40ms',
+      'A single AC test at IΔn, disconnecting within 300 ms',
+      'A test at 5x IΔn, disconnecting within 40 ms',
+      'Tests at half, 1x and 5x IΔn in sequence',
+      'The integral test button, operated twice',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      'For additional protection (30mA RCDs), maximum trip time at 5×IΔn (150mA) is 40ms.',
+      'Table 3A has been deleted from Appendix 3. Regardless of RCD Type, effectiveness is deemed verified by a single alternating current test at the rated residual operating current: within 300 ms maximum for a general non-delay device, or between 130 ms minimum and 500 ms maximum for a delay S type.',
     section: 'RCD Testing',
     difficulty: 'advanced',
     topic: 'Additional Protection',
@@ -1813,7 +1814,7 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Which of these is notifiable work under Part P?',
     options: [
       'Replacing a damaged socket outlet',
-      'Adding a fused spur to an existing circuit outside special locations',
+      'Adding a spur to a ring final circuit',
       'Installing a new circuit',
       'Replacing a light fitting',
     ],
@@ -1937,10 +1938,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 261,
     question: 'Which of these is non-notifiable work under Part P?',
     options: [
-      'Installing a new circuit from the consumer unit',
+      'Installing a new final circuit from the consumer unit in a kitchen',
       'Adding a socket outlet to an existing circuit (not in special location)',
-      'Replacing the consumer unit',
-      'Installing a new circuit in a bathroom',
+      'Replacing the consumer unit and all of its protective devices',
+      'Installing a new circuit in a room containing a bath or shower',
     ],
     correctAnswer: 1,
     explanation:
@@ -1954,8 +1955,8 @@ export const am2QuestionBank: AM2Question[] = [
     id: 262,
     question: 'Although not notifiable, what must all electrical work still comply with?',
     options: [
-      'Nothing in particular',
-      'Only customer wishes',
+      'The customer\'s written specification only',
+      'Part P only, not the wiring regulations',
       'BS 7671 and Part P requirements',
       'Only manufacturer instructions',
     ],
@@ -2116,7 +2117,7 @@ export const am2QuestionBank: AM2Question[] = [
       'All three phases L1, L2, L3 and neutral',
       'Only the phase being worked on',
       'Any two of the three phases plus earth',
-      'Only L1 and the neutral conductor',
+      'L1 and the neutral conductor at the origin',
     ],
     correctAnswer: 0,
     explanation:
@@ -2132,10 +2133,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 309,
     question: 'Why are two-pole voltage testers preferred over single-pole neon testers?',
     options: [
-      'They are cheaper and easier to carry on site',
+      'They are cheaper to buy and easier to carry around a busy site',
       'They measure voltage reliably between two points, unlike a neon that can mislead',
-      'They can also measure insulation resistance and continuity',
-      'They do not need to be proved on a known live source',
+      'They can also measure insulation resistance and continuity of the cpc',
+      'They do not need to be proved on a known live source beforehand',
     ],
     correctAnswer: 1,
     explanation:
@@ -2221,10 +2222,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 314,
     question: 'When might a permit to work system be required for electrical work?',
     options: [
-      'For any domestic socket-outlet addition',
-      'Whenever a Minor Works Certificate is issued',
+      'For any domestic socket-outlet addition on a ring final circuit',
+      'Whenever a Minor Works Certificate is issued for the work',
       'For high-risk work, especially on HV systems or in industrial environments',
-      'Only when working alone on a final circuit',
+      'When working alone on a final circuit in an occupied building',
     ],
     correctAnswer: 2,
     explanation:
@@ -2313,10 +2314,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 354,
     question: 'Before starting electrical fault finding, what must be done first?',
     options: [
-      'Order the replacement parts likely to be needed',
-      'Inform the customer of the expected repair cost',
+      'Order the replacement parts most likely to be needed',
+      'Inform the customer of the expected cost of the repair',
       'Conduct a risk assessment and ensure safe isolation where appropriate',
-      'Issue a Minor Works Certificate for the repair',
+      'Issue a Minor Works Certificate covering the repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -2383,10 +2384,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 358,
     question: 'What causes a high resistance joint?',
     options: [
-      'Over-tightened terminals crushing the conductor',
-      'Using a conductor of too large a cross-section',
+      'Over-tightened terminals crushing the conductor strands',
+      'Using a conductor of too large a cross-sectional area',
       'Poor connections, oxidation, incorrect termination, or mechanical damage',
-      'Excessive insulation resistance at the termination',
+      'Excessive insulation resistance at the termination point',
     ],
     correctAnswer: 2,
     explanation:
@@ -2400,9 +2401,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 359,
     question: 'How can a high resistance joint be identified?',
     options: [
-      'An insulation resistance reading below 1.0MΩ',
-      'A residual current that trips the RCD repeatedly',
-      'A prospective fault current above the device rating',
+      'An insulation resistance reading of less than 1.0MΩ to earth',
+      'A residual current that trips the RCD repeatedly on load',
+      'A prospective fault current above the device breaking capacity',
       'Thermal imaging, smell of burning, discoloration, or voltage drop testing',
     ],
     correctAnswer: 3,
@@ -2451,10 +2452,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 362,
     question: 'What can cause flickering lights?',
     options: [
-      'An oversized circuit protective conductor',
-      'Correctly rated and well-terminated conductors',
+      'An oversized circuit protective conductor in the final circuit',
+      'Correctly rated conductors that are well terminated at both ends',
       'Loose connections, failing lamps, incompatible dimmer, or supply issues',
-      'An RCD set to a higher residual current rating',
+      'An RCD set to a higher residual operating current rating',
     ],
     correctAnswer: 2,
     explanation:
@@ -2592,8 +2593,8 @@ export const am2QuestionBank: AM2Question[] = [
     id: 370,
     question: 'What does AMD stand for in relation to BS 7671?',
     options: [
-      'Automatic Monitoring Device',
-      'Additional Monitoring Document',
+      'Auto Metering Device',
+      'Approved Modification',
       'Amendment',
       'Applied Maximum Demand',
     ],
@@ -2627,9 +2628,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What is the purpose of RCD protection?',
     options: [
       'To provide additional protection against electric shock by detecting earth leakage',
-      'To protect cables against overload and short-circuit current',
-      'To limit voltage drop on long final circuits',
-      'To bond exposed-conductive-parts to the earthing terminal',
+      'To protect the circuit cables against overload and short-circuit current',
+      'To limit the voltage drop on long final circuits in large installations',
+      'To bond exposed-conductive-parts back to the main earthing terminal',
     ],
     correctAnswer: 0,
     explanation:
@@ -2782,10 +2783,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 381,
     question: 'What is the recommended minimum height for socket outlets in new domestic premises?',
     options: [
-      '150mm from floor level',
+      '150mm from floor level (just above the skirting)',
       '450mm from floor level (accessibility guidance)',
-      '900mm from floor level',
-      '1200mm from floor level',
+      '900mm from floor level (standard worktop height)',
+      '1200mm from floor level (upper accessible reach)',
     ],
     correctAnswer: 1,
     explanation:
@@ -2816,9 +2817,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 383,
     question: 'What is the purpose of supplementary bonding in bathrooms?',
     options: [
-      'To provide a low-impedance fault return path',
-      'To limit voltage drop on the lighting circuit',
-      'To reduce the disconnection time of the RCD',
+      'To provide a low-impedance return path for earth fault current',
+      'To limit the voltage drop on the bathroom lighting circuit',
+      'To reduce the disconnection time of the protective device',
       'To reduce potential differences between simultaneously accessible parts',
     ],
     correctAnswer: 3,
@@ -2867,10 +2868,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 386,
     question: 'What information must be recorded on the Electrical Installation Certificate?',
     options: [
-      'Only the name and address of the installer',
-      'Only the test results for the final circuits',
+      'Only the name, address and scheme registration number of the installer',
+      'The test results for each final circuit, on a separate schedule of results',
       'Description of installation, test results, schedule of circuits, design and installation details',
-      'Only the earthing arrangement and main bonding sizes',
+      'The earthing arrangement and the sizes of the main protective bonding conductors',
     ],
     correctAnswer: 2,
     explanation:
@@ -2967,9 +2968,9 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'Where must PFC be measured?',
     options: [
       'At the origin and at the most remote point of the installation',
-      'At the consumer unit neutral bar only',
-      'At every accessory on each final circuit',
-      'At the main earthing terminal only',
+      'At the neutral bar within the consumer unit only',
+      'At every accessory point on each final circuit',
+      'At the main earthing terminal at the origin only',
     ],
     correctAnswer: 0,
     explanation:
@@ -3084,9 +3085,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 399,
     question: 'What information should be displayed on the consumer unit labelling?',
     options: [
-      'The prospective fault current and Ze value only',
-      'The maximum demand and main fuse rating only',
-      'The make and model of every protective device',
+      'The prospective fault current and the measured Ze value only',
+      'The maximum demand and the rating of the main fuse only',
+      'The make and model of every protective device fitted',
       'Installer details, inspection dates, and earthing/bonding information',
     ],
     correctAnswer: 3,
@@ -3441,9 +3442,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 420,
     question: 'Under the Electricity at Work Regulations 1989, when may live working be undertaken?',
     options: [
-      'Whenever the operative holds a valid competency card',
-      'Where the work will take less than fifteen minutes to complete',
-      'On any circuit operating at or below 230 V single-phase',
+      'Whenever the operative holds a valid competency card and is accompanied by a second person',
+      'Where the work will take less than fifteen minutes to complete and the customer agrees',
+      'On any circuit operating at or below 230V single-phase, provided insulating gloves are worn',
       'Where it is unreasonable to work dead, it is reasonable to work live, and suitable precautions are taken',
     ],
     correctAnswer: 3,
@@ -3509,9 +3510,9 @@ export const am2QuestionBank: AM2Question[] = [
     id: 424,
     question: 'A circuit shows correct continuity and insulation resistance but the RCD trips as soon as it is energised. What is the most likely cause?',
     options: [
-      'A short circuit between line and neutral',
-      'The RCD is undersized for the circuit load',
-      'An open circuit protective conductor',
+      'A short circuit between line and neutral, which an insulation resistance test would not reveal if those two conductors were linked',
+      'The RCD is undersized for the connected load, so normal load current alone exceeds its residual operating current',
+      'An open circuit protective conductor, which a continuity test taken only at the origin of the circuit would not pick up on a radial',
       'A neutral-to-earth fault, which insulation resistance testing between live conductors and earth can miss if the neutral was linked',
     ],
     correctAnswer: 3,
@@ -3543,10 +3544,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 426,
     question: 'Which of these correctly describes the requirement for a consumer unit in a domestic property?',
     options: [
-      'It must be metal in all cases without exception',
+      'It must be manufactured from metal in every case, without any exception',
       'It must comply with BS EN 61439-3, which in practice means a non-combustible enclosure',
-      'It must be installed at least 1.4 m above floor level',
-      'It must have a main switch rated at 100 A minimum',
+      'It must be installed with its main switch at least 1.4m above floor level',
+      'It must be fitted with a double-pole main switch rated at not less than 100A',
     ],
     correctAnswer: 1,
     explanation:
@@ -3560,10 +3561,10 @@ export const am2QuestionBank: AM2Question[] = [
     id: 427,
     question: 'Under Part P of the Building Regulations in England, which work is notifiable?',
     options: [
-      'Replacing a damaged socket-outlet on an existing circuit',
-      'Any electrical work carried out in a dwelling',
+      'Replacing a damaged socket-outlet on an existing ring final circuit in a kitchen',
+      'Any electrical work carried out in a dwelling, however minor the alteration may be',
       'Installing a new circuit, or any work in a room containing a bath or shower involving a new circuit',
-      'Replacing a consumer unit only where the supply is TT',
+      'Replacing an existing consumer unit, but only where the earthing arrangement is TT',
     ],
     correctAnswer: 2,
     explanation:

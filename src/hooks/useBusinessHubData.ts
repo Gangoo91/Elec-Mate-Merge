@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useInvoiceStorage } from './useInvoiceStorage';
 import { Quote } from '@/types/quote';
+import { isInvoiceOverdue } from '@/utils/invoice-status';
 
 export interface BusinessHubData {
   revenue: number;
@@ -10,7 +11,7 @@ export interface BusinessHubData {
   overdueAmount: number;
   overdueCount: number;
   latePaymentCount: number;
-  winRate: number;
+  winRate: number | null;
   quotes: Quote[];
   invoices: Quote[];
   isLoading: boolean;
@@ -68,18 +69,11 @@ export function useBusinessHubData(): BusinessHubData {
     );
     const outstanding = outstandingInvoices.reduce((sum, inv) => sum + remaining(inv), 0);
 
-    // Overdue — explicitly overdue OR due date has passed (+24h grace) and not paid
-    const overdueInvoices = invoices.filter((inv) => {
-      if (inv.invoice_status === 'paid') return false;
-      if (inv.invoice_status === 'overdue') return true;
-      if (
-        inv.invoice_due_date &&
-        new Date(inv.invoice_due_date).getTime() + 24 * 60 * 60 * 1000 < now.getTime() &&
-        inv.invoice_status === 'sent'
-      )
-        return true;
-      return false;
-    });
+    // Overdue — the SHARED rule (utils/invoice-status), not a fourth local copy.
+    // The hand-rolled version here required `invoice_status === 'sent'` for the
+    // due-date case, so an invoice sitting in any other non-paid state was
+    // silently never overdue on this page while it was on others.
+    const overdueInvoices = invoices.filter(isInvoiceOverdue);
     const overdueAmount = overdueInvoices.reduce((sum, inv) => sum + remaining(inv), 0);
     const overdueCount = overdueInvoices.length;
 
@@ -97,17 +91,31 @@ export function useBusinessHubData(): BusinessHubData {
     return { paidThisMonth, outstanding, overdueAmount, overdueCount, latePaymentCount, revenue };
   }, [invoices]);
 
-  // Win rate: (accepted / total decided) * 100
-  const winRate = useMemo(() => {
-    const decided = savedQuotes.filter(
-      (q) =>
-        q.status === 'sent' ||
-        q.acceptance_status === 'accepted' ||
-        q.acceptance_status === 'rejected'
-    );
-    const accepted = savedQuotes.filter((q) => q.acceptance_status === 'accepted');
-    if (decided.length === 0) return 0;
-    return Math.round((accepted.length / decided.length) * 100);
+  /**
+   * Win rate — or null when the data cannot honestly support one.
+   *
+   * Two things were wrong. `decided` counted `status === 'sent'`, but sent is
+   * a SENDING state: a quote awaiting a reply has not been decided, and every
+   * accepted quote already matched the accepted clause anyway, so the
+   * denominator collapsed onto the numerator.
+   *
+   * The deeper problem is that nobody ever marks a quote rejected. On the
+   * account this was found on: 30 accepted, 10 pending, ZERO rejected — so the
+   * ratio was structurally pinned at 100% no matter what happened. Losses are
+   * simply left as pending forever. A "100% win rate" that cannot fall is not
+   * a statistic, it is a rendering artefact, and putting it on the hub next to
+   * real money invites the user to trust it.
+   *
+   * So: only decisions count, and we return null unless at least one quote has
+   * actually been rejected — without a single loss on record there is no way
+   * to tell "wins everything" from "never writes down a loss".
+   */
+  const winRate = useMemo<number | null>(() => {
+    const accepted = savedQuotes.filter((q) => q.acceptance_status === 'accepted').length;
+    const rejected = savedQuotes.filter((q) => q.acceptance_status === 'rejected').length;
+    const decided = accepted + rejected;
+    if (decided < 5 || rejected === 0) return null;
+    return Math.round((accepted / decided) * 100);
   }, [savedQuotes]);
 
   const isLoading = quotesLoading || invoicesLoading;

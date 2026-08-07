@@ -632,7 +632,7 @@ export default function ElectricCarChargingAtHomePage() {
   return (
     <GuideTemplate
       title="Electric Car Charging at Home | Installation Guide UK"
-      description="Complete guide to electric car charging at home in the UK. 3-pin vs wallbox, 7kW vs 22kW charging speeds, installation costs, smart charging regulations…"
+      description="Complete guide to electric car charging at home in the UK. 3-pin vs wallbox, 7kW vs 22kW charging speeds, installation costs, smart charging regulations."
       datePublished="2025-04-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

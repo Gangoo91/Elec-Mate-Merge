@@ -517,7 +517,7 @@ export default function SelectElectricalRegistrationPage() {
   return (
     <GuideTemplate
       title="SELECT Electrical Registration Scotland | Approved"
-      description="Complete guide to SELECT electrical registration in Scotland — Building Standards Scotland explained, how the Approved Certifier scheme works…"
+      description="Complete guide to SELECT electrical registration in Scotland — Building Standards Scotland explained, how the Approved Certifier scheme works."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

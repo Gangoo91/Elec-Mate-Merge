@@ -516,7 +516,7 @@ export default function SolarBatteryStorageInstallationPage() {
   return (
     <GuideTemplate
       title="Solar Battery Storage Installation UK | Home Battery Guide"
-      description="Complete guide to solar battery storage installation in the UK. AC-coupled vs DC-coupled, popular batteries (Tesla Powerwall, Givenergy, Growatt)…"
+      description="Complete guide to solar battery storage installation in the UK. AC-coupled vs DC-coupled, popular batteries (Tesla Powerwall, Givenergy, Growatt)."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

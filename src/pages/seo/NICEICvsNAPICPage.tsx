@@ -572,7 +572,7 @@ export default function NICEICvsNAPICPage() {
   return (
     <GuideTemplate
       title="NICEIC vs NAPIT | Which Scheme Is Best? 2026"
-      description="Detailed comparison of NICEIC and NAPIT competent person schemes for UK electricians. Costs, assessment process, reputation, coverage…"
+      description="Detailed comparison of NICEIC and NAPIT competent person schemes for UK electricians. Costs, assessment process, reputation, coverage."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

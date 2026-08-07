@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Minus, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import { ItemTypePickerSheet } from './ItemTypePickerSheet';
 import { getAccessoriesForRoom, type AccessoryType } from '@/data/siteVisit/accessoryTypes';
 import type { SiteVisitItem, RoomType } from '@/types/siteVisit';
@@ -14,12 +15,22 @@ interface RoomItemRowProps {
   onRemove: () => void;
 }
 
+/**
+ * One line of the take-off: what it is, how many, and any note.
+ *
+ * The three controls used to share a single row — item picker, a 148px
+ * quantity stepper and a delete button. On a 375px phone that left the item
+ * name about 110px, so "13A twin switched socket" truncated to "13A twin…" on
+ * the one control whose whole job is telling you what the line is. The name
+ * now owns the top row and the stepper sits underneath it.
+ */
 export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowProps) => {
   const [showNotes, setShowNotes] = useState(!!item.notes);
   const [pickerOpen, setPickerOpen] = useState(false);
 
   const accessories = getAccessoriesForRoom(roomType);
   const selected = accessories.find((a) => a.id === item.itemType);
+  const isCustomItem = item.itemType === 'custom_item';
 
   const handleTypeSelect = (accessory: AccessoryType) => {
     onUpdate({
@@ -29,84 +40,50 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
     });
   };
 
-  const isCustomItem = item.itemType === 'custom_item';
+  const stepperButtonCn =
+    'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] text-white transition-colors hover:bg-white/[0.10] touch-manipulation active:scale-[0.97]';
 
   return (
-    <div className="space-y-2 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-      <div className="flex gap-2 items-start">
-        {/* Item type — opens a searchable bottom sheet (was a 54-option dropdown) */}
-        <div className="flex-1 min-w-0">
-          <button
-            type="button"
-            onClick={() => setPickerOpen(true)}
-            className={`flex h-11 w-full items-center justify-between gap-2 rounded-xl border px-3.5 text-left text-sm touch-manipulation active:scale-[0.99] ${
-              selected
-                ? 'border-white/[0.1] bg-white/[0.05] text-white'
-                : 'border-dashed border-white/20 bg-transparent text-white/50'
-            }`}
-          >
-            <span className="truncate">{selected ? selected.label : 'Choose item…'}</span>
-            <ChevronDown className="h-4 w-4 flex-shrink-0 text-white/40" />
-          </button>
-          <ItemTypePickerSheet
-            open={pickerOpen}
-            onOpenChange={setPickerOpen}
-            accessories={accessories}
-            selectedId={item.itemType || undefined}
-            onSelect={handleTypeSelect}
-          />
-        </div>
+    <div className="space-y-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+      {/* The name gets the full width. */}
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setPickerOpen(true)}
+          className={cn(
+            'flex h-11 min-w-0 flex-1 items-center rounded-xl border px-3.5 text-left text-sm touch-manipulation active:scale-[0.99]',
+            selected
+              ? 'border-white/[0.12] bg-white/[0.06] text-white'
+              : 'border-dashed border-white/25 bg-transparent text-white'
+          )}
+        >
+          <span className="truncate">{selected ? selected.label : 'Choose item…'}</span>
+        </button>
 
-        {/* Quantity stepper */}
-        <div className="flex items-center gap-1">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onUpdate({ quantity: Math.max(1, item.quantity - 1) })}
-            className="h-11 w-11 touch-manipulation border-white/20 text-white"
-          >
-            <Minus className="h-4 w-4" />
-          </Button>
-          <Input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={item.quantity}
-            onChange={(e) => {
-              const val = parseInt(e.target.value) || 1;
-              onUpdate({ quantity: Math.max(1, val) });
-            }}
-            className="h-11 w-14 text-center text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            enterKeyHint="done"
-          />
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => onUpdate({ quantity: item.quantity + 1 })}
-            className="h-11 w-11 touch-manipulation border-white/20 text-white"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Delete */}
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
+          type="button"
           onClick={onRemove}
-          className="h-11 w-11 touch-manipulation text-white hover:text-red-400 hover:bg-red-500/10"
+          aria-label="Remove item"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-red-500/10 hover:text-red-300 touch-manipulation"
         >
           <Trash2 className="h-4 w-4" />
-        </Button>
+        </button>
       </div>
 
-      {/* Custom item description */}
+      <ItemTypePickerSheet
+        open={pickerOpen}
+        onOpenChange={setPickerOpen}
+        accessories={accessories}
+        selectedId={item.itemType || undefined}
+        onSelect={handleTypeSelect}
+      />
+
       {isCustomItem && (
         <Input
           value={item.itemDescription || ''}
           onChange={(e) => onUpdate({ itemDescription: e.target.value })}
-          placeholder="What is it? e.g. Dado trunking adaptor"
-          className="h-11 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          placeholder="What is it? e.g. dado trunking adaptor"
+          className={inputCn}
           autoCapitalize="sentences"
           autoComplete="off"
           enterKeyHint="done"
@@ -114,24 +91,62 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
         />
       )}
 
-      {/* Expandable notes — proper tappable affordance (was 12px text) */}
-      <button
-        onClick={() => setShowNotes(!showNotes)}
-        className="flex h-9 items-center gap-1.5 rounded-lg px-2 -ml-2 text-[13px] font-medium text-white/70 touch-manipulation active:bg-white/[0.06]"
-      >
-        {showNotes ? (
-          <ChevronUp className="h-3.5 w-3.5" />
-        ) : (
-          <ChevronDown className="h-3.5 w-3.5" />
-        )}
-        Notes
-      </button>
+      {/* Quantity and notes share the second row — both are secondary to what
+          the item actually is. */}
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => onUpdate({ quantity: Math.max(1, item.quantity - 1) })}
+            aria-label="One fewer"
+            className={stepperButtonCn}
+          >
+            <Minus className="h-4 w-4" />
+          </button>
+          <Input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={item.quantity}
+            onChange={(e) => onUpdate({ quantity: Math.max(1, parseInt(e.target.value) || 1) })}
+            aria-label="Quantity"
+            className="h-11 w-14 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.06] text-center text-base font-semibold text-white tabular-nums caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            enterKeyHint="done"
+          />
+          <button
+            type="button"
+            onClick={() => onUpdate({ quantity: item.quantity + 1 })}
+            aria-label="One more"
+            className={stepperButtonCn}
+          >
+            <Plus className="h-4 w-4" />
+          </button>
+          {item.unit && (
+            <span className="ml-1 shrink-0 text-[12px] text-white">{item.unit}</span>
+          )}
+        </div>
+
+        <div className="flex-1" />
+
+        {/* Was h-9 — under the 44px minimum on a control used with gloves on. */}
+        <button
+          type="button"
+          onClick={() => setShowNotes(!showNotes)}
+          className={cn(
+            'h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold touch-manipulation',
+            showNotes || item.notes ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {item.notes ? 'Note added' : showNotes ? 'Hide note' : 'Add note'}
+        </button>
+      </div>
+
       {showNotes && (
         <Textarea
           value={item.notes || ''}
           onChange={(e) => onUpdate({ notes: e.target.value })}
-          placeholder="Additional notes for this item..."
-          className="min-h-[60px] touch-manipulation text-base rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          placeholder="Anything worth remembering about this one"
+          className={cn(textareaCn, 'min-h-[60px]')}
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"

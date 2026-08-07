@@ -1,4 +1,6 @@
 import { RecentChatRow } from './RecentChatRow';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { RecentChat } from './types';
 
 export function EmptyState({
@@ -20,17 +22,17 @@ export function EmptyState({
     <div className="py-6 px-1">
       {recentChatsLoading && recentChats.length === 0 && (
         <div className="mb-5">
-          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/40 mb-2">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white mb-2">
             Recent chats
           </p>
           <div className="space-y-1">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="rounded-xl bg-white/[0.02] border border-white/[0.04] px-3 py-2.5 animate-pulse"
+                className={cn('animate-pulse rounded-xl border border-white/[0.18] px-3 py-2.5', CARD_SURFACE)}
               >
-                <div className="h-3 bg-white/[0.08] rounded w-3/5 mb-2" />
-                <div className="h-2 bg-white/[0.05] rounded w-16" />
+                <div className="mb-2 h-3 w-3/5 rounded bg-white/[0.18]" />
+                <div className="h-2 w-16 rounded bg-white/[0.12]" />
               </div>
             ))}
           </div>
@@ -38,7 +40,7 @@ export function EmptyState({
       )}
       {recentChats.length > 0 && (
         <div className="mb-5">
-          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/40 mb-2">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white mb-2">
             Recent chats
           </p>
           <div className="space-y-1">
@@ -55,21 +57,12 @@ export function EmptyState({
           </div>
         </div>
       )}
-      <div className="mb-5 sm:mb-6">
-        <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-elec-yellow mb-2.5">
-          Ready when you are
-        </p>
-        <h3 className="text-[22px] sm:text-[26px] font-semibold leading-[1.1] tracking-tight">
-          <span className="text-white">What's the</span>{' '}
-          <span className="text-elec-yellow">plan?</span>
-        </h3>
-        <p className="text-[13px] sm:text-[13.5px] text-white/55 mt-2 max-w-[440px] leading-relaxed">
-          Voice or text. I propose, you approve, it saves.
-        </p>
-      </div>
-
-      {/* Starter cards — 2×2 mobile, 4-up desktop. Same pattern as the Business Hub landing. */}
-      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-3">
+      {/* The "Ready when you are / What's the plan? / Voice or text, I propose,
+          you approve" block that stood here was three lines of Mate
+          introducing itself, every single time the sheet opened, between the
+          user and the thing they came to use. The starters below say what it
+          can do far better than a tagline does. */}
+      <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
         Start with
       </p>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
@@ -78,12 +71,12 @@ export function EmptyState({
             key={s.label}
             type="button"
             onClick={() => onPick(s.prompt)}
-            className="group text-left rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.18] transition-colors px-3 sm:px-3.5 py-3 sm:py-3.5 touch-manipulation active:scale-[0.98] min-h-[72px]"
+            className={cn('group min-h-[76px] rounded-xl border border-white/[0.18] px-3 py-3 text-left transition-[background-image,background-color,border-color,transform] duration-150 touch-manipulation active:scale-[0.97] hover:border-elec-yellow/50 hover:from-white/[0.19] sm:px-3.5 sm:py-3.5', CARD_SURFACE)}
           >
             <p className="text-[13px] sm:text-[13.5px] font-semibold text-white leading-snug">
               {s.label}
             </p>
-            <p className="mt-1 text-[11px] sm:text-[11.5px] text-white/45 leading-snug">
+            <p className="mt-1 text-[11px] sm:text-[11.5px] text-white leading-snug">
               {s.outcome}
             </p>
           </button>

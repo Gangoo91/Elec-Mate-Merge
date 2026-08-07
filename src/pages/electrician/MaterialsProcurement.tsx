@@ -3,15 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { storageSetJSONSync } from '@/utils/storage';
 import {
   ArrowLeft,
-  Zap,
   FileText,
   Search,
-  BarChart3,
   CheckCircle2,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useProcurementEngine } from '@/hooks/useProcurementEngine';
 import { ProcurementInputSheet } from '@/components/procurement/ProcurementInputSheet';
 import { OptimisedBasketSummary } from '@/components/procurement/OptimisedBasketSummary';
@@ -163,41 +160,34 @@ export default function MaterialsProcurement() {
           >
             <ArrowLeft className="h-5 w-5" />
           </Link>
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            <BarChart3 className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-            <span className="text-sm font-semibold text-white truncate">Smart Procurement</span>
-          </div>
+          <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white">
+            Smart Procurement
+          </h1>
         </div>
       </div>
 
-      {/* Hero */}
-      <div className="px-4 pt-4 pb-3">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
-            <BarChart3 className="h-6 w-6 text-yellow-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white">Smart Procurement</h1>
-            <p className="text-sm text-white">Compare prices across 6 suppliers instantly</p>
-          </div>
-        </div>
+      <div className="px-4 pt-4 pb-3 lg:mx-auto lg:max-w-[900px] lg:px-8">
+        {/* The supplier count is not hardcoded on purpose: the comparison
+            searches every supplier with stock, and the old copy said "6"
+            while 11 had products. */}
+        <p className="text-sm leading-snug text-white">
+          Paste a materials list and we'll price every line against each supplier we track, then
+          work out what splitting the order saves you.
+        </p>
       </div>
 
-      <div className="px-4 space-y-4">
+      <div className="px-4 space-y-4 lg:mx-auto lg:max-w-[900px] lg:px-8">
         {/* Input section — collapsible after results */}
         {hasResults ? (
           <button
             onClick={() => setInputCollapsed(!inputCollapsed)}
             className="w-full flex items-center justify-between p-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl touch-manipulation active:bg-white/[0.05] transition-colors"
           >
+            <span className="text-sm font-medium text-white tabular-nums">
+              {parsedItems.length} items compared
+            </span>
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-medium text-white">
-                {parsedItems.length} items compared
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-white">New comparison</span>
+              <span className="text-xs text-white">Start again</span>
               {inputCollapsed ? (
                 <ChevronDown className="h-4 w-4 text-white" />
               ) : (
@@ -224,7 +214,7 @@ export default function MaterialsProcurement() {
             <p className="text-sm text-white">{STEP_INFO[step].description}</p>
             {parsedItems.length > 0 && step === 'comparing_prices' && (
               <p className="text-xs text-white mt-2">
-                Searching prices for {parsedItems.length} items...
+                Pricing {parsedItems.length} items…
               </p>
             )}
           </div>
@@ -235,13 +225,13 @@ export default function MaterialsProcurement() {
           <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
             <p className="text-sm text-red-400 font-medium mb-2">Something went wrong</p>
             <p className="text-sm text-white">{error}</p>
-            <Button
+            <button
+              type="button"
               onClick={reset}
-              variant="outline"
-              className="mt-3 h-11 touch-manipulation border-white/20 text-white"
+              className="mt-3 h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-5 text-[13.5px] font-semibold text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
             >
-              Try Again
-            </Button>
+              Try again
+            </button>
           </div>
         )}
 

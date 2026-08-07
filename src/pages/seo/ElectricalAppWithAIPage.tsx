@@ -304,7 +304,7 @@ const sections = [
         </p>
         <p>
           The scanner also identifies arc fault detection devices (AFDDs) — relevant since
-          Regulation 421.1.7, introduced by A4:2026, recommends AFDD installation on AC final
+          Regulation 421.1.7, introduced by Amendment 2:2022, recommends AFDD installation on AC final
           circuits of a fixed installation to mitigate fire risk from arc fault currents. Where the
           AI Circuit Designer is used for a new installation, it accounts for this recommendation so
           that the consumer unit schedule reflects current best practice.
@@ -573,7 +573,7 @@ export default function ElectricalAppWithAIPage() {
   return (
     <ToolTemplate
       title="Electrical App with AI | Smart Tools for Electricians"
-      description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation…"
+      description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation."
       datePublished="2025-10-01"
       dateModified="2026-06-10"
       toolPath="/tools/electrical-app-with-ai"

@@ -662,7 +662,7 @@ export default function NVQLevel2PortfolioGuidePage() {
   return (
     <GuideTemplate
       title="NVQ Level 2 Electrical Portfolio Guide | What You Need"
-      description="Complete guide to building your NVQ Level 2 Electrical Installations portfolio. Evidence types, mandatory units, photographing work, common rejections…"
+      description="Complete guide to building your NVQ Level 2 Electrical Installations portfolio. Evidence types, mandatory units, photographing work, common rejections."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -191,15 +191,15 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
       <div className="space-y-5">
         {/* Draft recovery banner */}
         {showRecoveryBanner && (
-          <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div className="flex flex-col gap-3 rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.07] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                 Unsaved draft found
               </div>
               <div className="mt-1 text-[14px] font-semibold text-white">
                 Recover where you left off?
               </div>
-              <p className="mt-0.5 text-[12.5px] text-white/65">
+              <p className="mt-0.5 text-[12.5px] text-white">
                 Your last session was saved locally and never uploaded.
                 {unrecoverablePhotoCount > 0 &&
                   ` ${unrecoverablePhotoCount} photo${unrecoverablePhotoCount === 1 ? '' : 's'} couldn't be recovered — photos only survive once uploaded.`}
@@ -208,13 +208,13 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
             <div className="flex items-center gap-2">
               <button
                 onClick={handleDiscardDraft}
-                className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13.5px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
               >
                 Discard
               </button>
               <button
                 onClick={handleRecoverDraft}
-                className="flex h-9 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+                className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
               >
                 Recover →
               </button>
@@ -254,15 +254,19 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
                           ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
                           : isComplete
                             ? 'border border-emerald-500/30 bg-emerald-500/15 text-emerald-400'
-                            : 'border border-white/[0.10] bg-white/[0.06] text-white/55'
+                            : 'border border-white/[0.10] bg-white/[0.06] text-white'
                       )}
                     >
                       {isComplete ? '✓' : step.id + 1}
                     </span>
                     <span
                       className={cn(
-                        'hidden text-[12px] font-medium leading-none sm:block',
-                        isActive ? 'text-white' : isComplete ? 'text-white/80' : 'text-white/50'
+                        'hidden text-[12px] leading-none text-white sm:block',
+                        // The grey sweep flattened three branches into one and
+                        // took the active-step distinction with it. Weight
+                        // carries it instead of opacity, which is what the
+                        // all-white rule requires.
+                        isActive ? 'font-semibold' : 'font-medium'
                       )}
                     >
                       {step.shortTitle}
@@ -279,7 +283,7 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
           <div className="mb-5 flex items-start justify-between gap-3 border-b border-white/[0.08] pb-4">
             <div>
               <h2 className="text-[20px] font-bold leading-tight text-white">{currentStepTitle}</h2>
-              <p className="mt-1 text-[12px] text-white/60">{STEPS[sv.currentStep]?.sub}</p>
+              <p className="mt-1 text-[12px] text-white">{STEPS[sv.currentStep]?.sub}</p>
             </div>
             <div className="flex flex-col items-end gap-1">
               <AutoSaveIndicator
@@ -287,12 +291,12 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
                 isSaving={sv.isSaving || cloud.cloudStatus === 'syncing'}
               />
               {cloud.cloudStatus === 'offline' && (
-                <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
+                <span className="rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-0.5 text-[10.5px] font-medium text-white">
                   Offline — saved on this device, will sync
                 </span>
               )}
               {cloud.cloudStatus === 'error' && (
-                <span className="rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-medium text-red-300">
+                <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-0.5 text-[10.5px] font-medium text-orange-300">
                   Cloud save failed — retrying
                 </span>
               )}

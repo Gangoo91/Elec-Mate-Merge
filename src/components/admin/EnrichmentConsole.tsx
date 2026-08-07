@@ -936,38 +936,38 @@ export default function EnrichmentConsole() {
             <div className="text-2xl font-bold text-primary">
               {stats.sourceTotal?.toLocaleString()}
             </div>
-            <div className="text-xs text-muted-foreground">Source Records</div>
+            <div className="text-xs text-white">Source Records</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-success">
               {stats.sourceEnriched?.toLocaleString()}
             </div>
-            <div className="text-xs text-muted-foreground">Fully Enriched</div>
+            <div className="text-xs text-white">Fully Enriched</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-1">
               {stats.facetsCreated.toLocaleString()}
             </div>
-            <div className="text-xs text-muted-foreground">Facets Created</div>
+            <div className="text-xs text-white">Facets Created</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-warning">
               {stats.remaining.toLocaleString()}
             </div>
-            <div className="text-xs text-muted-foreground">Remaining</div>
+            <div className="text-xs text-white">Remaining</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-2">{stats.progress}%</div>
-            <div className="text-xs text-muted-foreground">Progress</div>
+            <div className="text-xs text-white">Progress</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-3">
               {batches.filter((b) => b.status === 'processing').length}
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-white">
               Processing Now
               {config.workerCount && (
-                <span className="block text-[10px] text-muted-foreground/70 mt-0.5">
+                <span className="block text-[10px] text-white/70 mt-0.5">
                   Max: {config.workerCount} workers
                 </span>
               )}
@@ -987,25 +987,25 @@ export default function EnrichmentConsole() {
                 <div className="text-xl font-bold text-primary">
                   {stats.compliance.avgFacets10min}
                 </div>
-                <div className="text-xs text-muted-foreground">Avg Facets/Source</div>
+                <div className="text-xs text-white">Avg Facets/Source</div>
               </div>
               <div className="text-center p-3 bg-muted rounded-md">
                 <div className="text-xl font-bold text-success">
                   {stats.compliance.compliancePercentage10min}%
                 </div>
-                <div className="text-xs text-muted-foreground">Exactly 8</div>
+                <div className="text-xs text-white">Exactly 8</div>
               </div>
               <div className="text-center p-3 bg-muted rounded-md">
                 <div className="text-xl font-bold text-chart-2">
                   {stats.compliance.sourcesEnriched10min}
                 </div>
-                <div className="text-xs text-muted-foreground">Sources Enriched</div>
+                <div className="text-xs text-white">Sources Enriched</div>
               </div>
               <div className="text-center p-3 bg-muted rounded-md">
                 <div className="text-xl font-bold text-chart-3">
                   {stats.compliance.avgFacetsAllTime}
                 </div>
-                <div className="text-xs text-muted-foreground">All-Time Avg</div>
+                <div className="text-xs text-white">All-Time Avg</div>
               </div>
             </div>
           </div>
@@ -1033,7 +1033,7 @@ export default function EnrichmentConsole() {
                 <div>
                   <p className="text-sm font-medium">{alert.message}</p>
                   {idx === 0 && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       CASCADE protection is now active. Re-ingest original sources or restore from
                       backup.
                     </p>
@@ -1052,7 +1052,7 @@ export default function EnrichmentConsole() {
             <AlertCircle className="w-5 h-5 text-warning" />
             <h4 className="font-semibold text-warning">Incomplete Enrichment Detected</h4>
           </div>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-sm text-white mb-3">
             {stats.sourceTotal - stats.sourceEnriched} unique{' '}
             {selectedTask === 'bs7671'
               ? 'regulations'
@@ -1069,7 +1069,7 @@ export default function EnrichmentConsole() {
                 <CheckCircle2 className="w-4 h-4 text-success" />
                 <span className="text-sm font-semibold text-success">Data Integrity Verified</span>
               </div>
-              <div className="text-xs text-muted-foreground font-mono space-y-1">
+              <div className="text-xs text-white font-mono space-y-1">
                 <div>
                   Baseline: {integrityCheck.beforeCount.toLocaleString()} records •{' '}
                   {integrityCheck.beforeUniqueRegs} unique regs
@@ -1249,12 +1249,12 @@ export default function EnrichmentConsole() {
                     </Badge>
                     <span className="text-sm font-mono">{job.job_type}</span>
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-white">
                     {job.completed_batches}/{job.total_batches} batches
                     {job.failed_batches > 0 && ` • ${job.failed_batches} failed`}
                   </div>
                 </div>
-                <div className="text-right text-xs text-muted-foreground">
+                <div className="text-right text-xs text-white">
                   {new Date(job.updated_at).toLocaleTimeString()}
                 </div>
               </div>
@@ -1274,7 +1274,7 @@ export default function EnrichmentConsole() {
             <Badge variant="secondary" className="text-xs">
               {batches.filter((b) => b.status === 'processing').length} Active Batches
               {config.workerCount && (
-                <span className="ml-1 text-muted-foreground">/ {config.workerCount} max</span>
+                <span className="ml-1 text-white">/ {config.workerCount} max</span>
               )}
             </Badge>
           </div>
@@ -1310,11 +1310,11 @@ export default function EnrichmentConsole() {
                       {batch.status === 'processing' && (
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-                          <span className="text-xs text-muted-foreground">{elapsed}s</span>
+                          <span className="text-xs text-white">{elapsed}s</span>
                         </div>
                       )}
                     </div>
-                    <span className="text-xs font-mono text-muted-foreground">
+                    <span className="text-xs font-mono text-white">
                       {batch.items_processed}/{batch.total_items} items
                     </span>
                   </div>
@@ -1336,7 +1336,7 @@ export default function EnrichmentConsole() {
                   </div>
 
                   {batch.status === 'processing' && batch.data?.current_regulation && (
-                    <div className="mt-2 text-xs text-muted-foreground font-mono">
+                    <div className="mt-2 text-xs text-white font-mono">
                       Processing: {batch.data.current_regulation}
                     </div>
                   )}
@@ -1345,13 +1345,13 @@ export default function EnrichmentConsole() {
                   {batch.data?.skipped_count !== undefined &&
                     batch.data?.new_count !== undefined && (
                       <div className="mt-2 flex gap-3 text-xs">
-                        <span className="text-muted-foreground">
+                        <span className="text-white">
                           Skipped:{' '}
                           <span className="font-semibold text-warning">
                             {batch.data.skipped_count}
                           </span>
                         </span>
-                        <span className="text-muted-foreground">
+                        <span className="text-white">
                           New:{' '}
                           <span className="font-semibold text-success">{batch.data.new_count}</span>
                         </span>
@@ -1373,7 +1373,7 @@ export default function EnrichmentConsole() {
               <h4 className="font-medium text-destructive mb-1">
                 {stuckBatches.length} Stuck Batch{stuckBatches.length > 1 ? 'es' : ''} Detected
               </h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white mb-3">
                 These batches have been processing for over 4.5 minutes without progress
               </p>
               <MobileButton

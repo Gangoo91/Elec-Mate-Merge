@@ -602,7 +602,7 @@ export default function LEDDownlightGuidePage() {
   return (
     <GuideTemplate
       title="LED Downlight Installation | Fire Rating & IC Guide"
-      description="Complete guide to LED downlight installation in the UK. Fire-rated vs non-fire-rated, IC rating for insulation contact, thermal protection…"
+      description="Complete guide to LED downlight installation in the UK. Fire-rated vs non-fire-rated, IC rating for insulation contact, thermal protection."
       datePublished="2025-07-10"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

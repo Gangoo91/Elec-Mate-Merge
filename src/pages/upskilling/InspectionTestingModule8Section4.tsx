@@ -126,7 +126,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Item 4.23 reads: "Confirmation of indication that AFDD(s) are operational (421.1.7; 532.6; 651.2(e))". This was added at A4:2026 to align with the new Reg 421.1.7 AFDD recommendation. Item 4.0 is the parent "Consumer Unit / Distribution Board" group; item 5.12 is the new RCD-not-exceeding-30-mA item including its bullet for "Final circuits supplying luminaires within domestic (household) premises (411.3.4)" — also an A4 reorganisation.',
+      'Item 4.23 reads: "Confirmation of indication that AFDD(s) are operational (421.1.7; 532.6; 651.2(e))". This was introduced by Amendment 2:2022 to align with the new Reg 421.1.7 AFDD recommendation. Item 4.0 is the parent "Consumer Unit / Distribution Board" group; item 5.12 is the new RCD-not-exceeding-30-mA item including its bullet for "Final circuits supplying luminaires within domestic (household) premises (411.3.4)" — also an A4 reorganisation.',
   },
   {
     id: 5,

@@ -672,8 +672,8 @@ const sections = [
 export default function ElectricalSymbolsChartPage() {
   return (
     <GuideTemplate
-      title="Electrical Symbols Chart UK: All 114 Symbols, Free Download"
-      description="114 UK electrical symbols to IEC 60617: sockets, switches, RCBOs, FCUs, lighting, fire alarm, fuse spurs. Free SVG chart + per-symbol reference. BS EN 60617 has been withdrawn and replaced by IEC 60617."
+      title="IEC 60617 Electrical Symbols: 114 Free UK SVGs"
+      description="114 IEC 60617 symbols with meanings: sockets, switches, MCBs, RCBOs, RCDs, AFDDs, SPDs, lighting and wiring. Free SVGs for UK drawings and schedules."
       datePublished="2025-11-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -691,7 +691,7 @@ export default function ElectricalSymbolsChartPage() {
       answerBox={{
         question: 'What are the standard UK electrical symbols?',
         answer:
-          'UK electrical symbols follow IEC 60617 (BS 7671:2018+A4:2026 Reg 514.9 requires that any symbol used complies with IEC 60617; BS EN 60617 was withdrawn and replaced by the IEC 60617 online database) and are used on circuit diagrams, installation drawings, and certificates. Switches use an angled line (one-way, two-way, intermediate); sockets use semicircles — one for a single, two for a double; and protection devices have distinct symbols for fuses, MCBs, RCDs, RCBOs, AFDDs, and SPDs.',
+          'UK electrical symbols follow IEC 60617 (BS 7671:2018+A4:2026 Reg 514.9.1 requires that any symbol used complies with IEC 60617; BS EN 60617 was withdrawn and replaced by the IEC 60617 online database) and are used on circuit diagrams, installation drawings, and certificates. Switches use an angled line (one-way, two-way, intermediate); sockets use semicircles — one for a single, two for a double; and protection devices have distinct symbols for fuses, MCBs, RCDs, RCBOs, AFDDs, and SPDs.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

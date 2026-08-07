@@ -2,6 +2,8 @@ import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
 import {
   AlertTriangle,
   Zap,
@@ -22,21 +24,22 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Earth Fault Loop Impedance Too High? Causes + Fixes (BS 7671)';
+const PAGE_TITLE = 'Max Earth Loop Impedance (Zs): 32A Type B 1.37Ω';
 const PAGE_DESCRIPTION =
-  'High earth fault loop impedance (Zs) over the BS 7671 Table 41.3 (MCB) or Table 41.2 (fuse) maximum: high Ze, long runs, loose joints, hot conductors. Step-by-step diagnosis + 6 fixes for UK electricians.';
+  'BS 7671 Table 41.3 max Zs: 32 A Type B 1.37Ω, 20 A 2.19Ω, 6 A 7.28Ω — site limit is 0.8× that (1.10Ω at 32 A). Plus the 5 causes of high Zs and the fixes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
   {
     label: 'Earth Fault Loop Impedance Too High',
-    href: '/guides/earth-fault-loop-impedance-explained',
+    href: '/guides/earth-fault-loop-impedance-too-high',
   },
 ];
 
 const tocItems = [
   { id: 'what-too-high-means', label: 'What "Too High" Means' },
   { id: 'max-zs-table', label: 'Maximum Zs Table (41.3)' },
+  { id: 'calculator', label: 'Check Your Zs Reading' },
   { id: 'common-causes', label: 'Common Causes' },
   { id: 'solutions', label: 'Solutions' },
   { id: 'when-to-report-dno', label: 'When to Report to DNO' },
@@ -46,7 +49,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  '"Too high" Zs means the earth fault loop impedance exceeds the maximum value permitted by BS 7671 — Table 41.3 (BS 7671:2018+A4:2026, Reg 411.4.204) for circuits protected by circuit breakers (MCBs/MCCBs), or Table 41.2 (Reg 411.4.201) for circuits protected by fuses — meaning the protective device may not disconnect quickly enough during an earth fault.',
+  '"Too high" Zs means the earth fault loop impedance exceeds the maximum value permitted by BS 7671 — Table 41.3 (BS 7671:2018+A4:2026, Reg 411.4.202) for circuits protected by circuit breakers (MCBs/MCCBs), or Table 41.2 (Reg 411.4.201) for circuits protected by fuses — meaning the protective device may not disconnect quickly enough during an earth fault.',
   'The most common causes of high Zs are a poor main earth connection (loose, corroded, or high-resistance), long cable runs with small CPC, high external earth fault loop impedance (Ze) from the supply, and loose or corroded connections in the earth path.',
   'For TT earthing systems, high Zs is inherent because the earth return path goes through the general mass of earth — RCD protection (not overcurrent protection) is the primary means of fault disconnection on TT systems.',
   "Elec-Mate's Zs lookup calculator instantly shows the maximum permitted earth fault loop impedance for any BS 7671 protective device, so you can verify compliance on site without carrying the tables.",
@@ -57,7 +60,7 @@ const faqs = [
   {
     question: 'What is the maximum earth fault loop impedance for a 32A Type B MCB?',
     answer:
-      "For a 32A Type B MCB, the maximum earth fault loop impedance (Zs) per BS 7671:2018+A4:2026 Table 41.3 (Reg 411.4.204) is 1.37 ohms. This is the value at which the MCB is guaranteed to trip within the required disconnection time for a 230 V circuit. In practice, Guidance Note 3 (GN3 Reg 1.16.9) gives an acceptance equation with a 0.8 factor from Appendix 3, which converts the tabulated limit to the maximum acceptable cold-measured site reading: 1.37 × 0.8 = 1.10 ohms. So the site-measured Zs should not exceed approximately 1.10 ohms to ensure compliance. Below 10 °C ambient a further Appendix 3 temperature adjustment may be needed. Elec-Mate's Zs lookup calculator applies the 0.8 factor automatically.",
+      "For a 32A Type B MCB, the maximum earth fault loop impedance (Zs) per BS 7671:2018+A4:2026 Table 41.3 (Reg 411.4.202) is 1.37 ohms. This is the value at which the MCB is guaranteed to trip within the required disconnection time for a 230 V circuit. In practice, Guidance Note 3 (GN3 Reg 1.16.9) applies the BS 7671 Appendix 3 acceptance equation with its 0.8 factor, which converts the tabulated limit to the maximum acceptable cold-measured site reading: 1.37 × 0.8 = 1.10 ohms. So the site-measured Zs should not exceed approximately 1.10 ohms to ensure compliance. GN3's maximum measured Zs tables (Appendix A) are referenced to an ambient of 10 °C — where you test at any other ambient temperature, apply the Table A7 correction factors. Elec-Mate's Zs lookup calculator applies the 0.8 factor automatically.",
   },
   {
     question: 'What causes high earth fault loop impedance on a TN-S system?',
@@ -82,7 +85,7 @@ const faqs = [
   {
     question: 'What should I do if Zs is too high for the existing MCB?',
     answer:
-      'If Zs exceeds the maximum for the existing MCB but is within limits for a different protective device, one option is to change the protective device. For example, the maximum Zs for a 20 A Type B MCB is 2.19 ohms, but for a 20 A Type C MCB it is 1.09 ohms (Type C has a higher magnetic trip multiple). Moving from Type B to Type C is only appropriate if the load characteristics require it. Alternatively, fitting an RCBO in place of the MCB ensures earth fault disconnection via the 30 mA RCD function, which operates independently of Zs. However, BS 7671 still requires automatic disconnection of supply (ADS), so RCD protection alone does not remove the need for Zs verification. In all cases, verify that the cable is adequately protected against thermal effects during a fault using the adiabatic equation per BS 7671 Section 543.',
+      'If Zs exceeds the maximum for the existing MCB but is within limits for a different protective device, one option is to change the protective device. For example, the maximum Zs for a 20 A Type B MCB is 2.19 ohms, but for a 20 A Type C MCB it is 1.09 ohms (Type C has a higher magnetic trip multiple). Moving from Type B to Type C is only appropriate if the load characteristics require it. Alternatively, fitting an RCBO in place of the MCB ensures earth fault disconnection via the 30 mA RCD function, which operates independently of Zs. However, BS 7671 still requires automatic disconnection of supply (ADS): where an RCD is the device relied on, Reg 411.4.204 applies the maximum earth fault loop impedances of Table 41.5 (1 667 Ω at 30 mA), so Zs verification is not removed. In all cases, verify that the cable is adequately protected against thermal effects during a fault using the adiabatic equation of BS 7671 Reg 543.1.3.',
   },
 ];
 
@@ -92,6 +95,16 @@ const sections = [
     heading: 'What Does "Earth Fault Loop Impedance Too High" Mean?',
     content: (
       <>
+        <p className="text-white">
+          <strong className="text-white">Got a reading in front of you?</strong> Skip the theory and{' '}
+          <a
+            href="#calculator"
+            className="font-semibold text-yellow-400 underline underline-offset-4 touch-manipulation"
+          >
+            check your Zs against the BS 7671 limit
+          </a>{' '}
+          — free, no sign-up.
+        </p>
         <p>
           Earth fault loop impedance (Zs) is the total impedance of the path that fault current
           takes when a live conductor contacts earth — from the point of fault, through the
@@ -102,9 +115,13 @@ const sections = [
         </p>
         <p>
           If Zs is too high, the fault current during an earth fault is too low to trip the
-          protective device within the required disconnection time. BS 7671 requires disconnection
-          within 0.4 seconds for circuits supplying socket outlets and portable equipment, and
-          within 5 seconds for distribution circuits. If the protective device does not disconnect
+          protective device within the required disconnection time. On a TN system at 230 V, Table
+          41.1 requires disconnection within 0.4 seconds — and Regulation 411.3.2.2 applies that to
+          final circuits rated up to 63 A with one or more socket-outlets, and to final circuits
+          rated up to 32 A supplying only fixed connected current-using equipment. Regulation
+          411.3.2.3 permits 5 seconds for a distribution circuit and for any circuit not covered by
+          411.3.2.2. (On a TT system the corresponding times are 0.2 s and 1 s.) If the protective
+          device does not disconnect
           quickly enough, the metalwork of the faulty equipment remains energised for a dangerous
           period, creating a severe electric shock risk.
         </p>
@@ -124,9 +141,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
-                <strong className="text-yellow-400">BS 7671 Table 41.3 (Reg 411.4.204):</strong>{' '}
+                <strong className="text-yellow-400">BS 7671 Table 41.3 (Reg 411.4.202):</strong>{' '}
                 Maximum Zs values for circuits protected by circuit breakers (MCBs to BS EN 60898,
-                RCBOs to BS EN 61009-1). Values depend on breaker type (B, C, or D) and rating.
+                RCBOs to BS EN 61009-1). Values depend on breaker type (B, C, or D) and rating. The
+                table covers both the 0.4 s time of Reg 411.3.2.2 and the 5 s time of Reg 411.3.2.3
+                — Types B and C print one row valid for both, and only Type D prints separate 0.4 s
+                and 5 s rows.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -141,12 +161,13 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">GN3 0.8 Site Factor (GN3 Reg 1.16.9):</strong>{' '}
-                Guidance Note 3 9th Ed:2022 Appendix 3 gives the acceptance equation Zs(measured) =
-                0.8 × (Uo / Ia). The 0.8 factor converts the tabulated limit to the maximum
-                acceptable cold-measured site reading, accounting for conductor temperature under
-                load. For example, the Table 41.3 value for a 32 A Type B MCB is 1.37 Ω — the
-                maximum site reading is 1.10 Ω. Below 10 °C ambient, a further Appendix 3
-                temperature adjustment may be required.
+                Guidance Note 3 9th Ed:2022 applies the BS 7671 Appendix 3 acceptance equation
+                Zs(measured) = 0.8 × (Uo / Ia). The 0.8 factor converts the tabulated limit to the
+                maximum acceptable cold-measured site reading, accounting for conductor temperature
+                under load. For example, the Table 41.3 value for a 32 A Type B MCB is 1.37 Ω — the
+                maximum site reading is 1.10 Ω. GN3's maximum measured Zs tables in Appendix A are
+                referenced to an ambient of 10 °C; test at any other ambient and the Table A7
+                correction factors apply.
               </span>
             </li>
           </ul>
@@ -155,18 +176,18 @@ const sections = [
           <div className="flex items-center gap-2 mb-2">
             <ShieldCheck className="w-5 h-5 text-yellow-400 flex-shrink-0" />
             <h3 className="font-bold text-white text-base">
-              A4:2026 Update: 30 mA RCD Now Required on Domestic Lighting Circuits
+              30 mA RCD Required on Domestic Lighting Circuits (Reg 411.3.4)
             </h3>
           </div>
           <p className="text-white text-sm leading-relaxed">
             BS 7671:2018+A4:2026 Regulation 411.3.4 requires that, within domestic (household)
             premises, AC final circuits supplying luminaires shall be provided with additional
-            protection by an RCD with a rated residual operating current not exceeding 30 mA. For
-            EICR work, a domestic lighting circuit without 30 mA RCD protection installed before
-            this amendment will require a C2 or C3 observation on the Schedule of Inspections. Where
-            high Zs is found on a lighting circuit during an EICR, fitting an RCBO satisfies both
-            the Zs disconnection requirement and the new Reg 411.3.4 RCD obligation in a single
-            device.
+            protection by an RCD with a rated residual operating current not exceeding 30 mA. This
+            is not a new A4:2026 change — Reg 411.3.4 was introduced with BS 7671:2018 (the 18th
+            Edition) and A4:2026 made no changes to Chapter 41. So any domestic lighting circuit
+            designed after 31 December 2018 should already have it. Where high Zs is found on a
+            lighting circuit during an EICR, fitting an RCBO addresses both the Zs disconnection
+            requirement and the Reg 411.3.4 RCD obligation in a single device.
           </p>
         </div>
         <SEOAppBridge
@@ -188,7 +209,10 @@ const sections = [
           circuits), from BS 7671:2018+A4:2026 Table 41.3. If your measured Zs is higher than the
           figure for your device, the circuit is non-compliant.
         </p>
-        {/* grounded: bs7671_facets — Table 41.3(a) Type B, 41.3(b) Type C, 41.3(c) Type D, Reg 411.4.204, 230V 0.4s. Every value sourced from a per-device facet. */}
+        {/* grounded: printed BS 7671:2018+A4:2026 Table 41.3(a) Type B, 41.3(b) Type C, 41.3(c) Type D
+            — Reg 411.4.202 (NOT 411.4.204, which is RCDs/Table 41.5), Up 230 V, Cmin 0.95.
+            Type B = 230 x 0.95/(5·In), Type C = /(10·In), Type D 0.4 s = /(20·In).
+            Cross-checked against src/data/zsLimits.ts, the canonical source. Do not re-derive. */}
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">
             Maximum Zs (&Omega;) — 230 V, 0.4 s disconnection
@@ -226,10 +250,11 @@ const sections = [
             ))}
           </div>
           <p className="text-white/70 text-xs mt-4">
-            Values per BS 7671:2018+A4:2026 Table 41.3, Reg 411.4.204, 230 V, 0.4 s. A higher trip
+            Values per BS 7671:2018+A4:2026 Table 41.3, Reg 411.4.202, 230 V, 0.4 s. A higher trip
             type needs a lower Zs (Type D needs roughly a quarter of the Type B limit). For the
             on-site pass/fail figure, multiply by 0.8 — e.g. a 32 A Type B limit of 1.37 &Omega;
-            gives a maximum cold-measured site reading of 1.10 &Omega; (GN3, Appendix 3).
+            gives a maximum cold-measured site reading of 1.10 &Omega; (GN3 Reg 1.16.9, applying the
+            BS 7671 Appendix 3 acceptance equation).
           </p>
         </div>
         <p>
@@ -240,6 +265,31 @@ const sections = [
             earth fault loop impedance calculation
           </SEOInternalLink>{' '}
           guide.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Check Your Zs Reading Against the Limit',
+    content: (
+      <>
+        <p>
+          Free to use, no sign-up and no email — enter your figures and get the answer on this page.
+        </p>
+        <p>
+          Enter Ze and R1+R2 (or the Zs you measured directly), pick the protective device and the
+          required disconnection time, and the calculator returns Zs, the prospective fault current,
+          the tabulated maximum from Table 41.2, 41.3 or 41.4, and the 0.8 site limit — with a
+          pass, marginal or fail verdict against both. Switch to TT and it checks R
+          <sub>A</sub> × I<sub>Δn</sub> ≤ 50 V under Regulation 411.5.3(b) instead.
+        </p>
+        <CalculatorSurface>
+          <EarthFaultLoopCalculator />
+        </CalculatorSurface>
+        <p>
+          If the verdict is fail or marginal, measure Ze at the origin next — that splits the
+          problem between the supply and your circuit, and the causes below follow that split.
         </p>
       </>
     ),
@@ -429,14 +479,17 @@ const sections = [
               the primary means of fault disconnection in TT systems.
             </p>
             <p className="text-white text-sm leading-relaxed mt-2">
-              BS 7671 Regulation 411.5.3 provides the quantitative RCD selection rule: Ra × Ign ≤ 50
-              V, where Ra is the sum of the resistances of the earth electrode and the protective
-              conductor (in ohms), and Ign is the rated residual operating current of the RCD. For a
-              100 mA RCD: Ra must not exceed 500 Ω (50 V ÷ 0.1 A). For a 30 mA RCD: Ra must not
-              exceed 1 667 Ω (50 V ÷ 0.03 A). In practice, most TT installations use a 100 mA
-              time-delayed RCD at origin and 30 mA RCDs on final circuits. If the earth electrode
-              resistance is too high even for RCD operation, driving the earth rod deeper, using
-              multiple rods in parallel, or treating the soil with bentonite can reduce Ra.
+              BS 7671 Regulation 411.5.3 provides the quantitative RCD selection rule: R
+              <sub>A</sub> × I<sub>Δn</sub> ≤ 50 V, where R<sub>A</sub> is the sum of the resistances
+              of the earth electrode and the protective conductor connecting it to the
+              exposed-conductive-parts (in ohms), and I<sub>Δn</sub> is the rated residual operating
+              current of the RCD. Table 41.5 tabulates the result: 30 mA gives 1 667 Ω and 100 mA
+              gives 500 Ω. Do not treat those as design targets — the note to Table 41.5 warns that
+              the electrode resistance should be as low as practicable and that a value exceeding
+              200 Ω may not be stable (see Reg 542.2.4). In practice, most TT installations use a
+              100 mA time-delayed RCD at origin and 30 mA RCDs on final circuits. If the earth
+              electrode resistance is too high, driving the earth rod deeper, using multiple rods in
+              parallel, or treating the soil with bentonite can reduce R<sub>A</sub>.
             </p>
           </div>
         </div>
@@ -444,17 +497,20 @@ const sections = [
           <div className="flex items-center gap-2 mb-2">
             <Zap className="w-5 h-5 text-yellow-400 flex-shrink-0" />
             <h3 className="font-bold text-white text-base">
-              A4:2026 Recommendation: Fit AFDDs When Replacing Wiring or Consumer Units
+              Consider AFDDs When Replacing Wiring or Consumer Units (Reg 421.1.7)
             </h3>
           </div>
           <p className="text-white text-sm leading-relaxed">
-            BS 7671:2018+A4:2026 Regulation 421.1.7 recommends the installation of arc fault
-            detection devices (AFDDs) on AC final circuits to mitigate the risk of fire caused by
-            arc faults. When resolving high Zs by replacing wiring or fitting a new consumer unit,
-            this is an appropriate point to consider AFDDs. They must conform to BS EN 62606. Note:
-            Reg 421.1.7 is a recommendation, not a mandatory requirement for all circuits — but it
-            should be considered and discussed with the client during any consumer unit replacement
-            or rewire undertaken to address Zs deficiencies.
+            BS 7671:2018+A4:2026 Regulation 421.1.7 <strong className="text-white">requires</strong>{' '}
+            arc fault detection devices (AFDDs) conforming to BS EN 62606 on single-phase AC final
+            circuits supplying socket-outlets rated not exceeding 32 A in four premises types: high
+            rise residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built
+            student accommodation, and care homes. For all other premises AFDDs are{' '}
+            <strong className="text-white">recommended</strong> on the same kind of circuit. Where
+            used, they must be placed at the origin of the circuit protected. This is not new in
+            A4:2026 — the requirement came in with A2:2022, and A4:2026 only reworded 421.1.7(a) to
+            &ldquo;high rise residential buildings&rdquo;. When resolving high Zs by replacing wiring
+            or fitting a new consumer unit, that is a sensible point to raise AFDDs with the client.
           </p>
         </div>
         <SEOAppBridge
@@ -524,7 +580,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Zs Lookup Calculator"
-          description="Select any protective device type (BS 88 fuse, BS 3036 fuse, BS 1361 fuse, Type B/C/D MCB) and rating…"
+          description="Select any protective device type (BS 88-2 fuse, BS 88-3 fuse, BS 3036 fuse, BS 1362 fuse, Type B/C/D MCB) and rating…"
           icon={Calculator}
         />
         <SEOAppBridge

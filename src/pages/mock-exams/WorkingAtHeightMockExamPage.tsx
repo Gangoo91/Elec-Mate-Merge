@@ -19,8 +19,8 @@ export default function WorkingAtHeightMockExamPage() {
           typeof PublicMockExamPage
         >[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={30}
+      questionsPerExam={30}
+      timeLimitMinutes={35}
       passThreshold={70}
       breadcrumbLabel="Working at Height"
     />

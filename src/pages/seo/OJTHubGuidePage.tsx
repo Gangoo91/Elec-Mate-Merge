@@ -601,7 +601,7 @@ export default function OJTHubGuidePage() {
   return (
     <GuideTemplate
       title="On-the-Job Training Guide | Electrical Apprentice"
-      description="Complete guide to on-the-job training for electrical apprentices. What counts as OJT, evidence types, skills sign-off process, supervisor role…"
+      description="Complete guide to on-the-job training for electrical apprentices. What counts as OJT, evidence types, skills sign-off process, supervisor role."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

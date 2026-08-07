@@ -47,6 +47,7 @@ export const wireGaugeContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Reference conversion tool. AWG/SWG↔mm² conversions exact; UK installation sizing is mm² under BS 7671.',
+    notes:
+      'Reference conversion tool. AWG/SWG↔mm² conversions exact; UK installation sizing is mm² under BS 7671.',
   },
 };

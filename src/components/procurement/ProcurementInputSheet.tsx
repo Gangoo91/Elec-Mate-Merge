@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
-import { ClipboardPaste, Camera, Loader2, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Camera, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { chipBase, chipOff, chipOn } from '@/components/shared/surfaceStyles';
+import { textareaCn } from '@/components/forms/fieldStyles';
 
 interface ProcurementInputSheetProps {
   onSubmitText: (text: string) => void;
@@ -13,8 +14,7 @@ interface ProcurementInputSheetProps {
 type InputTab = 'text' | 'photo';
 
 /**
- * Input section for the procurement page.
- * Two tabs: "Paste Text" and "Take Photo / Upload"
+ * Getting the materials list in — typed out, or photographed.
  */
 export function ProcurementInputSheet({
   onSubmitText,
@@ -50,31 +50,21 @@ export function ProcurementInputSheet({
 
   return (
     <div className="space-y-4">
-      {/* Tab switcher */}
-      <div className="flex gap-2 p-1 bg-white/[0.03] rounded-xl border border-white/[0.08]">
+      {/* Two options — chips, not a segmented control with icons. */}
+      <div className="flex gap-2">
         <button
+          type="button"
           onClick={() => setActiveTab('text')}
-          className={cn(
-            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium touch-manipulation transition-all',
-            activeTab === 'text'
-              ? 'bg-elec-yellow text-black'
-              : 'text-white hover:bg-white/[0.05]'
-          )}
+          className={cn(chipBase, 'h-10 px-4 text-[13px]', activeTab === 'text' ? chipOn : chipOff)}
         >
-          <ClipboardPaste className="h-4 w-4" />
-          Paste Text
+          Paste a list
         </button>
         <button
+          type="button"
           onClick={() => setActiveTab('photo')}
-          className={cn(
-            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium touch-manipulation transition-all',
-            activeTab === 'photo'
-              ? 'bg-elec-yellow text-black'
-              : 'text-white hover:bg-white/[0.05]'
-          )}
+          className={cn(chipBase, 'h-10 px-4 text-[13px]', activeTab === 'photo' ? chipOn : chipOff)}
         >
-          <Camera className="h-4 w-4" />
-          Photo / Upload
+          Photograph one
         </button>
       </div>
 
@@ -82,8 +72,7 @@ export function ProcurementInputSheet({
       {activeTab === 'text' && (
         <div className="space-y-3">
           <p className="text-sm text-white">
-            Paste your materials list below. One item per line, quantities like "10x" are detected
-            automatically.
+            One item a line. Quantities like "10x" are picked up automatically.
           </p>
           <Textarea
             value={pasteText}
@@ -91,26 +80,17 @@ export function ProcurementInputSheet({
             placeholder={
               '10x 2.5mm T&E 100m\n5x double sockets\n3x MCB 32A Type B\n6x LED downlights\n2x 6mm SWA 25m'
             }
-            className="min-h-[160px] text-base touch-manipulation"
+            className={cn(textareaCn, 'min-h-[160px]')}
             disabled={isProcessing}
           />
-          <Button
+          <button
+            type="button"
             onClick={handleTextSubmit}
             disabled={!pasteText.trim() || isProcessing}
-            className="w-full h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-50"
           >
-            {isProcessing ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4 mr-2" />
-                Compare Prices
-              </>
-            )}
-          </Button>
+            {isProcessing ? 'Checking every supplier…' : 'Compare prices'}
+          </button>
         </div>
       )}
 
@@ -118,8 +98,7 @@ export function ProcurementInputSheet({
       {activeTab === 'photo' && (
         <div className="space-y-3">
           <p className="text-sm text-white">
-            Take a photo or upload an image of your materials list. We'll use AI to read and extract
-            items automatically.
+            A photo of a written list, a printed one or a screenshot — all get read the same way.
           </p>
 
           <input
@@ -142,7 +121,7 @@ export function ProcurementInputSheet({
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                   <div className="text-center">
                     <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mx-auto mb-2" />
-                    <p className="text-sm text-white font-medium">Reading materials...</p>
+                    <p className="text-sm font-medium text-white">Reading the list…</p>
                   </div>
                 </div>
               )}
@@ -159,26 +138,25 @@ export function ProcurementInputSheet({
             >
               <Camera className="h-10 w-10 text-white" />
               <div className="text-center">
-                <p className="text-sm font-medium text-white">Tap to take photo or upload</p>
+                <p className="text-sm font-medium text-white">Tap to take a photo or upload one</p>
                 <p className="text-xs text-white mt-1">
-                  Supports handwritten, printed, and screenshot formats
+                  Handwritten, printed or a screenshot
                 </p>
               </div>
             </button>
           )}
 
           {photoPreview && !isProcessing && (
-            <Button
+            <button
+              type="button"
               onClick={() => {
                 setPhotoPreview(null);
                 fileInputRef.current?.click();
               }}
-              variant="outline"
-              className="w-full h-11 touch-manipulation"
+              className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13.5px] font-semibold text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
             >
-              <Camera className="h-4 w-4 mr-2" />
-              Take Another Photo
-            </Button>
+              Try another photo
+            </button>
           )}
         </div>
       )}

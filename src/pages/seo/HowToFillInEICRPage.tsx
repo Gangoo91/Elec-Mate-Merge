@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'How to Fill In an EICR Form | Step-by-Step Guide | Elec-Mate';
+const PAGE_TITLE = 'How to Fill In an EICR Form | Step-by-Step Guide';
 const PAGE_DESCRIPTION =
   'Step-by-step EICR form walkthrough: every field, observation codes C1/C2/C3/FI, BS 7671:2018+A4:2026 compliant. For UK electricians.';
 

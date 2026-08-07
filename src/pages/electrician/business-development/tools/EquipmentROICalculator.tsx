@@ -14,7 +14,6 @@ import {
   CheckCircle,
   AlertCircle,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -25,6 +24,7 @@ import {
   CalculatorSelect,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -39,6 +39,7 @@ import {
   CartesianGrid,
   ReferenceLine,
 } from 'recharts';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface ROIInputs {
   equipmentCost: string;
@@ -66,8 +67,14 @@ const num = (raw: string, fallback: number) => {
 const EquipmentROICalculator = () => {
   const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
   const [showChart, setShowChart] = useState(false);
   const [showReference, setShowReference] = useState(false);
 
@@ -83,7 +90,6 @@ const EquipmentROICalculator = () => {
   });
 
   const update = (key: keyof ROIInputs, val: string) => {
-    setCalculated(false);
     setInputs((p) => ({ ...p, [key]: val }));
   };
 
@@ -171,10 +177,10 @@ const EquipmentROICalculator = () => {
       utilisationRate: '85',
       discountRate: '5',
     });
-    setCalculated(false);
   };
 
-  const currency = (n: number) => `£${(n || 0).toFixed(2)}`;
+  const currency = (n: number) =>
+    `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   const isValid = equipmentCostNum > 0;
 
   const getROIStatus = () => {
@@ -210,27 +216,12 @@ const EquipmentROICalculator = () => {
         <link rel="canonical" href="/electrician/business-development/tools/equipment-roi" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <BarChart3 className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Equipment ROI Calculator
-              </h1>
-              <p className="text-sm text-white">Analyse return on investment</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Equipment ROI Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -239,10 +230,7 @@ const EquipmentROICalculator = () => {
           badge="Investment"
         >
           {/* Investment Costs Section */}
-          <div className="flex items-center gap-2 mb-3">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Investment Costs</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Investment Costs</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -291,10 +279,7 @@ const EquipmentROICalculator = () => {
           </div>
 
           {/* Revenue Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <TrendingUp className="h-4 w-4 text-green-400" />
-            <span className="text-sm font-medium text-white">Revenue & Savings</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Revenue & Savings</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -321,10 +306,7 @@ const EquipmentROICalculator = () => {
           </div>
 
           {/* Financial Settings Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Financial Settings</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Financial Settings</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorSelect
@@ -398,25 +380,16 @@ const EquipmentROICalculator = () => {
             {/* Key Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CalculatorResult category="business">
-                <div className="text-center">
-                  <p className="text-sm text-white mb-1">NPV @ {discountRateNum}%</p>
-                  <div
-                    className={cn('text-3xl font-bold', results.npv >= 0 ? '' : 'text-red-400')}
-                    style={
-                      results.npv >= 0
-                        ? {
-                            backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text',
-                          }
-                        : undefined
-                    }
-                  >
-                    {currency(results.npv)}
-                  </div>
-                  <p className="text-xs text-white mt-1">Net Present Value</p>
-                </div>
+                <ResultHeadline
+                  label={`Net present value @ ${discountRateNum}%`}
+                  value={currency(results.npv)}
+                  tone={results.npv >= 0 ? 'default' : 'negative'}
+                  caption={
+                    results.npv >= 0
+                      ? 'Worth more than it costs, in today\u2019s money.'
+                      : 'Costs more than it returns, in today\u2019s money.'
+                  }
+                />
               </CalculatorResult>
 
               <CalculatorResult category="business">
@@ -486,11 +459,11 @@ const EquipmentROICalculator = () => {
 
             {/* Cash Flow Chart */}
             <Collapsible open={showChart} onOpenChange={setShowChart}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <BarChart3 className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <BarChart3 className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Cumulative Cash Flow Chart
                     </span>
                   </div>
@@ -532,9 +505,9 @@ const EquipmentROICalculator = () => {
                         <Line
                           type="monotone"
                           dataKey="cumulative"
-                          stroke="#60a5fa"
+                          stroke="#FFC800"
                           strokeWidth={2}
-                          dot={{ fill: '#60a5fa', strokeWidth: 0, r: 3 }}
+                          dot={{ fill: '#FFC800', strokeWidth: 0, r: 3 }}
                         />
                       </LineChart>
                     </ResponsiveContainer>
@@ -547,11 +520,11 @@ const EquipmentROICalculator = () => {
             </Collapsible>
 
             {/* NPV Sensitivity Note */}
-            <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/10">
+            <div className="p-4 rounded-xl border border-white/[0.10] bg-white/[0.04]">
               <div className="flex items-start gap-2">
-                <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">NPV sensitivity:</strong> move the discount
+                <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-elec-yellow/80">
+                  <strong className="text-elec-yellow">NPV sensitivity:</strong> move the discount
                   rate 5 percentage points either way and NPV runs from{' '}
                   {currency(results.npvWorst)} at {(discountRateNum + 5).toFixed(1)}% up to{' '}
                   {currency(results.npvBest)} at{' '}
@@ -566,7 +539,7 @@ const EquipmentROICalculator = () => {
         {/* Prompt to Calculate */}
         {!calculated && (
           <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
-            <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+            <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
             <h3 className="text-white text-lg font-semibold mb-2">Ready to Analyse</h3>
             <p className="text-white text-sm">
               Enter your equipment costs and expected savings above, then click "Calculate ROI" to

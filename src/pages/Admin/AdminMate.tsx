@@ -462,7 +462,7 @@ export default function AdminMate() {
                             no JWT
                           </span>
                         )}
-                        <span className="tabular-nums text-white/70">
+                        <span className="tabular-nums text-white">
                           {' · '}
                           {lastSeen}
                         </span>
@@ -586,7 +586,7 @@ export default function AdminMate() {
                     title={
                       <span className="truncate">
                         {e.tool}
-                        <span className="text-white/60 hidden sm:inline">
+                        <span className="text-white hidden sm:inline">
                           {' · '}
                           {e.error}
                         </span>
@@ -594,7 +594,7 @@ export default function AdminMate() {
                     }
                     subtitle={
                       <span className="tabular-nums truncate">
-                        <span className="sm:hidden text-white/60">{e.error} · </span>
+                        <span className="sm:hidden text-white">{e.error} · </span>
                         {e.users_affected} user
                         {e.users_affected === 1 ? '' : 's'} · last{' '}
                         {formatDistanceToNow(parseISO(e.last_seen), {

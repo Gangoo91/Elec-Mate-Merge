@@ -110,8 +110,8 @@ export const CashFlowSidebar = ({
             )}
           >
             <div className="flex items-center gap-1.5 mb-1">
-              <Wallet className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-blue-400">Net Profit</span>
+              <Wallet className="h-3.5 w-3.5 text-elec-yellow" />
+              <span className="text-xs text-elec-yellow">Net Profit</span>
             </div>
             <p className="text-lg font-bold text-white">
               {formatCurrency(financialMetrics.netProfit)}
@@ -125,7 +125,7 @@ export const CashFlowSidebar = ({
             className={cn(
               'p-3 rounded-xl border',
               financialMetrics.minBalance >= 0
-                ? 'bg-blue-500/10 border-blue-500/20'
+                ? 'bg-white/[0.04] border-white/[0.10]'
                 : 'bg-red-500/10 border-red-500/20'
             )}
           >
@@ -152,7 +152,7 @@ export const CashFlowSidebar = ({
               className={cn(
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
                 selectedScenario === scenario.id
-                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                  ? 'bg-white/[0.04] text-elec-yellow border border-white/[0.10]'
                   : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
               )}
             >
@@ -168,7 +168,7 @@ export const CashFlowSidebar = ({
         <div className="grid grid-cols-1 gap-2">
           <button
             onClick={onLoadTemplates}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-blue-400 text-sm font-medium hover:bg-blue-500/20 transition-colors"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-elec-yellow text-sm font-medium hover:bg-white/[0.04] transition-colors"
           >
             <FileText className="h-4 w-4" />
             <span>Load Template</span>
@@ -207,7 +207,7 @@ export const CashFlowSidebar = ({
                     'bg-amber-500/10 border-amber-500/20 text-amber-300',
                   insight.type === 'success' &&
                     'bg-green-500/10 border-green-500/20 text-green-300',
-                  insight.type === 'info' && 'bg-blue-500/10 border-blue-500/20 text-blue-300'
+                  insight.type === 'info' && 'bg-white/[0.04] border-white/[0.10] text-elec-yellow'
                 )}
               >
                 {insight.message}

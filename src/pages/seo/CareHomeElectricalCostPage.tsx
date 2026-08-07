@@ -620,7 +620,7 @@ export default function CareHomeElectricalCostPage() {
   return (
     <GuideTemplate
       title="Care Home Electrical Installation Cost UK 2025 | Healthcare"
-      description="Care home electrical installation costs UK 2025. Nurse call systems to BS 8670, assisted bathing electrical, emergency lighting…"
+      description="Care home electrical installation costs UK 2025. Nurse call systems to BS 8670, assisted bathing electrical, emergency lighting."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

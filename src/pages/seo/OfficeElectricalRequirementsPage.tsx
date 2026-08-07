@@ -490,7 +490,7 @@ export default function OfficeElectricalRequirementsPage() {
   return (
     <GuideTemplate
       title="Office Electrical Requirements — Commercial Fit-Out, PAT"
-      description="Complete guide to office electrical requirements: open plan power distribution, floor boxes, server room power, PAT testing obligations…"
+      description="Complete guide to office electrical requirements: open plan power distribution, floor boxes, server room power, PAT testing obligations."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

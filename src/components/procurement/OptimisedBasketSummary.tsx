@@ -1,81 +1,88 @@
-import { TrendingDown, Store, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { cardCn, eyebrowCn } from '@/components/shared/surfaceStyles';
 import type { OptimisedBasket } from '@/types/procurement';
 
-interface OptimisedBasketSummaryProps {
-  basket: OptimisedBasket;
-  onSendToQuote?: () => void;
-}
+const money = (v: number) => `£${v.toFixed(2)}`;
 
 /**
- * Summary card showing the optimised basket total, savings, and supplier split
+ * What splitting the order across suppliers is worth.
+ *
+ * The saving is the whole reason this page exists, and it used to sit in a
+ * 14px row between the total and the supplier pills, the same size as the
+ * struck-through comparison beside it. It leads now, at the size of the
+ * number it is.
+ *
+ * The decorative icons went with it — a trending-down arrow next to the words
+ * "You save" and a shop next to "Supplier split" told the reader nothing the
+ * words did not.
  */
-export function OptimisedBasketSummary({ basket, onSendToQuote }: OptimisedBasketSummaryProps) {
+export function OptimisedBasketSummary({
+  basket,
+  onSendToQuote,
+}: {
+  basket: OptimisedBasket;
+  onSendToQuote?: () => void;
+}) {
+  const saves = basket.savings > 0;
+
   return (
-    <div className="bg-gradient-to-r from-yellow-500/10 to-green-500/10 border border-elec-yellow/30 rounded-2xl p-4 space-y-4">
-      {/* Totals */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-white">Optimised Total</span>
-          <span className="text-2xl font-bold text-elec-yellow">£{basket.total.toFixed(2)}</span>
-        </div>
+    <section className={cn(cardCn, 'p-4 sm:p-5')}>
+      {saves ? (
+        <>
+          <span className={cn(eyebrowCn, 'block')}>Split across suppliers, you save</span>
+          <p className="mt-1 text-[32px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+            {money(basket.savings)}
+          </p>
+          <p className="mt-2 text-[13px] leading-snug text-white tabular-nums">
+            {money(basket.total)} buying from the cheapest for each item, against{' '}
+            {money(basket.single_supplier_total)} putting it all through{' '}
+            {basket.single_supplier_name} — {basket.savings_percentage}% off.
+          </p>
+        </>
+      ) : (
+        <>
+          <span className={cn(eyebrowCn, 'block')}>Basket total</span>
+          <p className="mt-1 text-[32px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+            {money(basket.total)}
+          </p>
+          <p className="mt-2 text-[13px] leading-snug text-white">
+            Nothing to gain by splitting this one — {basket.single_supplier_name} is cheapest on
+            the lot.
+          </p>
+        </>
+      )}
 
-        {basket.savings > 0 && (
-          <>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-white">vs {basket.single_supplier_name}</span>
-              <span className="text-sm text-white line-through">
-                £{basket.single_supplier_total.toFixed(2)}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-white flex items-center gap-1.5">
-                <TrendingDown className="h-4 w-4 text-green-400" />
-                You Save
-              </span>
-              <span className="text-sm font-bold text-green-400">
-                £{basket.savings.toFixed(2)} ({basket.savings_percentage}%)
-              </span>
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* Supplier split pills */}
       {basket.supplier_split.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-xs font-medium text-white">
-            <Store className="h-3.5 w-3.5" />
-            Supplier Split
-          </div>
-          <div className="flex flex-wrap gap-2">
+        <div className="mt-4 border-t border-white/[0.1] pt-4">
+          <h3 className="text-sm font-semibold text-white">Where it comes from</h3>
+          <div className="mt-2.5 flex flex-wrap gap-2">
             {basket.supplier_split.map((supplier) => (
-              <div
+              <span
                 key={supplier.supplier_slug}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/[0.06] border border-white/[0.1] rounded-full text-xs"
+                className="flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 text-[12px]"
               >
-                <span className="font-medium text-white">{supplier.supplier_name}</span>
-                <span className="text-white">
+                <span className="font-semibold text-white">{supplier.supplier_name}</span>
+                <span className="text-white tabular-nums">
                   {supplier.item_count} {supplier.item_count === 1 ? 'item' : 'items'}
                 </span>
-                <span className="text-elec-yellow font-semibold">£{supplier.total.toFixed(2)}</span>
-              </div>
+                <span className="font-semibold text-elec-yellow tabular-nums">
+                  {money(supplier.total)}
+                </span>
+              </span>
             ))}
           </div>
         </div>
       )}
 
-      {/* Send to Quote CTA */}
       {onSendToQuote && (
-        <Button
+        <button
+          type="button"
           onClick={onSendToQuote}
-          className="w-full h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+          className="mt-4 h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99]"
         >
-          <FileText className="h-4 w-4 mr-2" />
-          Send to Quote Builder
-        </Button>
+          Send to quote builder
+        </button>
       )}
-    </div>
+    </section>
   );
 }

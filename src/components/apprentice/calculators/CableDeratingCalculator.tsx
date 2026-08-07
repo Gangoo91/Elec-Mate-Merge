@@ -21,6 +21,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { cableDeratingContent } from './content/cable-derating';
 
@@ -197,13 +198,36 @@ const CableDeratingCalculator = () => {
     ts60: { 25: 1.02, 30: 1.0, 35: 0.91, 40: 0.82, 45: 0.71, 50: 0.58, 55: 0.41 },
     tp70: { 25: 1.03, 30: 1.0, 35: 0.94, 40: 0.87, 45: 0.79, 50: 0.71, 55: 0.61, 60: 0.5 },
     ts90: {
-      25: 1.04, 30: 1.0, 35: 0.96, 40: 0.91, 45: 0.87, 50: 0.82, 55: 0.76,
-      60: 0.71, 65: 0.65, 70: 0.58, 75: 0.5, 80: 0.41,
+      25: 1.04,
+      30: 1.0,
+      35: 0.96,
+      40: 0.91,
+      45: 0.87,
+      50: 0.82,
+      55: 0.76,
+      60: 0.71,
+      65: 0.65,
+      70: 0.58,
+      75: 0.5,
+      80: 0.41,
     },
     mineral70: { 25: 1.07, 30: 1.0, 35: 0.93, 40: 0.85, 45: 0.78, 50: 0.67, 55: 0.57, 60: 0.45 },
     mineral105: {
-      25: 1.04, 30: 1.0, 35: 0.96, 40: 0.92, 45: 0.88, 50: 0.84, 55: 0.8, 60: 0.75,
-      65: 0.7, 70: 0.65, 75: 0.6, 80: 0.54, 85: 0.47, 90: 0.4, 95: 0.32,
+      25: 1.04,
+      30: 1.0,
+      35: 0.96,
+      40: 0.92,
+      45: 0.88,
+      50: 0.84,
+      55: 0.8,
+      60: 0.75,
+      65: 0.7,
+      70: 0.65,
+      75: 0.6,
+      80: 0.54,
+      85: 0.47,
+      90: 0.4,
+      95: 0.32,
     },
   };
 
@@ -215,13 +239,65 @@ const CableDeratingCalculator = () => {
    */
   const TABLE_4C1 = {
     // Row 1 — bunched in air, on a surface, embedded or enclosed (Methods A to F)
-    bunched: { 1: 1.0, 2: 0.8, 3: 0.7, 4: 0.65, 5: 0.6, 6: 0.57, 7: 0.54, 8: 0.52, 9: 0.5, 12: 0.45, 16: 0.41, 20: 0.38 },
+    bunched: {
+      1: 1.0,
+      2: 0.8,
+      3: 0.7,
+      4: 0.65,
+      5: 0.6,
+      6: 0.57,
+      7: 0.54,
+      8: 0.52,
+      9: 0.5,
+      12: 0.45,
+      16: 0.41,
+      20: 0.38,
+    },
     // Row 2 — single layer on wall or floor (Method C)
-    singleLayer: { 1: 1.0, 2: 0.85, 3: 0.79, 4: 0.75, 5: 0.73, 6: 0.72, 7: 0.72, 8: 0.71, 9: 0.7, 12: 0.7, 16: 0.7, 20: 0.7 },
+    singleLayer: {
+      1: 1.0,
+      2: 0.85,
+      3: 0.79,
+      4: 0.75,
+      5: 0.73,
+      6: 0.72,
+      7: 0.72,
+      8: 0.71,
+      9: 0.7,
+      12: 0.7,
+      16: 0.7,
+      20: 0.7,
+    },
     // Row 3 — single layer on a perforated cable tray (Method E)
-    tray: { 1: 1.0, 2: 0.88, 3: 0.82, 4: 0.77, 5: 0.75, 6: 0.73, 7: 0.73, 8: 0.72, 9: 0.72, 12: 0.72, 16: 0.72, 20: 0.72 },
+    tray: {
+      1: 1.0,
+      2: 0.88,
+      3: 0.82,
+      4: 0.77,
+      5: 0.75,
+      6: 0.73,
+      7: 0.73,
+      8: 0.72,
+      9: 0.72,
+      12: 0.72,
+      16: 0.72,
+      20: 0.72,
+    },
     // Row 4 — single layer on ladder system or cleats
-    ladder: { 1: 1.0, 2: 0.87, 3: 0.82, 4: 0.8, 5: 0.8, 6: 0.79, 7: 0.79, 8: 0.78, 9: 0.78, 12: 0.78, 16: 0.78, 20: 0.78 },
+    ladder: {
+      1: 1.0,
+      2: 0.87,
+      3: 0.82,
+      4: 0.8,
+      5: 0.8,
+      6: 0.79,
+      7: 0.79,
+      8: 0.78,
+      9: 0.78,
+      12: 0.78,
+      16: 0.78,
+      20: 0.78,
+    },
   } as const;
 
   /**
@@ -276,7 +352,8 @@ const CableDeratingCalculator = () => {
   /** Cg from Table 4C1, or Table 4C2 where the cables are buried. */
   const getGroupingFactor = (numCables: string, method: string): number => {
     const n = parseInt(numCables, 10);
-    if (method.includes('d')) return lookupStepDown(TABLE_4C2[burialClearance] ?? TABLE_4C2.touching, n);
+    if (method.includes('d'))
+      return lookupStepDown(TABLE_4C2[burialClearance] ?? TABLE_4C2.touching, n);
     if (method === 'method-c') return lookupStepDown(TABLE_4C1.singleLayer, n);
     if (method === 'method-e') return lookupStepDown(TABLE_4C1.tray, n);
     if (method === 'method-f') return lookupStepDown(TABLE_4C1.tray, n);
@@ -457,461 +534,479 @@ const CableDeratingCalculator = () => {
       title="Cable Derating Calculator"
       description="Calculate cable current carrying capacity with BS 7671 derating factors"
     >
-      {/* Circuit Design Section */}
-      <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white">Circuit Design (Optional)</h4>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Design Current (Ib)"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={designCurrent}
-            onChange={setDesignCurrent}
-            placeholder="Enter design current"
-          />
-          <CalculatorSelect
-            label="Device Rating (In)"
-            value={deviceRating}
-            onChange={setDeviceRating}
-            options={deviceRatingOptions}
-          />
-        </CalculatorInputGrid>
-      </div>
-
-      {/* Cable Parameters */}
-      <CalculatorInput
-        label="Base Current Rating"
-        unit="A"
-        type="text"
-        inputMode="decimal"
-        value={baseRating}
-        onChange={setBaseRating}
-        placeholder="e.g., 32"
-        hint="From BS 7671 current capacity tables"
-      />
-
-      <CalculatorSelect
-        label="Cable Type"
-        value={cableType}
-        onChange={setCableType}
-        options={cableTypes.map((t) => ({ value: t.value, label: t.label }))}
-      />
-
-      <CalculatorSelect
-        label="Installation Method"
-        value={installationMethod}
-        onChange={setInstallationMethod}
-        options={installationMethods.map((m) => ({ value: m.value, label: m.label }))}
-      />
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Ambient Temperature"
-          value={ambientTemp}
-          onChange={setAmbientTemp}
-          options={ambientTemperatures.map((t) => ({
-            value: t,
-            label: `${t}°C${t === '30' ? ' (Reference)' : ''}`,
-          }))}
-        />
-        <CalculatorSelect
-          label="Number of Cables"
-          value={numberOfCables}
-          onChange={setNumberOfCables}
-          options={cableQuantities.map((q) => ({ value: q.value, label: q.label }))}
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorSelect
-        label="Thermal Insulation"
-        value={thermalInsulation}
-        onChange={setThermalInsulation}
-        options={thermalInsulationTypes.map((t) => ({ value: t.value, label: t.label }))}
-      />
-
-      {installationMethod.includes('d') && (
-        <CalculatorSelect
-          label="Cable-to-Cable Clearance"
-          value={burialClearance}
-          onChange={setBurialClearance}
-          options={burialClearances.map((c) => ({ value: c.value, label: c.label }))}
-        />
-      )}
-
-      {installationMethod.includes('d') && (
-        <CalculatorInput
-          label="Soil Thermal Resistivity"
-          unit="K·m/W"
-          type="text"
-          inputMode="decimal"
-          value={soilThermalResistivity}
-          onChange={setSoilThermalResistivity}
-          placeholder="e.g., 2.5"
-          hint="Standard is 2.5 K·m/W"
-        />
-      )}
-
-      <CalculatorSelect
-        label="Protective Device Type"
-        value={deviceType}
-        onChange={setDeviceType}
-        options={deviceTypes.map((d) => ({ value: d.value, label: d.label }))}
-      />
-
-      <CalculatorActions
-        category="cable"
-        onCalculate={calculateDerating}
-        onReset={reset}
-        isDisabled={!hasValidInputs()}
-      />
-
-      {result && (
-        <>
-          <CalculatorDivider category="cable" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Status Chip */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20">
-              <span className="text-xs font-semibold text-emerald-300">
-                Derating: -{result.deratingPercentage.toFixed(1)}%
-              </span>
-            </div>
-
-            {/* Hero Value */}
-            <div className="rounded-xl p-4 bg-white/[0.04]">
-              <p className="text-sm text-white mb-1">Derated Cable Capacity</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.finalRating.toFixed(1)} A
-              </div>
-              <p className="text-sm text-white mt-2">Base: {baseRating}A</p>
-            </div>
-
-            {/* Derating Factors */}
+      <CalculatorPanes
+        form={
+          <>
+            {/* Circuit Design Section */}
             <div className="space-y-3">
-              <h4 className="text-sm font-medium text-white">Derating Factors</h4>
-
-              {/* Temperature Factor */}
-              <div className="space-y-1">
-                <div className="flex justify-between text-sm">
-                  <span className="text-white">Temperature (Ca)</span>
-                  <span className="font-mono text-emerald-400">
-                    {result.temperatureFactor.toFixed(3)}
-                  </span>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div
-                    className="h-1.5 rounded-full transition-all"
-                    style={{
-                      width: `${Math.max(result.temperatureFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Grouping Factor */}
-              <div className="space-y-1">
-                <div className="flex justify-between text-sm">
-                  <span className="text-white">Grouping (Cg)</span>
-                  <span className="font-mono text-emerald-400">
-                    {result.groupingFactor.toFixed(3)}
-                  </span>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div
-                    className="h-1.5 rounded-full transition-all"
-                    style={{
-                      width: `${Math.max(result.groupingFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Thermal Insulation Factor */}
-              <div className="space-y-1">
-                <div className="flex justify-between text-sm">
-                  <span className="text-white">Thermal Insulation (Ci)</span>
-                  <span className="font-mono text-emerald-400">
-                    {result.thermalInsulationFactor.toFixed(3)}
-                  </span>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div
-                    className="h-1.5 rounded-full transition-all"
-                    style={{
-                      width: `${Math.max(result.thermalInsulationFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Soil Factor */}
-              <div className="space-y-1">
-                <div className="flex justify-between text-sm">
-                  <span className="text-white">Soil (Cs)</span>
-                  <span className="font-mono text-emerald-400">{result.soilFactor.toFixed(3)}</span>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div
-                    className="h-1.5 rounded-full transition-all"
-                    style={{
-                      width: `${Math.max(result.soilFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Protective device (Cf) — only when it bites, i.e. BS 3036 */}
-              {result.deviceFactor < 1 && (
-                <div className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white">BS 3036 fuse (Cf)</span>
-                    <span className="font-mono text-emerald-400">
-                      {result.deviceFactor.toFixed(3)}
-                    </span>
-                  </div>
-                  <div className="w-full bg-white/10 rounded-full h-1.5">
-                    <div
-                      className="h-1.5 rounded-full transition-all"
-                      style={{
-                        width: `${Math.max(result.deviceFactor * 100, 5)}%`,
-                        background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Buried installation (Cc) — only when buried */}
-              {result.buriedFactor < 1 && (
-                <div className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white">Buried (Cc)</span>
-                    <span className="font-mono text-emerald-400">
-                      {result.buriedFactor.toFixed(3)}
-                    </span>
-                  </div>
-                  <div className="w-full bg-white/10 rounded-full h-1.5">
-                    <div
-                      className="h-1.5 rounded-full transition-all"
-                      style={{
-                        width: `${Math.max(result.buriedFactor * 100, 5)}%`,
-                        background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
+              <h4 className="text-sm font-medium text-white">Circuit Design (Optional)</h4>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Design Current (Ib)"
+                  unit="A"
+                  type="text"
+                  inputMode="decimal"
+                  value={designCurrent}
+                  onChange={setDesignCurrent}
+                  placeholder="Enter design current"
+                />
+                <CalculatorSelect
+                  label="Device Rating (In)"
+                  value={deviceRating}
+                  onChange={setDeviceRating}
+                  options={deviceRatingOptions}
+                />
+              </CalculatorInputGrid>
             </div>
 
-            {/* Compliance Check */}
-            {result.compliance && (
-              <div
-                className={cn(
-                  'p-3 rounded-xl border',
-                  result.compliance.overallCompliant
-                    ? 'bg-green-500/10 border-green-500/30'
-                    : 'bg-red-500/10 border-red-500/30'
-                )}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  {result.compliance.overallCompliant ? (
-                    <CheckCircle2 className="h-4 w-4 text-green-400" />
-                  ) : (
-                    <AlertTriangle className="h-4 w-4 text-red-400" />
-                  )}
-                  <span
-                    className={cn(
-                      'font-medium',
-                      result.compliance.overallCompliant ? 'text-green-300' : 'text-red-300'
+            {/* Cable Parameters */}
+            <CalculatorInput
+              label="Base Current Rating"
+              unit="A"
+              type="text"
+              inputMode="decimal"
+              value={baseRating}
+              onChange={setBaseRating}
+              placeholder="e.g., 32"
+              hint="From BS 7671 current capacity tables"
+            />
+
+            <CalculatorSelect
+              label="Cable Type"
+              value={cableType}
+              onChange={setCableType}
+              options={cableTypes.map((t) => ({ value: t.value, label: t.label }))}
+            />
+
+            <CalculatorSelect
+              label="Installation Method"
+              value={installationMethod}
+              onChange={setInstallationMethod}
+              options={installationMethods.map((m) => ({ value: m.value, label: m.label }))}
+            />
+
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Ambient Temperature"
+                value={ambientTemp}
+                onChange={setAmbientTemp}
+                options={ambientTemperatures.map((t) => ({
+                  value: t,
+                  label: `${t}°C${t === '30' ? ' (Reference)' : ''}`,
+                }))}
+              />
+              <CalculatorSelect
+                label="Number of Cables"
+                value={numberOfCables}
+                onChange={setNumberOfCables}
+                options={cableQuantities.map((q) => ({ value: q.value, label: q.label }))}
+              />
+            </CalculatorInputGrid>
+
+            <CalculatorSelect
+              label="Thermal Insulation"
+              value={thermalInsulation}
+              onChange={setThermalInsulation}
+              options={thermalInsulationTypes.map((t) => ({ value: t.value, label: t.label }))}
+            />
+
+            {installationMethod.includes('d') && (
+              <CalculatorSelect
+                label="Cable-to-Cable Clearance"
+                value={burialClearance}
+                onChange={setBurialClearance}
+                options={burialClearances.map((c) => ({ value: c.value, label: c.label }))}
+              />
+            )}
+
+            {installationMethod.includes('d') && (
+              <CalculatorInput
+                label="Soil Thermal Resistivity"
+                unit="K·m/W"
+                type="text"
+                inputMode="decimal"
+                value={soilThermalResistivity}
+                onChange={setSoilThermalResistivity}
+                placeholder="e.g., 2.5"
+                hint="Standard is 2.5 K·m/W"
+              />
+            )}
+
+            <CalculatorSelect
+              label="Protective Device Type"
+              value={deviceType}
+              onChange={setDeviceType}
+              options={deviceTypes.map((d) => ({ value: d.value, label: d.label }))}
+            />
+
+            <CalculatorActions
+              category="cable"
+              onCalculate={calculateDerating}
+              onReset={reset}
+              isDisabled={!hasValidInputs()}
+            />
+          </>
+        }
+        result={
+          <>
+            {result && (
+              <>
+                <CalculatorDivider category="cable" />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Status Chip */}
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20">
+                    <span className="text-xs font-semibold text-emerald-300">
+                      Derating: -{result.deratingPercentage.toFixed(1)}%
+                    </span>
+                  </div>
+
+                  {/* Hero Value */}
+                  <div className="rounded-xl p-4 bg-white/[0.04]">
+                    <p className="text-sm text-white mb-1">Derated Cable Capacity</p>
+                    <div
+                      className="text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {result.finalRating.toFixed(1)} A
+                    </div>
+                    <p className="text-sm text-white mt-2">Base: {baseRating}A</p>
+                  </div>
+
+                  {/* Derating Factors */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-white">Derating Factors</h4>
+
+                    {/* Temperature Factor */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white">Temperature (Ca)</span>
+                        <span className="font-mono text-emerald-400">
+                          {result.temperatureFactor.toFixed(3)}
+                        </span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full transition-all"
+                          style={{
+                            width: `${Math.max(result.temperatureFactor * 100, 5)}%`,
+                            background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Grouping Factor */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white">Grouping (Cg)</span>
+                        <span className="font-mono text-emerald-400">
+                          {result.groupingFactor.toFixed(3)}
+                        </span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full transition-all"
+                          style={{
+                            width: `${Math.max(result.groupingFactor * 100, 5)}%`,
+                            background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Thermal Insulation Factor */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white">Thermal Insulation (Ci)</span>
+                        <span className="font-mono text-emerald-400">
+                          {result.thermalInsulationFactor.toFixed(3)}
+                        </span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full transition-all"
+                          style={{
+                            width: `${Math.max(result.thermalInsulationFactor * 100, 5)}%`,
+                            background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Soil Factor */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white">Soil (Cs)</span>
+                        <span className="font-mono text-emerald-400">
+                          {result.soilFactor.toFixed(3)}
+                        </span>
+                      </div>
+                      <div className="w-full bg-white/10 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full transition-all"
+                          style={{
+                            width: `${Math.max(result.soilFactor * 100, 5)}%`,
+                            background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Protective device (Cf) — only when it bites, i.e. BS 3036 */}
+                    {result.deviceFactor < 1 && (
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-white">BS 3036 fuse (Cf)</span>
+                          <span className="font-mono text-emerald-400">
+                            {result.deviceFactor.toFixed(3)}
+                          </span>
+                        </div>
+                        <div className="w-full bg-white/10 rounded-full h-1.5">
+                          <div
+                            className="h-1.5 rounded-full transition-all"
+                            style={{
+                              width: `${Math.max(result.deviceFactor * 100, 5)}%`,
+                              background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                            }}
+                          />
+                        </div>
+                      </div>
                     )}
-                  >
-                    Ib ≤ In ≤ Iz:{' '}
-                    {result.compliance.overallCompliant ? 'COMPLIANT' : 'NON-COMPLIANT'}
-                  </span>
-                </div>
-                <div className="grid grid-cols-3 gap-2 text-sm">
-                  <div className="text-center">
-                    <div className="text-white text-xs">Ib</div>
-                    <div className="text-white font-mono">{result.compliance.Ib}A</div>
+
+                    {/* Buried installation (Cc) — only when buried */}
+                    {result.buriedFactor < 1 && (
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-white">Buried (Cc)</span>
+                          <span className="font-mono text-emerald-400">
+                            {result.buriedFactor.toFixed(3)}
+                          </span>
+                        </div>
+                        <div className="w-full bg-white/10 rounded-full h-1.5">
+                          <div
+                            className="h-1.5 rounded-full transition-all"
+                            style={{
+                              width: `${Math.max(result.buriedFactor * 100, 5)}%`,
+                              background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-center">
-                    <div className="text-white text-xs">In</div>
-                    <div className="text-white font-mono">{result.compliance.In}A</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-white text-xs">Iz</div>
-                    <div className="text-white font-mono">{result.compliance.Iz.toFixed(1)}A</div>
-                  </div>
+
+                  {/* Compliance Check */}
+                  {result.compliance && (
+                    <div
+                      className={cn(
+                        'p-3 rounded-xl border',
+                        result.compliance.overallCompliant
+                          ? 'bg-green-500/10 border-green-500/30'
+                          : 'bg-red-500/10 border-red-500/30'
+                      )}
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        {result.compliance.overallCompliant ? (
+                          <CheckCircle2 className="h-4 w-4 text-green-400" />
+                        ) : (
+                          <AlertTriangle className="h-4 w-4 text-red-400" />
+                        )}
+                        <span
+                          className={cn(
+                            'font-medium',
+                            result.compliance.overallCompliant ? 'text-green-300' : 'text-red-300'
+                          )}
+                        >
+                          Ib ≤ In ≤ Iz:{' '}
+                          {result.compliance.overallCompliant ? 'COMPLIANT' : 'NON-COMPLIANT'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 text-sm">
+                        <div className="text-center">
+                          <div className="text-white text-xs">Ib</div>
+                          <div className="text-white font-mono">{result.compliance.Ib}A</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-white text-xs">In</div>
+                          <div className="text-white font-mono">{result.compliance.In}A</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-white text-xs">Iz</div>
+                          <div className="text-white font-mono">
+                            {result.compliance.Iz.toFixed(1)}A
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-xs text-white text-center mt-2">
+                        Safety margin: {result.compliance.safetyMargin.toFixed(1)}%
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Warnings */}
+                  {result.warnings.length > 0 && (
+                    <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                        <div className="space-y-1 text-sm text-white">
+                          {result.warnings.map((warning, index) => (
+                            <p key={index}>{warning}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="text-xs text-white text-center mt-2">
-                  Safety margin: {result.compliance.safetyMargin.toFixed(1)}%
-                </div>
-              </div>
+
+                <CalculatorDivider category="cable" />
+
+                {/* How It Worked Out - Collapsible */}
+                <Collapsible open={showFormula} onOpenChange={setShowFormula}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Calculator className="h-4 w-4 text-purple-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        How It Worked Out
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showFormula && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="text-sm font-mono text-white space-y-2 p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                      <div className="text-xs text-purple-400">Derated capacity formula:</div>
+                      <div>Iz = It × Ca × Cg × Ci × Cs</div>
+                      <div className="pt-2 border-t border-purple-500/20">
+                        Iz = {baseRating} × {result.temperatureFactor.toFixed(3)} ×{' '}
+                        {result.groupingFactor.toFixed(3)} ×{' '}
+                        {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)}
+                      </div>
+                      <div className="text-white font-bold">
+                        Iz = {result.finalRating.toFixed(1)}A
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* What This Means - Collapsible */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Derating factors</strong> reduce cable
+                          capacity based on installation conditions.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Multiple factors</strong> combine to
+                          determine safe operating current.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Ib ≤ In ≤ Iz</strong> ensures proper
+                          circuit protection per BS 7671.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Safety margin</strong> should be positive
+                          for compliant design.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* BS 7671 Guidance - Collapsible */}
+                <Collapsible open={showRegs} onOpenChange={setShowRegs}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <BookOpen className="h-4 w-4 text-amber-400" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        BS 7671 Reference
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showRegs && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Table 4C1:</strong> Grouping factors for
+                          cables
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Appendix 4, 2.6:</strong> Cable surrounded
+                          by thermal insulation (Ci)
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Tables 4B1 to 4B3:</strong> Ambient
+                          temperature and soil resistivity factors
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-amber-400/40 pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Appendix 4, 5.1.1:</strong> Cf for BS 3036
+                          fuses (0.725) and Cc for buried cables (0.9)
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
             )}
 
-            {/* Warnings */}
-            {result.warnings.length > 0 && (
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                  <div className="space-y-1 text-sm text-white">
-                    {result.warnings.map((warning, index) => (
-                      <p key={index}>{warning}</p>
-                    ))}
-                  </div>
-                </div>
+            {/* Formula Reference */}
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                <p className="text-sm text-white">
+                  <strong>Iz = It × Ca × Cg × Ci × Cs × Cf × Cc</strong> — the tabulated current
+                  from Appendix 4, reduced by every rating factor that applies. Size the cable so Iz
+                  is not less than the rating of the protective device (In).
+                </p>
               </div>
-            )}
-          </div>
-
-          <CalculatorDivider category="cable" />
-
-          {/* How It Worked Out - Collapsible */}
-          <Collapsible open={showFormula} onOpenChange={setShowFormula}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Calculator className="h-4 w-4 text-purple-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  How It Worked Out
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showFormula && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="text-sm font-mono text-white space-y-2 p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                <div className="text-xs text-purple-400">Derated capacity formula:</div>
-                <div>Iz = It × Ca × Cg × Ci × Cs</div>
-                <div className="pt-2 border-t border-purple-500/20">
-                  Iz = {baseRating} × {result.temperatureFactor.toFixed(3)} ×{' '}
-                  {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} ×{' '}
-                  {result.soilFactor.toFixed(3)}
-                </div>
-                <div className="text-white font-bold">Iz = {result.finalRating.toFixed(1)}A</div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* What This Means - Collapsible */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Derating factors</strong> reduce cable capacity
-                    based on installation conditions.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Multiple factors</strong> combine to determine
-                    safe operating current.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Ib ≤ In ≤ Iz</strong> ensures proper circuit
-                    protection per BS 7671.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Safety margin</strong> should be positive for
-                    compliant design.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* BS 7671 Guidance - Collapsible */}
-          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Reference
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Table 4C1:</strong> Grouping factors for cables
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Appendix 4, 2.6:</strong> Cable surrounded by
-                    thermal insulation (Ci)
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Tables 4B1 to 4B3:</strong> Ambient temperature
-                    and soil resistivity factors
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Appendix 4, 5.1.1:</strong> Cf for BS 3036 fuses
-                    (0.725) and Cc for buried cables (0.9)
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      )}
-
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white">
-            <strong>Iz = It × Ca × Cg × Ci × Cs × Cf × Cc</strong> — the tabulated current from
-            Appendix 4, reduced by every rating factor that applies. Size the cable so Iz is not
-            less than the rating of the protective device (In).
-          </p>
-        </div>
-      </div>
-      <CalculatorEditorial content={cableDeratingContent} category="cable" />
+            </div>
+          </>
+        }
+        footer={<CalculatorEditorial content={cableDeratingContent} category="cable" />}
+      />
     </CalculatorCard>
   );
 };

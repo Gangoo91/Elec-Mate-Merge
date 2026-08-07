@@ -632,7 +632,7 @@ export default function ExtractorFanNotWorkingPage() {
   return (
     <GuideTemplate
       title="Extractor Fan Not Working | Troubleshooting Guide"
-      description="Extractor fan not working? Learn the common causes — isolator switch, timer relay failure, humidity sensor fault…"
+      description="Extractor fan not working? Learn the common causes — isolator switch, timer relay failure, humidity sensor fault."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

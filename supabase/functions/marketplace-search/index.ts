@@ -30,6 +30,7 @@ serve(async (req: Request) => {
       maxPrice = null,
       dealsOnly = false,
       productType = null, // 'tools' | 'materials' | null
+      brands = null, // string[] — brand names to narrow to
       sort = 'relevance',
       page = 1,
       pageSize = 24,
@@ -89,7 +90,11 @@ serve(async (req: Request) => {
     productsQuery = productsQuery
       .not('name', 'ilike', 'brands')
       .not('name', 'ilike', 'categories')
-      .not('name', 'ilike', 'all products');
+      .not('name', 'ilike', 'all products')
+      // The scraper writes promotional labels as products: 103 rows named
+      // "10%Off", "15%Off", "45%Off" and the like, all from one supplier.
+      // They were appearing in the grid as buyable items.
+      .not('name', 'ilike', '%\\%off');
 
     // Apply filters — use full-text search when available, fall back to ilike
     if (query && query.length > 0) {
@@ -125,6 +130,13 @@ serve(async (req: Request) => {
 
     if (dealsOnly) {
       productsQuery = productsQuery.eq('is_on_sale', true);
+    }
+
+    // Brand is how tools get shopped for — an electrician wants Knipex or
+    // Makita, not "hand tools". Knipex is carried by 7 suppliers, Makita 6 and
+    // DeWalt 5, so it narrows meaningfully.
+    if (Array.isArray(brands) && brands.length > 0) {
+      productsQuery = productsQuery.in('brand', brands);
     }
 
     // Filter by product type (tools vs materials)
@@ -164,7 +176,11 @@ serve(async (req: Request) => {
       .or(`expires_at.gte.${nowISO},expires_at.is.null`)
       .not('name', 'ilike', 'brands')
       .not('name', 'ilike', 'categories')
-      .not('name', 'ilike', 'all products');
+      .not('name', 'ilike', 'all products')
+      // The scraper writes promotional labels as products: 103 rows named
+      // "10%Off", "15%Off", "45%Off" and the like, all from one supplier.
+      // They were appearing in the grid as buyable items.
+      .not('name', 'ilike', '%\\%off');
     if (query && query.length > 0) {
       const tsQueryCount = query.trim().split(/\s+/).join(' & ');
       countQuery = countQuery.or(`search_vector.fts.${tsQueryCount},name.ilike.%${query}%`);
@@ -179,6 +195,13 @@ serve(async (req: Request) => {
       countQuery = countQuery.in('category', TOOL_CATEGORIES);
     } else if (productType === 'materials') {
       countQuery = countQuery.in('category', MATERIAL_CATEGORIES);
+    }
+    // The count query is built separately from the products query, so every
+    // filter has to be repeated here. Miss one and the results narrow while
+    // the total does not — the header claims 2,245 tools while the grid shows
+    // thirty Knipex, and pagination offers pages that are empty.
+    if (Array.isArray(brands) && brands.length > 0) {
+      countQuery = countQuery.in('brand', brands);
     }
 
     const { count: total } = await countQuery;
@@ -266,7 +289,7 @@ serve(async (req: Request) => {
     const totalPages = Math.ceil(totalCount / pageSize);
 
     // Get facets
-    const [categoryFacets, supplierFacets] = await Promise.all([
+    const [categoryFacets, supplierFacets, brandFacets] = await Promise.all([
       supabase
         .from('marketplace_products')
         .select('category')
@@ -295,6 +318,34 @@ serve(async (req: Request) => {
             count: 0,
           }));
         }),
+
+      // Brands carried by more than one supplier, most-stocked first. A brand
+      // only one merchant sells is a dead end as a filter.
+      (async () => {
+        let bq = supabase
+          .from('marketplace_products')
+          .select('brand, supplier_id')
+          .not('brand', 'is', null)
+          .neq('brand', '');
+        if (productType === 'tools') bq = bq.in('category', TOOL_CATEGORIES);
+        else if (productType === 'materials') bq = bq.in('category', MATERIAL_CATEGORIES);
+
+        const { data } = await bq;
+        if (!data) return [];
+        const byBrand: Record<string, { count: number; suppliers: Set<string> }> = {};
+        for (const row of data as { brand: string; supplier_id: string }[]) {
+          const b = row.brand.trim();
+          if (!b) continue;
+          if (!byBrand[b]) byBrand[b] = { count: 0, suppliers: new Set() };
+          byBrand[b].count += 1;
+          byBrand[b].suppliers.add(row.supplier_id);
+        }
+        return Object.entries(byBrand)
+          .filter(([, v]) => v.suppliers.size > 1)
+          .map(([name, v]) => ({ name, count: v.count, supplierCount: v.suppliers.size }))
+          .sort((a, b) => b.supplierCount - a.supplierCount || b.count - a.count)
+          .slice(0, 20);
+      })(),
     ]);
 
     // Get last scraped timestamp
@@ -354,6 +405,7 @@ serve(async (req: Request) => {
           .not('name', 'ilike', 'brands')
           .not('name', 'ilike', 'categories')
           .not('name', 'ilike', 'all products')
+          .not('name', 'ilike', '%\\%off')
           .gte('current_price', 0.5)
           .or(`expires_at.gte.${nowISO},expires_at.is.null`);
 
@@ -403,6 +455,7 @@ serve(async (req: Request) => {
       facets: {
         categories: categoryFacets,
         suppliers: supplierFacets,
+        brands: brandFacets,
         priceRange: { min: 0, max: 1000 },
       },
     };
@@ -421,7 +474,7 @@ serve(async (req: Request) => {
         page: 1,
         pageSize: 24,
         totalPages: 0,
-        facets: { categories: [], suppliers: [], priceRange: { min: 0, max: 1000 } },
+        facets: { categories: [], suppliers: [], brands: [], priceRange: { min: 0, max: 1000 } },
       }),
       {
         status: 500,

@@ -134,7 +134,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                 <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
-              <p className="text-sm text-muted-foreground text-center">
+              <p className="text-sm text-white text-center">
                 Your message has been delivered to {user.full_name || 'the user'}
               </p>
             </div>
@@ -164,7 +164,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                       )}
                     </div>
                     {user.email && (
-                      <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                      <p className="text-xs text-white truncate">{user.email}</p>
                     )}
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
 
               {/* Message Type Selector */}
               <div className="p-4 border-b border-white/[0.06]">
-                <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-2">
+                <label className="text-xs text-white uppercase tracking-wide block mb-2">
                   Delivery Method
                 </label>
                 <div className="flex gap-2">
@@ -193,7 +193,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                         <Icon
                           className={cn(
                             'h-5 w-5',
-                            isSelected ? 'text-elec-yellow' : 'text-muted-foreground'
+                            isSelected ? 'text-elec-yellow' : 'text-white'
                           )}
                         />
                         <span
@@ -213,7 +213,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
               {/* Message Form */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <div>
-                  <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-2">
+                  <label className="text-xs text-white uppercase tracking-wide block mb-2">
                     Subject
                   </label>
                   <Input
@@ -230,7 +230,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                 </div>
 
                 <div>
-                  <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-2">
+                  <label className="text-xs text-white uppercase tracking-wide block mb-2">
                     Message
                   </label>
                   <Textarea
@@ -246,7 +246,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
 
                 {/* Quick Templates */}
                 <div>
-                  <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-2">
+                  <label className="text-xs text-white uppercase tracking-wide block mb-2">
                     Quick Templates
                   </label>
                   <div className="flex flex-wrap gap-2">

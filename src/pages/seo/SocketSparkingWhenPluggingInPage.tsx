@@ -593,7 +593,7 @@ export default function SocketSparkingWhenPluggingInPage() {
   return (
     <GuideTemplate
       title="Socket Sparking When Plugging In | Safe or Dangerous?"
-      description="Why does your socket spark when you plug something in? Learn the difference between a normal inductive spark and dangerous arcing…"
+      description="Why does your socket spark when you plug something in? Learn the difference between a normal inductive spark and dangerous arcing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

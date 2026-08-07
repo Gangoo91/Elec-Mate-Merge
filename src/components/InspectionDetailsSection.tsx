@@ -403,59 +403,83 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     storageGetJSONSync<number | null>(SAVED_SCOPE_AT_KEY, null)
   );
 
-  useEffect(() => {
-    // A DUPLICATED cert loads with the source's scope already populated. Don't
-    // let that carried-over text overwrite the inspector's own saved scope
-    // (ELE-1160) — only genuine edits on a normal cert should update the store.
-    if (formData.duplicatedFrom) return;
-    const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
-    const trio = {} as SavedScope;
-    let hasText = false;
-    fields.forEach((f) => {
-      const v = (formData[f] ?? '').toString();
-      // Never remember the pre-printed exclusions — the template prints them.
-      trio[f] = f === 'limitationsOfInspection' ? stripPrePrinted(v) : v;
-      if (v.trim() && !isFieldMarker(v)) hasText = true;
-    });
-    if (hasText) {
-      const now = Date.now();
-      storageSetJSONSync(SAVED_SCOPE_KEY, trio);
-      storageSetJSONSync(SAVED_SCOPE_AT_KEY, now);
-      setSavedScope(trio);
-      setSavedAt(now);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    formData.extentOfInspection,
-    formData.limitationsOfInspection,
-    formData.operationalLimitations,
-  ]);
+  /*
+   * The scope is NOT remembered as you type — ELE-1516.
+   *
+   * An effect used to write SAVED_SCOPE_KEY on every change to these three
+   * fields, which meant "my saved wording" was really "the wording currently on
+   * screen". `savedScope` therefore tracked the form, so "Apply my saved" had
+   * nothing to apply that was not already there — on any populated certificate
+   * it did nothing at all, which is what Craig Soper reported. It looked like a
+   * phone bug because that is where he works; it behaved identically on desktop.
+   *
+   * `saveCurrentAsDefault` ("Save current as my default") is now the only writer.
+   * A remembered wording has to be one the inspector chose, or Apply can never
+   * offer them anything but what they are already looking at.
+   */
 
   const hasSavedScope =
     !!savedScope && Object.values(savedScope).some((v) => (v || '').trim());
 
+  /**
+   * Put the inspector's saved wording into the scope fields — over whatever is
+   * already there (ELE-1516).
+   *
+   * This used to fill blanks only, which made the button a guaranteed no-op on
+   * any populated certificate: the effect above auto-saves the scope on mount,
+   * so opening a cert with wording saves *that* wording, and Apply then finds
+   * every field already holding exactly it. Craig reported it as broken on his
+   * phone; it behaved identically on desktop. The blank-only rule meant the one
+   * situation the button was reached for — "put my usual wording on this cert"
+   * — was the one it refused to do.
+   *
+   * Overwriting is also what ELE-1160 wanted: its complaint was a duplicated
+   * cert leaving the inspector stuck with the source's stale scope, worked
+   * around by Clear then Apply. One tap now does it.
+   *
+   * Nothing is lost: the text being replaced is the text the effect above has
+   * already saved, and `applyStandardField` has always overwritten per field.
+   */
   const applyMySaved = useCallback(() => {
     if (!savedScope) return;
     const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
-    let filled = 0;
+    let replaced = 0;
+    let unchanged = 0;
     fields.forEach((field) => {
       const saved = (savedScope[field] || '').trim();
-      // Fill blanks AND N/A markers (ELE-1169) — only genuinely typed text is kept.
-      const hasRealText =
-        !!(formData[field] || '').toString().trim() && !isFieldMarker(formData[field]);
-      if (saved && !hasRealText) {
-        onUpdate(field, savedScope[field]);
-        filled += 1;
+      if (!saved) return;
+      const current = (formData[field] ?? '').toString();
+      // Limitations carries pre-printed exclusions that the template prints
+      // itself, and the saved copy has them stripped. Compare like for like or
+      // the field reads as different on every tap and is rewritten needlessly.
+      const comparable =
+        field === 'limitationsOfInspection' ? stripPrePrinted(current) : current.trim();
+      if (comparable === saved) {
+        unchanged += 1;
+        return;
       }
+      onUpdate(field, savedScope[field]);
+      replaced += 1;
     });
     haptic.success();
-    toast({
-      title: filled > 0 ? 'Your saved wording applied' : 'Nothing to fill',
-      description:
-        filled > 0
-          ? `Filled ${filled} blank field${filled === 1 ? '' : 's'} from your saved scope. Existing text was left untouched.`
-          : 'All scope fields already contain text — nothing was overwritten.',
-    });
+    // "Nothing to fill" read as a failure. Say which of the two it is: the scope
+    // already matches, or there was genuinely nothing saved to apply.
+    toast(
+      replaced > 0
+        ? {
+            title: 'Your saved wording applied',
+            description: `Updated ${replaced} field${replaced === 1 ? '' : 's'} to your saved scope.`,
+          }
+        : unchanged > 0
+          ? {
+              title: 'Already applied',
+              description: 'The scope already matches your saved wording.',
+            }
+          : {
+              title: 'Nothing to apply',
+              description: 'Your saved scope is empty — type your wording once and it is kept.',
+            }
+    );
   }, [savedScope, formData, haptic, onUpdate, toast]);
 
   // Escape hatch (ELE-1160): a duplicated cert carries the source's scope text,
@@ -477,10 +501,12 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     ['extentOfInspection', 'limitationsOfInspection', 'operationalLimitations'] as const
   ).some((f) => ((formData[f] || '') as string).trim() && !isFieldMarker(formData[f]));
 
-  // The scope is remembered automatically as you type (effect above). This is
-  // the deliberate version of the same thing — so saving isn't invisible, and
-  // so a duplicated cert (where the silent save is suppressed, ELE-1160) can
-  // still be promoted to the inspector's default on purpose.
+// The only writer of the saved scope (ELE-1516).
+  //
+  // The scope used to be remembered silently as you typed, which made
+  // "my saved wording" mean "the wording on screen" — so Apply my saved had
+  // nothing to offer that was not already in the fields. Saving is now
+  // deliberate, which is what makes Apply worth tapping.
   const saveCurrentAsDefault = useCallback(() => {
     const trio = {} as SavedScope;
     (Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[]).forEach((f) => {
@@ -847,8 +873,8 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
 
         <p className="-mt-1 text-[11px] leading-relaxed text-white">
           {savedAtLabel
-            ? `Your wording is remembered as you type — last saved ${savedAtLabel}. `
-            : 'Your wording is remembered as you type, ready for your next EICR. '}
+            ? `Saved as your default ${savedAtLabel} — tap Apply my saved to use it here. `
+            : 'Tap “Save current as my default” to reuse this wording on your next EICR. '}
           Use N/A when a box has nothing to record; LIM records that the extent
           itself was limited.
         </p>

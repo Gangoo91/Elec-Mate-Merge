@@ -22,6 +22,7 @@ export { CalculatorInput, CalculatorSelect, CalculatorNumberInput } from './Calc
 export {
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   ResultDetails,
   ResultBadge,
@@ -35,3 +36,4 @@ export { CalculatorFormula, InlineFormula, FormulaReference } from './Calculator
 
 // Calculator Editorial (grounded guidance + standards layer)
 export { CalculatorEditorial } from './CalculatorEditorial';
+export { CalculatorPanes } from './CalculatorPanes';

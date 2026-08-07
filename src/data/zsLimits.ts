@@ -230,7 +230,15 @@ export const FUSE_ZS_LIMITS_5S = {
 
 export const RCD_ZS_LIMITS = {
   // Rated residual operating current (IΔn) in mA -> Max Zs in Ω
-  // Formula: Zs = 50V / (IΔn × 5) for 230V systems
+  //
+  // Zs = 50 / IΔn, from Reg 411.5.3: Ra × IΔn ≤ 50 V.
+  // 30 mA -> 50/0.03 = 1667 Ω · 100 mA -> 500 Ω · 300 mA -> 167 Ω · 500 mA -> 100 Ω.
+  //
+  // The comment here used to read "Zs = 50V / (IΔn × 5)", which yields 333 Ω at
+  // 30 mA and matches none of the values below it. The ×5 came from the old
+  // 5IΔn trip test — which A4:2026 DELETED along with Table 3A — so anyone
+  // maintaining this from the comment rather than the table would have
+  // "corrected" four right numbers into four wrong ones.
   30: 1667, // 30mA RCD - Note: Earth electrode resistance ≤ 200Ω
   100: 500, // 100mA RCD - Note: Earth electrode resistance ≤ 200Ω
   300: 167, // 300mA RCD

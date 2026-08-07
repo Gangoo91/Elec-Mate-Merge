@@ -18,6 +18,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { marineElectricalContent } from './content/marine-electrical';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -283,547 +284,556 @@ const MarineElectricalCalculator = () => {
       title="Marine Electrical Calculator"
       description="Load analysis, battery sizing, charging balance for marine electrical systems"
     >
-      {/* Quick Presets */}
-      <CalculatorSelect
-        label="Quick Preset"
-        value=""
-        onChange={applyPreset}
-        options={presetConfigs.map((p) => ({ value: p.value, label: p.label }))}
-        placeholder="Apply a vessel preset..."
-      />
+      <CalculatorPanes
+        form={
+          <>
+            {/* Quick Presets */}
+            <CalculatorSelect
+              label="Quick Preset"
+              value=""
+              onChange={applyPreset}
+              options={presetConfigs.map((p) => ({ value: p.value, label: p.label }))}
+              placeholder="Apply a vessel preset..."
+            />
 
-      {/* Vessel Details */}
-      <CalculatorSection title="Vessel Details">
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorSelect
-            label="Vessel Type"
-            value={vesselType}
-            onChange={setVesselType}
-            options={vesselTypeOptions}
-          />
-          <CalculatorInput
-            label="Vessel Length"
-            unit="m"
-            type="text"
-            inputMode="decimal"
-            value={vesselLength}
-            onChange={setVesselLength}
-            placeholder="e.g., 12"
-          />
-        </CalculatorInputGrid>
-        <CalculatorSelect
-          label="System Voltage"
-          value={systemVoltage}
-          onChange={setSystemVoltage}
-          options={voltageOptions}
-        />
-      </CalculatorSection>
-
-      {/* Electrical Loads */}
-      <CalculatorSection title="Electrical Loads">
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Navigation Lights"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={navigationLights}
-            onChange={setNavigationLights}
-            placeholder="25"
-          />
-          <CalculatorInput
-            label="Cabin Lighting"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={cabinLights}
-            onChange={setCabinLights}
-            placeholder="120"
-          />
-          <CalculatorInput
-            label="Galley Equipment"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={galleyLoad}
-            onChange={setGalleyLoad}
-            placeholder="200"
-          />
-          <CalculatorInput
-            label="Electronics"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={electronics}
-            onChange={setElectronics}
-            placeholder="150"
-          />
-          <CalculatorInput
-            label="Fresh Water Pump"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={freshWaterPump}
-            onChange={setFreshWaterPump}
-            placeholder="80"
-          />
-          <CalculatorInput
-            label="Bilge Pump"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={bilgePump}
-            onChange={setBilgePump}
-            placeholder="50"
-          />
-          <CalculatorInput
-            label="Ventilation Fans"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={ventilationFans}
-            onChange={setVentilationFans}
-            placeholder="30"
-          />
-          <CalculatorInput
-            label="Winch/Windlass"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={winch}
-            onChange={setWinch}
-            placeholder="800"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInput
-          label="Additional Load"
-          unit="W"
-          type="text"
-          inputMode="decimal"
-          value={additionalLoad}
-          onChange={setAdditionalLoad}
-          placeholder="0"
-        />
-      </CalculatorSection>
-
-      {/* Battery System */}
-      <CalculatorSection title="Battery System">
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorSelect
-            label="Battery Type"
-            value={batteryType}
-            onChange={setBatteryType}
-            options={batteryTypeOptions}
-          />
-          <CalculatorInput
-            label="Max Discharge"
-            unit="%"
-            type="text"
-            inputMode="decimal"
-            value={maxDischarge}
-            onChange={setMaxDischarge}
-            placeholder="80"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInput
-          label="Battery Voltage"
-          unit="V"
-          type="text"
-          inputMode="decimal"
-          value={batteryVoltage}
-          onChange={setBatteryVoltage}
-          placeholder="12"
-        />
-      </CalculatorSection>
-
-      {/* Charging & Cable */}
-      <CalculatorSection title="Charging and Cable">
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Alternator"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={alternatorRating}
-            onChange={setAlternatorRating}
-            placeholder="120"
-          />
-          <CalculatorInput
-            label="Solar Panels"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={solarPanels}
-            onChange={setSolarPanels}
-            placeholder="200"
-          />
-          <CalculatorInput
-            label="Wind Generator"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={windGenerator}
-            onChange={setWindGenerator}
-            placeholder="100"
-          />
-          <CalculatorInput
-            label="Shore Charger"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={shoreCharger}
-            onChange={setShoreCharger}
-            placeholder="80"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Cable Length"
-            unit="m"
-            type="text"
-            inputMode="decimal"
-            value={cableLength}
-            onChange={setCableLength}
-            placeholder="5"
-          />
-          <CalculatorInput
-            label="Voltage Drop Limit"
-            unit="%"
-            type="text"
-            inputMode="decimal"
-            value={voltageDropLimit}
-            onChange={setVoltageDropLimit}
-            placeholder="3"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2} className="grid-cols-2">
-          <CalculatorInput
-            label="Temperature"
-            unit="°C"
-            type="text"
-            inputMode="decimal"
-            value={temperature}
-            onChange={setTemperature}
-            placeholder="15"
-          />
-          <div className="flex items-end pb-1">
-            <label className="flex items-center gap-2 cursor-pointer min-h-[44px] touch-manipulation">
-              <input
-                type="checkbox"
-                checked={saltwaterExposure}
-                onChange={(e) => setSaltwaterExposure(e.target.checked)}
-                className="rounded border-white/20 bg-white/10 text-green-400 focus:ring-green-400/50 h-5 w-5"
+            {/* Vessel Details */}
+            <CalculatorSection title="Vessel Details">
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorSelect
+                  label="Vessel Type"
+                  value={vesselType}
+                  onChange={setVesselType}
+                  options={vesselTypeOptions}
+                />
+                <CalculatorInput
+                  label="Vessel Length"
+                  unit="m"
+                  type="text"
+                  inputMode="decimal"
+                  value={vesselLength}
+                  onChange={setVesselLength}
+                  placeholder="e.g., 12"
+                />
+              </CalculatorInputGrid>
+              <CalculatorSelect
+                label="System Voltage"
+                value={systemVoltage}
+                onChange={setSystemVoltage}
+                options={voltageOptions}
               />
-              <span className="text-sm text-white">Saltwater exposure</span>
-            </label>
-          </div>
-        </CalculatorInputGrid>
-      </CalculatorSection>
+            </CalculatorSection>
 
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate()}
-        calculateLabel="Calculate"
-        showReset={!!results}
-      />
+            {/* Electrical Loads */}
+            <CalculatorSection title="Electrical Loads">
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Navigation Lights"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={navigationLights}
+                  onChange={setNavigationLights}
+                  placeholder="25"
+                />
+                <CalculatorInput
+                  label="Cabin Lighting"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={cabinLights}
+                  onChange={setCabinLights}
+                  placeholder="120"
+                />
+                <CalculatorInput
+                  label="Galley Equipment"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={galleyLoad}
+                  onChange={setGalleyLoad}
+                  placeholder="200"
+                />
+                <CalculatorInput
+                  label="Electronics"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={electronics}
+                  onChange={setElectronics}
+                  placeholder="150"
+                />
+                <CalculatorInput
+                  label="Fresh Water Pump"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={freshWaterPump}
+                  onChange={setFreshWaterPump}
+                  placeholder="80"
+                />
+                <CalculatorInput
+                  label="Bilge Pump"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={bilgePump}
+                  onChange={setBilgePump}
+                  placeholder="50"
+                />
+                <CalculatorInput
+                  label="Ventilation Fans"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={ventilationFans}
+                  onChange={setVentilationFans}
+                  placeholder="30"
+                />
+                <CalculatorInput
+                  label="Winch/Windlass"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={winch}
+                  onChange={setWinch}
+                  placeholder="800"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInput
+                label="Additional Load"
+                unit="W"
+                type="text"
+                inputMode="decimal"
+                value={additionalLoad}
+                onChange={setAdditionalLoad}
+                placeholder="0"
+              />
+            </CalculatorSection>
 
-      {/* ── Results ── */}
-      {results && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={getComplianceStatus().status}
-              label={getComplianceStatus().label}
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
+            {/* Battery System */}
+            <CalculatorSection title="Battery System">
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorSelect
+                  label="Battery Type"
+                  value={batteryType}
+                  onChange={setBatteryType}
+                  options={batteryTypeOptions}
+                />
+                <CalculatorInput
+                  label="Max Discharge"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={maxDischarge}
+                  onChange={setMaxDischarge}
+                  placeholder="80"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInput
+                label="Battery Voltage"
+                unit="V"
+                type="text"
+                inputMode="decimal"
+                value={batteryVoltage}
+                onChange={setBatteryVoltage}
+                placeholder="12"
+              />
+            </CalculatorSection>
 
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Battery Bank Required</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {results.recommendedBatteryCapacity} Ah
-            </p>
-            <p className="text-sm text-white mt-2">
-              {results.numberOfBatteries} × 100Ah batteries at {results.batteryBankVoltage}V
-            </p>
-          </div>
+            {/* Charging & Cable */}
+            <CalculatorSection title="Charging and Cable">
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Alternator"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={alternatorRating}
+                  onChange={setAlternatorRating}
+                  placeholder="120"
+                />
+                <CalculatorInput
+                  label="Solar Panels"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={solarPanels}
+                  onChange={setSolarPanels}
+                  placeholder="200"
+                />
+                <CalculatorInput
+                  label="Wind Generator"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={windGenerator}
+                  onChange={setWindGenerator}
+                  placeholder="100"
+                />
+                <CalculatorInput
+                  label="Shore Charger"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={shoreCharger}
+                  onChange={setShoreCharger}
+                  placeholder="80"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Cable Length"
+                  unit="m"
+                  type="text"
+                  inputMode="decimal"
+                  value={cableLength}
+                  onChange={setCableLength}
+                  placeholder="5"
+                />
+                <CalculatorInput
+                  label="Voltage Drop Limit"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={voltageDropLimit}
+                  onChange={setVoltageDropLimit}
+                  placeholder="3"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2} className="grid-cols-2">
+                <CalculatorInput
+                  label="Temperature"
+                  unit="°C"
+                  type="text"
+                  inputMode="decimal"
+                  value={temperature}
+                  onChange={setTemperature}
+                  placeholder="15"
+                />
+                <div className="flex items-end pb-1">
+                  <label className="flex items-center gap-2 cursor-pointer min-h-[44px] touch-manipulation">
+                    <input
+                      type="checkbox"
+                      checked={saltwaterExposure}
+                      onChange={(e) => setSaltwaterExposure(e.target.checked)}
+                      className="rounded border-white/20 bg-white/10 text-green-400 focus:ring-green-400/50 h-5 w-5"
+                    />
+                    <span className="text-sm text-white">Saltwater exposure</span>
+                  </label>
+                </div>
+              </CalculatorInputGrid>
+            </CalculatorSection>
 
-          {/* Key metrics */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Peak Load"
-              value={results.peakLoad.toString()}
-              unit="W"
+            <CalculatorActions
               category={CAT}
-              size="sm"
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate()}
+              calculateLabel="Calculate"
+              showReset={!!results}
             />
-            <ResultValue
-              label="Daily Consumption"
-              value={results.dailyEnergyConsumption.toFixed(0)}
-              unit="Ah"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Cable Size"
-              value={results.recommendedCableSize.toString()}
-              unit="mm²"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Voltage Drop"
-              value={results.actualVoltageDropPercentage.toFixed(1)}
-              unit="%"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Inverter"
-              value={results.recommendedInverterSize.toString()}
-              unit="W"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Energy Balance"
-              value={`${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)}`}
-              unit="Ah/day"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
-
-          {/* Compliance checks */}
-          {results.complianceChecks.map((check, idx) => (
-            <div
-              key={idx}
-              className={cn(
-                'flex items-center justify-between p-3 rounded-lg border text-sm',
-                check.status === 'compliant'
-                  ? 'bg-green-500/5 border-green-500/20'
-                  : check.status === 'warning'
-                    ? 'bg-amber-500/5 border-amber-500/20'
-                    : 'bg-red-500/5 border-red-500/20'
-              )}
-            >
-              <div className="flex items-center gap-2">
-                {check.status === 'compliant' ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                )}
-                <span className="text-white font-medium text-xs">{check.regulation}</span>
-              </div>
-              <span className="text-white shrink-0 ml-2 text-xs">{check.message}</span>
-            </div>
-          ))}
-
-          {/* Recommendations */}
-          {results.recommendations.length > 0 && (
-            <div className="space-y-1.5">
-              <p className="text-sm font-medium text-white">Recommendations</p>
-              {results.recommendations.map((rec, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-sm text-white">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                    style={{ backgroundColor: config.gradientFrom }}
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {results && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={getComplianceStatus().status}
+                    label={getComplianceStatus().label}
                   />
-                  <span>
-                    <span className="font-medium">{rec.category}:</span> {rec.message}
-                  </span>
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
                 </div>
-              ))}
-            </div>
-          )}
 
-          <CalculatorDivider category={CAT} />
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Battery Bank Required</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {results.recommendedBatteryCapacity} Ah
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {results.numberOfBatteries} × 100Ah batteries at {results.batteryBankVoltage}V
+                  </p>
+                </div>
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Load analysis',
-                formula: `Continuous: ${results.totalContinuousLoad} W | Intermittent: ${results.totalIntermittentLoad} W`,
-                value: `${results.peakLoad} W peak load`,
-                description:
-                  'Navigation, cabin, electronics are continuous. Galley, pumps, winch are intermittent (30% duty cycle).',
-              },
-              {
-                label: 'Daily energy consumption',
-                formula: `(Continuous × ${dailyUsageHours}h + Intermittent × ${dailyUsageHours}h × 0.3) ÷ ${systemVoltage}V`,
-                value: `${results.dailyEnergyConsumption.toFixed(0)} Ah/day`,
-              },
-              {
-                label: 'Battery sizing with Peukert effect',
-                formula: `Daily Ah × autonomy days × temp factor ÷ max discharge`,
-                value: `${results.recommendedBatteryCapacity} Ah (${results.numberOfBatteries} × 100Ah)`,
-                description: `Temperature derating applied for ${temperature}°C. Capacity rounded to nearest 50Ah for practical battery selection.`,
-              },
-              {
-                label: 'Charging balance',
-                formula: `Total charging: ${results.totalChargingCapacity} W × 8h average`,
-                value: `${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)} Ah/day ${results.energyBalance > 0 ? '(surplus)' : '(deficit)'}`,
-                description:
-                  results.energyBalance < 0
-                    ? 'Charging deficit — increase charging capacity or reduce loads for extended trips.'
-                    : 'Positive energy balance — adequate charging for sustained operation.',
-              },
-              {
-                label: 'Cable sizing',
-                formula: `Peak current at ${systemVoltage}V, ${cableLength}m run, ${voltageDropLimit}% max drop`,
-                value: `${results.recommendedCableSize} mm² ${results.cableType} — ${results.actualVoltageDropPercentage.toFixed(1)}% actual drop`,
-              },
-            ]}
-          />
+                {/* Key metrics */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Peak Load"
+                    value={results.peakLoad.toString()}
+                    unit="W"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Daily Consumption"
+                    value={results.dailyEnergyConsumption.toFixed(0)}
+                    unit="Ah"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Cable Size"
+                    value={results.recommendedCableSize.toString()}
+                    unit="mm²"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Voltage Drop"
+                    value={results.actualVoltageDropPercentage.toFixed(1)}
+                    unit="%"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Inverter"
+                    value={results.recommendedInverterSize.toString()}
+                    unit="W"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Energy Balance"
+                    value={`${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)}`}
+                    unit="Ah/day"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-4"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Marine Electrical Safety</p>
-                  <ul className="space-y-1">
-                    {[
-                      'Vessel safety depends on reliable electrical systems for navigation, communication, and safety equipment',
-                      'Proper load calculation prevents battery failure and equipment damage in marine environments',
-                      'Adequate charging capacity ensures vessel autonomy during extended cruising or emergencies',
-                      'Correct cable sizing prevents dangerous voltage drops and potential fire hazards at sea',
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white">
+                {/* Compliance checks */}
+                {results.complianceChecks.map((check, idx) => (
+                  <div
+                    key={idx}
+                    className={cn(
+                      'flex items-center justify-between p-3 rounded-lg border text-sm',
+                      check.status === 'compliant'
+                        ? 'bg-green-500/5 border-green-500/20'
+                        : check.status === 'warning'
+                          ? 'bg-amber-500/5 border-amber-500/20'
+                          : 'bg-red-500/5 border-red-500/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      {check.status === 'compliant' ? (
+                        <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                      ) : (
+                        <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+                      )}
+                      <span className="text-white font-medium text-xs">{check.regulation}</span>
+                    </div>
+                    <span className="text-white shrink-0 ml-2 text-xs">{check.message}</span>
+                  </div>
+                ))}
+
+                {/* Recommendations */}
+                {results.recommendations.length > 0 && (
+                  <div className="space-y-1.5">
+                    <p className="text-sm font-medium text-white">Recommendations</p>
+                    {results.recommendations.map((rec, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm text-white">
                         <span
                           className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                           style={{ backgroundColor: config.gradientFrom }}
                         />
-                        {item}
-                      </li>
+                        <span>
+                          <span className="font-medium">{rec.category}:</span> {rec.message}
+                        </span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Corrosion Protection</p>
-                  <ul className="space-y-1">
-                    {[
-                      'Install galvanic isolator on shore power connection',
-                      'Use sacrificial anodes on metal components',
-                      'Apply anti-corrosion compounds to all connections',
-                      'Regular inspection and maintenance schedule essential',
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* ── Standards Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>Standards Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
+                  </div>
                 )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'ISO 13297',
-                      desc: 'Small craft electrical systems — DC installations. Covers wiring, protection, battery installation, and testing requirements.',
-                    },
-                    {
-                      reg: 'ABYC E-11',
-                      desc: 'AC and DC electrical systems on boats — voltage drop limits (3% for critical, 10% max), wire sizing, overcurrent protection.',
-                    },
-                    {
-                      reg: 'IEC 60364-7-709',
-                      desc: 'Electrical installations in marinas and pleasure craft — RCD requirements, shore supply connections.',
-                    },
-                    {
-                      reg: 'BS 7671 Section 709',
-                      desc: 'Requirements for marinas and similar locations — supplementary bonding, RCD protection, IP ratings for exposed locations.',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Battery Sizing"
-        formula="Ah = (Daily Wh ÷ V) × Days ÷ DoD × Temp Factor"
-        variables={[
-          { symbol: 'Ah', description: 'Required battery capacity (amp-hours)' },
-          { symbol: 'Wh', description: 'Daily energy consumption (watt-hours)' },
-          { symbol: 'V', description: 'System voltage (12V, 24V, or 48V)' },
-          { symbol: 'DoD', description: 'Maximum depth of discharge (0.5-0.9)' },
-        ]}
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Load analysis',
+                      formula: `Continuous: ${results.totalContinuousLoad} W | Intermittent: ${results.totalIntermittentLoad} W`,
+                      value: `${results.peakLoad} W peak load`,
+                      description:
+                        'Navigation, cabin, electronics are continuous. Galley, pumps, winch are intermittent (30% duty cycle).',
+                    },
+                    {
+                      label: 'Daily energy consumption',
+                      formula: `(Continuous × ${dailyUsageHours}h + Intermittent × ${dailyUsageHours}h × 0.3) ÷ ${systemVoltage}V`,
+                      value: `${results.dailyEnergyConsumption.toFixed(0)} Ah/day`,
+                    },
+                    {
+                      label: 'Battery sizing with Peukert effect',
+                      formula: `Daily Ah × autonomy days × temp factor ÷ max discharge`,
+                      value: `${results.recommendedBatteryCapacity} Ah (${results.numberOfBatteries} × 100Ah)`,
+                      description: `Temperature derating applied for ${temperature}°C. Capacity rounded to nearest 50Ah for practical battery selection.`,
+                    },
+                    {
+                      label: 'Charging balance',
+                      formula: `Total charging: ${results.totalChargingCapacity} W × 8h average`,
+                      value: `${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)} Ah/day ${results.energyBalance > 0 ? '(surplus)' : '(deficit)'}`,
+                      description:
+                        results.energyBalance < 0
+                          ? 'Charging deficit — increase charging capacity or reduce loads for extended trips.'
+                          : 'Positive energy balance — adequate charging for sustained operation.',
+                    },
+                    {
+                      label: 'Cable sizing',
+                      formula: `Peak current at ${systemVoltage}V, ${cableLength}m run, ${voltageDropLimit}% max drop`,
+                      value: `${results.recommendedCableSize} mm² ${results.cableType} — ${results.actualVoltageDropPercentage.toFixed(1)}% actual drop`,
+                    },
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-4"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Marine Electrical Safety</p>
+                        <ul className="space-y-1">
+                          {[
+                            'Vessel safety depends on reliable electrical systems for navigation, communication, and safety equipment',
+                            'Proper load calculation prevents battery failure and equipment damage in marine environments',
+                            'Adequate charging capacity ensures vessel autonomy during extended cruising or emergencies',
+                            'Correct cable sizing prevents dangerous voltage drops and potential fire hazards at sea',
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-white">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Corrosion Protection</p>
+                        <ul className="space-y-1">
+                          {[
+                            'Install galvanic isolator on shore power connection',
+                            'Use sacrificial anodes on metal components',
+                            'Apply anti-corrosion compounds to all connections',
+                            'Regular inspection and maintenance schedule essential',
+                          ].map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-white">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── Standards Reference ── */}
+                <Collapsible open={showReference} onOpenChange={setShowReference}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>Standards Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showReference && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          {
+                            reg: 'ISO 13297',
+                            desc: 'Small craft electrical systems — DC installations. Covers wiring, protection, battery installation, and testing requirements.',
+                          },
+                          {
+                            reg: 'ABYC E-11',
+                            desc: 'AC and DC electrical systems on boats — voltage drop limits (3% for critical, 10% max), wire sizing, overcurrent protection.',
+                          },
+                          {
+                            reg: 'IEC 60364-7-709',
+                            desc: 'Electrical installations in marinas and pleasure craft — RCD requirements, shore supply connections.',
+                          },
+                          {
+                            reg: 'BS 7671 Section 709',
+                            desc: 'Requirements for marinas and similar locations — supplementary bonding, RCD protection, IP ratings for exposed locations.',
+                          },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Battery Sizing"
+              formula="Ah = (Daily Wh ÷ V) × Days ÷ DoD × Temp Factor"
+              variables={[
+                { symbol: 'Ah', description: 'Required battery capacity (amp-hours)' },
+                { symbol: 'Wh', description: 'Daily energy consumption (watt-hours)' },
+                { symbol: 'V', description: 'System voltage (12V, 24V, or 48V)' },
+                { symbol: 'DoD', description: 'Maximum depth of discharge (0.5-0.9)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={marineElectricalContent} category={CAT} />}
       />
-      <CalculatorEditorial content={marineElectricalContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -56,14 +56,14 @@ const relatedPages = [
   {
     href: '/guides/electrical-symbols-chart',
     title: 'Electrical Symbols Chart (Full Library)',
-    description: 'All 114 BS EN 60617 symbols grouped by category — the master reference.',
+    description: 'All 114 IEC 60617 symbols grouped by category — the master reference.',
     icon: 'PenTool',
     category: 'Reference',
   },
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'BookOpen',
     category: 'Guide',
   },
@@ -78,7 +78,7 @@ const relatedPages = [
   {
     href: '/ai-diagram-builder',
     title: 'AI Diagram Builder',
-    description: 'Drag-and-drop BS EN 60617 symbols into a working circuit drawing.',
+    description: 'Drag-and-drop IEC 60617 symbols into a working circuit drawing.',
     icon: 'ShieldCheck',
     category: 'Tool',
   },
@@ -110,7 +110,7 @@ const sections = [
           EN 60617 with BS 7671 supply requirements for each appliance.
         </p>
         <p>
-          Each symbol is drawn to <strong>BS EN 60617</strong> — the UK adoption of the
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
           international IEC 60617 standard for graphical symbols on electrical diagrams. The same
           symbols appear on{' '}
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
@@ -119,14 +119,14 @@ const sections = [
         <p>
           Looking for symbols in a different category? See the full{' '}
           <SEOInternalLink href="/guides/electrical-symbols-chart">
-            BS EN 60617 symbol library
+            IEC 60617 symbol library
           </SEOInternalLink>{' '}
           covering switches, sockets, lighting, distribution, safety, containment, equipment,
           mechanical, renewables, controls and architectural symbols.
         </p>
         <SEOAppBridge
           title="Use these symbols in real drawings"
-          description="The Elec-Mate AI Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
+          description="The Elec-Mate AI Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -139,7 +139,7 @@ export default function ElectricalMechanicalSymbolsPage() {
   return (
     <GuideTemplate
       title="Mechanical + HVAC Symbols | Boilers, Heaters, AC Drawings"
-      description="Boiler, water heater, panel heater, air conditioning, fan coil unit, towel rail…"
+      description="Boiler, water heater, panel heater, air conditioning, fan coil unit, towel rail."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -152,14 +152,14 @@ export default function ElectricalMechanicalSymbolsPage() {
           <span className="text-yellow-400">Heating, hot water + AC references</span>
         </>
       }
-      heroSubtitle="Every heating, hot water and air conditioning electrical termination symbol — drawn to BS EN 60617 with BS 7671 supply requirements for each appliance."
+      heroSubtitle="Every heating, hot water and air conditioning electrical termination symbol — drawn to IEC 60617 with BS 7671 supply requirements for each appliance."
       readingTime={6}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       faqHeading="FAQ — Mechanical + HVAC Symbols"
       relatedPages={relatedPages}
-      ctaHeading="Use BS EN 60617 symbols in working drawings"
+      ctaHeading="Use IEC 60617 symbols in working drawings"
       ctaSubheading="Drag-and-drop circuit diagrams. EICR + EIC schedules with correct symbols. Built for UK electricians. 7-day free trial."
     />
   );

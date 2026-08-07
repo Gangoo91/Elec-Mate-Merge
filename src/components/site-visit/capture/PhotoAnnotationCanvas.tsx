@@ -190,7 +190,7 @@ export const PhotoAnnotationCanvas = ({
                 <button
                   onClick={handleUndo}
                   disabled={strokes.length === 0}
-                  className="h-9 w-9 flex items-center justify-center rounded-lg bg-white/[0.05] touch-manipulation active:bg-white/10 disabled:opacity-30"
+                  className="h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.05] touch-manipulation active:bg-white/10 disabled:opacity-30"
                   aria-label="Undo"
                 >
                   <Undo2 className="h-4 w-4 text-white" />
@@ -198,7 +198,7 @@ export const PhotoAnnotationCanvas = ({
                 <button
                   onClick={handleClear}
                   disabled={strokes.length === 0}
-                  className="h-9 w-9 flex items-center justify-center rounded-lg bg-white/[0.05] touch-manipulation active:bg-white/10 disabled:opacity-30"
+                  className="h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.05] touch-manipulation active:bg-white/10 disabled:opacity-30"
                   aria-label="Clear all"
                 >
                   <Trash2 className="h-4 w-4 text-white" />

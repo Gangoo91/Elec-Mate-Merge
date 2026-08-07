@@ -493,7 +493,7 @@ export default function EVChargerInstallationLiverpoolPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Liverpool 2026 | Costs, DNO, and"
-      description="How much does EV charger installation cost in Liverpool in 2026? Local costs, Electricity North West DNO notification, OZEV grant…"
+      description="How much does EV charger installation cost in Liverpool in 2026? Local costs, Electricity North West DNO notification, OZEV grant."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

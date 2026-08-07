@@ -19,7 +19,7 @@ export default function SolarPanelSizingCalculatorPage() {
   return (
     <ToolTemplate
       title="Solar Panel Sizing Calculator UK | Free Tool"
-      description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt…"
+      description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt."
       datePublished="2026-01-30"
       dateModified="2026-06-10"
       breadcrumbs={[

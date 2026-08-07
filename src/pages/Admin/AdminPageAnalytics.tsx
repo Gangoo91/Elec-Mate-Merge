@@ -188,11 +188,11 @@ export default function AdminPageAnalytics() {
                       <button
                         type="button"
                         onClick={() => setDrillArea(null)}
-                        className="touch-manipulation inline-flex items-center gap-1 text-white/60 hover:text-white text-[13px]"
+                        className="touch-manipulation inline-flex items-center gap-1 text-white hover:text-white text-[13px]"
                       >
                         <ArrowLeft className="h-3.5 w-3.5" /> Areas
                       </button>
-                      <span className="text-white/40">/</span>
+                      <span className="text-white">/</span>
                       <span className="truncate">{drillArea}</span>
                     </span>
                   }
@@ -227,11 +227,11 @@ export default function AdminPageAnalytics() {
                       <button
                         type="button"
                         onClick={() => setDrillPage(null)}
-                        className="touch-manipulation inline-flex items-center gap-1 text-white/60 hover:text-white text-[13px]"
+                        className="touch-manipulation inline-flex items-center gap-1 text-white hover:text-white text-[13px]"
                       >
                         <ArrowLeft className="h-3.5 w-3.5" /> Pages
                       </button>
-                      <span className="text-white/40">/</span>
+                      <span className="text-white">/</span>
                       <span className="truncate">{drillPage}</span>
                     </span>
                   }
@@ -260,7 +260,7 @@ export default function AdminPageAnalytics() {
                       }
                       trailing={
                         <span className="inline-flex items-center gap-1.5 font-semibold text-white tabular-nums">
-                          <Clock className="h-3.5 w-3.5 text-white/50" />
+                          <Clock className="h-3.5 w-3.5 text-white" />
                           {fmtMinutes(Number(person.minutes))}
                         </span>
                       }

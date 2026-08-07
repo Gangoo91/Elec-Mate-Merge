@@ -603,8 +603,8 @@ export default function ElectricianDayRatesPage() {
   return (
     <GuideTemplate
       localArea="Day Rates Uk"
-      title="Electrician Day Rates UK 2026 | What to Charge"
-      description="What UK electricians charge in 2026 — domestic vs commercial day rates by region, specialist rates for testing, EV and CompEx, and how to calculate your true day rate from costs up."
+      title="Electrician Day Rate UK 2026: £220–£300 a Day"
+      description="UK electrician day rates 2026: £220–£300 average, £200–£280 domestic, £300–£450 specialist. Regional rates and how to set a profitable self-employed rate."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -640,7 +640,7 @@ export default function EVChargerInstallationOxfordPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Oxford | Home EV Charging Oxford"
-      description="EV charger installation in Oxford. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, BS 7671 Section 722 compliance…"
+      description="EV charger installation in Oxford. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, BS 7671 Section 722 compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

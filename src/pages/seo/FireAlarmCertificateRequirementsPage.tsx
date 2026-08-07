@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Fire alarm systems require five key certificates across their lifecycle: design, installation, commissioning, verification, and annual service records.',
   'BS 5839-1 requires a design certificate confirming the system category, detector layout, sounder coverage, and cable routes before installation begins.',
   'The commissioning certificate must record functional tests of every device, cause-and-effect verification, sounder level measurements, and battery drain tests.',
-  'Annual service records are a legal requirement under the Regulatory Reform (Fire Safety) Order 2005 and must be kept in the fire safety logbook.',
+  'Keeping the fire alarm system maintained is a legal duty on the Responsible Person — under the Regulatory Reform (Fire Safety) Order 2005 in England and Wales, and under equivalent fire safety legislation in Scotland and Northern Ireland. Service records kept in the fire safety logbook are how that duty is evidenced.',
   'The fire alarm panel’s mains supply circuit also requires a BS 7671 Electrical Installation Certificate. Under A4:2026 the Appendix 6 model forms now include dedicated fields for recording the details of any SPDs and AFDDs fitted on that circuit.',
   'Elec-Mate provides digital fire alarm certificate templates for all five certificate types, with professional PDF export and cloud storage.',
 ];
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Who is responsible for keeping fire alarm certificates?',
     answer:
-      'The Responsible Person for the premises is legally responsible for keeping fire alarm certificates and service records. Under the Regulatory Reform (Fire Safety) Order 2005, the Responsible Person must ensure fire safety systems are maintained and that records of maintenance are available for inspection by the fire and rescue service. In practice, this means the building owner, landlord, managing agent, or employer must maintain a fire safety logbook containing all certificates, test records, and service reports. Failure to produce these records during a fire safety inspection can result in enforcement action.',
+      'The Responsible Person for the premises is legally responsible for keeping fire alarm certificates and service records. Under the Regulatory Reform (Fire Safety) Order 2005 — which applies in England and Wales, with equivalent duties under separate fire safety legislation in Scotland and Northern Ireland — the Responsible Person must ensure fire safety systems are maintained and that records of maintenance are available for inspection by the fire and rescue service. In practice, this means the building owner, landlord, managing agent, or employer must maintain a fire safety logbook containing all certificates, test records, and service reports. Failure to produce these records during a fire safety inspection can result in enforcement action.',
   },
   {
     question: 'How long must fire alarm certificates be kept?',
@@ -409,8 +409,14 @@ const sections = [
           </p>
           <ul className="space-y-2 text-white/90 text-sm list-disc list-inside">
             <li>
-              Alarm signal cables run in the same containment as mains power wiring — fire alarm
-              cables must be kept in separate, dedicated trunking or conduit.
+              Alarm signal cables sharing containment with mains power wiring without any of the
+              segregation methods BS 7671 permits. Regulation 528.1 does not allow a voltage Band I
+              circuit (the typical extra-low-voltage detection loop) to share a wiring system with a
+              Band II circuit unless one of its listed methods is used — every cable insulated for
+              the highest voltage present, a separate compartment of a trunking or ducting system, a
+              partition on cable tray, or a separate conduit, trunking or ducting system. NOTE 2 to
+              that regulation points to BS 5839 for the further separation and segregation
+              recommendations that apply to safety services.
             </li>
             <li>
               Fire-resistant cable specified on the design but standard cable installed, with no
@@ -439,7 +445,11 @@ const sections = [
           </SEOInternalLink>
           , the installation certificate for the fire alarm system is separate from the Electrical
           Installation Certificate for the general electrical installation. That EIC — covering the
-          panel&apos;s mains supply circuit — must be completed in accordance with BS 7671. Under
+          panel&apos;s mains supply circuit — must be completed in accordance with BS 7671, which at
+          Regulation 560.10 requires fire detection and fire alarm systems to comply with the
+          relevant parts of the BS 5839 series. Where the panel is fed by a new dedicated circuit a
+          Minor Works Certificate is not an alternative: Regulation 644.4.201 limits that form to
+          work which does not include the provision of a new circuit. Under
           A4:2026 the Appendix 6 model forms were revised to add dedicated fields for recording the
           details of any surge protective devices (SPDs) and arc fault detection devices (AFDDs)
           fitted on that circuit, so these now have to be captured on the certificate.
@@ -798,7 +808,7 @@ export default function FireAlarmCertificateRequirementsPage() {
       title="Fire Alarm Certificate Requirements | BS 5839 UK"
       description="Complete guide to fire alarm certificate requirements under BS 5839-1. Design, commissioning, and annual service records explained. Who can issue and how long to keep them."
       datePublished="2026-02-01"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

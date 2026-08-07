@@ -585,7 +585,7 @@ export default function ApprenticeProgressionGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Apprentice Career Progression | After Your"
-      description="Complete guide to career progression after an electrical apprenticeship. JIB ECS Gold Card, AM2 assessment, Level 3 qualification…"
+      description="Complete guide to career progression after an electrical apprenticeship. JIB ECS Gold Card, AM2 assessment, Level 3 qualification."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

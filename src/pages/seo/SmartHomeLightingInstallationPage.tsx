@@ -584,7 +584,7 @@ export default function SmartHomeLightingInstallationPage() {
   return (
     <GuideTemplate
       title="Smart Home Lighting Installation UK | DALI, KNX &amp; Zigbee Guide"
-      description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements…"
+      description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

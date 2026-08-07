@@ -7,10 +7,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown, Check, X } from 'lucide-react';
+import { ChevronDown, Check, X, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
+import type { CellWarning } from '@/utils/cellWarnings';
+import { describeCellWarning } from '@/utils/cellWarnings';
 
 interface ComboboxOption {
   value: string;
@@ -28,6 +30,16 @@ interface ComboboxCellProps {
   className?: string;
   allowCustom?: boolean;
   compact?: boolean;
+  /**
+   * A BS 7671 finding that names this cell.
+   *
+   * This component owns eight of the schedule's dropdown columns — including
+   * the protective device rating, which is the single most common thing a
+   * finding is about. Without this the most frequent warnings were the ones the
+   * grid could not show.
+   */
+  regulationWarning?: CellWarning;
+  onOpenWarning?: () => void;
 }
 
 const ComboboxCell: React.FC<ComboboxCellProps> = ({
@@ -38,6 +50,8 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   title,
   className,
   allowCustom = true,
+  regulationWarning,
+  onOpenWarning,
   compact = false,
 }) => {
   const [open, setOpen] = useState(false);
@@ -112,7 +126,47 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
         className
       )}
     >
-      <span className="truncate text-left flex-1">{displayValue || placeholder}</span>
+      <span
+        className={cn(
+          'truncate text-left flex-1',
+          // Same treatment as a text cell: the value carries the colour, so a
+          // flagged dropdown and a flagged input read identically.
+          regulationWarning &&
+            onOpenWarning &&
+            (regulationWarning.severity === 'critical' ? 'text-red-300' : 'text-amber-300')
+        )}
+      >
+        {displayValue || placeholder}
+      </span>
+      {regulationWarning && onOpenWarning ? (
+        /* Replaces the chevron rather than crowding beside it — the cell is
+           95px wide and the dropdown is still reachable by clicking the value.
+           Rendered as a span with a role, not a nested button: a button inside
+           the PopoverTrigger button is invalid and swallows the open click. */
+        <span
+          role="button"
+          tabIndex={0}
+          aria-label={describeCellWarning(regulationWarning)}
+          title={describeCellWarning(regulationWarning)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenWarning?.();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.stopPropagation();
+              onOpenWarning?.();
+            }
+          }}
+          className={cn(
+            'flex h-4 w-4 flex-shrink-0 items-center justify-center rounded',
+            regulationWarning.severity === 'critical' ? 'text-red-300' : 'text-amber-300'
+          )}
+        >
+          <AlertTriangle className="h-3.5 w-3.5" />
+        </span>
+      ) : (
       <ChevronDown
         className={cn(
           'h-3 w-3 flex-shrink-0 transition-opacity',
@@ -123,6 +177,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
             : 'opacity-40'
         )}
       />
+      )}
     </button>
   );
 

@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { PromptAnswerOptions } from './PromptAnswerOptions';
 import { getPromptsForRoom } from '@/data/siteVisit/smartPrompts';
 import type { RoomType } from '@/types/siteVisit';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 interface RoomSmartPromptsProps {
   roomType: RoomType;
@@ -33,7 +34,7 @@ export const RoomSmartPrompts = ({
           const value = getResponse(prompt.key, roomId) || '';
           return (
             <div key={prompt.key} className="space-y-1">
-              <label className="text-[11.5px] font-medium text-white/65">{prompt.question}</label>
+              <label className="text-[11.5px] font-medium text-white">{prompt.question}</label>
               {prompt.helpText && <p className="text-[11px] text-white">{prompt.helpText}</p>}
 
               {prompt.inputType === 'select' && prompt.options && (
@@ -56,7 +57,7 @@ export const RoomSmartPrompts = ({
                 <Input
                   value={value}
                   onChange={(e) => setResponse(prompt.key, e.target.value, roomId, prompt.question)}
-                  className="h-11 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+                  className={inputCn}
                   placeholder="Enter response..."
                   autoCapitalize="sentences"
                   enterKeyHint="done"

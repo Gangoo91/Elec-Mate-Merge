@@ -576,7 +576,7 @@ export default function EVChargerInstallationLeedsPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Leeds 2026 | Costs, Grants, and DNO"
-      description="How much does EV charger installation cost in Leeds in 2026? Local costs, Northern Powergrid DNO notification, OZEV grant, 7kW vs 22kW chargers…"
+      description="How much does EV charger installation cost in Leeds in 2026? Local costs, Northern Powergrid DNO notification, OZEV grant, 7kW vs 22kW chargers."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

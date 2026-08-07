@@ -564,7 +564,7 @@ export default function CarParkLightingCostPage() {
   return (
     <GuideTemplate
       title="Car Park Lighting Cost 2026 | Column & Bollard UK Price"
-      description="How much does car park lighting cost in 2026? UK guide covering column lighting at £500-2000 per column, bollards, CCTV integration, BMS controls…"
+      description="How much does car park lighting cost in 2026? UK guide covering column lighting at £500-2000 per column, bollards, CCTV integration, BMS controls."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

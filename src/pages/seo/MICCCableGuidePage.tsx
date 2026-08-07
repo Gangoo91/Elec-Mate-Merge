@@ -20,7 +20,7 @@ export default function MICCCableGuidePage() {
   return (
     <GuideTemplate
       title="MICC Cable Guide | Mineral Insulated Copper Clad"
-      description="Complete guide to MICC (Mineral Insulated Copper Clad) cable. Properties, fire performance, where to use MICC cable, termination and sealing…"
+      description="Complete guide to MICC (Mineral Insulated Copper Clad) cable. Properties, fire performance, where to use MICC cable, termination and sealing."
       datePublished="2025-06-01"
       dateModified="2026-05-18"
       breadcrumbs={[

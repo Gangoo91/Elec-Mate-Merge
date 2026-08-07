@@ -539,7 +539,7 @@ export default function SolarPanelInstallationCardiffPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Cardiff 2025 | Solar PV Wales"
-      description="Complete guide to solar panel installation in Cardiff. Welsh Government grants (Warm Homes Programme), costs, SEG payments…"
+      description="Complete guide to solar panel installation in Cardiff. Welsh Government grants (Warm Homes Programme), costs, SEG payments."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

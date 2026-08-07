@@ -541,7 +541,7 @@ export default function EVChargerInstallationCambridgePage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Cambridge | Home EV Charging"
-      description="EV charger installation costs in Cambridge 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, UKPN DNO notification…"
+      description="EV charger installation costs in Cambridge 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, UKPN DNO notification."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

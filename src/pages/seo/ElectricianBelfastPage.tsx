@@ -586,7 +586,7 @@ export default function ElectricianBelfastPage() {
     <GuideTemplate
       localArea="Belfast"
       title="Electrician in Belfast | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P)…"
+      description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P)."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

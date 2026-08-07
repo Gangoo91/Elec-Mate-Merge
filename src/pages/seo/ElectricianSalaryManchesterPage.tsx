@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'How does the JIB agreement affect Manchester electrician pay?',
     answer:
-      'JIB (Joint Industry Board) rates apply nationally, with a standard rate and a London plus rate. In Manchester, the standard JIB Approved Electrician rate of approximately £20.50 to £21.50 per hour applies for 2025–2026, equating to approximately £39,000 to £41,000 per year for a 38-hour week. Many Manchester M&E contractors pay above JIB rates to attract and retain quality electricians, particularly for larger projects where skill availability is tight. For self-employed electricians, JIB rates are a useful benchmark but not a ceiling — experienced self-employed electricians typically bill at rates 30 to 60% above the equivalent JIB employed rate.',
+      'JIB (Joint Industry Board) rates apply nationally, with a National Standard rate and a separate London Zone rate. Manchester sits on the National Standard rate. From 5 January 2026 the JIB Approved Electrician rate is £20.08 per hour and the Electrician rate (including Domestic) is £18.38 per hour, both on the Transport Provided column — the headline column most job adverts mean. On Own Transport the same grades are £21.19 and £19.54; Shop Employed, £18.61 and £16.95. A Site or Installation Technician is £22.70 on Transport Provided. Many Manchester M&E contractors pay above JIB rates to attract and retain quality electricians, particularly for larger projects where skill availability is tight. For self-employed electricians, JIB rates are a useful benchmark but not a ceiling — experienced self-employed electricians typically bill at rates well above the equivalent JIB employed rate.',
   },
 ];
 
@@ -174,16 +174,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Newly qualified (0–2 years)</strong> — £32,000 to £36,000. Working for
-                smaller contractors on residential or light commercial work. JIB craft person or
-                approved electrician grade.
+                smaller contractors on residential or light commercial work. JIB Electrician grade
+                (£18.38 per hour, Transport Provided, from 5 January 2026).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £36,000 to £46,000. On larger
-                commercial or mixed-use projects. JIB approved electrician or electrician technician
-                grade.
+                commercial or mixed-use projects. JIB Approved Electrician (£20.08 per hour) or Site
+                or Installation Technician (£22.70 per hour) grade, Transport Provided, from 5
+                January 2026.
               </span>
             </li>
             <li className="flex items-start gap-3">

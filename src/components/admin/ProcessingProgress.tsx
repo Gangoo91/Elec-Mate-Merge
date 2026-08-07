@@ -35,15 +35,15 @@ export default function ProcessingProgress({ total, processed, status }: Process
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold">{total}</div>
-            <div className="text-xs text-muted-foreground">Total Items</div>
+            <div className="text-xs text-white">Total Items</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-green-500">{processed}</div>
-            <div className="text-xs text-muted-foreground">Processed</div>
+            <div className="text-xs text-white">Processed</div>
           </div>
           <div>
             <div className="text-2xl font-bold">{Math.round(percentage)}%</div>
-            <div className="text-xs text-muted-foreground">Complete</div>
+            <div className="text-xs text-white">Complete</div>
           </div>
         </div>
 

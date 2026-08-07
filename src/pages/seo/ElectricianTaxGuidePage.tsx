@@ -648,7 +648,7 @@ export default function ElectricianTaxGuidePage() {
     <GuideTemplate
       localArea="Tax Guide Uk"
       title="Electrician Tax Guide UK 2026 | Self-Employed & Ltd"
-      description="Complete UK tax guide for self-employed electricians and limited companies. Covers self-assessment, allowable expenses, mileage, tools, CIS deductions…"
+      description="Complete UK tax guide for self-employed electricians and limited companies. Covers self-assessment, allowable expenses, mileage, tools, CIS deductions."
       datePublished="2026-01-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

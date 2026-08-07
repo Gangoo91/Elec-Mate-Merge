@@ -61,14 +61,14 @@ const relatedPages = [
   {
     href: '/guides/electrical-symbols-chart',
     title: 'Electrical Symbols Chart (Full Library)',
-    description: 'All 114 BS EN 60617 symbols grouped by category — the master reference.',
+    description: 'All 114 IEC 60617 symbols grouped by category — the master reference.',
     icon: 'PenTool',
     category: 'Reference',
   },
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'BookOpen',
     category: 'Guide',
   },
@@ -83,7 +83,7 @@ const relatedPages = [
   {
     href: '/ai-diagram-builder',
     title: 'AI Diagram Builder',
-    description: 'Drag-and-drop BS EN 60617 symbols into a working circuit drawing.',
+    description: 'Drag-and-drop IEC 60617 symbols into a working circuit drawing.',
     icon: 'ShieldCheck',
     category: 'Tool',
   },
@@ -115,7 +115,7 @@ const sections = [
           drawings — door swing, window, stairs, north arrow — drawn to standard convention.
         </p>
         <p>
-          Each symbol is drawn to <strong>BS EN 60617</strong> — the UK adoption of the
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
           international IEC 60617 standard for graphical symbols on electrical diagrams. The same
           symbols appear on{' '}
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
@@ -125,19 +125,19 @@ const sections = [
           <strong>Regulatory requirement:</strong> BS 7671:2018+A4:2026 Reg 514.9.2 requires that
           all diagrams, charts and notices used in an electrical installation shall comply with the
           applicable standards specified. For graphical symbols on UK installation drawings, the
-          applicable standard is BS EN 60617.
+          applicable standard is IEC 60617.
         </p>
         <p>
           Looking for symbols in a different category? See the full{' '}
           <SEOInternalLink href="/guides/electrical-symbols-chart">
-            BS EN 60617 symbol library
+            IEC 60617 symbol library
           </SEOInternalLink>{' '}
           covering switches, sockets, lighting, distribution, safety, containment, equipment,
           mechanical, renewables, controls and architectural symbols.
         </p>
         <SEOAppBridge
           title="Use these symbols in real drawings"
-          description="The Elec-Mate AI Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
+          description="The Elec-Mate AI Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -150,7 +150,7 @@ export default function ElectricalArchitecturalSymbolsPage() {
   return (
     <GuideTemplate
       title="Architectural Symbols on Electrical Drawings | UK Reference"
-      description="Door, window, stairs and north arrow architectural symbols used on UK electrical installation drawings — context for switch placement…"
+      description="Door, window, stairs and north arrow architectural symbols used on UK electrical installation drawings — context for switch placement."
       datePublished="2026-05-18"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -170,7 +170,7 @@ export default function ElectricalArchitecturalSymbolsPage() {
       faqs={faqs}
       faqHeading="FAQ — Architectural Symbols"
       relatedPages={relatedPages}
-      ctaHeading="Use BS EN 60617 symbols in working drawings"
+      ctaHeading="Use IEC 60617 symbols in working drawings"
       ctaSubheading="Drag-and-drop circuit diagrams. EICR + EIC schedules with correct symbols. Built for UK electricians. 7-day free trial."
     />
   );

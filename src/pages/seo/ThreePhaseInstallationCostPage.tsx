@@ -644,7 +644,7 @@ export default function ThreePhaseInstallationCostPage() {
   return (
     <GuideTemplate
       title="3-Phase Installation Cost UK 2026 | Supply Upgrade Guide"
-      description="How much does a 3-phase installation cost in the UK in 2026? Complete guide covering DNO application costs, 3-phase consumer units, labour…"
+      description="How much does a 3-phase installation cost in the UK in 2026? Complete guide covering DNO application costs, 3-phase consumer units, labour."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

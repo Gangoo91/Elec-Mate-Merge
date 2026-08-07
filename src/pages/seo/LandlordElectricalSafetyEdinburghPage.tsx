@@ -457,7 +457,7 @@ const sections = [
                 411.3.4 — new in BS 7671:2018+A4:2026), replacing outdated plastic consumer units
                 with metal enclosures, upgrading earthing and bonding, and replacing deteriorated
                 rubber-insulated cables common in the tenement stock. Where a consumer unit is being
-                replaced, Regulation 421.1.7 (introduced by A4:2026) recommends consideration of arc
+                replaced, Regulation 421.1.7 (introduced by Amendment 2:2022) recommends consideration of arc
                 fault detection devices (AFDDs) on AC final circuits to mitigate fire risk —
                 particularly relevant in high-risk or HMO premises.
               </span>

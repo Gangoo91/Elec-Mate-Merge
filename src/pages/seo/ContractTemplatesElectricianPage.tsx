@@ -635,7 +635,7 @@ export default function ContractTemplatesElectricianPage() {
   return (
     <GuideTemplate
       title="Electrical Contractor Contract Templates UK | Customer"
-      description="What to include in a domestic customer contract for electrical work — Consumer Contracts Regulations 2013, payment schedules, variation orders…"
+      description="What to include in a domestic customer contract for electrical work — Consumer Contracts Regulations 2013, payment schedules, variation orders."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

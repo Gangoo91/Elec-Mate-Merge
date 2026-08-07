@@ -4058,7 +4058,7 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'A general-type 30mA RCD must trip within 300ms at its rated residual current (IΔn) — and that single AC test at IΔn is what BS 7671:2018+A4:2026 requires under Regulation 643.7.3.201, whatever the RCD type. The familiar 40ms at 5IΔn is a device characteristic from BS EN 61008/61009; Amendment 4 deleted Table 3A of Appendix 3, so it is no longer part of the required verification.',
+      'A general-type 30mA RCD must trip within 300ms at its rated residual current (IΔn) — and that single AC test at IΔn is what BS 7671:2018+A4:2026 requires under Regulation 643.8, whatever the RCD type. The familiar 40ms at 5IΔn is a device characteristic from BS EN 61008/61009; Amendment 4 deleted Table 3A of Appendix 3, so it is no longer part of the required verification.',
     section: '3.6.3',
     difficulty: 'intermediate',
     topic: 'RCD Testing',

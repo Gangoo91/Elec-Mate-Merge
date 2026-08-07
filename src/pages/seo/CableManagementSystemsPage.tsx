@@ -527,7 +527,7 @@ export default function CableManagementSystemsPage() {
   return (
     <GuideTemplate
       title="Cable Management Systems — UK Guide 2024 | Conduit,"
-      description="Complete guide to cable management systems for UK electricians: conduit (BS EN 61386), cable trunking (BS EN 50085), cable tray and basket tray…"
+      description="Complete guide to cable management systems for UK electricians: conduit (BS EN 61386), cable trunking (BS EN 50085), cable tray and basket tray."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

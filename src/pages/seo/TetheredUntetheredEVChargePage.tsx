@@ -655,7 +655,7 @@ export default function TetheredUntetheredEVChargePage() {
   return (
     <GuideTemplate
       title="Tethered vs Untethered EV Charger UK | Which Should You"
-      description="Complete guide to tethered vs untethered EV chargers in the UK. Pros and cons of each, cable types (Type 2, Type 1), theft and security, future-proofing…"
+      description="Complete guide to tethered vs untethered EV chargers in the UK. Pros and cons of each, cable types (Type 2, Type 1), theft and security, future-proofing."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

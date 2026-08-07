@@ -281,10 +281,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 17,
     question: 'What is the recommended approach for smart home data backup?',
     options: [
-      'Storing configurations only on the device itself',
+      'Local storage on the hub device only',
       'Both local and cloud backup strategies',
-      'Relying solely on the manufacturer to retain settings',
-      'Pairing every device to a single manufacturer cloud account',
+      'Reliance on the manufacturer to retain settings',
+      'Cloud backup to a single manufacturer account',
     ],
     correctAnswer: 1,
     explanation:
@@ -1717,10 +1717,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 101,
     question: "What is 'adaptive comfort' in smart environmental control?",
     options: [
-      'Holding a fixed temperature regardless of feedback',
+      'Continuously holding a fixed set-point regardless of occupant feedback',
       'Automatically adjusting comfort settings based on occupant feedback and behavior',
-      'Allowing only manual adjustment from a wall panel',
-      'Maintaining maximum output for the fastest comfort',
+      'Manually adjusting the set-point from a wall panel only, with no learning',
+      'Permanently maintaining maximum output to reach comfort as fast as possible',
     ],
     correctAnswer: 1,
     explanation:
@@ -1734,10 +1734,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: 'Which approach minimizes HVAC energy consumption during unoccupied periods?',
     options: [
-      'Turning systems completely off',
-      'Random temperature adjustments',
+      'Complete shutdown of the heating and cooling plant',
+      'Random temperature adjustments throughout the day',
       'Intelligent setback with optimal recovery scheduling',
-      'Maintaining normal temperatures',
+      'Maintaining normal occupied temperatures at all times',
     ],
     correctAnswer: 2,
     explanation:
@@ -2008,10 +2008,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: "What is 'false alarm reduction' important for in smart security?",
     options: [
-      'Increasing the sensitivity of every sensor',
-      'Reducing the battery life of wireless detectors',
+      'Increasing the sensitivity of every sensor to its maximum setting',
+      'Reducing the battery life of wireless detectors and door contacts',
       'Preventing emergency response fatigue and maintaining system credibility',
-      'Disabling alerts whenever the home is occupied',
+      'Disabling all intruder alerts whenever the property is occupied',
     ],
     correctAnswer: 2,
     explanation:
@@ -2401,10 +2401,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: "What is 'contextual awareness' in smart home voice assistants?",
     options: [
-      'Responding identically regardless of time or location',
+      'Responding identically regardless of the time of day or room location',
       'Understanding environmental context and user habits for relevant responses',
-      'Limiting responses to a fixed list of preset phrases',
-      'Requiring the wake word before every single word',
+      'Limiting responses to a fixed list of preset phrases and commands',
+      'Requiring the wake word to be repeated before every single command',
     ],
     correctAnswer: 1,
     explanation:
@@ -2745,10 +2745,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'Which testing sequence should be followed for smart home electrical installations?',
     options: [
-      'Earth fault loop impedance first, then continuity last',
+      'Earth fault loop impedance first, then continuity and insulation last',
       'BS 7671 specified sequence: continuity, insulation, polarity, earth fault loop',
-      'Any order, as the sequence has no effect on results',
-      'Insulation resistance only, with no other tests required',
+      'Any convenient order, since the sequence has no effect on the results',
+      'Insulation resistance only, with no continuity or polarity testing needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -2797,9 +2797,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: "What is the purpose of 'safe isolation' procedures?",
     options: [
       'Ensuring electrical supply is disconnected and cannot be re-energized during work',
-      'Separating data cables from mains cables in trunking',
-      'Isolating each smart device on its own circuit',
-      'Reducing the supply voltage to a safe working level',
+      'Separating data cabling from mains cabling within shared trunking',
+      'Providing each smart device with its own individual final circuit',
+      'Reducing the supply voltage to a safe touch level before working',
     ],
     correctAnswer: 0,
     explanation:
@@ -2898,10 +2898,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: 'What is the purpose of equipotential bonding in electrical installations?',
     options: [
-      'Increasing the current-carrying capacity of conductors',
-      'Reducing the supply voltage to a safe level',
+      'Increasing the current-carrying capacity of the circuit conductors',
+      'Reducing the supply voltage to a safe level for smart devices',
       'Ensuring metallic parts are at same potential to prevent dangerous voltages',
-      'Providing surge protection for sensitive electronics',
+      'Providing surge protection for sensitive electronic equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -2915,9 +2915,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'Which documentation must be maintained for smart home installations?',
     options: [
-      'Only the original purchase receipts for devices',
-      'Just the manufacturer warranty cards',
-      'A verbal record kept by the installer',
+      'Original purchase receipts and warranty cards for the devices',
+      'Manufacturer app screenshots showing each device online',
+      'A verbal handover record kept by the installer',
       'Certificates, test results, maintenance records, and as-built drawings',
     ],
     correctAnswer: 3,
@@ -3002,7 +3002,7 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'What is the recommended periodic inspection interval for domestic installations?',
     options: [
       '10 years',
-      'No periodic inspection required',
+      '3 years',
       '15 years',
       '5 years',
     ],
@@ -3070,9 +3070,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'What is the most critical safety consideration for DIY smart home installations?',
     options: [
       'Understanding electrical safety requirements and knowing when to use qualified electricians',
-      'Choosing devices with the most attractive design',
-      'Buying the cheapest devices to reduce project cost',
-      'Selecting devices that pair the fastest with the hub',
+      'Choosing devices with the most attractive design and the best app interface',
+      'Buying the cheapest available devices to keep the project cost down',
+      'Selecting devices that pair fastest with the hub and need least setup',
     ],
     correctAnswer: 0,
     explanation:
@@ -3378,10 +3378,10 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: 'Which factor most affects the success of smart home troubleshooting?',
     options: [
-      'Replacing components at random until it works',
-      'Guessing the cause based on past experience alone',
+      'Replacing components at random until the fault clears',
+      'Trial-and-error substitution based on past experience',
       'Systematic approach and proper diagnostic tools',
-      'Resetting everything to factory defaults first',
+      'Resetting every device to factory defaults first',
     ],
     correctAnswer: 2,
     explanation:
@@ -3413,9 +3413,9 @@ export const smartHomeQuestionBank: StandardMockQuestion[] = [
     question: 'Which maintenance strategy provides the best return on investment?',
     options: [
       'Preventive maintenance based on usage patterns and manufacturer recommendations',
-      'Reactive repairs only after each component fails',
-      'Replacing the entire system on a fixed annual cycle',
-      'Performing no maintenance to minimise labour costs',
+      'Reactive repairs carried out only after each component has failed',
+      'Replacing the entire system on a fixed annual replacement cycle',
+      'Deferring all maintenance in order to minimise labour costs',
     ],
     correctAnswer: 0,
     explanation:

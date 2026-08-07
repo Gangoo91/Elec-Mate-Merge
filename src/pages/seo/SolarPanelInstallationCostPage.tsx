@@ -656,7 +656,7 @@ export default function SolarPanelInstallationCostPage() {
   return (
     <GuideTemplate
       title="Solar Panel Electrical Installation Cost UK 2026 | Wiring"
-      description="How much does the electrical work cost for solar panel installation in 2026? Complete UK guide covering DC and AC isolators, meter tails…"
+      description="How much does the electrical work cost for solar panel installation in 2026? Complete UK guide covering DC and AC isolators, meter tails."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

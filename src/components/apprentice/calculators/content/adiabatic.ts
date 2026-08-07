@@ -30,7 +30,8 @@ export const adiabaticContent: CalculatorContent = {
   ],
 
   workedExample: {
-    scenario: 'CPC on a circuit with 2 kA fault current, device clears in 0.1 s, 70 °C thermoplastic copper (k = 115).',
+    scenario:
+      'CPC on a circuit with 2 kA fault current, device clears in 0.1 s, 70 °C thermoplastic copper (k = 115).',
     inputs: [
       { label: 'Fault current (I)', value: '2000 A' },
       { label: 'Disconnection time (t)', value: '0.1 s' },
@@ -59,7 +60,10 @@ export const adiabaticContent: CalculatorContent = {
       citation: 'Regulation 434.5.2',
       clauseText:
         'A protective device shall have an operating characteristic such that it protects the wiring on the load side against the effects of fault current, so that the conductor temperature limit is not exceeded.',
-      sourceFacetIds: ['ae0f3b79-c8a8-4183-85c0-d35e30baf822', 'e72dac3b-a097-4065-a1f8-01cee06e7334'],
+      sourceFacetIds: [
+        'ae0f3b79-c8a8-4183-85c0-d35e30baf822',
+        'e72dac3b-a097-4065-a1f8-01cee06e7334',
+      ],
     },
   ],
 
@@ -72,7 +76,8 @@ export const adiabaticContent: CalculatorContent = {
       ['Aluminium, 70 °C thermoplastic', '76'],
       ['Steel', '~50'],
     ],
-    footnote: 'k depends on conductor material and insulation — always read the exact value from BS 7671 Table 43.1.',
+    footnote:
+      'k depends on conductor material and insulation — always read the exact value from BS 7671 Table 43.1.',
   },
 
   _grounding: {

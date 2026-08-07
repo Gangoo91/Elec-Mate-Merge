@@ -477,7 +477,7 @@ export default function ElectricianLincolnPage() {
       noindex={true}
       localArea="Lincoln"
       title="Electrician in Lincoln | Local Electricians 2026"
-      description="Find qualified electricians in Lincoln. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians…"
+      description="Find qualified electricians in Lincoln. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

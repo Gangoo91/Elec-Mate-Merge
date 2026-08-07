@@ -2,24 +2,16 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Award,
-  BookOpen,
-  Brain,
-  GraduationCap,
-  FileCheck2,
-  Target,
-  Lightbulb,
-  Users,
-  CheckCircle2,
-  Clock,
-  ShieldCheck,
-  ArrowUpRight,
-} from 'lucide-react';
+import { Award, BookOpen, GraduationCap, FileCheck2, Target, Users } from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
 // -------------------------------------------------------------------
+
+/** Edge-to-edge on phones, inset and rounded from sm: up. */
+const panelCn =
+  '-mx-4 my-6 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6';
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides/how-to-become-an-electrician' },
@@ -39,11 +31,12 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The ECS (Electrotechnical Certification Scheme) card is the industry-recognised identity card for electricians and electrical workers in the UK.',
-  'There are multiple card types: Apprentice, Provisional, Installation Electrician (gold card), Technician, and more — each requires different qualifications.',
-  'The gold Installation Electrician card requires the AM2 practical assessment, C&G 2382 (18th Edition), C&G 2391, and an NVQ Level 3. BS 7671 Reg 651.4 requires periodic inspection and testing to be carried out by skilled persons competent in such work — the 2391 qualification demonstrates exactly that competence.',
-  'ECS cards must be renewed every 3 to 5 years and require evidence of ongoing CPD. At renewal, your 18th Edition qualification must be current — the current edition is BS 7671:2018+A4:2026, which introduced AFDD recommendations (Reg 421.1.7) and revised SPD rules (Section 534). The C&G 2382 syllabus covers A4:2026.',
-  'GN3 (IET Guidance Note 3, 9th Edition) is the companion reference document for BS 7671 Part 6. It provides practical guidance for inspection and testing and notes that the person responsible shall be prepared to formally demonstrate competence.',
+  'The ECS (Electrotechnical Certification Scheme) card is the industry-recognised identity and competence card for electricians and electrical workers in the UK. It carries the CSCS logo, so it is accepted on CSCS-controlled sites.',
+  'There is a card for each career stage — Apprentice, Provisional, Installation Electrician (the gold card), Technician, Manager and a range of specialist occupations — and each has its own qualification requirements.',
+  'The gold Installation Electrician card is built on an NVQ Level 3, the AM2 practical assessment, C&G 2382 (BS 7671) and C&G 2391 (inspection and testing). BS 7671 Reg 651.5 requires periodic inspection and testing to be carried out by one or more skilled persons competent in such work, and Reg 641.6 says the same for initial verification — the 2391 is how you evidence that competence.',
+  'ECS cards are time-limited and require evidence of ongoing CPD at renewal. Your BS 7671 qualification must be to the edition in force: the current edition is BS 7671:2018+A4:2026, issued 15 April 2026, and the previous edition (A3:2024) is withdrawn on 15 October 2026.',
+  'A4:2026 introduced a new Chapter 57 (stationary secondary batteries), a new Section 716 (Power over Ethernet) and a new Chapter 81 (energy efficiency); it revised the Appendix 4 reference methods for buried cables and deleted Appendix 17.',
+  'IET Guidance Note 3 (9th Edition) is the companion guidance to BS 7671 Part 6. It states that the person responsible for inspection and testing shall be prepared to formally demonstrate competence, and that a recognised inspection and testing qualification held alongside a current Level 3 BS 7671 certificate is an acceptable way to do so.',
   'Elec-Mate helps you prepare for every qualification you need for your ECS card — 46+ training courses, flashcards, mock exams, and the AM2 simulator.',
 ];
 
@@ -51,7 +44,7 @@ const faqs = [
   {
     question: 'What is the difference between an ECS card and a CSCS card?',
     answer:
-      'The ECS (Electrotechnical Certification Scheme) card is the specific card for the electrical sector, managed by the JIB (Joint Industry Board) and NET (formerly the ECA and SELECT). The CSCS (Construction Skills Certification Scheme) is the broader construction industry card. ECS cards are recognised as equivalent to CSCS cards — if you hold an ECS card, you do not need a separate CSCS card to access construction sites. Your ECS card has the CSCS logo on it to confirm this. The key difference is that the ECS scheme is tailored to electrotechnical occupations and recognises electrical qualifications specifically, whereas the CSCS scheme covers all construction trades. For electricians, the ECS card is the correct card to hold. Other trades (plumbers, bricklayers, carpenters) hold CSCS cards relevant to their own sector schemes.',
+      'The ECS (Electrotechnical Certification Scheme) card is the specific card for the electrical sector, operated by the JIB (Joint Industry Board). The CSCS (Construction Skills Certification Scheme) is the broader construction industry card. ECS cards are recognised as equivalent to CSCS cards — if you hold an ECS card, you do not need a separate CSCS card to access construction sites. Your ECS card has the CSCS logo on it to confirm this. The key difference is that the ECS scheme is tailored to electrotechnical occupations and recognises electrical qualifications specifically, whereas the CSCS scheme covers all construction trades. For electricians, the ECS card is the correct card to hold. Other trades (plumbers, bricklayers, carpenters) hold CSCS cards relevant to their own sector schemes.',
   },
   {
     question: 'How long does it take to get an ECS card?',
@@ -61,7 +54,7 @@ const faqs = [
   {
     question: 'Do I need an ECS card to work as an electrician?',
     answer:
-      'Legally, there is no law that requires you to hold an ECS card to carry out electrical work. However, in practice, an ECS card is essential. Almost all commercial and industrial construction sites require workers to hold a valid ECS or CSCS card for site access — it is a standard condition in contracts and site rules. Many domestic electrical employers also expect their electricians to hold the card. Registration with competent person schemes (NICEIC, NAPIT, ELECSA) does not require an ECS card, but the qualifications needed for scheme registration (18th Edition, 2391, NVQ) are the same qualifications that qualify you for the ECS card. In summary: you can technically work without one, but you will find it very difficult to access sites, gain employment with reputable companies, or demonstrate your credentials to customers.',
+      'Legally, there is no law that requires you to hold an ECS card to carry out electrical work. However, in practice, an ECS card is essential. Almost all commercial and industrial construction sites require workers to hold a valid ECS or CSCS card for site access — it is a standard condition in contracts and site rules. Many domestic electrical employers also expect their electricians to hold the card. Registration with a competent person scheme (such as NICEIC or NAPIT) does not require an ECS card, but the qualifications needed for scheme registration (C&G 2382, C&G 2391, NVQ Level 3) are the same qualifications that qualify you for the ECS card. In summary: you can technically work without one, but you will find it very difficult to access sites, gain employment with reputable companies, or demonstrate your credentials to customers.',
   },
   {
     question: 'What qualifications do I need for the gold ECS card?',
@@ -166,10 +159,11 @@ const sections = [
     content: (
       <>
         <p>
-          The ECS scheme offers several card types. Here are the most common ones for electricians:
+          These are the four cards that cover almost every electrician. Scroll the table sideways on
+          a phone to see the full row.
         </p>
-        <div className="overflow-x-auto my-6 rounded-2xl border border-white/10">
-          <table className="w-full text-sm text-white border-collapse">
+        <div className="-mx-4 my-6 overflow-x-auto border-y border-white/10 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <table className="w-full min-w-[720px] text-sm text-white border-collapse">
             <thead>
               <tr className="bg-white/[0.07] text-left">
                 <th className="px-4 py-3 font-semibold border-b border-white/10">Card type</th>
@@ -216,7 +210,7 @@ const sections = [
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  NVQ Level 3, AM2 pass, C&G 2382 (BS 7671:2018+A4:2026), C&G 2391, HS&E test
+                  NVQ Level 3, AM2 pass, C&G 2382 (BS 7671), C&G 2391, HS&E test
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">5 years</td>
                 <td className="px-4 py-3">Fully qualified electricians working independently</td>
@@ -237,93 +231,83 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Apprentice Card (red)</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  For registered{' '}
-                  <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
-                    electrical apprentices
-                  </SEOInternalLink>{' '}
-                  currently working towards their qualifications. Requires enrolment on a recognised
-                  apprenticeship programme and a current HS&E test pass. Valid for the duration of
-                  the apprenticeship (typically 3 to 4 years). This card allows site access for
-                  apprentices working under supervision.
-                </p>
-              </div>
+        <div className={panelCn}>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Apprentice card (red)
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white">
+                For registered{' '}
+                <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
+                  electrical apprentices
+                </SEOInternalLink>{' '}
+                working towards their qualifications. Requires enrolment on a recognised
+                apprenticeship programme and a current HS&E test pass. Valid for the duration of the
+                apprenticeship (typically 3 to 4 years). It gives site access to apprentices working
+                under supervision.
+              </p>
             </div>
-          </div>
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Target className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Provisional Card (blue)</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  For individuals who have completed their academic qualifications (such as the
-                  Diploma in Electrical Installation) but have not yet completed the NVQ Level 3 or
-                  passed the AM2. The Provisional card recognises that you have the theoretical
-                  knowledge but are still building the practical evidence for your NVQ portfolio.
-                  Valid for up to 3 years, during which time you should be working towards
-                  completing the NVQ and AM2.
-                </p>
-              </div>
+            <div className="border-t border-white/[0.1] pt-5">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Provisional card (blue)
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white">
+                For people who have finished their academic qualifications — such as the Diploma in
+                Electrical Installation — but have not yet completed the NVQ Level 3 or passed the
+                AM2. It recognises that you hold the theoretical knowledge while you are still
+                building the practical evidence for your NVQ portfolio. Valid for up to 3 years,
+                during which you should be working towards the NVQ and AM2.
+              </p>
             </div>
-          </div>
-          <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <Award className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Installation Electrician Card (gold)</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  The gold card is the standard card for fully qualified Installation Electricians.
-                  Requires: NVQ Level 3, AM2 pass,{' '}
-                  <SEOInternalLink href="/guides/18th-edition-exam-tips">
-                    C&G 2382 (18th Edition — current edition BS 7671:2018+A4:2026)
-                  </SEOInternalLink>
-                  ,{' '}
-                  <SEOInternalLink href="/guides/2391-exam-tips">
-                    C&G 2391 (Inspection and Testing)
-                  </SEOInternalLink>
-                  , and a current HS&E test pass. The 2391 requirement is grounded in BS 7671
-                  itself: Reg 651.4 states that periodic inspection and testing shall be carried out
-                  by one or more skilled persons competent in such work. This is the card most
-                  electricians are working towards. It confirms you are qualified to design,
-                  install, inspect, and test electrical installations. Valid for 5 years.
-                </p>
-              </div>
+            <div className="border-t border-white/[0.1] pt-5">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Installation Electrician card (gold)
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white">
+                The standard card for fully qualified Installation Electricians, and the one most
+                electricians are working towards. Requires an NVQ Level 3, an AM2 pass,{' '}
+                <SEOInternalLink href="/guides/18th-edition-exam-tips">
+                  C&G 2382 (BS 7671 Wiring Regulations)
+                </SEOInternalLink>
+                ,{' '}
+                <SEOInternalLink href="/guides/2391-exam-tips">
+                  C&G 2391 (inspection and testing)
+                </SEOInternalLink>{' '}
+                and a current HS&E test pass. Valid for 5 years.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-white">
+                The 2391 requirement is grounded in BS 7671 itself. Reg 641.6 requires initial
+                verification to be made by one or more skilled persons competent in such work, and
+                Reg 651.5 places the same duty on periodic inspection and testing. IET Guidance Note
+                3 goes further, stating that the person responsible shall be prepared to formally
+                demonstrate competence — and that a recognised inspection and testing qualification
+                held with a current Level 3 BS 7671 certificate is an acceptable way to do it.
+              </p>
             </div>
-          </div>
-          <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <ShieldCheck className="w-6 h-6 text-purple-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Technician Card (black)</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  For electricians with additional higher-level qualifications — typically an
-                  HNC/HND or foundation degree in electrical/electronic engineering, on top of the
-                  standard Installation Electrician requirements. The Technician card recognises a
-                  higher level of technical knowledge and is often held by engineers, designers, and
-                  senior technical staff.
-                </p>
-              </div>
+            <div className="border-t border-white/[0.1] pt-5">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Technician card (black)
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white">
+                For electricians holding higher-level qualifications on top of the standard
+                Installation Electrician requirements — typically an HNC/HND or foundation degree in
+                electrical or electronic engineering. It recognises a higher level of technical
+                knowledge and is often held by engineers, designers and senior technical staff.
+              </p>
             </div>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-4">
-              <Users className="w-6 h-6 text-white mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Other Card Types</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  The ECS scheme also issues cards for: Maintenance Electricians, Electrical
-                  Improvers (experienced but without formal NVQ), Highway Electrical operatives,
-                  Fire and Security engineers, Data and Communications engineers, and Building
-                  Management Systems (BMS) engineers. Each has specific qualification requirements.
-                  Check the JIB/ECS website for the full list.
-                </p>
-              </div>
+            <div className="border-t border-white/[0.1] pt-5">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Manager and specialist cards
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-white">
+                Beyond the four cards above, the ECS scheme issues a Manager card for people in
+                electrotechnical management roles, plus cards for Maintenance Electricians,
+                Electrical Improvers, Highway Electrical operatives, Fire and Security engineers,
+                Data and Communications engineers, and Building Management Systems (BMS) engineers.
+                Each has its own qualification requirements — check the JIB/ECS website for the
+                current list and criteria before you apply.
+              </p>
             </div>
           </div>
         </div>
@@ -336,55 +320,56 @@ const sections = [
     content: (
       <>
         <p>
-          The ECS card you need depends on where you are in your career and what qualifications you
-          hold. Here is a quick guide:
+          Find the line that describes you. The card you need depends on where you are in your
+          career and which qualifications you already hold.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Starting an apprenticeship?</strong> You need the Apprentice card (red).
-                Your employer or training provider should arrange this as part of your
-                apprenticeship registration.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>
-                  Finished your academic qualifications but not yet completed the NVQ or AM2?
-                </strong>{' '}
-                Apply for the Provisional card (blue). This gives you site access while you work
-                towards your full qualification.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Fully qualified with NVQ Level 3, AM2, 18th Edition, and 2391?</strong>{' '}
-                Apply for the Installation Electrician card (gold). This is the standard card for
-                qualified electricians.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>
-                  Hold an HNC/HND or degree on top of your installation qualifications?
-                </strong>{' '}
-                Apply for the Technician card (black).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Experienced electrician without formal NVQ?</strong> Check the Experienced
-                Worker assessment route — the JIB offers a pathway for experienced workers to gain
-                formal recognition without going back to college.
-              </span>
-            </li>
-          </ul>
+        <div className="-mx-4 my-6 overflow-x-auto border-y border-white/10 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <table className="w-full min-w-[520px] border-collapse text-sm text-white">
+            <thead>
+              <tr className="bg-white/[0.07] text-left">
+                <th className="border-b border-white/10 px-4 py-3 font-semibold">
+                  Where you are now
+                </th>
+                <th className="border-b border-white/10 px-4 py-3 font-semibold">
+                  Card to apply for
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06]">
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  Starting an apprenticeship — your employer or training provider normally arranges
+                  this as part of your registration
+                </td>
+                <td className="px-4 py-3 font-medium">Apprentice (red)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">
+                  Academic qualifications finished, NVQ Level 3 or AM2 still outstanding
+                </td>
+                <td className="px-4 py-3 font-medium">Provisional (blue)</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  Fully qualified — NVQ Level 3, AM2, C&G 2382 and C&G 2391 all held
+                </td>
+                <td className="px-4 py-3 font-medium">Installation Electrician (gold)</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3">
+                  HNC/HND or a degree on top of your installation qualifications
+                </td>
+                <td className="px-4 py-3 font-medium">Technician (black)</td>
+              </tr>
+              <tr className="bg-white/[0.02]">
+                <td className="px-4 py-3">
+                  Years of experience but no formal NVQ — ask the JIB about the Experienced Worker
+                  assessment route rather than going back to college
+                </td>
+                <td className="px-4 py-3 font-medium">Experienced Worker route</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <SEOAppBridge
           title="Prepare for every qualification with Elec-Mate"
@@ -403,8 +388,8 @@ const sections = [
           Applying for an ECS card is done through the JIB/ECS website. The process is
           straightforward:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ol className="space-y-4 text-white list-decimal list-inside">
+        <div className={panelCn}>
+          <ol className="list-inside list-decimal space-y-4 text-white">
             <li>
               <strong>Pass the HS&E test.</strong> Before you can apply for any ECS card, you must
               pass the Health, Safety and Environment test. This is a computer-based test taken at a
@@ -449,77 +434,83 @@ const sections = [
           ECS cards are not permanent — they must be renewed. The renewal process ensures that
           cardholders are keeping their knowledge and skills up to date.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={panelCn}>
           <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Validity period:</strong> Most ECS cards are valid for 5 years. Apprentice
-                cards are valid for the duration of the apprenticeship. Provisional cards are
-                typically valid for 3 years.
-              </span>
+            <li>
+              <strong>Validity period.</strong> Most ECS cards are valid for 5 years. Apprentice
+              cards are valid for the duration of the apprenticeship. Provisional cards are
+              typically valid for 3 years.
             </li>
-            <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>CPD requirement:</strong> To renew your card, you must demonstrate that you
-                have completed{' '}
-                <SEOInternalLink href="/guides/cpd-for-electricians">
-                  Continuing Professional Development (CPD)
-                </SEOInternalLink>{' '}
-                during the card's validity period. The JIB requires evidence of relevant learning
-                activities — courses, training, seminars, or structured self-study.
-              </span>
+            <li>
+              <strong>CPD requirement.</strong> To renew, you must show that you have completed{' '}
+              <SEOInternalLink href="/guides/cpd-for-electricians">
+                Continuing Professional Development (CPD)
+              </SEOInternalLink>{' '}
+              during the card's validity period. The JIB requires evidence of relevant learning
+              activities — courses, training, seminars or structured self-study.
             </li>
-            <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Current qualifications:</strong> Your qualifications must still be current
-                at renewal. The current edition of the Wiring Regulations is{' '}
-                <strong>BS 7671:2018+A4:2026</strong> (effective 2026). Amendment A4:2026 introduced
-                significant new requirements including AFDD recommendations (Reg 421.1.7) and
-                revised surge protective device rules (Section 534). Gold card holders must hold the
-                C&G 2382 qualification to the current edition — the 2382 syllabus covers A4:2026. If
-                you qualified under an earlier edition, a{' '}
-                <SEOInternalLink href="/guides/18th-edition-exam-tips">
-                  BS 7671 update course
-                </SEOInternalLink>{' '}
-                will bring you current before renewal.
-              </span>
+            <li>
+              <strong>Current qualifications.</strong> Your BS 7671 qualification must be to the
+              edition in force. The current edition is <strong>BS 7671:2018+A4:2026</strong>, issued
+              on 15 April 2026; the previous edition (A2:2022 + Corrigendum + A3:2024) remains
+              current but is withdrawn on 15 October 2026. If you qualified under an earlier
+              edition, a{' '}
+              <SEOInternalLink href="/guides/18th-edition-exam-tips">
+                BS 7671 update course
+              </SEOInternalLink>{' '}
+              will bring you current before renewal.
             </li>
-            <li className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>HS&E test:</strong> You may need a current HS&E test pass at renewal. The
-                test is valid for 2 years, so you may need to retake it during your card's validity
-                period.
-              </span>
+            <li>
+              <strong>HS&E test.</strong> You may need a current HS&E test pass at renewal. The test
+              is valid for 2 years, so you may need to retake it during your card's validity period.
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-            <div>
-              <p className="text-white text-sm font-semibold mb-1">
-                Keeping your 18th Edition knowledge current
-              </p>
-              <p className="text-white text-sm leading-relaxed">
-                IET Guidance Note 3 (GN3, 9th Edition) is the companion reference document for BS
-                7671 Part 6 — Inspection and Testing. It provides practical guidance for competent
-                persons performing inspection and testing and notes that the person responsible
-                shall be prepared to formally demonstrate competence. The current edition of GN3
-                incorporates A4:2026 changes. Elec-Mate's{' '}
-                <SEOInternalLink href="/guides/18th-edition-exam-tips">
-                  18th Edition training
-                </SEOInternalLink>{' '}
-                and{' '}
-                <SEOInternalLink href="/guides/cpd-for-electricians">CPD resources</SEOInternalLink>{' '}
-                cover both the core regulations and the A4:2026 updates.
-              </p>
-            </div>
-          </div>
+        <h3 className="mb-3 mt-8 text-[15px] font-semibold tracking-tight text-white">
+          What changed at A4:2026
+        </h3>
+        <p>
+          Amendment 4:2026 is not a light touch. The changes most likely to come up on an update
+          course, and in conversation on site, are:
+        </p>
+        <div className={panelCn}>
+          <ul className="space-y-3 text-white">
+            <li>
+              <strong>New Chapter 57</strong> — requirements for stationary secondary battery
+              installations used for storage and supply.
+            </li>
+            <li>
+              <strong>New Section 716</strong> — Power over Ethernet: distributing ELV DC power over
+              balanced information technology cabling.
+            </li>
+            <li>
+              <strong>New Chapter 81</strong> — energy efficiency, replacing the deleted Appendix
+              17.
+            </li>
+            <li>
+              <strong>New Section 545</strong> — functional earthing and functional equipotential
+              bonding for ICT equipment and systems.
+            </li>
+            <li>
+              <strong>Appendix 4</strong> — the reference methods for buried cables now distinguish
+              between a cable in direct contact with soil and one in a conduit or duct, with
+              different current-carrying capacities for each.
+            </li>
+            <li>
+              <strong>Reg 537.4.2</strong> — firefighter's switches are now required in locations
+              specified by the fire engineer to support the building's fire strategy.
+            </li>
+          </ul>
         </div>
+        <p>
+          IET Guidance Note 3 (9th Edition) is the companion guidance to BS 7671 Part 6, Inspection
+          and Testing. It is worth reading alongside the regulations at renewal time, because it is
+          the document that spells out how an inspector is expected to evidence competence.
+          Elec-Mate's{' '}
+          <SEOInternalLink href="/guides/18th-edition-exam-tips">BS 7671 training</SEOInternalLink>{' '}
+          and <SEOInternalLink href="/guides/cpd-for-electricians">CPD resources</SEOInternalLink>{' '}
+          cover the core regulations and the A4:2026 updates.
+        </p>
         <p>
           The JIB sends renewal reminders before your card expires. Do not let your card lapse —
           turning up to site with an expired card is the same as turning up with no card. Apply for
@@ -539,41 +530,13 @@ const sections = [
           sites. You do not need a separate CSCS card if you hold a valid ECS card.
         </p>
         <p>
-          When you arrive at a construction site and the gateman asks for your CSCS card, your ECS
-          card serves the same purpose. The card has a colour coding system that tells the site
-          manager your occupation and qualification level at a glance:
+          When you arrive on site and the gateman asks for your CSCS card, your ECS card serves the
+          same purpose. The colour tells the site manager your occupation and qualification level at
+          a glance — red for an apprentice under supervision, blue for a provisional holder building
+          practical experience, gold for a fully qualified Installation Electrician working
+          independently, and black for a Technician. The table near the top of this guide sets out
+          what sits behind each colour.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Red = Apprentice.</strong> Working towards qualifications, must work under
-                supervision.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Blue = Provisional.</strong> Academically qualified, building practical
-                experience.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Gold = Installation Electrician.</strong> Fully qualified, can work
-                independently.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Black = Technician.</strong> Higher-level qualification holder.
-              </span>
-            </li>
-          </ul>
-        </div>
         <p>
           The CSCS scheme periodically reviews its partner schemes to ensure standards are
           maintained. The ECS scheme has consistently met these standards, making it one of the most
@@ -591,8 +554,8 @@ const sections = [
           Your ECS card tells a story of your career progression. Most electricians follow this
           path:
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ol className="space-y-4 text-white list-decimal list-inside">
+        <div className={panelCn}>
+          <ol className="list-inside list-decimal space-y-4 text-white">
             <li>
               <strong>Apprentice card (red)</strong> — start your apprenticeship, study{' '}
               <SEOInternalLink href="/level2-electrical">Level 2</SEOInternalLink> and{' '}
@@ -605,7 +568,7 @@ const sections = [
             </li>
             <li>
               <strong>Installation Electrician card (gold)</strong> — pass the AM2, complete the NVQ
-              Level 3, and hold the 18th Edition and 2391. You are now fully qualified.
+              Level 3, and hold C&G 2382 and C&G 2391. You are now fully qualified.
             </li>
             <li>
               <strong>Technician card (black)</strong> — gain higher-level qualifications (HNC/HND
@@ -642,7 +605,7 @@ export default function ECSCardTypesPage() {
       title="ECS Card Types | Which Card Do You Need?"
       description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
       datePublished="2025-05-10"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"
@@ -657,7 +620,7 @@ export default function ECSCardTypesPage() {
       answerBox={{
         question: 'What are the different ECS card types?',
         answer:
-          "The ECS (Electrotechnical Certification Scheme) issues a card for each career stage: the Apprentice card while training, the Provisional card for those still gaining qualifications, the Installation Electrician 'Gold' card (the main qualified-electrician card, needing a Level 3 NVQ, the AM2 and the ECS Health, Safety & Environmental assessment), and Technician/specialist cards. The card proves your qualifications and grants access to UK construction sites.",
+          'There are four main ECS cards: Apprentice (red) while you are training, Provisional (blue) once your academic qualifications are done but the NVQ or AM2 is not, Installation Electrician (gold) for fully qualified electricians, and Technician (black) for HNC/HND or degree holders. A Manager card and a range of specialist cards sit alongside them. The gold card needs an NVQ Level 3, an AM2 pass, C&G 2382, C&G 2391 and a current health and safety test.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

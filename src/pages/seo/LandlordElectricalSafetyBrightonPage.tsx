@@ -658,7 +658,7 @@ export default function LandlordElectricalSafetyBrightonPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Brighton | EICR Landlords"
-      description="Landlord electrical safety requirements in Brighton and Hove. 2020 Regulations, Brighton City Council enforcement, HMO licensing…"
+      description="Landlord electrical safety requirements in Brighton and Hove. 2020 Regulations, Brighton City Council enforcement, HMO licensing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

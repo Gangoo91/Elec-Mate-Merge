@@ -8,6 +8,8 @@ import {
 } from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
+import type { CellWarning } from '@/utils/cellWarnings';
+import { CellWarningMarker } from './CellWarningMarker';
 import {
   protectiveDeviceRatingOptions,
   protectiveDeviceCurveOptions,
@@ -20,6 +22,10 @@ import { FieldTooltip } from '@/components/ui/field-tooltip';
 import ComboboxCell from './ComboboxCell';
 
 interface ProtectiveDeviceCellsProps {
+  /** BS 7671 findings that name a cell in this group, keyed by field. */
+  cellWarnings?: Partial<Record<keyof TestResult, CellWarning>>;
+  /** Opens the finding in the Validate sheet. */
+  onOpenWarning?: () => void;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
@@ -29,6 +35,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
   result,
   onUpdate,
   onBulkUpdate,
+  cellWarnings,
+  onOpenWarning,
 }) => {
   // Show curve selector only for MCB/RCBO types (based on BS Standard)
   const showCurveSelector = bsStandardRequiresCurve(result.bsStandard || '');
@@ -154,6 +162,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       {/* Column 8: BS (EN) */}
       <TableCell className="p-0 h-8 align-middle w-40 min-w-[160px] max-w-[160px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.bsStandard}
+          onOpenWarning={onOpenWarning}
           value={result.bsStandard || ''}
           onChange={handleBsStandardChange}
           options={bsStandardOptions}
@@ -163,7 +173,13 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       </TableCell>
 
       {/* Column 9: Type (Curve) */}
-      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="relative p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+        {/* Curve and device type are both Radix Selects, so the marker is an
+            overlay rather than part of the control. */}
+        <CellWarningMarker
+          warning={cellWarnings?.protectiveDeviceCurve ?? cellWarnings?.protectiveDeviceType}
+          onOpen={onOpenWarning}
+        />
         <Select
           name={`protectiveDeviceCurve-${result.id}`}
           value={result.protectiveDeviceCurve || ''}
@@ -195,6 +211,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       {/* Column 10: Rating (A) */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[95px] max-w-[95px]">
         <ComboboxCell
+          regulationWarning={cellWarnings?.protectiveDeviceRating}
+          onOpenWarning={onOpenWarning}
           value={result.protectiveDeviceRating || ''}
           onChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
@@ -206,6 +224,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       {/* Column 11: Breaking capacity (kA) */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.protectiveDeviceKaRating}
+          onOpenWarning={onOpenWarning}
           value={result.protectiveDeviceKaRating}
           onChange={(value) => onUpdate(result.id, 'protectiveDeviceKaRating', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
@@ -217,6 +237,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
       <TableCell className="p-0 h-8 align-middle w-32 min-w-[132px] max-w-[132px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
+          regulationWarning={cellWarnings?.maxZs}
+          onOpenWarning={onOpenWarning}
             value={result.maxZs || ''}
             onChange={(value) => onUpdate(result.id, 'maxZs', value)}
             className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"

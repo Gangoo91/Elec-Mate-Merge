@@ -547,7 +547,7 @@ export default function ElectricianStudyTipsPage() {
     <GuideTemplate
       localArea="Study Tips"
       title="Study Tips for Electricians | Exam Preparation Guide"
-      description="Evidence-based study techniques for electrical exams. Covers active recall, spaced repetition, flashcard technique, BS 7671 navigation…"
+      description="Evidence-based study techniques for electrical exams. Covers active recall, spaced repetition, flashcard technique, BS 7671 navigation."
       datePublished="2025-04-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

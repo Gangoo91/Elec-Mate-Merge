@@ -58,6 +58,7 @@ export const useCloudSync = ({
     syncNow,
     syncNowImmediate,
     onTabChange,
+    retrySync,
   } = useReportSync({
     reportId,
     reportType,
@@ -108,11 +109,17 @@ export const useCloudSync = ({
     [loadReport]
   );
 
-  // Process offline queue - now handled automatically
-  const processOfflineQueue = useCallback(async () => {
-    // This is now handled internally by useReportSync
-    // Just a no-op for compatibility
-  }, []);
+  /*
+   * Retry the queued writes.
+   *
+   * This was a no-op — "handled internally by useReportSync", per the comment
+   * that used to be here. But it is what the offline banner's "Retry Now"
+   * button calls, so the one action offered to an electrician whose work has
+   * not reached the server did nothing at all, on a banner whose whole purpose
+   * was to tell them that. `useReportSync.retrySync` is the real thing: it
+   * re-attempts the cloud write and drains the queue.
+   */
+  const processOfflineQueue = retrySync;
 
   return {
     syncState,

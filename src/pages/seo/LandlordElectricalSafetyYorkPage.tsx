@@ -726,7 +726,7 @@ export default function LandlordElectricalSafetyYorkPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety York | EICR Landlords York"
-      description="Landlord electrical safety requirements in York. 2020 Regulations, City of York Council enforcement, Victorian property EICR challenges, HMO licensing…"
+      description="Landlord electrical safety requirements in York. 2020 Regulations, City of York Council enforcement, Victorian property EICR challenges, HMO licensing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

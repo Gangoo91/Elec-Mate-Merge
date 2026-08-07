@@ -667,7 +667,7 @@ export default function IntruderAlarmInstallationPage() {
   return (
     <GuideTemplate
       title="Intruder Alarm Installation UK | Burglar Alarm Wiring Guide"
-      description="Intruder alarm installation guide for the UK. BS EN 50131 grades 1–4 explained, wired vs wireless systems, PIR placement, door contacts…"
+      description="Intruder alarm installation guide for the UK. BS EN 50131 grades 1–4 explained, wired vs wireless systems, PIR placement, door contacts."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

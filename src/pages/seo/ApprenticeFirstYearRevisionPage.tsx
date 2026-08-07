@@ -1,17 +1,30 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { MockExamIndexLinks } from '@/components/seo/MockExamIndexLinks';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  BookOpen,
-  Zap,
-  Calculator,
-  ShieldCheck,
-  Wrench,
-  ClipboardCheck,
-  GraduationCap,
-  Lightbulb,
-} from 'lucide-react';
+import { BookOpen, Calculator, ClipboardCheck, GraduationCap, Lightbulb } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared presentation classes
+// -------------------------------------------------------------------
+
+const cardCn =
+  '-mx-4 my-5 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] ' +
+  'to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const tableWrapCn =
+  '-mx-4 my-5 overflow-x-auto rounded-none border-y border-white/[0.14] ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const tableCn = 'w-full min-w-[560px] border-collapse text-left text-[13.5px] text-white';
+const thCn = 'px-4 py-3 font-semibold text-white align-bottom';
+const tdCn = 'px-4 py-3 text-white align-top';
+const trCn = 'border-t border-white/[0.1]';
+
+const defListCn = 'divide-y divide-white/[0.1]';
+const defRowCn = 'py-3 first:pt-0 last:pb-0 text-white';
+const defTermCn = 'block font-semibold text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -23,6 +36,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'quick-reference', label: 'Year 1 Numbers to Memorise' },
   { id: 'electrical-units', label: 'Electrical Units' },
   { id: 'ohms-law', label: "Ohm's Law" },
   { id: 'basic-circuit-theory', label: 'Basic Circuit Theory' },
@@ -40,36 +54,36 @@ const keyTakeaways = [
   "Ohm's Law (V = IR) is the single most important formula in Year 1 — know it forwards, backwards, and be able to transpose it for any unknown.",
   'The six core electrical units you must memorise: volt (V), ampere (A), ohm (Ω), watt (W), coulomb (C), and farad (F).',
   'Series circuits share the same current throughout; parallel circuits share the same voltage across each branch.',
-  'AC (alternating current) in the UK runs at 230V / 50Hz — frequency and voltage values appear in every exam.',
-  'Health and safety legislation you must know in Year 1: Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, and Manual Handling Operations Regulations 1992.',
-  'BS 7671:2018+A4:2026 introduced two key rules apprentices encounter from day one: Reg 411.3.4 requires 30 mA RCD protection on domestic lighting circuits; Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC final circuits.',
+  'AC (alternating current) in the UK runs at 230 V / 50 Hz — frequency and voltage values appear in every exam.',
+  'Health and safety legislation you must know in Year 1: Health and Safety at Work etc. Act 1974, Electricity at Work Regulations 1989, and Manual Handling Operations Regulations 1992.',
+  'Two rules from BS 7671:2018+A4:2026 you meet from day one: Reg 411.3.4 requires 30 mA RCD protection on AC final circuits supplying luminaires in domestic premises; Reg 421.1.7 requires AFDDs on socket-outlet circuits up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them elsewhere.',
 ];
 
 const faqs = [
   {
     question: 'What topics are covered in Year 1 of an electrical apprenticeship?',
     answer:
-      "Year 1 of a Level 3 Electrical Installation apprenticeship covers fundamental electrical theory including electrical units (volts, amps, ohms, watts), Ohm's Law, Kirchhoff's Laws, series and parallel circuits, DC and AC fundamentals, basic tools and their safe use, health and safety legislation (Health and Safety at Work Act 1974, Electricity at Work Regulations 1989), PAT testing introduction, and basic wiring principles. You will also begin working towards your Level 3 Award in the Requirements for Electrical Installations (BS 7671).",
+      "Year 1 of a Level 3 Electrical Installation apprenticeship covers fundamental electrical theory including electrical units (volts, amps, ohms, watts), Ohm's Law, Kirchhoff's Laws, series and parallel circuits, DC and AC fundamentals, basic tools and their safe use, health and safety legislation (Health and Safety at Work etc. Act 1974, Electricity at Work Regulations 1989), PAT testing introduction, and basic wiring principles. You will also begin working towards your Level 3 Award in the Requirements for Electrical Installations (BS 7671:2018+A4:2026).",
   },
   {
     question: "How do I revise Ohm's Law effectively?",
     answer:
-      "Use the Ohm's Law triangle (V at the top, I and R at the bottom). Cover the unknown and the remaining symbols show you the formula: cover V → V = I × R; cover I → I = V / R; cover R → R = V / I. Practice transposing the formula with worked examples until it becomes automatic. The Elec-Mate flashcard system lets you drill Ohm's Law calculations with randomly generated values so you practise the maths, not just the formula.",
+      "Use the Ohm's Law triangle (V at the top, I and R at the bottom). Cover the unknown and the remaining symbols show you the formula: cover V → V = I × R; cover I → I = V / R; cover R → R = V / I. Practise transposing the formula with worked examples until it becomes automatic. The Elec-Mate flashcard system lets you drill Ohm's Law calculations with randomly generated values so you practise the maths, not just the formula.",
   },
   {
     question: 'What is the difference between series and parallel circuits?',
     answer:
-      'In a series circuit, components are connected end-to-end so the same current flows through every component. The total resistance is the sum of all individual resistances (Rt = R1 + R2 + R3). Voltage is shared between components proportional to their resistance. In a parallel circuit, each component has its own separate path connected between the same two points. The voltage across each branch is identical, but current divides between branches. Total resistance in a parallel circuit is always less than the smallest individual resistance.',
+      'In a series circuit, components are connected end-to-end so the same current flows through every component. The total resistance is the sum of all individual resistances (Rt = R1 + R2 + R3). Voltage is shared between components in proportion to their resistance. In a parallel circuit, each component has its own separate path connected between the same two points. The voltage across each branch is identical, but current divides between branches. Total resistance in a parallel circuit is always less than the smallest individual resistance.',
   },
   {
     question: 'What is the UK mains supply voltage and frequency?',
     answer:
-      'The UK nominal supply voltage is 230V AC at 50Hz (hertz). The voltage tolerance is +10% / -6%, meaning acceptable voltages range from approximately 216.2V to 253.0V. The frequency tolerance is ±1%, so 49.5Hz to 50.5Hz. These limits are set by the Electricity Safety, Quality and Continuity Regulations (ESQCR) and align with European harmonised voltages. You must know both values — they appear frequently in theory exams and practical assessments throughout your apprenticeship.',
+      'The UK nominal supply voltage is 230 V AC at 50 Hz (hertz). The voltage tolerance is +10% / −6%, meaning acceptable voltages range from approximately 216.2 V to 253.0 V. The frequency tolerance is ±1%, so 49.5 Hz to 50.5 Hz. These limits sit with the Electricity Safety, Quality and Continuity Regulations (ESQCR), which require the distributor to declare the voltage and frequency of the supply and the extent of the permitted variations. You must know both values — they appear frequently in theory exams and practical assessments throughout your apprenticeship.',
   },
   {
     question: 'What health and safety legislation must I know in Year 1?',
     answer:
-      'The key legislation for Year 1 includes: Health and Safety at Work etc. Act 1974 (HSWA) — the primary legislation placing duties on employers and employees; Electricity at Work Regulations 1989 — specific to electrical systems, requires all electrical work to be carried out in a safe manner; Manual Handling Operations Regulations 1992 — risk assessment for lifting and moving loads; Personal Protective Equipment at Work Regulations 1992 — employer duty to provide PPE; and Control of Substances Hazardous to Health Regulations 2002 (COSHH). In construction, you will also encounter the Construction (Design and Management) Regulations 2015 (CDM).',
+      'The key legislation for Year 1 includes: Health and Safety at Work etc. Act 1974 (HSWA) — the primary legislation placing duties on employers and employees; Electricity at Work Regulations 1989 — specific to electrical systems, and the reason safe isolation is not optional; Manual Handling Operations Regulations 1992 — risk assessment for lifting and moving loads; Personal Protective Equipment at Work Regulations 1992 — employer duty to provide PPE; and Control of Substances Hazardous to Health Regulations 2002 (COSHH). In construction, you will also encounter the Construction (Design and Management) Regulations 2015 (CDM).',
   },
   {
     question: 'What tools should a first-year apprentice know?',
@@ -79,7 +93,7 @@ const faqs = [
   {
     question: 'What is PAT testing and do apprentices do it?',
     answer:
-      'PAT stands for Portable Appliance Testing — the process of inspecting and testing portable electrical equipment to check it is safe to use. Apprentices are introduced to PAT testing in Year 1 as it demonstrates fundamental principles: visual inspection, earth continuity testing, insulation resistance testing, and record keeping. Formal PAT testing certification (City & Guilds 2377) is usually completed later in the apprenticeship or after qualification, but understanding the principles from Year 1 helps build inspection and testing skills that are central to the AM2 assessment and EICR work.',
+      'PAT stands for Portable Appliance Testing — the process of inspecting and testing in-service electrical equipment to check it is safe to use. Apprentices are introduced to it in Year 1 because it demonstrates fundamental principles: visual inspection, earth continuity testing, insulation resistance testing, and record keeping. Formal certification (City & Guilds 2377) is usually completed later in the apprenticeship or after qualification, but understanding the principles from Year 1 builds the inspection and testing skills that are central to the AM2 assessment and EICR work.',
   },
 ];
 
@@ -131,6 +145,71 @@ const relatedPages: RelatedPage[] = [
 
 const sections = [
   {
+    id: 'quick-reference',
+    heading: 'Year 1 Numbers to Memorise',
+    content: (
+      <>
+        <p>
+          These are the figures that come up again and again in Year 1 written papers and on site.
+          Learn this table first — everything else on the page explains where the numbers come from.
+        </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Quantity</th>
+                <th className={thCn}>Value</th>
+                <th className={thCn}>Where it comes from</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>UK nominal supply voltage</td>
+                <td className={tdCn}>230 V AC (line to neutral)</td>
+                <td className={tdCn}>ESQCR declared voltage</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>UK supply frequency</td>
+                <td className={tdCn}>50 Hz</td>
+                <td className={tdCn}>ESQCR declared frequency</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Voltage tolerance</td>
+                <td className={tdCn}>+10% / −6% (216.2 V to 253.0 V)</td>
+                <td className={tdCn}>ESQCR permitted variation</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Frequency tolerance</td>
+                <td className={tdCn}>±1% (49.5 Hz to 50.5 Hz)</td>
+                <td className={tdCn}>ESQCR permitted variation</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Period of one cycle at 50 Hz</td>
+                <td className={tdCn}>T = 1 ÷ 50 = 0.02 s (20 ms)</td>
+                <td className={tdCn}>T = 1 ÷ f</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Peak voltage of a 230 V RMS supply</td>
+                <td className={tdCn}>230 × √2 ≈ 325 V</td>
+                <td className={tdCn}>Vpeak = Vrms × √2</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Three-phase supply</td>
+                <td className={tdCn}>400 V line to line / 230 V line to neutral, 120° apart</td>
+                <td className={tdCn}>Standard UK LV distribution</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>RCD for domestic luminaire circuits</td>
+                <td className={tdCn}>Rated residual operating current not exceeding 30 mA</td>
+                <td className={tdCn}>BS 7671 Reg 411.3.4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'electrical-units',
     heading: 'Electrical Units You Must Know',
     content: (
@@ -140,65 +219,118 @@ const sections = [
           measure electrical quantities. These are the foundation of everything else in Year 1 and
           beyond. The International System of Units (SI) is used throughout electrical engineering.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Volt (V)</strong> — the unit of electromotive force (EMF) or potential
-                difference (PD). Think of voltage as the electrical pressure that drives current
-                around a circuit. Symbol: V. Named after Alessandro Volta.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Ampere (A)</strong> — the unit of electric current. Current is the rate of
-                flow of electric charge. One ampere equals one coulomb of charge passing a point per
-                second. Symbol: A or I (for intensity). Named after André-Marie Ampère.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Ohm (Ω)</strong> — the unit of electrical resistance. Resistance is the
-                opposition to the flow of current. Symbol: Ω (omega) or R. Named after Georg Simon
-                Ohm. One ohm is the resistance that allows one ampere to flow when one volt is
-                applied.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Watt (W)</strong> — the unit of electrical power. Power is the rate at which
-                energy is transferred or converted. Symbol: W or P. Named after James Watt. P = V ×
-                I (power equals voltage multiplied by current).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Coulomb (C)</strong> — the unit of electric charge. One coulomb is the
-                charge transported by one ampere in one second. Q = I × t (charge equals current
-                multiplied by time).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Farad (F)</strong> — the unit of electrical capacitance. Capacitance is the
-                ability to store electrical charge. In practice, capacitors are measured in
-                microfarads (μF) or picofarads (pF) as one farad is very large. Named after Michael
-                Faraday.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Unit</th>
+                <th className={thCn}>Symbol</th>
+                <th className={thCn}>Quantity measured</th>
+                <th className={thCn}>What it means</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>Volt</td>
+                <td className={tdCn}>V</td>
+                <td className={tdCn}>Electromotive force (EMF) or potential difference (PD)</td>
+                <td className={tdCn}>
+                  The electrical pressure that drives current around a circuit. Named after
+                  Alessandro Volta.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Ampere</td>
+                <td className={tdCn}>A (I in formulas)</td>
+                <td className={tdCn}>Electric current</td>
+                <td className={tdCn}>
+                  The rate of flow of electric charge. One ampere is one coulomb passing a point per
+                  second. Named after André-Marie Ampère.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Ohm</td>
+                <td className={tdCn}>Ω (R in formulas)</td>
+                <td className={tdCn}>Resistance</td>
+                <td className={tdCn}>
+                  Opposition to the flow of current. One ohm allows one ampere to flow when one volt
+                  is applied. Named after Georg Simon Ohm.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Watt</td>
+                <td className={tdCn}>W (P in formulas)</td>
+                <td className={tdCn}>Power</td>
+                <td className={tdCn}>
+                  The rate at which energy is transferred or converted. P = V × I. Named after James
+                  Watt.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Coulomb</td>
+                <td className={tdCn}>C (Q in formulas)</td>
+                <td className={tdCn}>Electric charge</td>
+                <td className={tdCn}>
+                  The charge transported by one ampere in one second. Q = I × t.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Farad</td>
+                <td className={tdCn}>F</td>
+                <td className={tdCn}>Capacitance</td>
+                <td className={tdCn}>
+                  The ability to store electrical charge. One farad is very large, so capacitors are
+                  rated in microfarads (μF) or picofarads (pF). Named after Michael Faraday.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          SI prefixes you will use every day
+        </h3>
         <p>
-          You also need to understand SI prefixes for when values are very large or very small. The
-          key prefixes in electrical work are: kilo (k) = 1,000; mega (M) = 1,000,000; milli (m) =
-          0.001; micro (μ) = 0.000001. So 2.5kΩ means 2,500 ohms, and 100mA means 0.1 amperes.
+          Electrical values are rarely a convenient size, so prefixes scale them up or down. Get
+          these wrong in an exam and the answer is out by a factor of a thousand.
         </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Prefix</th>
+                <th className={thCn}>Symbol</th>
+                <th className={thCn}>Multiplier</th>
+                <th className={thCn}>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>mega</td>
+                <td className={tdCn}>M</td>
+                <td className={tdCn}>× 1,000,000</td>
+                <td className={tdCn}>1 MΩ = 1,000,000 Ω</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>kilo</td>
+                <td className={tdCn}>k</td>
+                <td className={tdCn}>× 1,000</td>
+                <td className={tdCn}>2.5 kΩ = 2,500 Ω</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>milli</td>
+                <td className={tdCn}>m</td>
+                <td className={tdCn}>× 0.001</td>
+                <td className={tdCn}>100 mA = 0.1 A</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>micro</td>
+                <td className={tdCn}>μ</td>
+                <td className={tdCn}>× 0.000001</td>
+                <td className={tdCn}>470 μF = 0.00047 F</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </>
     ),
   },
@@ -208,45 +340,44 @@ const sections = [
     content: (
       <>
         <p>
-          Ohm's Law is the single most important relationship in electrical theory. Stated by Georg
-          Simon Ohm in 1827, it defines the relationship between voltage, current, and resistance in
-          a conductor at constant temperature.
+          Ohm&rsquo;s Law is the single most important relationship in electrical theory. Published
+          by Georg Simon Ohm in 1827, it defines the relationship between voltage, current, and
+          resistance in a conductor at constant temperature.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>The formula:</strong> V = I × R — Voltage (volts) equals Current (amperes)
-                multiplied by Resistance (ohms).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Transposed for current:</strong> I = V ÷ R — if you know the voltage and
-                resistance, divide voltage by resistance to find current.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Transposed for resistance:</strong> R = V ÷ I — if you know the voltage and
-                current, divide voltage by current to find resistance.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>To find</th>
+                <th className={thCn}>Formula</th>
+                <th className={thCn}>Worked example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>Voltage (volts)</td>
+                <td className={tdCn}>V = I × R</td>
+                <td className={tdCn}>2 A through 6 Ω → V = 2 × 6 = 12 V</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Current (amperes)</td>
+                <td className={tdCn}>I = V ÷ R</td>
+                <td className={tdCn}>12 V across 6 Ω → I = 12 ÷ 6 = 2 A</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Resistance (ohms)</td>
+                <td className={tdCn}>R = V ÷ I</td>
+                <td className={tdCn}>12 V drawing 2 A → R = 12 ÷ 2 = 6 Ω</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          <strong>Worked example:</strong> A 12V battery supplies a lamp with a resistance of 6Ω.
-          What current flows? I = V ÷ R = 12 ÷ 6 = 2A. The Ohm's Law triangle is a memory aid: draw
-          a triangle with V at the top, I bottom-left, R bottom-right. Cover the unknown quantity
-          and the visible symbols show you the calculation.
-        </p>
-        <p>
-          Use the <SEOInternalLink href="/study-centre">Elec-Mate Study Centre</SEOInternalLink>{' '}
-          flashcard system to drill Ohm's Law calculations with randomly generated values until the
-          transposition is second nature.
+          The Ohm&rsquo;s Law triangle is the memory aid: draw a triangle with V at the top, I
+          bottom-left, R bottom-right. Cover the unknown quantity and the two visible symbols show
+          you the calculation. Practise transposing it until you no longer need the triangle — use
+          the <SEOInternalLink href="/study-centre">Elec-Mate Study Centre</SEOInternalLink>{' '}
+          flashcards to drill it with randomly generated values.
         </p>
       </>
     ),
@@ -257,44 +388,73 @@ const sections = [
     content: (
       <>
         <p>
-          Every electrical circuit has the same basic components: a source of EMF (battery or
-          supply), conductors (wires) to carry current, a load (device that uses the energy), and a
-          return path. Kirchhoff's Laws describe how voltage and current behave in circuits.
+          Every electrical circuit has the same basic parts: a source of EMF (battery or supply),
+          conductors to carry current, a load that uses the energy, and a return path.
+          Kirchhoff&rsquo;s Laws describe how voltage and current behave once those parts are
+          connected.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Kirchhoff's Current Law (KCL)</strong> — the total current entering a
-                junction equals the total current leaving it. No current is lost at a junction. This
-                is a statement of conservation of charge.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Kirchhoff's Voltage Law (KVL)</strong> — the sum of all voltages around a
-                closed loop equals zero. In practice: the supply voltage equals the sum of all
-                voltage drops across the resistances in the loop.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Series circuits</strong> — total resistance Rt = R1 + R2 + R3. Current is
-                the same throughout. Voltage divides proportionally to resistance (voltage divider).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Parallel circuits</strong> — voltage is the same across every branch.
-                Current divides between branches. For two resistors: 1/Rt = 1/R1 + 1/R2. Total
-                resistance is always less than the smallest individual resistance.
-              </span>
-            </li>
-          </ul>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Kirchhoff&rsquo;s Current Law (KCL)</dt>
+              <dd className="text-white">
+                The total current entering a junction equals the total current leaving it. No current
+                is lost at a junction — it is a statement of the conservation of charge.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Kirchhoff&rsquo;s Voltage Law (KVL)</dt>
+              <dd className="text-white">
+                The sum of all voltages around a closed loop equals zero. In practice: the supply
+                voltage equals the sum of all the voltage drops across the resistances in the loop.
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          Series against parallel
+        </h3>
+        <p>
+          This comparison is worth more marks than any other single topic in Year 1. Learn it as a
+          set of contrasts rather than two separate lists.
+        </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Property</th>
+                <th className={thCn}>Series circuit</th>
+                <th className={thCn}>Parallel circuit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>Current</td>
+                <td className={tdCn}>The same through every component</td>
+                <td className={tdCn}>Divides between the branches</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Voltage</td>
+                <td className={tdCn}>Divides in proportion to resistance</td>
+                <td className={tdCn}>The same across every branch</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Total resistance</td>
+                <td className={tdCn}>Rt = R1 + R2 + R3</td>
+                <td className={tdCn}>1/Rt = 1/R1 + 1/R2 + 1/R3</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Compared with the individual resistors</td>
+                <td className={tdCn}>Rt is greater than the largest resistor</td>
+                <td className={tdCn}>Rt is always less than the smallest resistor</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>If one component goes open circuit</td>
+                <td className={tdCn}>The whole circuit stops</td>
+                <td className={tdCn}>The remaining branches keep working</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </>
     ),
@@ -307,46 +467,71 @@ const sections = [
         <p>
           Direct current (DC) flows in one direction only. Batteries, solar panels, and USB chargers
           all produce DC. Understanding DC circuits is the foundation before moving on to AC, which
-          is more complex due to the effects of inductance and capacitance.
+          is more complex because of the effects of inductance and capacitance.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Resistors in series:</strong> Rt = R1 + R2 + R3. Example: 10Ω + 15Ω + 25Ω =
-                50Ω total.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Resistors in parallel (two):</strong> Rt = (R1 × R2) ÷ (R1 + R2). Example:
-                6Ω and 12Ω in parallel = (6 × 12) ÷ (6 + 12) = 72 ÷ 18 = 4Ω.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Power in DC circuits:</strong> P = V × I, P = I² × R, P = V² ÷ R. All three
-                are equivalent — use whichever suits the values you have been given.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Energy:</strong> W = P × t (energy in joules equals power in watts
-                multiplied by time in seconds). For kilowatt-hours: kWh = kW × hours.
-              </span>
-            </li>
-          </ul>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          Combining resistors
+        </h3>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Resistors in series</dt>
+              <dd className="text-white">Rt = R1 + R2 + R3. Example: 10 Ω + 15 Ω + 25 Ω = 50 Ω.</dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Two resistors in parallel</dt>
+              <dd className="text-white">
+                Rt = (R1 × R2) ÷ (R1 + R2). Example: 6 Ω and 12 Ω in parallel = (6 × 12) ÷ (6 + 12) =
+                72 ÷ 18 = 4 Ω.
+              </dd>
+            </div>
+          </dl>
         </div>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          Power and energy formulas
+        </h3>
         <p>
-          Practise these calculations using the{' '}
-          <SEOInternalLink href="/study-centre">apprentice module calculator tools</SEOInternalLink>{' '}
-          in the Elec-Mate Study Centre. Working through multiple examples is far more effective
-          than re-reading your notes.
+          All three power formulas are equivalent — pick whichever suits the two values the question
+          has given you.
         </p>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Formula</th>
+                <th className={thCn}>Gives you</th>
+                <th className={thCn}>Use when you know</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>P = V × I</td>
+                <td className={tdCn}>Power in watts</td>
+                <td className={tdCn}>Voltage and current</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>P = I² × R</td>
+                <td className={tdCn}>Power in watts</td>
+                <td className={tdCn}>Current and resistance</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>P = V² ÷ R</td>
+                <td className={tdCn}>Power in watts</td>
+                <td className={tdCn}>Voltage and resistance</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>W = P × t</td>
+                <td className={tdCn}>Energy in joules</td>
+                <td className={tdCn}>Power in watts and time in seconds</td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>kWh = kW × hours</td>
+                <td className={tdCn}>Energy as billed</td>
+                <td className={tdCn}>Load in kilowatts and running hours</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </>
     ),
   },
@@ -356,68 +541,82 @@ const sections = [
     content: (
       <>
         <p>
-          Alternating current (AC) repeatedly reverses direction. The UK mains supply is 230V at
-          50Hz — this is what you work with in almost every domestic and commercial installation. AC
-          introduces concepts of frequency, period, peak values, and RMS values.
+          Alternating current (AC) repeatedly reverses direction. The UK mains supply is 230 V at 50
+          Hz — this is what you work with in almost every domestic and commercial installation. AC
+          introduces frequency, period, peak values, and RMS values.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Frequency (f)</strong> — the number of complete cycles per second, measured
-                in hertz (Hz). UK mains: 50Hz. USA mains: 60Hz.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Period (T)</strong> — the time for one complete cycle. T = 1 ÷ f. At 50Hz: T
-                = 1 ÷ 50 = 0.02 seconds (20 milliseconds).
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Peak value</strong> — the maximum voltage reached during a cycle. For UK
-                mains (230V RMS): Vpeak = 230 × √2 ≈ 325V. This is why cable insulation must be
-                rated for higher than the nominal supply voltage.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>RMS (Root Mean Square)</strong> — the effective value of AC that produces
-                the same heating effect as an equivalent DC voltage. The 230V on the nameplate of
-                your socket outlet is the RMS value. Vrms = Vpeak ÷ √2.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Three-phase supply</strong> — commercial and industrial premises are
-                supplied with three-phase 400V AC (line-to-line) / 230V (line-to-neutral). The three
-                phases are 120° apart. You will study three-phase in depth in Years 2 and 3.
-              </span>
-            </li>
-          </ul>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Frequency (f)</dt>
+              <dd className="text-white">
+                The number of complete cycles per second, measured in hertz (Hz). UK mains: 50 Hz.
+                USA mains: 60 Hz.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Period (T)</dt>
+              <dd className="text-white">
+                The time for one complete cycle. T = 1 ÷ f. At 50 Hz: T = 1 ÷ 50 = 0.02 seconds (20
+                milliseconds).
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Peak value</dt>
+              <dd className="text-white">
+                The maximum voltage reached during a cycle. For a 230 V RMS supply, Vpeak = 230 × √2
+                ≈ 325 V. This is why cable insulation is rated well above the nominal supply voltage.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>RMS (root mean square)</dt>
+              <dd className="text-white">
+                The effective value of AC — the value that produces the same heating effect as an
+                equivalent DC voltage. The 230 V quoted for a socket-outlet is the RMS value. Vrms =
+                Vpeak ÷ √2.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Three-phase supply</dt>
+              <dd className="text-white">
+                Commercial and industrial premises are supplied at 400 V line to line and 230 V line
+                to neutral, with the three phases 120° apart. You will study three-phase in depth in
+                Years 2 and 3.
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <p className="text-white font-semibold mb-2">New in BS 7671:2018+A4:2026</p>
-          <ul className="space-y-2 text-white text-sm leading-relaxed">
-            <li>
-              <strong>Reg 411.3.4 — 30 mA RCD on domestic lighting circuits (mandatory):</strong>{' '}
-              All AC final circuits supplying luminaires in domestic (household) premises must now
-              have additional protection by an RCD with a rated residual operating current not
-              exceeding 30 mA. This is a mandatory &ldquo;shall&rdquo; requirement — not guidance.
-            </li>
-            <li>
-              <strong>Reg 421.1.7 — Arc Fault Detection Devices (AFDDs) recommended:</strong> BS
-              7671 A4:2026 recommends the installation of AFDDs on AC final circuits to mitigate the
-              risk of fire from arc fault currents. The wording is advisory rather than mandatory,
-              but you will encounter AFDDs on new and rewired installations from day one.
-            </li>
-          </ul>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          Two BS 7671 rules you will meet on your first jobs
+        </h3>
+        <p>
+          The current edition is BS 7671:2018+A4:2026. Two of its requirements shape almost every
+          domestic board you will see as an apprentice.
+        </p>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Reg 411.3.4 — 30 mA RCD on domestic luminaire circuits</dt>
+              <dd className="text-white">
+                Within domestic (household) premises, additional protection by an RCD with a rated
+                residual operating current not exceeding 30 mA <strong>shall</strong> be provided for
+                AC final circuits supplying luminaires. This is a &ldquo;shall&rdquo; requirement,
+                not guidance. It has been in BS 7671 since the 18th Edition was published in 2018.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Reg 421.1.7 — arc fault detection devices (AFDDs)</dt>
+              <dd className="text-white">
+                Redrafted at Amendment 4. AFDDs conforming to BS EN 62606 <strong>shall</strong> be
+                provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A
+                in high rise residential buildings (HRRBs), houses in multiple occupation,
+                purpose-built student accommodation, and care homes. For all other premises, AFDDs
+                are <strong>recommended</strong> on the same circuits. Where used, an AFDD is placed
+                at the origin of the circuit it protects. Do not describe AFDDs as simply
+                &ldquo;recommended&rdquo; in an exam answer — say where each wording applies.
+              </dd>
+            </div>
+          </dl>
         </div>
       </>
     ),
@@ -428,56 +627,53 @@ const sections = [
     content: (
       <>
         <p>
-          Knowing how to select, use, and maintain tools safely is tested in the practical elements
-          of your apprenticeship from Day 1. Your employer and college will both expect you to
+          Selecting, using, and maintaining tools safely is assessed in the practical elements of
+          your apprenticeship from day one. Your employer and your college will both expect you to
           handle tools confidently and safely.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Screwdrivers</strong> — flathead for slotted screws, Pozidriv (PZ2 is most
-                common) for cross-head screws. Insulated screwdrivers are rated to 1000V and
-                required for live working. Never use a damaged or incorrect screwdriver as it can
-                slip and cause injury or damage.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Wire strippers</strong> — used to remove cable insulation without nicking
-                the conductor. Set to the correct cable diameter to avoid damaging cores. Quality
-                wire strippers have adjustable stops for different cable sizes.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Pliers</strong> — combination pliers for gripping and cutting, long-nose
-                (needle-nose) for accessing confined spaces and shaping wire. Always use
-                insulated-handle pliers when working near live conductors.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Voltage indicator</strong> — a non-contact or two-pole voltage tester used
-                to confirm a circuit is dead before working on it. Under the Electricity at Work
-                Regulations 1989 and GS38, two-pole voltage testers are the industry standard for
-                safe isolation. A non-contact tester alone is not sufficient confirmation that a
-                circuit is dead.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Drill and bits</strong> — cordless drills are standard. SDS drills for
-                masonry. Always check for hidden cables and pipes before drilling using a cable and
-                pipe detector. Follow safe drilling procedures and wear eye protection.
-              </span>
-            </li>
-          </ul>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Screwdrivers</dt>
+              <dd className="text-white">
+                Flathead for slotted screws, Pozidriv (PZ2 is the most common) for cross-head screws.
+                Insulated screwdrivers are rated to 1000 V and are used wherever there is a risk of
+                contact with live parts. Never use a damaged or wrongly sized screwdriver — it slips,
+                and that causes injury and damage.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Wire strippers</dt>
+              <dd className="text-white">
+                Used to remove insulation without nicking the conductor. Set them to the correct
+                conductor size — a nicked core is a reduced cross-sectional area and a hot joint
+                waiting to happen.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Pliers</dt>
+              <dd className="text-white">
+                Combination pliers for gripping and cutting, long-nose for confined spaces and
+                shaping conductors. Use insulated-handle pliers wherever live parts could be present.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Voltage indicator</dt>
+              <dd className="text-white">
+                A two-pole voltage indicator is what you use to prove a circuit is dead. HSE Guidance
+                Note GS38 covers the selection and safe use of test equipment, leads and probes, and
+                BS 7671 and GN3 both direct you to it. A non-contact tester alone is never sufficient
+                confirmation that a circuit is dead.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Drill and bits</dt>
+              <dd className="text-white">
+                Cordless drills are standard; SDS for masonry. Always check for concealed cables and
+                pipes with a cable and pipe detector before you drill, and wear eye protection.
+              </dd>
+            </div>
+          </dl>
         </div>
       </>
     ),
@@ -488,64 +684,85 @@ const sections = [
     content: (
       <>
         <p>
-          Health and safety is not just a box-ticking exercise — it is a legal requirement and a
-          professional responsibility. Electrical work can be fatal if safety procedures are not
-          followed. The following legislation is examinable in Year 1 and applies to your work every
-          day.
+          Health and safety is not a box-ticking exercise — it is a legal duty and a professional
+          responsibility. Electrical work can be fatal if procedures are not followed. The
+          legislation below is examinable in Year 1 and applies to your work every day.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Health and Safety at Work etc. Act 1974</strong> — the primary UK health and
-                safety legislation. Places a duty on employers to provide a safe working
-                environment, safe equipment, and adequate training. Employees must take reasonable
-                care for their own safety and the safety of others, and must co-operate with their
-                employer on health and safety matters.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Electricity at Work Regulations 1989</strong> — specific to electrical
-                systems. Regulation 4 requires that electrical systems be constructed and maintained
-                to prevent danger. Regulation 14 prohibits working on or near live conductors unless
-                it is unreasonable to work dead, adequate precautions are taken, and it is
-                reasonable to work live. Safe isolation is mandatory before working on any circuit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Manual Handling Operations Regulations 1992</strong> — requires employers to
-                avoid manual handling where possible and, where not, to assess and reduce the risk.
-                Electricians regularly handle cable drums, consumer units, and conduit that can
-                cause musculoskeletal injury if handled incorrectly.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>PPE at Work Regulations 1992</strong> — employers must provide suitable PPE
-                free of charge. Employees must use PPE correctly and report defects. Basic
-                electrical PPE includes: safety footwear (steel toecap, anti-static), hi-vis vest,
-                hard hat (on construction sites), safety glasses, insulated gloves, and hearing
-                protection when using power tools.
-              </span>
-            </li>
-          </ul>
+        <div className={tableWrapCn}>
+          <table className={tableCn}>
+            <thead>
+              <tr>
+                <th className={thCn}>Legislation</th>
+                <th className={thCn}>What it means for you</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={trCn}>
+                <td className={tdCn}>Health and Safety at Work etc. Act 1974 (HSWA)</td>
+                <td className={tdCn}>
+                  The primary UK health and safety legislation. Employers must provide a safe working
+                  environment, safe equipment, and adequate training. Employees must take reasonable
+                  care for their own safety and that of others, and co-operate with their employer on
+                  health and safety matters.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Electricity at Work Regulations 1989 (EAWR)</td>
+                <td className={tdCn}>
+                  Specific to electrical systems. Regulation 14 (Work on or near live conductors) is
+                  the one you will be asked about: work on or near a live conductor is only permitted
+                  where it is unreasonable for it to be dead, it is reasonable to work on or near it
+                  live, and suitable precautions are taken. Regulation 16 requires persons to be
+                  competent to prevent danger and injury. HSE publication HSR25 is the guidance on
+                  these Regulations.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>Manual Handling Operations Regulations 1992</td>
+                <td className={tdCn}>
+                  Employers must avoid manual handling where they reasonably can and, where they
+                  cannot, assess and reduce the risk. Electricians regularly move cable drums,
+                  consumer units and conduit that cause musculoskeletal injury if handled badly.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>PPE at Work Regulations 1992</td>
+                <td className={tdCn}>
+                  Employers must provide suitable PPE free of charge; employees must use it correctly
+                  and report defects. Typical electrical PPE: safety footwear, hi-vis, hard hat on
+                  construction sites, safety glasses, insulated gloves, and hearing protection with
+                  power tools.
+                </td>
+              </tr>
+              <tr className={trCn}>
+                <td className={tdCn}>
+                  Construction (Design and Management) Regulations 2015 (CDM)
+                </td>
+                <td className={tdCn}>
+                  Applies on construction sites. Among other duties, it is why a means of safe
+                  isolation must be designed in for future maintenance — the On-Site Guide treats
+                  failing to provide one as a potential CDM breach.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <h3 className="mt-6 text-[15px] font-semibold tracking-tight text-white">
+          Safe isolation: the sequence
+        </h3>
         <p>
-          Safe isolation is one of the most critical procedures you will learn. The sequence is:
-          identify the circuit, switch off, lock off (lock the isolator and retain the key), attach
-          a warning notice, test for dead using a proved voltage tester. Prove the tester works on a
-          known live source before and after testing for dead. This{' '}
-          <em>prove&ndash;test&ndash;prove</em> method is the GN3-aligned approach set out in
-          Guidance Note 3, Chapter 8 (Reg 8.2): &ldquo;isolation shall be established and proven
-          before live-work tests are performed; voltage indicators shall be used.&rdquo; A
-          non-contact tester alone is never sufficient — always use a two-pole voltage indicator as
-          your primary confirmation tool.
+          Safe isolation is the most important procedure you will learn all year. The sequence is:
+          identify the circuit; switch off; lock off and retain the key; attach a warning notice;
+          then test for dead with a proved voltage indicator. Prove the indicator on a known live
+          source or a proving unit both <em>before</em> and <em>after</em> you test — that is the
+          prove&ndash;test&ndash;prove method.
+        </p>
+        <p>
+          Guidance Note 3 requires an installation to be made dead and safely isolated wherever a
+          test does not need it live, and refers you to HSE Guidance Note GS38 for the test equipment
+          itself. The IET On-Site Guide sets out the practical steps and proof-of-dead procedure in
+          Appendix M, Safe working practices. A non-contact tester is never your primary
+          confirmation — always use a two-pole voltage indicator.
         </p>
       </>
     ),
@@ -556,55 +773,52 @@ const sections = [
     content: (
       <>
         <p>
-          Portable Appliance Testing (PAT) is the process of inspecting and testing portable
-          electrical equipment to ensure it is safe to use. While apprentices are not usually
-          expected to carry out formal PAT testing independently in Year 1, understanding the
-          principles is part of the syllabus and introduces key concepts in inspection and testing
-          that become central to your work in later years.
+          Portable Appliance Testing (PAT) is the inspection and testing of in-service electrical
+          equipment to confirm it is safe to use. Apprentices are not usually expected to carry it
+          out independently in Year 1, but the principles are on the syllabus and they introduce the
+          inspection and testing habits that become central to your work later on.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Visual inspection</strong> — always the first step. Check for damaged
-                cables, cracked plugs, signs of overheating, incorrect fuse rating, and evidence of
-                misuse. Many faults are found by visual inspection alone, before any electrical
-                testing is carried out.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Earth continuity test</strong> — checks that the earth conductor in the
-                appliance is connected and has a low resistance. Typically less than 0.1Ω plus the
-                resistance of the supply lead. Carried out using a PAT tester or a low-resistance
-                ohmmeter.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Insulation resistance test</strong> — applies 500V DC between live
-                conductors and earth. For Class I appliances, the insulation resistance should be at
-                least 1MΩ (megohm). Confirms that the insulation has not broken down.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Record keeping</strong> — every PAT test must be recorded with the appliance
-                description, asset number, test results, pass or fail outcome, date, and tester's
-                name. Records demonstrate that a system of inspection and testing is in place and
-                form the audit trail for workplace safety compliance.
-              </span>
-            </li>
-          </ul>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>1. Visual inspection</dt>
+              <dd className="text-white">
+                Always the first step. Check for damaged cables, cracked plugs, signs of overheating,
+                the wrong fuse rating, and evidence of misuse. Most faults are found here, before any
+                instrument comes out of the bag.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>2. Earth continuity test</dt>
+              <dd className="text-white">
+                Confirms the protective conductor in a Class I appliance is connected and has a low
+                resistance — typically taken as 0.1 Ω plus the resistance of the supply lead. Carried
+                out with a PAT tester or a low-resistance ohmmeter.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>3. Insulation resistance test</dt>
+              <dd className="text-white">
+                Applies 500 V DC between the live conductors and earth. For Class I appliances the
+                reading should be at least 1 MΩ. It confirms the insulation has not broken down.
+              </dd>
+            </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>4. Record keeping</dt>
+              <dd className="text-white">
+                Every test is recorded: appliance description, asset number, results, pass or fail,
+                date, and the name of the person testing. The records are the audit trail that shows
+                a system of inspection and testing is actually in place.
+              </dd>
+            </div>
+          </dl>
         </div>
         <p>
-          The City & Guilds 2377 Award in the In-Service Inspection and Testing of Electrical
-          Equipment is the recognised PAT testing qualification. Most apprentices complete this
-          during their training or in the early years after qualification.
+          These acceptance values are not set by BS 7671 — Part 6 of BS 7671 covers the verification
+          of installations, not in-service equipment. In-service inspection and testing is covered by
+          the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment,
+          which is also the syllabus behind the City &amp; Guilds 2377 award. Most apprentices take
+          2377 later in their training or shortly after qualifying.
         </p>
       </>
     ),
@@ -615,39 +829,36 @@ const sections = [
     content: (
       <>
         <p>
-          Elec-Mate has been built by electricians for electricians and apprentices. The Study
-          Centre contains tools specifically designed to help you pass Year 1 theory and build the
-          practical knowledge you need for your end-point assessment.
+          Elec-Mate is built by electricians, for electricians and apprentices. The Study Centre
+          holds the tools designed to get you through Year 1 theory and build the practical knowledge
+          you need for your end-point assessment.
         </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-start gap-4">
-              <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Flashcard Revision System</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Drill Ohm's Law, electrical units, circuit theory, and health and safety
-                  legislation with the{' '}
-                  <SEOInternalLink href="/study-centre">Elec-Mate flashcard system</SEOInternalLink>
-                  . Spaced repetition ensures you review cards at the optimal time before your exam.
-                </p>
-              </div>
+        <div className={cardCn}>
+          <dl className={defListCn}>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Flashcard revision system</dt>
+              <dd className="text-white">
+                Drill Ohm&rsquo;s Law, electrical units, circuit theory, and health and safety
+                legislation. Spaced repetition brings each card back at the point you are about to
+                forget it, which is where the revision actually sticks.
+              </dd>
             </div>
-          </div>
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <GraduationCap className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">AI Tutor</h4>
-                <p className="text-white text-sm leading-relaxed">
-                  Ask the <SEOInternalLink href="/study-centre">Elec-Mate AI tutor</SEOInternalLink>{' '}
-                  any question about Year 1 theory. Get step-by-step explanations of calculations,
-                  worked examples, and plain-English explanations of complex topics like AC
-                  waveforms and circuit analysis.
-                </p>
-              </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>AI tutor</dt>
+              <dd className="text-white">
+                Ask any Year 1 theory question and get a step-by-step explanation — worked
+                calculations, and plain-English answers on the topics that take longest to click,
+                like AC waveforms and circuit analysis.
+              </dd>
             </div>
-          </div>
+            <div className={defRowCn}>
+              <dt className={defTermCn}>Mock exams and course modules</dt>
+              <dd className="text-white">
+                Module-by-module content and timed mock papers, so you find the gaps before the exam
+                does.
+              </dd>
+            </div>
+          </dl>
         </div>
         <SEOAppBridge
           title="Start revising for Year 1 with Elec-Mate"
@@ -667,9 +878,9 @@ export default function ApprenticeFirstYearRevisionPage() {
   return (
     <GuideTemplate
       title="Electrical Apprentice Year 1 Revision | First Year Study"
-      description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits…"
+      description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Study Guide"
@@ -677,15 +888,23 @@ export default function ApprenticeFirstYearRevisionPage() {
       heroTitle={
         <>
           Electrical Apprentice Year 1 Revision:{' '}
-          <span className="text-yellow-400">First Year Study Guide</span>
+          <span className="text-elec-yellow">First Year Study Guide</span>
         </>
       }
       heroSubtitle="Everything you need to revise for Year 1 of your electrical apprenticeship — electrical units, Ohm's Law, series and parallel circuits, DC and AC fundamentals, basic tools, health and safety legislation, and an introduction to PAT testing."
       readingTime={12}
+      answerBox={{
+        question: 'What do you study in Year 1 of an electrical apprenticeship?',
+        answer:
+          "Year 1 covers the electrical units (volt, ampere, ohm, watt), Ohm's Law and how to transpose it, series and parallel circuits, DC and AC fundamentals at 230 V / 50 Hz, safe use of hand tools, health and safety law, and an introduction to inspection, testing and PAT.",
+        detail:
+          'Every regulation on this page is referenced against BS 7671:2018+A4:2026, the current edition of the Wiring Regulations.',
+      }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       faqHeading="Frequently Asked Questions About Year 1 Electrical Apprenticeship"
+      embeddedTool={<MockExamIndexLinks heading="Practise with a free mock exam" />}
       relatedPages={relatedPages}
       ctaHeading="Revise Smarter with Elec-Mate"
       ctaSubheading="Flashcards, AI tutor, mock exams, and module-by-module course content built for electrical apprentices. Study on your phone, pass your exams. 7-day free trial."

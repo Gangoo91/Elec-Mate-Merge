@@ -26,9 +26,9 @@ import {
   Thermometer,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Adiabatic Equation Calculator | CPC Sizing BS 7671 | Elec-Mate';
+const PAGE_TITLE = 'Adiabatic Equation Calculator | CPC Sizing BS 7671';
 const PAGE_DESCRIPTION =
-  'Calculate minimum CPC size with the adiabatic equation. BS 7671 Reg 543.1 compliant. k values for copper, aluminium, steel. Start free.';
+  'Minimum CPC size S = √(I²t)/k. Free BS 7671 Reg 543.1 calculator with k values built in — copper 115, aluminium 76, steel 51 (PVC). Worked examples.';
 
 const faqs = [
   {
@@ -241,7 +241,7 @@ export default function AdiabaticEquationCalculatorPage() {
   );
 
   useSEO({
-    title: 'Adiabatic Equation Calculator: CPC Sizing UK (Free)',
+    title: 'Adiabatic Equation: S = √(I²t)/k CPC Calculator',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

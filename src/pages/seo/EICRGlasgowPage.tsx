@@ -691,7 +691,7 @@ export default function EICRGlasgowPage() {
   return (
     <GuideTemplate
       title="EICR Glasgow | Electrical Safety Certificate 2026"
-      description="EICR costs in Glasgow for 2026. Scottish landlord requirements (Housing Scotland Act), tenement flat challenges, observation codes, SPEN supply issues…"
+      description="EICR costs in Glasgow for 2026. Scottish landlord requirements (Housing Scotland Act), tenement flat challenges, observation codes, SPEN supply issues."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

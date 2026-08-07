@@ -544,7 +544,7 @@ export default function FindingEmergencyElectricianPage() {
   return (
     <GuideTemplate
       title="Emergency Electrician UK | How to Find an Emergency"
-      description="What counts as an electrical emergency, safe steps to take first, how to find a 24/7 NICEIC or NAPIT registered electrician…"
+      description="What counts as an electrical emergency, safe steps to take first, how to find a 24/7 NICEIC or NAPIT registered electrician."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

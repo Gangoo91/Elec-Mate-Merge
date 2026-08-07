@@ -101,8 +101,8 @@ export const RoomPhotoCapture = ({
                     </>
                   ) : isPending ? (
                     <>
-                      <Loader2 className="h-3 w-3 animate-spin text-white/80" />
-                      <span className="text-white/80">saving…</span>
+                      <Loader2 className="h-3 w-3 animate-spin text-white" />
+                      <span className="text-white">saving…</span>
                     </>
                   ) : (
                     <Check className="h-3 w-3 text-emerald-400" />

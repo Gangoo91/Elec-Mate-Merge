@@ -41,7 +41,7 @@ export default function AdminPagination({
       className={cn('flex flex-col sm:flex-row items-center justify-between gap-3 py-3', className)}
     >
       {/* Item count and per-page selector */}
-      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+      <div className="flex items-center gap-3 text-sm text-white">
         <span>
           {startItem}-{endItem} of {totalItems}
         </span>
@@ -95,7 +95,7 @@ export default function AdminPagination({
         <div className="flex items-center gap-1 mx-1">
           {generatePageNumbers(currentPage, totalPages).map((page, idx) =>
             page === '...' ? (
-              <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground">
+              <span key={`ellipsis-${idx}`} className="px-2 text-white">
                 ...
               </span>
             ) : (

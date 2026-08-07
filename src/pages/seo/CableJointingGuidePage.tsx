@@ -639,7 +639,7 @@ export default function CableJointingGuidePage() {
   return (
     <GuideTemplate
       title="Cable Jointing Guide — LV and MV Jointing for UK"
-      description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques…"
+      description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques."
       datePublished="2024-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

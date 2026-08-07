@@ -32,10 +32,19 @@ export default function MockExamTopicPage() {
   // Topic-specific copy — varies per page so each topic landing has its
   // own H1, title, description and intro paragraph (otherwise Google
   // treats them as duplicate content).
+  // A topic whose pool is no bigger than the paper serves every question it
+  // has, so calling them "random" or promising a different paper on retake
+  // would be untrue. Say what actually happens instead.
+  const drawsWholePool = questionsPerExam >= topic.qCount;
+
   const title = `${topic.category} — ${entry.examShortName} Mock Exam 2026`;
-  const description = `Practice ${topic.qCount} ${entry.subject} focused on ${topic.category}. Free mock exam, ${questionsPerExam} random questions, ${entry.timeLimitMinutes}-minute timer, instant results + explanations. No sign-up.`;
+  const description = drawsWholePool
+    ? `Practice all ${topic.qCount} ${entry.subject} on ${topic.category}. Free mock exam, ${entry.timeLimitMinutes}-minute timer, instant results + explanations. No sign-up.`
+    : `Practice ${topic.qCount} ${entry.subject} focused on ${topic.category}. Free mock exam, ${questionsPerExam} random questions, ${entry.timeLimitMinutes}-minute timer, instant results + explanations. No sign-up.`;
   const heading = `${topic.category} — ${entry.examShortName} Practice`;
-  const intro = `Free topic-focused mock exam: ${questionsPerExam} random questions from a pool of ${topic.qCount} on ${topic.category}, drawn from the wider ${entry.examShortName} bank. ${entry.timeLimitMinutes}-minute timer, ${entry.passThreshold}% to pass, worked explanation on every question. Use this when you've taken the full mock once and want to drill the topics you got wrong.`;
+  const intro = drawsWholePool
+    ? `Free topic-focused mock exam: all ${topic.qCount} questions on ${topic.category}, drawn from the wider ${entry.examShortName} bank. ${entry.timeLimitMinutes}-minute timer, ${entry.passThreshold}% to pass, worked explanation on every question. Use this when you've taken the full mock once and want to drill the topics you got wrong.`
+    : `Free topic-focused mock exam: ${questionsPerExam} random questions from a pool of ${topic.qCount} on ${topic.category}, drawn from the wider ${entry.examShortName} bank. ${entry.timeLimitMinutes}-minute timer, ${entry.passThreshold}% to pass, worked explanation on every question. Use this when you've taken the full mock once and want to drill the topics you got wrong.`;
 
   return (
     <PublicMockExamPage

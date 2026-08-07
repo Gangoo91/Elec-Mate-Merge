@@ -549,7 +549,7 @@ export default function MarinaMooringElectricalPage() {
   return (
     <GuideTemplate
       title="Marina & Mooring Electrical Installation UK | BS 7671"
-      description="Complete guide to marina and mooring electrical installations under BS 7671 Section 709. Shore power connections, galvanic corrosion…"
+      description="Complete guide to marina and mooring electrical installations under BS 7671 Section 709. Shore power connections, galvanic corrosion."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

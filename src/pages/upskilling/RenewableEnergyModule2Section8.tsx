@@ -60,7 +60,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'PV SLDs use BS EN 60617 / IEC 60617 standardised electrical symbols where applicable, plus some PV-specific conventions. The module symbol (rectangle with diagonal indicating PV cell type), string interconnection (single lines representing the series-connected modules), DC isolator (switch symbol with DC indicator), inverter (rectangle with internal converter / wave-shape), AC isolator (standard switch symbol), protective devices (fuse rectangles, MCB / RCD blocks per BS 7671 conventions), meter (M in circle for utility, separate symbols for generation meter and import meter), DNO connection (triangle or transformer symbol depending on the connection type).',
+      'PV SLDs use IEC 60617 / IEC 60617 standardised electrical symbols where applicable, plus some PV-specific conventions. The module symbol (rectangle with diagonal indicating PV cell type), string interconnection (single lines representing the series-connected modules), DC isolator (switch symbol with DC indicator), inverter (rectangle with internal converter / wave-shape), AC isolator (standard switch symbol), protective devices (fuse rectangles, MCB / RCD blocks per BS 7671 conventions), meter (M in circle for utility, separate symbols for generation meter and import meter), DNO connection (triangle or transformer symbol depending on the connection type).',
   },
   {
     id: 'm2s8-protection-on-sld',
@@ -258,7 +258,7 @@ const faqs = [
     question:
       'What standard symbols should I use?',
     answer:
-      'BS EN 60617 / IEC 60617 is the standardised electrical symbol set used in BS 7671 drawings. Some PV-specific symbols (e.g. the PV module symbol with the diagonal slash) extend the standard set. Most CAD and PV design tools include the standard library pre-loaded. Custom symbols should match the visual conventions of the standard library so the SLD is readable to anyone trained in BS 7671 drawing conventions.',
+      'IEC 60617 / IEC 60617 is the standardised electrical symbol set used in BS 7671 drawings. Some PV-specific symbols (e.g. the PV module symbol with the diagonal slash) extend the standard set. Most CAD and PV design tools include the standard library pre-loaded. Custom symbols should match the visual conventions of the standard library so the SLD is readable to anyone trained in BS 7671 drawing conventions.',
   },
   {
     question:
@@ -325,7 +325,7 @@ export default function RenewableEnergyModule2Section8() {
             points={[
               'A PV SLD (single-line diagram) is the schematic representation of the PV install\'s electrical topology — every major component (modules, strings, isolators, inverter, protective devices, meter, grid) shown in single-line form.',
               'Multiple audiences over the 25+ year install life: designer, installer, customer, DNO (for G99 approval), MCS auditor, EICR inspector, next contractor on future additions. Each reads the SLD at the appropriate level of detail.',
-              'BS EN 60617 / IEC 60617 standardised electrical symbols plus PV-specific conventions. CAD or PV design tools (OpenSolar, PVsyst, AutoCAD) produce the SLD; hand-drawn sketches are not appropriate for cert evidence.',
+              'IEC 60617 / IEC 60617 standardised electrical symbols plus PV-specific conventions. CAD or PV design tools (OpenSolar, PVsyst, AutoCAD) produce the SLD; hand-drawn sketches are not appropriate for cert evidence.',
               'Protection and isolation arrangements are the SLD\'s primary outputs — per-string fuses per Reg 712.431, RCBO type per Reg 531.3.3, bidirectional protective device per Reg 551.7.1(c), isolation accessibility per Reg 551.7.6, OSG signposting for warning notices.',
               'Living document — updated at every major install change (battery addition, EV addition, heat pump addition, inverter replacement). The SLD version history is the install\'s design audit trail in the cert evidence bundle.',
             ]}
@@ -334,7 +334,7 @@ export default function RenewableEnergyModule2Section8() {
           <LearningOutcomes
             outcomes={[
               'Produce a complete PV SLD covering modules, strings, DC and AC topology, inverter(s), protective devices, isolators, meters and grid connection.',
-              'Read standardised electrical symbols (BS EN 60617 / IEC 60617) and PV-specific conventions on an existing SLD.',
+              'Read standardised electrical symbols (IEC 60617 / IEC 60617) and PV-specific conventions on an existing SLD.',
               'Communicate protection and isolation arrangements on the SLD — fuses, RCBOs, surge protective devices, DC and AC isolators, lockable disconnection per DNO requirements.',
               'Match SLD detail level to the audience — residential single-string SLD for domestic; multi-sheet SLD for commercial / hybrid / complex installs.',
               'Maintain the SLD as a living document — update at every major install change to preserve the design audit trail through the install\'s 25+ year life.',
@@ -415,11 +415,11 @@ export default function RenewableEnergyModule2Section8() {
 
           <ContentEyebrow>Standard symbols and conventions</ContentEyebrow>
 
-          <Pullquote>BS EN 60617 symbols plus PV conventions. Read once; produce consistently.</Pullquote>
+          <Pullquote>IEC 60617 symbols plus PV conventions. Read once; produce consistently.</Pullquote>
 
           <ConceptBlock
             title="The symbol library — what each symbol means"
-            plainEnglish="BS EN 60617 / IEC 60617 is the standardised electrical symbol set used in BS 7671 drawings. PV-specific symbols extend it for modules, strings, and PV-specific components. Most CAD and PV design tools include the standard library."
+            plainEnglish="IEC 60617 / IEC 60617 is the standardised electrical symbol set used in BS 7671 drawings. PV-specific symbols extend it for modules, strings, and PV-specific components. Most CAD and PV design tools include the standard library."
             onSite="Read the symbol library once; produce SLDs that match the convention every time. Inspectors, auditors and future contractors all read the same convention — non-standard symbols create ambiguity that wastes time and creates disputes."
           >
             <p>Common PV SLD symbols:</p>
@@ -450,7 +450,7 @@ export default function RenewableEnergyModule2Section8() {
               </li>
               <li>
                 <strong className="text-white">Fuse</strong> — rectangle with diagonal
-                line (BS EN 60617); annotated with rating and type (gPV for PV
+                line (IEC 60617); annotated with rating and type (gPV for PV
                 application)
               </li>
               <li>
@@ -771,7 +771,7 @@ export default function RenewableEnergyModule2Section8() {
             points={[
               'A PV SLD is the schematic showing the install\'s electrical topology — every major component (modules, strings, isolators, inverter, protective devices, meter, grid) in single-line form.',
               'Multiple audiences over 25+ years: designer, installer, customer, DNO, MCS auditor, EICR inspector, next contractor. Each reads the SLD at the appropriate level of detail.',
-              'BS EN 60617 / IEC 60617 standardised symbols plus PV-specific conventions. Produced in CAD or PV design tools; hand-drawn sketches are not appropriate for the cert evidence bundle.',
+              'IEC 60617 / IEC 60617 standardised symbols plus PV-specific conventions. Produced in CAD or PV design tools; hand-drawn sketches are not appropriate for the cert evidence bundle.',
               'Protection and isolation are the SLD\'s primary regulatory outputs — per-string fuses per Reg 712.431, RCBO type per Reg 531.3.3, bidirectional protective device per Reg 551.7.1(c), isolation per Reg 551.7.6, OSG warning-notice signposting.',
               'Three SLD patterns: residential single-string (single-sheet), residential hybrid PV+BESS (single or two-sheet), commercial multi-MPPT (multi-sheet per discipline).',
               'Living document — updated at every install change (battery, EV, heat pump, inverter replacement). Version history is the install\'s design audit trail.',

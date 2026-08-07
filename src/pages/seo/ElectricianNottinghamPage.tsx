@@ -581,7 +581,7 @@ export default function ElectricianNottinghamPage() {
     <GuideTemplate
       localArea="Nottingham"
       title="Electrician in Nottingham | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements…"
+      description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -697,9 +697,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'micro-cable' in fibre optics?",
     options: [
       'High-density cable with very small outer diameter for microduct installation',
-      'A short patch cord used between adjacent panels',
-      'A single fibre with a 250µm coating and no jacket',
-      'A cable using a sub-millimetre cladding diameter',
+      'A short simplex patch cord used between adjacent patch panels in a rack',
+      'A single 250µm coated fibre with no jacket, for internal tray routing',
+      'A cable built with a sub-millimetre cladding diameter around each core',
     ],
     correctAnswer: 0,
     explanation:
@@ -1180,9 +1180,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'cable pull box' used for?",
     options: [
       'Providing access for intermediate pulls and cable management at changes of direction',
-      'Housing the active transceivers at the equipment room',
-      'Splitting one optical signal among several outputs',
-      'Storing slack fibre at the customer demarcation point',
+      'Housing the active transceivers and patch panels within the equipment room',
+      'Splitting one optical signal among several outputs in a passive network',
+      'Storing service slack fibre at the customer demarcation point outdoors',
     ],
     correctAnswer: 0,
     explanation:
@@ -1214,10 +1214,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question:
       'What environmental factor must be monitored when installing fibre cable in cold conditions?',
     options: [
-      'Humidity level inside the conduit',
-      'Wind speed at the installation site',
+      'Humidity level inside the conduit, which condenses on the glass',
+      'Wind speed at the installation site, which alters pulling tension',
       'Cable temperature - cables become brittle below rated temperature',
-      'Ambient light level for visual inspection',
+      'Ambient light level, so that end-face inspection stays reliable',
     ],
     correctAnswer: 2,
     explanation:
@@ -1231,10 +1231,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'How should fibre slack loops be stored in a splice enclosure?',
     options: [
-      "Coiled as tightly as possible to save tray space",
-      "Looped in a figure-8 pattern to relieve twist",
-      "Left loose without securing, to avoid added stress",
-      "Following the enclosure's fibre management guides, respecting bend radius",
+      'Coiled as tightly as possible to save space on the splice tray',
+      'Looped in a tight figure-of-eight pattern to relieve fibre twist',
+      'Left loose and unsecured so no extra stress is placed on fibres',
+      'Following the enclosure\'s fibre management guides, respecting bend radius',
     ],
     correctAnswer: 3,
     explanation:
@@ -1249,9 +1249,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What must be done before entering a confined space for fibre installation?',
     options: [
       'Follow confined space entry procedures including atmosphere testing',
-      'Clean and inspect all connector end-faces',
-      'Energise the link to verify continuity first',
-      'Apply cable lubricant to the entry conduit',
+      'Clean and inspect all connector end-faces before descending',
+      'Energise the link and verify continuity before entry',
+      'Apply cable lubricant to the entry duct and draw ropes',
     ],
     correctAnswer: 0,
     explanation:
@@ -1507,9 +1507,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: "What does 'entrance facility' refer to in building cabling design?",
     options: [
-      'The main lobby where reception equipment is located',
-      'The room housing core switches and servers',
-      'The work area where users connect their devices',
+      'The main lobby where the reception desk and equipment are located',
+      'The room housing the core switches, servers and cross-connects',
+      'The work area outlet where users connect their own devices',
       'Where external cables enter the building and transition to internal cabling',
     ],
     correctAnswer: 3,
@@ -1645,9 +1645,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What is the OTDR 'dead zone'?",
     options: [
-      'A section of fibre with no backscatter at all',
-      'The unused capacity of dark fibre in a cable',
-      'The wavelength band where attenuation is highest',
+      'A section of fibre that produces no backscatter at all',
+      'The unused capacity of dark fibre held spare in a cable',
+      'The wavelength band in which attenuation is at its highest',
       'The distance after a reflective event where events cannot be detected',
     ],
     correctAnswer: 3,
@@ -1850,9 +1850,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What is the consequence of exceeding the minimum bend radius during installation?',
     options: [
-      'Reduced attenuation due to tighter mode confinement',
-      'A permanent shift in the operating wavelength',
-      'Improved bend performance from work-hardening the glass',
+      'Reduced attenuation, because tighter bends confine the mode more',
+      'A permanent shift in the link\'s operating wavelength window',
+      'Improved bend performance, as work-hardening strengthens the glass',
       'Increased attenuation, potential crack initiation, and long-term failure risk',
     ],
     correctAnswer: 3,
@@ -1902,10 +1902,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'What documentation should be retained for the lifetime of a fibre installation?',
     options: [
-      'Only the manufacturer delivery note for the cable drums',
-      'Only the final invoice and warranty card',
+      'Only the delivery notes and packing lists for the cable drums',
+      'Warranty cards and the final invoice issued to the client',
       'Test results, as-built drawings, labelling schedules, and material certificates',
-      'Only a photograph of each completed splice tray',
+      'A photographic record of each completed splice tray',
     ],
     correctAnswer: 2,
     explanation:
@@ -2293,10 +2293,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: "What is the function of a 'fibre identifier'?",
     options: [
-      'To read the colour code printed on each fibre',
+      'To read the colour code printed on each fibre and buffer tube',
       'To detect and identify live traffic on a fibre without breaking the circuit',
-      'To measure the absolute optical power in dBm',
-      'To locate breaks by injecting visible red light',
+      'To measure the absolute optical power at the fibre end in dBm',
+      'To locate breaks by injecting visible red light into the fibre',
     ],
     correctAnswer: 1,
     explanation:
@@ -3041,10 +3041,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: "What does 'FOTP' stand for?",
     options: [
-      'Fibre Optic Termination Polish',
+      'Fibre Optic Termination Polish (connector finishing grade)',
       'Fibre Optic Test Procedure (standardised test methods)',
-      'Fibre Optic Transport Protocol',
-      'Fibre Optic Tray Panel',
+      'Fibre Optic Transport Protocol (a data link standard)',
+      'Fibre Optic Tray Panel (a splice enclosure fitting)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3365,9 +3365,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is 'bi-directional' (BiDi) transmission?",
     options: [
       'Simultaneous two-way transmission over a single fibre using different wavelengths',
-      'Transmission in one direction only along a simplex fibre',
-      'Sending the same signal over two fibres for redundancy',
-      'Bouncing the signal back to the source for monitoring',
+      'Transmission in one direction only along a single simplex fibre strand',
+      'Sending the same signal over two separate fibres for path redundancy',
+      'Bouncing the signal back to the source for loopback monitoring',
     ],
     correctAnswer: 0,
     explanation:
@@ -3449,10 +3449,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 201,
     question: "What is 'optical network terminal' (ONT)?",
     options: [
-      'Central office equipment managing many PON subscribers',
+      'Central office equipment managing many PON subscribers on one port',
       'Customer premises equipment converting optical to electrical signals in PON',
-      'A passive splitter dividing the signal among users',
-      'An optical amplifier extending the PON reach',
+      'A passive splitter dividing the optical signal among many users',
+      'An optical amplifier that extends the reach of the PON feeder',
     ],
     correctAnswer: 1,
     explanation:
@@ -3483,9 +3483,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 203,
     question: "What is 'time division multiplexing' (TDM) in PON?",
     options: [
-      'Assigning a different wavelength to each subscriber',
-      'Splitting power equally across all subscribers at once',
-      'Amplifying each subscriber signal in turn',
+      'Assigning a different downstream wavelength to each subscriber',
+      'Splitting optical power equally across all subscribers at once',
+      'Amplifying each subscriber\'s signal in turn at the splitter',
       'Allocating different time slots to different users for upstream transmission',
     ],
     correctAnswer: 3,
@@ -3501,9 +3501,9 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is 'dynamic bandwidth allocation' (DBA) in PON?",
     options: [
       'Dynamically assigning upstream time slots based on demand',
-      'Automatically adjusting laser power',
-      'Changing fibre paths automatically',
-      'Balancing traffic between fibres',
+      'Automatically adjusting the ONT laser output power',
+      'Switching subscribers between fibre paths automatically',
+      'Balancing traffic evenly between the feeder fibres',
     ],
     correctAnswer: 0,
     explanation:
@@ -3806,10 +3806,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 222,
     question: "What is 'one jumper' reference method?",
     options: [
-      'Referencing with launch, receive, and link cords together',
-      'Referencing with two cords to include both end connectors',
+      'Referencing with launch, receive and link cords connected together',
+      'Referencing with two test cords so both end connectors are included',
       'Setting reference with single test cord, excluding one link connector from measurement',
-      'Referencing using an OTDR launch fibre instead of a cord',
+      'Referencing using an OTDR launch fibre spool instead of a test cord',
     ],
     correctAnswer: 2,
     explanation:

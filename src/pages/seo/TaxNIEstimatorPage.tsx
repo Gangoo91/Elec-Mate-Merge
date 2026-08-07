@@ -21,7 +21,7 @@ export default function TaxNIEstimatorPage() {
   return (
     <BusinessTemplate
       title="Tax & NI Estimator for Electricians"
-      description="Estimate your income tax and National Insurance as a self-employed electrician in the UK. Class 2 and Class 4 NI, tax bands for 2025/26…"
+      description="Estimate your income tax and National Insurance as a self-employed electrician in the UK. Class 2 and Class 4 NI, tax bands for 2025/26."
       datePublished="2025-09-01"
       dateModified="2026-05-18"
       breadcrumbs={[

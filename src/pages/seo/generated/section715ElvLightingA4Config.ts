@@ -240,7 +240,7 @@ export const section715ElvLightingA4Config: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'For a full summary of the changes introduced by Amendment 4, see our [BS 7671 A4:2026 summary guide](/guides/bs-7671-a4-2026-summary). The AFDD requirements (Section 421.1.7), TN-C-S (PNB) earthing rules and new schedule columns all sit on the LV side and indirectly affect any final circuit that feeds an ELV driver.',
+            'For a full summary of the changes introduced by Amendment 2:2022, see our [BS 7671 A4:2026 summary guide](/guides/bs-7671-a4-2026-summary). The AFDD requirements (Section 421.1.7), TN-C-S (PNB) earthing rules and new schedule columns all sit on the LV side and indirectly affect any final circuit that feeds an ELV driver.',
         },
       ],
     },

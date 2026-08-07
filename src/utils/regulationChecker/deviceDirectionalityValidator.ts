@@ -26,6 +26,7 @@ export const checkDeviceDirectionality = (result: TestResult): RegulationWarning
     warnings.push({
       severity: 'warning',
       title: 'Check Protective Device Directionality',
+      fields: ['protectiveDeviceType', 'bsStandard'],
       description: `Circuit "${result.circuitDescription}" may have bidirectional power flow. Verify protective device supports bidirectional operation or is correctly oriented.`,
       regulation: 'BS 7671 Regulation 530.3.201',
       suggestion:

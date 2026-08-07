@@ -231,13 +231,17 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 
       try {
         const registration = await navigator.serviceWorker.ready;
+        // `vibrate` is real and supported on Android, but it is not in
+        // TypeScript's NotificationOptions, so the object needs widening.
+        // Dropping the field would silently lose the buzz on the platform
+        // where an electrician is most likely to have the phone in a pocket.
         await registration.showNotification(title, {
           body,
           icon: '/icons/icon-192x192.png',
           badge: '/icons/badge-72x72.png',
           data,
           vibrate: [100, 50, 100],
-        });
+        } as NotificationOptions & { vibrate: number[] });
       } catch (error) {
         console.error('Failed to show notification:', error);
       }

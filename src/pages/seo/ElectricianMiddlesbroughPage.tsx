@@ -528,7 +528,7 @@ export default function ElectricianMiddlesbroughPage() {
       noindex={true}
       localArea="Middlesbrough"
       title="Electrician in Middlesbrough | Local Electricians 2026"
-      description="Find qualified electricians in Middlesbrough. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
+      description="Find qualified electricians in Middlesbrough. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

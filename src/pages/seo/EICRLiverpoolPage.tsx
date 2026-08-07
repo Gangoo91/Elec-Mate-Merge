@@ -728,7 +728,7 @@ export default function EICRLiverpoolPage() {
   return (
     <GuideTemplate
       title="EICR Liverpool | Electrical Inspection Cost 2026"
-      description="EICR costs in Liverpool for 2026. Landlord legal requirements, selective licensing, student HMO requirements, dock area property challenges…"
+      description="EICR costs in Liverpool for 2026. Landlord legal requirements, selective licensing, student HMO requirements, dock area property challenges."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -464,7 +464,7 @@ export default function AIInstallationSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Installation Specialist | Guidance Tool"
-      description="Step-by-step electrical installation guidance from AI trained for UK work. Cable routing, containment sizing, first and second fix checklists…"
+      description="Step-by-step electrical installation guidance from AI trained for UK work. Cable routing, containment sizing, first and second fix checklists."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

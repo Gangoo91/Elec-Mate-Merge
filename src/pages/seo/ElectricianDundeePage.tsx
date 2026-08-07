@@ -481,7 +481,7 @@ export default function ElectricianDundeePage() {
       noindex={true}
       localArea="Dundee"
       title="Electrician in Dundee | Local Electricians 2026"
-      description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs…"
+      description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

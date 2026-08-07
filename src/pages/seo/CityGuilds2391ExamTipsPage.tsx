@@ -560,8 +560,8 @@ const sections = [
 export default function CityGuilds2391ExamTipsPage() {
   return (
     <GuideTemplate
-      title="2391 Exam Tips | Inspection & Testing Exam Guide"
-      description="How to pass the C&G 2391 Inspection and Testing exam. Covers written exam format, practical assessment, test sequence, common pitfalls…"
+      title="2391 Exam: 40 Questions, 2 Hours, 60% Pass Mark"
+      description="C&G 2391 written exam: 40 short-answer questions in 2 hours, open book, 60% pass mark. Plus the practical assessment, test sequence and common pitfalls."
       datePublished="2025-04-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

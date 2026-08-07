@@ -223,7 +223,7 @@ export default function AdminPeerSafety() {
                       </Pill>
                     )}
                   </div>
-                  <p className="text-[12.5px] text-white/70 mt-1">
+                  <p className="text-[12.5px] text-white mt-1">
                     {reasonLabel(selected.reason)} — reported by{' '}
                     {selected.reporter_name ?? 'unknown'} on{' '}
                     {format(new Date(selected.created_at), 'd MMM yyyy, h:mm a')}
@@ -238,20 +238,20 @@ export default function AdminPeerSafety() {
                 {/* Conversation context */}
                 <div className="flex-1 overflow-y-auto px-5 py-4 space-y-2.5">
                   {!selected.conversation_id ? (
-                    <p className="text-[13px] text-white/60 text-center py-8">
+                    <p className="text-[13px] text-white text-center py-8">
                       No conversation attached to this report.
                     </p>
                   ) : transcriptLoading ? (
                     <div className="flex justify-center py-8">
-                      <Loader2 className="h-5 w-5 animate-spin text-white/50" />
+                      <Loader2 className="h-5 w-5 animate-spin text-white" />
                     </div>
                   ) : !transcript || transcript.length === 0 ? (
-                    <p className="text-[13px] text-white/60 text-center py-8">
+                    <p className="text-[13px] text-white text-center py-8">
                       No messages in this conversation.
                     </p>
                   ) : (
                     <>
-                      <p className="text-[10.5px] uppercase tracking-[0.16em] text-white/50 font-semibold text-center pb-1">
+                      <p className="text-[10.5px] uppercase tracking-[0.16em] text-white font-semibold text-center pb-1">
                         Conversation — moderation access via this report only
                       </p>
                       {transcript.map((m) => (
@@ -273,7 +273,7 @@ export default function AdminPeerSafety() {
                             <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
                               {m.content}
                             </p>
-                            <span className="block text-[10px] text-white/50 mt-1 tabular-nums">
+                            <span className="block text-[10px] text-white mt-1 tabular-nums">
                               {m.sender_is_reported ? 'Reported user' : 'Reporter side'} ·{' '}
                               {format(new Date(m.created_at), 'd MMM, h:mm a')}
                             </span>

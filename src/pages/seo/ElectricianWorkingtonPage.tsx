@@ -528,7 +528,7 @@ export default function ElectricianWorkingtonPage() {
       noindex={true}
       localArea="Workington"
       title="Electrician in Workington | Local Electricians 2026"
-      description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO…"
+      description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

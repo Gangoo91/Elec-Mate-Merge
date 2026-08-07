@@ -834,7 +834,7 @@ export default function ConsumerUnitReplacementCostPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Cost 2026 | UK Price Guide"
-      description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification…"
+      description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -642,7 +642,7 @@ export default function LimitedCompanyElectricianPage() {
   return (
     <GuideTemplate
       title="Limited Company for Electricians | Setup Guide UK"
-      description="Complete guide to setting up a limited company as an electrician in the UK. Ltd vs sole trader comparison, Companies House registration, corporation tax…"
+      description="Complete guide to setting up a limited company as an electrician in the UK. Ltd vs sole trader comparison, Companies House registration, corporation tax."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

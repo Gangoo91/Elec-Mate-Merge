@@ -20,7 +20,7 @@ export default function ElectricalBIMGuidePage() {
   return (
     <GuideTemplate
       title="Electrical BIM Guide | Building Information Modelling"
-      description="Guide to Building Information Modelling (BIM) for electrical engineers and electricians. Covers what BIM is, LOD levels, Revit MEP for electrical…"
+      description="Guide to Building Information Modelling (BIM) for electrical engineers and electricians. Covers what BIM is, LOD levels, Revit MEP for electrical."
       datePublished="2025-10-01"
       dateModified="2026-06-10"
       breadcrumbs={[

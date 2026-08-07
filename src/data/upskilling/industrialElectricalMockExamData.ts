@@ -660,10 +660,10 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'What does IP65 rating indicate for an enclosure?',
     options: [
-      'Dust-protected and splash-proof from any direction',
-      'Limited dust ingress and protection from dripping water',
+      'Dust-protected and splash-proof',
+      'Limited dust ingress and dripping water protected',
       'Dust-tight and water jet protected',
-      'Dust-tight and protected against temporary immersion',
+      'Dust-tight and temporary immersion protected',
     ],
     correctAnswer: 2,
     explanation: 'IP65 means complete dust protection (6) and protection against water jets (5).',
@@ -1262,9 +1262,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: "What should be checked if a motor won't start?",
     options: [
       'Only the supply voltage at the incoming board',
-      'Only the power factor of the installation',
+      'The power factor of the installation and nothing else',
       'Power supply, control circuit, motor windings, mechanical binding',
-      'Only the harmonic distortion on the supply',
+      'The harmonic distortion on the supply only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1532,9 +1532,9 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What must be considered for underground cable routes?',
     options: [
       'Only the colour of the cable sheath',
-      'Only the supply power factor',
+      'The supply power factor alone',
       'Depth, protection, marking, and route recording',
-      'Only the conduit fill factor',
+      'The conduit fill factor only',
     ],
     correctAnswer: 2,
     explanation:
@@ -1752,8 +1752,8 @@ export const industrialElectricalQuestionBank: StandardMockQuestion[] = [
     question: 'What can happen if capacitors resonate with system inductance?',
     options: [
       'The supply frequency rises above 50Hz',
-      'The power factor is automatically driven to unity',
-      'The prospective fault current falls sharply',
+      'Power factor is driven to unity',
+      'Fault current falls sharply',
       'Harmonic amplification',
     ],
     correctAnswer: 3,

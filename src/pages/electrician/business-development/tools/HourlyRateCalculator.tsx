@@ -19,6 +19,7 @@ import {
   CalculatorSelect,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -26,7 +27,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Helmet } from 'react-helmet';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import {
   UK_EMPLOYER_COSTS,
@@ -34,6 +34,7 @@ import {
   employerPensionOn,
   priceFromMargin,
 } from '@/data/ukRates';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface RateInputs {
   annualSalary: string;
@@ -89,8 +90,14 @@ const HourlyRateCalculator = () => {
     afterHoursMultiplier: '1.5',
     weekendMultiplier: '2.0',
   });
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
   const [vatRegistered, setVatRegistered] = useState(false);
   const [rounding, setRounding] = useState<string>('nearest1');
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -100,7 +107,6 @@ const HourlyRateCalculator = () => {
 
   const updateInput = (field: keyof RateInputs, value: string) => {
     setInputs((prev) => ({ ...prev, [field]: value }));
-    setCalculated(false);
   };
 
   const calculateRate = () => {
@@ -166,7 +172,6 @@ const HourlyRateCalculator = () => {
       afterHoursMultiplier: '1.5',
       weekendMultiplier: '2.0',
     });
-    setCalculated(false);
   };
 
   // Parse inputs
@@ -293,28 +298,13 @@ const HourlyRateCalculator = () => {
         <link rel="canonical" href="/electrician/business-development/tools/hourly-rate" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6  ">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6  ">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Clock className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Hourly Rate Calculator
-              </h1>
-              <p className="text-sm text-white">Calculate your optimal charge-out rate</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+        <HubMasthead
+          section="Business"
+          title="Hourly Rate Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Input Section */}
@@ -326,10 +316,7 @@ const HourlyRateCalculator = () => {
               badge={UK_EMPLOYER_COSTS.taxYear}
             >
               {/* Core Inputs */}
-              <div className="flex items-center gap-2 mb-3">
-                <PoundSterling className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-white">Income & Time</span>
-              </div>
+              <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Income & Time</h3>
 
               <CalculatorInput
                 label="Desired Annual Salary"
@@ -407,10 +394,7 @@ const HourlyRateCalculator = () => {
               {/* Advanced Costs - Collapsible */}
               <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
                 <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                  <div className="flex items-center gap-2">
-                    <Settings className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm font-medium text-white">Advanced Costs</span>
-                  </div>
+                  <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Advanced Costs</h3>
                   <ChevronDown
                     className={cn(
                       'h-4 w-4 text-white transition-transform duration-200',
@@ -511,7 +495,7 @@ const HourlyRateCalculator = () => {
                   hint="Target profit (20-30%)"
                 />
                 <CalculatorInput
-                  label="Utilization Rate"
+                  label="Utilisation Rate"
                   unit="%"
                   type="text"
                   inputMode="decimal"
@@ -665,16 +649,13 @@ const HourlyRateCalculator = () => {
             {calculated ? (
               <>
                 <CalculatorResult category="business">
-                  <div className="text-center pb-4 border-b border-white/10">
-                    <p className="text-sm text-white mb-1">Recommended Hourly Rate (ex VAT)</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      £{roundedHourlyExVat.toFixed(2)}
-                    </div>
+                  <ResultHeadline
+                    label="Charge this per hour"
+                    value={`£${roundedHourlyExVat.toFixed(2)}`}
+                    aside={vatRegistered ? `£${hourlyIncVat?.toFixed(2)} inc VAT` : undefined}
+                    caption={`Covers your costs and pays you £${parseFloat(inputs.annualSalary || '0').toLocaleString('en-GB')} a year across ${Math.round(billableHours)} billable hours.`}
+                  />
+                  <div className="hidden">
                     {vatRegistered && (
                       <p className="text-sm text-white mt-2">
                         Inc VAT:{' '}
@@ -769,7 +750,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center">
                     <p className="text-xs text-white mb-1">After-hours</p>
-                    <p className="text-lg font-bold text-blue-400">
+                    <p className="text-lg font-bold text-elec-yellow">
                       £{afterHoursHourlyExVat.toFixed(0)}/h
                     </p>
                     {vatRegistered && (
@@ -780,7 +761,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-center">
                     <p className="text-xs text-white mb-1">Weekend</p>
-                    <p className="text-lg font-bold text-purple-400">
+                    <p className="text-lg font-bold text-white">
                       £{weekendHourlyExVat.toFixed(0)}/h
                     </p>
                     {vatRegistered && (
@@ -791,11 +772,11 @@ const HourlyRateCalculator = () => {
                   </div>
                 </div>
 
-                {/* Utilization Notice */}
-                <div className="p-3 rounded-xl border border-blue-400/20 bg-blue-400/5">
+                {/* Utilisation Notice */}
+                <div className="p-3 rounded-xl border border-white/[0.10] bg-white/[0.04]">
                   <div className="flex items-start gap-2">
-                    <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-blue-200/80">
+                    <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <p className="text-xs text-elec-yellow/80">
                       Utilisation set at {utilizationRate}%.{' '}
                       {utilizationRate < 65
                         ? 'This is low; consider marketing/admin balance to improve billable hours.'
@@ -822,7 +803,7 @@ const HourlyRateCalculator = () => {
               </>
             ) : (
               <div className="calculator-card text-center py-16">
-                <Clock className="h-16 w-16 text-blue-400/30 mx-auto mb-4" />
+                <Clock className="h-16 w-16 text-elec-yellow/30 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-white mb-2">Ready to Calculate</h3>
                 <p className="text-white">Enter your details and click "Calculate"</p>
               </div>
@@ -830,11 +811,11 @@ const HourlyRateCalculator = () => {
 
             {/* What This Means */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       What This Means
                     </span>
                   </div>
@@ -847,25 +828,25 @@ const HourlyRateCalculator = () => {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="p-4 pt-0">
-                  <ul className="space-y-2 text-sm text-blue-200/80">
+                  <ul className="space-y-2 text-sm text-elec-yellow/80">
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Base cost:</strong> Your salary + employer
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Base cost:</strong> Your salary + employer
                       costs + fixed expenses
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Overhead:</strong> Business costs (premises,
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Overhead:</strong> Business costs (premises,
                       admin, marketing)
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Utilisation:</strong> % of time you can
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Utilisation:</strong> % of time you can
                       actually bill clients
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Profit margin:</strong> Buffer for growth,
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <strong className="text-elec-yellow">Profit margin:</strong> Buffer for growth,
                       reinvestment, emergencies
                     </li>
                   </ul>

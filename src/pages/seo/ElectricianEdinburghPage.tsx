@@ -599,7 +599,7 @@ export default function ElectricianEdinburghPage() {
     <GuideTemplate
       localArea="Edinburgh"
       title="Electrician in Edinburgh | Local Electricians 2026"
-      description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring…"
+      description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

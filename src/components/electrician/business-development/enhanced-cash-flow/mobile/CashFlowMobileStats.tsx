@@ -44,9 +44,9 @@ export const CashFlowMobileStats = ({ financialMetrics, className }: CashFlowMob
       label: 'Runway',
       value: `${financialMetrics.cashRunway}mo`,
       icon: PiggyBank,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/20',
+      color: 'text-elec-yellow',
+      bgColor: 'bg-white/[0.04]',
+      borderColor: 'border-white/[0.10]',
     },
   ];
 

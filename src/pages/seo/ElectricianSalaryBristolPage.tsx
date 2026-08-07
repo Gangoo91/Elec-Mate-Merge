@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Employed electricians in Bristol earn £35,000 to £50,000 per year at JIB Approved Electrician grade, with senior and specialist roles reaching £55,000+. Bristol rates are 8 to 15% above the national JIB baseline due to high local demand.',
   "Self-employed electricians in Bristol typically charge £350 to £600 per day for domestic work and £500 to £900 per day for commercial and specialist work. Bristol's technology sector drives premium rates for data centre, laboratory, and cleanroom electrical work.",
   "Bristol's booming technology, aerospace, and life sciences sectors create strong demand for specialist electricians with industrial, high-voltage, or instrumentation experience — often earning 20 to 35% above standard rates.",
-  'JIB (Joint Industry Board) sets national pay scales for the electrical contracting industry. The 2024/2025 JIB Approved Electrician rate is £21.81 per hour (Monday to Friday, day work) — equivalent to approximately £42,500 to £45,000 per year with standard allowances.',
+  'JIB (Joint Industry Board) sets national pay scales for the electrical contracting industry. The JIB Approved Electrician rate effective 5 January 2026 is £20.08 per hour (National Standard, Transport Provided) — equivalent to approximately £39,150 per year at 37.5 hours per week, before allowances.',
   'Benefits for Bristol electricians working in larger firms typically include a tool allowance (£500 to £1,500 per year), employer pension contribution (5 to 8%), private health insurance in some firms, and a van or mileage allowance.',
 ];
 
@@ -50,12 +50,12 @@ const faqs = [
   {
     question: 'What is the average electrician salary in Bristol in 2025?',
     answer:
-      "The average employed electrician salary in Bristol in 2025 is approximately £38,000 to £48,000 per year at Approved Electrician grade. Senior electricians and working foremen earn £48,000 to £58,000. Bristol's strong local economy and high demand from the technology, aerospace, and construction sectors pushes salaries 8 to 15% above the national JIB baseline. Self-employed electricians in Bristol typically earn more — £70,000 to £150,000 gross depending on workload and specialisation.",
+      "The average employed electrician salary in Bristol in 2025 is approximately £38,000 to £48,000 per year at Approved Electrician grade. Electricians at Site or Installation Technician grade, and those carrying supervisory responsibility, earn £48,000 to £58,000. Bristol's strong local economy and high demand from the technology, aerospace, and construction sectors pushes salaries 8 to 15% above the national JIB baseline. Self-employed electricians in Bristol typically earn more — £70,000 to £150,000 gross depending on workload and specialisation.",
   },
   {
-    question: 'What are the JIB electrician rates for 2024/2025?',
+    question: 'What are the JIB electrician rates for 2026?',
     answer:
-      'The Joint Industry Board (JIB) sets the following national rates for 2024/2025: Approved Electrician — £21.81 per hour; Electrician — £20.62 per hour; Electrical Technician — £22.74 per hour; Working Foreman — £23.67 per hour; Approved Electrician (ECS Gold Card holder) — industry standard for most Bristol commercial and industrial sites. These are the agreed minimum rates — many Bristol employers pay 10 to 20% above JIB minimums to attract and retain staff.',
+      'The Joint Industry Board (JIB) sets the following National Standard rates, effective 5 January 2026 (Transport Provided column): Site or Installation Technician — £22.70 per hour; Approved Electrician — £20.08 per hour; Electrician (including Domestic) — £18.38 per hour; Trainee Electrician Stage 3 — £17.51 per hour; Stage 2 — £16.54 per hour; Stage 1 / Electrical Labourer — £14.60 per hour. Own Transport and Shop Employed columns differ — the Approved Electrician rate is £21.19 on Own Transport and £18.61 Shop Employed. An Approved Electrician placed in charge of work and supervising other operatives also receives responsibility money of not less than 50p and not more than £2 per hour. The ECS Gold Card is the industry standard for most Bristol commercial and industrial sites. These are the agreed minimum rates — many Bristol employers pay 10 to 20% above JIB minimums to attract and retain staff.',
   },
   {
     question: "How does Bristol's tech economy affect electrician salaries?",
@@ -75,12 +75,12 @@ const faqs = [
   {
     question: 'What apprentice pay rates apply in Bristol?',
     answer:
-      'JIB apprentice rates for 2024/2025 are: Year 1 (16 to 18) — £7.56 per hour; Year 1 (19+) — £10.42 per hour; Year 2 — £11.55 per hour; Year 3 — £14.29 per hour; Year 4 — £16.48 per hour. These are the JIB minimum rates — many Bristol employers pay above these rates, particularly in Year 3 and 4, to retain apprentices. Bristol has several excellent JTL training centres and further education colleges offering Level 3 Electrotechnical Technology apprenticeships.',
+      'JIB apprentice rates effective 5 January 2026 are: Stage 1 — £8.16 per hour; Stage 2 — £10.60 per hour; Stage 3 — £13.05 per hour; Stage 4 — £14.03 per hour. JIB uses Stages, not years, and each rate is a single rate covering all hours worked, including off-the-job training — the separate lower "at college" rate was removed for England, Wales and Northern Ireland. These are the JIB minimum rates — many Bristol employers pay above them, particularly at Stages 3 and 4, to retain apprentices. Bristol has several excellent JTL training centres and further education colleges offering Level 3 Electrotechnical Technology apprenticeships.',
   },
   {
     question: 'How much do Bristol electricians earn in overtime?',
     answer:
-      "JIB overtime rates are: first four hours overtime (Monday to Friday after standard hours) — time and a third (133%); thereafter and Saturday morning — time and a half (150%); Saturday afternoon — time and three quarters (175%); Sunday and public holidays — double time (200%). In Bristol's active construction market, overtime is readily available on large commercial sites. An Approved Electrician earning £21.81 basic earns £29.08 at Saturday rate and £43.62 at Sunday rate.",
+      "JIB overtime rates are: first four hours overtime (Monday to Friday after standard hours) — time and a third (133%); thereafter and Saturday morning — time and a half (150%); Saturday afternoon — time and three quarters (175%); Sunday and public holidays — double time (200%). In Bristol's active construction market, overtime is readily available on large commercial sites. An Approved Electrician on the £20.08 basic rate (Transport Provided, effective 5 January 2026) earns £30.12 at Saturday time-and-a-half and £40.16 at Sunday double time.",
   },
 ];
 
@@ -145,15 +145,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Approved Electrician (employed)</strong> — £38,000 to £48,000 per year
-                including JIB allowances. The 2024/2025 JIB rate of £21.81 per hour equates to
-                approximately £42,500 per year based on 37.5 hours per week. Bristol employers
-                typically pay a further 10 to 15% premium above JIB minimum.
+                including JIB allowances. The JIB rate effective 5 January 2026 is £20.08 per hour
+                (National Standard, Transport Provided), which equates to approximately £39,150 per
+                year based on 37.5 hours per week. Bristol employers typically pay a further 10 to
+                15% premium above the JIB minimum.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Senior / Foreman level</strong> — £48,000 to £58,000. Working foremen on
+                <strong>Site or Installation Technician / supervisory</strong> — £48,000 to £58,000.
+                Electricians running gangs on
                 major Bristol construction sites (Bristol Temple Quarter regeneration, Bristol
                 Arena, University of Bristol campus expansion) often earn £52,000 to £60,000
                 including overtime and site allowances.
@@ -181,35 +183,40 @@ const sections = [
   },
   {
     id: 'employed-rates',
-    heading: 'Employed Electrician Rates — JIB Scale 2024/2025',
+    heading: 'Employed Electrician Rates — JIB Scale 2026',
     content: (
       <>
         <p>
           The Joint Industry Board (JIB) sets national pay rates for the electrical contracting
-          industry. These are minimum rates — Bristol employers, particularly on commercial and
-          industrial projects, routinely pay above the JIB scale.
+          industry. The rates below are the National Standard, Transport Provided figures effective
+          Monday 5 January 2026 — the headline column, and the one usually quoted. Own Transport
+          rates are slightly higher and Shop Employed rates lower. These are minimum rates — Bristol
+          employers, particularly on commercial and industrial projects, routinely pay above the JIB
+          scale.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Trainee (ET)</strong> — £10.42 to £16.48 per hour. Paid at JIB
-                apprentice rates during the four-year NVQ Level 3 programme.
+                <strong>Trainee Electrician</strong> — Stage 1 / Electrical Labourer £14.60 per
+                hour, Stage 2 £16.54 per hour, Stage 3 £17.51 per hour. This is a separate grade
+                family from the apprentice Stages, which run from £8.16 to £14.03 per hour during
+                the apprenticeship itself.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrician</strong> — £20.62 per hour (£40,100 per year at 37.5hr/week).
-                Holds NVQ Level 3 and ECS Blue Card. Many Bristol employers start staff at this
+                <strong>Electrician (including Domestic)</strong> — £18.38 per hour (£35,840 per
+                year at 37.5hr/week). Holds NVQ Level 3 and ECS Blue Card. Many Bristol employers start staff at this
                 grade while gaining experience for ECS Gold Card application.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approved Electrician</strong> — £21.81 per hour (£42,480 per year at
+                <strong>Approved Electrician</strong> — £20.08 per hour (£39,150 per year at
                 37.5hr/week). ECS Gold Card holder. The most common grade on Bristol commercial
                 sites. Bristol market rate often £23 to £26 per hour above JIB minimum.
               </span>
@@ -217,17 +224,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Technician</strong> — £22.74 per hour (£44,340 per year). For
-                engineers with HNC/HND or degree-level qualifications. Common in Bristol's aerospace
-                and instrumentation sectors.
+                <strong>Site or Installation Technician</strong> — £22.70 per hour (£44,265 per
+                year). The top grade on the JIB scale. Common in Bristol's aerospace and
+                instrumentation sectors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Working Foreman</strong> — £23.67 per hour (£46,150 per year). Responsible
-                for supervising a gang of electricians on site. Bristol premium often pushes this to
-                £25 to £28 per hour, with site allowances adding further.
+                <strong>Responsibility money</strong> — an Approved Electrician placed in charge of
+                work and supervising other operatives receives responsibility money on top of the
+                grade rate: not less than 50p and not more than £2 per hour. Supervising apprentices
+                or trainees alone does not qualify. Bristol market rates for gang leaders often run
+                to £25 to £28 per hour, with site allowances adding further.
               </span>
             </li>
           </ul>
@@ -401,46 +410,41 @@ const sections = [
     content: (
       <>
         <p>
-          JIB apprentice (Electrical Trainee) rates in Bristol follow the national JIB scale, but
-          many Bristol employers pay above these minimums — particularly in Years 3 and 4 — to
-          retain quality apprentices in a competitive labour market.
+          JIB apprentice rates in Bristol follow the national JIB scale, effective 5 January 2026.
+          JIB sets these by Stage, not by year or by age, and each is a single rate covering all
+          hours worked including off-the-job training. Many Bristol employers pay above these
+          minimums — particularly at Stages 3 and 4 — to retain quality apprentices in a competitive
+          labour market.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 (aged 16 to 18)</strong> — £7.56 per hour (National Minimum Wage for
-                this age bracket). Approximately £14,700 per year.
+                <strong>Stage 1</strong> — £8.16 per hour. Approximately £15,900 per year at 37.5
+                hours per week. Adult entrants to electrical apprenticeships are increasingly common
+                in Bristol.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 (aged 19+)</strong> — £10.42 per hour. Approximately £20,300 per
-                year. Adult entrants to electrical apprenticeships are increasingly common in
-                Bristol.
+                <strong>Stage 2</strong> — £10.60 per hour. Approximately £20,670 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 2</strong> — £11.55 per hour. Approximately £22,500 per year.
+                <strong>Stage 3</strong> — £13.05 per hour. Approximately £25,450 per year. Many
+                Bristol employers pay above the JIB minimum at this stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 3</strong> — £14.29 per hour. Approximately £27,900 per year. Many
-                Bristol employers pay £15 to £17 per hour at this stage.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Year 4</strong> — £16.48 per hour. Approximately £32,100 per year. Upon
-                successful completion and ECS Gold Card application, progression to Approved
-                Electrician rate (£21.81/hr) is immediate.
+                <strong>Stage 4</strong> — £14.03 per hour. Approximately £27,360 per year. Upon
+                successful completion and ECS Gold Card application, progression to the Approved
+                Electrician rate (£20.08 per hour, Transport Provided) is immediate.
               </span>
             </li>
           </ul>
@@ -495,7 +499,8 @@ const sections = [
                 <strong>Travel and lodging allowances</strong> — JIB provides a nationwide travel
                 and fares scheme. Bristol electricians working away from home on major projects
                 (Bristol Hinkley Point C connections, offshore wind cable routes) may qualify for
-                subsistence and lodging allowances of £40 to £80 per day.
+                the JIB lodging allowance of £53.09 per night, and holiday retention of up to £17.46
+                per night (£122.22 per week), effective 5 January 2026.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -526,8 +531,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>0 to 4 years</strong> — JIB apprentice (Electrical Trainee). £14,700 to
-                £32,100 depending on year and age. ECS Gold Card application on completion.
+                <strong>0 to 4 years</strong> — JIB apprentice, Stages 1 to 4. £15,900 to £27,360
+                depending on stage. ECS Gold Card application on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -541,8 +546,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>8 to 12 years</strong> — Senior Electrician / Working Foreman. £48,000 to
-                £58,000. Leadership of site gangs, client liaison, and programme management.
+                <strong>8 to 12 years</strong> — Site or Installation Technician, the top JIB grade,
+                often with responsibility money for supervising a gang. £48,000 to £58,000.
+                Leadership of site gangs, client liaison, and programme management.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -626,7 +632,7 @@ export default function ElectricianSalaryBristolPage() {
   return (
     <GuideTemplate
       title="Electrician Salary Bristol 2025 | Electrician Pay Southwest"
-      description="Electrician salary guide for Bristol 2025. JIB rates, employed vs self-employed earnings, specialist uplifts for tech and aerospace sectors…"
+      description="Electrician salary guide for Bristol 2025. JIB rates, employed vs self-employed earnings, specialist uplifts for tech and aerospace sectors."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -639,7 +645,7 @@ export default function ElectricianSalaryBristolPage() {
           <span className="text-yellow-400">JIB Rates, Day Rates & Southwest Pay Guide</span>
         </>
       }
-      heroSubtitle="Comprehensive guide to electrician earnings in Bristol. Employed JIB rates (£38,000 to £48,000), self-employed day rates (£500 to £900), specialist uplifts in aerospace and tech, apprentice rates, overtime, and benefits for Bristol electricians in 2025."
+      heroSubtitle="Comprehensive guide to electrician earnings in Bristol. Employed salaries (£38,000 to £48,000) on the JIB scale, self-employed day rates (£500 to £900), specialist uplifts in aerospace and tech, apprentice rates, overtime, and benefits for Bristol electricians in 2025."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

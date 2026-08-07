@@ -35,11 +35,7 @@ export const maximumDemandContent: CalculatorContent = {
       { label: 'Maximum demand', value: '18 kW' },
       { label: 'Supply', value: '230 V, 1-phase' },
     ],
-    steps: [
-      'I = (MD × 1000) ÷ V',
-      'I = 18 000 ÷ 230',
-      'I ≈ 78 A',
-    ],
+    steps: ['I = (MD × 1000) ÷ V', 'I = 18 000 ÷ 230', 'I ≈ 78 A'],
     result: '≈ 78 A — within a typical 80–100 A single-phase supply, but close; check headroom.',
   },
 

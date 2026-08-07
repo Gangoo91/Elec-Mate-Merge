@@ -556,7 +556,7 @@ export default function EICRCheltenhamPage() {
   return (
     <GuideTemplate
       title="EICR Cheltenham | Electrical Inspection Cheltenham"
-      description="EICR Cheltenham — landlord regulations, inspection costs, common findings in period and Regency properties, qualified electrician requirements…"
+      description="EICR Cheltenham — landlord regulations, inspection costs, common findings in period and Regency properties, qualified electrician requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

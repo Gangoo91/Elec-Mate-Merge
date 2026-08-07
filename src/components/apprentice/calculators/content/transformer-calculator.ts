@@ -48,6 +48,7 @@ export const transformerContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Transformer relationships are fundamental theory; engine uses √3 correctly. No single governing UK installation standard for the calculation itself.',
+    notes:
+      'Transformer relationships are fundamental theory; engine uses √3 correctly. No single governing UK installation standard for the calculation itself.',
   },
 };

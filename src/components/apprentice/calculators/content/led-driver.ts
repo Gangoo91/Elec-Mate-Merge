@@ -48,6 +48,7 @@ export const ledDriverContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Component-selection tool — no single governing standard. Vf/current/wattage logic exact; the supply circuit still complies with BS 7671.',
+    notes:
+      'Component-selection tool — no single governing standard. Vf/current/wattage logic exact; the supply circuit still complies with BS 7671.',
   },
 };

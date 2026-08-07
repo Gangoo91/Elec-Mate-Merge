@@ -20,7 +20,7 @@ export default function ElectricalRetrofitGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Retrofit Guide | Upgrading Older Properties"
-      description="Complete guide to retrofitting electrical installations in older UK properties. Covers common wiring issues, rewire vs partial upgrade…"
+      description="Complete guide to retrofitting electrical installations in older UK properties. Covers common wiring issues, rewire vs partial upgrade."
       datePublished="2026-01-15"
       dateModified="2026-06-10"
       breadcrumbs={[

@@ -641,7 +641,7 @@ export default function EALLevel3GuidePage() {
   return (
     <GuideTemplate
       title="EAL Level 3 Electrical Installation | EAL vs City & Guilds"
-      description="Complete guide to the EAL Level 3 Electrical Installation qualification. What EAL is, qualification structure, units covered…"
+      description="Complete guide to the EAL Level 3 Electrical Installation qualification. What EAL is, qualification structure, units covered."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

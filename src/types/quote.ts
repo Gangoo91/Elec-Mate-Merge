@@ -129,6 +129,15 @@ export interface Quote {
   total: number;
   status: 'draft' | 'sent' | 'pending' | 'approved' | 'rejected' | 'superseded';
   tags?: QuoteTag[];
+  /*
+   * ELE-1513 — the client's requested start date, from the acceptance page.
+   *
+   * A request, not a booking. `booked_slot_start` is what says the electrician
+   * has actually confirmed it and put it in the diary.
+   */
+  requested_start_date?: string | null;
+  requested_time_preference?: 'morning' | 'afternoon' | 'flexible' | null;
+  booked_slot_start?: string | null;
   // ELE-956 — Quote versioning + variations
   user_id?: string;
   client_id?: string;

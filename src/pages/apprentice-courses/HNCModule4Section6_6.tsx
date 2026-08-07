@@ -285,7 +285,7 @@ const HNCModule4Section6_6 = () => {
               'LOD (Level of Development): LOD 100 concept → 200 generic → 300 specific → 350 with connections → 400 fabrication. Match LOD to project stage; over-modelling wastes budget.',
               'COBie (Construction Operations Building Information Exchange): the structured asset data spreadsheet that feeds the FM CAFM at handover. Build it progressively, never at the last minute.',
               'CDE (Common Data Environment): the single project information source. Status (WIP, Shared, Published, Archived) governs review and approval.',
-              'Reg 514.9.2 (A4:2026) requires diagrams, charts and notices to comply with applicable standards — a BIM-derived single-line PDF is no exception. The ISO 19650 deliverable still has to read against BS EN 61082-1, BS EN 60617 and BS 7671 Appendix 6.',
+              'Reg 514.9.2 (A4:2026) requires diagrams, charts and notices to comply with applicable standards — a BIM-derived single-line PDF is no exception. The ISO 19650 deliverable still has to read against BS EN 61082-1, IEC 60617 and BS 7671 Appendix 6.',
             ]}
           />
 
@@ -297,7 +297,7 @@ const HNCModule4Section6_6 = () => {
                 BIM workflows produce drawings, schedules, single-line diagrams and asset notices
                 automatically from the federated model. Reg 514.9.2 reminds the HNC designer that
                 automatic generation is no excuse for non-compliance — every output must still
-                read against BS EN 61082-1 (document preparation), BS EN 60617 (symbols), the BS
+                read against BS EN 61082-1 (document preparation), IEC 60617 (symbols), the BS
                 7671 Appendix 6 schedule pro-formas, and Section 514 notice wording. Configure
                 your model templates to enforce this at source — do not bolt it on at handover.
               </>
@@ -603,11 +603,11 @@ const HNCModule4Section6_6 = () => {
                 Set up the electrical model from the BEP. Use parametric families that carry the
                 full BS 7671 attribute set: Tag, Type, Manufacturer, Model, IP, IK, kW, V, PF,
                 CCT, Em, UGR, Ra, etc. Place objects with parameters populated as you go. Enforce
-                BS EN 60617 symbol mapping in the annotation families so the auto-generated
+                IEC 60617 symbol mapping in the annotation families so the auto-generated
                 single-line and schedules read compliantly with Reg 514.9.2. Run weekly clash
                 detection in Navisworks (containment vs structure, conduit vs ductwork). At each
                 CDE status gate (WIP → Shared → Published) run a model-check rule set: parameter
-                completeness, naming convention, BS EN 60617 symbol audit. COBie tabs (Component,
+                completeness, naming convention, IEC 60617 symbol audit. COBie tabs (Component,
                 Type, System, Space) populated progressively. At Stage 5 handover: model + COBie +
                 BS 7671 Appendix 6 schedules + EIC + O&amp;M, all referenced through the same Tag
                 = single source of truth for the FM team. The Reg 514.9.2 cross-check is
@@ -634,7 +634,7 @@ const HNCModule4Section6_6 = () => {
               'COBie spreadsheet tabs (Component, Type, System, Space) feed FM CAFM at handover. Build progressively.',
               'CDE status (WIP, Shared, Published, Archived) governs review and approval — single source of truth.',
               'Federated coordination (Navisworks) for clash detection — weekly cadence at design stage, daily at construction.',
-              'Reg 514.9.2 (A4:2026) compliance for auto-generated diagrams, charts and notices — configure templates to enforce BS EN 61082-1, BS EN 60617 and BS 7671 Appendix 6.',
+              'Reg 514.9.2 (A4:2026) compliance for auto-generated diagrams, charts and notices — configure templates to enforce BS EN 61082-1, IEC 60617 and BS 7671 Appendix 6.',
               'Digital handover = model + COBie + BS 7671 schedules + EIC + O&amp;M, all linked by Tag — the FM team’s start point for asset life management.',
             ]}
           />

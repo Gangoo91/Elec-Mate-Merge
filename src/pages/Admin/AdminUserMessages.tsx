@@ -432,7 +432,7 @@ export default function AdminUserMessages() {
                               {conv.unreadCount}
                             </span>
                           )}
-                          <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white/55">
+                          <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white">
                             {relativeTime(new Date(conv.lastMessage.created_at))}
                           </span>
                         </span>
@@ -447,17 +447,17 @@ export default function AdminUserMessages() {
                           <span
                             className={cn(
                               'truncate',
-                              conv.awaitingReply ? 'text-white' : 'text-white/70'
+                              conv.awaitingReply ? 'font-semibold text-white' : 'text-white'
                             )}
                           >
                             {/* Say who spoke last, or your own reply reads as theirs. */}
                             {!conv.awaitingReply && conv.hasAdminReply && (
-                              <span className="text-white/45">You: </span>
+                              <span className="text-white">You: </span>
                             )}
                             {preview}
                           </span>
                           {role && (
-                            <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white/45 capitalize">
+                            <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white capitalize">
                               {role}
                             </span>
                           )}
@@ -543,7 +543,7 @@ export default function AdminUserMessages() {
                 isSending={sendReplyMutation.isPending}
                 placeholder="Write a reply…"
                 emptyState={
-                  <p className="text-[13.5px] text-white/60">
+                  <p className="text-[13.5px] text-white">
                     No messages in this conversation yet.
                   </p>
                 }
@@ -569,7 +569,7 @@ export default function AdminUserMessages() {
                     placeholder="Search users by name or email…"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="h-11 pl-11 pr-4 bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-full text-[13px] text-white touch-manipulation focus:border-elec-yellow/60 placeholder:text-white/35"
+                    className="h-11 pl-11 pr-4 bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-full text-[13px] text-white touch-manipulation focus:border-elec-yellow/60 placeholder:text-white/25"
                     autoFocus
                   />
                 </div>

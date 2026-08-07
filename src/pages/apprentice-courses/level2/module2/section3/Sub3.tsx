@@ -286,7 +286,7 @@ export default function Sub3() {
           </ConceptBlock>
 
           <div className="flex items-center gap-3 py-2">
-            <ResistorSymbol label="Resistor (BS EN 60617)" />
+            <ResistorSymbol label="Resistor (IEC 60617)" />
             <p className="text-[13px] text-white/80">
               The standard schematic symbol for a resistor — just a rectangle with two leads. Same
               symbol whether it's a discrete component or the resistance of a cable.

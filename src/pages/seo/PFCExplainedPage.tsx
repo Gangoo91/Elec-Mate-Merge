@@ -582,7 +582,7 @@ export default function PFCExplainedPage() {
   return (
     <GuideTemplate
       title="Prospective Fault Current Explained | PFC Guide"
-      description="Complete guide to prospective fault current (PFC) for UK electricians. What PFC is, why it matters, how to measure it on site…"
+      description="Complete guide to prospective fault current (PFC) for UK electricians. What PFC is, why it matters, how to measure it on site."
       datePublished="2025-05-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

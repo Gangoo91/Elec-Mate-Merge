@@ -210,8 +210,7 @@ const ZsLookupResult = ({
               <tbody>
                 {sortedResults.map((item, index) => {
                   const testValue =
-                    item.testZs ||
-                    `${(parseFloat(item.maxZs.replace('Ω', '')) * 0.8).toFixed(3)}Ω`;
+                    item.testZs || `${(parseFloat(item.maxZs.replace('Ω', '')) * 0.8).toFixed(3)}Ω`;
 
                   return (
                     <tr key={index} className="border-b border-white/[0.04]">

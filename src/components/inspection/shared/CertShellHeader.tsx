@@ -154,9 +154,13 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
           </button>
         </div>
 
-        {/* Full-width step tabs — equal columns, volt underline on current,
-            volt label only when the step is genuinely complete. */}
-        <nav aria-label="Certificate steps" className="flex mt-1 lg:max-w-[720px]">
+        {/* Step tabs across the full width.
+            They used to stop at `lg:max-w-[720px]` while the row above spanned
+            the whole bar, so on a desktop they huddled in the left third with
+            an empty expanse beside them — the tabs read as leftovers rather
+            than as the certificate's spine. Equal columns edge to edge now line
+            up with the header above them. */}
+        <nav aria-label="Certificate steps" className="flex mt-1">
           {steps.map((step) => {
             const isActive = step.id === currentTab;
             const isDone = !isActive && !!completedTabs[step.id];
@@ -178,13 +182,18 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
                   isActive ? 'text-white' : isDone ? 'text-elec-yellow/90' : 'text-white/85'
                 )}
               >
-                {step.label}
-                <span
-                  className={cn(
-                    'absolute left-[14%] right-[14%] bottom-0 h-[2px] rounded-full transition-colors',
-                    isActive ? 'bg-elec-yellow' : 'bg-transparent'
-                  )}
-                />
+                {/* The underline hugs the word, not the column. At 14%–86% of a
+                    full-width column it became a rule several times the width of
+                    the label it was meant to mark. */}
+                <span className="relative inline-block px-1 pb-2.5">
+                  {step.label}
+                  <span
+                    className={cn(
+                      'absolute inset-x-0 -bottom-px h-[2px] rounded-full transition-colors',
+                      isActive ? 'bg-elec-yellow' : 'bg-transparent'
+                    )}
+                  />
+                </span>
               </button>
             );
           })}

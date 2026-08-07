@@ -495,7 +495,7 @@ export default function ElectricianWiganPage() {
       noindex={true}
       localArea="Wigan"
       title="Electrician in Wigan | Local Electricians 2026"
-      description="Find qualified electricians in Wigan. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
+      description="Find qualified electricians in Wigan. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

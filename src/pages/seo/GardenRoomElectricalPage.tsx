@@ -492,7 +492,7 @@ export default function GardenRoomElectricalPage() {
   return (
     <GuideTemplate
       title="Garden Room Electrical Installation UK | Home Office Wiring"
-      description="Complete guide to garden room electrical installation. Dedicated circuit or sub-board, cable sizing for distance, EV charging considerations…"
+      description="Complete guide to garden room electrical installation. Dedicated circuit or sub-board, cable sizing for distance, EV charging considerations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

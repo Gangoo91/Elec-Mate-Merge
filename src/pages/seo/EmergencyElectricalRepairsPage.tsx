@@ -20,7 +20,7 @@ export default function EmergencyElectricalRepairsPage() {
   return (
     <GuideTemplate
       title="Emergency Electrical Repairs | What Counts & Cost UK"
-      description="What qualifies as an emergency electrical repair in the UK, typical call-out charges, common electrical emergencies, temporary vs permanent fixes…"
+      description="What qualifies as an emergency electrical repair in the UK, typical call-out charges, common electrical emergencies, temporary vs permanent fixes."
       datePublished="2026-01-25"
       dateModified="2026-05-18"
       breadcrumbs={[

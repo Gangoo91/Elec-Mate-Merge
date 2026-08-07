@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
 import { CalculatorSurfaceContext, useCalculatorSurface } from './calculatorSurface';
@@ -48,9 +49,16 @@ export const CalculatorCard = ({
   const { edgeToEdge } = useCalculatorSurface();
 
   return (
+    // Brightness matches `card-recipe`: a /[0.18] border over a /[0.12]→/[0.06]
+    // gradient. This card sat at a /[0.06] border over /[0.02] — about a third
+    // of that — which looks fine on a desktop monitor and disappears on a phone
+    // in daylight, which is where an electrician actually uses it. The gradient
+    // also gives the card a top edge, so nested surfaces below can sit darker
+    // and produce real hierarchy instead of three identical greys.
     <div
       className={cn(
-        'border border-white/[0.06] bg-white/[0.02] overflow-hidden',
+        'overflow-hidden border border-white/[0.18]',
+        CARD_SURFACE,
         edgeToEdge
           ? '-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x'
           : 'rounded-2xl',
@@ -68,9 +76,7 @@ export const CalculatorCard = ({
             </span>
           )}
         </div>
-        {description && (
-          <p className="text-[13px] text-white leading-relaxed">{description}</p>
-        )}
+        {description && <p className="text-[13px] text-white leading-relaxed">{description}</p>}
       </div>
 
       <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-4">{children}</div>
@@ -100,9 +106,7 @@ export const CalculatorSection = ({ title, children, className }: CalculatorSect
   return (
     <div className={cn('space-y-3', className)}>
       {title && (
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          {title}
-        </h3>
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{title}</h3>
       )}
       {children}
     </div>

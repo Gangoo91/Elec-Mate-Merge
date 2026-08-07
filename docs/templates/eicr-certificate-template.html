@@ -1,0 +1,2827 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EICR Certificate</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 3mm 4mm 3mm 4mm;
+      }
+
+      /* A4:2026 — Schedule of Test Results MUST render landscape (30+ columns) */
+      @page schedule {
+        size: A4 landscape;
+        margin: 3mm;
+      }
+
+      /* Client-facing cover renders full-bleed (zero page margin) */
+      @page cover {
+        size: A4;
+        margin: 0;
+      }
+
+      .schedule-page {
+        page: schedule;
+        page-break-before: always;
+        /* Belt-and-braces: explicit landscape dimensions so even if named-page CSS
+           is ignored by the renderer, the inner table is sized for landscape A4
+           (297mm × 210mm minus margins). */
+        width: 291mm;
+        max-width: 291mm;
+        min-height: 204mm;
+        overflow: visible;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 9.5px;
+        line-height: 1.4;
+        color: #000;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* =============================================
+           DOCUMENT HEADER
+           ============================================= */
+      .doc-header {
+        background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+        color: #fff;
+        padding: 8px 10px;
+        margin-bottom: 6px;
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .doc-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+      }
+
+      .doc-header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .doc-title-section {
+        flex: 1;
+      }
+
+      .doc-title {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+      }
+
+      .doc-subtitle {
+        font-size: 9.5px;
+        font-weight: 400;
+        opacity: 0.85;
+        letter-spacing: 0.3px;
+      }
+
+      .doc-meta {
+        text-align: right;
+      }
+
+      .cert-number {
+        font-size: 11px;
+        font-weight: 700;
+        color: #fbbf24;
+        letter-spacing: 0.5px;
+      }
+
+      .page-number {
+        font-size: 8px;
+        opacity: 0.7;
+        margin-top: 2px;
+      }
+
+      .company-logo {
+        flex-shrink: 0;
+        margin-right: 12px;
+      }
+
+      .company-logo img {
+        max-height: 45px;
+        max-width: 120px;
+        object-fit: contain;
+      }
+
+      .scheme-logo {
+        flex-shrink: 0;
+        margin-left: 12px;
+      }
+
+      .scheme-logo img {
+        max-height: 45px;
+        max-width: 100px;
+        object-fit: contain;
+      }
+
+      .scheme-logo-signature {
+        margin-top: 6px;
+        text-align: center;
+      }
+
+      .scheme-logo-signature img {
+        max-height: 55px;
+        max-width: 140px;
+        object-fit: contain;
+      }
+
+      .company-name {
+        font-size: 9px;
+        font-weight: 600;
+        color: #fbbf24;
+        margin-top: 4px;
+        letter-spacing: 0.3px;
+      }
+
+      /* =============================================
+           SECTION STYLING
+           ============================================= */
+      .section {
+        margin-bottom: 5px;
+      }
+      /* Only small / critical blocks should avoid page-break-inside.
+         Large sections (inspection table, schedule of tests) must be allowed
+         to flow across pages — row-level avoid-break covers the rest. */
+
+      .section-title {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #fff;
+        font-size: 9.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 5px 8px;
+        margin-bottom: 5px;
+        border-left: 3px solid #f59e0b;
+        /* Never orphan a section header from its body */
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      /* Inspection table rows & section headers shouldn't break mid-row */
+      .inspection-table tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .inspection-table .section-header-row {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      /* Sub-board cards on Section H — keep the card together */
+      .board-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Circuit table: keep each row together */
+      .circuit-table tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Signature blocks — never orphan a signature from its label */
+      .signature-box, .sig-field, .inline-form {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      .section-subtitle {
+        background: #f1f5f9;
+        color: #000;
+        font-size: 9px;
+        font-weight: 600;
+        padding: 5px 8px;
+        margin-bottom: 5px;
+        margin-top: 6px;
+        border-left: 3px solid #64748b;
+      }
+
+      /* =============================================
+           FORM LAYOUTS
+           ============================================= */
+      .form-grid {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 6px;
+      }
+
+      .form-row {
+        display: table-row;
+      }
+
+      .form-label {
+        display: table-cell;
+        font-size: 9px;
+        font-weight: 600;
+        color: #000;
+        padding: 5px 8px;
+        width: 120px;
+        vertical-align: middle;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+
+      .form-value {
+        display: table-cell;
+        font-size: 9.5px;
+        color: #000;
+        padding: 5px 8px;
+        vertical-align: middle;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+      }
+
+      .form-value input,
+      .form-value select {
+        border: none;
+        background: transparent;
+        font-size: 9.5px;
+        color: #000;
+        width: 100%;
+        font-family: inherit;
+      }
+
+      /* Inline form layout */
+      .inline-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 6px;
+        background: #fafbfc;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+      }
+
+      .inline-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .inline-label {
+        font-size: 9.5px;
+        font-weight: 600;
+        color: #000;
+        white-space: nowrap;
+      }
+
+      .inline-value {
+        font-size: 9.5px;
+        color: #000;
+        padding: 4px 6px;
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        border-radius: 2px;
+        min-width: 60px;
+        min-height: 24px;
+        line-height: 1.5;
+      }
+
+      .inline-value.wide {
+        min-width: 120px;
+        flex: 1;
+      }
+
+      /* =============================================
+           CHECKBOX STYLING
+           ============================================= */
+      .checkbox-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .checkbox-item input[type='checkbox'] {
+        width: 12px;
+        height: 12px;
+        accent-color: #0f172a;
+      }
+
+      .checkbox-item label {
+        font-size: 9.5px;
+        color: #000;
+      }
+
+      /* =============================================
+           TWO COLUMN LAYOUT
+           ============================================= */
+      .two-col {
+        display: flex;
+        gap: 8px;
+      }
+
+      .two-col > .col {
+        flex: 1;
+      }
+
+      /* =============================================
+           DATA TABLE (Supply/Earthing)
+           ============================================= */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 8px;
+        margin-bottom: 6px;
+      }
+
+      .data-table th {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 8px;
+        padding: 6px 10px;
+        text-align: left;
+        border: 1px solid #0f172a;
+      }
+
+      .data-table td {
+        padding: 8px 10px;
+        border: 1px solid #e2e8f0;
+        vertical-align: top;
+        background: #fff;
+      }
+
+      .data-field {
+        margin-bottom: 7px;
+      }
+
+      .data-field:last-child {
+        margin-bottom: 0;
+      }
+
+      .data-field-label {
+        font-size: 8.5px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 3px;
+      }
+
+      .data-field-value {
+        font-size: 9.5px;
+        color: #000;
+        padding: 4px 6px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+        min-height: 22px;
+      }
+
+      /* =============================================
+           DISTRIBUTION BOARD CARDS
+           ============================================= */
+      .board-card {
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        margin-bottom: 5px;
+        overflow: hidden;
+      }
+
+      .board-card-header {
+        background: linear-gradient(135deg, #334155 0%, #475569 100%);
+        color: #fff;
+        padding: 6px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .board-card-title {
+        font-size: 9px;
+        font-weight: 600;
+      }
+
+      .board-card-badge {
+        font-size: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+
+      .board-card-body {
+        padding: 8px;
+        background: #fafbfc;
+      }
+
+      /* =============================================
+           INSPECTION TABLE
+           ============================================= */
+      .inspection-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 8px;
+        margin-bottom: 6px;
+      }
+
+      .inspection-table thead th {
+        background: #0f172a;
+        color: #fff;
+        font-weight: 600;
+        padding: 5px 4px;
+        text-align: center;
+        border: 1px solid #0f172a;
+        font-size: 6.5px;
+      }
+
+      .inspection-table thead th.desc-header {
+        text-align: left;
+        padding-left: 8px;
+      }
+
+      .inspection-table tbody td {
+        padding: 4px;
+        border: 1px solid #e2e8f0;
+        text-align: center;
+        font-size: 8px;
+      }
+
+      .inspection-table tbody td.item-num {
+        width: 35px;
+        font-weight: 600;
+        color: #000;
+        background: #f8fafc;
+      }
+
+      .inspection-table tbody td.item-desc {
+        text-align: left;
+        padding-left: 6px;
+        color: #000;
+      }
+
+      .inspection-table tbody td.outcome {
+        width: 28px;
+      }
+
+      .inspection-table tbody td.outcome input[type='checkbox'] {
+        width: 10px;
+        height: 10px;
+      }
+
+      .inspection-table tbody td.outcome-text {
+        width: 35px;
+        font-weight: 600;
+      }
+
+      .inspection-table .section-header-row td {
+        background: #e2e8f0;
+        font-weight: 700;
+        color: #000;
+        text-align: left;
+        padding: 3px 6px;
+        font-size: 9.5px;
+      }
+
+      .inspection-table tbody tr:nth-child(even) td:not(.item-num) {
+        background: #fafbfc;
+      }
+
+      /* =============================================
+           CIRCUIT TABLE (Landscape Schedule Page)
+           ============================================= */
+      .circuit-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9.5px;
+      }
+
+      .circuit-table thead tr:first-child th {
+        background: #1e293b;
+        color: #fff;
+        font-size: 9.5px;
+        padding: 6px 4px;
+        border: 1px solid #0f172a;
+      }
+
+      .circuit-table thead tr:nth-child(2) th {
+        background: #0f172a;
+        color: #fff;
+        font-size: 9.5px;
+        padding: 5px 3px;
+        border: 1px solid #0f172a;
+        height: 85px;
+        vertical-align: bottom;
+      }
+
+      .circuit-table thead .rotate {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+        white-space: nowrap;
+        font-size: 9.5px;
+      }
+
+      .circuit-table tbody td {
+        padding: 5px 4px;
+        border: 1px solid #d1d5db;
+        text-align: center;
+        font-size: 8px;
+        background: #fff;
+      }
+
+      .circuit-table tbody td.desc {
+        text-align: left;
+        padding-left: 5px;
+        max-width: 100px;
+      }
+
+      .circuit-table tbody td.remarks {
+        text-align: left;
+        padding-left: 5px;
+        font-style: italic;
+        color: #000;
+        font-size: 6px;
+      }
+
+      .circuit-table tbody tr:nth-child(even) td {
+        background: #f8fafc;
+      }
+
+      /* Board Info Header for Schedule */
+      .board-info-header {
+        background: linear-gradient(135deg, #334155 0%, #475569 100%);
+        color: #fff;
+        padding: 10px 14px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+      }
+
+      .board-info-title {
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .board-info-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 8px;
+      }
+
+      .board-info-details span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .board-info-verification {
+        display: flex;
+        gap: 16px;
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 8px;
+      }
+
+      /* =============================================
+           SIGNATURE BOXES
+           ============================================= */
+      .signature-grid {
+        display: flex;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .signature-box {
+        flex: 1;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .signature-box-header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #fff;
+        font-size: 8px;
+        font-weight: 600;
+        padding: 6px 10px;
+        border-bottom: 2px solid #f59e0b;
+      }
+
+      .signature-box-body {
+        padding: 8px;
+        background: #fafbfc;
+      }
+
+      .sig-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        gap: 8px;
+      }
+
+      .sig-field:last-child {
+        margin-bottom: 0;
+      }
+
+      .sig-field-label {
+        font-size: 9px;
+        font-weight: 600;
+        color: #000;
+        min-width: 75px;
+        flex-shrink: 0;
+      }
+
+      .sig-field-value {
+        flex: 1;
+        font-size: 9.5px;
+        color: #000;
+        padding: 5px 8px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+        min-height: 24px;
+      }
+
+      .sig-field-value.signature {
+        min-height: 35px;
+        display: flex;
+        align-items: center;
+      }
+
+      .sig-field-value img {
+        max-height: 30px;
+      }
+
+      /* =============================================
+           OBSERVATIONS
+           ============================================= */
+      .observations-summary {
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 6px;
+      }
+
+      .observations-row {
+        display: flex;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .observations-row:last-child {
+        border-bottom: none;
+      }
+
+      .observations-text {
+        flex: 1;
+        padding: 5px 8px;
+        font-size: 9.5px;
+        color: #000;
+        background: #fff;
+      }
+
+      .observations-code {
+        width: 60px;
+        padding: 5px 8px;
+        font-size: 9.5px;
+        font-weight: 700;
+        text-align: center;
+        background: #f8fafc;
+        border-left: 1px solid #e2e8f0;
+      }
+
+      .code-c1 {
+        color: #dc2626;
+      }
+      .code-c2 {
+        color: #ea580c;
+      }
+      .code-c3 {
+        color: #d97706;
+      }
+      .code-fi {
+        color: #7c3aed;
+      }
+
+      .codes-legend {
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-radius: 2px;
+        padding: 8px;
+        margin-top: 6px;
+        font-size: 8px;
+        line-height: 1.5;
+      }
+
+      .codes-legend strong {
+        color: #92400e;
+      }
+
+      /* =============================================
+           OBSERVATION DETAIL CARDS
+           ============================================= */
+      .observation-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        margin-bottom: 6px;
+        overflow: hidden;
+        page-break-inside: avoid;
+      }
+
+      .observation-card-header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #fff;
+        padding: 8px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .observation-card-title {
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .observation-card-number {
+        font-size: 9px;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 3px 10px;
+        border-radius: 12px;
+      }
+
+      .observation-card-body {
+        padding: 12px;
+        background: #fafbfc;
+      }
+
+      .observation-classification {
+        margin-bottom: 6px;
+      }
+
+      .classification-badge {
+        display: inline-block;
+        padding: 5px 14px;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .classification-badge.c1 {
+        background: #fef2f2;
+        color: #dc2626;
+        border: 2px solid #dc2626;
+      }
+
+      .classification-badge.c2 {
+        background: #fff7ed;
+        color: #ea580c;
+        border: 2px solid #ea580c;
+      }
+
+      .classification-badge.c3 {
+        background: #fffbeb;
+        color: #d97706;
+        border: 2px solid #d97706;
+      }
+
+      .classification-badge.fi {
+        background: #f5f3ff;
+        color: #7c3aed;
+        border: 2px solid #7c3aed;
+      }
+
+      .observation-section {
+        margin-bottom: 6px;
+      }
+
+      .observation-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .observation-section-title {
+        font-size: 9px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 4px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .observation-section-content {
+        font-size: 9.5px;
+        color: #000;
+        line-height: 1.5;
+        padding: 8px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+      }
+
+      .observation-section-content.recommendation {
+        background: #f0fdf4;
+        border-color: #86efac;
+      }
+
+      .photo-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .photo-item {
+        width: calc(33.333% - 4px);
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .photo-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* =============================================
+           GUIDANCE SECTION
+           ============================================= */
+      .guidance-intro {
+        font-size: 8px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 6px;
+        padding: 6px 8px;
+        background: #f1f5f9;
+        border-left: 3px solid #f59e0b;
+      }
+
+      .guidance-columns {
+        display: flex;
+        gap: 12px;
+      }
+
+      .guidance-col {
+        flex: 1;
+        font-size: 7.5px;
+        line-height: 1.5;
+        color: #000;
+      }
+
+      .guidance-col p {
+        margin-bottom: 4px;
+        text-align: justify;
+      }
+
+      .guidance-col strong {
+        color: #000;
+      }
+
+      /* =============================================
+           DECLARATION BOX
+           ============================================= */
+      .declaration-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+        padding: 8px 10px;
+        margin-bottom: 6px;
+      }
+
+      .declaration-text {
+        font-size: 8.5px;
+        color: #000;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      /* =============================================
+           OVERALL ASSESSMENT
+           ============================================= */
+      .assessment-box {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 8px 12px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 2px;
+      }
+
+      .assessment-label {
+        font-size: 8px;
+        font-weight: 600;
+        color: #000;
+      }
+
+      .assessment-options {
+        display: flex;
+        gap: 20px;
+      }
+
+      .assessment-option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .assessment-option input[type='checkbox'] {
+        width: 14px;
+        height: 14px;
+      }
+
+      .assessment-option label {
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .assessment-option label.satisfactory {
+        color: #16a34a;
+      }
+
+      .assessment-option label.unsatisfactory {
+        color: #dc2626;
+      }
+
+      /* Final Assessment Box (after signatures) */
+      .final-assessment-box {
+        border: 2px solid #1e293b;
+        border-radius: 4px;
+        padding: 12px 16px;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      }
+
+      .final-assessment-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .final-assessment-label {
+        font-size: 9px;
+        font-weight: 600;
+        color: #000;
+      }
+
+      .final-assessment-options {
+        display: flex;
+        gap: 16px;
+      }
+
+      .final-assessment-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 2px solid #cbd5e1;
+        border-radius: 4px;
+        background: #fff;
+      }
+
+      .final-assessment-option.selected {
+        border-width: 3px;
+      }
+
+      .final-assessment-option input[type='checkbox'] {
+        width: 16px;
+        height: 16px;
+      }
+
+      .final-assessment-option .option-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .final-assessment-option .satisfactory-label {
+        color: #16a34a;
+      }
+
+      .final-assessment-option .unsatisfactory-label {
+        color: #dc2626;
+      }
+
+      .final-assessment-option.satisfactory-selected {
+        background: #16a34a;
+        border-color: #16a34a;
+      }
+
+      .final-assessment-option.satisfactory-selected .satisfactory-label {
+        color: #fff;
+      }
+
+      .final-assessment-option.unsatisfactory-selected {
+        background: #dc2626;
+        border-color: #dc2626;
+      }
+
+      .final-assessment-option.unsatisfactory-selected .unsatisfactory-label {
+        color: #fff;
+      }
+
+      /* =============================================
+           PAGE BREAKS
+           ============================================= */
+      .page-break {
+        page-break-before: always;
+      }
+
+      .avoid-break {
+        page-break-inside: avoid;
+      }
+
+      /* =============================================
+           UTILITIES
+           ============================================= */
+      .text-center {
+        text-align: center;
+      }
+      .text-left {
+        text-align: left;
+      }
+      .text-right {
+        text-align: right;
+      }
+      .font-bold {
+        font-weight: 600;
+      }
+      .mt-2 {
+        margin-top: 8px;
+      }
+      .mb-2 {
+        margin-bottom: 5px;
+      }
+      .small {
+        font-size: 8px;
+      }
+
+      /* Special list formatting */
+      .intake-list {
+        margin: 0;
+        padding-left: 12px;
+        font-size: 6.5px;
+      }
+
+      .intake-list li {
+        margin-bottom: 1px;
+      }
+
+      /* =============================================
+           BS 7671 A4:2026 model-form layout classes
+           ============================================= */
+      /* Dotted-leader row — label on left, value on right, dots fill the gap.
+         Mirrors the classic IET form fill-ins. */
+      .lead-row {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-size: 9px;
+        line-height: 1.5;
+        padding: 2px 0;
+      }
+      .lead-row .lead-label {
+        flex-shrink: 0;
+        font-weight: 600;
+        color: #0f172a;
+      }
+      .lead-row .lead-dots {
+        flex: 1;
+        border-bottom: 1px dotted #64748b;
+        min-width: 20px;
+        align-self: flex-end;
+        margin-bottom: 2px;
+      }
+      .lead-row .lead-value {
+        flex-shrink: 0;
+        color: #000;
+        font-weight: 500;
+        white-space: nowrap;
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .lead-row .lead-suffix {
+        flex-shrink: 0;
+        color: #475569;
+        font-weight: 400;
+      }
+
+      /* Compound cell — 4-col layout for Section F. Uses flex so columns can
+         balance heights and the whole block stays together on page breaks. */
+      .compound-grid {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        font-size: 8px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .compound-grid > .compound-col {
+        border: 1px solid #cbd5e1;
+        border-right: 0;
+        padding: 5px 7px;
+        background: #fff;
+        box-sizing: border-box;
+      }
+      .compound-grid > .compound-col:last-child {
+        border-right: 1px solid #cbd5e1;
+      }
+      .compound-grid > .compound-col > .compound-title {
+        font-weight: 700;
+        font-size: 8.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: #0f172a;
+        margin-bottom: 4px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      /* Uniform grid-row system — use throughout board cards, RCD, cables.
+         Every label aligns to the same baseline, every value is the same
+         width, every row is perfectly level. */
+      .grid-row {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 5px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .grid-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .grid-row.cols-5 { grid-template-columns: repeat(5, 1fr); }
+      .grid-row.cols-6 { grid-template-columns: repeat(6, 1fr); }
+      .grid-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+      .grid-cell .cell-label {
+        font-size: 7.5px;
+        font-weight: 700;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .grid-cell .cell-value {
+        font-size: 9px;
+        font-weight: 500;
+        color: #0f172a;
+        border-bottom: 1px dotted #94a3b8;
+        padding: 2px 3px;
+        min-height: 15px;
+        line-height: 1.3;
+        word-break: break-word;
+      }
+      /* Inside Section F compound columns, label+value rows use uniform heights
+         so Col 3 and Col 4 line up row-for-row horizontally. */
+      .compound-col .grid-cell {
+        min-height: 34px;
+        justify-content: flex-start;
+      }
+      .compound-col .grid-cell .cell-label {
+        min-height: 12px;
+      }
+      .compound-col .grid-cell .cell-value {
+        min-height: 15px;
+      }
+      /* When a marker badge is the value, drop the dotted underline so the
+         pill reads as the entire value — cleaner alignment. */
+      .grid-cell .cell-value.is-marker {
+        border-bottom: 0;
+        padding-bottom: 3px;
+      }
+      /* Tighten marker badges when they sit inside grid/lead cells. */
+      .grid-cell .marker-badge,
+      .lead-row .marker-badge,
+      .cell-value .marker-badge {
+        font-size: 8px;
+        padding: 1px 5px;
+        line-height: 1.2;
+      }
+      .grid-cell .cell-check {
+        font-size: 9px;
+        color: #0f172a;
+        line-height: 1.35;
+        padding: 2px 0;
+      }
+      .grid-cell .cell-check .tick {
+        font-size: 10px;
+        margin-right: 4px;
+      }
+
+      /* Static tickbox glyphs — render reliably across PDF engines */
+      .tick {
+        font-size: 10px;
+        display: inline-block;
+        min-width: 10px;
+        color: #0f172a;
+      }
+      .tick-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 9px;
+        margin-right: 12px;
+        white-space: nowrap;
+      }
+
+      /* =============================================
+           ELE-849 — LIM / N/V / N/A marker badges + field notes
+           ============================================= */
+      .marker-badge {
+        display: inline-block;
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 8.5px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        border: 1px solid;
+        line-height: 1.3;
+      }
+      .marker-lim {
+        background: #fff7ed;
+        color: #ea580c;
+        border-color: #fb923c;
+      }
+      .marker-nv {
+        background: #f1f5f9;
+        color: #475569;
+        border-color: #94a3b8;
+      }
+      .marker-na {
+        background: #f4f4f5;
+        color: #52525b;
+        border-color: #a1a1aa;
+      }
+      .field-note {
+        display: block;
+        font-size: 7.5px;
+        font-style: italic;
+        color: #475569;
+        margin-top: 2px;
+        line-height: 1.3;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+      /* Long notes / values must wrap inside their container column */
+      .compound-col .field-note,
+      .compound-col .cell-value,
+      .grid-cell .field-note,
+      .grid-cell .cell-value {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      /* =============================================
+           CLIENT-FACING COVER SHEET (A4:2026) — full-bleed navy + gold
+           All values from the existing payload — statutory report unchanged below
+           ============================================= */
+      .cover-page { page: cover; width: 210mm; min-height: 297mm; display: flex; flex-direction: column; color: #0a1628; }
+      /* Navy hero — full bleed, gold top accent */
+      .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 22mm 18mm 16mm; }
+      .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b); }
+      .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
+      .cover-logos img { max-height: 60px; max-width: 190px; object-fit: contain; }
+      .cover-band-name { color: #fbbf24; font-weight: 700; font-size: 18px; letter-spacing: 0.3px; }
+      .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fbbf24; font-weight: 700; margin-bottom: 12px; }
+      .cover-title { font-size: 40px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+      .cover-title-rule { width: 80px; height: 4px; background: linear-gradient(90deg, #f59e0b, #fbbf24); margin-top: 16px; border-radius: 2px; }
+      .cover-subtitle { margin-top: 16px; font-size: 11px; color: #cbd5e1; letter-spacing: 0.3px; }
+      /* Status strip — full bleed colour band */
+      .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: #475569; color: #fff; }
+      .cover-status.is-sat { background: #16a34a; }
+      .cover-status.is-unsat { background: #dc2626; }
+      .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
+      .cover-status-value { font-size: 24px; font-weight: 800; letter-spacing: 2px; }
+      /* Details — white area, edge-to-edge with internal gutters; gold left accent */
+      .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid #fbbf24; margin-left: -0px; }
+      .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+      .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
+      .cover-row:last-child { border-bottom: 0; }
+      .cover-k { width: 185px; flex-shrink: 0; color: #0a1628; font-weight: 700; text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.5px; padding: 11px 0; align-self: center; }
+      .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0; align-self: center; }
+      .cover-v .muted { color: #64748b; font-weight: 500; }
+      /* Footer — full bleed navy */
+      .cover-footer { background: #0a1628; color: #94a3b8; font-size: 8.5px; font-style: italic; padding: 11px 18mm; }
+    </style>
+  </head>
+  <body>
+    <!-- =============================================
+     COVER SHEET — full-bleed navy + gold; all values from existing payload
+     ============================================= -->
+    <div class="cover-page">
+      <!-- Navy hero: logos + title -->
+      <div class="cover-hero">
+        <div class="cover-logos">
+          {% if company_details.company_logo %}<img src="{{company_details.company_logo}}" alt="{{company_details.company_name}}" />{% else %}<span class="cover-band-name">{{company_details.company_name}}</span>{% endif %}
+          {% if company_details.registration_scheme_logo %}<img src="{{company_details.registration_scheme_logo}}" alt="{{company_details.registration_scheme | default: 'Registration Scheme'}}" />{% endif %}
+        </div>
+        <div class="cover-eyebrow">BS 7671:2018 + Amendment 4:2026</div>
+        <h1 class="cover-title">Electrical Installation<br />Condition Report</h1>
+        <div class="cover-title-rule"></div>
+        <div class="cover-subtitle">IET Wiring Regulations 18th Edition{% if company_details.company_name %} &middot; {{company_details.company_name}}{% endif %}</div>
+      </div>
+
+      <!-- Full-width status strip -->
+      <div class="cover-status {% if declarations.overall_assessment == 'satisfactory' %}is-sat{% elsif declarations.overall_assessment == 'unsatisfactory' %}is-unsat{% endif %}">
+        <span class="cover-status-label">Overall Assessment of the Installation</span>
+        <span class="cover-status-value">{% if declarations.overall_assessment == 'satisfactory' %}SATISFACTORY{% elsif declarations.overall_assessment == 'unsatisfactory' %}UNSATISFACTORY{% else %}&mdash;{% endif %}</span>
+      </div>
+
+      <!-- Details -->
+      <div class="cover-details">
+        <div class="cover-details-h">Report Details</div>
+        <div class="cover-row"><span class="cover-k">Property Address</span><span class="cover-v">{{installation_details.address}}</span></div>
+        <div class="cover-row"><span class="cover-k">Client</span><span class="cover-v">{{client_details.client_name}}</span></div>
+        <div class="cover-row"><span class="cover-k">Report Reference</span><span class="cover-v">{{metadata.certificate_number}}</span></div>
+        <div class="cover-row"><span class="cover-k">Date of Inspection</span><span class="cover-v">{{installation_details.test_date}}</span></div>
+        <div class="cover-row"><span class="cover-k">Next Inspection Due</span><span class="cover-v">{{installation_details.next_inspection_date}}</span></div>
+        <div class="cover-row"><span class="cover-k">Inspected &amp; Tested By</span><span class="cover-v">{{inspector.name}}</span></div>
+        {% if inspector.company and inspector.company != "" %}<div class="cover-row"><span class="cover-k">For / On Behalf Of</span><span class="cover-v">{{inspector.company}}</span></div>{% endif %}
+        {% if company_details.registration_scheme and company_details.registration_scheme != "" %}<div class="cover-row"><span class="cover-k">Registration Scheme</span><span class="cover-v">{{company_details.registration_scheme}}</span></div>{% endif %}
+      </div>
+
+      <!-- Full-width footer -->
+      <div class="cover-footer">This report is valid only when accompanied by the Schedule(s) of Inspection and the Schedule(s) of Circuit Details and Test Results that form part of it.</div>
+    </div>
+    <div class="page-break"></div>
+    <!-- =============================================
+     PAGE 1: MAIN CERTIFICATE
+     ============================================= -->
+    <div class="doc-header">
+      <div class="doc-header-content">
+        {% if company_details.company_logo %}
+        <div class="company-logo">
+          <img src="{{company_details.company_logo}}" alt="Company Logo" />
+        </div>
+        {% endif %}
+        <div class="doc-title-section">
+          <div class="doc-title">ELECTRICAL INSTALLATION CONDITION REPORT</div>
+          <div class="doc-subtitle">
+            Condition report for an existing electrical installation in accordance with BS 7671:2018
+            (IET Wiring Regulations 18th Edition + Amendment 4:2026)
+          </div>
+          {% if company_details.company_name %}
+          <div class="company-name">{{company_details.company_name}}</div>
+          {% endif %}
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{metadata.certificate_number}}</div>
+          <div class="page-number">Front Sheet</div>
+        </div>
+        {% if company_details.registration_scheme_logo %}
+        <div class="scheme-logo">
+          <img src="{{company_details.registration_scheme_logo}}" alt="Registration Scheme" />
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- SECTION A: CLIENT DETAILS -->
+    <div class="section avoid-break">
+      <div class="section-title">Section A: Details of the Client</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Client Name</div>
+          <div class="form-value">{{client_details.client_name}}</div>
+          <div class="form-label">Telephone</div>
+          <div class="form-value">{{client_details.client_phone}}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Client Address</div>
+          <div class="form-value" colspan="3">{{client_details.client_address}}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Email Address</div>
+          <div class="form-value">{{client_details.client_email}}</div>
+          <div class="form-label"></div>
+          <div class="form-value"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION B: INSTALLATION ADDRESS -->
+    <div class="section avoid-break">
+      <div class="section-title">Section B: Details of the Installation</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Installation Address</div>
+          <div class="form-value" style="width: 100%">{{installation_details.address}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION C: DESCRIPTION OF PREMISES (A4:2026) -->
+    <div class="section">
+      <div class="section-title">Section C: Description of Premises</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Type:</span>
+          <div class="checkbox-row">
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "domestic" or installation_details.description == "residential" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Residential</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "commercial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Commercial</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "industrial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Industrial</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other (include brief description)</div>
+            {% if installation_details.description == "other" and installation_details.other_premises_description != "" %}
+            <span class="inline-value" style="margin-left: 8px;">{{installation_details.other_premises_description}}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Est. Age:</span>
+          <span class="inline-value">{{installation_details.estimated_age}} years</span>
+        </div>
+        {% if installation_details.installation_date and installation_details.installation_date != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Installation Date:</span>
+          <span class="inline-value">{{installation_details.installation_date}}</span>
+        </div>
+        {% endif %}
+        {% if installation_details.construction_date and installation_details.construction_date != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Construction Date:</span>
+          <span class="inline-value">{{installation_details.construction_date}}</span>
+        </div>
+        {% endif %}
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group">
+          <span class="inline-label">Evidence of alterations:</span>
+          <div class="checkbox-row">
+            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Not apparent</div>
+            {% if installation_details.evidence_of_alterations == "yes" %}
+            <div class="checkbox-item" style="margin-left: 10px;">
+              <span class="inline-label">If yes, age:</span>
+              <span class="inline-value">{{installation_details.alterations_age | default: "-"}} yrs</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Details:</span>
+          <span class="inline-value wide">{{installation_details.alterations_details}}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <!-- A4:2026 — Installation records available (Reg 651.1) -->
+        <div class="inline-group">
+          <span class="inline-label">Installation records available? (Reg 651.1):</span>
+          <div class="checkbox-row">
+            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No</div>
+          </div>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date of last inspection:</span>
+          <div class="checkbox-row">
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "known" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Known</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "unknown" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Unknown</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;N/A (First)</div>
+          </div>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{installation_details.date_of_last_inspection}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION D: EXTENT AND LIMITATIONS -->
+    <div class="section">
+      <div class="section-title">Section D: Extent and Limitations of the Inspection</div>
+      <div class="inline-form">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Purpose:</span>
+          <span class="inline-value wide">{{installation_details.purpose_of_inspection}}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group">
+          <span class="inline-label">Date of Inspection:</span>
+          <span class="inline-value">{{installation_details.test_date}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Recommended Interval:</span>
+          <span class="inline-value">{{installation_details.inspection_interval}} years</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Next Inspection Due:</span>
+          <span class="inline-value">{{installation_details.next_inspection_date}}</span>
+        </div>
+      </div>
+      {% if installation_details.interval_reasons and installation_details.interval_reasons != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Reasons for recommended interval:</span>
+          <span class="inline-value wide">{{installation_details.interval_reasons}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Extent:</span>
+          <span class="inline-value wide">{{installation_details.extent_of_inspection}}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Limitations:</span>
+          <span class="inline-value wide">{{installation_details.limitations_of_inspection}}</span>
+        </div>
+      </div>
+      <!-- A4:2026 — Operational limitations -->
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Operational limitations including the reasons:</span>
+          <span class="inline-value wide">{{installation_details.operational_limitations}}</span>
+        </div>
+      </div>
+      {% if installation_details.agreed_with and installation_details.agreed_with != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Agreed with:</span>
+          <span class="inline-value wide">{{installation_details.agreed_with}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <!-- A4:2026 — Standard limitations boilerplate -->
+      <div class="inline-form" style="margin-top: 6px; padding: 6px 8px; background: #f8fafc; border-left: 3px solid #fbbf24;">
+        <div class="inline-group" style="flex: 1; display: block;">
+          <div style="font-size: 8.5px; font-weight: 600; color: #475569; margin-bottom: 4px;">Standard Limitations (BS 7671:2018+A4:2026):</div>
+          <div style="font-size: 8px; line-height: 1.4; color: #334155;">
+            Unless specifically agreed between the client and inspector prior to the inspection:
+            <ul style="margin: 3px 0 3px 14px; padding: 0;">
+              <li>Cables concealed within trunking and conduits, under floors, in roof spaces, and generally within the fabric of the building or underground, have not been inspected.</li>
+              <li>No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made.</li>
+            </ul>
+            An inspection should be made of other electrical equipment housed within an accessible roof space.
+          </div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group">
+          <span class="inline-label">Inspection &amp; Testing carried out in accordance with BS 7671:2018, as amended to:</span>
+          <span class="inline-value">{{installation_details.bs_amendment | default: "A4:2026"}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION E: SUMMARY OF CONDITION -->
+    <div class="section">
+      <div class="section-title">Section E: Summary of the Condition of the Installation</div>
+      <div class="assessment-box">
+        <span class="assessment-label">Overall Assessment:</span>
+        <div class="assessment-options">
+          <div class="assessment-option">
+            <input
+              type="checkbox"
+              id="satisfactory"
+              {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
+            />
+            <label for="satisfactory" class="satisfactory">SATISFACTORY</label>
+          </div>
+          <div class="assessment-option">
+            <input
+              type="checkbox"
+              id="unsatisfactory"
+              {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
+            />
+            <label for="unsatisfactory" class="unsatisfactory">UNSATISFACTORY</label>
+          </div>
+        </div>
+      </div>
+      {% if general_condition and general_condition != "" %}
+      <div class="inline-form" style="margin-top: 6px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">General Condition (A4:2026):</span>
+          <span class="inline-value wide">{{general_condition}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <!-- A4:2026 — Section E advisory note (C3 / FI) -->
+      <div style="font-size: 8px; color: #475569; margin-top: 6px; padding: 4px 6px; background: #f8fafc; border-left: 3px solid #cbd5e1; line-height: 1.4;">
+        <em>Any observation classified as 'Improvement recommended' (code C3), or 'Further investigation' (code FI), is advisory and does not affect the overall assessment but should be given due consideration.</em>
+      </div>
+    </div>
+
+    <!-- DECLARATION -->
+    <div class="section">
+      <div class="declaration-box">
+        <div class="declaration-text">
+          I/We, being the person(s) responsible for the inspection and testing of the electrical
+          installation (as indicated by my/our signatures below), particulars of which are described
+          above, having exercised reasonable skill and care when carrying out the inspection and
+          testing, hereby declare that the information in this report, including the observations
+          and the attached schedules, provides an accurate assessment of the condition of the
+          electrical installation taking into account the stated extent and limitations.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION F: SUPPLY CHARACTERISTICS (BS 7671 A4:2026 4-column compound table) -->
+    <div class="section">
+      <div class="section-title">Section F: Supply Characteristics and Earthing Arrangements</div>
+      <div class="compound-grid">
+        <!-- Col 1: Earthing arrangements -->
+        <div class="compound-col" style="width: 16%">
+          <div class="compound-title">Earthing arrangements</div>
+          {% if supply_characteristics.earthing_arrangement == "LIM" or supply_characteristics.earthing_arrangement == "N/V" or supply_characteristics.earthing_arrangement == "N/A" %}
+            <span class="marker-badge marker-{% if supply_characteristics.earthing_arrangement == 'LIM' %}lim{% elsif supply_characteristics.earthing_arrangement == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.earthing_arrangement}}</span>
+            {% if supply_characteristics.earthing_arrangement_note != "" %}<div class="field-note">{{supply_characteristics.earthing_arrangement_note}}</div>{% endif %}
+          {% else %}
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-S" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-S</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PME)</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PNB)</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TT</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "IT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;IT</div>
+          {% endif %}
+        </div>
+
+        <!-- Col 2: Number and Type of Live Conductors -->
+        <div class="compound-col" style="width: 26%">
+          <div class="compound-title">Number and Type of Live Conductors</div>
+          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "ac" or supply_characteristics.supply_ac_dc == "" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>AC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-2-wire" or supply_characteristics.conductor_configuration == "2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "2-phase-3-wire" or supply_characteristics.conductor_configuration == "3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-4-wire" or supply_characteristics.conductor_configuration == "4-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 4-wire</div>
+          <div class="tick-row" style="display: flex; margin-top: 3px;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "dc" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>DC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other</div>
+          <div style="margin-top: 4px; border-top: 1px dotted #cbd5e1; padding-top: 3px;">
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_polarity_confirmed == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Confirmation of supply polarity</div>
+          </div>
+        </div>
+
+        <!-- Col 3: Nature of Supply Parameters (stacked label/value, no horizontal overflow) -->
+        <div class="compound-col" style="width: 30%">
+          <div class="compound-title">Nature of Supply Parameters</div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Nominal voltage, U/U<sub>0</sub> (V)</div>
+            <div class="cell-value">{{supply_characteristics.supply_voltage | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Nominal frequency, f (Hz)</div>
+            <div class="cell-value{% if supply_characteristics.supply_frequency == 'LIM' or supply_characteristics.supply_frequency == 'N/V' or supply_characteristics.supply_frequency == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.supply_frequency == "LIM" or supply_characteristics.supply_frequency == "N/V" or supply_characteristics.supply_frequency == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.supply_frequency == 'LIM' %}lim{% elsif supply_characteristics.supply_frequency == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.supply_frequency}}</span>{% if supply_characteristics.supply_frequency_note != "" %}<span class="field-note">{{supply_characteristics.supply_frequency_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.supply_frequency | default: "-"}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Prospective fault current, I<sub>pf</sub> (kA)</div>
+            <div class="cell-value{% if supply_characteristics.prospective_fault_current == 'LIM' or supply_characteristics.prospective_fault_current == 'N/V' or supply_characteristics.prospective_fault_current == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.prospective_fault_current == "LIM" or supply_characteristics.prospective_fault_current == "N/V" or supply_characteristics.prospective_fault_current == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.prospective_fault_current == 'LIM' %}lim{% elsif supply_characteristics.prospective_fault_current == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.prospective_fault_current}}</span>{% if supply_characteristics.prospective_fault_current_note != "" %}<span class="field-note">{{supply_characteristics.prospective_fault_current_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.prospective_fault_current | default: "-"}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">External earth fault loop impedance, Z<sub>e</sub> (&#937;)</div>
+            <div class="cell-value{% if supply_characteristics.external_ze == 'LIM' or supply_characteristics.external_ze == 'N/V' or supply_characteristics.external_ze == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.external_ze == "LIM" or supply_characteristics.external_ze == "N/V" or supply_characteristics.external_ze == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.external_ze == 'LIM' %}lim{% elsif supply_characteristics.external_ze == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.external_ze}}</span>{% if supply_characteristics.external_ze_note != "" %}<span class="field-note">{{supply_characteristics.external_ze_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.external_ze | default: "-"}}{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Supply Protective Device (stacked label/value) -->
+        <div class="compound-col" style="width: 28%">
+          <div class="compound-title">Supply Protective Device</div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">BS (EN)</div>
+            <div class="cell-value">{{main_protective_device.bs_en | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Type</div>
+            <div class="cell-value">{{main_protective_device.device_type | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Rated current (A)</div>
+            <div class="cell-value">{{main_protective_device.main_switch_rating | default: "-"}}</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Breaking capacity (kA)</div>
+            <div class="cell-value">{{main_protective_device.breaking_capacity | default: "-"}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other sources of supply (tick-box only — BS 7671 model form) -->
+      <div style="margin-top: 5px; padding: 6px 8px; border: 1px solid #e2e8f0; background: #fafbfc;">
+        {% if supply_characteristics.other_sources_of_supply_present == "N/A" %}
+          <div class="tick-row"><span class="marker-badge marker-na">N/A</span>&nbsp;Other sources of supply</div>
+          {% if supply_characteristics.other_sources_of_supply_note != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply_note}}</div>{% endif %}
+        {% else %}
+          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.other_sources_of_supply_present == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other sources of supply (as detailed on attached continuation sheet)</div>
+          {% if supply_characteristics.other_sources_of_supply_present == true and supply_characteristics.other_sources_of_supply != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply}}</div>{% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- SECTION G: BONDING + A4:2026 Maximum Demand -->
+    <div class="section avoid-break">
+      <div class="section-title">Section G: Particulars of Installation</div>
+      <!-- A4:2026 — Means of Earthing + Maximum Demand -->
+      <div class="inline-form" style="background: #fffbeb; padding: 6px 8px; border-left: 3px solid #fbbf24;">
+        {% if earthing_bonding.means_of_earthing_distributor == "LIM" or earthing_bonding.means_of_earthing_distributor == "N/V" or earthing_bonding.means_of_earthing_distributor == "N/A" %}
+          <div class="inline-group">
+            <span class="inline-label">Means of Earthing:</span>
+            <span class="marker-badge marker-{% if earthing_bonding.means_of_earthing_distributor == 'LIM' %}lim{% elsif earthing_bonding.means_of_earthing_distributor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.means_of_earthing_distributor}}</span>
+            {% if earthing_bonding.means_of_earthing_note and earthing_bonding.means_of_earthing_note != "" %}<span class="field-note">{{earthing_bonding.means_of_earthing_note}}</span>{% endif %}
+          </div>
+        {% else %}
+          <div class="inline-group">
+            <div class="checkbox-item">
+              <input type="checkbox" {% if earthing_bonding.means_of_earthing_distributor == true %}checked{% endif %} />
+              <label>Distributor's facility</label>
+            </div>
+          </div>
+          <div class="inline-group">
+            <div class="checkbox-item">
+              <input type="checkbox" {% if earthing_bonding.means_of_earthing_electrode == true %}checked{% endif %} />
+              <label>Installation earth electrode</label>
+            </div>
+          </div>
+        {% endif %}
+        <div class="inline-group">
+          <span class="inline-label">Maximum Demand (load):</span>
+          <span class="inline-value">{{maximum_demand | default: "-"}} {{maximum_demand_unit | default: "A"}}</span>
+        </div>
+      </div>
+      {% if earthing_bonding.earth_electrode_location != "" or earthing_bonding.earth_electrode_resistance != "" %}
+      <!-- Installation Earth Electrode details (BS 7671 Section J) -->
+      <div class="grid-row cols-3" style="margin-top: 4px">
+        <div class="grid-cell">
+          <div class="cell-label">Earth Electrode Type</div>
+          <div class="cell-value{% if earthing_bonding.earth_electrode_type == 'LIM' or earthing_bonding.earth_electrode_type == 'N/V' or earthing_bonding.earth_electrode_type == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.earth_electrode_type == "LIM" or earthing_bonding.earth_electrode_type == "N/V" or earthing_bonding.earth_electrode_type == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.earth_electrode_type == 'LIM' %}lim{% elsif earthing_bonding.earth_electrode_type == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earth_electrode_type}}</span>
+            {% else %}{{earthing_bonding.earth_electrode_type}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Earth Electrode Location</div>
+          <div class="cell-value">{{earthing_bonding.earth_electrode_location}}</div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Electrode Resistance R<sub>A</sub>/Z<sub>s</sub> (&#937;)</div>
+          <div class="cell-value">{{earthing_bonding.earth_electrode_resistance}}</div>
+        </div>
+      </div>
+      {% endif %}
+      <!-- Section G bonding — grid-aligned rows -->
+      <div class="grid-row cols-2" style="margin-top: 4px">
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Size (mm&#178;)</div>
+          <div class="cell-value{% if earthing_bonding.main_bonding_size == 'LIM' or earthing_bonding.main_bonding_size == 'N/V' or earthing_bonding.main_bonding_size == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.main_bonding_size == "LIM" or earthing_bonding.main_bonding_size == "N/V" or earthing_bonding.main_bonding_size == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_bonding_size == 'LIM' %}lim{% elsif earthing_bonding.main_bonding_size == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_bonding_size}}</span>{% if earthing_bonding.main_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_size_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_bonding_size}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Compliance</div>
+          <div class="cell-value{% if earthing_bonding.bonding_compliance == 'N/V' %} is-marker{% endif %}">
+            {% if earthing_bonding.bonding_compliance == "N/V" %}
+              <span class="marker-badge marker-nv">N/V</span>{% if earthing_bonding.bonding_compliance_note != "" %}<span class="field-note">{{earthing_bonding.bonding_compliance_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.bonding_compliance}}{% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="grid-row" style="grid-template-columns: 1fr;">
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Locations</div>
+          <div class="cell-value">{{earthing_bonding.main_bonding_locations}}</div>
+        </div>
+      </div>
+
+      <!-- Main Switch / Consumer's Switch (BS 7671 Section J) -->
+      {% comment %}ELE-1323 — half-filled data left bare blank cells and the
+      block never showed the current rating the user DID enter, which read as
+      broken. Full block with em-dash defaults; rating + BS (EN) added.{% endcomment %}
+      {% comment %}ELE-1382 — Main Switch now reads its OWN `main_switch` object
+      (the distribution board's main switch), separate from the supply protective
+      device above, so a DB isolator no longer bleeds into Supply Protective Device.{% endcomment %}
+      {% if main_switch.location != "" or main_switch.poles != "" or main_switch.rating != "" or main_switch.voltage_rating != "" or main_switch.type != "" %}
+      <div class="avoid-break">
+        <div class="section-subtitle">Main Switch / Consumer's Switch</div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{main_switch.location | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">No of poles</div><div class="cell-value">{{main_switch.poles | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Current rating (A)</div><div class="cell-value">{{main_switch.rating | default: "&mdash;"}}</div></div>
+        </div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Voltage rating (V)</div><div class="cell-value">{{main_switch.voltage_rating | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Type</div><div class="cell-value">{{main_switch.type | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">BS (EN)</div><div class="cell-value">{{main_switch.bs_en | default: "&mdash;"}}</div></div>
+        </div>
+      </div>
+      {% endif %}
+      <!-- ELE-849 — Continuity verification row (Yes/No/N/V) — grid-aligned -->
+      <div class="grid-row cols-2">
+        <div class="grid-cell">
+          <div class="cell-label">Earthing Conductor Continuity Verified</div>
+          <div class="cell-value{% if earthing_bonding.earthing_conductor_continuity_verified == 'N/V' or earthing_bonding.earthing_conductor_continuity_verified == 'LIM' or earthing_bonding.earthing_conductor_continuity_verified == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.earthing_conductor_continuity_verified == "N/V" or earthing_bonding.earthing_conductor_continuity_verified == "LIM" or earthing_bonding.earthing_conductor_continuity_verified == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.earthing_conductor_continuity_verified == 'LIM' %}lim{% elsif earthing_bonding.earthing_conductor_continuity_verified == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earthing_conductor_continuity_verified}}</span>{% if earthing_bonding.earthing_conductor_continuity_verified_note != "" %}<span class="field-note">{{earthing_bonding.earthing_conductor_continuity_verified_note}}</span>{% endif %}
+            {% elsif earthing_bonding.earthing_conductor_continuity_verified == true %}Yes{% else %}No{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Bonding Conductor Continuity Verified</div>
+          <div class="cell-value{% if earthing_bonding.bonding_conductor_continuity_verified == 'N/V' or earthing_bonding.bonding_conductor_continuity_verified == 'LIM' or earthing_bonding.bonding_conductor_continuity_verified == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.bonding_conductor_continuity_verified == "N/V" or earthing_bonding.bonding_conductor_continuity_verified == "LIM" or earthing_bonding.bonding_conductor_continuity_verified == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.bonding_conductor_continuity_verified == 'LIM' %}lim{% elsif earthing_bonding.bonding_conductor_continuity_verified == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.bonding_conductor_continuity_verified}}</span>{% if earthing_bonding.bonding_conductor_continuity_verified_note != "" %}<span class="field-note">{{earthing_bonding.bonding_conductor_continuity_verified_note}}</span>{% endif %}
+            {% elsif earthing_bonding.bonding_conductor_continuity_verified == true %}Yes{% else %}No{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION H: DISTRIBUTION BOARDS -->
+    <div class="section">
+      <div class="section-title">Section H: Consumer Unit / Distribution Board Details</div>
+
+      <!-- Main Board -->
+      <div class="board-card">
+        <div class="board-card-header">
+          <span class="board-card-title"
+            >{{distribution_board.board_designation | default: "Main Distribution Board"}}</span
+          >
+          <span class="board-card-badge">DB1</span>
+        </div>
+        <div class="board-card-body">
+          {% assign main_board_schedule = boards_with_schedules | first %}
+          <!-- Row 1: Location / Manufacturer / Type / Ways / Supplied from (5-col uniform grid) -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">Location</div>
+              <div class="cell-value">{{distribution_board.board_location}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Manufacturer</div>
+              <div class="cell-value">{{distribution_board.board_manufacturer}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type</div>
+              <div class="cell-value">{{distribution_board.board_type}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Ways</div>
+              <div class="cell-value">{{distribution_board.board_ways}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Supplied from</div>
+              <div class="cell-value">{{main_board_schedule.supplied_from | default: "DNO"}}</div>
+            </div>
+          </div>
+          <!-- Row 2: Zdb / Ipf / Polarity / Phase Seq / Ring Final -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">Zdb (&#937;)</div>
+              <div class="cell-value">{{distribution_board_verification.zdb}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Ipf (kA)</div>
+              <div class="cell-value">{{distribution_board_verification.ipf}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Polarity</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_correct_polarity %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Phase Seq</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Ring Final</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+            </div>
+          </div>
+          <!-- Row 3: SPD Operational / N/A / T1 / T2 / T3 -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">SPD</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_operational_status %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">SPD N/A</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 1</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 2</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 3</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div>
+            </div>
+          </div>
+          <!-- Row 4: SPD details (only when SPD present) -->
+          {% if main_board_schedule.spd_make != "" or main_board_schedule.spd_model != "" or main_board_schedule.spd_location != "" or main_board_schedule.spd_rated_current_ka != "" %}
+          <div class="grid-row cols-3">
+            <div class="grid-cell">
+              <div class="cell-label">SPD Make / Model</div>
+              <div class="cell-value">{{main_board_schedule.spd_make}} {{main_board_schedule.spd_model}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">SPD Location</div>
+              <div class="cell-value">{{main_board_schedule.spd_location}}</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">SPD Rated Current (kA)</div>
+              <div class="cell-value">{{main_board_schedule.spd_rated_current_ka}}</div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Additional Boards (A4:2026 — full board details, SPDs, ring final, supplied from) -->
+      {% for board in additional_boards %}
+      <div class="board-card">
+        <div class="board-card-header">
+          <span class="board-card-title">{{board.designation}}</span>
+          <span class="board-card-badge">DB{{forloop.index | plus: 1}}</span>
+        </div>
+        <div class="board-card-body">
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{board.location}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Manufacturer</div><div class="cell-value">{{board.manufacturer}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Type</div><div class="cell-value">{{board.board_type}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Ways</div><div class="cell-value">{{board.ways}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Supplied from</div><div class="cell-value">{{board.supplied_from | default: "Main DB"}}</div></div>
+          </div>
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">Zdb (&#937;)</div><div class="cell-value">{{board.zdb}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Ipf (kA)</div><div class="cell-value">{{board.ipf}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Polarity</div><div class="cell-check"><span class="tick">{% if board.polarity_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Phase Seq</div><div class="cell-check"><span class="tick">{% if board.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Ring Final</div><div class="cell-check"><span class="tick">{% if board.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+          </div>
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">SPD</div><div class="cell-check"><span class="tick">{% if board.spd_operational %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD N/A</div><div class="cell-check"><span class="tick">{% if board.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 1</div><div class="cell-check"><span class="tick">{% if board.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 2</div><div class="cell-check"><span class="tick">{% if board.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 3</div><div class="cell-check"><span class="tick">{% if board.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div></div>
+          </div>
+          {% if board.spd_make != "" or board.spd_model != "" or board.spd_location != "" or board.spd_rated_current_ka != "" %}
+          <div class="grid-row cols-3">
+            <div class="grid-cell"><div class="cell-label">SPD Make / Model</div><div class="cell-value">{{board.spd_make}} {{board.spd_model}}</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD Location</div><div class="cell-value">{{board.spd_location}}</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD Rated (kA)</div><div class="cell-value">{{board.spd_rated_current_ka}}</div></div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- RCD Details (kept together across page breaks) -->
+      <div class="avoid-break">
+        <div class="section-subtitle">RCD Main Switch (where applicable)</div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">RCD Main Switch</div><div class="cell-value">{{ rcd_details.rcd_main_switch }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Type (AC/A/F/B)</div><div class="cell-value">{{ rcd_details.rcd_type }}</div></div>
+          <div class="grid-cell"><div class="cell-label">I&#916;n (mA)</div><div class="cell-value">{{ rcd_details.rcd_rating }}</div></div>
+        </div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Time Delay (ms)</div><div class="cell-value">{{ rcd_details.rcd_time_delay }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Measured Operating Time (ms)</div><div class="cell-value">{{ rcd_details.rcd_measured_time }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Breaking Capacity (kA)</div><div class="cell-value">{{ rcd_details.rcd_breaking_capacity }}</div></div>
+        </div>
+      </div>
+
+      <!-- Cables (aligned 4-col / 3-col grids, kept together across page breaks) -->
+      <div class="avoid-break">
+        <div class="section-subtitle">Main Earth &amp; Bonding Conductors</div>
+      <div class="grid-row cols-2">
+        <div class="grid-cell">
+          <div class="cell-label">Main Earth Conductor</div>
+          <div class="cell-value">
+            {% if earthing_bonding.main_earthing_conductor == "LIM" or earthing_bonding.main_earthing_conductor == "N/V" or earthing_bonding.main_earthing_conductor == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_earthing_conductor == 'LIM' %}lim{% elsif earthing_bonding.main_earthing_conductor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_earthing_conductor}}</span>{% if earthing_bonding.main_earthing_conductor_size_note != "" %}<span class="field-note">{{earthing_bonding.main_earthing_conductor_size_note}}</span>{% elsif earthing_bonding.main_earthing_conductor_type_note != "" %}<span class="field-note">{{earthing_bonding.main_earthing_conductor_type_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_earthing_conductor}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Conductor</div>
+          <div class="cell-value">
+            {% if earthing_bonding.main_bonding_conductor == "LIM" or earthing_bonding.main_bonding_conductor == "N/V" or earthing_bonding.main_bonding_conductor == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_bonding_conductor == 'LIM' %}lim{% elsif earthing_bonding.main_bonding_conductor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_bonding_conductor}}</span>{% if earthing_bonding.main_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_size_note}}</span>{% elsif earthing_bonding.main_bonding_conductor_type_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_conductor_type_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_bonding_conductor}}{% endif %}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- SECTION K: OBSERVATIONS (BS 7671 A4:2026 — C1/C2 and C3/FI split into separate tables) -->
+    <div class="section">
+      <div class="section-title">Section K: Observations</div>
+      {% assign no_obs = true %}
+      {% for observation in observations %}{% assign no_obs = false %}{% endfor %}
+      <div style="font-size: 8.5px; margin-bottom: 4px;">
+        Referring to the attached Schedule(s) of Inspection and Schedule(s) of Circuit Details and Test Results, and subject to the limitations specified at the Extent and limitations of inspection and testing section:
+      </div>
+      <div class="tick-row" style="display: flex; margin-bottom: 4px;">
+        <span class="tick">{% if no_obs %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No remedial action is required&nbsp;&nbsp;
+        <span class="tick">{% if no_obs == false %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;The following observations are made (see below)
+      </div>
+
+      <!-- Table 1: C1 and C2 observations (legally distinct — affect overall assessment) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 6px;">
+        <thead>
+          <tr>
+            <th style="width: 50px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">Item No.</th>
+            <th style="padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">C1 and C2 OBSERVATION(S) <span style="font-weight: 400; font-style: italic; color: #64748b;">Include the relevant schedule reference(s)</span></th>
+            <th style="width: 80px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: center;">Classification code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% assign has_c12 = false %}
+          {% for observation in observations %}
+            {% if observation.defect_code == "C1" or observation.defect_code == "C2" %}
+              {% assign has_c12 = true %}
+              <tr>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.rectified %} <span style="display:inline-block; margin-left:4px; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; letter-spacing:0.3px; background:#dcfce7; color:#15803d; border:1px solid #86efac;">RECTIFIED</span>{% endif %}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C1' %}code-c1{% else %}code-c2{% endif %}">{{observation.defect_code}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          {% unless has_c12 %}
+          <tr>
+            <td colspan="3" style="padding: 6px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-style: italic;">None</td>
+          </tr>
+          {% endunless %}
+        </tbody>
+      </table>
+      <div style="font-size: 7.5px; color: #475569; margin-bottom: 6px; padding: 3px 6px; background: #fefce8; border-left: 3px solid #eab308;">
+        One of the following codes, as appropriate, has been allocated to each of the observations above to indicate the degree of urgency for remedial action. <strong>These items affect the overall assessment of the report.</strong><br />
+        <strong>C1</strong> — Danger present. Risk of injury. Immediate remedial action is necessary<br />
+        <strong>C2</strong> — Potentially dangerous — urgent remedial action is necessary
+      </div>
+
+      <!-- Table 2: C3 and FI observations (advisory — do not affect overall assessment) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 6px;">
+        <thead>
+          <tr>
+            <th style="width: 50px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">Item No.</th>
+            <th style="padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">C3 and FI OBSERVATION(S) <span style="font-weight: 400; font-style: italic; color: #64748b;">Include the relevant schedule reference(s)</span></th>
+            <th style="width: 80px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: center;">Classification code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% assign has_c3fi = false %}
+          {% for observation in observations %}
+            {% if observation.defect_code == "C3" or observation.defect_code == "FI" %}
+              {% assign has_c3fi = true %}
+              <tr>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.rectified %} <span style="display:inline-block; margin-left:4px; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; letter-spacing:0.3px; background:#dcfce7; color:#15803d; border:1px solid #86efac;">RECTIFIED</span>{% endif %}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C3' %}code-c3{% else %}code-fi{% endif %}">{{observation.defect_code}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          {% unless has_c3fi %}
+          <tr>
+            <td colspan="3" style="padding: 6px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-style: italic;">None</td>
+          </tr>
+          {% endunless %}
+        </tbody>
+      </table>
+      <div style="font-size: 7.5px; color: #475569; padding: 3px 6px; background: #f8fafc; border-left: 3px solid #94a3b8;">
+        One of the following codes, as appropriate, has been allocated to each of the observations above to indicate the advisory nature of urgency for remedial action. <strong>These items do not affect the overall assessment of the report.</strong><br />
+        <strong>C3</strong> — Improvement recommended<br />
+        <strong>FI</strong> — Further investigation is advised
+      </div>
+    </div>
+
+    <!-- A4:2026 Section H — Schedules and Continuation Sheets Attached -->
+    <div class="section avoid-break">
+      <div class="section-title">Schedules and Continuation Sheet(s) Attached</div>
+      <div class="inline-form" style="font-size: 8px;">
+        <div class="inline-group">
+          <span class="inline-label">Continuation sheet(s):</span>
+          <span class="inline-value">{{continuation_sheets_count | default: 0}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Schedule(s) of Inspection:</span>
+          <span class="inline-value">{{inspection_schedule_count | default: 1}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Schedule(s) of Circuit Details &amp; Test Results:</span>
+          <span class="inline-value">{{test_schedule_count | default: 1}}</span>
+        </div>
+      </div>
+      <div style="font-size: 7.5px; color: #64748b; margin-top: 4px;">
+        The schedule(s) and continuation sheet(s) listed are part of this document and this report is valid only when they are attached to it.
+      </div>
+    </div>
+
+    <!-- =============================================
+     PAGE 2: SCHEDULE OF INSPECTION
+     ============================================= -->
+    <div class="page-break"></div>
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        <div class="doc-title-section">
+          <div class="doc-title">SCHEDULE OF INSPECTION</div>
+          <div class="doc-subtitle">Inspection checklist in accordance with BS 7671</div>
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{metadata.certificate_number}}</div>
+          <div class="page-number">Schedule of Inspection</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inspection Checklist (A4:2026) -->
+    <div class="section">
+      <!-- A4:2026 — Outcome legend at top of every Schedule of Inspection page -->
+      <div style="font-size: 8px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 6px;">
+        <strong>Outcomes:</strong>
+        &nbsp;<strong>Y</strong> Acceptable condition
+        &nbsp;|&nbsp; <strong>C1</strong> or <strong>C2</strong> Unacceptable condition
+        &nbsp;|&nbsp; <strong>C3</strong> Improvement recommended
+        &nbsp;|&nbsp; <strong>FI</strong> Further investigation
+        &nbsp;|&nbsp; <strong>N/V</strong> Not verified
+        &nbsp;|&nbsp; <strong>LIM</strong> Limitation
+        &nbsp;|&nbsp; <strong>N/A</strong> Not applicable
+      </div>
+      <!-- A4:2026 — Single "Outcomes" column per A4 model form (inspector writes code in one column) -->
+      <table class="inspection-table">
+        <thead>
+          <tr>
+            <th style="width: 40px">Item No.</th>
+            <th class="desc-header" style="width: auto">Description</th>
+            <th style="width: 70px; text-align: center;">Outcomes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for section in inspection_items %}
+          <tr class="section-header-row">
+            <td colspan="3">{% if section.section_number and section.section_number != "" %}{{section.section_number}}.0 &nbsp; {% endif %}{{section.section_name}}</td>
+          </tr>
+          {% for item in section.items %}
+          <tr>
+            <td class="item-num">{{item.item_number}}</td>
+            <td class="item-desc">
+              {{item.item}}
+              {% if item.clause and item.clause != "" %}<span style="color: #64748b; font-size: 8px;">&nbsp;({{item.clause}})</span>{% endif %}
+            </td>
+            <td class="outcome-text" style="text-align: center; font-weight: 600;">{{item.outcome_display}}</td>
+          </tr>
+          {% endfor %} {% endfor %}
+        </tbody>
+      </table>
+      <!-- A4:2026 — Schedule of Inspection — Inspected by -->
+      <div class="inline-form" style="margin-top: 10px;">
+        <div class="inline-group">
+          <span class="inline-label">Inspected by (CAPITALS):</span>
+          <span class="inline-value">{{schedule_inspected_by_name}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Signature:</span>
+          <span class="inline-value">{% if schedule_inspected_by_signature contains "data:" %}<img src="{{schedule_inspected_by_signature}}" style="max-height: 32px; max-width: 130px; vertical-align: middle;" />{% else %}{{schedule_inspected_by_signature}}{% endif %}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{schedule_inspected_by_date}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+     PAGE 3+: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     A4:2026 — One landscape page PER distribution board
+     ============================================= -->
+    {% for board in boards_with_schedules %}
+    <div class="schedule-page">
+      <div class="doc-header">
+        <div class="doc-header-content">
+          <div class="doc-title-section">
+            <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
+            <div class="doc-subtitle">
+              {{board.db_reference}}{% if board.db_location and board.db_location != "" %} — {{board.db_location}}{% endif %}
+            </div>
+          </div>
+          <div class="doc-meta">
+            <div class="cert-number">{{metadata.certificate_number}}</div>
+            <div class="page-number">Board {{forloop.index}} of {{boards_with_schedules.size}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A4:2026 — Test Equipment block (global, rendered once per schedule page) -->
+      {% if test_instrument_details.make_model != "" or test_instrument_details.serial_number != "" or test_instrument_details.calibration_date != "" or test_instrument_details.test_temperature != "" %}
+      <div class="inline-form" style="font-size: 8px; padding: 4px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; margin-bottom: 6px;">
+        <div class="inline-group">
+          <span class="inline-label">Test Equipment:</span>
+          <span class="inline-value">{{test_instrument_details.make_model | default: "-"}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Serial:</span>
+          <span class="inline-value">{{test_instrument_details.serial_number | default: "-"}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Calibration Date:</span>
+          <span class="inline-value">{{test_instrument_details.calibration_date | default: "-"}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Test Temp (&deg;C):</span>
+          <span class="inline-value">{{test_instrument_details.test_temperature | default: "-"}}</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Distribution Board Info Header (per board) -->
+      <div class="board-info-header">
+        <div class="board-title">{{board.db_reference}}</div>
+        <div class="board-details">
+          <span><strong>Location:</strong> {{board.db_location}}</span>
+          <span><strong>Manufacturer:</strong> {{board.db_manufacturer}}</span>
+          <span><strong>Type:</strong> {{board.db_type}}</span>
+          <span><strong>Ways:</strong> {{board.db_ways}}</span>
+          <span><strong>Supplied from:</strong> {{board.supplied_from | default: "DNO"}}</span>
+        </div>
+        <div class="board-verification">
+          <span><strong>Zdb:</strong> {{board.zdb | default: "-"}} Ω</span>
+          <span><strong>Ipf:</strong> {{board.ipf | default: "-"}} kA</span>
+          <span>Polarity: {% if board.polarity_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>Phase Seq: {% if board.phase_sequence_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>Ring Final: {% if board.ring_final_circuit_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>SPD: {% if board.spd_operational %}✓{% elsif board.spd_na %}N/A{% else %}○{% endif %}</span>
+          {% if board.spd_t1 %}<span>T1 ✓</span>{% endif %}
+          {% if board.spd_t2 %}<span>T2 ✓</span>{% endif %}
+          {% if board.spd_t3 %}<span>T3 ✓</span>{% endif %}
+        </div>
+      </div>
+
+      <table class="circuit-table">
+        <thead>
+          <tr>
+            <th colspan="4">Circuit Details</th>
+            <th colspan="5">Conductor</th>
+            <th colspan="5">Overcurrent Device</th>
+            <th colspan="4">RCD</th>
+            <th colspan="5">Continuity (&#937;)</th>
+            <th colspan="3">Insulation (M&#937;)</th>
+            <th></th>
+            <th>Zs</th>
+            <th colspan="2">RCD Test</th>
+            <th>AFDD</th>
+                    <th>Funct</th>
+            <th rowspan="2" style="width: 50px">Remarks</th>
+          </tr>
+          <tr>
+            <th style="width: 22px"><span class="rotate">Cct</span></th>
+            <th colspan="3" style="width: 70px">Description</th>
+            <th><span class="rotate">Wiring</span></th>
+            <th><span class="rotate">Ref</span></th>
+            <th><span class="rotate">Points</span></th>
+            <th><span class="rotate">Live mm&#178;</span></th>
+            <th><span class="rotate">CPC mm&#178;</span></th>
+            <th><span class="rotate">BS(EN)</span></th>
+            <th><span class="rotate">Type</span></th>
+            <th><span class="rotate">Rating A</span></th>
+            <th><span class="rotate">kA</span></th>
+            <th><span class="rotate">Max Zs</span></th>
+            <th><span class="rotate">BS(EN)</span></th>
+            <th><span class="rotate">Type</span></th>
+            <th><span class="rotate">I&#916;n mA</span></th>
+            <th><span class="rotate">Rating A</span></th>
+            <th><span class="rotate">r1 &#937;</span></th>
+            <th><span class="rotate">rn &#937;</span></th>
+            <th><span class="rotate">r2 &#937;</span></th>
+            <th><span class="rotate">R1+R2</span></th>
+            <th><span class="rotate">R2</span></th>
+            <th><span class="rotate">Test V</span></th>
+            <th><span class="rotate">L-L</span></th>
+            <th><span class="rotate">L-E</span></th>
+            <th><span class="rotate">Pol</span></th>
+            <th><span class="rotate">Meas &#937;</span></th>
+            <th><span class="rotate">ms</span></th>
+            <th><span class="rotate">Test Btn</span></th>
+            <th><span class="rotate">AFDD</span></th>
+                    <th><span class="rotate">Funct</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for circuit in board.circuits %}
+          <tr>
+            <td>{{circuit.circuit_number}}</td>
+            <td colspan="3" class="desc">{{circuit.circuit_description}}</td>
+            <td>{{circuit.type_of_wiring}}</td>
+            <td>{{circuit.reference_method}}</td>
+            <td>{{circuit.points_served}}</td>
+            <td>{{circuit.live_size}}</td>
+            <td>{{circuit.cpc_size}}</td>
+            <td>{{circuit.bs_standard}}</td>
+            <td>{{circuit.protective_device_curve}}</td>
+            <td>{{circuit.protective_device_rating}}</td>
+            <td>{{circuit.protective_device_ka_rating}}</td>
+            <td>{{circuit.max_zs}}</td>
+            <td>{{circuit.rcd_bs_standard}}</td>
+            <td>{{circuit.rcd_type | default: "-"}}</td>
+            <td>{{circuit.rcd_rating}}</td>
+            <td>{{circuit.rcd_rating_a}}</td>
+            <td>{{circuit.ring_r1}}</td>
+            <td>{{circuit.ring_rn}}</td>
+            <td>{{circuit.ring_r2}}</td>
+            <td>{{circuit.r1r2}}</td>
+            <td>{{circuit.r2}}</td>
+            <td>{{circuit.insulation_test_voltage}}</td>
+            <td>{{circuit.insulation_live_neutral}}</td>
+            <td>{{circuit.insulation_live_earth}}</td>
+            <td>{% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' or circuit.polarity == 'OK' or circuit.polarity == 'Satisfactory' or circuit.polarity == '✓' %}✓{% elsif circuit.polarity == 'Incorrect' or circuit.polarity == '✗' %}✗{% else %}{{circuit.polarity}}{% endif %}</td>
+            <td>{{circuit.zs}}</td>
+            <td>{{circuit.rcd_one_x}}</td>
+            <td>{% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' or circuit.rcd_test_button == 'OK' or circuit.rcd_test_button == '✓' or circuit.rcd_test_button == 'Satisfactory' %}✓{% elsif circuit.rcd_test_button == '✗' or circuit.rcd_test_button == 'fail' or circuit.rcd_test_button == 'Fail' %}✗{% else %}{{circuit.rcd_test_button}}{% endif %}</td>
+            <td>{% if circuit.afdd_test == '✓' or circuit.afdd_test == 'pass' or circuit.afdd_test == 'Pass' or circuit.afdd_test == 'OK' or circuit.afdd_test == 'Satisfactory' %}✓{% elsif circuit.afdd_test == '✗' or circuit.afdd_test == 'fail' or circuit.afdd_test == 'Fail' %}✗{% else %}{{circuit.afdd_test}}{% endif %}</td>
+            <td>{% if circuit.functional_testing == '✓' or circuit.functional_testing == 'pass' or circuit.functional_testing == 'Pass' or circuit.functional_testing == 'OK' or circuit.functional_testing == 'Satisfactory' %}✓{% elsif circuit.functional_testing == '✗' or circuit.functional_testing == 'fail' or circuit.functional_testing == 'Fail' or circuit.functional_testing == 'Unsatisfactory' %}✗{% else %}{{circuit.functional_testing}}{% endif %}</td>
+            <td class="remarks">{{circuit.notes}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- A4:2026 — Schedule of Test Results: Tested by (Name / Signature / Date) -->
+      <div class="inline-form" style="margin-top: 10px; font-size: 8px;">
+        <div class="inline-group">
+          <span class="inline-label">Tested by (CAPITALS):</span>
+          <span class="inline-value">{{schedule_tested_by_name}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Signature:</span>
+          <span class="inline-value" style="font-style: italic; font-family: cursive;">{% if schedule_tested_by_signature contains "data:" %}<img src="{{schedule_tested_by_signature}}" style="max-height: 32px; max-width: 130px; vertical-align: middle; font-style: normal;" />{% else %}{{schedule_tested_by_signature}}{% endif %}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{schedule_tested_by_date}}</span>
+        </div>
+      </div>
+      <!-- A4:2026 footnotes for Schedule of Test Results -->
+      <div style="font-size: 7.5px; color: #64748b; margin-top: 6px; line-height: 1.3;">
+        Notes: Not all SPDs have visible functionality indication. Not all AFDDs have a manual test button. Where Ring Final Circuit testing is not applicable, an alternative test at rated residual operating current (I&#916;n) should be performed.
+      </div>
+      <!-- A4:2026 — Codes for types of wiring (footnote table from model form) -->
+      <div style="margin-top: 8px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px;">
+        <div style="font-size: 8px; font-weight: 600; color: #475569; margin-bottom: 3px;">Codes for Types of Wiring (Schedule of Circuit Details column 3)</div>
+        <table style="width: 100%; font-size: 7.5px; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 2px 4px;"><strong>A</strong> Thermoplastic insulated/sheathed cables</td>
+            <td style="padding: 2px 4px;"><strong>B</strong> Thermoplastic cables in metallic conduit</td>
+            <td style="padding: 2px 4px;"><strong>C</strong> Thermoplastic cables in non-metallic conduit</td>
+          </tr>
+          <tr>
+            <td style="padding: 2px 4px;"><strong>D</strong> Thermoplastic cables in metallic trunking</td>
+            <td style="padding: 2px 4px;"><strong>E</strong> Thermoplastic cables in non-metallic trunking</td>
+            <td style="padding: 2px 4px;"><strong>F</strong> Thermoplastic SWA cables</td>
+          </tr>
+          <tr>
+            <td style="padding: 2px 4px;"><strong>G</strong> Thermosetting SWA cables</td>
+            <td style="padding: 2px 4px;"><strong>H</strong> Mineral insulated cables</td>
+            <td style="padding: 2px 4px;"><strong>O</strong> Other &mdash; please state</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- End schedule-page (A4:2026: one per distribution board) -->
+
+    <!-- =============================================
+     PAGE 4: DECLARATIONS & SIGNATURES
+     ============================================= -->
+    <div class="page-break"></div>
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        <div class="doc-title-section">
+          <div class="doc-title">DECLARATIONS AND SIGNATURES</div>
+          <div class="doc-subtitle">Completion and certification details</div>
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{metadata.certificate_number}}</div>
+          <div class="page-number">Declarations &amp; Signatures</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inspector Details -->
+    <div class="section">
+      <div class="section-title">Inspector Declaration</div>
+      <div class="declaration-box">
+        <div class="declaration-text">
+          I/We, being the person(s) responsible for the inspection and testing of the electrical
+          installation (as indicated by my/our signatures below), particulars of which are described
+          above, having exercised reasonable skill and care when carrying out the inspection and
+          testing, hereby declare that the information in this report, including the observations
+          and the attached schedules, provides an accurate assessment of the condition of the
+          electrical installation taking into account the stated extent and limitations in Section D
+          of this report.
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 6px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Inspector Name:</span>
+          <span class="inline-value wide">{{inspector.name}}</span>
+        </div>
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Qualifications:</span>
+          <span class="inline-value wide" style="white-space: pre-line">{{inspector.qualifications}}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Company:</span>
+          <span class="inline-value wide">{{inspector.company}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{inspector.date}}</span>
+        </div>
+      </div>
+      {% if declarations.additional_notes %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Additional Comments:</span>
+          <span class="inline-value wide" style="min-height: 30px"
+            >{{declarations.additional_notes}}</span
+          >
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- BS 7671 / Building Regs / CP Scheme / Departures compliance block -->
+      <div class="avoid-break" style="margin-top: 8px;">
+        <div class="grid-row cols-3">
+          <div class="grid-cell">
+            <div class="cell-label">BS 7671 Compliance</div>
+            <div class="cell-check"><span class="tick">{% if declarations.bs7671_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Installation complies with BS 7671 as amended</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Building Regs Compliance</div>
+            <div class="cell-check"><span class="tick">{% if declarations.building_regs_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Complies with applicable Building Regulations</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Competent Person Scheme</div>
+            <div class="cell-check"><span class="tick">{% if declarations.competent_person_scheme == true %}&#9745;{% else %}&#9744;{% endif %}</span>Notified under CPS where applicable</div>
+          </div>
+        </div>
+        {% if departures and departures != "" %}
+        <div class="grid-row" style="grid-template-columns: 1fr;">
+          <div class="grid-cell">
+            <div class="cell-label">Departures from BS 7671 (Regs 120.3, 133.5)</div>
+            <div class="cell-value">{{departures}}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signature-grid">
+      <div class="signature-box">
+        <div class="signature-box-header">Inspected and Tested By</div>
+        <div class="signature-box-body">
+          <div class="sig-field">
+            <span class="sig-field-label">Name (CAPITALS)</span>
+            <span class="sig-field-value">{{declarations.inspected_by.name}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Signature</span>
+            <span class="sig-field-value signature">
+              {% if declarations.inspected_by.signature contains "data:" %}
+              <img src="{{declarations.inspected_by.signature}}" />
+              {% endif %}
+            </span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">For/on behalf of</span>
+            <span class="sig-field-value">{{declarations.inspected_by.for_on_behalf_of}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Position</span>
+            <span class="sig-field-value">{{declarations.inspected_by.position}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Address</span>
+            <span class="sig-field-value">{{declarations.inspected_by.address}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Date</span>
+            <span class="sig-field-value" style="max-width: 100px">{{declarations.inspected_by.date}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">CP Scheme</span>
+            <span class="sig-field-value" style="max-width: 80px"
+              >{{declarations.inspected_by.cp_scheme}}</span
+            >
+            <span style="font-size: 8px; margin-left: 8px">
+              <input
+                type="checkbox"
+                {%
+                if
+                declarations.inspected_by.cp_scheme_na
+                %}
+                checked
+                {%
+                endif
+                %}
+              />
+              N/A
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="signature-box">
+        <div class="signature-box-header">Report Authorised for Issue By</div>
+        <div class="signature-box-body">
+          <div class="sig-field">
+            <span class="sig-field-label">Name (CAPITALS)</span>
+            <span class="sig-field-value">{{declarations.report_authorised_by.name}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Date</span>
+            <span class="sig-field-value" style="max-width: 100px"
+              >{{declarations.report_authorised_by.date}}</span
+            >
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Signature</span>
+            <span class="sig-field-value signature">
+              {% if declarations.report_authorised_by.signature contains "data:" %}
+              <img src="{{declarations.report_authorised_by.signature}}" />
+              {% endif %}
+            </span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">For/on behalf of</span>
+            <span class="sig-field-value"
+              >{{declarations.report_authorised_by.for_on_behalf_of}}</span
+            >
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Position</span>
+            <span class="sig-field-value">{{declarations.report_authorised_by.position}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Address</span>
+            <span class="sig-field-value">{{declarations.report_authorised_by.address}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Membership No</span>
+            <span class="sig-field-value">{{declarations.report_authorised_by.membership_no}}</span>
+          </div>
+          {% if company_details.registration_scheme or company_details.registration_scheme_logo %}
+          <div class="sig-field">
+            <span class="sig-field-label">Registration Scheme</span>
+            <span class="sig-field-value">{{company_details.registration_scheme}}</span>
+          </div>
+          {% endif %}
+          {% if company_details.registration_scheme_logo %}
+          <div class="scheme-logo-signature">
+            <img src="{{company_details.registration_scheme_logo}}" alt="{{company_details.registration_scheme | default: 'Registration Scheme'}}" />
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Overall Assessment -->
+    <div class="section" style="margin-top: 12px">
+      <div class="section-title">Overall Assessment of the Installation</div>
+      <div class="final-assessment-box">
+        <div class="final-assessment-content">
+          <span class="final-assessment-label"
+            >The overall condition of the electrical installation is assessed as:</span
+          >
+          <div class="final-assessment-options">
+            <div
+              class="final-assessment-option {% if declarations.overall_assessment == 'satisfactory' %}satisfactory-selected{% endif %}"
+            >
+              <input
+                type="checkbox"
+                {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
+              />
+              <span class="option-label satisfactory-label">SATISFACTORY</span>
+            </div>
+            <div
+              class="final-assessment-option {% if declarations.overall_assessment == 'unsatisfactory' %}unsatisfactory-selected{% endif %}"
+            >
+              <input
+                type="checkbox"
+                {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
+              />
+              <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guidance for Recipients -->
+    <div class="section" style="margin-top: 12px">
+      <div class="section-title">Guidance for Recipients</div>
+      <div class="guidance-intro">
+        This Report is an important and valuable document which should be retained for future
+        reference.
+      </div>
+      <div class="guidance-columns">
+        <div class="guidance-col">
+          <p>
+            <strong>1.</strong> The purpose of this Report is to confirm, as far as reasonably
+            practicable, whether or not the electrical installation is in a satisfactory condition
+            for continued service. The Report should identify any damage, deterioration, defects
+            and/or conditions which may give rise to danger.
+          </p>
+          <p>
+            <strong>2.</strong> This Report is only valid if accompanied by the Inspection
+            Schedule(s) and the Schedule(s) of Circuit Details and Test Results.
+          </p>
+          <p>
+            <strong>3.</strong> The person ordering the Report should have received the 'original'
+            Report and the inspector should have retained a duplicate.
+          </p>
+          <p>
+            <strong>4.</strong> The 'original' Report should be retained in a safe place and be made
+            available to any person inspecting or undertaking work on the electrical installation in
+            the future.
+          </p>
+          <p>
+            <strong>5.</strong> Section D (Extent and Limitations) should identify fully the extent
+            of the installation covered by this Report and any limitations on the inspection and
+            testing.
+          </p>
+          <p>
+            <strong>6.</strong> Some operational limitations such as inability to gain access to
+            parts of the installation may have been encountered during the inspection.
+          </p>
+          <p>
+            <strong>7.</strong> For items classified as <strong>C1</strong> ('Danger present') the
+            safety of those using the installation is at risk - immediate remedial action required.
+          </p>
+        </div>
+        <div class="guidance-col">
+          <p>
+            <strong>8.</strong> For items classified as <strong>C2</strong> ('Potentially
+            dangerous') the safety of those using the installation may be at risk - urgent remedial
+            action is required.
+          </p>
+          <p>
+            <strong>9.</strong> For items classified as <strong>C3</strong> ('Improvement
+            recommended'), in some cases, remedial work may improve the safety of the installation.
+            However, it should be noted that a C3 observation is advisory only and does not affect
+            the overall assessment of the Report.
+          </p>
+          <p>
+            <strong>10.</strong> Where <strong>FI</strong> (Further Investigation) is stated, the
+            inspection has revealed an apparent deficiency which could not be fully identified due
+            to the extent or limitations.
+          </p>
+          <p>
+            <strong>11.</strong> For safety reasons, the electrical installation should be
+            re-inspected at appropriate intervals by a skilled person. The recommended date is
+            stated in Section F.
+          </p>
+          <p>
+            <strong>12.</strong> Where the installation includes an RCD it should be tested
+            six-monthly by pressing the button marked 'T' or 'Test'.
+          </p>
+          <p>
+            <strong>13.</strong> Where the installation includes an AFDD having a manual test
+            facility it should be tested six-monthly by pressing the test button.
+          </p>
+          <p>
+            <strong>14.</strong> Where the installation includes an SPD the status indicator should
+            be checked to confirm it is in operational condition in accordance with the
+            manufacturer's information.
+          </p>
+          <p>
+            <strong>15.</strong> Where the installation includes alternative or additional sources
+            of supply, warning notices should be found at the origin or meter position or, if remote
+            from the origin, at the consumer unit or distribution board and at all points of
+            isolation of all sources of supply.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================
+     APPENDIX: OBSERVATION DETAILS (IF ANY)
+     ============================================= -->
+    {% if observations.size > 0 %}
+    <div class="page-break"></div>
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        <div class="doc-title-section">
+          <div class="doc-title">OBSERVATION DETAILS</div>
+          <div class="doc-subtitle">
+            Detailed descriptions with photographic evidence and recommendations
+          </div>
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{metadata.certificate_number}}</div>
+          <div class="page-number">Appendix</div>
+        </div>
+      </div>
+    </div>
+
+    {% for observation in observations %}
+    <div class="observation-card avoid-break">
+      <div class="observation-card-header">
+        <span class="observation-card-title">Observation Item</span>
+        <span class="observation-card-number">#{{forloop.index}}</span>
+      </div>
+      <div class="observation-card-body">
+        <div class="observation-classification">
+          {% if observation.defect_code == "C1" %}
+          <span class="classification-badge c1">C1 - DANGER PRESENT</span>
+          {% elsif observation.defect_code == "C2" %}
+          <span class="classification-badge c2">C2 - POTENTIALLY DANGEROUS</span>
+          {% elsif observation.defect_code == "C3" %}
+          <span class="classification-badge c3">C3 - IMPROVEMENT RECOMMENDED</span>
+          {% elsif observation.defect_code == "FI" %}
+          <span class="classification-badge fi">FI - FURTHER INVESTIGATION</span>
+          {% else %}
+          <span class="classification-badge">{{observation.defect_code}}</span>
+          {% endif %}
+          {% if observation.rectified %}<span style="display:inline-block; margin-left:8px; padding:5px 12px; border-radius:3px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; background:#dcfce7; color:#15803d; border:2px solid #86efac;">&#10003; Rectified</span>{% endif %}
+        </div>
+
+        <div class="observation-section">
+          <div class="observation-section-title">Location / Item Reference</div>
+          <div class="observation-section-content">{{observation.item}}</div>
+        </div>
+
+        {% if observation.photo_evidence.size > 0 %}
+        <div class="observation-section">
+          <div class="observation-section-title">Photographic Evidence</div>
+          <div class="photo-grid">
+            {% for img in observation.photo_evidence %}
+            <div class="photo-item">
+              <img src="{{img}}" />
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="observation-section">
+          <div class="observation-section-title">Description</div>
+          <div class="observation-section-content">{{observation.description}}</div>
+        </div>
+
+        <div class="observation-section">
+          <div class="observation-section-title">Recommendation</div>
+          <div class="observation-section-content recommendation">
+            {{observation.recommendation}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}
+  </body>
+</html>

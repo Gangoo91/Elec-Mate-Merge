@@ -118,6 +118,22 @@ export const useQuoteStorage = () => {
       // Project + CRM links — must round-trip here or saveQuote nulls them on edit
       project_id: row.project_id,
       customer_id: row.customer_id,
+      // Owner. Needed by anything that writes a related row scoped to the
+      // user — StartDateRequestPanel could not create its calendar event
+      // without it and failed silently on a guard clause.
+      user_id: row.user_id,
+      /*
+       * ELE-1513 — start date the client asked for on the acceptance page,
+       * and whether it has been confirmed into the diary yet.
+       *
+       * This mapper is a field-by-field pick rather than a spread, so a new
+       * column is invisible to the app until it is named here. Safe to add:
+       * `saveQuote`'s column list writes none of these three, so editing a
+       * quote cannot null them.
+       */
+      requested_start_date: row.requested_start_date,
+      requested_time_preference: row.requested_time_preference,
+      booked_slot_start: row.booked_slot_start,
     }),
     []
   );

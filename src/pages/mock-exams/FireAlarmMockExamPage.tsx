@@ -16,8 +16,8 @@ export default function FireAlarmMockExamPage() {
       questionBank={
         fireAlarmQuestionBank as unknown as Parameters<typeof PublicMockExamPage>[0]['questionBank']
       }
-      questionsPerExam={25}
-      timeLimitMinutes={30}
+      questionsPerExam={30}
+      timeLimitMinutes={35}
       passThreshold={70}
       breadcrumbLabel="Fire Alarm"
     />

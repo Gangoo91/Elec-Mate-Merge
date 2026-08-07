@@ -141,7 +141,7 @@ export const CashFlowAddSheet = ({ open, onOpenChange, type, onAdd }: CashFlowAd
                 type="checkbox"
                 checked={variable}
                 onChange={(e) => setVariable(e.target.checked)}
-                className="w-5 h-5 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                className="w-5 h-5 rounded border-white/20 bg-white/5 text-elec-yellow focus:ring-elec-yellow/60 focus:ring-offset-0"
               />
               <div>
                 <span className="text-sm font-medium text-white">Variable cost</span>

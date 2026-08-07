@@ -740,7 +740,7 @@ export default function Sub4() {
                 <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
               <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                BS EN 60617 drawing symbols
+                IEC 60617 drawing symbols
               </div>
             </button>
             <button

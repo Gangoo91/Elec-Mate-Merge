@@ -588,7 +588,7 @@ export default function ElectricianOxfordPage() {
     <GuideTemplate
       localArea="Oxford"
       title="Electrician in Oxford | Local Electrical Guide"
-      description="Complete guide for electricians working in Oxford. SSEN DNO, university college electrical work, listed building challenges, Cowley new builds…"
+      description="Complete guide for electricians working in Oxford. SSEN DNO, university college electrical work, listed building challenges, Cowley new builds."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

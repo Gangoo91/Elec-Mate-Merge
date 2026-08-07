@@ -16,7 +16,7 @@ export default function SmokeAlarmRegsPage() {
   return (
     <GuideTemplate
       title="Smoke Alarm Regulations UK 2026 | BS 5839-6"
-      description="Complete UK guide to smoke alarm regulations. Smoke and Carbon Monoxide Alarm Regulations 2022, BS 5839-6 grades and categories, LD1/LD2/LD3…"
+      description="Complete UK guide to smoke alarm regulations. Smoke and Carbon Monoxide Alarm Regulations 2022, BS 5839-6 grades and categories, LD1/LD2/LD3."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={[

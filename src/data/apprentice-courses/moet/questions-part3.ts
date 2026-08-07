@@ -401,7 +401,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'A schematic (circuit) diagram shows the electrical function and logical connections using standard symbols (BS EN 60617). It focuses on how the circuit works. A wiring diagram shows the physical layout, cable routes, terminal numbers, and actual connections between components. Both are needed for maintenance: the schematic for understanding circuit operation and fault diagnosis, the wiring diagram for physically locating and connecting components.',
+      'A schematic (circuit) diagram shows the electrical function and logical connections using standard symbols (IEC 60617). It focuses on how the circuit works. A wiring diagram shows the physical layout, cable routes, terminal numbers, and actual connections between components. Both are needed for maintenance: the schematic for understanding circuit operation and fault diagnosis, the wiring diagram for physically locating and connecting components.',
     section: 'Schematics',
     difficulty: 'basic',
     topic: 'Drawing Types',

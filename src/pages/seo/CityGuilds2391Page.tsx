@@ -4,6 +4,7 @@ import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { RevisionPlan } from '@/components/seo/RevisionPlan';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   GraduationCap,
@@ -612,6 +613,20 @@ export default function CityGuilds2391Page() {
             description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
+          />
+        </div>
+      </section>
+
+      {/* Revision plan. This page is the site's best-ranking result for
+          "2391 revision" (position 11.2) and until now offered the reader no
+          practice at all — see RevisionPlan for why a new page would have been
+          the wrong answer. */}
+      <section className="px-5 pb-4">
+        <div className="max-w-4xl mx-auto">
+          <RevisionPlan
+            examSlugs={['2391-inspection-testing']}
+            examNames={{ '2391-inspection-testing': 'C&G 2391 Inspection & Testing' }}
+            subject="the C&G 2391"
           />
         </div>
       </section>

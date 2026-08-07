@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-symbols-chart',
     title: 'Electrical Symbols Chart',
-    description: 'BS EN 60617 electrical symbols for circuit diagrams and installation drawings.',
+    description: 'IEC 60617 electrical symbols for circuit diagrams and installation drawings.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -579,7 +579,7 @@ export default function HowToWireAPlugPage() {
   return (
     <GuideTemplate
       title="How to Wire a Plug | Step-by-Step Guide UK"
-      description="Step-by-step guide to wiring a UK 13A plug. Wire colours explained (brown live, blue neutral, green/yellow earth), fuse selection (3A vs 13A)…"
+      description="Step-by-step guide to wiring a UK 13A plug. Wire colours explained (brown live, blue neutral, green/yellow earth), fuse selection (3A vs 13A)."
       datePublished="2025-10-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

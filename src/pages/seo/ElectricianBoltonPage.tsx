@@ -518,7 +518,7 @@ export default function ElectricianBoltonPage() {
       noindex={true}
       localArea="Bolton"
       title="Electrician in Bolton | Local Electricians 2026"
-      description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires…"
+      description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

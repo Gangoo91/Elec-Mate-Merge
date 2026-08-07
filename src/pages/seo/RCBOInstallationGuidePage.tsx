@@ -630,8 +630,8 @@ const sections = [
 export default function RCBOInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="RCBO Installation Guide — Types, Costs, and BS 7671"
-      description="Complete guide to RCBO installation for UK electricians. Covers Type A, B, and F RCBOs, nuisance tripping on LED circuits, consumer unit compatibility…"
+      title="How to Wire an RCBO: 4 Steps + Neutral Rule"
+      description="Prove dead, clip the RCBO to the busbar, take the circuit neutral into the RCBO's own terminal, not the neutral bar, then verify tripping within 300ms."
       datePublished="2024-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

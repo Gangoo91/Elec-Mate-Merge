@@ -11,7 +11,6 @@ import {
   Info,
   Lightbulb,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -19,11 +18,14 @@ import {
   CalculatorInput,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 /**
  * Round a price UP to the next step. This used to be `Math.round`, which on a
  * £5 step pulled a £62 minimum down to £60 — a "minimum charge" that is £2 below
@@ -49,8 +51,14 @@ const MinimumChargeCalculator: React.FC = () => {
   const [vatRegistered, setVatRegistered] = React.useState(true);
   const [vatRate, setVatRate] = React.useState('20');
   const [rounding, setRounding] = React.useState('5');
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = React.useState(false);
+  const [calculated, setCalculated] = React.useState(true);
   const [showBreakdown, setShowBreakdown] = React.useState(false);
   const [showReference, setShowReference] = React.useState(false);
 
@@ -109,7 +117,6 @@ const MinimumChargeCalculator: React.FC = () => {
     setVatRegistered(true);
     setVatRate('20');
     setRounding('5');
-    setCalculated(false);
   };
 
   const isValid = hourlyCostNum > 0;
@@ -125,31 +132,13 @@ const MinimumChargeCalculator: React.FC = () => {
         <link rel="canonical" href="/electrician/business-development/tools/minimum-charge" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <PoundSterling
-                className="h-6 w-6 sm:h-7 sm:w-7"
-                style={{ color: config.gradientFrom }}
-              />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Minimum Charge Calculator
-              </h1>
-              <p className="text-sm text-white">Set profitable call-out pricing</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+        <HubMasthead
+          section="Business"
+          title="Minimum Charge Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -158,10 +147,7 @@ const MinimumChargeCalculator: React.FC = () => {
           badge="Pricing"
         >
           {/* Time Costs Section */}
-          <div className="flex items-center gap-2 mb-3">
-            <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Time Costs</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Time Costs</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -172,7 +158,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={travelMins}
               onChange={(val) => {
                 setTravelMins(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 30"
               hint="One way — the return leg is added for you"
@@ -186,7 +171,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={adminMins}
               onChange={(val) => {
                 setAdminMins(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 15"
               hint="Quotes, invoicing, calls"
@@ -194,10 +178,7 @@ const MinimumChargeCalculator: React.FC = () => {
           </div>
 
           {/* Costs Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Your Costs & Overheads</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Your Costs & Overheads</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -208,7 +189,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={hourlyCost}
               onChange={(val) => {
                 setHourlyCost(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 30"
               hint="Loaded cost per BILLABLE hour (Staff Cost Calculator)"
@@ -222,7 +202,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={overheadHr}
               onChange={(val) => {
                 setOverheadHr(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 10"
               hint="Insurance, tools, office"
@@ -230,10 +209,7 @@ const MinimumChargeCalculator: React.FC = () => {
           </div>
 
           {/* Pricing Strategy Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Target className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Pricing Strategy</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Pricing Strategy</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -244,7 +220,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={targetMargin}
               onChange={(val) => {
                 setTargetMargin(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 20"
               hint="Share of the price, applied to every hour"
@@ -258,7 +233,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={firstHourPremium}
               onChange={(val) => {
                 setFirstHourPremium(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 25"
               hint="Short-job surcharge on top of margin"
@@ -272,7 +246,6 @@ const MinimumChargeCalculator: React.FC = () => {
               value={rounding}
               onChange={(val) => {
                 setRounding(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 5"
               hint="Rounded up — never below your minimum"
@@ -287,7 +260,6 @@ const MinimumChargeCalculator: React.FC = () => {
                 <button
                   onClick={() => {
                     setVatRegistered(true);
-                    setCalculated(false);
                   }}
                   className={cn(
                     'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -306,7 +278,6 @@ const MinimumChargeCalculator: React.FC = () => {
                 <button
                   onClick={() => {
                     setVatRegistered(false);
-                    setCalculated(false);
                   }}
                   className={cn(
                     'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -334,7 +305,6 @@ const MinimumChargeCalculator: React.FC = () => {
                 value={vatRate}
                 onChange={(val) => {
                   setVatRate(val);
-                  setCalculated(false);
                 }}
                 placeholder="e.g., 20"
                 hint="20% standard, 5% reduced"
@@ -376,19 +346,13 @@ const MinimumChargeCalculator: React.FC = () => {
           <div className="space-y-4 animate-fade-in">
             {/* First Hour Pricing */}
             <CalculatorResult category="business">
-              <div className="text-center pb-4 border-b border-white/10">
-                <p className="text-sm text-white mb-1">First Hour Price</p>
-                <div
-                  className="text-4xl font-bold"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {currency(vatRegistered ? firstHourIncVat : firstHourRounded)}
-                </div>
+              <ResultHeadline
+                label="Minimum call-out charge"
+                value={currency(vatRegistered ? firstHourIncVat : firstHourRounded)}
+                aside={vatRegistered ? 'inc VAT' : 'ex VAT'}
+                caption="Below this a short job costs you money once travel and admin are paid for."
+              />
+              <div className="hidden">
                 <p className="text-xs text-white mt-1">
                   {vatRegistered ? 'inc VAT' : 'ex VAT'} - Your minimum call-out charge
                 </p>
@@ -412,10 +376,7 @@ const MinimumChargeCalculator: React.FC = () => {
 
             {/* Example Quote */}
             <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-amber-400">Example Quote</span>
-              </div>
+              <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Example Quote</h3>
               <p className="text-sm text-amber-200/80">
                 <strong className="text-amber-300">{exampleJobHours}-hour job:</strong>
                 <br />
@@ -438,11 +399,11 @@ const MinimumChargeCalculator: React.FC = () => {
 
             {/* Calculation Breakdown */}
             <Collapsible open={showBreakdown} onOpenChange={setShowBreakdown}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Calculation Breakdown
                     </span>
                   </div>
@@ -502,9 +463,9 @@ const MinimumChargeCalculator: React.FC = () => {
                             + {currency(firstHourIncVat - firstHourRounded)}
                           </span>
                         </div>
-                        <div className="flex justify-between items-center py-2 font-medium bg-blue-500/10 px-2 rounded">
-                          <span className="text-blue-300">= First Hour (inc VAT)</span>
-                          <span className="text-blue-400 font-mono text-base">
+                        <div className="flex justify-between items-center py-2 font-medium bg-white/[0.04] px-2 rounded">
+                          <span className="text-elec-yellow">= First Hour (inc VAT)</span>
+                          <span className="text-elec-yellow font-mono text-base">
                             {currency(firstHourIncVat)}
                           </span>
                         </div>
@@ -520,7 +481,7 @@ const MinimumChargeCalculator: React.FC = () => {
         {/* Prompt to Calculate */}
         {!calculated && (
           <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
-            <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+            <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
             <h3 className="text-white text-lg font-semibold mb-2">Ready to Calculate</h3>
             <p className="text-white text-sm">
               Enter your time costs and business overheads above, then click "Calculate Pricing" to

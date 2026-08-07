@@ -607,7 +607,7 @@ export default function ElectricalFirePreventionPage() {
   return (
     <GuideTemplate
       title="Electrical Fire Prevention UK | AFDDs, Consumer Units,"
-      description="Complete guide to electrical fire prevention in UK homes. UK statistics (~20,000 electrical fires/year), arc fault detection devices (AFDDs)…"
+      description="Complete guide to electrical fire prevention in UK homes. UK statistics (~20,000 electrical fires/year), arc fault detection devices (AFDDs)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

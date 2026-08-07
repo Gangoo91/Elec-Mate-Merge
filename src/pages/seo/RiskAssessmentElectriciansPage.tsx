@@ -724,7 +724,7 @@ export default function RiskAssessmentElectriciansPage() {
   return (
     <GuideTemplate
       title="Risk Assessment for Electricians | Free Template Guide"
-      description="Complete guide to risk assessments for electricians. HSE 5-step process, electrical-specific hazards, template structure…"
+      description="Complete guide to risk assessments for electricians. HSE 5-step process, electrical-specific hazards, template structure."
       datePublished="2025-03-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

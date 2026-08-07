@@ -609,7 +609,7 @@ export default function DataCablingInstallationPage() {
   return (
     <GuideTemplate
       title="Data Cabling Installation UK | CAT6 & Network Wiring Guide"
-      description="Data cabling installation guide for the UK. CAT5e vs CAT6 vs CAT6A explained, FLUKE cable certification, patch panel installation…"
+      description="Data cabling installation guide for the UK. CAT5e vs CAT6 vs CAT6A explained, FLUKE cable certification, patch panel installation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

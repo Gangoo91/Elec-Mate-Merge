@@ -404,7 +404,7 @@ export default function ElectricianCambridgeshirePage() {
   return (
     <GuideTemplate
       title="Electrician Cambridgeshire — Find Registered Electricians"
-      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Cambridgeshire including Cambridge, Peterborough, Ely, St Ives, March, Huntingdon…"
+      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Cambridgeshire including Cambridge, Peterborough, Ely, St Ives, March, Huntingdon."
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -573,7 +573,7 @@ export default function CableTrayInstallationPage() {
   return (
     <GuideTemplate
       title="Cable Tray Installation UK | Commercial & Industrial Cable"
-      description="Complete UK guide to cable tray installation. Types (perforated, solid bottom, ladder, wire mesh), materials (hot-dip galvanised, stainless steel, PVC)…"
+      description="Complete UK guide to cable tray installation. Types (perforated, solid bottom, ladder, wire mesh), materials (hot-dip galvanised, stainless steel, PVC)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

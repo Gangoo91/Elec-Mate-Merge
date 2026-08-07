@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Employed electricians in Edinburgh earn £37,000 to £50,000 per year at Approved Electrician grade under the JIB for the Electrical Contracting Industry in Scotland (JIB-SECTA). Edinburgh rates are typically 5 to 12% above the Scottish national baseline due to high city demand.',
   'The Scottish & Northern Ireland Joint Training Limited (SECTT) delivers electrical apprenticeships in Scotland, including Edinburgh, using the same four-year Electrotechnical framework as JTL in England — though with distinct Scottish qualifications (SVQ Level 3).',
   "Self-employed electricians in Edinburgh charge £400 to £700 per day for general commercial work, rising to £650 to £950 for specialist work in Edinburgh's government, defence, and research sectors.",
-  'The JIB-SECTA 2024/2025 Approved Electrician rate is £21.27 per hour — slightly below the England JIB rate of £21.81 but Edinburgh employers regularly pay a city premium of 10 to 15% above the SECTA minimum.',
+  'The JIB-SECTA 2024/2025 Approved Electrician rate is £21.27 per hour. For comparison, the England JIB Approved Electrician rate is £20.08 per hour (Transport Provided, effective 5 January 2026). Edinburgh employers regularly pay a city premium of 10 to 15% above the SECTA minimum.',
   'Scotland has its own approach to employer pension contributions through the JIB-SECTA Pension and Death Benefit Scheme. Employer contributions of 5 to 6% are standard, with additional holiday pay entitlements of 24 days per year for JIB-SECTA members.',
 ];
 
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'How do JIB rates work in Scotland?',
     answer:
-      "Scotland has its own Joint Industry Board — the JIB for the Electrical Contracting Industry in Scotland (JIB-SECTA), formerly the Scottish JIB. JIB-SECTA sets minimum pay rates for electricians working for member electrical contractors in Scotland. The 2024/2025 Approved Electrician rate under JIB-SECTA is £21.27 per hour — fractionally below the England JIB rate of £21.81 per hour, but Edinburgh's labour market typically delivers £23 to £26 per hour in practice. JIB-SECTA covers holiday pay, pension, welfare, and training standards as separate but parallel arrangements to the England JIB.",
+      "Scotland has its own Joint Industry Board — the JIB for the Electrical Contracting Industry in Scotland (JIB-SECTA), formerly the Scottish JIB. JIB-SECTA sets minimum pay rates for electricians working for member electrical contractors in Scotland. The 2024/2025 Approved Electrician rate under JIB-SECTA is £21.27 per hour, compared with the England JIB Approved Electrician rate of £20.08 per hour (Transport Provided, effective 5 January 2026). Edinburgh's labour market typically delivers £23 to £26 per hour in practice. JIB-SECTA covers holiday pay, pension, welfare, and training standards as separate but parallel arrangements to the England JIB.",
   },
   {
     question: 'What is SECTT and how does it relate to electrical apprenticeships in Edinburgh?',
@@ -540,7 +540,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>8 to 12 years</strong> — Senior Electrician / Working Foreman. £48,000 to
+                <strong>8 to 12 years</strong> — Working Foreman. £48,000 to
                 £58,000. Supervisory responsibility, client liaison, and programme management on
                 Edinburgh's commercial and public sector projects.
               </span>
@@ -621,7 +621,7 @@ export default function ElectricianSalaryEdinburghPage() {
   return (
     <GuideTemplate
       title="Electrician Salary Edinburgh 2025 | Electrician Pay Scotland"
-      description="Electrician salary guide for Edinburgh 2025. JIB-SECTA Scotland rates, SECTT apprenticeships, employed vs self-employed earnings, specialist uplifts…"
+      description="Electrician salary guide for Edinburgh 2025. JIB-SECTA Scotland rates, SECTT apprenticeships, employed vs self-employed earnings, specialist uplifts."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

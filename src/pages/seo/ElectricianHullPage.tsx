@@ -454,7 +454,7 @@ export default function ElectricianHullPage() {
       noindex={true}
       localArea="Hull"
       title="Electrician in Hull | Local Electricians 2026"
-      description="Find qualified electricians in Hull. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
+      description="Find qualified electricians in Hull. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

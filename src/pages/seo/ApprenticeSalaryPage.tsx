@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Is the apprentice electrician salary the same across the UK?',
     answer:
-      'No, apprentice electrician pay varies significantly across the UK. London and the South East typically offer the highest rates due to higher living costs and strong demand for electricians. JIB rates include London and South East weighting allowances. Outside London, rates are generally lower but so are living costs. Scotland and Wales have similar rates to the English Midlands and North. Northern Ireland operates under separate employment legislation but follows broadly similar apprenticeship structures. As a general guide, a first-year apprentice with a JIB-registered employer in London earns £9.14 per hour (the 2026 JIB London Stage 1 rate), while the statutory floor elsewhere is £8.00 per hour — with many regional employers paying somewhere between the two. The difference narrows as you qualify — a qualified electrician in most parts of the UK can earn a comfortable living regardless of location, and self-employed electricians can choose to travel to higher-paying areas for specific projects.',
+      'No, apprentice electrician pay varies significantly across the UK. London and the South East typically offer the highest rates due to higher living costs and strong demand for electricians. The JIB operates a separate, higher London rate area on top of the national standard rates. Outside that area, rates are generally lower but so are living costs. Scotland and Wales have similar rates to the English Midlands and North. Northern Ireland operates under separate employment legislation but follows broadly similar apprenticeship structures. As a general guide, a first-year apprentice with a JIB-registered employer in London earns £9.14 per hour (the 2026 JIB London Stage 1 rate), while the statutory floor elsewhere is £8.00 per hour — with many regional employers paying somewhere between the two. The difference narrows as you qualify — a qualified electrician in most parts of the UK can earn a comfortable living regardless of location, and self-employed electricians can choose to travel to higher-paying areas for specific projects.',
   },
   {
     question: 'Does the 18th Edition exam now cover the A4:2026 changes?',
@@ -194,8 +194,9 @@ const sections = [
           apprenticeship. Under the JIB Industrial Determination, from 5 January 2026 the national
           standard rates are: Stage 1 £8.16 per hour, Stage 2 £10.60, Stage 3 £13.05, and Stage 4
           £14.03. Work falling within the JIB London rate area pays more: £9.14, £11.88, £14.62 and
-          £15.72 respectively. Stage rises are linked to passing your qualifications as well as time
-          served.
+          £15.72 respectively. The JIB grades apprentices by stage rather than by year, and stage
+          rises are linked to passing your qualifications as well as time served. Each stage rate is
+          a single rate covering all your hours, including off-the-job training days.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">JIB apprentice stage rates (2026)</h3>
@@ -203,23 +204,21 @@ const sections = [
             National standard hourly rates from the JIB Industrial Determination, effective 5
             January 2026. Work in the JIB London rate area pays a higher rate (shown in brackets).
           </p>
-          <div className="grid grid-cols-3 gap-2 text-sm">
+          <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Stage</div>
-            <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Year</div>
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
               £/hr (London)
             </div>
             {(
               [
-                ['Stage 1', 'Year 1', '£8.16 (£9.14)'],
-                ['Stage 2', 'Year 2', '£10.60 (£11.88)'],
-                ['Stage 3', 'Year 3', '£13.05 (£14.62)'],
-                ['Stage 4', 'Year 4', '£14.03 (£15.72)'],
-              ] as Array<[string, string, string]>
-            ).map(([stage, year, rate]) => (
+                ['Stage 1', '£8.16 (£9.14)'],
+                ['Stage 2', '£10.60 (£11.88)'],
+                ['Stage 3', '£13.05 (£14.62)'],
+                ['Stage 4', '£14.03 (£15.72)'],
+              ] as Array<[string, string]>
+            ).map(([stage, rate]) => (
               <Fragment key={stage}>
                 <div className="p-2 rounded bg-white/[0.04] text-center text-white">{stage}</div>
-                <div className="p-2 rounded bg-white/[0.04] text-center text-white">{year}</div>
                 <div className="p-2 rounded bg-white/[0.04] text-center text-yellow-400 font-bold">
                   {rate}
                 </div>
@@ -265,7 +264,7 @@ const sections = [
           to your gross — approximately £285 to £300 per week.
         </p>
         <p>
-          <strong>Year 1 at the JIB London rate (£9.14/hr):</strong> Gross weekly pay of
+          <strong>Year 1 at the JIB London Stage 1 rate (£9.14/hr):</strong> Gross weekly pay of
           approximately £343. After minimal tax and NI deductions, take-home is approximately £320
           to £340 per week. This is a meaningful difference from the minimum rate and illustrates
           why JIB employers are attractive.
@@ -276,10 +275,11 @@ const sections = [
           this stage you are earning a reasonable wage and contributing meaningfully on site.
         </p>
         <p>
-          <strong>Year 4 or final year (approximately £15.50/hr):</strong> Gross weekly pay of
-          approximately £581. Take-home after deductions is approximately £480 to £510 per week.
-          This is approaching the wage of a newly qualified electrician, reflecting your
-          near-complete training.
+          <strong>Year 4 at the JIB Stage 4 rate (£14.03/hr):</strong> Gross weekly pay of
+          approximately £526. Take-home after deductions is approximately £440 to £460 per week. In
+          the JIB London rate area the Stage 4 rate is £15.72 per hour, giving gross weekly pay of
+          approximately £590. This is approaching the wage of a newly qualified electrician,
+          reflecting your near-complete training.
         </p>
         <p>
           These figures assume standard hours with no overtime. Overtime at enhanced rates can add
@@ -536,10 +536,10 @@ const sections = [
 export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Salary UK 2026: Year 1–4 Real Rates"
-      description="What apprentice electricians earn in each year of the apprenticeship: Year 1 to 4 hourly rates, JIB Stage 1-4 graded rates for 2026, and weekly take-home pay."
+      title="Apprentice Electrician Pay: JIB £8.16–£14.03/hr"
+      description="JIB apprentice rates from 5 Jan 2026: Stage 1 £8.16, Stage 2 £10.60, Stage 3 £13.05, Stage 4 £14.03/hr (London £9.14–£15.72). Minimum wage £8.00/hr."
       datePublished="2025-09-10"
-      dateModified="2026-07-02"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

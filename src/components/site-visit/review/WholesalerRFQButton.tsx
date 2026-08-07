@@ -47,7 +47,7 @@ function buildRfqText(materials: MaterialItem[], visit: SiteVisit, companyName: 
 }
 
 const fieldCls =
-  'h-10 rounded-lg border border-white/[0.12] bg-white/[0.05] px-3 text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 touch-manipulation';
+  'h-10 rounded-lg border border-white/[0.12] bg-white/[0.05] px-3 text-[13px] text-white placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 touch-manipulation';
 
 export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonProps) => {
   const { toast } = useToast();
@@ -137,11 +137,11 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="bottom"
-          className="flex h-[88vh] flex-col overflow-hidden rounded-t-2xl border-white/[0.08] bg-elec-dark p-0 lg:left-64"
+          className="flex h-[85vh] flex-col overflow-hidden rounded-t-2xl border-white/[0.08] bg-elec-dark p-0 lg:left-64"
         >
           <SheetHeader className="border-b border-white/[0.06] px-5 pb-3 pt-5">
             <SheetTitle className="text-left text-white">Request wholesaler quotes</SheetTitle>
-            <p className="text-left text-[12px] text-white/60">
+            <p className="text-left text-[12px] text-white">
               {itemCount} item{itemCount !== 1 ? 's' : ''} · price-free, sent BCC so they quote
               their best
             </p>
@@ -150,7 +150,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
           <div className="flex-1 space-y-5 overflow-y-auto px-5 py-4">
             {/* Wholesaler picker */}
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/55">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white">
                 Send to ({selectedEmails.length} selected)
               </p>
               <div className="space-y-1.5">
@@ -181,7 +181,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
                             {c.name || c.email}
                           </span>
                           {c.name && (
-                            <span className="block truncate text-[11px] text-white/50">
+                            <span className="block truncate text-[11px] text-white">
                               {c.email}
                             </span>
                           )}
@@ -198,7 +198,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
                           deleteContact(c.id);
                         }}
                         aria-label="Remove wholesaler"
-                        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-white/40 hover:text-red-400 active:bg-white/[0.06] touch-manipulation"
+                        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-white hover:text-red-400 active:bg-white/[0.06] touch-manipulation"
                       >
                         <X className="h-4 w-4" />
                       </button>
@@ -206,7 +206,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
                   );
                 })}
                 {contacts.length === 0 && (
-                  <p className="text-[12px] text-white/50">
+                  <p className="text-[12px] text-white">
                     No wholesalers saved yet — add your merchant reps below.
                   </p>
                 )}
@@ -234,7 +234,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
                   onClick={handleAdd}
                   disabled={adding || !newEmail.trim()}
                   variant="outline"
-                  className="h-10 touch-manipulation rounded-lg border-white/[0.15] bg-white/[0.04] px-3 text-[13px] text-white active:scale-[0.98] disabled:opacity-50"
+                  className="h-11 touch-manipulation rounded-lg border-white/[0.15] bg-white/[0.04] px-3 text-[13px] text-white active:scale-[0.98] disabled:opacity-50"
                 >
                   <Plus className="mr-1 h-4 w-4" />
                   Add
@@ -244,10 +244,10 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
 
             {/* RFQ preview */}
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/55">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white">
                 Preview
               </p>
-              <pre className="whitespace-pre-wrap break-words rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5 font-sans text-[12.5px] leading-relaxed text-white/85">
+              <pre className="whitespace-pre-wrap break-words rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5 font-sans text-[12.5px] leading-relaxed text-white">
                 {rfqText}
               </pre>
             </div>

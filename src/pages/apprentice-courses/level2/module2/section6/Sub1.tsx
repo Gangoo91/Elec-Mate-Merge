@@ -393,7 +393,7 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS EN 60617 / IEC 60417 — Graphical symbols for diagrams"
+            source="IEC 60617 / IEC 60417 — Graphical symbols for diagrams"
             clause="Standard graphical symbols are used in electrotechnical documentation to represent components, equipment and circuit elements. The rectangular box symbol denotes a resistor; the zig-zag form remains acceptable in older drawings but the rectangle is preferred in current standards."
             meaning={
               <>
@@ -402,7 +402,7 @@ export default function Sub1() {
                 and you won’t freeze when you open a manual translated from the wrong continent.
               </>
             }
-            cite="Verbatim wording paraphrased from BS EN 60617 — see BSI for the full symbol library."
+            cite="Verbatim wording paraphrased from IEC 60617 — see BSI for the full symbol library."
           />
 
           <InlineCheck

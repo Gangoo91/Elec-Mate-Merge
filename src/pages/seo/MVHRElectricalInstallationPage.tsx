@@ -581,7 +581,7 @@ export default function MVHRElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="MVHR Electrical Installation | Ventilation Wiring Guide"
-      description="Complete guide to MVHR electrical installation in the UK. Dedicated circuit, boost switch wiring, summer bypass controls, condensate pump…"
+      description="Complete guide to MVHR electrical installation in the UK. Dedicated circuit, boost switch wiring, summer bypass controls, condensate pump."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

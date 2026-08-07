@@ -625,7 +625,7 @@ export default function PLCElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="PLC Electrical Installation UK | Programmable Logic"
-      description="Complete guide to PLC electrical installation in the UK. Panel design, 24 VDC input wiring, relay and transistor outputs, earthing for noise immunity…"
+      description="Complete guide to PLC electrical installation in the UK. Panel design, 24 VDC input wiring, relay and transistor outputs, earthing for noise immunity."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

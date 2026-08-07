@@ -703,7 +703,7 @@ export default function EICRForLandlordsPage() {
   return (
     <GuideTemplate
       title="EICR for Landlords 2026 | Legal Requirements UK"
-      description="Complete guide to EICR requirements for UK landlords. Legal obligations under Electrical Safety Standards 2020, penalties up to £30,000…"
+      description="Complete guide to EICR requirements for UK landlords. Legal obligations under Electrical Safety Standards 2020, penalties up to £30,000."
       datePublished="2025-01-10"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

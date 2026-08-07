@@ -647,7 +647,7 @@ export default function ApprenticeRightsPayPage() {
   return (
     <GuideTemplate
       title="Apprentice Rights & Pay UK 2026 | Know Your Entitlements"
-      description="Complete guide to apprentice rights and pay in the UK. National Minimum Wage rates, holiday entitlement, sick pay, working hours, redundancy rights…"
+      description="Complete guide to apprentice rights and pay in the UK. National Minimum Wage rates, holiday entitlement, sick pay, working hours, redundancy rights."
       datePublished="2025-12-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

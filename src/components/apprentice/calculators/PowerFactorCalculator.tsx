@@ -1,21 +1,18 @@
-import { Info, BookOpen, TrendingDown, ChevronDown } from 'lucide-react';
 import { useCalculator } from './power-factor/useCalculator';
 import {
   CalculatorCard,
-  CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
+  CalculatorResult,
+  ResultHeadline,
   ResultValue,
   ResultsGrid,
   CalculatorEditorial,
-  CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { powerFactorContent } from './content/power-factor';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 const PowerFactorCalculator = () => {
   const {
@@ -44,10 +41,6 @@ const PowerFactorCalculator = () => {
     currentAfterCorrection,
   } = useCalculator();
 
-  const [showGuidance, setShowGuidance] = useState(false);
-  const [showBsRegs, setShowBsRegs] = useState(false);
-  const config = CALCULATOR_CONFIG['power'];
-
   const getResultStatus = () => {
     if (powerFactor === null) return { text: 'Enter values to calculate', color: 'text-white' };
     const pf = parseFloat(powerFactor);
@@ -71,6 +64,89 @@ const PowerFactorCalculator = () => {
   };
 
   const status = getResultStatus();
+  const pf = powerFactor === null ? null : parseFloat(powerFactor);
+  const rating = pf === null ? '' : pf >= 0.95 ? 'Excellent' : pf >= 0.85 ? 'Good' : 'Poor';
+  const methodLabel =
+    calculationMethod === 'power'
+      ? 'Power values'
+      : `V/I (${phases === 'three' ? 'three-phase' : 'single-phase'})`;
+  const showCorrection = Boolean(capacitorKVAr && targetPF && pfType === 'lagging');
+
+  /*
+    The answer, rebuilt on the shared result kit.
+
+    It was a centred 4xl figure painted with `bg-clip-text` over the category
+    gradient, above a Method/Efficiency box whose labels sat hard left and values
+    hard right — on a wide window that is a label and a value separated by more
+    than a thousand pixels of nothing. Everything else on the page is left
+    aligned, so the one number you came for was the only centred thing on it.
+
+    Now: one headline, then the supporting figures in a 2-up grid. A poor power
+    factor renders red rather than volt — volt is the good answer throughout the
+    app, and showing 0.107 in the same colour as 0.99 is worse than no colour.
+  */
+  const resultPane =
+    pf === null ? null : (
+      <CalculatorResult category="power" variant={pf < 0.85 ? 'warning' : 'success'}>
+        <ResultHeadline
+          label="Power factor"
+          value={pf.toFixed(3)}
+          caption={status.text}
+          tone={pf < 0.85 ? 'negative' : 'default'}
+        />
+
+        <ResultsGrid columns={2}>
+          <ResultValue label="Efficiency" value={rating} category="power" size="sm" />
+          <ResultValue label="Method" value={methodLabel} category="power" size="sm" />
+          {showCorrection && (
+            <ResultValue
+              label="Capacitor needed"
+              value={capacitorKVAr}
+              unit="kVAr"
+              category="power"
+              size="sm"
+            />
+          )}
+          {showCorrection && currentAfterCorrection && (
+            <ResultValue
+              label="Current after correction"
+              value={currentAfterCorrection}
+              unit="A"
+              category="power"
+              size="sm"
+            />
+          )}
+        </ResultsGrid>
+
+        {capacitorKVAr && currentAfterCorrection && parseFloat(current) > 0 && (
+          <p className="text-[12.5px] leading-relaxed text-white">
+            Correction cuts the current by{' '}
+            {(
+              ((parseFloat(current) - parseFloat(currentAfterCorrection)) / parseFloat(current)) *
+              100
+            ).toFixed(1)}
+            %.
+          </p>
+        )}
+
+        {/* The kVAr figure was previously given with no mention of stored charge.
+            Reg 416.2.5 requires a warning label where a capacitor that may retain a
+            dangerous charge is behind a barrier or in an enclosure; Reg 559.7
+            requires discharge resistors over 0.5 uF and compliance with BS EN 61048. */}
+        {showCorrection && (
+          <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-3">
+            <p className="text-[12.5px] leading-relaxed text-white">
+              <strong>Before you fit it</strong> — a capacitor can hold a dangerous charge after
+              switch-off. Reg 416.2.5 requires a warning label where such a capacitor is behind a
+              barrier or in an enclosure, and Reg 559.7 requires discharge resistors for
+              compensation capacitors over 0.5 µF (to BS EN 61048). Where the installation has
+              significant harmonic content, capacitor banks can resonate with the supply inductance
+              — that needs a specialist harmonic study, which this calculator does not do.
+            </p>
+          </div>
+        )}
+      </CalculatorResult>
+    );
 
   return (
     <CalculatorCard
@@ -78,395 +154,130 @@ const PowerFactorCalculator = () => {
       title="Power Factor Calculator"
       description="Calculate power factor from power values or electrical parameters"
     >
-      {/* Calculation Method Selector */}
-      <CalculatorSelect
-        label="Calculation Method"
-        value={calculationMethod}
-        onChange={(value) => setCalculationMethod(value as 'power' | 'currentVoltage')}
-        options={[
-          { value: 'power', label: 'From Power Values' },
-          { value: 'currentVoltage', label: 'From Electrical Parameters' },
-        ]}
-      />
+      <CalculatorPanes
+        result={resultPane}
+        placeholder="Enter your values and press Calculate — the power factor, efficiency rating and any correction figure appear here."
+        footer={<CalculatorEditorial content={powerFactorContent} category="power" />}
+        form={
+          <>
+            {/* Calculation Method Selector */}
+            <CalculatorSelect
+              label="Calculation Method"
+              value={calculationMethod}
+              onChange={(value) => setCalculationMethod(value as 'power' | 'currentVoltage')}
+              options={[
+                { value: 'power', label: 'From Power Values' },
+                { value: 'currentVoltage', label: 'From Electrical Parameters' },
+              ]}
+            />
 
-      {/* Input Fields based on method */}
-      {calculationMethod === 'power' ? (
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Active Power"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={activePower}
-            onChange={setActivePower}
-            placeholder="e.g., 2000"
-            error={errors.activePower}
-          />
-          <CalculatorInput
-            label="Apparent Power"
-            unit="VA"
-            type="text"
-            inputMode="decimal"
-            value={apparentPower}
-            onChange={setApparentPower}
-            placeholder="e.g., 2300"
-            error={errors.apparentPower}
-          />
-        </CalculatorInputGrid>
-      ) : (
-        <>
-          {/* Apparent power from V and I depends on the supply arrangement:
-              single-phase S = V x I; three-phase S = sqrt(3) x V(line) x I(line). */}
-          <CalculatorSelect
-            label="Supply"
-            value={phases}
-            onChange={(value) => setPhases(value as 'single' | 'three')}
-            options={[
-              { value: 'single', label: 'Single-phase (S = V × I)' },
-              { value: 'three', label: 'Three-phase (S = √3 × V × I)' },
-            ]}
-          />
-          <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Voltage"
-            unit="V"
-            type="text"
-            inputMode="decimal"
-            value={voltage}
-            onChange={setVoltage}
-            placeholder="e.g., 230"
-            error={errors.voltage}
-          />
-          <CalculatorInput
-            label="Current"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={current}
-            onChange={setCurrent}
-            placeholder="e.g., 10"
-            error={errors.current}
-          />
-          <CalculatorInput
-            label="Active Power"
-            unit="W"
-            type="text"
-            inputMode="decimal"
-            value={activePower}
-            onChange={setActivePower}
-            placeholder="e.g., 2000"
-            error={errors.activePower}
-            className="sm:col-span-2"
-          />
-          </CalculatorInputGrid>
-        </>
-      )}
-
-      {/* PF Type and Target */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Power Factor Type"
-          value={pfType}
-          onChange={setPfType}
-          options={[
-            { value: 'lagging', label: 'Lagging (Inductive loads)' },
-            { value: 'leading', label: 'Leading (Capacitive loads)' },
-          ]}
-        />
-        {pfType === 'lagging' && (
-          <CalculatorInput
-            label="Target PF for Correction"
-            type="text"
-            inputMode="decimal"
-            value={targetPF}
-            onChange={setTargetPF}
-            placeholder="0.95"
-            hint="Typical target: 0.95"
-          />
-        )}
-      </CalculatorInputGrid>
-
-      {/* Action Buttons */}
-      <CalculatorActions
-        category="power"
-        onCalculate={calculatePowerFactor}
-        onReset={resetCalculator}
-        isDisabled={!hasValidInputs()}
-      />
-
-      {/* Results */}
-      {powerFactor && (
-        <>
-          <CalculatorDivider category="power" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Status Chip */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
-              <span className="text-xs font-semibold text-amber-300">PF</span>
-              <span className={cn('text-sm font-semibold', status.color)}>{status.text}</span>
-            </div>
-
-            {/* Hero — Power Factor */}
-            <div className="text-center py-3">
-              <p className="text-sm text-white mb-1">Power Factor</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {parseFloat(powerFactor).toFixed(3)}
-              </div>
-            </div>
-
-            {/* Method & Efficiency */}
-            <div className="rounded-xl p-3 bg-white/[0.04] space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-white">Method:</span>
-                <span className="text-white">
-                  {calculationMethod === 'power'
-                    ? 'Power Values'
-                    : `V/I Parameters (${phases === 'three' ? 'three-phase' : 'single-phase'})`}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-white">Efficiency Rating:</span>
-                <span
-                  className={
-                    parseFloat(powerFactor) >= 0.95
-                      ? 'text-green-400'
-                      : parseFloat(powerFactor) >= 0.85
-                        ? 'text-amber-400'
-                        : 'text-red-400'
-                  }
-                >
-                  {parseFloat(powerFactor) >= 0.95
-                    ? 'Excellent'
-                    : parseFloat(powerFactor) >= 0.85
-                      ? 'Good'
-                      : 'Poor'}
-                </span>
-              </div>
-            </div>
-
-            {/* Correction Results */}
-            {capacitorKVAr && targetPF && pfType === 'lagging' && (
-              <ResultsGrid columns={2}>
-                <ResultValue
-                  label="Capacitor Needed"
-                  value={capacitorKVAr}
-                  unit="kVAr"
-                  category="power"
-                  size="sm"
+            {/* Input Fields based on method */}
+            {calculationMethod === 'power' ? (
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Active Power"
+                  unit="W"
+                  type="text"
+                  inputMode="decimal"
+                  value={activePower}
+                  onChange={setActivePower}
+                  placeholder="e.g., 2000"
+                  error={errors.activePower}
                 />
-                {currentAfterCorrection && (
-                  <ResultValue
-                    label="Current After Correction"
-                    value={currentAfterCorrection}
-                    unit="A"
-                    category="power"
-                    size="sm"
+                <CalculatorInput
+                  label="Apparent Power"
+                  unit="VA"
+                  type="text"
+                  inputMode="decimal"
+                  value={apparentPower}
+                  onChange={setApparentPower}
+                  placeholder="e.g., 2300"
+                  error={errors.apparentPower}
+                />
+              </CalculatorInputGrid>
+            ) : (
+              <>
+                {/* Apparent power from V and I depends on the supply arrangement:
+              single-phase S = V x I; three-phase S = sqrt(3) x V(line) x I(line). */}
+                <CalculatorSelect
+                  label="Supply"
+                  value={phases}
+                  onChange={(value) => setPhases(value as 'single' | 'three')}
+                  options={[
+                    { value: 'single', label: 'Single-phase (S = V × I)' },
+                    { value: 'three', label: 'Three-phase (S = √3 × V × I)' },
+                  ]}
+                />
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Voltage"
+                    unit="V"
+                    type="text"
+                    inputMode="decimal"
+                    value={voltage}
+                    onChange={setVoltage}
+                    placeholder="e.g., 230"
+                    error={errors.voltage}
                   />
-                )}
-              </ResultsGrid>
+                  <CalculatorInput
+                    label="Current"
+                    unit="A"
+                    type="text"
+                    inputMode="decimal"
+                    value={current}
+                    onChange={setCurrent}
+                    placeholder="e.g., 10"
+                    error={errors.current}
+                  />
+                  <CalculatorInput
+                    label="Active Power"
+                    unit="W"
+                    type="text"
+                    inputMode="decimal"
+                    value={activePower}
+                    onChange={setActivePower}
+                    placeholder="e.g., 2000"
+                    error={errors.activePower}
+                    className="sm:col-span-2"
+                  />
+                </CalculatorInputGrid>
+              </>
             )}
 
-            {/* Capacitor safety note — the kVAr figure was previously presented with no
-                mention of stored charge. BS 7671:2018+A4:2026 Reg 416.2.5 requires a
-                warning label where a capacitor that may retain a dangerous charge is
-                behind a barrier or in an enclosure; Reg 559.7 requires discharge
-                resistors for compensation capacitors over 0.5 µF and compliance with
-                BS EN 61048. */}
-            {capacitorKVAr && targetPF && pfType === 'lagging' && (
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <p className="text-sm text-white">
-                  <strong>Before you fit it</strong> {'—'} a capacitor can hold a dangerous charge
-                  after switch-off. Reg 416.2.5 requires a warning label where such a capacitor is
-                  behind a barrier or in an enclosure, and Reg 559.7 requires discharge resistors
-                  for compensation capacitors over 0.5 µF (to BS EN 61048). Where the installation
-                  has significant harmonic content, capacitor banks can resonate with the supply
-                  inductance {'—'} that needs a specialist harmonic study, which this calculator
-                  does not do.
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Current Reduction Alert */}
-          {capacitorKVAr && currentAfterCorrection && parseFloat(current) > 0 && (
-            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
-              <div className="flex items-center gap-2">
-                <TrendingDown className="h-4 w-4 text-green-400" />
-                <p className="text-sm text-white">
-                  Current reduction with PF correction:{' '}
-                  {(
-                    ((parseFloat(current) - parseFloat(currentAfterCorrection)) /
-                      parseFloat(current)) *
-                    100
-                  ).toFixed(1)}
-                  % lower
-                </p>
-              </div>
-            </div>
-          )}
-
-          <CalculatorDivider category="power" />
-
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
+            {/* PF Type and Target */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Power Factor Type"
+                value={pfType}
+                onChange={setPfType}
+                options={[
+                  { value: 'lagging', label: 'Lagging (Inductive loads)' },
+                  { value: 'leading', label: 'Leading (Capacitive loads)' },
+                ]}
               />
-            </CollapsibleTrigger>
+              {pfType === 'lagging' && (
+                <CalculatorInput
+                  label="Target PF for Correction"
+                  type="text"
+                  inputMode="decimal"
+                  value={targetPF}
+                  onChange={setTargetPF}
+                  placeholder="0.95"
+                  hint="Typical target: 0.95"
+                />
+              )}
+            </CalculatorInputGrid>
 
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-blue-300">Power Factor Quality</strong> {'—'}{' '}
-                    {parseFloat(powerFactor) >= 0.95
-                      ? 'Excellent - minimal reactive power waste'
-                      : parseFloat(powerFactor) >= 0.85
-                        ? 'Acceptable for most applications'
-                        : 'Poor - significant energy inefficiency'}
-                  </p>
-                </div>
-                {pfType === 'lagging' && (
-                  <div className="border-l-2 border-blue-400/40 pl-3">
-                    <p className="text-sm text-white">
-                      <strong className="text-blue-300">Inductive Load</strong> {'—'} Current lags
-                      voltage - typical of motors, transformers, fluorescent lighting
-                    </p>
-                  </div>
-                )}
-                {pfType === 'leading' && (
-                  <div className="border-l-2 border-blue-400/40 pl-3">
-                    <p className="text-sm text-white">
-                      <strong className="text-blue-300">Capacitive Load</strong> {'—'} Current leads
-                      voltage - can cause voltage regulation issues
-                    </p>
-                  </div>
-                )}
-                {capacitorKVAr && (
-                  <div className="border-l-2 border-blue-400/40 pl-3">
-                    <p className="text-sm text-white">
-                      <strong className="text-blue-300">Correction Benefits</strong> {'—'} Reduced
-                      kVA demand, lower energy costs, improved voltage regulation, reduced cable
-                      losses
-                    </p>
-                  </div>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* BS 7671 Regs at a Glance */}
-          <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Regs at a Glance
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showBsRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              {/*
-                Citations rewritten against BS 7671:2018+A4:2026. What was here before:
-                  512.1.2 "power factor and efficiency" — 512.1.2 is headed "Current";
-                    efficiency is not a BS 7671 equipment-selection criterion at all.
-                    The index entry for "Power factor" points at 331.1(l) and 512.1.4.
-                  525 "must account for active and reactive power" — 525 is headed
-                    "Voltage drop in consumers' installations" and says nothing about
-                    reactive power. The load-power-factor correction of mV/A/m is
-                    Appendix 4 Section 6.2, and Section 6 is explicitly optional
-                    ("where a more accurate assessment ... the following methods may be
-                    used") and approximate.
-                  523 "not reduced current from poor PF" — poor power factor RAISES the
-                    current for a given kW (I = P / (V cos φ)); it never reduces it.
-                  534 "capacitor banks" — Section 534 is headed "Devices for protection
-                    against overvoltage" (SPDs). The capacitor regulations are 416.2.5
-                    and 559.7.
-              */}
-              <div className="space-y-3 pl-1">
-                <p className="text-sm text-white">
-                  BS 7671 does not govern the power-factor arithmetic itself and sets no minimum
-                  power factor. These are the regulations that touch on it.
-                </p>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">331.1(l)</strong> {'—'} Power factor is one of
-                    the equipment characteristics that shall be assessed for harmful effects on
-                    other equipment or the supply. No numerical limit is set.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">512.1.2</strong> {'—'} Current: equipment
-                    shall be suitable for the design current, taking into account any capacitive and
-                    inductive effects.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">523</strong> {'—'} Current-carrying capacities
-                    of cables. Size on the actual design current: a poorer power factor means MORE
-                    current for the same kW, not less.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">Appendix 4, Section 6.2</strong> {'—'} Voltage
-                    drop (Section 525) may optionally be refined for load power factor by multiplying
-                    the tabulated mV/A/m by cos φ for conductors up to 16 mm². It is an approximation,
-                    not a requirement.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">416.2.5</strong> {'—'} Where a capacitor that
-                    may retain a dangerous charge after switch-off sits behind a barrier or in an
-                    enclosure, a warning label shall be provided.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">559.7</strong> {'—'} Compensation capacitors
-                    (lighting installations): total capacitance over 0.5 µF shall only be used with
-                    discharge resistors, and capacitors and their marking shall be to BS EN 61048.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Formula Reference */}
-          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-            <div className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-              <p className="text-sm text-white">
-                <strong>Power Factor</strong> = Active Power ÷ Apparent Power. Typical target: 0.95.
-              </p>
-            </div>
-          </div>
-        </>
-      )}
-      <CalculatorEditorial content={powerFactorContent} category="power" />
+            {/* Action Buttons */}
+            <CalculatorActions
+              category="power"
+              onCalculate={calculatePowerFactor}
+              onReset={resetCalculator}
+              isDisabled={!hasValidInputs()}
+            />
+          </>
+        }
+      />
     </CalculatorCard>
   );
 };

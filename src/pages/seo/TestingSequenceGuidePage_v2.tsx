@@ -1,30 +1,52 @@
+import type { ReactNode } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { CARD_PADDED, LABEL } from '@/components/seo/seoSurface';
 import {
   ListOrdered,
-  Zap,
   ShieldCheck,
-  AlertTriangle,
   Calculator,
-  ClipboardCheck,
   FileCheck2,
   Mic,
-  Camera,
-  Brain,
-  BookOpen,
   GraduationCap,
   Activity,
   Gauge,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
+// Local presentation helpers
+//
+// Every test section repeats the same four beats — what it proves, the
+// method, pass/fail, and why it sits where it does in the order. One
+// component instead of eight hand-rolled copies keeps them identical and
+// stops the accent colour from creeping onto every line.
+// -------------------------------------------------------------------
+
+function Fact({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="border-t border-white/[0.08] pt-4 first:border-t-0 first:pt-0">
+      <p className={`${LABEL} text-white`}>{label}</p>
+      <p className="mt-2 text-white leading-relaxed">{children}</p>
+    </div>
+  );
+}
+
+function TestMeta({ state, reg }: { state: 'Dead test' | 'Live test'; reg: string }) {
+  return (
+    <p className="text-white text-[13px] font-semibold tracking-tight">
+      {state} <span className="px-2">·</span> BS 7671 Reg {reg}
+    </p>
+  );
+}
+
+// -------------------------------------------------------------------
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Testing Sequence BS 7671 | Dead & Live Testing Order';
+const PAGE_TITLE = 'Electrical Testing Sequence: 8 Tests in Order (BS 7671)';
 const PAGE_DESCRIPTION =
-  'BS 7671 + IET GN3 testing sequence: continuity, IR, polarity, electrode R, EFLI, PFC, functional + RCD. Why order matters, pass/fail, mistakes.';
+  'The BS 7671 testing sequence in order: continuity, ring, insulation resistance, polarity, earth electrode — then loop impedance, PFC and functional testing. Reg 643.1 makes the order a requirement.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -32,6 +54,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'sequence', label: 'The Sequence at a Glance' },
   { id: 'why-order-matters', label: 'Why the Order Matters' },
   { id: 'dead-tests', label: 'Dead Tests (De-energised)' },
   { id: 'test-1', label: '1. Continuity of Protective Conductors' },
@@ -48,49 +71,57 @@ const tocItems = [
   { id: 'related', label: 'Related Pages' },
 ];
 
+const answerBox = {
+  question: 'What is the correct electrical testing sequence?',
+  answer:
+    'Dead first, live second. 1. Continuity of protective conductors. 2. Continuity of ring final circuit conductors. 3. Insulation resistance. 4. Polarity. 5. Earth electrode resistance, where there is one. Then energise for 6. earth fault loop impedance, 7. prospective fault current and 8. functional testing, including RCD operation.',
+  detail:
+    'The order is not a convention or a training-centre habit. BS 7671 Regulation 643.1 requires the tests of Regulations 643.2 to 643.6 to be carried out in that order before the installation is energised, and where the installation incorporates an earth electrode, the test of Regulation 643.7.2 must also be done before energising.',
+};
+
 const keyTakeaways = [
-  'Dead tests (continuity, insulation resistance, polarity, earth electrode resistance) must always be completed before live tests (loop impedance, PFC, functional testing) — this is a safety-critical requirement, not a suggestion.',
-  'The testing sequence follows IET Guidance Note 3 (GN3), 9th Edition, aligned with BS 7671:2018+A4:2026 Part 6.',
-  'Each test depends on the satisfactory result of the previous test — if continuity fails, you cannot rely on insulation resistance or loop impedance results.',
-  'Functional testing (test 8) is often overlooked but is required to confirm that all switching, interlocking, and control devices operate correctly.',
-  'Elec-Mate auto-validates every test result against BS 7671 maximum permitted values and supports voice-to-test-result entry so you can speak values while holding probes.',
+  'The order is a requirement, not a recommendation: Regulation 643.1 states the tests of Regulations 643.2 to 643.6 shall be carried out in that order before the installation is energised.',
+  'Where the installation has an earth electrode, the electrode resistance test (Regulation 643.7.2) must also be completed before energising — so it belongs with the dead tests, not the live ones.',
+  'Insulation resistance is measured against Table 64: 500 V DC and 1.0 MΩ minimum for circuits up to and including 500 V. Amendment 4 added a second-stage 250 V DC test at 1 MΩ minimum after sensitive equipment is reconnected (Regulation 643.3.3).',
+  'RCD verification changed at Amendment 4. Table 3A of Appendix 3 has been deleted; regardless of RCD type, an alternating current test at IΔn verifies effectiveness — 300 ms maximum for a general non-delay device.',
+  'If any test shows a failure to comply, Regulation 643.1 requires that test — and every preceding test whose result the fault could have influenced — to be repeated after the fault is rectified.',
 ];
 
 const faqs = [
   {
     question: 'Why does the testing sequence matter?',
     answer:
-      'The testing sequence matters because each test builds on the results of the previous test and, critically, each test relies on the safety conditions established by the previous test. For example, you must confirm that the insulation resistance is satisfactory (test 3) before you energise the circuit to carry out earth fault loop impedance testing (test 6). If you performed loop impedance testing without first verifying insulation resistance, you could energise a circuit with a fault to earth, causing a dangerous short circuit, damaging the test instrument, or injuring yourself. Similarly, you must verify continuity of the protective conductor (test 1) before relying on the earth path for loop impedance testing. The IET Guidance Note 3 (GN3) specifies the testing sequence precisely because it is the safe order — deviating from it introduces risk to both the electrician and the installation.',
+      'Because BS 7671 makes it a requirement, and because each test relies on the safety conditions the previous one established. Regulation 643.1 states that the tests of Regulations 643.2 to 643.6 shall be carried out in that order before the installation is energised, and that where an earth electrode is present the test of Regulation 643.7.2 shall also be carried out before energising. The reasoning is practical. You must confirm that insulation resistance is satisfactory (test 3) before you energise for earth fault loop impedance testing (test 6) — energising a circuit with an undetected fault to earth risks a short circuit, a damaged instrument, or injury. You must verify continuity of the protective conductor (test 1) before relying on the earth path for loop impedance testing; Regulation 643.7.3.1 says so explicitly, requiring a continuity test to Regulation 643.2 before the loop impedance measurement. Regulation 643.1 also requires that where any test indicates a failure to comply, that test and any preceding test whose result may have been influenced by the fault are repeated once the fault is rectified.',
   },
   {
     question: 'What is the difference between R1+R2 and R2 continuity tests?',
     answer:
-      'The R1+R2 test measures the total resistance of the line conductor (R1) and the circuit protective conductor (R2) connected together at the furthest point. This serves two purposes: it verifies the continuity of the CPC, and the measured R1+R2 value is used to calculate the expected earth fault loop impedance (Zs) by adding it to the external earth fault loop impedance (Ze). The formula is Zs = Ze + (R1+R2). The R2-only test measures the resistance of the circuit protective conductor alone, from the distribution board to the furthest point. This is used for some circuit types and in situations where you need to confirm the CPC is continuous independently of the line conductor. Both tests are carried out with the circuit de-energised using a low-reading ohmmeter (typically the continuity function on a multifunction tester) at a test voltage between 4 and 24 V DC.',
+      'The R1+R2 test measures the total resistance of the line conductor (R1) and the circuit protective conductor (R2) connected together at the furthest point. This serves two purposes: it verifies the continuity of the CPC, and the measured R1+R2 value is used to calculate the expected earth fault loop impedance (Zs) by adding it to the external earth fault loop impedance (Ze). The formula is Zs = Ze + (R1+R2). The R2-only test measures the resistance of the circuit protective conductor alone, from the distribution board to the furthest point. This is used for some circuit types and in situations where you need to confirm the CPC is continuous independently of the line conductor. Both tests are carried out with the circuit de-energised using a low-reading ohmmeter — typically the continuity function on a multifunction tester, at a test voltage in the 4 to 24 V DC range recommended by IET Guidance Note 3. Note that Regulation 643.2.1(a) covers protective conductors including protective bonding conductors, so main and supplementary bonding continuity is part of this test, not a separate exercise.',
   },
   {
     question: 'What is the minimum acceptable insulation resistance?',
     answer:
-      'BS 7671 Table 64 specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500 V AC (which covers all standard domestic and commercial installations at 230 V and 400 V), the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MR). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12 V or 24 V circuits), the test voltage is 250 V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kR). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MR to 200 MR or more are common for new installations. Low but passing readings (for example, 2 to 5 MR) may indicate deteriorating insulation that should be monitored. Readings below 1 MR are failures that must be investigated and rectified before the circuit is energised.',
+      'BS 7671 Table 64 specifies the minimum insulation resistance values. For circuits with a nominal voltage up to and including 500 V — which covers all standard domestic and commercial installations at 230 V and 400 V — the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 MΩ. For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage), the test voltage is 250 V DC and the minimum is 0.5 MΩ. Above 500 V, the test voltage is 1000 V DC and the minimum is again 1.0 MΩ. Regulation 643.3.2 sets the acceptance condition: the main switchboard and each distribution circuit tested separately, with all its final circuits connected but current-using equipment disconnected, must not fall below the Table 64 value. Amendment 4 added Regulation 643.3.3: where connected equipment is likely to influence the result or be damaged, the Table 64 test is applied before that equipment is connected, and a further test at 250 V DC between live conductors and the protective conductor is applied afterwards, with a minimum of 1 MΩ. In practice a healthy new circuit reads far above the minimum — 50 MΩ to 200 MΩ or more is common. Low but passing readings suggest deteriorating insulation worth monitoring; readings below the Table 64 minimum are failures.',
   },
   {
     question: 'Can I use a multifunction tester for all the tests in the sequence?',
     answer:
-      'A modern multifunction test instrument (MFT) can perform all of the primary tests in the GN3 sequence: continuity (using the low-reading ohmmeter function), insulation resistance (using the insulation resistance function at 250 V or 500 V DC), polarity (confirmed during continuity testing and visual inspection), earth fault loop impedance (using the loop impedance function), prospective fault current (calculated automatically from the loop impedance measurement or measured directly), and RCD testing (using the RCD test function at various multiples of the rated current). However, you also need a separate voltage indicator that complies with HSE Guidance Note GS 38 for safe isolation — proving circuits dead before testing. This is not a function of the MFT. Some tests, such as earth electrode resistance on TT systems using the fall-of-potential method, may require a dedicated earth electrode resistance tester, although the MFT loop impedance function can provide a working value.',
+      'A modern multifunction test instrument (MFT) can perform all of the primary tests in the sequence: continuity (using the low-reading ohmmeter function), insulation resistance (at 250 V, 500 V or 1000 V DC), polarity (confirmed during continuity testing and visual inspection), earth fault loop impedance, prospective fault current (calculated from the loop impedance measurement or measured directly), and RCD testing. Regulation 643.1 requires measuring instruments to be chosen in accordance with the relevant parts of BS EN 61557, or to provide no lesser degree of performance and safety — and Regulations 643.7.1 and 643.8 name BS EN 61557-6 specifically for RCD testing. You also need a separate voltage indicator complying with HSE Guidance Note GS 38 for safe isolation, to prove circuits dead before testing; that is not a function of the MFT. Earth electrode resistance on TT systems using the fall-of-potential method may need a dedicated electrode tester, although Regulation 643.7.2 notes that where a measurement of RA is not practicable, the measured value of external earth fault loop impedance may be used.',
   },
   {
     question: 'How do I test a ring final circuit for continuity?',
     answer:
-      'Ring final circuit continuity testing has three stages. First, measure the end-to-end resistance of each conductor in the ring: Line-to-Line (r1), Neutral-to-Neutral (rn), and CPC-to-CPC (r2). For a healthy ring with no cross-connections or breaks, r1 and rn should be approximately equal (since the conductors are the same size), and r2 may be different if the CPC is a different size (for example, 1.5 mm squared CPC in 2.5 mm squared twin-and-earth cable). Second, cross-connect the Line and Neutral conductors at one end of the ring (connecting L1 to N2 and N1 to L2, where subscripts indicate the two ends) and measure the resistance between Line and Neutral at each socket outlet on the ring. The readings should form a consistent pattern, rising to a maximum at the midpoint of the ring and then falling back — this is the figure-of-eight test. The maximum reading should be approximately (r1 + rn) / 4. Third, cross-connect the Line and CPC conductors and repeat the measurements at each socket outlet. The maximum reading should be approximately (r1 + r2) / 4. This final set of readings gives you the R1+R2 value at the furthest point of the ring for Zs calculation purposes.',
+      'Regulation 643.2.1(b) requires the continuity of the live conductors of a ring final circuit to be verified by measurement of resistance. The established three-stage method works as follows. First, measure the end-to-end resistance of each conductor in the ring: line-to-line (r1), neutral-to-neutral (rn), and CPC-to-CPC (r2). For a healthy ring with no cross-connections or breaks, r1 and rn should be approximately equal (the conductors are the same size), and r2 will differ where the CPC is a smaller size — for example a 1.5 mm² CPC in 2.5 mm² twin-and-earth. Second, cross-connect the line and neutral conductors at one end of the ring and measure between line and neutral at each socket outlet. The readings should form a consistent pattern, rising to a maximum around the midpoint and falling back — the figure-of-eight test — with the maximum approximately (r1 + rn) / 4. Third, cross-connect the line and CPC conductors and repeat at each socket outlet, where the maximum should be approximately (r1 + r2) / 4. That final set gives you the R1+R2 value at the furthest point of the ring for the Zs calculation.',
   },
   {
     question: 'What prospective fault current values make an installation unacceptable?',
     answer:
-      'There is no single unacceptable prospective fault current value — the requirement is that the prospective fault current at every relevant point in the installation must not exceed the rated breaking capacity of the protective devices installed. If the prospective fault current exceeds the breaking capacity of a device, the device may not be able to safely interrupt the fault, potentially resulting in an explosion or fire. Standard domestic MCBs to BS EN 60898 have a rated breaking capacity of 6 kA (6,000 amps) as a minimum. Some have higher ratings of 10 kA or 15 kA. For most domestic installations, the prospective fault current at the consumer unit is typically between 1 kA and 4 kA, well within the 6 kA rating. However, installations close to the supply transformer or with very short mains tails can have much higher prospective fault currents — occasionally exceeding 6 kA. In these cases, devices with higher breaking capacity ratings (10 kA or 16 kA) must be installed.',
+      'There is no single unacceptable figure. Regulation 643.7.3.201 requires the prospective short-circuit current and prospective earth fault current to be measured, calculated or otherwise determined at the origin and at other relevant points; Appendix 14 gives further information on determining them. The requirement they are checked against is Regulation 432.3: a protective device shall be capable of breaking — and, for a circuit-breaker, making — the fault current up to and including the maximum prospective fault current at its point of installation. If the prospective fault current exceeds what the device can interrupt, the device may fail destructively. The one documented exception is Regulation 434.5.1, which permits a device with a lower rated breaking capacity than the prospective short-circuit current where combined short-circuit protection with an upstream device is used, strictly in accordance with the manufacturers’ instructions — Regulation 536.6 sets out that arrangement. In most domestic installations the prospective fault current at the consumer unit sits comfortably below the rating of the devices fitted, but a property close to the supply transformer or with very short mains tails can measure much higher, and that is where the device rating needs checking rather than assuming.',
   },
   {
     question: 'What are the RCD trip time limits?',
     answer:
-      'Two different things get muddled here, so it is worth separating them. What BS 7671 requires you to verify: Amendment 4 deleted Table 3A of Appendix 3, and Regulation 643.7.3.201 now calls for a single alternating current test at the rated residual operating current (IΔn), regardless of RCD type — AC, A, F or B. A general (non-delay) 30 mA device must operate within 300 milliseconds; a Type S between 130 and 500 milliseconds. That is the test, and that is the figure recorded on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) give 40 milliseconds at five-times rated current for a general device, and 50 to 200 milliseconds for a Type S. Those are device characteristics, not the BS 7671 verification — the ½x and 5x tests are no longer part of the required sequence, though 5x is still useful when fault-finding a nuisance-tripping device.',
+      'Two different things get muddled here, so it is worth separating them. What BS 7671 requires you to verify: Amendment 4 deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1 and 643.8 now say that regardless of RCD type, effectiveness is deemed verified where the device disconnects within the stated time under an alternating current test at the rated residual operating current (IΔn). For a general non-delay type that is 300 ms maximum. For a delay Type S device, Regulation 643.7.1 gives a window of between 130 ms minimum and 500 ms maximum. That is the test, and that is the figure recorded on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) include a 40 ms limit at five times rated current for a general device. That is a device characteristic verified by the manufacturer, not an installation verification — the ½x and 5x tests are no longer part of the required sequence, though 5x remains useful when fault-finding a nuisance-tripping device.',
   },
 ];
 
@@ -100,75 +131,143 @@ const howToSteps = [
     text: 'Before any dead tests, carry out full safe isolation per HSE GS 38. Prove your voltage indicator on a known live source, isolate the circuit, lock off with your personal padlock, test all conductor combinations at the point of work (L-N, L-E, N-E), and prove the voltage indicator still works. Safe isolation is the prerequisite for all dead testing.',
   },
   {
-    name: 'Test 1: Continuity of protective conductors',
-    text: 'Using the low-reading ohmmeter function on your MFT, measure the resistance of the circuit protective conductor (CPC) from the distribution board to the furthest point of each circuit. For radial circuits, this gives the R1+R2 value. Record the reading — it will be used later to verify Zs. A reading of infinity indicates a break in the CPC. Unexpected readings require investigation.',
+    name: 'Test 1: Continuity of protective conductors (Reg 643.2.1(a))',
+    text: 'Using the low-reading ohmmeter function on your MFT, measure the resistance of the circuit protective conductor (CPC) from the distribution board to the furthest point of each circuit, and of the main and supplementary protective bonding conductors — Regulation 643.2.1(a) covers protective conductors including protective bonding conductors. For radial circuits this gives the R1+R2 value. Record the reading; it is used later to verify Zs. A reading of infinity indicates a break in the CPC.',
   },
   {
-    name: 'Test 2: Continuity of ring final circuit conductors',
+    name: 'Test 2: Continuity of ring final circuit conductors (Reg 643.2.1(b))',
     text: 'For ring circuits only. Measure end-to-end resistance of L, N, and CPC conductors (r1, rn, r2). Cross-connect L and N at one end and measure at each socket (figure-of-eight test). Cross-connect L and CPC and repeat. Maximum readings should be approximately (r1+rn)/4 and (r1+r2)/4 respectively. Anomalies indicate breaks, cross-connections, or spurs.',
   },
   {
-    name: 'Test 3: Insulation resistance',
-    text: 'Using the insulation resistance function at 500 V DC, test between all live conductors connected together and earth (L+N to E), and between live conductors (L to N). Minimum acceptable value: 1.0 MΩ. Disconnect all electronic equipment and SPDs before testing. Remove lamps and disconnect RCDs if necessary. Typical healthy values are 50 to 200+ MΩ.',
+    name: 'Test 3: Insulation resistance (Reg 643.3)',
+    text: 'Using the insulation resistance function at 500 V DC, test between live conductors, and between live conductors and the protective conductor connected to the earthing arrangement — line and neutral may be joined for the second of these. Minimum acceptable value from Table 64: 1.0 MΩ. Where connected equipment would influence the result or be damaged, Regulation 643.3.3 requires the Table 64 test before that equipment is connected, then a 250 V DC test afterwards with a minimum of 1 MΩ.',
   },
   {
-    name: 'Test 4: Polarity',
-    text: 'Verify that all single-pole switching devices are in the line conductor, all socket outlets are correctly wired (L right, N left, E top), and Edison-screw lampholders have line to centre contact. Much of this is confirmed during continuity testing. Final verification may require brief energisation — safe because insulation resistance has been confirmed.',
+    name: 'Test 4: Polarity (Reg 643.6)',
+    text: 'Verify the polarity of the supply at the origin before the installation is energised. Confirm every fuse and single-pole control and protective device is connected in the line conductor only; that centre-contact bayonet and Edison screw lampholders have the outer or screwed contacts connected to the neutral, except for E14 and E27 lampholders to BS EN 60238; and that wiring is correctly connected throughout. Much of this is confirmed during continuity testing and visual inspection.',
   },
   {
-    name: 'Test 5: Earth electrode resistance (where applicable)',
-    text: 'On TT installations, measure the earth electrode resistance using the fall-of-potential method or obtain a working value from the loop impedance test. The electrode resistance (RA) multiplied by the rated residual operating current of the RCD (IΔn) must not exceed 50 V. For a 30 mA RCD, this gives a maximum RA of 1667 ohms. This test is not required on TN-S or TN-C-S systems.',
+    name: 'Test 5: Earth electrode resistance, where applicable (Reg 643.7.2)',
+    text: 'Where the earthing system incorporates an earth electrode, measure its resistance to Earth. Regulation 643.1 requires this test before energising, so it belongs with the dead tests. Where a measurement of RA is not practicable, the measured external earth fault loop impedance may be used. Regulation 411.5.3(b) requires RA x IΔn to not exceed 50 V; Table 41.5 tabulates this as a maximum Zs of 1667 Ω for a 30 mA RCD.',
   },
   {
-    name: 'Test 6: Earth fault loop impedance (Zs and Ze)',
-    text: 'Energise the circuit. Measure Ze at the origin with the main earthing conductor disconnected. Measure Zs at the furthest point of each circuit. Compare against BS 7671 maximum permitted values for the protective device type and rating. Apply the 80% rule of thumb for temperature correction. Verify that Zs ≈ Ze + (R1+R2) — if not, investigate.',
+    name: 'Test 6: Earth fault loop impedance (Reg 643.7.3)',
+    text: 'Energise the circuit. Regulation 643.7.3.1 requires a continuity test to Regulation 643.2 to have been carried out before the loop impedance measurement. Measure Ze at the origin with the main earthing conductor disconnected, then Zs at the furthest point of each circuit. The measured earth fault loop impedance shall comply with Chapter 41 — Table 41.3 for circuit-breakers. Verify that Zs is approximately Ze + (R1+R2); if not, investigate.',
   },
   {
-    name: 'Test 7: Prospective fault current (Ipf)',
-    text: 'Measure or calculate the prospective fault current at the origin. Most MFTs calculate Ipf from the loop impedance automatically. The highest value (typically line-neutral short circuit) must not exceed the rated breaking capacity of the protective devices. Standard domestic MCBs have a minimum breaking capacity of 6 kA.',
+    name: 'Test 7: Prospective fault current (Reg 643.7.3.201)',
+    text: 'Measure, calculate or otherwise determine the prospective short-circuit current and prospective earth fault current at the origin and at other relevant points. Most MFTs derive it from the loop impedance measurement. Appendix 14 gives further information. The device must be capable of breaking the fault current up to the maximum prospective fault current at its point of installation (Regulation 432.3), except where combined short-circuit protection under Regulation 434.5.1 applies.',
   },
   {
-    name: 'Test 8: Functional testing (including RCD operation)',
-    text: 'Test all RCDs: push-button test first, then the instrument test. Under BS 7671:2018+A4:2026 that is a single alternating current test at IΔn, whatever the RCD type — a general (non-delay) device must operate within 300 ms, a Type S within 130 to 500 ms. Amendment 4 deleted Table 3A of Appendix 3, so the ½x and 5x IΔn tests are no longer part of the required sequence. Then test all switching devices, interlocks, isolators, fireman switches, time clocks, PIR sensors, dimmer switches, and other controls for correct operation. This test is often overlooked but is required by BS 7671.',
+    name: 'Test 8: Functional testing, including RCD operation (Reg 643.10)',
+    text: 'Test all RCDs: integral test button first, then the instrument test. Under BS 7671:2018+A4:2026 that is a single alternating current test at IΔn, whatever the RCD type — a general non-delay device must operate within 300 ms; Regulation 643.7.1 gives 130 to 500 ms for a delay Type S. Amendment 4 deleted Table 3A of Appendix 3, so the ½x and 5x IΔn tests are no longer part of the required sequence. Then functionally test switchgear and controlgear assemblies, drives, controls and interlocks, emergency switching off and emergency stopping systems, and insulation monitoring. Where an AFDD is installed, verify its manual test facility per the manufacturers’ recommendations.',
   },
 ];
 
+const SEQUENCE_ROWS: Array<{
+  n: string;
+  test: string;
+  reg: string;
+  state: string;
+}> = [
+  {
+    n: '1',
+    test: 'Continuity of protective conductors, including protective bonding',
+    reg: '643.2.1(a)',
+    state: 'Dead',
+  },
+  { n: '2', test: 'Continuity of ring final circuit conductors', reg: '643.2.1(b)', state: 'Dead' },
+  { n: '3', test: 'Insulation resistance (Table 64)', reg: '643.3', state: 'Dead' },
+  { n: '4', test: 'Polarity', reg: '643.6', state: 'Dead' },
+  { n: '5', test: 'Earth electrode resistance, where fitted', reg: '643.7.2', state: 'Dead' },
+  { n: '6', test: 'Earth fault loop impedance (Ze, Zs)', reg: '643.7.3', state: 'Live' },
+  { n: '7', test: 'Prospective fault current', reg: '643.7.3.201', state: 'Live' },
+  { n: '8', test: 'Functional testing, including RCD operation', reg: '643.10', state: 'Live' },
+];
+
 const sections = [
+  {
+    id: 'sequence',
+    heading: 'The Sequence at a Glance',
+    content: (
+      <>
+        <p>
+          Eight tests, in this order. Tests 1 to 5 are carried out with the installation
+          de-energised; tests 6 to 8 with it live. Regulation 643.1 fixes the order of the first
+          four and requires the earth electrode test before energising too, which is why the
+          electrode sits at position 5 rather than with the live tests.
+        </p>
+        <div className={`${CARD_PADDED} mt-6`}>
+          <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <table className="w-full min-w-[520px] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/[0.14]">
+                  <th className="py-2 pr-3 font-semibold text-white">#</th>
+                  <th className="py-2 pr-3 font-semibold text-white">Test</th>
+                  <th className="py-2 pr-3 font-semibold text-white">BS 7671</th>
+                  <th className="py-2 font-semibold text-white">State</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SEQUENCE_ROWS.map((row) => (
+                  <tr key={row.n} className="border-b border-white/[0.08] last:border-b-0">
+                    <td className="py-3 pr-3 align-top font-bold text-elec-yellow">{row.n}</td>
+                    <td className="py-3 pr-3 align-top text-white leading-relaxed">{row.test}</td>
+                    <td className="py-3 pr-3 align-top text-white whitespace-nowrap tabular-nums">
+                      {row.reg}
+                    </td>
+                    <td className="py-3 align-top text-white whitespace-nowrap">{row.state}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p>
+          These eight are the tests that apply to nearly every job, but Chapter 64 runs from
+          Regulation 643.2 to 643.11. The ones not listed above are conditional: Regulation 643.4
+          (protection by SELV, PELV or electrical separation), Regulation 643.5 (insulation
+          resistance or impedance of floors and walls, where Regulation 418.1 applies), Regulation
+          643.9 (check of phase sequence, for polyphase circuits) and Regulation 643.11
+          (verification of voltage drop, which the regulation notes is not normally required during
+          initial verification).
+        </p>
+      </>
+    ),
+  },
   {
     id: 'why-order-matters',
     heading: 'Why the Testing Order Matters',
     content: (
       <>
         <p>
-          The electrical testing sequence is not arbitrary — it follows a logical and
-          safety-critical order defined in IET Guidance Note 3: Inspection and Testing (currently
-          the 9th Edition, aligned with the 18th Edition of{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>).
-          Each test in the sequence serves a specific purpose, and many tests depend on the
-          satisfactory completion of previous tests to be both safe and meaningful.
+          The electrical testing sequence is not arbitrary, and it is not merely good practice.{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
+            BS 7671:2018+A4:2026
+          </SEOInternalLink>{' '}
+          Regulation 643.1 states that the tests of Regulations 643.2 to 643.6 shall, where
+          relevant, be carried out in that order before the installation is energised — and that
+          where the installation incorporates an earth electrode, the test of Regulation 643.7.2
+          shall also be carried out before energising. IET Guidance Note 3: Inspection and Testing
+          (9th Edition) sets out how to perform each of those tests, but the order itself comes from
+          the standard.
         </p>
         <p>
-          The fundamental principle is that dead tests (carried out with the installation
-          de-energised) must be completed before live tests (carried out with the installation
-          energised). This is because the dead tests verify the basic integrity of the wiring —
-          continuity, insulation, and polarity — before you apply mains voltage to the circuits. If
-          you energised a circuit without first checking its insulation resistance, you could be
-          applying 230 V to a circuit with a short-circuit or earth fault, with potentially
-          catastrophic results.
+          The reasoning is that the dead tests verify the basic integrity of the wiring — continuity,
+          insulation and polarity — before mains voltage is applied. Energise a circuit without first
+          checking its insulation resistance and you may be applying 230 V to a short circuit or an
+          earth fault. The dependency also runs the other way: Regulation 643.7.3.1 explicitly
+          requires a continuity test to Regulation 643.2 to have been carried out before the earth
+          fault loop impedance measurement, because a loop impedance reading taken through a broken
+          or high-resistance CPC is meaningless.
         </p>
         <p>
-          The sequence also follows a logical progression from the simplest tests to the most
-          complex. Continuity testing requires only a low-voltage ohmmeter. Insulation resistance
-          testing requires a 500 V DC test voltage. Earth fault loop impedance testing requires the
-          circuit to be energised at mains voltage. RCD testing requires both mains voltage and a
-          specific test current. Each step introduces more energy into the system, and the preceding
-          tests ensure that the system is safe to receive that energy.
+          Regulation 643.1 closes the loop on failures: if any test indicates a failure to comply,
+          that test and any preceding test whose result may have been influenced by the fault shall
+          be repeated after the fault has been rectified. Finding a broken CPC at test 6 does not
+          just mean re-testing the CPC — it means going back and repeating whatever earlier results
+          that break could have distorted.
         </p>
-        <SEOAppBridge
-          title="Guided testing sequence built into the app"
-          description="Elec-Mate walks you through the correct GN3 testing sequence step by step. Enter results for each test and the app validates them against BS 7671 maximum…"
-          icon={ListOrdered}
-        />
       </>
     ),
   },
@@ -178,21 +277,25 @@ const sections = [
     content: (
       <>
         <p>
-          Dead tests are carried out with the circuit de-energised and isolated. Before beginning
-          any dead testing, you must carry out{' '}
+          Dead tests are carried out with the circuit de-energised and isolated. Before beginning any
+          dead testing, you must carry out{' '}
           <SEOInternalLink href="/guides/safe-isolation-procedure">safe isolation</SEOInternalLink>{' '}
           per HSE Guidance Note GS 38 — proving your voltage indicator works, isolating the circuit,
           locking off with your personal padlock, testing all conductor combinations at the point of
-          work, and proving the indicator still works. Safe isolation is the prerequisite for all
-          dead testing.
+          work, and proving the indicator still works.
         </p>
         <p>
-          The dead tests are: continuity of protective conductors (test 1), continuity of ring final
-          circuit conductors (test 2), insulation resistance (test 3), polarity verification (test
-          4), and earth electrode resistance where applicable (test 5). These five tests establish
-          that the wiring is intact, the insulation is sound, the connections are correct, and the
-          earthing arrangement is adequate — the fundamental conditions that must be met before the
-          circuit is energised for live testing.
+          The dead tests are: continuity of protective conductors (test 1, Regulation 643.2.1(a)),
+          continuity of ring final circuit conductors (test 2, Regulation 643.2.1(b)), insulation
+          resistance (test 3, Regulation 643.3), polarity (test 4, Regulation 643.6) and earth
+          electrode resistance where applicable (test 5, Regulation 643.7.2). Together they establish
+          that the wiring is intact, the insulation is sound, the connections are correct and the
+          earthing arrangement is adequate.
+        </p>
+        <p>
+          Regulation 643.1 also requires measuring instruments and monitoring equipment to be chosen
+          in accordance with the relevant parts of BS EN 61557, or otherwise to provide no lesser
+          degree of performance and safety.
         </p>
       </>
     ),
@@ -202,45 +305,35 @@ const sections = [
     heading: 'Test 1: Continuity of Protective Conductors',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">1</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Continuity of Protective Conductors</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the circuit protective
-            conductor (CPC) — the earth wire — is continuous from the distribution board to the
-            furthest point of every circuit. This confirms that in the event of an earth fault,
-            there is a complete low-impedance path for fault current to flow back to the source,
-            allowing the protective device to operate and disconnect the supply.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> Using a low-reading ohmmeter (the
-            continuity function on a multifunction tester at 4 to 24 V DC), measure the resistance
-            between the earth terminal at the distribution board and the earth terminal at each
-            point on the circuit. For radial circuits, the measurement at the last accessory gives
-            the R1+R2 value — the combined resistance of the line conductor (R1) and the CPC (R2) in
-            series. This value is recorded on the schedule of test results and used later to verify
-            the earth fault loop impedance.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> There is no single pass/fail
-            value — the reading must be consistent with the expected value based on the cable
-            length, conductor size, and conductor material. A reading of infinity (open circuit)
-            indicates a break in the CPC. An unexpectedly high reading may indicate a loose
-            connection or damaged conductor. Values should be cross-referenced against the published
-            resistance-per-metre values in BS 7671 tables.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is first:</strong> The earth path must be
-            confirmed before any other test because the earth path is the primary safety mechanism.
-            If the earth path is broken, the installation is immediately dangerous — a fault to
-            earth would not be cleared by the protective device, leaving metalwork live.
-          </p>
+        <TestMeta state="Dead test" reg="643.2.1(a)" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the circuit protective conductor (CPC) is continuous from the distribution board to
+            the furthest point of every circuit, so that an earth fault has a complete low-impedance
+            path back to the source and the protective device can operate. Regulation 643.2.1(a)
+            covers protective conductors <em>including protective bonding conductors</em>, so main
+            and supplementary bonding continuity is part of this test rather than a separate one.
+          </Fact>
+          <Fact label="Method">
+            Using a low-reading ohmmeter — the continuity function on a multifunction tester —
+            measure the resistance between the earth terminal at the distribution board and the earth
+            terminal at each point on the circuit. For radial circuits, the measurement at the last
+            accessory gives the R1+R2 value: the combined resistance of the line conductor (R1) and
+            the CPC (R2) in series. This value goes on the schedule of test results and is used later
+            to verify the earth fault loop impedance.
+          </Fact>
+          <Fact label="Pass or fail">
+            There is no single tabulated pass value — the reading must be consistent with the value
+            expected from the cable length, conductor size and conductor material. A reading of
+            infinity means an open circuit in the CPC. An unexpectedly high reading points to a loose
+            connection or a damaged conductor.
+          </Fact>
+          <Fact label="Why it is first">
+            Regulation 643.1 places 643.2 at the head of the sequence, and Regulation 643.7.3.1
+            requires it to be complete before the loop impedance measurement. Beyond the ordering,
+            the earth path is the primary safety mechanism: if it is broken, a fault to earth will
+            not be cleared and metalwork can stay live.
+          </Fact>
         </div>
       </>
     ),
@@ -250,47 +343,32 @@ const sections = [
     heading: 'Test 2: Continuity of Ring Final Circuit Conductors',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">2</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">
-              Continuity of Ring Final Circuit Conductors
-            </h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the ring final circuit
-            is a complete ring — all three conductors (line, neutral, and CPC) leave the
-            distribution board, travel around the ring, and return without any breaks. It also
-            identifies cross-connections (where two rings are interconnected), bootleg rings (where
-            a radial has been disguised as a ring), and broken rings that are operating as two
-            radial circuits.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> The three-step method: (1) Measure
-            end-to-end resistance of each conductor — r1 (line), rn (neutral), r2 (CPC). For a
-            healthy ring, r1 and rn should be approximately equal. r2 may differ if the CPC is a
-            different size. (2) Cross-connect line and neutral at one end of the ring and measure
-            between L and N at each socket — readings should rise to a maximum at the midpoint of
-            approximately (r1 + rn) / 4, then fall back. (3) Cross-connect line and CPC and repeat —
-            the maximum reading gives the R1+R2 value at the furthest point, approximately (r1 + r2)
-            / 4.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> Readings must follow the
-            expected pattern. Anomalies indicate problems: readings that do not rise and fall
-            symmetrically suggest cross-connections; a very high reading at one socket suggests a
-            high-resistance joint; inconsistent readings suggest spurs or breaks in the ring.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is second:</strong> Ring circuit testing is
-            an extension of protective conductor continuity testing. It is still a dead test and
-            must be completed before insulation resistance testing because a break in the ring could
-            cause problems that would be masked by other tests if done out of order.
-          </p>
+        <TestMeta state="Dead test" reg="643.2.1(b)" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the ring final circuit is a complete ring — line, neutral and CPC all leave the
+            distribution board, travel round and return without a break. It also exposes
+            cross-connections between two rings, bootleg rings where a radial has been dressed up as
+            a ring, and broken rings running as two radials.
+          </Fact>
+          <Fact label="Method">
+            Three stages. First, measure end-to-end resistance of each conductor: r1 (line), rn
+            (neutral), r2 (CPC). On a healthy ring r1 and rn are approximately equal; r2 differs
+            where the CPC is a smaller size. Second, cross-connect line and neutral at one end and
+            measure between L and N at each socket — readings should rise to a maximum of roughly
+            (r1 + rn) / 4 around the midpoint, then fall back. Third, cross-connect line and CPC and
+            repeat; the maximum, roughly (r1 + r2) / 4, is the R1+R2 value at the furthest point.
+          </Fact>
+          <Fact label="Pass or fail">
+            Readings must follow the expected pattern. Readings that do not rise and fall
+            symmetrically suggest cross-connections; a single very high reading suggests a
+            high-resistance joint; inconsistent readings suggest spurs or breaks.
+          </Fact>
+          <Fact label="Why it is second">
+            Regulation 643.2.1 lists protective conductors at (a) and ring final circuit live
+            conductors at (b), and the whole of 643.2 precedes insulation resistance testing under
+            Regulation 643.1. It is still a dead test.
+          </Fact>
         </div>
         <SEOAppBridge
           title="70+ calculators for Zs, Ze, R1+R2 and more"
@@ -305,107 +383,116 @@ const sections = [
     heading: 'Test 3: Insulation Resistance',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">3</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Insulation Resistance</h3>
-          </div>
+        <TestMeta state="Dead test" reg="643.3" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the insulation between live conductors, and between live conductors and the
+            protective conductor connected to the earthing arrangement, is sound. Poor insulation
+            causes earth leakage that trips RCDs, short circuits that trip MCBs, shock hazards and a
+            fire risk from tracking.
+          </Fact>
+          <Fact label="Method">
+            Regulation 643.3.1 requires the measurement between (a) live conductors, and (b) live
+            conductors and the protective conductor connected to the earthing arrangement — for the
+            second, line and neutral may be connected together. Regulation 643.3.2 sets the
+            condition: the main switchboard and each distribution circuit tested separately, with all
+            its final circuits connected but current-using equipment disconnected, must not fall
+            below the Table 64 value.
+          </Fact>
         </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the insulation between
-            live conductors and between live conductors and earth is in good condition and can
-            withstand the normal operating voltage without allowing leakage current to flow. Poor
-            insulation can cause earth leakage (tripping RCDs), short circuits (tripping MCBs),
-            electric shock hazards, and fire risk from tracking currents.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> Using an insulation resistance
-            tester set to 500 V DC, test between all live conductors connected together and earth
-            (L+N to E), and between live conductors (L to N). All switches must be closed (ON
-            position), all loads disconnected, and all lamps removed. Electronic equipment, SPDs,
-            and RCDs may need to be disconnected to prevent damage from the 500 V DC test voltage.
-          </p>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">
-              BS 7671 Table 64 — Minimum Insulation Resistance
-            </h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>SELV/PELV circuits (up to 50 V):</strong> Test at 250 V DC — minimum 0.5
-                  MR
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Up to 500 V AC (standard 230 V / 400 V):</strong> Test at 500 V DC —
-                  minimum 1.0 MR
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Over 500 V AC:</strong> Test at 1000 V DC — minimum 1.0 MR
-                </span>
-              </li>
-            </ul>
+        <div className={`${CARD_PADDED} mt-4`}>
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
+            Table 64 — Minimum values of insulation resistance
+          </h3>
+          <div className="-mx-4 mt-3 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <table className="w-full min-w-[460px] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/[0.14]">
+                  <th className="py-2 pr-3 font-semibold text-white">Circuit nominal voltage</th>
+                  <th className="py-2 pr-3 font-semibold text-white">Test voltage DC</th>
+                  <th className="py-2 font-semibold text-white">Minimum insulation resistance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/[0.08]">
+                  <td className="py-3 pr-3 text-white">SELV and PELV</td>
+                  <td className="py-3 pr-3 text-white tabular-nums">250 V</td>
+                  <td className="py-3 text-white tabular-nums">0.5 MΩ</td>
+                </tr>
+                <tr className="border-b border-white/[0.08]">
+                  <td className="py-3 pr-3 text-white">
+                    Up to and including 500 V, with the exception of the above systems
+                  </td>
+                  <td className="py-3 pr-3 text-white tabular-nums">500 V</td>
+                  <td className="py-3 text-white tabular-nums">1.0 MΩ</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-3 text-white">Above 500 V</td>
+                  <td className="py-3 pr-3 text-white tabular-nums">1000 V</td>
+                  <td className="py-3 text-white tabular-nums">1.0 MΩ</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <p>
-            <strong className="text-yellow-400">Why it is third:</strong> Insulation resistance must
-            be verified before any live tests. If insulation is compromised and you energise the
-            circuit, fault current will flow — potentially damaging equipment, tripping devices
-            unexpectedly, or creating a shock hazard.
+          <p className="mt-3 text-white text-sm leading-relaxed">
+            Table 64 also applies when verifying insulation resistance between non-earthed protective
+            conductors and Earth. FELV circuits are tested at the same voltage as that applied to the
+            primary side of the source and must meet all the test requirements for low voltage
+            circuits.
           </p>
+        </div>
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="New at Amendment 4 — the two-stage test">
+            Regulation 643.3.3 was redrafted at A4. Where connected equipment is likely to influence
+            the measurement or be damaged, the Table 64 test is applied <em>before</em> that
+            equipment is connected. Following connection, a test at 250 V DC is applied between live
+            conductors and the protective conductor connected to the earthing arrangement, and the
+            insulation resistance shall be at least 1 MΩ. The note adds that manufacturers&rsquo;
+            instructions may recommend some equipment is disconnected even for the 250 V DC test.
+          </Fact>
+          <Fact label="Why it is third">
+            Insulation resistance must be verified before any live test. If insulation is compromised
+            and you energise, fault current flows — damaging equipment, tripping devices, or creating
+            a shock hazard.
+          </Fact>
         </div>
       </>
     ),
   },
   {
     id: 'test-4',
-    heading: 'Test 4: Polarity (Where Not Already Confirmed)',
+    heading: 'Test 4: Polarity',
     content: (
       <>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">4</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Polarity Verification</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That all single-pole
-            switching devices (light switches, MCBs, fuse carriers) are connected in the line
-            conductor only, that socket outlets are correctly wired (line right, neutral left, earth
-            top), and that Edison-screw lampholders have line connected to the centre contact.
-            Incorrect polarity can leave metalwork live when a switch is turned off, or render an
-            MCB ineffective because it is in the neutral.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> Polarity is largely verified during
-            the continuity tests — by measuring continuity between specific conductors, you confirm
-            which conductor is connected to which terminal. It is also confirmed by visual
-            inspection (checking wiring at accessories). Final verification may require brief
-            energisation — which is safe because insulation resistance has already been confirmed.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> All single-pole devices must be
-            in the line conductor. All socket outlets must have correct L-N-E connections. Any
-            incorrect polarity is a failure that must be corrected before the installation is put
-            into service.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is fourth:</strong> Polarity verification
-            bridges the dead tests and the live tests. Much of the confirmation comes from
-            continuity tests already completed. Where energisation is needed for final verification,
-            this is safe because insulation resistance has been confirmed.
-          </p>
+        <TestMeta state="Dead test" reg="643.6" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            Regulation 643.6 requires that, where relevant, the polarity of the supply at the origin
+            of the installation is verified <em>before the installation is energised</em>. Where
+            single-pole switching devices are not permitted in the neutral, a test is made to verify
+            that all such devices are connected in the line conductor(s) only. Incorrect polarity can
+            leave metalwork live when a switch is off, or render a protective device useless because
+            it sits in the neutral.
+          </Fact>
+          <Fact label="What must be verified">
+            Regulation 643.6 lists three things: (a) every fuse and single-pole control and
+            protective device is connected in the line conductor only; (b) except for E14 and E27
+            lampholders to BS EN 60238, in circuits having an earthed neutral conductor,
+            centre-contact bayonet and Edison screw lampholders have the outer or screwed contacts
+            connected to the neutral conductor; and (c) wiring has been correctly connected
+            throughout the installation.
+          </Fact>
+          <Fact label="Method">
+            Polarity is largely verified during the continuity tests — measuring continuity between
+            specific conductors confirms which conductor lands on which terminal — and by visual
+            inspection at accessories. It is a dead test: Regulation 643.1 puts 643.6 inside the
+            group that must be completed before the installation is energised.
+          </Fact>
+          <Fact label="Why it is fourth">
+            643.6 is the last of the regulations named in the fixed pre-energisation order of
+            Regulation 643.1. Much of the evidence comes free with the continuity tests already
+            completed, which is why it sits at the end of that group rather than the start.
+          </Fact>
         </div>
       </>
     ),
@@ -415,45 +502,36 @@ const sections = [
     heading: 'Test 5: Earth Electrode Resistance (Where Applicable)',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">5</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Earth Electrode Resistance</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the resistance of the
-            earth electrode (on TT systems) is low enough to allow sufficient fault current to flow
-            for the protective device to operate. On TT systems, where the installation relies on
-            its own earth electrode rather than the supply company earth, this test confirms the
-            electrode provides an adequate connection to the general mass of earth.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> The earth electrode resistance can
-            be measured using the dedicated earth electrode resistance function on an MFT or a
-            dedicated earth electrode resistance tester using the fall-of-potential method.
-            Alternatively, a working value can be obtained from the loop impedance test — the
-            measured Ze on a TT system is approximately equal to the earth electrode resistance plus
-            the resistance of the supply transformer earthing. This test applies to TT installations
-            and is not required on TN-S or TN-C-S systems where the earth is provided by the supply
-            company.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> The earth electrode resistance
-            (RA) multiplied by the rated residual operating current of the RCD (IΔn) must not exceed
-            50 V (the touch voltage limit). For a 30 mA RCD: RA x IΔn must be no greater than 50 V,
-            giving a maximum RA of 1667 ohms. In practice, values below 200 ohms are preferred for
-            reliability.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is fifth:</strong> Earth electrode resistance
-            is the final dead test. It must be confirmed before energising the installation for live
-            tests on TT systems because the earth electrode is the sole means of earthing — if it is
-            inadequate, energising could create a shock hazard.
-          </p>
+        <TestMeta state="Dead test" reg="643.7.2" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the resistance of the earth electrode is low enough for the protective device to
+            operate. Regulation 643.7.2 requires that where the earthing system incorporates an earth
+            electrode as part of the installation, the electrode resistance to Earth shall be
+            measured. On a TT system the installation relies on its own electrode rather than a
+            distributor&rsquo;s earth, so this is the whole earthing arrangement.
+          </Fact>
+          <Fact label="Method">
+            Measure with the earth electrode resistance function on an MFT, or a dedicated tester
+            using the fall-of-potential method. The note to Regulation 643.7.2 allows that where a
+            measurement of RA is not practicable, the measured value of external earth fault loop
+            impedance may be used instead. The test does not apply where the installation has no
+            electrode of its own.
+          </Fact>
+          <Fact label="Pass or fail">
+            Regulation 411.5.3(b) requires RA x IΔn to not exceed 50 V, where RA is the sum of the
+            resistances of the earth electrode and the protective conductor connecting it to the
+            exposed-conductive-parts. Table 41.5 tabulates the equivalent maximum earth fault loop
+            impedance: 1667 Ω for a 30 mA RCD, 500 Ω at 100 mA, 167 Ω at 300 mA and 100 Ω at 500 mA.
+            The note to that table warns that the electrode resistance should be as low as
+            practicable and that a value exceeding 200 Ω may not be stable.
+          </Fact>
+          <Fact label="Why it is fifth — and why it is a dead test">
+            Regulation 643.7.2 sits in the 643.7 group with the live tests, but Regulation 643.1
+            singles it out: where the installation incorporates an earth electrode, this test shall
+            also be carried out before the installation is energised. That is what puts it at the end
+            of the dead tests rather than with loop impedance.
+          </Fact>
         </div>
       </>
     ),
@@ -464,18 +542,16 @@ const sections = [
     content: (
       <>
         <p>
-          Live tests are carried out with the circuit energised at mains voltage. They can only be
-          performed safely after all dead tests have been completed satisfactorily — meaning
-          continuity of the protective conductor is confirmed, the ring (if applicable) is intact,
-          insulation resistance meets the minimum values, polarity is correct, and earth electrode
-          resistance is adequate (where applicable). Energising a circuit that has not passed all
-          dead tests is dangerous and must never be done.
+          Live tests are carried out with the circuit energised at mains voltage, and only once all
+          the pre-energisation tests have been completed satisfactorily — continuity of the
+          protective conductor confirmed, the ring intact, insulation resistance at or above the
+          Table 64 minimum, polarity correct, and earth electrode resistance measured where there is
+          an electrode.
         </p>
         <p>
-          Before energising for live testing, remove all lock-off devices and warning labels. Ensure
-          all test leads are disconnected. Restore the circuit to its normal operating condition
-          (reconnect loads, replace fuses, close covers). Then energise the circuit and proceed with
-          live testing in order.
+          Before energising, remove all lock-off devices and warning labels, disconnect all test
+          leads, and restore the circuit to its normal operating condition — reconnect loads, replace
+          fuses, close covers. Then energise and work through tests 6 to 8 in order.
         </p>
       </>
     ),
@@ -485,46 +561,38 @@ const sections = [
     heading: 'Test 6: Earth Fault Loop Impedance (Zs and Ze)',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">6</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Earth Fault Loop Impedance</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the total impedance of
-            the earth fault loop — from the point of the fault, through the CPC, through the main
-            earthing terminal, through the external earth path back to the supply transformer, and
-            through the transformer winding back to the point of the fault — is low enough for the
-            protective device to operate within the required disconnection time. This is the Zs test
-            — the single most important electrical safety verification.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> Measure Ze at the origin of the
-            installation with the main earthing conductor temporarily disconnected from the main
-            earthing terminal. Then measure Zs at the furthest point of each circuit using the loop
-            impedance function on the MFT. Compare the measured Zs against the maximum permitted
-            value from{' '}
-            <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
-            tables for the type and rating of the protective device.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> The measured Zs must not exceed
-            the maximum value tabulated in BS 7671. The "80% rule" — that measured values at ambient
-            temperature should not exceed 80% of the tabulated maximum — is a design guideline to
-            allow for conductor temperature rise during normal operation. Values exceeding the
-            tabulated maximum are failures. For example, a B32 MCB has a maximum tabulated Zs of
-            1.37 ohms; the 80% design value is 1.10 ohms.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Verification:</strong> Check that Zs is
-            approximately equal to Ze + (R1+R2). If the measured Zs is significantly higher than the
-            calculated value, there may be a high-resistance connection in the earth path that was
-            not detected during continuity testing.
-          </p>
+        <TestMeta state="Live test" reg="643.7.3" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the total impedance of the earth fault loop — from the fault, through the CPC and
+            the main earthing terminal, out through the external earth path to the supply
+            transformer, through the transformer winding and back — is low enough for the protective
+            device to disconnect within the required time. Maximum disconnection times are set by
+            Regulation 411.3.2.2 and Table 41.1.
+          </Fact>
+          <Fact label="Method">
+            Regulation 643.7.3.1 requires a continuity test to Regulation 643.2 to have been carried
+            out before the loop impedance measurement. Measure Ze at the origin with the main
+            earthing conductor temporarily disconnected from the main earthing terminal, then measure
+            Zs at the furthest point of each circuit. Note 1 to the regulation warns that readings
+            taken with a loop impedance instrument may be adversely affected by power converting
+            equipment such as inverters.
+          </Fact>
+          <Fact label="Pass or fail">
+            The measured earth fault loop impedance shall comply with Chapter 41 — Table 41.3 for
+            circuit-breakers, Table 41.2 for fuses, Table 41.5 for RCDs. A B32 circuit-breaker has a
+            tabulated maximum Zs of 1.37 Ω. The widely used industry rule of thumb applies a 0.8
+            factor to allow for conductor temperature rise, giving a design target of 1.10 Ω for the
+            same device — but the tabulated value is the compliance limit, not the 80% figure. Where
+            the requirements of the regulation are not satisfied and
+            supplementary protective equipotential bonding is provided, the effectiveness of that
+            bonding shall be verified.
+          </Fact>
+          <Fact label="Cross-check">
+            Zs should be approximately Ze + (R1+R2). A measured Zs significantly above the calculated
+            value suggests a high-resistance connection in the earth path that continuity testing did
+            not catch.
+          </Fact>
         </div>
         <SEOAppBridge
           title="Voice-to-test-results — speak values while holding probes"
@@ -539,45 +607,40 @@ const sections = [
     heading: 'Test 7: Prospective Fault Current (Ipf)',
     content: (
       <>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">7</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Prospective Fault Current</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That the maximum fault
-            current that could flow under a short-circuit or earth fault condition does not exceed
-            the rated breaking capacity (kA rating) of the protective devices installed. If the
-            fault current exceeds the device rating, the device may not safely interrupt the fault,
-            potentially causing it to explode or catch fire.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Method:</strong> Prospective fault current is
-            measured or calculated at the origin of the installation. Most MFTs calculate Ipf
-            automatically from the loop impedance measurement. For a line-earth fault, Ipf = Uo/Zs.
-            For a line-neutral short circuit, Ipf = Uo/Zline-neutral. The highest value (typically
-            the line-neutral short circuit) is the one that must not exceed the device breaking
-            capacity.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Pass/fail:</strong> The prospective fault current
-            must not exceed the rated breaking capacity of the protective device. Standard domestic
-            MCBs have a minimum breaking capacity of 6 kA. Ipf exceeding 6 kA requires devices with
-            higher ratings. The Ipf is recorded on the{' '}
+        <TestMeta state="Live test" reg="643.7.3.201" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            That the maximum current which could flow under short-circuit or earth fault conditions
+            does not exceed what the protective devices can safely interrupt. Regulation 432.3
+            requires a device to be capable of breaking — and, for a circuit-breaker, making — the
+            fault current up to and including the maximum prospective fault current.
+          </Fact>
+          <Fact label="Method">
+            Regulation 643.7.3.201 requires the prospective short-circuit current and prospective
+            earth fault current to be measured, calculated or determined by another method, at the
+            origin and at other relevant points in the installation. Most MFTs derive it from the
+            loop impedance measurement: for a line-earth fault, Ipf = Uo/Zs; for a line-neutral short
+            circuit, Ipf = Uo/Z(line-neutral). The higher of the two is the figure that matters. The
+            note to the regulation points to Appendix 14 for further information.
+          </Fact>
+          <Fact label="Pass or fail">
+            The prospective fault current at a device must be within its rated breaking capacity. The
+            one documented exception is Regulation 434.5.1, which permits a device with a lower rated
+            breaking capacity where combined short-circuit protection with an upstream device is
+            used; Regulation 536.6 requires this to follow the downstream device
+            manufacturer&rsquo;s instructions, and states that where no such information is
+            available, combined short-circuit protection shall not be used. The Ipf is recorded on
+            the{' '}
             <SEOInternalLink href="/guides/electrical-certificate-types-uk">
               EIC or EICR
             </SEOInternalLink>
             .
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is seventh:</strong> It follows naturally
-            from the loop impedance test — in many cases, the Ipf is calculated from the same
-            measurements. It is a live test that requires the circuit to be energised.
-          </p>
+          </Fact>
+          <Fact label="Why it is seventh">
+            It shares a regulation group and, in most cases, the same measurement as the loop
+            impedance test — Regulation 643.7.3 covers earth fault loop impedance and prospective
+            fault current together.
+          </Fact>
         </div>
       </>
     ),
@@ -587,79 +650,52 @@ const sections = [
     heading: 'Test 8: Functional Testing (Including RCD Operation)',
     content: (
       <>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
-              <span className="font-bold text-yellow-400">8</span>
-            </div>
-            <h3 className="font-bold text-white text-xl">Functional Testing</h3>
-          </div>
-        </div>
-        <div className="mt-4 space-y-4">
-          <p>
-            <strong className="text-yellow-400">What it proves:</strong> That all assemblies,
-            switchgear, controlgear, interlocks, controls, and RCDs function correctly as intended.
-            This is the final test in the sequence and includes RCD operation testing — confirming
-            that every RCD in the installation (RCCBs, RCBOs, and socket-outlet RCDs) trips at the
-            correct current and within the required time. It also verifies that all switching
-            devices, isolators, and interlocking arrangements operate as designed. This test is
-            often the most overlooked, but it is required by BS 7671 Regulation 643.10. For a
-            detailed guide to RCD testing, see our{' '}
+        <TestMeta state="Live test" reg="643.10" />
+        <div className={`${CARD_PADDED} mt-4 space-y-4`}>
+          <Fact label="What it proves">
+            Regulation 643.10 requires equipment to be subjected to functional testing, as
+            appropriate, to verify that it is properly mounted, adjusted and installed and operates
+            correctly. The regulation gives three examples — switchgear and controlgear assemblies,
+            drives, controls and interlocks; systems for emergency switching off and emergency
+            stopping; and insulation monitoring — and notes the list is not exhaustive. Protective
+            devices shall be submitted to a test of their function, and where fault protection or
+            additional protection is provided by an RCD, the effectiveness of any test facility
+            incorporated in the device shall be verified. Where an AFDD is installed, the
+            effectiveness of any manually operated test facility shall be verified per the
+            manufacturers&rsquo; recommendations. For a detailed guide to RCD testing, see our{' '}
             <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink>.
-          </p>
-          <p>
-            <strong className="text-yellow-400">RCD testing method:</strong> For each RCD, carry out
-            the following tests using the RCD test function on the MFT:
-          </p>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>Push-button test:</strong> Confirm the mechanical trip mechanism works
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>IΔn (rated residual operating current):</strong> A single alternating
-                  current test at IΔn, whatever the RCD type — AC, A, F or B. A general
-                  (non-delay) device must operate within 300 ms; a Type S within 130 to 500 ms per BS EN
-                  61008/61009.
-                  This is the verification Regulation 643.3 asks for.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>What changed in Amendment 4:</strong> Table 3A of Appendix 3 (time/current
-                  performance criteria for RCDs) has been deleted, and the ½x and 5x IΔn tests are
-                  no longer part of the required sequence. The 5x test remains a useful fault-finding
-                  tool, and 40 ms at 5x IΔn is still a device characteristic under BS EN
-                  61008/61009 — but it is not what BS 7671 now asks you to verify.
-                </span>
-              </li>
-            </ul>
-          </div>
-          <p>
-            <strong className="text-yellow-400">Other functional tests:</strong> All switching
-            devices (isolators, circuit breakers, switches) for correct operation and mechanical
-            integrity. All interlocking devices for correct sequencing. Time switches, photoelectric
-            cells, and PIR sensors for correct activation. Dimmer switches for smooth operation.
-            Emergency switching devices (fireman switches, emergency stop buttons) for correct
-            operation. Any automation, BMS controls, or smart switching.
-          </p>
-          <p>
-            <strong className="text-yellow-400">Why it is last:</strong> Functional testing is the
-            final test because it requires the installation to be fully energised and operating in
-            its normal state. RCD testing deliberately injects fault current through the earth path.
-            All previous tests must have confirmed that the earth path is continuous (test 1), the
-            ring is complete (test 2), the insulation is sound (test 3), the polarity is correct
-            (test 4), the earth electrode resistance is adequate where applicable (test 5), the loop
-            impedance is acceptable (test 6), and the fault current is within device ratings (test
-            7). Only then is it safe to deliberately inject fault current and test all functional
-            aspects of the installation.
-          </p>
+          </Fact>
+          <Fact label="RCD verification — what A4:2026 asks for">
+            Regulations 643.7.1 and 643.8 require the effectiveness of automatic disconnection by
+            RCDs to be verified using test equipment to BS EN 61557-6. Their notes state that
+            regardless of RCD type, effectiveness is deemed verified where the RCD disconnects within
+            the stated time under an alternating current test at the rated residual operating current
+            (IΔn): 300 ms maximum for a general non-delay type, and — per the note to 643.7.1 —
+            between 130 ms minimum and 500 ms maximum for a delay Type S device. Start with the
+            integral test button, then take the instrument reading at IΔn.
+          </Fact>
+          <Fact label="What changed at Amendment 4">
+            Table 3A of Appendix 3, which gave time/current performance criteria for RCDs, has been
+            deleted. The ½x and 5x IΔn tests are no longer part of the required sequence. The 5x test
+            remains useful when fault-finding a nuisance-tripping device, and 40 ms at 5x IΔn is
+            still a device characteristic under BS EN 61008 and BS EN 61009 — but it is not what BS
+            7671 now asks you to verify or record.
+          </Fact>
+          <Fact label="Other functional tests">
+            Switching devices — isolators, circuit-breakers, switches — for correct operation and
+            mechanical integrity. Interlocking devices for correct sequencing. Time switches,
+            photoelectric cells and PIR sensors for correct activation. Dimmer switches for smooth
+            operation. Emergency switching and emergency stopping devices. Any automation, BMS
+            controls or smart switching.
+          </Fact>
+          <Fact label="Why it is last">
+            Functional testing needs the installation fully energised and running in its normal
+            state, and RCD testing deliberately injects residual current through the earth path. Only
+            once the earth path is proven continuous (test 1), the ring complete (test 2), the
+            insulation sound (test 3), the polarity correct (test 4), the electrode adequate where
+            fitted (test 5), the loop impedance within limits (test 6) and the fault current within
+            device ratings (test 7) is that a reasonable thing to do.
+          </Fact>
         </div>
       </>
     ),
@@ -670,108 +706,104 @@ const sections = [
     content: (
       <>
         <p>
-          Even experienced electricians make testing errors. These are the most common mistakes and
-          why they matter.
+          Even experienced electricians make testing errors. These are the ones that come up most
+          often, and why they matter.
         </p>
-        <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  Testing loop impedance before insulation resistance
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Performing the Zs test before verifying insulation resistance means energising a
-                  circuit that may have a fault to earth. This could cause a short circuit, trip
-                  protective devices, damage the test instrument, or create an electric shock or arc
-                  flash hazard.
-                </p>
-              </div>
-            </div>
+        <div className="mt-6 space-y-4">
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Testing loop impedance before insulation resistance
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Taking the Zs test before verifying insulation resistance means energising a circuit
+              that may have a fault to earth. That risks a short circuit, nuisance tripping, a
+              damaged instrument, or a shock or arc flash hazard — and it reverses the order
+              Regulation 643.1 requires.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  Not disconnecting loads for insulation resistance testing
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Leaving appliances connected during insulation resistance testing gives
-                  misleadingly low readings (the appliance impedance is in parallel with the cable
-                  insulation) and can damage sensitive electronic equipment — the 500 V DC test
-                  voltage can destroy electronic controllers, LED drivers, and dimmer switches.
-                </p>
-              </div>
-            </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Leaving current-using equipment connected for insulation resistance testing
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Regulation 643.3.2 sets the acceptance condition with final circuits connected but
+              current-using equipment disconnected. Leaving appliances in circuit gives misleadingly
+              low readings, because the appliance impedance sits in parallel with the cable
+              insulation, and the 500 V DC test voltage can destroy electronic controllers, LED
+              drivers and dimmers. Where equipment cannot practically be disconnected, Regulation
+              643.3.3 sets out the two-stage approach.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">
-                  Still testing RCDs to the old Table 3A sequence
-                </h3>
-                <p className="text-white text-sm leading-relaxed">
-                  The ½x, 1x and 5x routine is deeply ingrained, and plenty of instruments still
-                  default to it. Amendment 4 deleted Table 3A of Appendix 3, and Regulation 643.3
-                  now verifies an RCD with a single alternating current test at IΔn, whatever the
-                  device type. Running the old sequence is not dangerous — but recording a 5x
-                  result as the certified figure, or failing a device on a criterion BS 7671 no
-                  longer applies, is a real error. Record the trip time at IΔn.
-                </p>
-              </div>
-            </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Still testing RCDs to the old Table 3A sequence
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              The ½x, 1x and 5x routine is deeply ingrained, and plenty of instruments still default
+              to it. Amendment 4 deleted Table 3A of Appendix 3, and the notes to Regulations 643.7.1
+              and 643.8 now verify an RCD with a single alternating current test at IΔn, whatever the
+              device type. Running the old sequence is not dangerous — but recording a 5x result as
+              the certified figure, or failing a device against a criterion BS 7671 no longer
+              applies, is a real error. Record the trip time at IΔn.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Not testing RCDs on both half-cycles</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  RCDs must be tested on both positive (0 degrees) and negative (180 degrees)
-                  half-cycles. An RCD that passes on one half-cycle but fails on the other has
-                  failed the test. The worst-case (longest) trip time from either half-cycle is the
-                  value recorded on the certificate.
-                </p>
-              </div>
-            </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Treating the earth electrode test as a live test
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Regulation 643.7.2 sits in the 643.7 group alongside loop impedance, so it is easy to
+              assume it happens after energising. Regulation 643.1 says otherwise: where the
+              installation incorporates an earth electrode, that test shall also be carried out
+              before the installation is energised.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Using uncalibrated instruments</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  All test instruments must be calibrated and within their calibration date.
-                  Uncalibrated instruments may give inaccurate readings — passing circuits that
-                  should fail or failing circuits that should pass. Calibration is typically
-                  required annually and must be recorded on the certificate.
-                </p>
-              </div>
-            </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Not testing RCDs on both half-cycles
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              IET Guidance Note 3 has electricians test on both the positive (0 degree) and negative
+              (180 degree) half-cycles. A device that passes on one and fails on the other has
+              failed. The worst-case, longest trip time from either half-cycle is the value recorded
+              on the certificate.
+            </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1">Forgetting functional testing</h3>
-                <p className="text-white text-sm leading-relaxed">
-                  Functional testing (test 8) is required by BS 7671 but is frequently omitted or
-                  done superficially. Switching devices that do not operate correctly, time clocks
-                  that are not set, and interlocks that do not function represent real defects that
-                  should be recorded and rectified.
-                </p>
-              </div>
-            </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Using uncalibrated instruments
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Regulation 643.1 requires measuring instruments to be chosen in accordance with the
+              relevant parts of BS EN 61557, or to provide no lesser degree of performance and
+              safety. An out-of-calibration instrument can pass circuits that should fail and fail
+              circuits that should pass. Calibration is typically annual and the instrument details
+              are recorded on the certificate.
+            </p>
+          </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Forgetting functional testing
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Functional testing is required by Regulation 643.10 but is frequently omitted or done
+              superficially. Switching devices that do not operate correctly, time clocks that are
+              not set and interlocks that do not function are real defects that should be recorded
+              and rectified.
+            </p>
+          </div>
+          <div className={CARD_PADDED}>
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              Not repeating earlier tests after a fault is found
+            </h3>
+            <p className="mt-2 text-white text-sm leading-relaxed">
+              Regulation 643.1 requires that where a test indicates a failure to comply, that test
+              and any preceding test whose result may have been influenced by the fault are repeated
+              after the fault has been rectified. Fixing the fault and moving on leaves earlier
+              results on the certificate that the fault may have distorted.
+            </p>
           </div>
         </div>
-        <SEOAppBridge
-          title="Board scanner populates circuit data from a photo"
-          description="Point your phone at the distribution board and Elec-Mate's AI reads MCB/RCBO ratings, circuit details, and board layout."
-          icon={Camera}
-        />
       </>
     ),
   },
@@ -803,8 +835,7 @@ const relatedPages = [
   {
     href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
-    description:
-      'Complete guide to RCD testing — trip times, half-cycle testing, Type A vs Type AC.',
+    description: 'Complete guide to RCD testing — trip times, half-cycle testing, Type A vs Type AC.',
     icon: Activity,
     category: 'Guide',
   },
@@ -834,7 +865,7 @@ export default function TestingSequenceGuidePage_v2() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-09-15"
-      dateModified="2026-05-18"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
@@ -842,16 +873,17 @@ export default function TestingSequenceGuidePage_v2() {
       heroTitle={
         <>
           Electrical Testing Sequence:{' '}
-          <span className="text-yellow-400">Dead and Live Testing Order</span>
+          <span className="text-elec-yellow">Dead and Live Testing Order</span>
         </>
       }
-      heroSubtitle="The correct electrical testing sequence per BS 7671 and IET Guidance Note 3 (GN3, 9th Edition). Continuity, insulation resistance, polarity, earth electrode resistance, earth fault loop impedance, prospective fault current, and functional testing (including RCD operation) — why the order matters, what each test measures, pass/fail criteria, and common mistakes."
+      heroSubtitle="The eight tests in the order BS 7671:2018+A4:2026 requires — continuity, ring final circuit continuity, insulation resistance, polarity and earth electrode resistance before energising, then earth fault loop impedance, prospective fault current and functional testing. Regulation numbers, pass criteria and the mistakes that show up most often on site."
+      answerBox={answerBox}
       readingTime={22}
       keyTakeaways={keyTakeaways}
       sections={sections}
       howToSteps={howToSteps}
       howToHeading="The Complete Testing Sequence: Step by Step"
-      howToDescription="The full BS 7671 / GN3 testing sequence from safe isolation through to functional testing, with pass/fail criteria for each test."
+      howToDescription="The full BS 7671 testing sequence from safe isolation through to functional testing, with the regulation and pass criteria for each test."
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Record test results digitally, validated automatically"

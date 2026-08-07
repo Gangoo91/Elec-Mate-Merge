@@ -8,7 +8,7 @@
  *
  * The single-line diagram is the spine of the design pack. Every other
  * document hangs off it. This Sub covers what an SLD is, what it must
- * show, BS EN 60617 conventions for SLD symbols, CAD layer discipline,
+ * show, IEC 60617 conventions for SLD symbols, CAD layer discipline,
  * fault-level annotation, breaker selection annotation and version control.
  */
 
@@ -35,7 +35,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'Single-line schematic (SLD) production (5.1) | Level 3 Module 6.6.1 | Elec-Mate';
 const DESCRIPTION =
-  'The SLD is the spine of the design pack. What it must show, BS EN 60617 conventions, CAD layer discipline, fault-level and breaker annotation, version control and the audit trail back to BS 7671 Reg 132.13 and 514.9.1.';
+  'The SLD is the spine of the design pack. What it must show, IEC 60617 conventions, CAD layer discipline, fault-level and breaker annotation, version control and the audit trail back to BS 7671 Reg 132.13 and 514.9.1.';
 
 const checks = [
   {
@@ -59,12 +59,12 @@ const checks = [
     options: [
       'BS 7671 itself — the Wiring Regulations define the graphical symbols for every device, taken directly from the standard.',
       'There is no governing standard — each CAD package uses its own symbols and the reader relies on the drawing legend.',
-      'BS EN 60617 — the international graphical symbols standard adopted in the UK, so any reader interprets the drawing the same way.',
+      'IEC 60617 — the international graphical symbols standard adopted in the UK, so any reader interprets the drawing the same way.',
       'The manufacturer\'s catalogue — the symbols come from whichever breaker maker supplied the devices, Schneider or Hager.',
     ],
     correctIndex: 2,
     explanation:
-      "BS EN 60617 (Graphical Symbols for Diagrams) is the international standard adopted in the UK for electrical drawings. It defines a recognised graphical alphabet for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, indicator lamps, instruments and most of the building-services components an L3 designer specifies. BS 7671 mandates compliance with recognised standards but does not itself define the symbol set — that's the job of BS EN 60617. Manufacturer marketing symbols are decorative and not interchangeable; CAD package defaults are usually 60617-compatible but verify per package.",
+      "IEC 60617 (Graphical Symbols for Diagrams) is the international standard adopted in the UK for electrical drawings. It defines a recognised graphical alphabet for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, indicator lamps, instruments and most of the building-services components an L3 designer specifies. BS 7671 mandates compliance with recognised standards but does not itself define the symbol set — that's the job of IEC 60617. Manufacturer marketing symbols are decorative and not interchangeable; CAD package defaults are usually 60617-compatible but verify per package.",
   },
   {
     id: 'm6-s6-sub1-sld-fault-annotation',
@@ -98,7 +98,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'BS EN 60617 is the standard for:',
+    question: 'IEC 60617 is the standard for:',
     options: [
       'Cable selection and current-carrying capacity — the standard that sets the derating factors and Reference Methods for sizing conductors.',
       'Distribution board construction — the standard that specifies busbar ratings, enclosure IP ratings and way counts for consumer units and DBs.',
@@ -107,7 +107,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "BS EN 60617 (Graphical Symbols for Diagrams) is the international IEC standard adopted in the UK as the symbol set for electrical drawings. It is the reason a circle with a diagonal slash means 'switch' on every drawing, regardless of who drafted it. Using the standard symbol set is the discipline that lets a tester two years later pick up the SLD and read it without translation. Manufacturer marketing or one-off symbols break that interoperability.",
+      "IEC 60617 (Graphical Symbols for Diagrams) is the international IEC standard adopted in the UK as the symbol set for electrical drawings. It is the reason a circle with a diagonal slash means 'switch' on every drawing, regardless of who drafted it. Using the standard symbol set is the discipline that lets a tester two years later pick up the SLD and read it without translation. Manufacturer marketing or one-off symbols break that interoperability.",
   },
   {
     id: 3,
@@ -193,7 +193,7 @@ const faqs = [
   {
     question: 'Do I need to use a CAD package for SLDs or can I hand-draw?',
     answer:
-      "Hand-drawn SLDs are acceptable for small simple jobs (a domestic CU change, a small radial alteration) where the topology is trivial and the audit trail is short. For anything commercial, multi-DB, or any installation where the design pack will live for years and be referenced by future designers and testers, CAD is the practical choice. AutoCAD, Revit MEP, AmTech, ElectricalOM, Trimble Stabicad and a handful of UK-specific tools are the common picks. The CAD package is less important than the discipline — layers, version control, BS EN 60617 symbol library, title block consistency. Most apprentices start in AutoCAD because it is the lowest barrier to entry; commercial design firms increasingly work in Revit MEP or BIM-native tooling because of CDE integration.",
+      "Hand-drawn SLDs are acceptable for small simple jobs (a domestic CU change, a small radial alteration) where the topology is trivial and the audit trail is short. For anything commercial, multi-DB, or any installation where the design pack will live for years and be referenced by future designers and testers, CAD is the practical choice. AutoCAD, Revit MEP, AmTech, ElectricalOM, Trimble Stabicad and a handful of UK-specific tools are the common picks. The CAD package is less important than the discipline — layers, version control, IEC 60617 symbol library, title block consistency. Most apprentices start in AutoCAD because it is the lowest barrier to entry; commercial design firms increasingly work in Revit MEP or BIM-native tooling because of CDE integration.",
   },
   {
     question: 'How detailed should the SLD be — every accessory, or just the topology?',
@@ -208,7 +208,7 @@ const faqs = [
   {
     question: 'How do I show three-phase versus single-phase on an SLD?',
     answer:
-      "Three-phase cables on an SLD are typically shown with a slash through the line and the number 3 (or 4 if including neutral) — e.g. a single line with /4 means a four-core cable (L1, L2, L3, N). Single-phase cables are shown as a single line with /2 (L, N) or /3 (L, N, CPC). Three-phase distribution boards are shown as TP+N rectangular blocks; single-phase as SP+N. Some designers use coloured lines (brown/black/grey/blue for L1/L2/L3/N, green-yellow for CPC) on multi-line schematic variants but the strict SLD is one-line-per-cable with the slash convention. BS EN 60617 covers both styles.",
+      "Three-phase cables on an SLD are typically shown with a slash through the line and the number 3 (or 4 if including neutral) — e.g. a single line with /4 means a four-core cable (L1, L2, L3, N). Single-phase cables are shown as a single line with /2 (L, N) or /3 (L, N, CPC). Three-phase distribution boards are shown as TP+N rectangular blocks; single-phase as SP+N. Some designers use coloured lines (brown/black/grey/blue for L1/L2/L3/N, green-yellow for CPC) on multi-line schematic variants but the strict SLD is one-line-per-cable with the slash convention. IEC 60617 covers both styles.",
   },
   {
     question: 'When does the SLD get updated — and by whom?',
@@ -240,14 +240,14 @@ export default function Sub1() {
           <PageHero
             eyebrow="Module 6 · Section 6 · Subsection 1"
             title="Single-line schematic (SLD) production"
-            description="The SLD is the spine of the design pack. Every other document hangs off it. What it must show, BS EN 60617 conventions, CAD layer discipline, fault-level and breaker annotation, version control, and the audit trail back to BS 7671 Reg 132.13 and 514.9.1."
+            description="The SLD is the spine of the design pack. Every other document hangs off it. What it must show, IEC 60617 conventions, CAD layer discipline, fault-level and breaker annotation, version control, and the audit trail back to BS 7671 Reg 132.13 and 514.9.1."
             tone="amber"
           />
 
           <TLDR
             points={[
               "The single-line diagram (SLD) shows installation topology — supply origin, sub-mains, distribution boards, protective devices and final-circuit groupings — drawn one-line-per-cable with full annotations (rating, cable spec, length, fault levels, design Zs vs regs ceiling, discrimination check).",
-              "BS EN 60617 is the recognised graphical symbol standard for UK electrical drawings. Use it consistently so any reader — installer, tester, future designer — interprets the drawing the same way.",
+              "IEC 60617 is the recognised graphical symbol standard for UK electrical drawings. Use it consistently so any reader — installer, tester, future designer — interprets the drawing the same way.",
               "BS 7671 Reg 132.13 makes design documentation mandatory; Reg 514.9.1 requires a per-DB diagram or chart sufficient to identify every circuit (with an A4:2026 domestic exception). The SLD discharges these regs at the design level.",
               "Version control on the SLD is non-negotiable. Revisions go up alphabetically with a revision history table; superseded copies are marked VOID; current revision is the only one in active use.",
             ]}
@@ -256,7 +256,7 @@ export default function Sub1() {
           <LearningOutcomes
             outcomes={[
               'Describe the purpose of a single-line diagram (SLD) and explain why it is the spine of the design pack.',
-              'Apply BS EN 60617 graphical symbols to draft an SLD that any reader can interpret without translation.',
+              'Apply IEC 60617 graphical symbols to draft an SLD that any reader can interpret without translation.',
               'Annotate each protective device on the SLD with type, rating, curve, breaking capacity, design Zs and regs ceiling, plus discrimination check vs upstream device.',
               'Apply CAD layer discipline so the SLD remains readable as the project grows — power, annotations, revision clouds and sub-discipline layers.',
               'Maintain version control on the SLD with revision letters and a revision history table so superseded drawings cannot be worked from in error.',
@@ -310,14 +310,14 @@ export default function Sub1() {
 
           <SectionRule />
 
-          <ContentEyebrow>BS EN 60617 — the symbol set</ContentEyebrow>
+          <ContentEyebrow>IEC 60617 — the symbol set</ContentEyebrow>
 
           <ConceptBlock
-            title="BS EN 60617 graphical symbols — the universal alphabet"
+            title="IEC 60617 graphical symbols — the universal alphabet"
             plainEnglish="A standard symbol library for UK electrical drawings. Breaker, fuse, switch, isolator, RCD, RCBO, AFDD, motor, transformer, cable, DB block — all defined."
           >
             <p>
-              BS EN 60617 (Graphical Symbols for Diagrams) is the IEC standard adopted in the UK
+              IEC 60617 (Graphical Symbols for Diagrams) is the IEC standard adopted in the UK
               that defines the graphical alphabet of electrical drawings. The relevant parts for
               SLD work include:
             </p>
@@ -334,7 +334,7 @@ export default function Sub1() {
             <p>
               For SLDs the most-used parts are 2, 3, 6 and 7. Most professional CAD packages ship
               with a 60617-compatible symbol library; verify before relying on it. Hand-drawn SLDs
-              should reference a printed BS EN 60617 quick-card pinned to the desk so the symbols
+              should reference a printed IEC 60617 quick-card pinned to the desk so the symbols
               are drawn consistently. Symbol consistency is what lets a tester two years later read
               the drawing without translation.
             </p>
@@ -343,7 +343,7 @@ export default function Sub1() {
           <ConceptBlock
             title="Symbols you will draw most often on an SLD"
             plainEnglish="A short list of the daily-use symbols. Learn these and 80 percent of an SLD reads naturally."
-            onSite="Pin a BS EN 60617 quick-card to the desk for the first six months of design work. After that the symbols become muscle memory."
+            onSite="Pin a IEC 60617 quick-card to the desk for the first six months of design work. After that the symbols become muscle memory."
           >
             <p>
               The high-frequency symbols on a UK commercial SLD:
@@ -628,7 +628,7 @@ export default function Sub1() {
                 circuit. Run the discrimination check with the landlord MCCB and confirm
                 cascading per the manufacturer table is acceptable. Title block shows project,
                 drawing number, Rev A first issue, drafter initials, BS 7671:2018+A4:2026 cited
-                as design basis, BS EN 60617 cited as symbol standard. Issue Rev A for client
+                as design basis, IEC 60617 cited as symbol standard. Issue Rev A for client
                 review.
               </>
             }
@@ -677,7 +677,7 @@ export default function Sub1() {
             title="Inconsistent symbols across drawings in the same pack"
             whatHappens={
               <>
-                The SLD uses the BS EN 60617 RCBO symbol; the per-DB schedule uses a
+                The SLD uses the IEC 60617 RCBO symbol; the per-DB schedule uses a
                 manufacturer-marketing RCBO icon; the layout drawings use yet another non-standard
                 icon copied from an old project. The reader has to translate between three symbol
                 sets to match the same device across the pack. Errors creep in.
@@ -685,7 +685,7 @@ export default function Sub1() {
             }
             doInstead={
               <>
-                One symbol set across the whole pack — BS EN 60617 — enforced by a shared CAD
+                One symbol set across the whole pack — IEC 60617 — enforced by a shared CAD
                 symbol library. When working in a CAD package, lock the symbol library at project
                 kick-off and require all team members to use the locked library. When working
                 hand-drawn or in mixed tooling, agree the symbol set in writing and circulate a
@@ -723,7 +723,7 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "The SLD is the spine of the design pack. Every other document — cable schedules, layouts, calc sheets, EIC — references the SLD. Get topology right first, annotations second, calc back-fill third.",
-              "BS EN 60617 is the recognised symbol set for UK electrical drawings. Use it consistently across the whole pack. Lock the CAD symbol library at project kick-off; circulate a one-page symbol legend with hand-drawn or mixed-tool packs.",
+              "IEC 60617 is the recognised symbol set for UK electrical drawings. Use it consistently across the whole pack. Lock the CAD symbol library at project kick-off; circulate a one-page symbol legend with hand-drawn or mixed-tool packs.",
               "Annotate every protective device on the SLD with type, rating, curve, breaking capacity, design Zs and regs ceiling, plus discrimination check vs upstream. The SLD is then self-checking — failures are visible.",
               "Annotate every cable with type, size, length, Reference Method and any non-typical derating factors. The cable annotations on the SLD ARE the source for the cable schedule (Sub 2).",
               "CAD layer discipline keeps the SLD readable as the project grows. At minimum: title block, topology, rating annotations, fault annotations, sub-discipline highlights, revision clouds, general notes. Toggle layers per audit purpose.",

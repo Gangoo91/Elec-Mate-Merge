@@ -65,7 +65,7 @@ export function InlineEditor({
         <button
           type="button"
           onClick={() => setEditingTitle(true)}
-          className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/35 hover:text-white/70 transition-colors"
+          className="text-[10px] font-bold uppercase tracking-[0.14em] text-white hover:text-white transition-colors"
         >
           + Edit title
         </button>
@@ -73,7 +73,7 @@ export function InlineEditor({
 
       {/* Priority chips */}
       <div className="flex flex-wrap items-center gap-1">
-        <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/35 mr-1">
+        <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white mr-1">
           Priority
         </span>
         {PRIORITY_CHOICES.map((p) => (
@@ -91,7 +91,7 @@ export function InlineEditor({
                     : p === 'low'
                       ? 'bg-white/15 text-white ring-1 ring-white/25'
                       : 'bg-elec-yellow/20 text-elec-yellow ring-1 ring-elec-yellow/40'
-                : 'bg-white/[0.04] text-white/40 hover:bg-white/[0.08] hover:text-white/80'
+                : 'bg-white/[0.04] text-white hover:bg-white/[0.08] hover:text-white'
             )}
           >
             {p}
@@ -101,7 +101,7 @@ export function InlineEditor({
 
       {/* Due date */}
       <div className="flex items-center gap-2">
-        <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/35">
+        <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white">
           {isProject ? 'Due date' : 'Due at'}
         </span>
         {showDate || dateValue ? (
@@ -125,7 +125,7 @@ export function InlineEditor({
           <button
             type="button"
             onClick={() => setShowDate(true)}
-            className="text-[10px] font-medium text-white/40 hover:text-white/70 transition-colors"
+            className="text-[10px] font-medium text-white hover:text-white transition-colors"
           >
             + Set
           </button>

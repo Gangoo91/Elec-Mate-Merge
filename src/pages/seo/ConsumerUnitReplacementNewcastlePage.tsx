@@ -604,7 +604,7 @@ export default function ConsumerUnitReplacementNewcastlePage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Newcastle | Fuse Box Upgrade"
-      description="Consumer unit replacement in Newcastle — metal enclosure requirements since 2016, costs £400–800, BS EN 61439, Part P Building Regulations…"
+      description="Consumer unit replacement in Newcastle — metal enclosure requirements since 2016, costs £400–800, BS EN 61439, Part P Building Regulations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

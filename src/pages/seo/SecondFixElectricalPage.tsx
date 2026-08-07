@@ -293,7 +293,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 514.9 requires every circuit to be identified by a label at the
+          BS 7671 Regulation 514.9.1 requires every circuit to be identified by a label at the
           distribution board. The circuit chart must show the circuit number, the circuit
           description (e.g., "Kitchen sockets", "Upstairs lighting"), the protective device type and
           rating (e.g., "32A Type B MCB"), and the cable size.

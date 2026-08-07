@@ -464,7 +464,7 @@ export default function ElectricianBournemouthPage() {
     <GuideTemplate
       localArea="Bournemouth"
       title="Electrician in Bournemouth | Find Qualified Electricians"
-      description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations…"
+      description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -20,7 +20,7 @@ export default function FutureOfElectricalTradePage() {
   return (
     <GuideTemplate
       title="Future of the Electrical Trade | Trends 2026 & Beyond"
-      description="Explore the future of the electrical trade in the UK. Covers EV charging growth, smart home technology, renewable energy, AI tools for electricians…"
+      description="Explore the future of the electrical trade in the UK. Covers EV charging growth, smart home technology, renewable energy, AI tools for electricians."
       datePublished="2025-11-01"
       dateModified="2026-05-18"
       breadcrumbs={[

@@ -598,7 +598,7 @@ export default function ElectricianLiverpoolPage() {
     <GuideTemplate
       localArea="Liverpool"
       title="Electrician in Liverpool | Qualified Electricians 2026"
-      description="Find qualified electricians in Liverpool. SP Energy Networks DNO, dock area regeneration, conservation areas, terraced house rewiring, HMO compliance…"
+      description="Find qualified electricians in Liverpool. SP Energy Networks DNO, dock area regeneration, conservation areas, terraced house rewiring, HMO compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

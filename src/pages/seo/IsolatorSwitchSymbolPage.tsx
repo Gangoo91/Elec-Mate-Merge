@@ -20,7 +20,7 @@ const tocItems = [
 const sections = [
   {
     id: 'the-symbol',
-    heading: 'Isolator (Switch-Disconnector) — BS EN 60617 Symbol',
+    heading: 'Isolator (Switch-Disconnector) — IEC 60617 Symbol',
     content: (
       <>
         <SymbolGallery
@@ -67,7 +67,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Drop this symbol into a circuit drawing"
-          description="The Elec-Mate Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
+          description="The Elec-Mate Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for EIC schedules, EICR observation diagrams…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -100,7 +100,7 @@ const relatedPages = [
   },
   {
     href: '/guides/electrical-symbols-chart',
-    title: 'BS EN 60617 Master Symbol Library',
+    title: 'IEC 60617 Master Symbol Library',
     description: 'All 114 UK electrical symbols across 11 categories — the master reference.',
     icon: 'BookOpen',
     category: 'Reference',
@@ -108,7 +108,7 @@ const relatedPages = [
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'FileCheck2',
     category: 'Guide',
   },
@@ -124,8 +124,8 @@ const relatedPages = [
 export default function IsolatorSwitchSymbolPage() {
   return (
     <GuideTemplate
-      title="Isolator Symbol | BS EN 60617 Switch-Disconnector"
-      description="Isolator (Switch-Disconnector) BS EN 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
+      title="Isolator Symbol | IEC 60617 Switch-Disconnector"
+      description="Isolator (Switch-Disconnector) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -135,15 +135,15 @@ export default function IsolatorSwitchSymbolPage() {
       heroTitle={
         <>
           Isolator (Switch-Disconnector) Symbol{' '}
-          <span className="text-yellow-400">BS EN 60617 reference</span>
+          <span className="text-yellow-400">IEC 60617 reference</span>
         </>
       }
-      heroSubtitle="Isolator switch-disconnector electrical symbol BS EN 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
+      heroSubtitle="Isolator switch-disconnector electrical symbol IEC 60617 — what it represents, where it appears in UK electrical drawings, and how it relates to the rest of the symbol library."
       readingTime={4}
       keyTakeaways={[
         'A switching device that fully isolates a circuit or item of equipment for maintenance. Must be lockable in the OFF position per BS 7671 Section 537. Different from a functional switch.',
         'Boilers, immersion heaters, EV chargers, solar PV DC isolators, sub-mains, plant equipment.',
-        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to BS EN 60617.',
+        'Every Elec-Mate certificate + circuit diagram uses this symbol where applicable, drawn to IEC 60617.',
       ]}
       sections={sections}
       faqs={[
@@ -161,7 +161,7 @@ export default function IsolatorSwitchSymbolPage() {
       faqHeading="FAQ — Isolator (Switch-Disconnector) Symbol"
       relatedPages={relatedPages}
       ctaHeading="Use this symbol in real drawings"
-      ctaSubheading="Drag and drop BS EN 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
+      ctaSubheading="Drag and drop IEC 60617 symbols into circuit diagrams, EICR observation drawings, and EIC distribution schedules. 7-day free trial."
     />
   );
 }

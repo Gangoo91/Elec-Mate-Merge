@@ -16,8 +16,24 @@
  * project working agreement.
  */
 import { useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubQuickStart,
+  HubToolGrid,
+  HubWorkList,
+  HubKpi,
+  HubKpiRow,
+  type HubTool,
+  type HubQuickAction,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
@@ -26,364 +42,36 @@ import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
-import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { VideosWatchedDetailSheet } from '@/components/apprentice/stats-detail/VideosWatchedDetailSheet';
 import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/DiaryEntriesDetailSheet';
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 import { cn } from '@/lib/utils';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
 // ─────────────────────────────────────────────────────────────────────────
 
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
-interface HeroHeadline {
-  yellow: string;
-  white: string;
-}
-
-const HEADLINES_OVERDUE: HeroHeadline[] = [
-  { yellow: "Tutor's", white: 'set work.' },
-  { yellow: 'Stuff', white: 'to catch up on.' },
-  { yellow: 'Work', white: 'waiting from college.' },
-];
-
-const HEADLINES_STREAK: HeroHeadline[] = [
-  { yellow: 'Same', white: 'time tomorrow.' },
-  { yellow: 'Day', white: 'after day.' },
-  { yellow: 'Keep', white: 'going.' },
-];
-
-const HEADLINES_HEALTHY: HeroHeadline[] = [
-  { yellow: 'Your', white: 'apprenticeship.' },
-  { yellow: 'Course,', white: 'site, log.' },
-  { yellow: "What's", white: 'on today.' },
-  { yellow: 'Training', white: 'in one place.' },
-  { yellow: 'Crack', white: 'on.' },
-];
-
-const HEADLINES_EMPTY: HeroHeadline[] = [
-  { yellow: 'Year', white: 'one.' },
-  { yellow: 'Start', white: 'here.' },
-];
-
-const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
-  const now = new Date();
-  const hour = now.getHours();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return pool[(hour + dayOfYear) % pool.length];
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Sticky masthead
-// ─────────────────────────────────────────────────────────────────────────
-
-const PageMasthead = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center h-12 gap-4 sm:gap-6">
-          <button
-            type="button"
-            onClick={() => navigate('/dashboard')}
-            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-          >
-            ← Back
-          </button>
-          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-              Apprentice
-            </span>
-            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-              Apprentice Hub
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// HeadlineStats
-// ─────────────────────────────────────────────────────────────────────────
-
-interface AppStat {
-  label: string;
-  value: string | number;
-  sub?: string;
-  accent?: boolean;
-  onClick: () => void;
-}
-
-const ApprenticeHeadlineStats = ({
-  stats,
-  loading = false,
-}: {
-  stats: AppStat[];
-  loading?: boolean;
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>01 · AT A GLANCE</Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-      {loading
-        ? stats.map((stat) => (
-            <div
-              key={stat.label}
-              className={cn(
-                'relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col',
-                stat.accent &&
-                  'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent'
-              )}
-            >
-              <div
-                className={cn(
-                  'text-[10px] font-medium uppercase tracking-[0.18em]',
-                  stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-                )}
-              >
-                {stat.label}
-              </div>
-              {/* Skeleton value — avoids flashing 0-day streak / 0% before
-                  the real figures load for a returning apprentice. */}
-              <div className="mt-3 sm:mt-4 h-10 sm:h-12 lg:h-14 w-20 rounded-md bg-white/[0.06] animate-pulse" />
-              <div className="mt-3 h-3 w-24 rounded bg-white/[0.05] animate-pulse" />
-            </div>
-          ))
-        : stats.map((stat) => {
-        const valueStr = String(stat.value);
-        const isNumericish =
-          typeof stat.value === 'number' || /^[\d.,+\-/%hkm£\s]+$/i.test(valueStr);
-        const sizeClass =
-          isNumericish && valueStr.length <= 6
-            ? 'text-4xl sm:text-5xl lg:text-[56px]'
-            : valueStr.length <= 10
-              ? 'text-3xl sm:text-4xl lg:text-5xl'
-              : 'text-2xl sm:text-3xl lg:text-4xl';
-
-        return (
-          <button
-            key={stat.label}
-            type="button"
-            onClick={stat.onClick}
-            className={cn(
-              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-[hsl(0_0%_15%)] transition-colors',
-              stat.accent &&
-                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
-            )}
-          >
-            <div
-              className={cn(
-                'text-[10px] font-medium uppercase tracking-[0.18em]',
-                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-              )}
-            >
-              {stat.label}
-            </div>
-            <span
-              className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                sizeClass,
-                stat.accent ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {stat.value}
-            </span>
-            {stat.sub && (
-              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
-                {stat.sub}
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </motion.div>
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// EditorialToolGrid
-// ─────────────────────────────────────────────────────────────────────────
-
+/**
+ * A tool entry as this page models it: a title, a line of description, and
+ * either a route or a click handler. `toHubTool` maps it onto the shared
+ * HubTool so these render as the same card as every other hub.
+ */
 interface ToolCard {
-  id: string;
-  eyebrow: string;
+  id?: string;
+  /** Category word. Carried through from the old grid; toHubTool drops it —
+      every one restated the title ("LEARN · Study Centre"). */
+  eyebrow?: string;
   title: string;
   description: string;
   to?: string;
-  href?: string;
   onClick?: () => void;
   meta?: string;
-  alert?: boolean;
-  /** Optional brand logo shown in the card header (e.g. a partner app). */
+  /** External partner tiles (TradeFox) render a logo instead of a chevron. */
   logo?: string;
+  href?: string;
 }
-
-const EditorialToolGrid = ({
-  number,
-  label,
-  cards,
-  columns = 'three',
-}: {
-  number: string;
-  label: string;
-  cards: ToolCard[];
-  columns?: 'two' | 'three' | 'four';
-}) => {
-  const navigate = useNavigate();
-  if (cards.length === 0) return null;
-
-  const colClass =
-    columns === 'two'
-      ? 'grid-cols-1 sm:grid-cols-2'
-      : columns === 'four'
-        ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-        : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
-
-  const largestColCount = columns === 'two' ? 2 : columns === 'four' ? 4 : 3;
-  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
-
-  return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-4"
-    >
-      <motion.div variants={itemVariants}>
-        <Eyebrow>
-          {number} · {label}
-        </Eyebrow>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          // Content-driven row heights; default `align-items: stretch`
-          // keeps same-row cards equal-height so the layout never crops
-          // the footer "Open" CTA on the longer card.
-          'relative grid gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          colClass
-        )}
-      >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-        {cards.map((card, i) => (
-          <button
-            key={card.id}
-            type="button"
-            onClick={() => {
-              if (card.onClick) card.onClick();
-              else if (card.href) window.open(card.href, '_blank', 'noopener,noreferrer');
-              else if (card.to) navigate(card.to);
-            }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[200px] sm:min-h-[300px] lg:min-h-[320px]"
-          >
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              {card.logo ? (
-                <img
-                  src={card.logo}
-                  alt={card.title}
-                  className="h-7 w-auto object-contain"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="flex items-baseline gap-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                    · {card.eyebrow}
-                  </span>
-                </div>
-              )}
-              {card.href ? (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/15 px-1.5 py-0.5 rounded">
-                  External
-                </span>
-              ) : card.alert ? (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
-                  Action
-                </span>
-              ) : null}
-            </div>
-
-            <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-              {card.title}
-            </h3>
-            {/* Description — line-clamp keeps the card tidy without ever
-                cropping mid-word, no max-width that forces tall wraps in
-                narrow cells. */}
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/65 line-clamp-3">
-              {card.description}
-            </p>
-
-            <div className="flex-grow min-h-[8px]" />
-
-            {/* Footer — stacks vertically by default so the Open CTA gets
-                its own line and can never be clipped by long meta text.
-                Inline only at lg+ where there's guaranteed horizontal room. */}
-            <div className="mt-4 pt-3 border-t border-white/[0.05] flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-              <span className="text-[11px] text-white/55 tabular-nums leading-tight">
-                {card.meta ?? 'Open'}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow shrink-0 self-start lg:self-auto">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </div>
-          </button>
-        ))}
-
-        {Array.from({ length: fillerCount }).map((_, i) => (
-          <div
-            key={`filler-${i}`}
-            aria-hidden
-            className="hidden lg:block bg-[hsl(0_0%_10%)]"
-          />
-        ))}
-      </motion.div>
-    </motion.section>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Main page
-// ─────────────────────────────────────────────────────────────────────────
 
 const TOUR_STEPS = [
   {
@@ -402,6 +90,28 @@ const TOUR_STEPS = [
     sub: 'Photos from the job build your portfolio — get them verified as you go.',
   },
 ] as const;
+
+
+/**
+ * ToolCard → HubTool. `meta` on these cards is mostly a verb ("Open portfolio",
+ * "Browse guidance") rather than a figure, so it is dropped: the description
+ * already says what the tool does, and a card either reports a number or says
+ * what it is for, never both.
+ */
+const NUMERIC_META = /^([\d,.]+)\s+(.+)$/;
+
+const toHubTool = (c: ToolCard): HubTool => {
+  const m = c.meta ? NUMERIC_META.exec(c.meta) : null;
+  return {
+    id: c.id ?? c.title,
+    title: c.title,
+    description: c.description,
+    to: c.to,
+    onClick: c.onClick,
+    value: m ? m[1] : undefined,
+    valueLabel: m ? m[2] : undefined,
+  };
+};
 
 export default function ApprenticeHub() {
   useSEO({
@@ -429,9 +139,6 @@ export default function ApprenticeHub() {
   // real figures are still in flight.
   const statsLoading = appLoading || diaryLoading;
   const heroLoading = appLoading || diaryLoading || quizzesLoading || ilpLoading;
-
-  // Computed once per mount — avoids `new Date()` on every render.
-  const todayEyebrow = useMemo(() => dateEyebrow(), []);
 
   const [streakOpen, setStreakOpen] = useState(false);
   const [progressOpen, setProgressOpen] = useState(false);
@@ -464,69 +171,26 @@ export default function ApprenticeHub() {
   const inProgressQuizzes = pendingQuizzes.filter((q) => q.status === 'in_progress');
   const newCount =
     notStartedQuizzes.length + rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
+  const { user } = useAuth();
+
+  // Whether the Elec-ID credential exists yet — drives the "You" card. Read
+  // here rather than inside a banner component so the card can live in a grid.
+  const { data: elecIdProfile } = useQuery({
+    queryKey: ['elec-id-banner', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      const { data } = await supabase
+        .from('profiles')
+        .select('elec_id_number')
+        .eq('id', user.id)
+        .single();
+      return data;
+    },
+    enabled: !!user?.id,
+  });
+  const hasElecId = !!elecIdProfile?.elec_id_number;
+
   const hasOverdue = overdueQuizzes.length > 0;
-
-  // ── Hero state ───────────────────────────────────────────────────────
-  const { headline, verdict, cta } = useMemo(() => {
-    if (hasOverdue) {
-      return {
-        headline: pickHeadline(HEADLINES_OVERDUE),
-        verdict: `${overdueQuizzes.length} ${overdueQuizzes.length === 1 ? 'item' : 'items'} overdue from your tutor. Catch up to keep your progress on track.`,
-        cta: { label: 'Open college plan', onClick: () => navigate('/apprentice/college-plan') },
-      };
-    }
-    if (stats.learning.currentStreak >= 2) {
-      return {
-        headline: pickHeadline(HEADLINES_STREAK),
-        verdict: `Day ${stats.learning.currentStreak} of your run. One section keeps it alive.`,
-        cta: { label: 'Resume study', onClick: () => navigate('/study-centre/apprentice') },
-      };
-    }
-    if (stats.progress.overallPercent > 0 || entries.length > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_HEALTHY),
-        verdict: `${stats.progress.overallPercent}% of your course complete · ${entries.length} diary ${entries.length === 1 ? 'entry' : 'entries'} logged.`,
-        cta: { label: 'Resume study', onClick: () => navigate('/study-centre/apprentice') },
-      };
-    }
-    return {
-      headline: pickHeadline(HEADLINES_EMPTY),
-      verdict: 'Pick a card below to get started.',
-      cta: { label: 'Open Study Centre', onClick: () => navigate('/study-centre/apprentice') },
-    };
-  }, [hasOverdue, overdueQuizzes.length, stats.learning.currentStreak, stats.progress.overallPercent, entries.length, navigate]);
-
-  // ── Stats ────────────────────────────────────────────────────────────
-  const statCells: AppStat[] = [
-    {
-      label: 'Streak',
-      value:
-        stats.learning.currentStreak === 1
-          ? '1 day'
-          : `${stats.learning.currentStreak} days`,
-      sub: stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going',
-      accent: true,
-      onClick: () => setStreakOpen(true),
-    },
-    {
-      label: 'Progress',
-      value: `${stats.progress.overallPercent}%`,
-      sub: 'Course completion',
-      onClick: () => setProgressOpen(true),
-    },
-    {
-      label: 'Videos',
-      value: totalVideos > 0 ? `${watchedCount}/${totalVideos}` : `${watchedCount}`,
-      sub: 'Watched this term',
-      onClick: () => setVideosOpen(true),
-    },
-    {
-      label: 'Diary',
-      value: entries.length,
-      sub: 'Site logbook',
-      onClick: () => setDiaryOpen(true),
-    },
-  ];
 
   // ── College plan card ────────────────────────────────────────────────
   // Brand-new account → show the three-step start-here strip until dismissed.
@@ -680,230 +344,272 @@ export default function ApprenticeHub() {
     },
   ];
 
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   *
+   * Was five sections of two, two, two, one and eight — `03 · CORE LEARNING`
+   * through `07 · TOOLS`, each with its own numbered eyebrow. Three
+   * consecutive two-card sections is not structure, it is fragmentation: the
+   * page spent more height on headings than on cards, and the grid is
+   * auto-fit at four tracks so a pair left half a row empty every time.
+   *
+   * Regrouped into fours (and one three) around what an apprentice is
+   * actually doing: learning, proving it, working, and their own record.
+   */
+  const learnCards: HubTool[] = [...coreLearning, ...examPrep].map(toHubTool);
+  const evidenceCards: HubTool[] = [
+    ...portfolio,
+    ...tools.filter((t) => t.title === 'Site diary'),
+  ].map(toHubTool);
+  const toolCards: HubTool[] = tools
+    .filter((t) => ['Calculators', 'On-the-job tools', 'Study assistant', 'Guidance area'].includes(t.title))
+    .map(toHubTool);
+  /*
+   * "You" is where My Elec-ID belongs.
+   *
+   * It was a standalone full-width banner under the tool grids — but the
+   * component is built as a GRID CARD (min-h-[110px], flex-col, a flex-grow
+   * spacer to push its footer down), so stretching it across the page left
+   * ~1,900px of empty card and put "Open" and its chevron at opposite ends of
+   * the screen: two affordances for one action, as far apart as they could be.
+   *
+   * As the fourth card here it fills the row exactly, sheds a whole section,
+   * and can say something useful — whether the credential exists yet.
+   */
+  const youCards: HubTool[] = [
+    ...tools
+      .filter((t) => ['Progression', 'Mental health', 'TradeFox'].includes(t.title))
+      .map(toHubTool),
+    {
+      id: 'elec-id',
+      title: 'My Elec-ID',
+      to: '/elec-id',
+      description: hasElecId
+        ? 'Worker-owned professional identity.'
+        : 'Get your free digital credential.',
+      alert: !hasElecId,
+    },
+  ];
+
+  // ── Start something ──────────────────────────────────────────────────
+  // The hero's CTA was the only actionable thing above the fold; it is the
+  // primary card here, with the three other things an apprentice starts.
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Study now',
+      description: hasOverdue ? 'Catch up on your tutor’s work' : 'Pick up your course',
+      onClick: () => (hasOverdue ? navigate('/apprentice/college-plan') : navigate('/study-centre/apprentice')),
+      primary: true,
+    },
+    {
+      title: 'Log a diary entry',
+      description: 'What you did on site today',
+      onClick: () => navigate('/apprentice/site-diary'),
+    },
+    {
+      title: 'Add evidence',
+      description: 'Photo or note for your portfolio',
+      onClick: () => navigate('/apprentice/hub'),
+    },
+    {
+      title: 'Log OTJ hours',
+      description: 'Off-the-job training time',
+      onClick: () => navigate('/apprentice/ojt-hub'),
+    },
+  ];
+
+  /*
+   * Needs you — only what your tutor is waiting on.
+   *
+   * The hero verdict said "3 items overdue from your tutor" as a sentence you
+   * could not act on. Each one is a row now.
+   */
+  const needsYou: HubWorkItem[] = [
+    ...overdueQuizzes.map((q) => ({
+      id: `quiz-${q.id}`,
+      title: q.title,
+      reason: 'Overdue — set by your tutor',
+      urgent: true,
+      to: '/apprentice/college-plan',
+    })),
+    ...(rollUp.unread_tutor_comments > 0
+      ? [{
+          id: 'tutor-comments',
+          title: `${rollUp.unread_tutor_comments} tutor comment${rollUp.unread_tutor_comments === 1 ? '' : 's'}`,
+          reason: 'Unread feedback on your goals',
+          to: '/apprentice/college-plan',
+        }]
+      : []),
+    ...(notStartedQuizzes.length > 0
+      ? [{
+          id: 'new-quizzes',
+          title: `${notStartedQuizzes.length} new from your tutor`,
+          reason: 'Not started yet',
+          to: '/apprentice/college-plan',
+        }]
+      : []),
+  ];
+
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
-      <PageMasthead />
+    <HubPage>
+      <HubMasthead section="Apprentice" title="Apprentice Hub" backTo="/dashboard" />
 
-      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-        {/* Hero */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative pt-2 sm:pt-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>{todayEyebrow}</Eyebrow>
-          </motion.div>
+      <HubBody>
+        {/* August Referral Race — everyone, whole campaign, not dismissible.
+            Self-hides after 31 Aug. */}
+        <ReferralRaceCard />
 
-          <motion.h1
-            variants={itemVariants}
-            className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
-          >
-            {heroLoading ? (
-              <>
-                <span className="text-elec-yellow">Your</span>{' '}
-                <span className="text-white">apprenticeship.</span>
-              </>
-            ) : (
-              <>
-                <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-                <span className="text-white">{headline.white}</span>
-              </>
-            )}
-          </motion.h1>
+        {/* Start something first — see the other hubs. */}
+        <HubQuickStart label="Start something" items={quickStart} />
 
-          {heroLoading ? (
-            <motion.div
-              variants={itemVariants}
-              className="mt-3 sm:mt-4 space-y-2 max-w-2xl"
-              aria-hidden
-            >
-              <div className="h-4 w-3/4 rounded bg-white/[0.06] animate-pulse" />
-              <div className="h-4 w-1/2 rounded bg-white/[0.05] animate-pulse" />
-            </motion.div>
-          ) : (
-            <motion.p
-              variants={itemVariants}
-              className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-            >
-              {verdict}
-            </motion.p>
-          )}
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Streak"
+            value={stats.learning.currentStreak === 1 ? '1 day' : `${stats.learning.currentStreak} days`}
+            verdict={stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going'}
+            onClick={() => setStreakOpen(true)}
+          />
+          <HubKpi
+            label="Progress"
+            value={`${stats.progress.overallPercent}%`}
+            verdict="Course completion"
+            onClick={() => setProgressOpen(true)}
+          />
+          <HubKpi
+            label="Videos"
+            value={totalVideos > 0 ? `${watchedCount}/${totalVideos}` : `${watchedCount}`}
+            verdict="Watched this term"
+            onClick={() => setVideosOpen(true)}
+          />
+          <HubKpi
+            label="Diary"
+            value={String(entries.length)}
+            verdict="Site logbook"
+            onClick={() => setDiaryOpen(true)}
+          />
+        </HubKpiRow>
 
-          {!heroLoading && cta && (
-            <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-              <button
-                type="button"
-                onClick={cta.onClick}
-                className={cn(
-                  'group inline-flex items-center gap-2 h-11 px-4 rounded-full',
-                  'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-                  'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-                )}
-              >
-                <span>{cta.label}</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-            </motion.div>
-          )}
-        </motion.section>
+        <HubWorkList items={needsYou} unit="job" />
 
-        <ApprenticeHeadlineStats stats={statCells} loading={statsLoading} />
-
-        {/* FIRST WEEK — three-step start-here strip for brand-new accounts */}
+        {/* First week — brand-new accounts only, dismissable forever. */}
         {showTour && (
-          <motion.section
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-4"
-          >
-            <motion.div variants={itemVariants} className="flex items-baseline justify-between">
-              <Eyebrow>YOUR FIRST WEEK · START HERE</Eyebrow>
+          <section className="space-y-3">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+                Your first week
+              </h2>
               <button
                 type="button"
                 onClick={dismissTour}
-                className="text-[11px] text-white/45 hover:text-white/70 touch-manipulation transition-colors"
+                className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-white touch-manipulation"
               >
                 Got it — hide
               </button>
-            </motion.div>
-            <motion.div
-              variants={itemVariants}
-              className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]"
+            </div>
+            <div
+              className={cn(
+                '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+                CARD_SURFACE
+              )}
             >
-              {TOUR_STEPS.map((step, i) => (
-                <button
-                  key={step.to}
-                  type="button"
-                  onClick={() => navigate(step.to)}
-                  className="group w-full flex items-center gap-4 p-4 sm:p-5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
-                >
-                  <span className="w-5 shrink-0 text-[13px] font-mono text-elec-yellow/80">
-                    {i + 1}
-                  </span>
-                  <span className="flex-1 min-w-0">
-                    <span className="block text-[14px] font-medium text-white group-hover:text-elec-yellow transition-colors">
-                      {step.title}
-                    </span>
-                    <span className="mt-0.5 block text-[12px] text-white/55">{step.sub}</span>
-                  </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-white/40 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              ))}
-            </motion.div>
-          </motion.section>
+              <ul className="divide-y divide-white/[0.10]">
+                {TOUR_STEPS.map((step, i) => (
+                  <li key={step.to}>
+                    <button
+                      type="button"
+                      onClick={() => navigate(step.to)}
+                      className="group flex w-full items-center gap-3.5 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] sm:px-5"
+                    >
+                      <span className="w-4 shrink-0 text-[13px] font-semibold tabular-nums text-elec-yellow">
+                        {i + 1}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {step.title}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {step.sub}
+                        </span>
+                      </span>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
         )}
 
-        {/* 02 · FROM YOUR COLLEGE — single hairline cell */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants} className="flex items-baseline justify-between">
-            <Eyebrow>02 · FROM YOUR COLLEGE</Eyebrow>
+        {/* From your college */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+              From your college
+            </h2>
             {!hasCollegeLink && !soloMode && !ilpLoading && (
               <button
                 type="button"
                 onClick={dismissCollegeCard}
-                className="text-[11px] text-white/45 hover:text-white/70 touch-manipulation transition-colors"
+                className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-white touch-manipulation"
               >
                 Not now
               </button>
             )}
-          </motion.div>
+          </div>
 
-          {!hasCollegeLink && soloMode ? (
-            <motion.div variants={itemVariants}>
-              <button
-                type="button"
-                onClick={() => navigate('/apprentice/college-plan')}
-                className="group w-full flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] transition-colors"
-              >
-                <span className="text-[12px] text-white/55">
-                  Working solo — got a college invite code? Link up any time.
-                </span>
-                <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white/40 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-            </motion.div>
-          ) : (
-          <motion.div
-            variants={itemVariants}
-            className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+          <button
+            type="button"
+            onClick={() => navigate('/apprentice/college-plan')}
+            className={cn(
+              CARD_BASE,
+              CARD_NEUTRAL,
+              'relative overflow-hidden p-4 sm:p-5',
+              hasOverdue && 'border-elec-yellow/70'
+            )}
           >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-            <button
-              type="button"
-              onClick={() => navigate('/apprentice/college-plan')}
-              className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-                    My college plan
-                  </span>
-                </div>
-                {hasOverdue ? (
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
-                    {overdueQuizzes.length} overdue
-                  </span>
-                ) : newCount > 0 ? (
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded">
-                    {newCount} new
-                  </span>
-                ) : null}
-              </div>
-              <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-                {hasCollegeLink
-                  ? 'Your goals & quizzes from college'
-                  : 'Link your college — optional'}
-              </h3>
-              <p className="text-[13px] text-white/60">{collegeDescription}</p>
-              <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
-                <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
-                  {collegeMeta}
+            <span
+              aria-hidden
+              className={cn(
+                'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
+                hasOverdue ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
+              )}
+            />
+            <span className="flex items-center justify-between gap-3">
+              <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                {hasCollegeLink ? 'Your goals & quizzes' : 'Link your college — optional'}
+              </span>
+              {hasOverdue ? (
+                <span className="shrink-0 rounded border border-elec-yellow/50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-elec-yellow">
+                  {overdueQuizzes.length} overdue
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
-                  Open
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              ) : newCount > 0 ? (
+                <span className="shrink-0 rounded border border-white/[0.30] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                  {newCount} new
                 </span>
-              </div>
-            </button>
-          </motion.div>
-          )}
-        </motion.section>
+              ) : null}
+            </span>
+            <span className="mt-1.5 text-[12px] leading-snug text-white">{collegeDescription}</span>
+            <span className="flex-grow" />
+            <span className="mt-3 text-[11.5px] font-medium text-white">{collegeMeta}</span>
+          </button>
+        </section>
 
-        <EditorialToolGrid number="03" label="CORE LEARNING" cards={coreLearning} columns="two" />
+        <HubToolGrid label="Learn" cards={learnCards} columns="four" />
 
-        <EditorialToolGrid number="04" label="EXAM PREP" cards={examPrep} columns="two" />
+        <HubToolGrid label="Evidence & hours" cards={evidenceCards} columns="four" />
 
-        <EditorialToolGrid number="05" label="PORTFOLIO & OTJ" cards={portfolio} columns="two" />
+        <HubToolGrid label="Tools" cards={toolCards} columns="four" />
 
-        {/* Elec-ID banner — kept, since it's a high-value account CTA */}
-        <motion.section variants={itemVariants}>
-          <ElecIdBanner variant="apprentice" />
-        </motion.section>
+        <HubToolGrid label="You" cards={youCards} columns="four" />
 
-        {/* 06 · LEARNING VIDEOS — existing widget, untouched */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>06 · LEARNING VIDEOS</Eyebrow>
-          </motion.div>
-          <motion.div variants={itemVariants}>
-            <LearningVideosSection />
-          </motion.div>
-        </motion.section>
-
-        <EditorialToolGrid number="07" label="TOOLS" cards={tools} columns="four" />
-      </div>
+        <section className="space-y-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            Learning videos
+          </h2>
+          <LearningVideosSection />
+        </section>
+      </HubBody>
 
       {/* Stat detail sheets */}
       <StudyStreakDetailSheet open={streakOpen} onOpenChange={setStreakOpen} />
@@ -914,6 +620,6 @@ export default function ApprenticeHub() {
         onOpenChange={setDiaryOpen}
         entries={entries}
       />
-    </div>
+    </HubPage>
   );
 }

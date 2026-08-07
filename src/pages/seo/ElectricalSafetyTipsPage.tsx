@@ -589,7 +589,7 @@ export default function ElectricalSafetyTipsPage() {
   return (
     <GuideTemplate
       title="Electrical Safety Tips | 15 Things Every Homeowner Should"
-      description="15 essential electrical safety tips for UK homeowners. Socket safety, RCD testing, cable checks, kitchen and bathroom rules, children's safety…"
+      description="15 essential electrical safety tips for UK homeowners. Socket safety, RCD testing, cable checks, kitchen and bathroom rules, children's safety."
       datePublished="2026-01-12"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

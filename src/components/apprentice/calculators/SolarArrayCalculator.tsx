@@ -19,6 +19,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { solarArrayContent } from './content/solar-array';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -352,485 +353,500 @@ const SolarArrayCalculator = () => {
       title="PV System Designer"
       description="Professional solar array design with BS 7671 compliance"
     >
-      {/* Mode Toggle */}
-      <div className="flex justify-end">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setAdvancedMode(!advancedMode)}
-          className="gap-2 h-11 text-xs border-white/20 hover:bg-white/10 text-white touch-manipulation"
-        >
-          {advancedMode ? 'Basic Mode' : 'Advanced Mode'}
-        </Button>
-      </div>
-
-      {/* Panel Selection */}
-      <CalculatorSection title="Panel Selection">
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Panel Wattage"
-            value={panelWattage}
-            onChange={setPanelWattage}
-            options={panelSpecs.wattage.map((s) => ({ value: s.value, label: s.label }))}
-            placeholder="Select wattage"
-          />
-          <CalculatorSelect
-            label="Panel Dimensions"
-            value={panelLength ? `${panelLength},${panelWidth}` : ''}
-            onChange={handlePanelSize}
-            options={panelSpecs.dimensions.map((s) => ({
-              value: `${s.length},${s.width}`,
-              label: s.label,
-            }))}
-            placeholder="Select size"
-          />
-          <CalculatorSelect
-            label="Location"
-            value={location}
-            onChange={setLocation}
-            options={Object.entries(locationData).map(([key, data]) => ({
-              value: key,
-              label: data.name,
-            }))}
-          />
-          <CalculatorInput
-            label="Custom Wattage"
-            unit="W"
-            inputMode="numeric"
-            value={panelWattage}
-            onChange={setPanelWattage}
-            placeholder="Or enter custom"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
-
-      <CalculatorSection title="Available Roof Area">
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Available Length"
-            unit="m"
-            inputMode="decimal"
-            value={availableLength}
-            onChange={setAvailableLength}
-            placeholder="e.g., 12"
-          />
-          <CalculatorInput
-            label="Available Width"
-            unit="m"
-            inputMode="decimal"
-            value={availableWidth}
-            onChange={setAvailableWidth}
-            placeholder="e.g., 8"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
-
-      {/* Advanced Options */}
-      {advancedMode && (
-        <>
-          <CalculatorSection title="Panel Electrical">
-            <CalculatorSelect
-              label="Electrical Preset"
-              value=""
-              onChange={handleElectricalPreset}
-              options={panelSpecs.electrical.map((s) => ({ value: s.label, label: s.label }))}
-              placeholder="Select preset"
-            />
-            <CalculatorInputGrid columns={3}>
-              <CalculatorInput
-                label="Voc"
-                unit="V"
-                inputMode="decimal"
-                value={panelVoc}
-                onChange={setPanelVoc}
-                placeholder="49.5"
-              />
-              <CalculatorInput
-                label="Vmpp"
-                unit="V"
-                inputMode="decimal"
-                value={panelVmpp}
-                onChange={setPanelVmpp}
-                placeholder="40.6"
-              />
-              <CalculatorInput
-                label="Impp"
-                unit="A"
-                inputMode="decimal"
-                value={panelImpp}
-                onChange={setPanelImpp}
-                placeholder="9.85"
-              />
-            </CalculatorInputGrid>
-          </CalculatorSection>
-
-          <CalculatorSection title="Inverter">
-            <CalculatorSelect
-              label="Inverter Preset"
-              value=""
-              onChange={handleInverterPreset}
-              options={inverterSpecs.map((s) => ({ value: s.label, label: s.label }))}
-              placeholder="Select inverter"
-            />
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Max Vdc"
-                unit="V"
-                inputMode="numeric"
-                value={inverterMaxVdc}
-                onChange={setInverterMaxVdc}
-                placeholder="1000"
-              />
-              <CalculatorInput
-                label="Min Vdc"
-                unit="V"
-                inputMode="numeric"
-                value={inverterMinVdc}
-                onChange={setInverterMinVdc}
-                placeholder="200"
-              />
-              <CalculatorInput
-                label="Nominal Power"
-                unit="W"
-                inputMode="numeric"
-                value={inverterNominalPower}
-                onChange={setInverterNominalPower}
-                placeholder="8000"
-              />
-              <CalculatorInput
-                label="Efficiency"
-                unit="%"
-                inputMode="decimal"
-                value={inverterEfficiency}
-                onChange={setInverterEfficiency}
-                placeholder="97"
-              />
-            </CalculatorInputGrid>
-          </CalculatorSection>
-
-          <CalculatorSection title="System Config">
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Tilt Angle"
-                unit="°"
-                inputMode="numeric"
-                value={tiltAngle}
-                onChange={setTiltAngle}
-                placeholder="35"
-              />
-              <CalculatorInput
-                label="Azimuth"
-                unit="°"
-                inputMode="numeric"
-                value={azimuthAngle}
-                onChange={setAzimuthAngle}
-                placeholder="180"
-              />
-              <CalculatorInput
-                label="Shading Loss"
-                unit="%"
-                inputMode="decimal"
-                value={shadingLoss}
-                onChange={setShadingLoss}
-                placeholder="5"
-              />
-              <CalculatorInput
-                label="Soiling Loss"
-                unit="%"
-                inputMode="decimal"
-                value={soilingLoss}
-                onChange={setSoilingLoss}
-                placeholder="3"
-              />
-            </CalculatorInputGrid>
-          </CalculatorSection>
-        </>
-      )}
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!hasValidInputs()}
-        calculateLabel="Design System"
-        showReset={!!result}
-      />
-
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={allChecksPass ? 'pass' : 'warning'}
-              label={allChecksPass ? 'All Checks Pass' : 'Issues Found'}
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">System Capacity</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {(result.totalWattage / 1000).toFixed(1)} kWp
-            </p>
-            <p className="text-sm text-white mt-2">
-              {result.totalPanels} panels | {result.totalStrings} strings
-            </p>
-          </div>
-
-          {/* Array Layout */}
-          <CalculatorSection title="Array Layout">
-            <ResultsGrid columns={2}>
-              <ResultValue
-                category={CAT}
-                label="Panels per Row"
-                value={result.panelsPerRow.toString()}
+      <CalculatorPanes
+        form={
+          <>
+            {/* Mode Toggle */}
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
                 size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Number of Rows"
-                value={result.numberOfRows.toString()}
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Panels per String"
-                value={result.panelsPerString.toString()}
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Area Efficiency"
-                value={result.areaEfficiency.toFixed(1)}
-                unit="%"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorSection>
-
-          {/* Annual Performance */}
-          <CalculatorSection title="Annual Performance">
-            <ResultsGrid columns={2}>
-              <ResultValue
-                category={CAT}
-                label="Yearly Generation"
-                value={result.yearlyGeneration.toFixed(0)}
-                unit="kWh"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Performance Ratio"
-                value={(result.performanceRatio * 100).toFixed(1)}
-                unit="%"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Daily Average"
-                value={result.dailyGeneration.toFixed(1)}
-                unit="kWh"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Inverter Sizing"
-                value={result.inverterSizing.toFixed(0)}
-                unit="%"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorSection>
-
-          {/* String Configuration */}
-          <CalculatorSection title="String Configuration">
-            <ResultsGrid columns={2}>
-              <ResultValue
-                category={CAT}
-                label="Voc (Cold)"
-                value={result.stringVocCold.toFixed(0)}
-                unit="V"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="Vmpp (Hot)"
-                value={result.stringVmppHot.toFixed(0)}
-                unit="V"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="DC Voltage Drop"
-                value={result.voltageDropDC.toFixed(2)}
-                unit="%"
-                size="sm"
-              />
-              <ResultValue
-                category={CAT}
-                label="AC Voltage Drop"
-                value={result.voltageDropAC.toFixed(2)}
-                unit="%"
-                size="sm"
-              />
-            </ResultsGrid>
-          </CalculatorSection>
-
-          {/* Compliance Checks */}
-          <CalculatorSection title="BS 7671 Compliance">
-            <div className="space-y-2">
-              {[
-                {
-                  check: result.complianceChecks.stringVoltageOK,
-                  label: 'String voltage within inverter limits',
-                  detail: `Voc: ${result.stringVocCold.toFixed(0)}V`,
-                },
-                {
-                  check: result.complianceChecks.inverterSizingOK,
-                  label: 'Inverter sizing (90-120%)',
-                  detail: `${result.inverterSizing.toFixed(0)}%`,
-                },
-                {
-                  check: result.complianceChecks.voltageDropOK,
-                  label: 'Voltage drop within limits',
-                  detail: `DC: ${result.voltageDropDC.toFixed(2)}%, AC: ${result.voltageDropAC.toFixed(2)}%`,
-                },
-                {
-                  check: result.complianceChecks.isolationDistanceOK,
-                  label: 'Isolation distances',
-                  detail: 'BS 7671 compliant',
-                },
-                {
-                  check: result.complianceChecks.mcsSizingOK,
-                  label: 'MCS requirements',
-                  detail: `${result.totalPanels} panels, ${(result.totalWattage / 1000).toFixed(1)}kWp`,
-                },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
-                  {item.check ? (
-                    <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                  ) : (
-                    <XCircle className="h-4 w-4 text-red-400 shrink-0" />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white">{item.label}</p>
-                    <p className="text-xs text-white">{item.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CalculatorSection>
-
-          <CalculatorDivider category={CAT} />
-
-          {/* How It Worked Out */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Array layout',
-                formula: `${result.panelsPerRow} × ${result.numberOfRows} = ${result.totalPanels} panels`,
-                value: `${(result.totalWattage / 1000).toFixed(1)} kWp`,
-              },
-              {
-                label: 'String configuration',
-                formula: `${result.panelsPerString} panels × ${result.totalStrings} strings`,
-                value: `Voc cold: ${result.stringVocCold.toFixed(0)}V | Vmpp hot: ${result.stringVmppHot.toFixed(0)}V`,
-              },
-              {
-                label: 'Performance ratio',
-                formula: `Product of all derating factors (shading, soiling, inverter, cable, tilt, azimuth)`,
-                value: `${(result.performanceRatio * 100).toFixed(1)}%`,
-              },
-              {
-                label: 'Annual yield',
-                formula: `${(result.totalWattage / 1000).toFixed(1)}kWp × ${locationData[location].irradiance} kWh/m²/yr × ${(result.performanceRatio * 100).toFixed(1)}%`,
-                value: `${result.yearlyGeneration.toFixed(0)} kWh/year`,
-              },
-              {
-                label: 'Voltage drop',
-                formula: `DC: ${result.voltageDropDC.toFixed(2)}% (limit 3%) | AC: ${result.voltageDropAC.toFixed(2)}% (limit 2.5%)`,
-                value: result.complianceChecks.voltageDropOK
-                  ? 'PASS'
-                  : 'FAIL — cable upgrade needed',
-              },
-            ]}
-          />
-
-          {/* What This Means */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
+                onClick={() => setAdvancedMode(!advancedMode)}
+                className="gap-2 h-11 text-xs border-white/20 hover:bg-white/10 text-white touch-manipulation"
               >
-                <p className="text-sm text-white">
-                  Performance ratio of{' '}
-                  <span className="font-medium">{(result.performanceRatio * 100).toFixed(1)}%</span>{' '}
-                  is{' '}
-                  {result.performanceRatio > 0.8
-                    ? 'excellent'
-                    : result.performanceRatio > 0.75
-                      ? 'good'
-                      : 'below average'}{' '}
-                  for UK installations.
-                </p>
-                <p className="text-sm text-white">
-                  Annual yield:{' '}
-                  <span className="font-medium">
-                    {((result.yearlyGeneration / result.totalWattage) * 1000).toFixed(0)} kWh/kWp
-                  </span>
-                </p>
-                <p className="text-sm text-white">
-                  Area utilisation of{' '}
-                  <span className="font-medium">{result.areaEfficiency.toFixed(1)}%</span> optimises
-                  available space.
-                </p>
+                {advancedMode ? 'Basic Mode' : 'Advanced Mode'}
+              </Button>
+            </div>
+
+            {/* Panel Selection */}
+            <CalculatorSection title="Panel Selection">
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Panel Wattage"
+                  value={panelWattage}
+                  onChange={setPanelWattage}
+                  options={panelSpecs.wattage.map((s) => ({ value: s.value, label: s.label }))}
+                  placeholder="Select wattage"
+                />
+                <CalculatorSelect
+                  label="Panel Dimensions"
+                  value={panelLength ? `${panelLength},${panelWidth}` : ''}
+                  onChange={handlePanelSize}
+                  options={panelSpecs.dimensions.map((s) => ({
+                    value: `${s.length},${s.width}`,
+                    label: s.label,
+                  }))}
+                  placeholder="Select size"
+                />
+                <CalculatorSelect
+                  label="Location"
+                  value={location}
+                  onChange={setLocation}
+                  options={Object.entries(locationData).map(([key, data]) => ({
+                    value: key,
+                    label: data.name,
+                  }))}
+                />
+                <CalculatorInput
+                  label="Custom Wattage"
+                  unit="W"
+                  inputMode="numeric"
+                  value={panelWattage}
+                  onChange={setPanelWattage}
+                  placeholder="Or enter custom"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
+
+            <CalculatorSection title="Available Roof Area">
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Available Length"
+                  unit="m"
+                  inputMode="decimal"
+                  value={availableLength}
+                  onChange={setAvailableLength}
+                  placeholder="e.g., 12"
+                />
+                <CalculatorInput
+                  label="Available Width"
+                  unit="m"
+                  inputMode="decimal"
+                  value={availableWidth}
+                  onChange={setAvailableWidth}
+                  placeholder="e.g., 8"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
+
+            {/* Advanced Options */}
+            {advancedMode && (
+              <>
+                <CalculatorSection title="Panel Electrical">
+                  <CalculatorSelect
+                    label="Electrical Preset"
+                    value=""
+                    onChange={handleElectricalPreset}
+                    options={panelSpecs.electrical.map((s) => ({ value: s.label, label: s.label }))}
+                    placeholder="Select preset"
+                  />
+                  <CalculatorInputGrid columns={3}>
+                    <CalculatorInput
+                      label="Voc"
+                      unit="V"
+                      inputMode="decimal"
+                      value={panelVoc}
+                      onChange={setPanelVoc}
+                      placeholder="49.5"
+                    />
+                    <CalculatorInput
+                      label="Vmpp"
+                      unit="V"
+                      inputMode="decimal"
+                      value={panelVmpp}
+                      onChange={setPanelVmpp}
+                      placeholder="40.6"
+                    />
+                    <CalculatorInput
+                      label="Impp"
+                      unit="A"
+                      inputMode="decimal"
+                      value={panelImpp}
+                      onChange={setPanelImpp}
+                      placeholder="9.85"
+                    />
+                  </CalculatorInputGrid>
+                </CalculatorSection>
+
+                <CalculatorSection title="Inverter">
+                  <CalculatorSelect
+                    label="Inverter Preset"
+                    value=""
+                    onChange={handleInverterPreset}
+                    options={inverterSpecs.map((s) => ({ value: s.label, label: s.label }))}
+                    placeholder="Select inverter"
+                  />
+                  <CalculatorInputGrid columns={2}>
+                    <CalculatorInput
+                      label="Max Vdc"
+                      unit="V"
+                      inputMode="numeric"
+                      value={inverterMaxVdc}
+                      onChange={setInverterMaxVdc}
+                      placeholder="1000"
+                    />
+                    <CalculatorInput
+                      label="Min Vdc"
+                      unit="V"
+                      inputMode="numeric"
+                      value={inverterMinVdc}
+                      onChange={setInverterMinVdc}
+                      placeholder="200"
+                    />
+                    <CalculatorInput
+                      label="Nominal Power"
+                      unit="W"
+                      inputMode="numeric"
+                      value={inverterNominalPower}
+                      onChange={setInverterNominalPower}
+                      placeholder="8000"
+                    />
+                    <CalculatorInput
+                      label="Efficiency"
+                      unit="%"
+                      inputMode="decimal"
+                      value={inverterEfficiency}
+                      onChange={setInverterEfficiency}
+                      placeholder="97"
+                    />
+                  </CalculatorInputGrid>
+                </CalculatorSection>
+
+                <CalculatorSection title="System Config">
+                  <CalculatorInputGrid columns={2}>
+                    <CalculatorInput
+                      label="Tilt Angle"
+                      unit="°"
+                      inputMode="numeric"
+                      value={tiltAngle}
+                      onChange={setTiltAngle}
+                      placeholder="35"
+                    />
+                    <CalculatorInput
+                      label="Azimuth"
+                      unit="°"
+                      inputMode="numeric"
+                      value={azimuthAngle}
+                      onChange={setAzimuthAngle}
+                      placeholder="180"
+                    />
+                    <CalculatorInput
+                      label="Shading Loss"
+                      unit="%"
+                      inputMode="decimal"
+                      value={shadingLoss}
+                      onChange={setShadingLoss}
+                      placeholder="5"
+                    />
+                    <CalculatorInput
+                      label="Soiling Loss"
+                      unit="%"
+                      inputMode="decimal"
+                      value={soilingLoss}
+                      onChange={setSoilingLoss}
+                      placeholder="3"
+                    />
+                  </CalculatorInputGrid>
+                </CalculatorSection>
+              </>
+            )}
+
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!hasValidInputs()}
+              calculateLabel="Design System"
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={allChecksPass ? 'pass' : 'warning'}
+                    label={allChecksPass ? 'All Checks Pass' : 'Issues Found'}
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">System Capacity</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {(result.totalWattage / 1000).toFixed(1)} kWp
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {result.totalPanels} panels | {result.totalStrings} strings
+                  </p>
+                </div>
+
+                {/* Array Layout */}
+                <CalculatorSection title="Array Layout">
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      category={CAT}
+                      label="Panels per Row"
+                      value={result.panelsPerRow.toString()}
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Number of Rows"
+                      value={result.numberOfRows.toString()}
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Panels per String"
+                      value={result.panelsPerString.toString()}
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Area Efficiency"
+                      value={result.areaEfficiency.toFixed(1)}
+                      unit="%"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+                </CalculatorSection>
+
+                {/* Annual Performance */}
+                <CalculatorSection title="Annual Performance">
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      category={CAT}
+                      label="Yearly Generation"
+                      value={result.yearlyGeneration.toFixed(0)}
+                      unit="kWh"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Performance Ratio"
+                      value={(result.performanceRatio * 100).toFixed(1)}
+                      unit="%"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Daily Average"
+                      value={result.dailyGeneration.toFixed(1)}
+                      unit="kWh"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Inverter Sizing"
+                      value={result.inverterSizing.toFixed(0)}
+                      unit="%"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+                </CalculatorSection>
+
+                {/* String Configuration */}
+                <CalculatorSection title="String Configuration">
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      category={CAT}
+                      label="Voc (Cold)"
+                      value={result.stringVocCold.toFixed(0)}
+                      unit="V"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="Vmpp (Hot)"
+                      value={result.stringVmppHot.toFixed(0)}
+                      unit="V"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="DC Voltage Drop"
+                      value={result.voltageDropDC.toFixed(2)}
+                      unit="%"
+                      size="sm"
+                    />
+                    <ResultValue
+                      category={CAT}
+                      label="AC Voltage Drop"
+                      value={result.voltageDropAC.toFixed(2)}
+                      unit="%"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+                </CalculatorSection>
+
+                {/* Compliance Checks */}
+                <CalculatorSection title="BS 7671 Compliance">
+                  <div className="space-y-2">
+                    {[
+                      {
+                        check: result.complianceChecks.stringVoltageOK,
+                        label: 'String voltage within inverter limits',
+                        detail: `Voc: ${result.stringVocCold.toFixed(0)}V`,
+                      },
+                      {
+                        check: result.complianceChecks.inverterSizingOK,
+                        label: 'Inverter sizing (90-120%)',
+                        detail: `${result.inverterSizing.toFixed(0)}%`,
+                      },
+                      {
+                        check: result.complianceChecks.voltageDropOK,
+                        label: 'Voltage drop within limits',
+                        detail: `DC: ${result.voltageDropDC.toFixed(2)}%, AC: ${result.voltageDropAC.toFixed(2)}%`,
+                      },
+                      {
+                        check: result.complianceChecks.isolationDistanceOK,
+                        label: 'Isolation distances',
+                        detail: 'BS 7671 compliant',
+                      },
+                      {
+                        check: result.complianceChecks.mcsSizingOK,
+                        label: 'MCS requirements',
+                        detail: `${result.totalPanels} panels, ${(result.totalWattage / 1000).toFixed(1)}kWp`,
+                      },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
+                        {item.check ? (
+                          <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                        ) : (
+                          <XCircle className="h-4 w-4 text-red-400 shrink-0" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-white">{item.label}</p>
+                          <p className="text-xs text-white">{item.detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CalculatorSection>
+
+                <CalculatorDivider category={CAT} />
+
+                {/* How It Worked Out */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Array layout',
+                      formula: `${result.panelsPerRow} × ${result.numberOfRows} = ${result.totalPanels} panels`,
+                      value: `${(result.totalWattage / 1000).toFixed(1)} kWp`,
+                    },
+                    {
+                      label: 'String configuration',
+                      formula: `${result.panelsPerString} panels × ${result.totalStrings} strings`,
+                      value: `Voc cold: ${result.stringVocCold.toFixed(0)}V | Vmpp hot: ${result.stringVmppHot.toFixed(0)}V`,
+                    },
+                    {
+                      label: 'Performance ratio',
+                      formula: `Product of all derating factors (shading, soiling, inverter, cable, tilt, azimuth)`,
+                      value: `${(result.performanceRatio * 100).toFixed(1)}%`,
+                    },
+                    {
+                      label: 'Annual yield',
+                      formula: `${(result.totalWattage / 1000).toFixed(1)}kWp × ${locationData[location].irradiance} kWh/m²/yr × ${(result.performanceRatio * 100).toFixed(1)}%`,
+                      value: `${result.yearlyGeneration.toFixed(0)} kWh/year`,
+                    },
+                    {
+                      label: 'Voltage drop',
+                      formula: `DC: ${result.voltageDropDC.toFixed(2)}% (limit 3%) | AC: ${result.voltageDropAC.toFixed(2)}% (limit 2.5%)`,
+                      value: result.complianceChecks.voltageDropOK
+                        ? 'PASS'
+                        : 'FAIL — cable upgrade needed',
+                    },
+                  ]}
+                />
+
+                {/* What This Means */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <p className="text-sm text-white">
+                        Performance ratio of{' '}
+                        <span className="font-medium">
+                          {(result.performanceRatio * 100).toFixed(1)}%
+                        </span>{' '}
+                        is{' '}
+                        {result.performanceRatio > 0.8
+                          ? 'excellent'
+                          : result.performanceRatio > 0.75
+                            ? 'good'
+                            : 'below average'}{' '}
+                        for UK installations.
+                      </p>
+                      <p className="text-sm text-white">
+                        Annual yield:{' '}
+                        <span className="font-medium">
+                          {((result.yearlyGeneration / result.totalWattage) * 1000).toFixed(0)}{' '}
+                          kWh/kWp
+                        </span>
+                      </p>
+                      <p className="text-sm text-white">
+                        Area utilisation of{' '}
+                        <span className="font-medium">{result.areaEfficiency.toFixed(1)}%</span>{' '}
+                        optimises available space.
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Grounded standards + worked example */}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+            )}
 
-          {/* Grounded standards + worked example */}
-          <CalculatorEditorial content={solarArrayContent} category={CAT} />
-        </div>
-      )}
-
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="PV Annual Yield"
-        formula="E_annual = P_peak × G_annual × PR / 1000"
-        variables={[
-          { symbol: 'P_peak', description: 'System peak power (Wp)' },
-          { symbol: 'G_annual', description: 'Annual irradiance (kWh/m²/yr)' },
-          { symbol: 'PR', description: 'Performance ratio = product of all derating factors' },
-        ]}
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="PV Annual Yield"
+              formula="E_annual = P_peak × G_annual × PR / 1000"
+              variables={[
+                { symbol: 'P_peak', description: 'System peak power (Wp)' },
+                { symbol: 'G_annual', description: 'Annual irradiance (kWh/m²/yr)' },
+                {
+                  symbol: 'PR',
+                  description: 'Performance ratio = product of all derating factors',
+                },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={solarArrayContent} category={CAT} />}
       />
     </CalculatorCard>
   );

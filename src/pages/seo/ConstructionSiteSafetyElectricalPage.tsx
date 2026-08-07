@@ -659,7 +659,7 @@ export default function ConstructionSiteSafetyElectricalPage() {
   return (
     <GuideTemplate
       title="Construction Site Electrical Safety | CDM Guide"
-      description="Complete guide to construction site electrical safety for UK electricians. CDM 2015 duties, 110V reduced voltage systems, temporary distribution…"
+      description="Complete guide to construction site electrical safety for UK electricians. CDM 2015 duties, 110V reduced voltage systems, temporary distribution."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

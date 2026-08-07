@@ -21,7 +21,7 @@ const subsections = [
   },
   {
     number: '2.3',
-    title: 'BS EN 60617 drawing symbols (2.3)',
+    title: 'IEC 60617 drawing symbols (2.3)',
     description:
       'The standardised symbols you read on every UK installation drawing — switches, sockets, lights, protection.',
     icon: Hash,
@@ -53,7 +53,7 @@ export default function Section2() {
       moduleNumber={3}
       sectionNumber={2}
       title="Technical information and drawings"
-      description="Where to find the technical information you need on a job, the different drawing types you'll see, the BS EN 60617 symbol set and how to convert drawing scale to real-world dimensions. Aligned to LO2 of Unit 203."
+      description="Where to find the technical information you need on a job, the different drawing types you'll see, the IEC 60617 symbol set and how to convert drawing scale to real-world dimensions. Aligned to LO2 of Unit 203."
       tone="emerald"
       subsectionsCount={subsections.length}
       prevSectionHref="../section1"
@@ -72,7 +72,7 @@ export default function Section2() {
             Sub 2.1 covers the sources you'll meet — specs, manuals, drawings,
             RAMS, BS 7671 itself. Sub 2.2 introduces the six drawing types you'll
             see on UK installs (block, schematic, wiring, circuit, layout,
-            as-built). Sub 2.3 is the BS EN 60617 symbol library — the visual
+            as-built). Sub 2.3 is the IEC 60617 symbol library — the visual
             shorthand every drawing uses. Sub 2.4 closes with scale conversion:
             turning a 1:50 or 1:100 drawing back into the metres you'll measure on
             the floor.

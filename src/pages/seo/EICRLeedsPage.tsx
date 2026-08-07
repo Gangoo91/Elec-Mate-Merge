@@ -639,7 +639,7 @@ export default function EICRLeedsPage() {
   return (
     <GuideTemplate
       title="EICR Leeds | Electrical Inspection Certificate 2026"
-      description="EICR costs in Leeds for 2026. Landlord legal requirements, student HMO licensing, back-to-back terrace challenges, observation codes…"
+      description="EICR costs in Leeds for 2026. Landlord legal requirements, student HMO licensing, back-to-back terrace challenges, observation codes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

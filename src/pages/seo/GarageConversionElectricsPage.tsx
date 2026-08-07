@@ -762,7 +762,7 @@ export default function GarageConversionElectricsPage() {
   return (
     <GuideTemplate
       title="Garage Conversion Electrics | Electrical Guide UK 2026"
-      description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits…"
+      description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

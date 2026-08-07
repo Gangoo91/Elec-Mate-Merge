@@ -21,7 +21,6 @@ import { EmailCertificateDialog } from '@/components/certificate-completion/Emai
 import { useCustomers } from '@/hooks/useCustomers';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAppReview } from '@/hooks/useAppReview';
-import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
 import { useReferralPrompt } from '@/hooks/useReferralPrompt';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import {
@@ -128,7 +127,7 @@ const EICRSummary = ({
   // 'approved' + hash mismatch = edited after approval; 'pending' = not yet reviewed.
   const { data: qsReviewStatus } = useQsReviewStatus(effectiveReportId);
   const haptic = useHaptic();
-  const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
+  const { recordPositiveAction } = useAppReview();
   const {
     recordPositiveAction: recordReferralAction,
     showReferralPrompt,
@@ -781,7 +780,23 @@ const EICRSummary = ({
     label: e.message,
     where: STEP_LABEL[e.tab] || 'Issue',
   }));
-  const showCompletionHint = missingItems.length > 0 && qsReviewStatus?.status !== 'approved';
+
+  /*
+   * Things worth knowing that do not stop you issuing.
+   *
+   * The gate has always produced these — untested circuits, unrecorded bonding,
+   * a C2 with no description, an email address that cannot receive the
+   * certificate — and nothing has ever rendered them. Computing a warning and
+   * showing it to no one is the same as not checking. They sit below the
+   * blocking list, visually quieter, and never gate the button: an EICR can be
+   * legitimately issued with any of them outstanding.
+   */
+  const advisoryItems = eicrValidation.warnings.map((w) => ({
+    label: w.message,
+    where: STEP_LABEL[w.tab] || 'Issue',
+  }));
+  const showCompletionHint =
+    (missingItems.length > 0 || advisoryItems.length > 0) && qsReviewStatus?.status !== 'approved';
 
   // Section completion chips — same derivation as the shell's step ticks
   // (no validation errors for that step), so a tab full of auto-seeded blank
@@ -1419,8 +1434,9 @@ const EICRSummary = ({
             }}
             className="w-full min-h-11 flex items-center text-left text-[12px] font-medium text-elec-yellow touch-manipulation"
           >
-            {missingItems.length} item{missingItems.length === 1 ? '' : 's'} to complete before
-            generating — tap to see
+            {missingItems.length > 0
+              ? `${missingItems.length} item${missingItems.length === 1 ? '' : 's'} to complete before generating — tap to see`
+              : `${advisoryItems.length} thing${advisoryItems.length === 1 ? '' : 's'} worth checking before you issue — tap to see`}
           </button>
         )}
 
@@ -1482,11 +1498,15 @@ const EICRSummary = ({
           <div className="flex flex-col h-full bg-background">
             <div className="px-4 pt-4 pb-3 border-b border-white/[0.1]">
               <SheetTitle className="text-white text-left">
-                {missingItems.length} item{missingItems.length === 1 ? '' : 's'} to complete
+                {missingItems.length > 0
+                  ? `${missingItems.length} item${missingItems.length === 1 ? '' : 's'} to complete`
+                  : 'Before you issue'}
               </SheetTitle>
             </div>
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-              <p className="text-[12px] text-white">Finish these then tap Generate again.</p>
+              {missingItems.length > 0 && (
+                <p className="text-[12px] text-white">Finish these then tap Generate again.</p>
+              )}
               <div className="space-y-1.5">
                 {missingItems.map((item) => (
                   <div
@@ -1500,6 +1520,24 @@ const EICRSummary = ({
                   </div>
                 ))}
               </div>
+              {advisoryItems.length > 0 && (
+                <div className="space-y-1.5 pt-1">
+                  <p className="text-[12px] font-semibold text-white">
+                    Worth checking — these do not stop you issuing
+                  </p>
+                  {advisoryItems.map((item) => (
+                    <div
+                      key={item.label}
+                      className="px-3 py-2 rounded-xl border border-amber-400/25 bg-amber-400/[0.07]"
+                    >
+                      <span className="text-sm text-white">{item.label}</span>
+                      <span className="ml-2 text-[12px] font-semibold text-amber-300">
+                        {item.where}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
               <button
                 type="button"
                 onClick={() => setShowMissingSheet(false)}
@@ -1629,7 +1667,6 @@ const EICRSummary = ({
           setShowEstimatorSheet(false);
         }}
       />
-      <AppReviewPromptSheet open={showReviewPrompt} onRate={handleRate} onDismiss={handleDismiss} />
       <ReferralShareSheet
         open={showReferralPrompt}
         onOpenChange={(open) => !open && handleReferralClose()}

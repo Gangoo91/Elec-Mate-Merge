@@ -24,10 +24,7 @@ import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   PageFrame,
   PageHero,
-  HeroNumber,
   StatStrip,
-  AlertRow,
-  Divider,
   ListCard,
   ListCardHeader,
   ListBody,
@@ -122,6 +119,34 @@ interface StripeStats {
 }
 
 /* ── engagement ring (kept local — used inside rows) ─────── */
+
+/**
+ * When somebody signed up, in words you can act on.
+ *
+ * "39 minutes ago" tells you it was recent but not whether it landed during
+ * the working day — and it was hidden on mobile entirely. Day and clock time
+ * show the pattern; a run of 11pm signups reads very differently from a run
+ * at 8am. The relative form stays alongside it.
+ */
+function signupWhen(iso: string): { when: string; relative: string } {
+  const d = new Date(iso);
+  const now = new Date();
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+
+  const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const day =
+    d.toDateString() === now.toDateString()
+      ? 'Today'
+      : d.toDateString() === yesterday.toDateString()
+        ? 'Yesterday'
+        : d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+
+  return {
+    when: `${day}, ${time}`,
+    relative: formatDistanceToNow(d, { addSuffix: true }).replace('about ', ''),
+  };
+}
 
 function EngagementRing({ score, size = 28 }: { score: number; size?: number }) {
   const colour = getScoreColor(score);
@@ -294,6 +319,29 @@ export default function AdminDashboard() {
     staleTime: 5 * 60 * 1000,
   });
 
+  /*
+   * The true at-risk count, not the page size.
+   *
+   * The header read `atRiskSubs.length`, which is capped by the RPC's
+   * p_limit of 50 — so 150 quiet payers displayed as "50" and would have
+   * stayed at 50 however much worse it got.
+   */
+  const { data: atRiskTotal } = useQuery({
+    queryKey: ['admin-at-risk-count'],
+    queryFn: async () => {
+      // The generated Supabase types are regenerated on a schedule and do not
+      // know this function yet — same reason the get_at_risk_subscribers call
+      // above casts.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await supabase.rpc('count_at_risk_subscribers' as any, {
+        p_days: 30,
+      });
+      if (error) throw error;
+      return (data as number) ?? 0;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   const syncRC = async () => {
     setSyncing(true);
     try {
@@ -335,10 +383,19 @@ export default function AdminDashboard() {
       const [totalUsersRes, signupsTodayRes, signupsWeekRes, activeTodayRes, trialDataRes] =
         await Promise.all([
           supabase.from('profiles').select('*', { count: 'exact', head: true }),
+          /*
+           * Signups today.
+           *
+           * This filtered on `subscription_start`, not `created_at` — so it
+           * counted people whose SUBSCRIPTION began today, missed everyone who
+           * signed up today without paying, and included anyone who joined a
+           * year ago and subscribed this morning. Live check on 7 Aug: 3 real
+           * signups, 6 reported.
+           */
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
-            .gte('subscription_start', today.toISOString()),
+            .gte('created_at', today.toISOString()),
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
@@ -496,8 +553,22 @@ export default function AdminDashboard() {
   const stripeTrials = stripeStats?.stripe.trialingSubscriptions || 0;
   const totalTrials = rcActiveTrials + stripeTrials;
 
+  /*
+   * People who started a checkout and never finished.
+   *
+   * This was every one of them, ever — 542 at the time of writing, sitting in
+   * a block headed "Needs you today". A backlog that can never reach zero
+   * teaches you to ignore the section it lives in. Somebody who dropped out
+   * this week is worth an email; somebody who dropped out two years ago is
+   * not, so the actionable count is the recent one and the full list stays a
+   * click away on the incomplete-signup page.
+   */
   const abandonedCheckouts =
     baseUsers?.filter((u) => u.stripe_customer_id && !u.subscribed && !u.free_access_granted) || [];
+
+  const abandonedThisWeek = abandonedCheckouts.filter(
+    (u) => new Date(u.created_at).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
+  );
 
   const recentSubscriptions = (() => {
     const allSubs = [...(stripeStats?.subscriptions || []), ...(stripeStats?.trialingList || [])];
@@ -527,7 +598,15 @@ export default function AdminDashboard() {
   const now = new Date();
   const in24h = new Date(now.getTime() + 24 * 60 * 60 * 1000);
   const in48h = new Date(now.getTime() + 48 * 60 * 60 * 1000);
-  const in72h = new Date(now.getTime() + 72 * 60 * 60 * 1000);
+  /*
+   * "This week" meant 48–72 hours.
+   *
+   * The third bucket ran to `in72h` and was labelled "this week", so a trial
+   * ending in four days appeared nowhere at all — the one warning window long
+   * enough to actually do something about. It now runs to seven days, which
+   * is what the label always claimed.
+   */
+  const in7d = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
   const activeTrialUsers = (rcStats?.trialUsers || []).filter(
     (t) => !t.is_cancelled && t.trial_end
   );
@@ -538,7 +617,7 @@ export default function AdminDashboard() {
   }).length;
   const expiringThisWeek = activeTrialUsers.filter((t) => {
     const end = parseISO(t.trial_end!);
-    return end > in48h && end <= in72h;
+    return end > in48h && end <= in7d;
   }).length;
   const hasExpiringTrials = expiringToday + expiringTomorrow + expiringThisWeek > 0;
 
@@ -602,109 +681,156 @@ export default function AdminDashboard() {
           }
         />
 
-        {/* Alerts ─────────────────────────────────────────── */}
-        {(hasExpiringTrials || (pendingCounts?.unreadMessages ?? 0) > 0) && (
-          <div className="space-y-2.5">
-            {hasExpiringTrials && (
-              <AlertRow
-                tone="orange"
-                title="Trials Expiring"
-                subtitle={expiringSummary || 'Upcoming trial expirations'}
-                trailing={
-                  <Pill tone="orange">{expiringToday + expiringTomorrow + expiringThisWeek}</Pill>
-                }
-                onClick={() =>
-                  mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }
-              />
-            )}
-          </div>
-        )}
+        {/*
+          One command bar, not a hero.
 
-        {/* Revenue hero ──────────────────────────────────── */}
-        <HeroNumber
-          eyebrow="Live Revenue"
-          live
-          onClick={() => navigate('/admin/revenue')}
-          value={<AnimatedCounter value={mrr} prefix="£" decimals={2} />}
-          caption="Monthly Recurring Revenue"
-          columns={[
-            {
-              label: 'Paying',
-              value: <AnimatedCounter value={allPaying} />,
-              tone: 'yellow',
-            },
-            {
-              label: 'ARR',
-              value: (
-                <AnimatedCounter
-                  value={arr / 1000}
-                  prefix="£"
-                  suffix="k"
-                  decimals={arr >= 10000 ? 0 : 1}
-                />
-              ),
-            },
+          This was a 52px revenue card with 90% empty space, then a separate
+          four-cell strip underneath. Both said the same kind of thing — a
+          number and a label — so they are one row now, and the row stays
+          readable at any width instead of reflowing into a column of giants.
+
+          MRR keeps the largest type because it is the one figure the page
+          exists to report; the rest are peers.
+        */}
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.10] sm:grid-cols-3 lg:grid-cols-6">
+          <button
+            onClick={() => navigate('/admin/revenue')}
+            className="col-span-2 bg-[hsl(0_0%_10%)] px-4 py-4 text-left transition-colors hover:bg-[hsl(0_0%_13%)] touch-manipulation sm:col-span-3 lg:col-span-2"
+          >
+            <span className="flex items-center gap-1.5">
+              <PulseDot tone="green" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                Monthly recurring
+              </span>
+            </span>
+            <span className="mt-1.5 block text-[30px] font-semibold leading-none tracking-tight text-white tabular-nums sm:text-[34px]">
+              <AnimatedCounter value={mrr} prefix="£" decimals={2} />
+            </span>
+            <span className="mt-1.5 block text-[11.5px] text-white tabular-nums">
+              £{Math.round(arr / 1000)}k a year · {totalSubs} Stripe · {appStoreSubs} App Store ·{' '}
+              {playStoreSubs} Play
+            </span>
+          </button>
+
+          {[
+            { label: 'Paying', value: allPaying, to: '/admin/revenue', accent: true },
             {
               label: 'Founders',
-              value: <AnimatedCounter value={stripeStats?.stripe.tierCounts?.founder || 0} />,
-              tone: 'yellow',
+              value: stripeStats?.stripe.tierCounts?.founder || 0,
+              to: '/admin/founders',
             },
-          ]}
-          legend={[
-            { label: 'Stripe', value: totalSubs, tone: 'purple' },
-            { label: 'App Store', value: appStoreSubs, tone: 'blue' },
-            { label: 'Play Store', value: playStoreSubs, tone: 'green' },
-          ]}
-        />
+            {
+              label: 'Signed up today',
+              value: stats?.signupsToday || 0,
+              to: '/admin/users?filter=today',
+            },
+            { label: 'Users', value: stats?.totalUsers || 0, to: '/admin/users' },
+            {
+              label: 'Active today',
+              value: stats?.activeToday || 0,
+              to: '/admin/users?filter=active',
+            },
+          ].map((m) => (
+            <button
+              key={m.label}
+              onClick={() => navigate(m.to)}
+              className="bg-[hsl(0_0%_10%)] px-4 py-4 text-left transition-colors hover:bg-[hsl(0_0%_13%)] touch-manipulation"
+            >
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                {m.label}
+              </span>
+              <span
+                className={cn(
+                  'mt-1.5 block text-[24px] font-semibold leading-none tabular-nums',
+                  m.accent ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                <AnimatedCounter value={m.value} />
+              </span>
+            </button>
+          ))}
+        </div>
 
-        {/* Quick stats ───────────────────────────────────── */}
-        <StatStrip
-          columns={4}
-          stats={[
-            {
-              label: 'Users',
-              value: <AnimatedCounter value={stats?.totalUsers || 0} />,
-              onClick: () => navigate('/admin/users'),
-            },
-            {
-              label: 'Active',
-              value: <AnimatedCounter value={stats?.activeToday || 0} />,
-              tone: 'green',
-              onClick: () => navigate('/admin/users?filter=active'),
-            },
-            {
-              label: 'Today',
-              value: <AnimatedCounter value={stats?.signupsToday || 0} />,
-              onClick: () => navigate('/admin/users?filter=today'),
-            },
-            {
-              label: 'Trial',
-              value: <AnimatedCounter value={totalTrials} />,
-              tone: 'orange',
-              onClick: () => navigate('/admin/users?filter=trial'),
-            },
-          ]}
-        />
+        {/*
+          Needs you today.
 
-        {/* Abandoned checkouts ──────────────────────────── */}
-        {abandonedCheckouts.length > 0 && (
-          <AlertRow
-            tone="amber"
-            title="Abandoned Checkouts"
-            subtitle="Started checkout, never subscribed"
-            trailing={<Pill tone="amber">{abandonedCheckouts.length}</Pill>}
-            onClick={() => navigate('/admin/incomplete-signup')}
-          />
+          The trials, the abandoned checkouts and the unread messages were three
+          separate alert rows scattered down the page with other content between
+          them. They are the only things on this dashboard anyone has to ACT on,
+          so they sit together, directly under the numbers, and the block
+          disappears entirely on a quiet day.
+        */}
+        {(hasExpiringTrials ||
+          abandonedThisWeek.length > 0 ||
+          (pendingCounts?.unreadMessages ?? 0) > 0) && (
+          <ListCard>
+            <ListCardHeader tone="orange" title="Needs you today" />
+            <ListBody>
+              {hasExpiringTrials && (
+                <ListRow
+                  accent="orange"
+                  title="Trials expiring"
+                  subtitle={expiringSummary || 'Upcoming trial expirations'}
+                  trailing={
+                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
+                      {expiringToday + expiringTomorrow + expiringThisWeek}
+                    </span>
+                  }
+                  onClick={() =>
+                    mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
+                />
+              )}
+              {abandonedThisWeek.length > 0 && (
+                <ListRow
+                  accent="orange"
+                  title="Abandoned checkouts"
+                  subtitle={`Started this week, never subscribed · ${abandonedCheckouts.length} all time`}
+                  trailing={
+                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
+                      {abandonedThisWeek.length}
+                    </span>
+                  }
+                  onClick={() => navigate('/admin/incomplete-signup')}
+                />
+              )}
+              {(pendingCounts?.unreadMessages ?? 0) > 0 && (
+                <ListRow
+                  accent="orange"
+                  title="Unread messages"
+                  subtitle="Waiting on a reply from you"
+                  trailing={
+                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
+                      {pendingCounts?.unreadMessages}
+                    </span>
+                  }
+                  onClick={() => navigate('/admin/user-messages')}
+                />
+              )}
+            </ListBody>
+          </ListCard>
         )}
 
-        <Divider label="Activity" />
+        {/*
+          Two columns from lg — CSS columns, not a grid.
+
+          A grid places items in source order: first left, second right, third
+          left. With ten cards of wildly different heights that leaves holes —
+          a tall "Recently left" beside a two-row stat strip stranded the whole
+          right-hand column with about 500px of nothing under it.
+
+          `columns-2` flows instead: each card drops into whichever column has
+          room, so the two sides finish level and there is no void. Children
+          need `break-inside-avoid` or a card will be sliced in half across the
+          column boundary — that is what the wrapper below is for.
+        */}
+        <div className="lg:columns-2 lg:gap-6 [&>*]:mb-5 lg:[&>*]:mb-6 [&>*]:break-inside-avoid">
 
         {/* Live users ────────────────────────────────────── */}
         <ListCard>
           <ListCardHeader
             tone="green"
-            title="Live Now"
+            title="On the app now"
             meta={
               <span className="flex items-center gap-1.5">
                 <PulseDot tone="green" />
@@ -729,7 +855,7 @@ export default function AdminDashboard() {
               {liveHotspots.map(([area, n]) => (
                 <span
                   key={area}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-1 text-[11px] text-white/80"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-1 text-[11px] text-white"
                 >
                   <span className="truncate max-w-[140px]">{area}</span>
                   <span className="text-elec-yellow font-semibold tabular-nums">{n}</span>
@@ -786,7 +912,7 @@ export default function AdminDashboard() {
                         : `${diffMins}m ago · ${currentPage}`
                     }
                     trailing={
-                      <span className="flex items-center gap-1 text-[11px] text-white/55">
+                      <span className="flex items-center gap-1 text-[11px] text-white">
                         <DeviceIcon className="h-3.5 w-3.5 shrink-0" />
                         <span className="hidden sm:inline">{deviceLabel}</span>
                       </span>
@@ -806,7 +932,7 @@ export default function AdminDashboard() {
         <ListCard>
           <ListCardHeader
             tone="yellow"
-            title="Recent Signups"
+            title="Recent signups"
             meta={
               <span className="text-[11px] text-white tabular-nums">
                 {stats?.signupsThisWeek ?? 0} this week
@@ -816,7 +942,7 @@ export default function AdminDashboard() {
               (stats?.recentSignups?.length || 0) > 5
                 ? showAllSignups
                   ? 'Show less'
-                  : `Show all ${stats?.recentSignups?.length}`
+                  : `Show ${stats?.recentSignups?.length} most recent`
                 : undefined
             }
             onAction={
@@ -841,11 +967,13 @@ export default function AdminDashboard() {
                   trailing={
                     <>
                       <Pill tone={status.tone}>{status.label}</Pill>
-                      {/* Time is secondary — hide on mobile so the name wins */}
-                      <span className="hidden text-[11px] text-white tabular-nums sm:inline">
-                        {formatDistanceToNow(new Date(user.created_at), {
-                          addSuffix: true,
-                        }).replace('about ', '')}
+                      {/* Shown on mobile too — the row reflows now, so the
+                          name no longer has to fight the metadata for width. */}
+                      <span className="text-[11px] font-medium text-white tabular-nums">
+                        {signupWhen(user.created_at).when}
+                      </span>
+                      <span className="text-[11px] text-white tabular-nums">
+                        {signupWhen(user.created_at).relative}
                       </span>
                     </>
                   }
@@ -865,7 +993,7 @@ export default function AdminDashboard() {
             <ListCard>
               <ListCardHeader
                 tone="blue"
-                title="Mobile Subscribers"
+                title="Mobile subscribers"
                 meta={
                   <span className="flex items-center gap-1.5">
                     <PulseDot tone="green" />
@@ -1090,10 +1218,10 @@ export default function AdminDashboard() {
           <ListCard>
             <ListCardHeader
               tone="orange"
-              title="Churn Risk"
+              title="At risk of leaving"
               meta={
                 <span className="text-[11px] text-orange-400 font-medium tabular-nums">
-                  {atRiskSubs.length} paying · quiet 30d+
+                  {atRiskTotal ?? atRiskSubs.length} paying · quiet 30d+
                 </span>
               }
               action={
@@ -1141,12 +1269,12 @@ export default function AdminDashboard() {
           <ListCard>
             <ListCardHeader
               tone="red"
-              title="Recently Churned"
+              title="Recently left"
               meta={<Pill tone="red">{churnedUsers.length}</Pill>}
             />
             <GroupHeader
               tone="red"
-              label="Cancelled Trials"
+              label="Cancelled trials"
               count={churnedUsers.length}
               open={showChurned}
               onClick={() => setShowChurned(!showChurned)}
@@ -1210,7 +1338,7 @@ export default function AdminDashboard() {
           <ListCard>
             <ListCardHeader
               tone="emerald"
-              title="New Subscriptions"
+              title="New subscriptions"
               meta={
                 <span className="text-[11px] text-white tabular-nums">
                   {recentSubscriptions.length} today
@@ -1248,12 +1376,10 @@ export default function AdminDashboard() {
 
         {/* Support inbox ──────────────────────────────── */}
         {supportMessages && supportMessages.length > 0 && (
-          <>
-            <Divider label="Messages" />
             <ListCard>
               <ListCardHeader
                 tone="yellow"
-                title="Support Inbox"
+                title="Support inbox"
                 meta={
                   unreadSupportCount > 0 ? (
                     <Pill tone="yellow">{unreadSupportCount} unread</Pill>
@@ -1301,8 +1427,9 @@ export default function AdminDashboard() {
                 })}
               </ListBody>
             </ListCard>
-          </>
         )}
+
+        </div>
 
         <UserManagementSheet
           user={selectedUser}

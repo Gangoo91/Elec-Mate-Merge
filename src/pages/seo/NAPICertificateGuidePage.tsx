@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { CARD_PADDED, SUBPANEL } from '@/components/seo/seoSurface';
 import {
   ShieldCheck,
   FileCheck2,
@@ -11,12 +12,23 @@ import {
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
+// Shared presentation tokens
+// -------------------------------------------------------------------
+
+/** Scrolls sideways inside itself so the page body never does. */
+const TABLE_WRAP =
+  '-mx-4 my-6 overflow-x-auto border-y border-white/[0.08] sm:mx-0 sm:rounded-2xl sm:border';
+const TH = 'px-4 py-3 text-left text-[13px] font-semibold text-white';
+const TD = 'px-4 py-3 align-top text-sm leading-relaxed text-white';
+const CARD_H3 = 'mb-3 text-[17px] font-bold tracking-tight text-white';
+
+// -------------------------------------------------------------------
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'NAPIT Certificate UK 2026: Registration + Building Regs';
+const PAGE_TITLE = 'NAPIT Certificate: Building Regs + Notification';
 const PAGE_DESCRIPTION =
-  'NAPIT certificate + registration for UK electricians 2026: scope categories, assessment, annual cost, Building Regulations compliance certificate, NICEIC comparison.';
+  'NAPIT = National Association of Professional Inspectors and Testers. Notify online to get a Building Regulations Compliance Certificate. Fees £280-£380/yr.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -25,6 +37,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-napit', label: 'What Is NAPIT?' },
+  { id: 'which-certificate', label: 'Which Certificate You Issue' },
   { id: 'registration-categories', label: 'Registration Categories' },
   { id: 'requirements', label: 'Requirements' },
   { id: 'costs', label: 'Costs' },
@@ -38,48 +51,48 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'NAPIT (National Association of Professional Inspectors and Testers) is the second-largest competent person scheme for electricians in the UK, providing the same self-certification ability under Part P as NICEIC.',
+  'NAPIT (National Association of Professional Inspectors and Testers) is one of the largest competent person schemes for electricians in the UK, and is Government-authorised to self-certify notifiable domestic work under Part P.',
+  'There is no such thing as a "NAPIT certificate" for the electrical work itself. You issue the BS 7671 Appendix 6 model form — an EIC, a Minor Works Certificate or an EICR — and NAPIT issues the Building Regulations Compliance Certificate to the homeowner once you notify.',
   'NAPIT covers multiple trades — electrical, gas, plumbing, heating, ventilation, and building fabric — making it popular with multi-trade contractors.',
-  'Registration requires the same core qualifications as NICEIC: 18th Edition (C&G 2382), Inspection & Testing (C&G 2391), NVQ Level 3, calibrated instruments, and public liability insurance.',
-  'NAPIT registration is typically more competitively priced than NICEIC, making it attractive for sole traders and smaller firms without sacrificing self-certification ability.',
-  'Elec-Mate certificates work with any scheme provider including NAPIT — professional PDF output meets all scheme requirements, and the digital workflow is faster than paper forms.',
+  'Registration requires the core qualifications every competent person scheme asks for: the current edition of the Wiring Regulations, an inspection and testing qualification, an NVQ Level 3, calibrated instruments, and public liability insurance.',
+  'Elec-Mate certificates work with any scheme provider including NAPIT — the PDF output follows the Appendix 6 model forms, and BS 7671 expressly permits certificates in electronic form (Reg 644.4.202).',
 ];
 
 const faqs = [
   {
     question: 'Is a NAPIT certificate the same as an NICEIC certificate?',
     answer:
-      'Yes, in terms of legal standing. Both NAPIT and NICEIC are Government-authorised competent person schemes approved under Part P of the Building Regulations. A Building Regulations Compliance Certificate issued through NAPIT has exactly the same legal validity as one issued through NICEIC. The underlying electrical certificates — EIC, Minor Works Certificate, and EICR — are BS 7671 documents that follow the same model forms regardless of which scheme you are registered with. The scheme provider does not determine the certificate format; BS 7671:2018+A4:2026 does. The differences between NAPIT and NICEIC are in brand recognition, annual fees, assessment processes, and additional member benefits — not in the legal weight or technical requirements of the certificates themselves.',
+      'Yes, in terms of legal standing. Both NAPIT and NICEIC are Government-authorised competent person schemes approved under Part P of the Building Regulations. A Building Regulations Compliance Certificate issued through NAPIT has exactly the same legal validity as one issued through NICEIC. The underlying electrical certificates — EIC, Minor Works Certificate, and EICR — are BS 7671 documents that follow the same model forms regardless of which scheme you are registered with. The scheme provider does not determine the certificate format; BS 7671:2018+A4:2026 Appendix 6 does. The differences between schemes are in brand recognition, annual fees, assessment processes, and additional member benefits — not in the legal weight or technical requirements of the certificates themselves.',
   },
   {
     question: 'How much does NAPIT registration cost?',
     answer:
-      'NAPIT registration costs are competitive and generally lower than NICEIC. As of 2026, the Electrical Competent Person Scheme typically costs in the region of 280 to 380 pounds per year for the annual registration fee, depending on whether you are a sole trader or a larger firm. The initial assessment fee is typically between 250 and 400 pounds. So the total first-year cost is approximately 530 to 780 pounds. NAPIT often runs promotional offers for new joiners, which can reduce the first-year cost further. Multi-trade registration (for example, electrical plus gas) may offer bundled pricing. These figures are approximate and subject to annual review — confirm the current fees directly with NAPIT before applying.',
+      'As of 2026, the Electrical Competent Person Scheme typically costs in the region of 280 to 380 pounds per year for the annual registration fee, depending on whether you are a sole trader or a larger firm. The initial assessment fee is typically between 250 and 400 pounds, so the total first-year cost is roughly 530 to 780 pounds. NAPIT often runs promotional offers for new joiners, which can reduce the first-year cost further, and multi-trade registration (for example, electrical plus gas) may offer bundled pricing. These figures are indicative only and are reviewed annually — confirm the current fees directly with NAPIT before applying.',
   },
   {
     question: 'What qualifications do I need for NAPIT electrical registration?',
     answer:
-      'The qualification requirements for NAPIT electrical registration are the same as for other competent person schemes. You need: the 18th Edition of the IET Wiring Regulations (City & Guilds 2382 or equivalent), an Inspection and Testing qualification (City & Guilds 2391 or the older 2394/2395 equivalents), and NVQ Level 3 in Electrical Installation or equivalent (such as City & Guilds 2357 or 2365 with AM2). You must also hold current public liability insurance with a minimum cover typically of 2 million pounds, and your test instruments must be calibrated and within their calibration date. NAPIT may consider applicants with older qualifications on a case-by-case basis, provided you can demonstrate current competence and knowledge of BS 7671:2018+A4:2026.',
+      'The qualification requirements for NAPIT electrical registration are the same as for other competent person schemes. You need: the current edition of the IET Wiring Regulations, BS 7671:2018+A4:2026 (City & Guilds 2382 or equivalent), an inspection and testing qualification (City & Guilds 2391 or the older 2394/2395 equivalents), and an NVQ Level 3 in Electrical Installation or equivalent, such as City & Guilds 2357 or the 5357 apprenticeship, including the AM2 assessment. You must also hold current public liability insurance with a minimum cover typically of 2 million pounds, and your test instruments must be calibrated and within their calibration date. NAPIT may consider applicants with older qualifications on a case-by-case basis, provided you can demonstrate current competence and knowledge of BS 7671:2018+A4:2026.',
   },
   {
     question: 'Can I switch from NICEIC to NAPIT?',
     answer:
-      'Yes, you can switch from NICEIC to NAPIT (or from any scheme to any other scheme) at any time. The process involves applying to NAPIT as a new member and going through their assessment process. Your existing NICEIC registration and track record will be taken into account, and the transition is usually straightforward for experienced electricians with a clean compliance history. You should time the switch to coincide with the end of your current NICEIC registration period to avoid paying for two overlapping registrations. NAPIT sometimes offers discounted initial assessment fees for electricians transferring from another scheme. The reverse also applies — you can switch from NAPIT to NICEIC if your business needs change.',
+      'Yes, you can switch between competent person schemes at any time. The process involves applying to NAPIT as a new member and going through their assessment process. Your existing registration and track record will be taken into account, and the transition is usually straightforward for experienced electricians with a clean compliance history. Time the switch to coincide with the end of your current registration period so you are not paying two memberships at once. NAPIT sometimes offers discounted initial assessment fees for electricians transferring from another scheme, and the reverse also applies — you can move back if your business needs change.',
   },
   {
     question: 'Does NAPIT cover commercial and industrial work?',
     answer:
-      'Yes. NAPIT offers registration categories that cover domestic, commercial, and industrial electrical work. The Electrical Competent Person Scheme covers domestic work and provides Part P self-certification. For commercial and industrial work, NAPIT registration demonstrates assessed competence to clients, main contractors, and specifiers. While Part P only applies to domestic dwellings (so self-certification is only relevant for domestic work), having NAPIT registration for commercial work provides a recognised credential that many clients require when appointing electrical contractors for non-domestic projects.',
+      'Yes. NAPIT offers registration categories that cover domestic, commercial, and industrial electrical work. The Electrical Competent Person Scheme covers domestic work and provides Part P self-certification. For commercial and industrial work, NAPIT registration demonstrates assessed competence to clients, main contractors, and specifiers. Part P applies to dwellings, so self-certification is only relevant to domestic work — but holding registration for commercial work provides a recognised credential that many clients require when appointing electrical contractors for non-domestic projects.',
   },
   {
     question: 'How do I notify NAPIT of completed work?',
     answer:
-      'After completing notifiable domestic electrical work, you must notify NAPIT within the required timescale (typically within 30 days of completion, but check the current NAPIT guidance). Notification is done through the NAPIT online contractor portal. You log in, enter the job details (installation address, type of work, date of completion, certificate reference number), and upload the completed certificate. NAPIT then issues a Building Regulations Compliance Certificate to the homeowner and registers the notification with the relevant local authority building control department. The entire process is online and typically takes a few minutes per job. Failure to notify completed work within the required timescale can result in compliance issues with NAPIT and may affect your registration status.',
+      'After completing notifiable domestic electrical work, you must notify NAPIT within the required timescale — typically within 30 days of completion, but check the current NAPIT guidance. Notification is done through the NAPIT online contractor portal. You log in, enter the job details (installation address, type of work, date of completion, certificate reference number), and upload the completed certificate. NAPIT then issues a Building Regulations Compliance Certificate to the homeowner and registers the notification with the relevant local authority building control department. The entire process is online and typically takes a few minutes per job. Failure to notify completed work within the required timescale can result in compliance issues with NAPIT and may affect your registration status.',
   },
   {
     question: 'What happens at a NAPIT annual assessment?',
     answer:
-      'The NAPIT annual assessment is carried out by a NAPIT assessor, typically at your business premises or a job site. The assessor reviews your qualifications, insurance, and test instrument calibration to confirm they are all current. They review a sample of certificates you have issued since the last assessment, checking for correct completion, accurate test results, and compliance with BS 7671:2018+A4:2026. The assessor may ask technical questions about current regulations and testing procedures. They may also request to visit a recent or current job site to inspect the standard of your installation work. If any issues are identified, you are given a corrective action plan with a deadline. Persistent or serious non-compliance can result in suspension or withdrawal of registration. The assessment is thorough but fair — it is designed to maintain standards, not to catch you out.',
+      'The NAPIT annual assessment is carried out by a NAPIT assessor, typically at your business premises or a job site. The assessor reviews your qualifications, insurance, and test instrument calibration to confirm they are all current. They review a sample of certificates you have issued since the last assessment, checking for correct completion, accurate test results, and compliance with BS 7671:2018+A4:2026. The assessor may ask technical questions about current regulations and testing procedures, and may request to visit a recent or current job site to inspect the standard of your installation work. If any issues are identified, you are given a corrective action plan with a deadline. Persistent or serious non-compliance can result in suspension or withdrawal of registration.',
   },
 ];
 
@@ -90,41 +103,209 @@ const sections = [
     content: (
       <>
         <p>
-          NAPIT stands for the National Association of Professional Inspectors and Testers. It is
-          the second-largest competent person scheme for electricians in the United Kingdom,
-          providing the same Government-authorised self-certification ability as{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>. NAPIT was
-          established to provide an alternative to NICEIC, with a focus on competitive pricing and
-          multi-trade coverage.
-        </p>
-        <p>
-          Unlike NICEIC, which focuses exclusively on the electrical trade, NAPIT covers multiple
-          building trades under one umbrella — electrical, gas (as a Gas Safe Operator Scheme),
-          plumbing, heating, ventilation, and building fabric. This makes NAPIT particularly popular
-          with multi-trade contractors who want a single scheme membership covering all their
-          trades, rather than separate registrations with different bodies.
-        </p>
-        <p>
-          For electrical work, NAPIT operates as a Government-authorised competent person scheme
-          under{' '}
+          NAPIT stands for the National Association of Professional Inspectors and Testers. It is a
+          Government-authorised competent person scheme, which means a registered electrician can
+          self-certify notifiable domestic electrical work under{' '}
           <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
-          </SEOInternalLink>
-          . This means NAPIT-registered electricians can self-certify notifiable domestic electrical
-          work, issuing Building Regulations Compliance Certificates directly to homeowners without
-          involving building control. The legal standing of a NAPIT certification is identical to
-          that of an NICEIC certification — both are authorised by the Government under the same
-          Part P framework.
+          </SEOInternalLink>{' '}
+          instead of putting the job through local authority building control.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-5 py-4 my-6 flex items-start gap-3">
-          <p className="text-white/60 text-xs leading-relaxed">
-            <span className="text-white/80 font-medium">
-              Written by the Elec-Mate editorial team
-            </span>{' '}
-            &mdash; verified by a qualified UK electrician and checked against
-            BS&nbsp;7671:2018+A4:2026 and the On-Site Guide 9th&nbsp;Ed:2022 (A4).
+
+        <div className={TABLE_WRAP}>
+          <table className="w-full min-w-[440px] border-collapse">
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <th scope="row" className={`${TH} w-[42%] align-top`}>
+                  What NAPIT stands for
+                </th>
+                <td className={TD}>National Association of Professional Inspectors and Testers</td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  What it is
+                </th>
+                <td className={TD}>
+                  A Government-authorised competent person scheme under Part P of the Building
+                  Regulations
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  Certificate you issue
+                </th>
+                <td className={TD}>
+                  EIC, Minor Electrical Installation Works Certificate or EICR — the BS 7671
+                  Appendix 6 model forms
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  Certificate NAPIT issues
+                </th>
+                <td className={TD}>
+                  A Building Regulations Compliance Certificate, sent to the homeowner once you
+                  notify the job
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  Notification deadline
+                </th>
+                <td className={TD}>
+                  Typically within 30 days of completion, through the NAPIT online portal — check
+                  the current NAPIT guidance
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  Trades covered
+                </th>
+                <td className={TD}>
+                  Electrical, gas, plumbing, heating, ventilation and building fabric, under one
+                  membership
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className={`${TH} align-top`}>
+                  Indicative cost
+                </th>
+                <td className={TD}>
+                  Around £280 – £380 a year, plus a one-off initial assessment fee. Fees are
+                  reviewed annually — confirm the current figures with NAPIT.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="mt-8 text-[17px] font-bold tracking-tight text-white">
+          Multi-trade under one membership
+        </h3>
+        <p>
+          NAPIT covers several building trades under one umbrella — electrical, gas (as a Gas Safe
+          Operator Scheme), plumbing, heating, ventilation, and building fabric. That makes it
+          popular with multi-trade contractors who want a single scheme membership covering
+          everything they do, rather than separate registrations with different bodies.
+        </p>
+
+        <h3 className="mt-8 text-[17px] font-bold tracking-tight text-white">
+          What Government authorisation actually means
+        </h3>
+        <p>
+          A NAPIT-registered electrician can self-certify notifiable domestic electrical work,
+          which triggers a Building Regulations Compliance Certificate being issued directly to the
+          homeowner without building control involvement. The legal standing of that certificate is
+          identical whichever authorised scheme issues it — they all sit under the same Part P
+          framework.
+        </p>
+
+        <div className={`${CARD_PADDED} my-6`}>
+          <p className="text-sm leading-relaxed text-white">
+            <span className="font-semibold">Written by the Elec-Mate editorial team</span> &mdash;
+            verified by a qualified UK electrician and checked against BS&nbsp;7671:2018+A4:2026.
           </p>
         </div>
+      </>
+    ),
+  },
+  {
+    id: 'which-certificate',
+    heading: 'Which Certificate You Actually Issue',
+    content: (
+      <>
+        <p>
+          This is the point most searches get stuck on. NAPIT does not have its own electrical
+          certificate. The document recording the work is a BS 7671 certificate on the Appendix 6
+          model form, and it is identical whichever scheme you belong to. The NAPIT-branded document
+          — the Building Regulations Compliance Certificate — is a separate thing, produced by NAPIT
+          after you notify, and it evidences Building Regulations compliance rather than the test
+          results.
+        </p>
+
+        <div className={TABLE_WRAP}>
+          <table className="w-full min-w-[600px] border-collapse text-white">
+            <thead>
+              <tr className="border-b border-white/[0.08] bg-white/[0.04]">
+                <th className={TH}>Work carried out</th>
+                <th className={TH}>Certificate to issue</th>
+                <th className={TH}>BS 7671</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={TD}>
+                  A new installation, or an addition or alteration to an existing one — including
+                  replacing a distribution board or consumer unit
+                </td>
+                <td className={TD}>Electrical Installation Certificate (EIC)</td>
+                <td className={`${TD} whitespace-nowrap`}>Reg 644.1</td>
+              </tr>
+              <tr>
+                <td className={TD}>
+                  Work that adds to or alters a circuit but provides no new circuit and does not
+                  replace a distribution board or consumer unit
+                </td>
+                <td className={TD}>
+                  Minor Electrical Installation Works Certificate — one for each circuit added to or
+                  altered
+                </td>
+                <td className={`${TD} whitespace-nowrap`}>Reg 644.4.201</td>
+              </tr>
+              <tr>
+                <td className={TD}>Periodic inspection and testing of an existing installation</td>
+                <td className={TD}>Electrical Installation Condition Report (EICR)</td>
+                <td className={`${TD} whitespace-nowrap`}>Reg 653.1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>What has to go with the certificate</h3>
+          <p className="text-sm leading-relaxed text-white">
+            Regulation 644.3 requires the Certificate to state the extent of the work covered and to
+            include (a) Schedule(s) of Inspection and (b) Schedule(s) of Circuit Details and
+            Schedule(s) of Test Results. The schedules{' '}
+            <strong>shall be based on the models in Appendix 6</strong> — the wording is mandatory,
+            so a non-conforming schedule format is a non-conformance in its own right.
+          </p>
+          <div className={`${SUBPANEL} mt-4 p-4`}>
+            <p className="text-sm leading-relaxed text-white">
+              <strong>Changed at A4:2026.</strong> The single-page generic schedule of test results
+              used for the EIC and EICR has been redrafted. There is now a separate page for the
+              schedule of circuit details and a separate page for the schedule of test results. The
+              schedule of inspections for initial verification has also been simplified, and a new
+              example checklist of items requiring inspection has been added to Appendix 6 — that
+              checklist is not required to be provided with the certificate.
+            </p>
+          </div>
+        </div>
+
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Who signs it, and can it be digital?</h3>
+          <p className="text-sm leading-relaxed text-white">
+            Regulation 644.4 puts the Certificate in the hands of the person or persons responsible
+            for the design, construction and verification of the installation, who issue it to the
+            person ordering the work along with the records mentioned in Regulation 644.3. The same
+            regulation requires the recommendation for the interval between initial verification and
+            the first periodic inspection to be recorded on the Certificate. Under Regulation 644.5
+            the certificate is compiled and signed or otherwise authenticated by one or more skilled
+            persons competent to verify that the requirements of BS 7671 have been met.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white">
+            Digital is expressly allowed. Regulation 644.4.202 states that Electrical Installation
+            Certificates and Minor Electrical Installation Works Certificates may be produced in any
+            written or electronic form — provided their authenticity and integrity are verified by a
+            reliable process or method, which must also verify that any copy is a true copy of the
+            original.
+          </p>
+        </div>
+
+        <SEOAppBridge
+          title="EIC, Minor Works and EICR on the Appendix 6 model forms"
+          description="Issue the right certificate on your phone, with the schedules attached and the recommended inspection interval prompted before you can sign off. Export a PDF and upload it straight to your scheme portal."
+        />
       </>
     ),
   },
@@ -137,32 +318,29 @@ const sections = [
           NAPIT offers several registration categories for electricians, structured to match the
           scope of work you undertake.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Electrical Competent Person Scheme</h3>
-          <p className="text-white text-sm leading-relaxed">
-            This is the core registration for electricians. It provides self-certification ability
-            for notifiable domestic electrical work under Part P. It is equivalent to the NICEIC
-            Domestic Installer or Approved Contractor schemes. Most electricians who register with
-            NAPIT for electrical work will join this scheme.
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Electrical Competent Person Scheme</h3>
+          <p className="text-sm leading-relaxed text-white">
+            The core registration for electricians. It provides self-certification for notifiable
+            domestic electrical work under Part P, and it is the scheme most electricians joining
+            NAPIT for electrical work will register under.
           </p>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Multi-Trade Registration</h3>
-          <p className="text-white text-sm leading-relaxed">
-            NAPIT allows you to add multiple trades to your registration. If you are a qualified
-            electrician who also does plumbing, heating, ventilation, or building fabric work, you
-            can register for multiple trades under a single NAPIT membership. This is more
-            cost-effective than registering with separate bodies for each trade and simplifies your
-            compliance obligations.
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Multi-Trade Registration</h3>
+          <p className="text-sm leading-relaxed text-white">
+            You can add multiple trades to one registration. A qualified electrician who also does
+            plumbing, heating, ventilation, or building fabric work can register those trades under
+            a single NAPIT membership, which keeps the compliance paperwork in one place.
           </p>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Specialist Schemes</h3>
-          <p className="text-white text-sm leading-relaxed">
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Specialist Schemes</h3>
+          <p className="text-sm leading-relaxed text-white">
             NAPIT also operates specialist schemes for specific types of work, including fire
             detection and alarm systems (BS 5839), emergency lighting (BS 5266), renewable energy
-            installations, and electric vehicle charger installations. These specialist schemes can
-            be added to your core electrical registration.
+            installations, and electric vehicle charger installations. These can be added to your
+            core electrical registration.
           </p>
         </div>
       </>
@@ -175,57 +353,43 @@ const sections = [
       <>
         <p>
           The requirements for NAPIT electrical registration are consistent with industry standards
-          and are largely the same as those for NICEIC and other competent person schemes.
+          and are largely the same as those for any other competent person scheme.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Qualifications Required</h3>
-          <ul className="space-y-2 text-white text-sm leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>18th Edition:</strong> City & Guilds 2382 (or equivalent) — the current
-                edition of the IET Wiring Regulations, BS 7671:2018+A4:2026
-              </span>
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Qualifications required</h3>
+          <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-white marker:text-white">
+            <li>
+              <strong>Wiring Regulations:</strong> City &amp; Guilds 2382 or equivalent, covering
+              the current edition — BS 7671:2018+A4:2026
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Inspection & Testing:</strong> City & Guilds 2391 (or equivalent, such as
-                the older 2394/2395) — required for initial verification and periodic inspection
-              </span>
+            <li>
+              <strong>Inspection &amp; testing:</strong> City &amp; Guilds 2391 or equivalent, such
+              as the older 2394/2395 — needed for initial verification and periodic inspection
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>NVQ Level 3:</strong> NVQ Level 3 in Electrical Installation or equivalent
-                vocational qualification (C&G 2357, 2365 with AM2, or equivalent)
-              </span>
+            <li>
+              <strong>NVQ Level 3:</strong> NVQ Level 3 in Electrical Installation or equivalent —
+              City &amp; Guilds 2357, or the 5357 apprenticeship, including the AM2 assessment
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Other Requirements</h3>
-          <ul className="space-y-2 text-white text-sm leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Public liability insurance:</strong> Minimum 2 million pounds cover (higher
-                cover may be required for some contract types)
-              </span>
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Other requirements</h3>
+          <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-white marker:text-white">
+            <li>
+              <strong>Public liability insurance:</strong> minimum 2 million pounds cover — higher
+              cover may be required for some contract types
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Test instruments:</strong> Calibrated multifunction tester, GS38-compliant
-                voltage indicator, and (if not integrated) RCD tester. All within calibration date.
-              </span>
+            <li>
+              <strong>Test instruments:</strong> calibrated multifunction tester, GS38-compliant
+              voltage indicator, and an RCD tester if not integrated. All within calibration date.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Business premises:</strong> A fixed address for correspondence and records.
-                Home address is acceptable.
-              </span>
+            <li>
+              <strong>Business premises:</strong> a fixed address for correspondence and records. A
+              home address is acceptable.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Recent work samples:</strong> You must be able to provide samples of recent
-                electrical installation certificates for the assessor to review.
-              </span>
+            <li>
+              <strong>Recent work samples:</strong> certificates from recent jobs for the assessor
+              to review
             </li>
           </ul>
         </div>
@@ -238,43 +402,49 @@ const sections = [
     content: (
       <>
         <p>
-          NAPIT registration is generally more competitively priced than NICEIC, which is one of the
-          main reasons electricians choose NAPIT — particularly sole traders and smaller firms where
-          cost control is important.
+          The figures below are indicative. Scheme fees are reviewed annually and vary with the size
+          of the business and the number of trades registered, so confirm the current fee schedule
+          with NAPIT before you budget for it.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">Typical NAPIT Costs (2026)</h3>
-          <ul className="space-y-2 text-white text-sm leading-relaxed">
-            <li>
-              <strong>Initial assessment fee:</strong> approximately 250 to 400 pounds (one-off)
-            </li>
-            <li>
-              <strong>Annual registration fee:</strong> approximately 280 to 380 pounds per year
-            </li>
-            <li>
-              <strong>Total first year:</strong> approximately 530 to 780 pounds
-            </li>
-            <li>
-              <strong>Multi-trade discount:</strong> Bundled pricing may be available for
-              electricians registering for multiple trades
-            </li>
-            <li>
-              <strong>New member promotions:</strong> NAPIT frequently offers discounted first-year
-              fees for new joiners
-            </li>
-          </ul>
+        <div className={TABLE_WRAP}>
+          <table className="w-full min-w-[440px] border-collapse">
+            <thead>
+              <tr className="border-b border-white/[0.08] bg-white/[0.04]">
+                <th className={TH}>Item</th>
+                <th className={TH}>Indicative figure</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={TD}>Initial assessment fee (one-off)</td>
+                <td className={`${TD} whitespace-nowrap`}>£250 – £400</td>
+              </tr>
+              <tr>
+                <td className={TD}>Annual registration fee</td>
+                <td className={`${TD} whitespace-nowrap`}>£280 – £380 a year</td>
+              </tr>
+              <tr>
+                <td className={TD}>Total first year</td>
+                <td className={`${TD} whitespace-nowrap`}>£530 – £780</td>
+              </tr>
+              <tr>
+                <td className={TD}>Multi-trade registration</td>
+                <td className={TD}>Bundled pricing may be available across trades</td>
+              </tr>
+              <tr>
+                <td className={TD}>New joiner promotions</td>
+                <td className={TD}>First-year discounts are offered from time to time</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          As with all competent person scheme fees, NAPIT registration costs are fully
-          tax-deductible as a business expense. Given that building control notification fees cost
-          between 250 and 400 pounds per notifiable job, NAPIT registration pays for itself after
-          just one or two notifiable domestic jobs per year.
+          As with all competent person scheme fees, NAPIT registration is a deductible business
+          expense. Set against it the local authority building control charge you would otherwise
+          pay on every notifiable job — those charges are set by each authority and commonly run to
+          several hundred pounds per job, so registration tends to pay for itself over a handful of
+          notifiable jobs a year.
         </p>
-        <SEOAppBridge
-          title="NAPIT Certificate Guide: Types & How to Issue"
-          description="NAPIT electrical certificates explained: which certificate to issue, what each one covers, and how to complete and notify them correctly."
-          icon={FileCheck2}
-        />
       </>
     ),
   },
@@ -284,9 +454,8 @@ const sections = [
     content: (
       <>
         <p>
-          The NAPIT application process is designed to be straightforward. You can apply online
-          through the NAPIT website and the process typically takes 4 to 6 weeks from application to
-          registration confirmation.
+          You apply online through the NAPIT website, and the process typically takes 4 to 6 weeks
+          from application to registration confirmation.
         </p>
         <p>
           Start by completing the online application form, selecting your registration category
@@ -313,51 +482,47 @@ const sections = [
       <>
         <p>
           Like all competent person schemes, NAPIT requires an annual assessment to maintain your
-          registration. The annual assessment is carried out by a NAPIT assessor and focuses on work
-          completed since the last assessment.
+          registration. It is carried out by a NAPIT assessor and focuses on work completed since
+          the last visit: a sample of your certificates is checked for completeness and accuracy,
+          your qualifications, insurance and instrument calibrations are confirmed as current, and
+          the assessor may visit a recent job site. Technical questions on current regulations and
+          testing procedures are part of it.
         </p>
-        <p>
-          The assessor will review a sample of your certificates for completeness and accuracy,
-          check that your qualifications, insurance, and instrument calibrations are current, and
-          may visit a recent job site to inspect your installation work. Technical questions about
-          current regulations and testing procedures are part of the assessment.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <h3 className="font-bold text-white text-base mb-2">
-            What assessors check on certificates (BS 7671:2018+A4:2026)
-          </h3>
-          <ul className="space-y-2 text-white/80 text-sm leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Recommended inspection interval (Reg 644.4):</strong> Every EIC must record
-                the recommended interval between initial verification and the first periodic
-                inspection. Assessors specifically check this field is completed, as it is a legal
-                requirement under BS 7671:2018+A4:2026.
-              </span>
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>Certificate fields assessors look for (A4:2026)</h3>
+          <ul className="list-disc space-y-3 pl-5 text-sm leading-relaxed text-white marker:text-white">
+            <li>
+              <strong>Recommended inspection interval (Reg 644.4).</strong> Every EIC must record
+              the recommendation for the interval between initial verification and the first
+              periodic inspection. BS 7671 states this in mandatory terms, and a blank field is the
+              single easiest thing for an assessor to spot.
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>SPD and AFDD fields (Appendix 6, A4:2026):</strong> The A4:2026 amendment
-                updated the Appendix 6 model forms to include dedicated fields for recording surge
-                protective device (SPD) and arc fault detection device (AFDD) details. Certificates
-                issued since the amendment should include these fields where such devices are
-                installed.
-              </span>
+            <li>
+              <strong>SPD and AFDD details (Appendix 6).</strong> A4:2026 added fields to the model
+              forms and the guidance for recipients specifically for recording the details of surge
+              protective devices and arc fault detection devices. Certificates issued since the
+              amendment should populate them where such devices are installed.
+            </li>
+            <li>
+              <strong>The split test-result pages (Appendix 6).</strong> The generic single-page
+              schedule of test results was redrafted at A4:2026 into a separate schedule of circuit
+              details and a separate schedule of test results. Forms still on the old single page
+              are out of date.
+            </li>
+            <li>
+              <strong>Extent of the work covered (Reg 644.3).</strong> The certificate is not
+              complete unless it says what portion of the installation it relates to, with the
+              Schedule(s) of Inspection and the Schedule(s) of Circuit Details and Test Results
+              attached.
             </li>
           </ul>
         </div>
         <p>
-          If the assessor identifies any non-conformances, you will receive a corrective action
-          report with specific issues to address and a deadline for resolution. Minor issues are
-          common and are usually resolved quickly. Serious or persistent non-compliance can result
-          in enhanced monitoring, additional assessment visits, or ultimately suspension or
-          withdrawal of registration.
+          If the assessor identifies non-conformances you receive a corrective action report with
+          specific issues and a deadline. Minor issues are common and usually resolved quickly.
+          Serious or persistent non-compliance can lead to enhanced monitoring, additional
+          assessment visits, or ultimately suspension or withdrawal of registration.
         </p>
-        <SEOAppBridge
-          title="NAPIT Certificate Guide – Auto-Validate in 2026"
-          description="Create NAPIT certificates that auto-validate against BS 7671:2018+A4:2026. Reduce errors by 100%, complete mandatory fields automatically…"
-          icon={ClipboardCheck}
-        />
       </>
     ),
   },
@@ -367,67 +532,83 @@ const sections = [
     content: (
       <>
         <p>
-          One of the primary benefits of NAPIT registration is the ability to self-certify
-          notifiable domestic electrical work under{' '}
-          <SEOInternalLink href="/part-p-building-regulations">
-            Part P of the Building Regulations
-          </SEOInternalLink>
-          . When you complete notifiable work, you notify NAPIT through their online portal rather
-          than notifying the local authority building control department.
+          The main practical benefit of registration is that you notify NAPIT through their online
+          portal rather than notifying the local authority building control department yourself.
+          NAPIT then issues the Building Regulations Compliance Certificate to the homeowner and
+          registers the notification with the local authority on your behalf — no building control
+          inspection, no building control charge, and the homeowner gets a formal certificate they
+          can produce when they sell the property.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
-          <h3 className="font-bold text-white text-base mb-3">
-            What is and is not notifiable under Part P?
-          </h3>
-          <p className="text-white/80 text-sm leading-relaxed mb-3">
-            The On-Site Guide (9th Ed:2022, A4) makes clear that &lsquo;all electrical work within
-            dwellings, of which <em>some</em> is notifiable&rsquo; — not all domestic electrical
-            work requires a competent person scheme notification.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2 text-sm">
-            <div>
-              <p className="font-semibold text-yellow-400 mb-1">
-                Notifiable (requires notification)
-              </p>
-              <ul className="space-y-1 text-white/80 leading-relaxed">
-                <li>New circuits from the consumer unit</li>
-                <li>Consumer unit replacement or alteration</li>
-                <li>New circuits in bathrooms, kitchens, or outdoors</li>
-                <li>New circuits anywhere in a dwelling</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-white/60 mb-1">
-                Not notifiable (no notification required)
-              </p>
-              <ul className="space-y-1 text-white/80 leading-relaxed">
-                <li>Like-for-like socket or switch replacement</li>
-                <li>
-                  Adding a socket to an existing ring circuit (except in a kitchen or bathroom)
-                </li>
-                <li>Replacing a light fitting (except in a bathroom)</li>
-                <li>Repair and maintenance work</li>
-              </ul>
-            </div>
-          </div>
+
+        <h3 className="mt-8 text-[17px] font-bold tracking-tight text-white">
+          Which work is notifiable?
+        </h3>
+        <p>
+          Not all domestic electrical work is notifiable — but all of it, notifiable or not, still
+          has to comply with BS 7671. The list below reflects Approved Document P as it applies in{' '}
+          <strong>England</strong>.
+        </p>
+        <div className={TABLE_WRAP}>
+          <table className="w-full min-w-[560px] border-collapse">
+            <thead>
+              <tr className="border-b border-white/[0.08] bg-white/[0.04]">
+                <th className={TH}>Notifiable</th>
+                <th className={TH}>Not notifiable</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.08]">
+              <tr>
+                <td className={`${TD} w-1/2`}>
+                  Installing a new circuit — including a new outdoor circuit or a supply to an
+                  outbuilding
+                </td>
+                <td className={`${TD} w-1/2`}>
+                  Like-for-like replacement of accessories on an existing circuit — sockets,
+                  switches, ceiling roses
+                </td>
+              </tr>
+              <tr>
+                <td className={TD}>Replacing a consumer unit or distribution board</td>
+                <td className={TD}>
+                  Adding a socket or a fused spur to an existing circuit, outside a special location
+                </td>
+              </tr>
+              <tr>
+                <td className={TD}>
+                  Any addition or alteration to an existing circuit in a special location — a room
+                  containing a bath or shower, or a room containing a swimming pool or sauna heater
+                </td>
+                <td className={TD}>Replacing a light fitting outside a special location</td>
+              </tr>
+              <tr>
+                <td className={TD}>
+                  Electrical work forming part of an extension, loft conversion or similar building
+                  work
+                </td>
+                <td className={TD}>Repair and maintenance work</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <p>
-          The notification process is simple. After completing the work and issuing the appropriate
-          electrical certificate (
-          <SEOInternalLink href="/guides/electrical-certificate-types-uk">
-            EIC or Minor Works Certificate
-          </SEOInternalLink>
-          ), you log into the NAPIT portal, enter the job details (installation address, type of
-          work, date of completion, certificate reference), and upload the certificate. NAPIT then
-          issues a Building Regulations Compliance Certificate to the homeowner and registers the
-          notification with the local authority on your behalf.
+          Wales, Scotland and Northern Ireland run their own building standards regimes, and the
+          notifiable list in Wales is wider than the England list above — it still catches work in
+          kitchens and outdoors. Check the guidance for the nation you are working in before you
+          decide a job is exempt.
         </p>
+
+        <h3 className="mt-8 text-[17px] font-bold tracking-tight text-white">
+          How the notification works
+        </h3>
         <p>
-          This process eliminates the need for building control inspections, avoids building control
-          fees (which typically cost 250 to 400 pounds per job), and gives the homeowner immediate
-          confirmation that the work complies with building regulations. The homeowner receives a
-          formal Building Regulations Compliance Certificate that they can present when selling the
-          property.
+          Complete the work and issue the appropriate{' '}
+          <SEOInternalLink href="/guides/electrical-certificate-types-uk">
+            electrical certificate
+          </SEOInternalLink>{' '}
+          — an EIC, or a Minor Works Certificate where no new circuit is involved. Then log into the
+          NAPIT portal, enter the installation address, the type of work, the date of completion and
+          the certificate reference, and upload the certificate. Do it within the notification
+          window; late notification is one of the things that shows up at assessment.
         </p>
       </>
     ),
@@ -437,51 +618,27 @@ const sections = [
     heading: 'Benefits of NAPIT Registration',
     content: (
       <>
-        <p>
-          NAPIT registration provides a range of commercial and professional benefits for
-          electricians.
-        </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
-          <ul className="space-y-3 text-white text-sm leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Part P self-certification:</strong> Certify notifiable domestic work without
-                building control involvement. Save 250 to 400 pounds per job in building control
-                fees.
-              </span>
+        <div className={`${CARD_PADDED} my-6`}>
+          <ul className="list-disc space-y-3 pl-5 text-sm leading-relaxed text-white marker:text-white">
+            <li>
+              <strong>Part P self-certification:</strong> certify notifiable domestic work without
+              building control involvement, and without the local authority charge on every job
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Multi-trade coverage:</strong> Register for electrical, gas, plumbing,
-                heating, and building fabric under one membership. Simplifies compliance for
-                multi-trade firms.
-              </span>
+            <li>
+              <strong>Multi-trade coverage:</strong> electrical, gas, plumbing, heating and building
+              fabric under one membership, which keeps compliance in one place for multi-trade firms
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Find a Tradesperson directory:</strong> Your business appears on the NAPIT
-                website directory, helping homeowners find you when searching for a registered
-                electrician in their area.
-              </span>
+            <li>
+              <strong>Find a Tradesperson directory:</strong> your business appears on the NAPIT
+              website directory when homeowners search for a registered electrician in their area
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Technical support helpline:</strong> Access to NAPIT's technical team for
-                guidance on regulation interpretation, complex installations, and BS 7671 queries.
-              </span>
+            <li>
+              <strong>Technical support helpline:</strong> access to NAPIT&rsquo;s technical team for
+              regulation interpretation and BS 7671 queries
             </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Insurance-backed warranty:</strong> NAPIT provides an insurance-backed
-                warranty on domestic work, giving homeowners protection if the contractor ceases
-                trading.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span>
-                <strong>Competitive pricing:</strong> Lower annual fees than NICEIC with the same
-                self-certification ability and legal standing.
-              </span>
+            <li>
+              <strong>Insurance-backed warranty:</strong> cover offered on domestic work, protecting
+              the homeowner if the contractor ceases trading
             </li>
           </ul>
         </div>
@@ -494,84 +651,59 @@ const sections = [
     content: (
       <>
         <p>
-          The choice between NAPIT and{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink> is one of the
-          most common questions asked by electricians looking to join a competent person scheme.
-          Both schemes provide the same legal self-certification ability under Part P, so the
-          decision comes down to other factors.
+          This is the most common question electricians ask before joining a scheme, and the
+          technical half of it has a short answer. NAPIT and{' '}
+          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink> are both
+          Government-authorised competent person schemes under Part P. A Building Regulations
+          Compliance Certificate from either carries the same legal weight, and the electrical
+          certificate you issue is the same BS 7671 Appendix 6 model form either way. Nothing about
+          the standard of work, the tests, or the paperwork changes with the badge.
         </p>
-        <div className="overflow-x-auto my-6 rounded-2xl border border-white/10">
-          <table className="w-full text-sm text-white">
-            <thead>
-              <tr className="bg-white/[0.06] border-b border-white/10">
-                <th className="text-left px-4 py-3 font-semibold text-white/70 w-1/3">Feature</th>
-                <th className="text-left px-4 py-3 font-semibold text-yellow-400">NAPIT</th>
-                <th className="text-left px-4 py-3 font-semibold text-white">NICEIC</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/[0.06]">
-              <tr>
-                <td className="px-4 py-3 text-white/70">Annual fee (approx.)</td>
-                <td className="px-4 py-3">£280 – £380</td>
-                <td className="px-4 py-3">£350 – £500+</td>
-              </tr>
-              <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 text-white/70">Initial assessment fee</td>
-                <td className="px-4 py-3">£250 – £400</td>
-                <td className="px-4 py-3">£300 – £500+</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-3 text-white/70">Part P self-cert</td>
-                <td className="px-4 py-3">Yes</td>
-                <td className="px-4 py-3">Yes</td>
-              </tr>
-              <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 text-white/70">Multi-trade coverage</td>
-                <td className="px-4 py-3">Yes (gas, plumbing, heating, building fabric)</td>
-                <td className="px-4 py-3">Electrical only</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-3 text-white/70">Insurance-backed warranty</td>
-                <td className="px-4 py-3">Yes</td>
-                <td className="px-4 py-3">Yes (Platinum Promise)</td>
-              </tr>
-              <tr className="bg-white/[0.02]">
-                <td className="px-4 py-3 text-white/70">Commercial/industrial scope</td>
-                <td className="px-4 py-3">Yes</td>
-                <td className="px-4 py-3">Yes (Approved Contractor)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Choose NAPIT if...</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>Cost is a priority — NAPIT is typically cheaper than NICEIC</li>
-              <li>You work across multiple trades and want one registration body</li>
-              <li>You are a sole trader or small firm focused on value</li>
-              <li>You are switching from NICEIC and want to reduce overheads</li>
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Choose NICEIC if...</h3>
-            <ul className="space-y-2 text-white text-sm leading-relaxed">
-              <li>Brand recognition with consumers is important to your business</li>
-              <li>You tender for commercial contracts where NICEIC is specified</li>
-              <li>You work with main contractors or housing associations that require NICEIC</li>
-              <li>You want the Platinum Promise warranty as a selling point</li>
-            </ul>
-          </div>
+        <p>
+          So the decision is commercial, not technical. Rather than rely on second-hand figures,
+          take the checklist below to each scheme&rsquo;s own published information and compare like
+          for like.
+        </p>
+        <div className={`${CARD_PADDED} my-6`}>
+          <h3 className={CARD_H3}>What to compare before you commit</h3>
+          <ul className="list-disc space-y-3 pl-5 text-sm leading-relaxed text-white marker:text-white">
+            <li>
+              <strong>Current fee schedule.</strong> Initial assessment plus annual registration,
+              and whether the first year is discounted. Both are reviewed annually, so a figure you
+              read anywhere else may already be out of date.
+            </li>
+            <li>
+              <strong>Trades covered.</strong> Whether one membership covers everything you do, or
+              you would need a second registration elsewhere.
+            </li>
+            <li>
+              <strong>Assessment format.</strong> How often you are assessed, where it happens, and
+              how many certificates get sampled.
+            </li>
+            <li>
+              <strong>What your clients specify.</strong> Main contractors, housing associations and
+              some tender documents name a particular scheme. That is often the deciding factor and
+              it costs nothing to ask before you join.
+            </li>
+            <li>
+              <strong>Consumer-facing extras.</strong> Directory listing, insurance-backed warranty
+              and any dispute service — these are what the homeowner sees.
+            </li>
+            <li>
+              <strong>Transfer terms.</strong> If you are moving from another scheme, check for a
+              transfer discount and time the switch to the end of your current registration so you
+              are not paying twice.
+            </li>
+          </ul>
         </div>
         <p>
-          There is no wrong answer. Both schemes are Government-authorised, both provide the same
-          self-certification ability, and both issue certificates with identical legal standing. The
-          best choice depends on your business priorities, your client base, and your budget.
+          There is no wrong answer. Both schemes are Government-authorised, both give you the same
+          self-certification ability, and both underpin certificates with identical legal standing.
+          The best choice depends on your client base, the trades you cover, and your budget.
         </p>
         <SEOAppBridge
-          title="Works with NAPIT, NICEIC, ELECSA, and BRE"
-          description="Elec-Mate certificates are scheme-agnostic. Built to BS 7671:2018+A4:2026, the professional PDF output meets the requirements of all competent person…"
-          icon={FileCheck2}
+          title="Scheme-agnostic certificates, built to BS 7671:2018+A4:2026"
+          description="Elec-Mate produces the Appendix 6 model forms whichever scheme you are registered with. PDF export, digital signatures and cloud storage, so the certificate is ready to upload to your scheme portal the moment you leave site."
         />
       </>
     ),
@@ -637,7 +769,7 @@ export default function NAPICertificateGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-20"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"
@@ -647,19 +779,19 @@ export default function NAPICertificateGuidePage() {
           NAPIT Certificate Guide: <span className="text-yellow-400">Registration & Forms</span>
         </>
       }
-      heroSubtitle="NAPIT is a Government-authorised competent person scheme under Part P of the Building Regulations, giving electricians the same self-certification ability as NICEIC for notifiable domestic work. The complete guide covers registration categories, qualification requirements, costs, application process, building control notification, and a detailed comparison with NICEIC."
+      heroSubtitle="NAPIT is a Government-authorised competent person scheme under Part P of the Building Regulations, so a registered electrician can self-certify notifiable domestic work. This guide covers which certificate you actually issue, registration categories and qualifications, costs, the application and annual assessment, and how building control notification works."
       readingTime={16}
       answerBox={{
-        question: 'Is NAPIT as good as NICEIC?',
+        question: 'What is a NAPIT Building Regulations Compliance Certificate?',
         answer:
-          'Legally they are equivalent. NAPIT and NICEIC are both Government-authorised competent person schemes under Part P, so a Building Regulations compliance certificate from either carries the same standing, and the underlying BS 7671 certificates (EIC, Minor Works, EICR) follow the same model forms regardless of scheme. The differences are in registration cost, assessment style, brand recognition and member benefits — not legal weight or technical requirements.',
+          'It is the document NAPIT issues to the homeowner confirming that notifiable domestic electrical work complies with Part P of the Building Regulations. You do not write it. You issue the BS 7671 certificate for the work — an EIC, a Minor Works Certificate or an EICR on the Appendix 6 model form — then notify NAPIT through their online portal, typically within 30 days. NAPIT sends the compliance certificate to the homeowner and registers the notification with local authority building control.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Work With Any Scheme"
-      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. Works with NAPIT, NICEIC, ELECSA, and BRE. PDF export, digital signatures, cloud storage. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians producing BS 7671:2018+A4:2026 certificates with Elec-Mate. Appendix 6 model forms, PDF export, digital signatures and cloud storage — ready to upload to your scheme portal. 7-day free trial."
     />
   );
 }

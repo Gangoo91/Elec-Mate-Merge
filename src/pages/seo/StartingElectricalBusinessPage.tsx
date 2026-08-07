@@ -16,7 +16,7 @@ export default function StartingElectricalBusinessPage() {
   return (
     <GuideTemplate
       title="Starting an Electrical Business UK 2026 | Startup Guide"
-      description="Step-by-step guide to starting an electrical business in the UK. Covers qualifications, competent person scheme registration, business structure…"
+      description="Step-by-step guide to starting an electrical business in the UK. Covers qualifications, competent person scheme registration, business structure."
       datePublished="2026-01-10"
       dateModified="2026-05-18"
       breadcrumbs={[

@@ -479,26 +479,24 @@ function buildMockExamSchemas({ url, title, description, slug, isHub }) {
 //     description + canonical, so Google indexes ~67 long-tail landings.
 // ---------------------------------------------------------------------------
 
-// Banks that participate in topic landings — mirrors src/components/seo/
-// mockExamTopicRegistry.ts. Update both files together when adding new
-// topic-enabled exams.
-const TOPIC_REGISTRY = [
-  { examSlug: 'am2-online-knowledge-test', shortName: 'AM2 Online Knowledge Test', subject: 'AM2 questions', bankFile: 'src/data/apprentice-courses/am2/questionBank.ts', questionsPerExam: 15, timeLimit: 25 },
-  { examSlug: '2391-inspection-testing', shortName: 'C&G 2391 Inspection & Testing', subject: 'inspection and testing questions', bankFile: 'src/data/upskilling/inspectionTestingMockExamData.ts', questionsPerExam: 20, timeLimit: 25 },
-  { examSlug: 'asbestos-awareness', shortName: 'Asbestos Awareness', subject: 'asbestos awareness questions', bankFile: 'src/data/general-upskilling/asbestosMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'confined-spaces', shortName: 'Confined Spaces', subject: 'confined spaces questions', bankFile: 'src/data/general-upskilling/confinedSpacesMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'coshh', shortName: 'COSHH', subject: 'COSHH questions', bankFile: 'src/data/general-upskilling/coshhMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'cscs-card', shortName: 'CSCS Card HS&E Test', subject: 'CSCS test questions', bankFile: 'src/data/general-upskilling/cscsCardMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'fire-safety', shortName: 'Fire Safety', subject: 'fire safety questions', bankFile: 'src/data/general-upskilling/fireSafetyMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'first-aid', shortName: 'First Aid at Work', subject: 'first aid questions', bankFile: 'src/data/general-upskilling/firstAidMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'ipaf', shortName: 'IPAF MEWP Operator', subject: 'IPAF questions', bankFile: 'src/data/general-upskilling/ipafMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'manual-handling', shortName: 'Manual Handling', subject: 'manual handling questions', bankFile: 'src/data/general-upskilling/manualHandlingMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'pasma', shortName: 'PASMA Towers for Users', subject: 'PASMA questions', bankFile: 'src/data/general-upskilling/pasmaMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-  { examSlug: 'working-at-height', shortName: 'Working at Height', subject: 'working at height questions', bankFile: 'src/data/general-upskilling/workingAtHeightMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
-];
+// Banks that participate in topic landings. Single source of truth, shared
+// with src/components/seo/mockExamTopicRegistry.ts — that file supplies the
+// bank imports, this one reads the same metadata to prerender each landing.
+// Previously these were two hand-kept lists and they had drifted.
+const TOPIC_REGISTRY = JSON.parse(
+  readFileSync(join(ROOT, 'src/data/seo/mockExamTopics.json'), 'utf-8')
+);
 
 function categoryToSlug(c) {
-  return c.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  // Must stay identical to categoryToSlug() in mockExamTopicRegistry.ts —
+  // a mismatch means the static HTML lands on a URL the client route can't
+  // resolve, which redirects the visitor straight back out of the page.
+  return c
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/['\u2019]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 // Filter out the dynamic topic route from the main loop, then build
@@ -512,18 +510,36 @@ let topicCount = 0;
 for (const entry of TOPIC_REGISTRY) {
   const bankPath = join(ROOT, entry.bankFile);
   if (!existsSync(bankPath)) continue;
-  const bankSrc = readFileSync(bankPath, 'utf-8');
+  let bankSrc = readFileSync(bankPath, 'utf-8');
+  // Scan only from the exported bank onward. Several data files declare a
+  // categories list or a sample question ABOVE the bank (asbestos, PASMA),
+  // and a whole-file regex counts those too — which inflated the question
+  // count printed in the meta description by 1-3 on eight pages.
+  const bankStart = bankSrc.search(new RegExp(`export const ${entry.bankExport}\\b`));
+  if (bankStart >= 0) bankSrc = bankSrc.slice(bankStart);
   // Count per-category from category: 'X' literals.
   const counts = new Map();
-  for (const m of bankSrc.matchAll(/category\s*:\s*['"`]([^'"`]+)['"`]/g)) {
-    counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+  if (entry.sectionNames) {
+    // Section-driven bank: tally `section: '3.1'` literals and translate the
+    // code to its topic name. Sections absent from sectionNames are skipped
+    // deliberately — they are the 3-7 question fragments we chose not to
+    // turn into landing pages.
+    for (const m of bankSrc.matchAll(/section\s*:\s*['"`]([^'"`]+)['"`]/g)) {
+      const name = entry.sectionNames[m[1].trim()];
+      if (!name) continue;
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
+  } else {
+    for (const m of bankSrc.matchAll(/category\s*:\s*['"`]([^'"`]+)['"`]/g)) {
+      counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+    }
   }
   for (const [category, qCount] of counts) {
     if (qCount < 5) continue; // matches resolveTopicPage() guard
     const slug = categoryToSlug(category);
     const questionsPerExam = Math.min(entry.questionsPerExam, qCount);
-    const title = `${category} — ${entry.shortName} Mock Exam 2026`;
-    const description = `Practice ${qCount} ${entry.subject} focused on ${category}. Free mock exam, ${questionsPerExam} random questions, ${entry.timeLimit}-minute timer, instant results + explanations. No sign-up.`;
+    const title = `${category} — ${entry.examShortName} Mock Exam 2026`;
+    const description = `Practice ${qCount} ${entry.subject} focused on ${category}. Free mock exam, ${questionsPerExam} random questions, ${entry.timeLimitMinutes}-minute timer, instant results + explanations. No sign-up.`;
     routeEntries.push({
       path: `${MOCK_EXAM_PREFIX}/${entry.examSlug}/${slug}`,
       componentName: '__TOPIC__',

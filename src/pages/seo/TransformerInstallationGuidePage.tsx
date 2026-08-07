@@ -571,7 +571,7 @@ export default function TransformerInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Transformer Installation UK | Electrical Transformer Guide"
-      description="Complete guide to electrical transformer installation in the UK. Isolation, step-down, and autotransformers — ventilation requirements…"
+      description="Complete guide to electrical transformer installation in the UK. Isolation, step-down, and autotransformers — ventilation requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

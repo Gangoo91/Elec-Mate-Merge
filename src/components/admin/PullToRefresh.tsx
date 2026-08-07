@@ -91,7 +91,7 @@ export default function PullToRefresh({
           }}
         >
           <RefreshCw
-            className={`h-5 w-5 text-muted-foreground ${isRefreshing ? 'animate-spin' : ''}`}
+            className={`h-5 w-5 text-white ${isRefreshing ? 'animate-spin' : ''}`}
           />
         </div>
       </div>

@@ -452,7 +452,7 @@ export default function ElectricianChelmsfordPage() {
       noindex={true}
       localArea="Chelmsford"
       title="Electrician in Chelmsford | Local Electricians 2026"
-      description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
+      description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

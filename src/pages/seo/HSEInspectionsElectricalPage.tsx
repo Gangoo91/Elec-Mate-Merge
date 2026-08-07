@@ -601,7 +601,7 @@ export default function HSEInspectionsElectricalPage() {
   return (
     <GuideTemplate
       title="HSE Inspections | What Electricians Need to Know"
-      description="Complete guide to HSE inspections for electricians. What inspectors look for, improvement notices, prohibition notices, prosecution, penalties…"
+      description="Complete guide to HSE inspections for electricians. What inspectors look for, improvement notices, prohibition notices, prosecution, penalties."
       datePublished="2025-05-12"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

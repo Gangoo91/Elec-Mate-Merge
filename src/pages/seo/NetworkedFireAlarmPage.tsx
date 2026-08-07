@@ -20,7 +20,7 @@ export default function NetworkedFireAlarmPage() {
   return (
     <GuideTemplate
       title="Networked Fire Alarm System | Addressable vs Conventional"
-      description="Complete guide to networked fire alarm systems for electricians. Covers conventional zones, addressable loop wiring, analogue addressable panels…"
+      description="Complete guide to networked fire alarm systems for electricians. Covers conventional zones, addressable loop wiring, analogue addressable panels."
       datePublished="2026-01-20"
       dateModified="2026-05-18"
       breadcrumbs={[

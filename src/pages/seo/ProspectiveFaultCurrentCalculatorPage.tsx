@@ -25,9 +25,9 @@ import {
   FileCheck2,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Prospective Fault Current Calculator | PSCC & PEFC | Elec-Mate';
+const PAGE_TITLE = 'Prospective Fault Current Calculator: 230 ÷ Zs';
 const PAGE_DESCRIPTION =
-  'Calculate prospective fault current (PSCC + PEFC) on your phone. Verify breaking capacity, BS 7671 Reg 434.5.1, plus 70 calculators. Start free.';
+  'Prospective fault current: Ipf = 230 V ÷ Zs. Free PSCC and PEFC calculator — enter Ze or measured loop impedance, get kA and check MCB breaking capacity.';
 
 const faqs = [
   {
@@ -188,7 +188,7 @@ const howToSchema = {
 
 export default function ProspectiveFaultCurrentCalculatorPage() {
   useSEO({
-    title: 'Prospective Fault Current Calculator | PSCC & PEFC',
+    title: 'Prospective Fault Current Calculator: 230 ÷ Zs',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

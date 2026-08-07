@@ -20,7 +20,7 @@ export default function ElectricalMarketingTipsPage() {
   return (
     <GuideTemplate
       title="Marketing Tips for Electricians | Get More Work UK"
-      description="Practical marketing strategies for UK electricians. Covers Google Business Profile optimisation, social media, word of mouth, website essentials…"
+      description="Practical marketing strategies for UK electricians. Covers Google Business Profile optimisation, social media, word of mouth, website essentials."
       datePublished="2026-01-30"
       dateModified="2026-06-10"
       breadcrumbs={[

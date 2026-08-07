@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'The average employed electrician salary in the UK in 2026 is between £32,000 and £45,000, with experienced electricians in London and the South East regularly exceeding £50,000.',
   'Self-employed electricians typically earn between £40,000 and £75,000 per year, with top earners in specialist fields such as EV charging and solar PV exceeding £80,000.',
-  'Apprentice electricians start at around £14,000-£18,000 in Year 1, rising to £22,000-£28,000 by Year 4, depending on employer and region.',
+  'JIB apprentice rates effective 5 January 2026 are £8.16 per hour at Stage 1, £10.60 at Stage 2, £13.05 at Stage 3 and £14.03 at Stage 4 — a single rate covering all hours, including off-the-job training.',
   'Day rates for qualified electricians range from £200 to £350 depending on location, specialism, and whether the work is domestic, commercial, or industrial.',
   'The fastest route to higher earnings is specialisation — electricians who add EV, solar, fire alarm, or testing and inspection qualifications can charge significantly more per hour.',
 ];
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What are the current JIB pay rates for electricians?',
     answer:
-      'The Joint Industry Board (JIB) sets nationally agreed pay rates for electricians working under the JIB grading structure in the electrical contracting industry. As of 2026, the JIB Approved Electrician rate is approximately £17.50-£18.50 per hour (rates are reviewed annually through SJIB/JIB negotiations and typically increase each January). The JIB Electrician (Technician) rate is higher at approximately £19.00-£20.50 per hour. Apprentice rates under JIB start at around £6.50-£7.50 per hour in Year 1 and increase each year to approximately £12.00-£14.00 in Year 4. These rates represent the minimum agreed pay — many employers pay above JIB rates to attract and retain skilled electricians, particularly in areas with high demand. JIB rates also come with a benefits package including holiday pay, sick pay, pension contributions, and death-in-service benefit, which adds significant value on top of the headline hourly rate.',
+      'The Joint Industry Board (JIB) sets nationally agreed pay rates for electricians working under the JIB grading structure in the electrical contracting industry. The current National Standard rates took effect on 5 January 2026 and are reviewed annually through JIB negotiations with Unite. On the headline Transport Provided column, the Electrician rate (which includes domestic electricians) is £18.38 per hour, the Approved Electrician rate is £20.08 per hour, and the Site or Installation Technician rate is £22.70 per hour. Below those grades, Trainee Electrician Stage 3 is £17.51, Stage 2 is £16.54, and the Electrical Labourer / Trainee Stage 1 rate is £14.60. Apprentices are paid a single rate covering all hours, including off-the-job training: £8.16 at Stage 1, £10.60 at Stage 2, £13.05 at Stage 3 and £14.03 at Stage 4. London Zone rates are higher — £20.58 for an Electrician, £22.48 for an Approved Electrician and £25.47 for a Site or Installation Technician. These rates represent the minimum agreed pay — many employers pay above JIB rates to attract and retain skilled electricians, particularly in areas with high demand. JIB rates also come with a benefits package including holiday pay, sick pay, pension contributions, and death-in-service benefit, which adds significant value on top of the headline hourly rate.',
   },
   {
     question: 'Do electricians in London earn significantly more than the rest of the UK?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'How much do electrical apprentices earn in the UK?',
     answer:
-      'Electrical apprentice pay in the UK varies by year of training, employer, and region. Under the JIB grading structure, Year 1 apprentices earn approximately £14,000-£18,000 per year (around £6.50-£8.50 per hour). This increases annually as the apprentice progresses through their training: Year 2 typically pays £16,000-£20,000, Year 3 pays £19,000-£24,000, and Year 4 pays £22,000-£28,000. These are gross figures before tax and National Insurance. Some larger employers, particularly those in industrial sectors, utilities, or major contractors, pay above JIB minimum rates and may offer additional benefits such as funded training, tool allowances, and company vehicles. The national minimum wage for apprentices provides a floor (currently £6.40 per hour for those under 19 or in Year 1 of an apprenticeship), but most electrical employers pay well above this. London apprenticeships typically pay 10-20% more than equivalent roles elsewhere. While apprentice pay may seem low, the investment pays off — a newly qualified electrician immediately earns £28,000-£35,000, and the career earnings trajectory is strong.',
+      'Electrical apprentice pay in the UK varies by stage of training, employer, and region. The JIB grades apprentices by Stage rather than year, and the rates effective 5 January 2026 are £8.16 per hour at Stage 1, £10.60 at Stage 2, £13.05 at Stage 3 and £14.03 at Stage 4. In London these become £9.14, £11.88, £14.62 and £15.72. Each is a single rate covering all hours worked, including off-the-job training — the separate lower "at college" rate was removed for England, Wales and Northern Ireland. These are gross figures before tax and National Insurance. Some larger employers, particularly those in industrial sectors, utilities, or major contractors, pay above JIB minimum rates and may offer additional benefits such as funded training, tool allowances, and company vehicles. The national minimum wage for apprentices provides a statutory floor (currently £6.40 per hour for those under 19 or in the first year of an apprenticeship) — that is a government minimum, not a JIB rate, and every JIB apprentice stage sits well above it. While apprentice pay may seem low, the investment pays off — a newly qualified electrician immediately earns £28,000-£35,000, and the career earnings trajectory is strong.',
   },
 ];
 
@@ -363,47 +363,50 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical apprenticeships typically last 3-4 years, and pay increases each year as the
+          Electrical apprenticeships typically last 3-4 years, and pay increases at each stage as the
           apprentice gains skills and takes on more responsibility. Most employers follow either the
           JIB grading structure or set their own rates above the national minimum wage for
-          apprentices.
+          apprentices. The JIB grades apprentices by Stage 1 to Stage 4, not by year, and each stage
+          carries a single rate covering all hours worked — including off-the-job training at
+          college.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
-            Typical Apprentice Electrician Pay (2026)
+            JIB Apprentice Rates (effective 5 January 2026)
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Year 1:</strong> £14,000-£18,000 per year (£6.50-£8.50/hr)
+                <strong>Stage 1:</strong> £8.16/hr (London £9.14/hr)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Year 2:</strong> £16,000-£20,000 per year (£7.50-£9.50/hr)
+                <strong>Stage 2:</strong> £10.60/hr (London £11.88/hr)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Year 3:</strong> £19,000-£24,000 per year (£9.00-£11.50/hr)
+                <strong>Stage 3:</strong> £13.05/hr (London £14.62/hr)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Year 4:</strong> £22,000-£28,000 per year (£10.50-£13.50/hr)
+                <strong>Stage 4:</strong> £14.03/hr (London £15.72/hr)
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Larger employers — particularly those in the industrial, utilities, and infrastructure
-          sectors — often pay above these ranges and may provide additional benefits such as a
-          company vehicle, funded training materials, and tool allowances. London apprenticeships
-          typically pay 10-20% more than equivalent positions elsewhere.
+          These are the agreed minimums. Larger employers — particularly those in the industrial,
+          utilities, and infrastructure sectors — often pay above them and may provide additional
+          benefits such as a company vehicle, funded training materials, and tool allowances. The
+          apprentice element of the current deal also carries agreed increases of 2% in January 2027
+          and 3% in January 2028.
         </p>
         <p>
           While apprentice pay may seem modest compared to other career paths, the long-term earning
@@ -435,39 +438,62 @@ const sections = [
           operatives in the electrical contracting industry. JIB rates are the benchmark that many
           employers follow, and they are reviewed and updated annually (usually effective from
           January each year) through collective negotiations between the JIB and the trade union
-          Unite.
+          Unite. The rates below are the National Standard rates effective Monday 5 January 2026,
+          shown on the Transport Provided column — the headline column and the one most often quoted.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
-            JIB Grading and Approximate Hourly Rates (2026)
+            JIB Grading and Hourly Rates (Transport Provided, from 5 January 2026)
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Electrical Labourer:</strong> £12.50-£13.50/hr
+                <strong>Electrical Labourer / Trainee Stage 1:</strong> £14.60/hr
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Electrician (Installer):</strong> £15.50-£16.50/hr
+                <strong>Trainee Electrician Stage 2:</strong> £16.54/hr
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Approved Electrician:</strong> £17.50-£18.50/hr
+                <strong>Trainee Electrician Stage 3:</strong> £17.51/hr
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Electrician (Technician):</strong> £19.00-£20.50/hr
+                <strong>Electrician (including Domestic):</strong> £18.38/hr
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-left">
+                <strong>Approved Electrician:</strong> £20.08/hr
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-left">
+                <strong>Site or Installation Technician:</strong> £22.70/hr
               </span>
             </li>
           </ul>
         </div>
+        <p>
+          Two other columns apply depending on travel arrangements: Own Transport pays more (for
+          example £19.54 for an Electrician, £21.19 for an Approved Electrician and £23.87 for a Site
+          or Installation Technician), while Shop Employed pays less (£16.95, £18.61 and £21.24
+          respectively). London Zone rates under National Working Rule 6.2 are higher again — £20.58
+          for an Electrician, £22.48 for an Approved Electrician and £25.47 for a Site or
+          Installation Technician. Approved Electricians placed in charge of work and supervising
+          other operatives also receive responsibility money of not less than 50p and not more than
+          £2.00 per hour; supervising apprentices or trainees does not attract it.
+        </p>
         <p>
           JIB rates represent the minimum agreed pay for each grade. Many employers pay above these
           rates, particularly in regions with high demand or skills shortages. The JIB package
@@ -478,10 +504,13 @@ const sections = [
         </p>
         <p>
           To move up the JIB grading structure, electricians need to complete specific
-          qualifications and demonstrate competence. Progression from Installer to Approved
-          Electrician requires the AM2 assessment, while the Technician grade requires additional
-          qualifications such as the C&G 2391 (Inspection and Testing). Each step up the grading
-          ladder comes with a meaningful pay increase.
+          qualifications and demonstrate competence. The ladder runs Apprentice Stage 1-4, Electrical
+          Labourer / Trainee Stage 1, Trainee Stage 2, Trainee Stage 3, Electrician, Approved
+          Electrician, and finally Site or Installation Technician. Progression from Electrician to
+          Approved Electrician requires the AM2 assessment, while the Site or Installation Technician
+          grade requires additional qualifications such as the C&G 2391 (Inspection and Testing).
+          Each step up the grading ladder comes with a meaningful pay increase. The current agreement
+          also sets further rises of 4.6% in January 2027 and 4.85% in January 2028.
         </p>
       </>
     ),

@@ -552,7 +552,7 @@ export default function EICRPlymouthPage() {
   return (
     <GuideTemplate
       title="EICR Plymouth | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Plymouth for 2026. Landlord legal requirements, Plymouth City Council enforcement, post-war housing stock findings…"
+      description="EICR costs in Plymouth for 2026. Landlord legal requirements, Plymouth City Council enforcement, post-war housing stock findings."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

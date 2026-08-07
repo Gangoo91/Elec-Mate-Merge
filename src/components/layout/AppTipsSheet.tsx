@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, type Variants } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -152,9 +152,9 @@ const sections: Section[] = [
         route: ELEC('installation-specialist'),
       },
       {
-        title: 'Diagram Builder',
-        body: 'Generate single-line diagrams, circuit layouts and schematics from a brief description.',
-        route: ELEC('circuit-designer'),
+        title: 'Room Planner',
+        body: 'Draw the walls, drop sockets, lights and switches where they go, and run the cables between them. Several rooms to a plan, saved and exported for the client. Stuck on the shape — let the AI build it from a description.',
+        route: ELEC('business/room-planner'),
       },
       {
         title: 'On-site analysis',
@@ -184,7 +184,7 @@ const sections: Section[] = [
       },
       {
         title: 'Calendar',
-        body: 'Plan your week, see jobs at a glance, set reminders. Connects with the AI day planner for routing.',
+        body: 'Plan your week, see jobs at a glance, set reminders. A nudge lands before each one so nothing gets missed.',
         route: ELEC('business/calendar'),
       },
       {
@@ -194,7 +194,7 @@ const sections: Section[] = [
       },
       {
         title: 'Snagging',
-        body: 'Log defects with photos against a project, assign to yourself or a mate, and generate a snag list PDF.',
+        body: 'Log defects with photos against a project and work them off as they are cleared. Photograph a fault and you get a read on what it is and what to check.',
         route: ELEC('snagging'),
       },
       {
@@ -204,12 +204,12 @@ const sections: Section[] = [
       },
       {
         title: 'Accounting sync',
-        body: 'Push invoices and expenses to Xero, QuickBooks, Sage or FreeAgent. Set up once in your business settings.',
+        body: 'Push invoices and expenses straight to Xero or QuickBooks. Connect once in your business settings and it keeps itself in step.',
         route: SETTINGS_BUSINESS,
       },
       {
         title: 'Late payment chasers',
-        body: 'Automatic reminder emails for overdue invoices, with a tone that escalates over time. You stay in control.',
+        body: 'Overdue invoices are flagged for you daily. Chase with one tap and pick the tone yourself — gentle, firm or final notice. Nothing goes to a client without you sending it.',
         route: ELEC('invoices'),
       },
       {
@@ -244,7 +244,7 @@ const sections: Section[] = [
       },
       {
         title: 'BS 7671, OSG, GN3',
-        body: 'The full text, searchable, with practical notes alongside.',
+        body: 'Search the regulations by what you are actually trying to do and get the reg number, what it requires and how it plays out on site. Amendment 4:2026 throughout.',
       },
     ],
   },
@@ -292,34 +292,38 @@ const sections: Section[] = [
         route: ELEC('quotes'),
       },
       {
-        title: 'Bulk PDF export',
-        body: 'Select a date range or project and export every cert, quote and invoice as a single bundle.',
-        route: ELEC('invoices'),
+        title: 'Let quotes chase themselves',
+        body: 'Turn on auto follow-up and an unanswered quote gets chased at 3 days, then again at 7 — then it stops. You get a heads-up before it expires. Invoices are the other way round: you chase those yourself, so nothing goes to a client unless you send it.',
+        route: ELEC('quotes'),
       },
       {
-        title: 'Search regs from any cert',
-        body: 'A reg lookup is one tap from inside the cert forms. Find the right reference without leaving the form.',
+        title: 'Let the observation writer word it',
+        body: 'Type what you found in your own words and it comes back written up properly — the classification code, the wording and the regulation reference, all from BS 7671.',
         route: ELEC('inspection-testing'),
       },
     ],
   },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.04 },
   },
 };
 
-const sectionVariants = {
+// `as const` on type: framer-motion's Variants wants the literal 'spring', not
+// a widened string — without it this whole object fails to type-check.
+const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 240, damping: 22 },
+    transition: { type: 'spring' as const, stiffness: 240, damping: 22 },
   },
 };
+
+const TOTAL_TIPS = sections.reduce((n, s) => n + s.tips.length, 0);
 
 const matchesQuery = (tip: Tip, q: string) => {
   if (!q) return true;
@@ -331,12 +335,40 @@ const AppTipsSheet = ({ open, onOpenChange }: AppTipsSheetProps) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
+  // Jumping between sections: 40-odd tips across 7 sections is too much to
+  // reach by scrolling alone, so the chip row seeks the scroll container.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+
   const filtered = useMemo(() => {
     if (!query.trim()) return sections;
     return sections
       .map((s) => ({ ...s, tips: s.tips.filter((t) => matchesQuery(t, query)) }))
       .filter((s) => s.tips.length > 0);
   }, [query]);
+
+  const resultCount = useMemo(
+    () => filtered.reduce((n, s) => n + s.tips.length, 0),
+    [filtered]
+  );
+
+  const searching = query.trim().length > 0;
+
+  // Typing a search while scrolled halfway down left you looking at the middle
+  // of the result list. Every keystroke changes the results, so go back to the
+  // first one. Not smooth — an animated scroll per keystroke is nauseating.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [query]);
+
+  const jumpTo = (number: string) => {
+    const el = sectionRefs.current[number];
+    const scroller = scrollRef.current;
+    if (!el || !scroller) return;
+    // offsetTop is measured against the scroll container, which is `relative`
+    // for exactly this reason. -8 leaves the heading clear of the sticky edge.
+    scroller.scrollTo({ top: Math.max(0, el.offsetTop - 8), behavior: 'smooth' });
+  };
 
   const handleOpen = (route?: string) => {
     if (!route) return;
@@ -347,54 +379,95 @@ const AppTipsSheet = ({ open, onOpenChange }: AppTipsSheetProps) => {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Sticky header — editorial: thin gold accent, big title, search */}
-          <div className="flex-shrink-0 sticky top-0 z-10 backdrop-blur-xl bg-background/95">
-            <div className="h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400" />
+      <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl border-t border-white/[0.14] bg-[#16161b] p-0 focus:outline-none">
+        <div className="flex h-full flex-col">
+          {/* Sticky header — title, search, then a jump row for the sections */}
+          <div className="sticky top-0 z-10 flex-shrink-0 border-b border-white/[0.10] bg-[#16161b]/95 backdrop-blur-xl">
+            <div className="h-[2px] bg-elec-yellow" />
 
-            <div className="px-5 sm:px-8 pt-6 pb-5">
+            <div className="px-4 pt-6 pb-4 sm:px-8">
               <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-elec-yellow">
                 Tips &amp; Guidance
               </div>
-              <h2 className="mt-2 text-[28px] sm:text-[34px] leading-[1.05] font-semibold text-white tracking-tight">
+              <h2 className="mt-2 text-[28px] font-semibold leading-[1.05] tracking-tight text-white sm:text-[34px]">
                 A guide to every part of Elec-Mate.
               </h2>
 
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search tips"
-                aria-label="Search tips"
-                className={cn(
-                  'mt-5 w-full bg-transparent border-0 border-b border-white/15',
-                  'text-base text-white placeholder:text-white/35',
-                  'pb-2 pt-1 outline-none focus:border-elec-yellow/70 focus:ring-0',
-                  'transition-colors touch-manipulation'
+              <div className="mt-5 flex items-center gap-3">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={`Search ${TOTAL_TIPS} tips`}
+                  aria-label="Search tips"
+                  className={cn(
+                    'input-underline h-11 min-w-0 flex-1 rounded-none border-0 border-b border-white/[0.15]',
+                    'bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25',
+                    'caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow',
+                    'focus:outline-none focus:ring-0 focus-visible:ring-0 touch-manipulation'
+                  )}
+                />
+                {searching && (
+                  <button
+                    type="button"
+                    onClick={() => setQuery('')}
+                    className="h-11 flex-shrink-0 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                  >
+                    Clear
+                  </button>
                 )}
-              />
+              </div>
+
+              {/* Searching replaces the jump row with a count — the sections
+                  it would scroll to are the ones being filtered away. */}
+              {searching ? (
+                <div className="mt-3 text-[13px] font-medium text-white">
+                  {resultCount} {resultCount === 1 ? 'tip' : 'tips'}
+                </div>
+              ) : (
+                <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-8 sm:px-8">
+                  {sections.map((s) => (
+                    <button
+                      key={s.number}
+                      type="button"
+                      onClick={() => jumpTo(s.number)}
+                      className={cn(
+                        'h-9 flex-shrink-0 rounded-full border border-white/[0.12] bg-white/[0.06] px-3.5',
+                        'text-[13px] font-medium whitespace-nowrap text-white',
+                        'transition-colors hover:border-elec-yellow/50 hover:bg-elec-yellow/10',
+                        'touch-manipulation'
+                      )}
+                    >
+                      {s.title}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Body */}
-          <div className="flex-1 overflow-y-auto overscroll-contain">
+          {/* Body — `relative` so section offsetTop is measured against this
+              scroller, which is what jumpTo() seeks. */}
+          <div ref={scrollRef} className="relative flex-1 overflow-y-auto overscroll-contain">
             <motion.div
-              className="px-5 sm:px-8 pt-2 pb-20"
+              className="px-4 pt-2 pb-20 sm:px-8"
               variants={containerVariants}
               initial="hidden"
               animate={open ? 'visible' : 'hidden'}
             >
               {filtered.length === 0 ? (
-                <div className="py-20 text-center text-sm text-white/50">
+                <div className="py-20 text-center text-sm text-white">
                   No tips match &ldquo;{query}&rdquo;.
                 </div>
               ) : (
                 filtered.map((section) => (
                   <motion.section
                     key={section.number}
+                    ref={(el) => {
+                      sectionRefs.current[section.number] = el;
+                    }}
                     variants={sectionVariants}
-                    className="pt-10 sm:pt-14 first:pt-6"
+                    className="pt-10 first:pt-6 sm:pt-14"
                   >
                     {/* Section header — number in yellow, eyebrow, then title */}
                     <div className="flex items-baseline gap-4 sm:gap-6">
@@ -412,44 +485,47 @@ const AppTipsSheet = ({ open, onOpenChange }: AppTipsSheetProps) => {
                     </div>
 
                     {section.intro && (
-                      <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-white/65">
+                      <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-white">
                         {section.intro}
                       </p>
                     )}
 
-                    {/* Tips — hairline-separated rows, no icons, no chrome */}
-                    <ul className="mt-6 border-t border-white/[0.06]">
+                    {/* Tips as cards. Full-bleed and flush-stacked on a phone,
+                        insetting into two columns from lg — the old single
+                        column left the Open link stranded ~700px from its own
+                        text on a desktop-width sheet. */}
+                    <ul className="mt-6 grid grid-cols-1 sm:gap-4 lg:grid-cols-2">
                       {section.tips.map((tip) => {
                         const interactive = Boolean(tip.route);
                         return (
-                          <li key={tip.title} className="border-b border-white/[0.06]">
+                          <li key={tip.title} className="-mt-px flex sm:mt-0">
                             <button
                               type="button"
                               onClick={() => handleOpen(tip.route)}
                               disabled={!interactive}
                               className={cn(
-                                'w-full text-left py-5 sm:py-6 flex items-start gap-6',
-                                'group touch-manipulation',
+                                '-mx-4 flex w-[calc(100%+2rem)] flex-col items-start p-4 text-left sm:mx-0 sm:w-full sm:p-5',
+                                'rounded-none border-y border-white/[0.14] sm:rounded-2xl sm:border-x',
+                                'bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
+                                'group touch-manipulation transition-colors',
                                 interactive
-                                  ? 'cursor-pointer hover:bg-white/[0.02] transition-colors'
+                                  ? 'cursor-pointer hover:border-elec-yellow/40 hover:from-white/[0.12] hover:to-white/[0.06]'
                                   : 'cursor-default'
                               )}
                             >
-                              <div className="flex-1 min-w-0 pr-2">
-                                <div className="text-[16px] sm:text-[17px] font-semibold text-white leading-snug">
-                                  {tip.title}
-                                </div>
-                                <p className="mt-1.5 text-[14px] sm:text-[15px] leading-relaxed text-white/65 max-w-[60ch]">
-                                  {tip.body}
-                                </p>
+                              <div className="text-[16px] font-semibold leading-snug text-white sm:text-[17px]">
+                                {tip.title}
                               </div>
+                              <p className="mt-1.5 text-[14px] leading-relaxed text-white sm:text-[15px]">
+                                {tip.body}
+                              </p>
 
                               {interactive && (
                                 <span
                                   className={cn(
-                                    'flex-shrink-0 mt-1 text-[13px] font-medium tracking-wide',
-                                    'text-elec-yellow/80 group-hover:text-elec-yellow',
-                                    'transition-colors whitespace-nowrap'
+                                    'mt-3 inline-flex h-9 items-center rounded-lg bg-elec-yellow/10 px-3',
+                                    'text-[13px] font-semibold text-elec-yellow',
+                                    'transition-colors group-hover:bg-elec-yellow group-hover:text-black'
                                   )}
                                 >
                                   Open →

@@ -237,9 +237,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
         onClick={() => setShowStandards(!showStandards)}
         className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity text-white/85 hover:text-white"
       >
-        <span className="text-[12px]">
-          {showStandards ? 'Hide' : 'Show'} standards reference
-        </span>
+        <span className="text-[12px]">{showStandards ? 'Hide' : 'Show'} standards reference</span>
         <ChevronDown
           className={`h-3.5 w-3.5 text-white/55 transition-transform duration-200 ${showStandards ? 'rotate-180' : ''}`}
         />

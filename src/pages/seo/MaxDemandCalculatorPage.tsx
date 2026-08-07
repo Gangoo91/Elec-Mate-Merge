@@ -164,7 +164,7 @@ export default function MaxDemandCalculatorPage() {
   useSEO({
     title: 'Maximum Demand Calculator BS 7671 | Diversity Factors',
     description:
-      'Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2). Covers domestic, commercial, cooker, shower, EV charger…',
+      'Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2). Covers domestic, commercial, cooker, shower, EV charger.',
   });
 
   return (

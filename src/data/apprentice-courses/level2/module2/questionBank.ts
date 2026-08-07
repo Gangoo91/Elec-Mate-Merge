@@ -384,10 +384,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 25,
     question: 'What is an atom?',
     options: [
-      'A particle that carries only negative charge',
+      'A particle that carries only a negative charge and no mass',
       'The basic unit of matter consisting of protons, neutrons, and electrons',
-      'A unit of electrical charge equal to one coulomb',
-      'The smallest amount of current that can flow',
+      'A unit of electrical charge equal to one coulomb of electrons',
+      'The smallest quantity of current that is able to flow in a conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -574,7 +574,7 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Only the supply voltage',
       'Both voltage and resistance',
-      'Only the circuit resistance',
+      'The circuit resistance alone',
       'Neither voltage nor resistance',
     ],
     correctAnswer: 1,
@@ -942,10 +942,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 61,
     question: 'What mathematical operations are commonly needed for electrical calculations?',
     options: [
-      'Only addition and subtraction',
+      'Only addition and subtraction of whole numbers',
       'Addition, subtraction, multiplication, division',
-      'Only multiplication and division',
-      'Calculus and differential equations',
+      'Multiplication and division, but never addition',
+      'Calculus and differential equations exclusively',
     ],
     correctAnswer: 1,
     explanation:
@@ -990,7 +990,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'What is a reasonable check for electrical calculations?',
     options: [
       'Order of magnitude estimation',
-      'Repeating the same keystrokes on the calculator',
+      'Repeated keystrokes on the same calculator',
       'Assuming the first answer is always correct',
       'Rounding every value to zero first',
     ],
@@ -1068,8 +1068,8 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Yes, it applies equally to every material',
       'Only to ohmic materials (linear resistance)',
-      'Only to insulating materials',
-      'Only to materials carrying alternating current',
+      'Only to insulating materials such as PVC',
+      'To any material carrying alternating current',
     ],
     correctAnswer: 1,
     explanation:
@@ -1180,9 +1180,9 @@ export const module2QuestionBank: QuestionBank[] = [
       "In practical electrical work, what should always be considered along with Ohm's Law?",
     options: [
       'Safety, temperature effects, and component ratings',
-      'Only the colour of the cable insulation',
-      'Only the cost of the components used',
-      'The brand name printed on the equipment',
+      'Only the colour of the cable insulation used',
+      'The purchase cost of the components rather than ratings',
+      'The brand name printed on the equipment casing',
     ],
     correctAnswer: 0,
     explanation:
@@ -1243,9 +1243,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question: "When using Ohm's Law for circuit design, what must be considered?",
     options: [
       'Power ratings, current capacity, and safety margins',
-      'Only the supply voltage value',
-      'Only the colour coding of components',
-      'Only the physical size of the enclosure',
+      'Only the supply voltage value at the origin',
+      'The colour coding of the components fitted',
+      'The physical size of the enclosure used',
     ],
     correctAnswer: 0,
     explanation:
@@ -1418,7 +1418,7 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 91,
     question: 'In a parallel circuit, how does current divide?',
     options: [
-      'Equally between all branches regardless of resistance',
+      'Splitting equally between all branches regardless of resistance',
       'Entirely through the highest-resistance branch',
       'In direct proportion to each branch resistance',
       'According to branch resistance (inversely proportional)',
@@ -1716,7 +1716,7 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'How should mixed circuits be analysed?',
     options: [
       'Add every resistance together regardless of layout',
-      'Ignore the parallel sections entirely',
+      'Apply the reciprocal formula to the whole circuit at once',
       'Break down into series and parallel sections, solve step by step',
       'Treat the whole circuit as a single parallel group',
     ],
@@ -2290,7 +2290,7 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Chemical reactions inside a battery',
       'Solar cells exposed to sunlight',
-      'A rectifier converting DC to AC',
+      'Rectifying circuits converting DC into AC',
       'Rotating generators (alternators)',
     ],
     correctAnswer: 3,
@@ -2350,9 +2350,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 151,
     question: 'Why is AC preferred for power transmission?',
     options: [
-      'It can be stored more easily than DC',
-      'It produces no heat in the conductors',
-      'It travels faster along the cables than DC',
+      'It can be stored in batteries far more easily than DC can',
+      'It produces no heating effect in the transmission conductors',
+      'It travels faster along the overhead lines than DC does',
       'Voltage can be easily changed with transformers for efficient transmission',
     ],
     correctAnswer: 3,
@@ -2459,10 +2459,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 158,
     question: 'Why is polarity important with DC supplies?',
     options: [
-      'Polarity changes the supply frequency',
-      'Reversing polarity increases the voltage',
+      'Reversed polarity changes the frequency of the supply',
+      'Reversing the polarity doubles the terminal voltage',
       'Incorrect polarity can damage components or prevent proper operation',
-      'Polarity only matters for AC supplies',
+      'Polarity only matters on alternating current supplies',
     ],
     correctAnswer: 2,
     explanation:
@@ -2537,9 +2537,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 163,
     question: 'Why do some motors use AC and others use DC?',
     options: [
-      'All motors run equally well on either AC or DC supply',
-      'DC motors are always simpler and cheaper than AC motors',
-      'AC motors cannot start under load whereas DC motors always can',
+      'All motors run equally well on either supply, so the choice is arbitrary',
+      'DC motors are always simpler and cheaper to build than any AC motor',
+      'AC motors cannot start under load, whereas a DC motor always can do so',
       'Different characteristics: AC motors are simpler, DC motors offer better speed control',
     ],
     correctAnswer: 3,
@@ -2714,10 +2714,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 174,
     question: 'What is resistivity?',
     options: [
-      'The total resistance of a finished cable',
-      'The current a material can carry per volt',
+      'The total resistance measured along a finished cable run',
+      'The current a material can carry for each volt applied',
       'A material property indicating resistance per unit length and area',
-      'The voltage needed to break down an insulator',
+      'The voltage needed to break down an insulating material',
     ],
     correctAnswer: 2,
     explanation:
@@ -3110,9 +3110,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 199,
     question: "What factors determine a cable's current rating?",
     options: [
-      'Only the colour of the cable insulation and its length',
-      'Only the supply voltage and the circuit frequency',
-      'Only the brand of cable and the cost per metre',
+      'Only the colour of the insulation and the overall length of the run',
+      'The supply voltage and the frequency of the circuit it feeds',
+      'The brand of the cable and the cost per metre when purchased',
       'Cross-sectional area, insulation type, installation method, ambient temperature',
     ],
     correctAnswer: 3,
@@ -3191,8 +3191,8 @@ export const module2QuestionBank: QuestionBank[] = [
     question: 'At what frequencies does skin effect become significant?',
     options: [
       'High frequencies (kHz and above)',
-      'Only at DC (zero frequency)',
-      'Only at the 50 Hz mains frequency',
+      'Only at DC, where frequency is zero',
+      'At the 50 Hz mains frequency alone',
       'At no frequency, as it does not exist',
     ],
     correctAnswer: 0,
@@ -3208,7 +3208,7 @@ export const module2QuestionBank: QuestionBank[] = [
     options: [
       'Current lost through poor cable connections',
       'Circulating currents in conductors causing power loss',
-      'Current leaking to earth through damp insulation',
+      'Leaking current passing to earth through damp insulation',
       'The current drawn by a motor at start-up',
     ],
     correctAnswer: 1,
@@ -3981,10 +3981,10 @@ export const module2QuestionBank: QuestionBank[] = [
     question:
       'What is the main advantage of a clamp meter over a standard in-line ammeter for measuring load current?',
     options: [
-      'It measures current far more accurately than an in-line ammeter',
-      'It can read both AC current and insulation resistance at once',
+      'It measures load current far more accurately than any in-line ammeter can',
+      'It can read AC current and insulation resistance at the same time on one range',
       'It can measure current without breaking the circuit or making contact with live conductors',
-      'It does not require a battery or any internal power source',
+      'It needs no battery or any internal power source in order to take a reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -3997,9 +3997,9 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 255,
     question: 'Why must test instruments used for BS 7671 verification be regularly calibrated?',
     options: [
-      'To increase the test voltage the instrument can apply',
-      'So the instrument can be used on higher-current circuits',
-      'To extend the battery life of the test instrument',
+      'To increase the test voltage that the instrument is able to apply on test',
+      'So that the instrument can be used on higher-current circuits safely',
+      'To extend the working life of the instrument\'s battery between charges',
       'To ensure measured values are accurate and traceable so certificates are valid and safe',
     ],
     correctAnswer: 3,
@@ -4046,10 +4046,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 258,
     question: 'What is meant by a "free electron" in a metal?',
     options: [
-      'An electron locked tightly in the nucleus of the atom',
-      'An electron that has gained a positive charge',
+      'An electron held tightly inside the nucleus alongside the protons',
+      'An electron that has gained a positive charge from the nucleus',
       'An electron loosely bound in the outer shell that can drift through the lattice',
-      'An electron that only moves when the metal is heated',
+      'An electron that moves only when the metal is strongly heated',
     ],
     correctAnswer: 2,
     explanation:
@@ -4112,10 +4112,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 262,
     question: 'What is a semiconductor?',
     options: [
-      'A material with even lower resistivity than copper or silver',
-      'A material that conducts only when cooled to very low temperatures',
+      'A material with an even lower resistivity than either copper or pure silver',
+      'A material that conducts only when it is cooled to a very low temperature',
       'A material whose conductivity sits between a conductor and an insulator and can be controlled',
-      'A material that completely blocks current in both directions',
+      'A material that completely blocks the flow of current in both directions alike',
     ],
     correctAnswer: 2,
     explanation:
@@ -4370,10 +4370,10 @@ export const module2QuestionBank: QuestionBank[] = [
     id: 277,
     question: 'What is electrolysis?',
     options: [
-      'The heating effect of current passing through a solid conductor',
+      'The heating effect produced when current passes through a solid metal conductor',
       'A chemical reaction caused by the passage of an electric current through a conducting liquid',
-      'The build-up of static charge on the surface of an insulator',
-      'The conversion of chemical energy into light in a discharge tube',
+      'The build-up of static charge on the surface of an insulating material body',
+      'The conversion of chemical energy directly into light within a discharge tube',
     ],
     correctAnswer: 1,
     explanation:
@@ -4438,7 +4438,7 @@ export const module2QuestionBank: QuestionBank[] = [
       'From south to north',
       'From north to south',
       'In random directions',
-      'They form closed loops with no defined direction',
+      'In closed loops with no direction',
     ],
     correctAnswer: 1,
     explanation:
@@ -4602,9 +4602,9 @@ export const module2QuestionBank: QuestionBank[] = [
     question:
       'What is the difference between slip rings and a commutator on a rotating machine?',
     options: [
-      'They are different names for the same thing',
-      'A commutator is used only on AC generators',
-      'Slip rings only work on small machines',
+      'They are two different names for exactly the same component',
+      'A commutator is fitted only to AC generators, not to DC ones',
+      'Slip rings are used only on very small machines and motors',
       'Slip rings give an AC output; a commutator rectifies the output to DC',
     ],
     correctAnswer: 3,

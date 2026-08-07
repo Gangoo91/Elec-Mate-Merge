@@ -527,7 +527,7 @@ export default function ElectricityMeterGuidePage() {
   return (
     <GuideTemplate
       title="Electricity Meter Guide UK | Smart Meters, Types & Readings"
-      description="Complete UK electricity meter guide. Types of meter (single rate, Economy 7, smart SMETS2), time-of-use tariffs, how to read your meter…"
+      description="Complete UK electricity meter guide. Types of meter (single rate, Economy 7, smart SMETS2), time-of-use tariffs, how to read your meter."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

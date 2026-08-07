@@ -431,7 +431,7 @@ export default function SecurityAlarmElectricalFaultPage() {
   return (
     <GuideTemplate
       title="Security Alarm Electrical Fault | Alarm Wiring Problems UK"
-      description="Security alarm fault? This guide covers tamper alerts, low battery, power supply faults, communication faults…"
+      description="Security alarm fault? This guide covers tamper alerts, low battery, power supply faults, communication faults."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

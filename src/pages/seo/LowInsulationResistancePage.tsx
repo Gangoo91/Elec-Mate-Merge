@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import InsulationResistanceInterpreter from '@/components/apprentice/calculators/InsulationResistanceInterpreter';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -22,9 +24,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Low Insulation Resistance: Causes + Fix (BS 7671)';
+const PAGE_TITLE = 'Low Insulation Resistance: Under 1 MΩ, 5 Causes';
 const PAGE_DESCRIPTION =
-  'Low insulation resistance (BS 7671 Table 64): 1 MΩ minimum, when <2 MΩ needs investigation, damp + nail-strike + degraded cable causes, step-by-step diagnosis + fix.';
+  'Under 1 MΩ fails BS 7671 Table 64 (500 V DC). Moisture ingress is the top cause, then nail strikes, aged and carbonised cable. How to trace and fix it.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -33,6 +35,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-counts-low', label: 'What Counts as Low?' },
+  { id: 'calculator', label: 'Check Your Reading' },
   { id: 'causes', label: 'Causes of Low Insulation Resistance' },
   { id: 'how-to-diagnose', label: 'How to Diagnose' },
   { id: 'fixing-low-ir', label: 'Fixing Low Insulation Resistance' },
@@ -49,7 +52,7 @@ const keyTakeaways = [
   'Moisture ingress is the most common and most easily reversible cause of low insulation resistance — drying out affected enclosures and resealing cable entries often restores acceptable readings without cable replacement.',
   'Carbonised insulation from arcing or persistent overheating is a serious fire risk and cannot be repaired — the affected cable must be replaced entirely.',
   "Elec-Mate's schedule of tests auto-validates every insulation resistance reading against the BS 7671 Table 64 minimum and suggests the appropriate EICR observation code for failures.",
-  'A4:2026 update (Reg 411.3.4): domestic lighting circuits with low insulation resistance and no 30 mA RCD additional protection present two simultaneous EICR issues — the IR failure and missing RCD protection both require coding.',
+  'Reg 411.3.4 requires additional protection by a 30 mA RCD for AC final circuits supplying luminaires within domestic (household) premises — so a lighting circuit with low insulation resistance and no 30 mA RCD presents two simultaneous EICR issues, and both require coding.',
 ];
 
 const faqs = [
@@ -119,10 +122,11 @@ const sections = [
                 deterioration. For wiring over 25 years old, readings in this range suggest the
                 insulation is approaching end of life. Likely a C3 (improvement recommended)
                 observation, or C2 if trending downward from previous inspections.{' '}
-                <strong className="text-yellow-400">A4:2026 note:</strong> on domestic lighting
-                circuits, also check for 30 mA RCD additional protection — BS 7671:2018+A4:2026 Reg
-                411.3.4 mandates this, so a low IR reading and absent RCD protection are two
-                concurrent EICR issues requiring separate codes.
+                <strong className="text-yellow-400">Also check:</strong> on domestic lighting
+                circuits, look for 30 mA RCD additional protection — Reg 411.3.4 requires it for AC
+                final circuits supplying luminaires within domestic (household) premises, so a low IR
+                reading and absent RCD protection are two concurrent EICR issues requiring separate
+                codes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -141,7 +145,9 @@ const sections = [
               <span>
                 <strong className="text-green-400">Above 200 MΩ — Excellent.</strong> Expected for
                 new installations and relatively new wiring (under 10 years). Readings this high
-                indicate insulation in excellent condition.
+                indicate insulation in excellent condition. For context, GN3 treats anything below
+                20 MΩ on a new installation as needing investigation, even though 1 MΩ is all the
+                Regulations require.
               </span>
             </li>
           </ul>
@@ -154,6 +160,23 @@ const sections = [
           an underlying issue such as persistent moisture ingress, overheating, or chemical
           degradation.
         </p>
+      </>
+    ),
+  },
+  {
+    id: 'calculator',
+    heading: 'Check Your Reading',
+    content: (
+      <>
+        <p className="text-white leading-relaxed">
+          Enter what your tester showed and the interpreter gives you the Table 64 pass/fail, the
+          test voltage that should have been used, and — the part a search result cannot tell you —
+          what that value means on an installation of that age. Add a previous reading and it will
+          flag a sharp fall even where the current value passes. Free, no sign-up.
+        </p>
+        <CalculatorSurface>
+          <InsulationResistanceInterpreter />
+        </CalculatorSurface>
       </>
     ),
   },
@@ -241,14 +264,15 @@ const sections = [
                 </p>
                 <p className="text-white text-sm leading-relaxed mt-2">
                   <strong className="text-yellow-400">
-                    A4:2026 — AFDD recommendation (Reg 421.1.7):
+                    Arc fault detection devices (Reg 421.1.7):
                   </strong>{' '}
-                  BS 7671:2018+A4:2026 Reg 421.1.7 recommends installation of arc fault detection
-                  devices (AFDDs) in AC final circuits of a fixed installation to mitigate the risk
-                  of fire due to arc fault currents — precisely the arcing events that lead to
-                  carbonisation. While the wording is recommendatory rather than mandatory, AFDDs
-                  provide early detection before carbonisation can develop and are increasingly
-                  expected on new domestic circuits.
+                  AFDDs to BS EN 62606 <em>shall</em> be provided for single-phase AC final circuits
+                  supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs,
+                  purpose-built student accommodation and care homes. For all other premises their
+                  use is recommended on the same type of circuit. Where fitted, an AFDD must be
+                  placed at the origin of the circuit it protects. AFDDs detect exactly the arcing
+                  events that lead to carbonisation, but using them does not remove the need for the
+                  other protective measures required elsewhere in BS 7671.
                 </p>
               </div>
             </div>
@@ -307,9 +331,12 @@ const sections = [
               <strong className="text-white">Disconnect all equipment.</strong> Remove all
               appliances, luminaires, LED drivers, and dimmer switches. RCCBs, RCBOs, AFDDs, and
               surge protection devices (SPDs) can present a low resistance during an insulation
-              resistance test and must also be bridged out or temporarily disconnected (GN3 Reg
-              2.22). The 500 V DC test voltage can damage sensitive electronic devices, and any
-              connected equipment provides parallel leakage paths that produce falsely low readings.
+              resistance test, so Reg 643.3.3 calls for a two-stage test on circuits containing them:
+              test the wiring at 500 V DC before that equipment is connected, then, once it is
+              connected, test at 250 V DC between the live conductors (linked together) and the
+              protective conductor — that reading must still be at least 1 MΩ (GN3 2.22). The 500 V
+              DC test voltage can damage sensitive electronic devices, and any connected equipment
+              provides parallel leakage paths that produce falsely low readings.
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
@@ -372,9 +399,9 @@ const sections = [
                 alternative: connect the line and neutral conductors together and test the combined
                 conductors to earth using a reduced 250 V DC test voltage. This avoids applying
                 damaging voltage to connected equipment while still verifying insulation integrity
-                between the wiring and earth. Note that this alternative does not verify insulation
-                between L and N, so a full disconnected test should be arranged as soon as
-                practicable.
+                between the wiring and earth. The reduced-voltage reading must still be at least
+                1 MΩ (Reg 643.3.3). Note that this alternative does not verify insulation between L
+                and N, so a full disconnected test should be arranged as soon as practicable.
               </p>
             </div>
           </div>

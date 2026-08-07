@@ -932,9 +932,9 @@ export const module3Questions: Question[] = [
     id: 63,
     question: 'What is the angular frequency ω?',
     options: [
-      'f × 2',
-      'f²',
-      'f / 2π',
+      'f / 2π (radians per second)',
+      '2π / f (radians per second)',
+      'f × 2 (radians per second)',
       '2πf (radians per second)',
     ],
     correctAnswer: 3,
@@ -1617,9 +1617,9 @@ export const module3Questions: Question[] = [
     question: 'What causes eddy current losses in transformers?',
     options: [
       'Circulating currents induced in the iron core',
-      'Resistance of the copper primary and secondary windings',
-      'Repeated reversal of magnetic domains in the core',
-      'Leakage of magnetic flux into the surrounding air',
+      'Heating in the resistance of the copper windings',
+      'Reversing the magnetic domains on every AC cycle',
+      'Leaking magnetic flux escaping into the surrounding air',
     ],
     correctAnswer: 0,
     explanation:
@@ -1661,9 +1661,9 @@ export const module3Questions: Question[] = [
     id: 111,
     question: 'What is the purpose of an isolation transformer?',
     options: [
-      'To step the voltage up for long-distance transmission',
-      'To smooth a pulsating DC supply into clean DC',
-      'To correct a lagging power factor on the supply',
+      'To step the voltage up for economic long-distance transmission at reduced current',
+      'To smooth a pulsating DC supply into a steady DC output for electronic equipment',
+      'To correct a lagging power factor by supplying leading reactive current to the load',
       'To provide electrical isolation between primary and secondary with no voltage change',
     ],
     correctAnswer: 3,
@@ -1677,9 +1677,9 @@ export const module3Questions: Question[] = [
     question: "Why can't transformers work with DC?",
     options: [
       'No changing current means no changing magnetic field, so no induced voltage',
-      'DC voltage is always too low to magnetise the core',
-      'The core saturates instantly and rejects all current',
-      'DC reverses the polarity of the secondary winding',
+      'The DC voltage is always too low to magnetise the laminated steel core',
+      'The core saturates the instant DC flows and rejects all further current',
+      'DC reverses the polarity of the secondary winding relative to the primary',
     ],
     correctAnswer: 0,
     explanation:
@@ -1766,10 +1766,10 @@ export const module3Questions: Question[] = [
     id: 118,
     question: 'What is voltage regulation in transformers?',
     options: [
-      'The ratio of secondary to primary turns',
-      'The maximum continuous current the secondary can deliver',
+      'The ratio of secondary turns to primary turns, expressed as a percentage',
+      'The maximum continuous current the secondary can deliver without overheating',
       'The change in secondary voltage from no-load to full-load, expressed as a percentage',
-      'The percentage of input power lost as heat in the core',
+      'The percentage of the input power that is lost as heat in the core and windings',
     ],
     correctAnswer: 2,
     explanation:
@@ -1899,9 +1899,9 @@ export const module3Questions: Question[] = [
     id: 127,
     question: 'What is the principle of generator operation?',
     options: [
-      'A current-carrying conductor in a magnetic field feels a force',
-      'A steady current produces a steady magnetic field',
-      'Heat applied to a junction of two metals produces a voltage',
+      'Passing current through a conductor in a field produces a force',
+      'Maintaining a steady current in a coil produces a steady field',
+      'Heating a junction of two dissimilar metals produces a voltage',
       'Moving a conductor through a magnetic field induces an EMF',
     ],
     correctAnswer: 3,
@@ -1929,10 +1929,10 @@ export const module3Questions: Question[] = [
     id: 129,
     question: "What does Fleming's Right Hand Rule determine?",
     options: [
-      'Direction of force on a conductor carrying current (motor action)',
+      'Direction of force on a current-carrying conductor',
       'Direction of induced EMF in a generator',
-      'The direction of magnetic flux inside a solenoid',
-      'The polarity of a charged capacitor plate',
+      'Direction of magnetic flux inside a solenoid',
+      'Polarity of the plates of a charged capacitor',
     ],
     correctAnswer: 1,
     explanation:
@@ -1959,9 +1959,9 @@ export const module3Questions: Question[] = [
     id: 131,
     question: 'What is synchronous speed?',
     options: [
-      'The actual running speed of the rotor under full load',
-      'The speed at which the motor draws its lowest current',
-      'The maximum speed before the motor overheats',
+      'The actual running speed of the rotor measured at the shaft under full rated load',
+      'The speed at which the motor draws its lowest current from the supply at rated torque',
+      'The maximum speed the rotor can reach before the stator windings begin to overheat',
       'The speed of the rotating magnetic field, determined by supply frequency and number of poles',
     ],
     correctAnswer: 3,
@@ -2018,9 +2018,9 @@ export const module3Questions: Question[] = [
     id: 135,
     question: 'Why does an induction motor need slip to operate?',
     options: [
-      'Slip allows the rotor to run faster than the rotating field',
-      'Slip reduces the starting current drawn at switch-on',
-      'Slip keeps the power factor close to unity at all loads',
+      'Slip allows the rotor to run slightly faster than the rotating field at light load',
+      'Slip reduces the starting current drawn from the supply at the moment of switch-on',
+      'Slip holds the motor power factor close to unity across the whole of the load range',
       'Without slip, there would be no relative motion between rotor and field, so no induced current',
     ],
     correctAnswer: 3,
@@ -2079,9 +2079,9 @@ export const module3Questions: Question[] = [
     id: 139,
     question: 'What is a Variable Frequency Drive (VFD)?',
     options: [
-      'A resistor bank that limits motor starting current',
-      'A mechanical gearbox that varies output shaft speed',
-      'A transformer that steps motor voltage up and down',
+      'A resistor bank switched into the rotor circuit to limit the starting current',
+      'A mechanical gearbox that varies the output shaft speed under load',
+      'A tapped transformer that steps the motor supply voltage up and down',
       'An electronic device that controls motor speed by varying the supply frequency',
     ],
     correctAnswer: 3,
@@ -2275,9 +2275,9 @@ export const module3Questions: Question[] = [
     question: 'What is back-EMF in a motor?',
     options: [
       'The voltage induced in motor windings that opposes the supply, increasing with speed',
-      'The voltage drop caused by the resistance of the motor windings',
-      'The surge voltage produced when the motor is switched off',
-      'The supply voltage applied across the motor terminals',
+      'The voltage dropped across the resistance of the motor windings when loaded',
+      'The surge voltage produced by the collapsing field when the motor is switched off',
+      'The supply voltage applied across the motor terminals at the connection block',
     ],
     correctAnswer: 0,
     explanation:
@@ -2289,10 +2289,10 @@ export const module3Questions: Question[] = [
     id: 153,
     question: 'Why is starting current so high in motors?',
     options: [
-      'The power factor is at its highest during starting',
+      'The power factor is at its highest during starting, so the current drawn peaks briefly',
       'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
-      'The supply voltage is momentarily boosted at switch-on',
-      'The rotor resistance falls sharply when the motor is at rest',
+      'The supply voltage is momentarily boosted at switch-on by the supply transformer',
+      'The rotor resistance falls sharply while the motor is still stationary at switch-on',
     ],
     correctAnswer: 1,
     explanation:
@@ -2683,9 +2683,9 @@ export const module3Questions: Question[] = [
     id: 179,
     question: 'What is the effect of harmonics on power factor?',
     options: [
-      'Harmonics have no effect on power factor at all',
-      'Harmonics always improve the true power factor',
-      'Harmonics only affect power factor on DC circuits',
+      'Harmonics have no effect on power factor at all, only on cable heating',
+      'Harmonics improve true power factor by adding real power to the load',
+      'Harmonics affect power factor only on rectified DC supply circuits',
       'Harmonics reduce true power factor even if displacement power factor is good',
     ],
     correctAnswer: 3,
@@ -2773,10 +2773,10 @@ export const module3Questions: Question[] = [
     id: 185,
     question: 'How does power factor correction reduce I²R losses?',
     options: [
-      'By lowering the resistance of the supply cables directly',
+      'By lowering the effective resistance of the supply cables feeding the load',
       'By reducing current flow for the same real power, current squared losses decrease',
-      'By raising the supply voltage so less current is needed',
-      'By converting the reactive losses into useful real power',
+      'By raising the supply voltage so that less current is needed for the load',
+      'By converting the reactive component of the load into useful real power',
     ],
     correctAnswer: 1,
     explanation:
@@ -2986,9 +2986,9 @@ export const module3Questions: Question[] = [
     id: 199,
     question: 'What is the thermal equivalent current for intermittent loads?',
     options: [
-      'The peak current reached during the load cycle',
-      'The average of the maximum and minimum load currents',
-      'The total current summed over the whole load cycle',
+      'The highest peak current reached at any point during the load cycle',
+      'The arithmetic average of the maximum and minimum currents in the cycle',
+      'The total of all the currents drawn over the whole of the load cycle',
       'The steady current producing the same heating effect as the intermittent load',
     ],
     correctAnswer: 3,
@@ -3535,10 +3535,10 @@ export const module3Questions: Question[] = [
     question:
       "A variable frequency drive (VFD) controls motor speed by:",
     options: [
-      'Switching extra resistance into the rotor circuit',
+      'Switching extra resistance into the rotor circuit as the motor runs up',
       'Varying both the supply frequency and the voltage proportionally (V/f control)',
-      'Adjusting the mechanical gearing on the output shaft',
-      'Reversing two supply phases to change motor speed',
+      'Adjusting the mechanical gearing fitted to the motor output shaft',
+      'Reversing two of the supply phases to change the motor speed',
     ],
     correctAnswer: 1,
     explanation:
@@ -3759,9 +3759,9 @@ export const module3Questions: Question[] = [
     question:
       "A relay differs from a contactor in that:",
     options: [
-      'A relay is operated mechanically, a contactor electromagnetically',
-      'A relay switches AC only, a contactor switches DC only',
-      'A relay provides overcurrent protection, a contactor does not',
+      'A relay is operated mechanically, while a contactor is operated electromagnetically',
+      'A relay can switch AC circuits only, while a contactor switches DC circuits only',
+      'A relay provides overcurrent protection to the load circuit, whereas a contactor does not',
       'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
     ],
     correctAnswer: 3,
@@ -3791,7 +3791,7 @@ export const module3Questions: Question[] = [
     question:
       "Where two cables of different CSA carry the same current, which experiences greater voltage drop per metre?",
     options: [
-      'It depends on the colour of the insulation',
+      'The cable with the thicker insulation',
       'The smaller CSA cable',
       'The larger CSA cable',
       'They are the same',

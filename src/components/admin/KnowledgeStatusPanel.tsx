@@ -172,15 +172,15 @@ export const KnowledgeStatusPanel = () => {
                 className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
               >
                 <div className="flex items-center gap-3">
-                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <Icon className="h-4 w-4 text-white" />
                   <div>
                     <p className="font-medium text-sm">{source.name}</p>
-                    <p className="text-xs text-muted-foreground">{source.table}</p>
+                    <p className="text-xs text-white">{source.table}</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold">{(source.count ?? 0).toLocaleString()}</p>
-                  <p className="text-xs text-muted-foreground">chunks</p>
+                  <p className="text-xs text-white">chunks</p>
                 </div>
               </div>
             );

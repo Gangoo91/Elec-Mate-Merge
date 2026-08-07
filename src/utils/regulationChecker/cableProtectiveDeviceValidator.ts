@@ -5,6 +5,16 @@ import { getCableCapacity, getCableSizeForRating } from './cableCapacityCalculat
 import { getVerifiedCableCapacity } from './cableCapacity';
 import { overloadProtectionRule } from '@/utils/validation/rules/overloadProtection';
 
+const MISSING_TO_FIELD: Record<string, keyof TestResult> = {
+  'reference method': 'referenceMethod',
+  'cable size': 'liveSize',
+  'live conductor size': 'liveSize',
+  'device rating': 'protectiveDeviceRating',
+  'protective device rating': 'protectiveDeviceRating',
+  'bs standard': 'bsStandard',
+  'device type': 'protectiveDeviceType',
+};
+
 // ── ELE-1366: Iz from the circuit's ACTUAL wiring type + reference method ──
 // The old check used one generic capacity column (16mm = 76A) and hardcoded
 // Method C, so it falsely failed cables that legitimately carry more — e.g. a
@@ -69,11 +79,20 @@ export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationW
     nominalVoltage: 230,
   });
 
+  /**
+   * The rule reports what it needed in prose ("reference method"); the grid
+   * needs the field name. One map, so a reworded message cannot silently stop
+   * flagging a cell — an unmapped phrase yields no field, which shows the
+   * finding in the sheet without a marker rather than marking the wrong cell.
+   */
   if (outcome.status === 'fail') {
     return [
       {
         severity: 'critical',
         title: outcome.title ?? 'Cable Undersized for Protective Device',
+        // The finding is the relationship between the device, the cable and how
+        // it is installed — so all three are flagged, not just one.
+        fields: ['protectiveDeviceRating', 'liveSize', 'referenceMethod'],
         description: [outcome.message, outcome.detail].filter(Boolean).join(' '),
         regulation: 'BS 7671 Regulation 433.1.1 (and 433.1.202 / 433.1.204)',
         suggestion: outcome.suggestion ?? 'Increase the cable size or reduce the device rating.',
@@ -86,6 +105,12 @@ export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationW
       {
         severity: 'warning',
         title: 'Overload Protection Not Verified',
+        // An abstain names what is missing, so flag exactly those cells rather
+        // than the whole relationship — the electrician needs to know which box
+        // to fill, not which rule could not run.
+        fields: (outcome.missing ?? [])
+          .map((m) => MISSING_TO_FIELD[m.toLowerCase()])
+          .filter(Boolean) as (keyof TestResult)[],
         description: outcome.message,
         regulation: 'BS 7671 Regulation 433.1.1',
         suggestion: `Record: ${outcome.missing.join(', ').toLowerCase()}.`,

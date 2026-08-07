@@ -1,5 +1,15 @@
 import { useMemo } from 'react';
 
+/** The parts of an observation this gate reads. */
+interface CodedObservation {
+  id?: string;
+  item?: string;
+  defectCode?: string;
+  description?: string;
+  recommendation?: string;
+  inspectionItemId?: string;
+}
+
 export type EICRTabId = 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
 
 export interface EICRValidationRule {
@@ -127,6 +137,62 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
       errors.push({ field: 'inspectorSignature', message: 'Inspector signature', severity: 'error', tab: 'inspector' });
     }
 
+    /*
+     * Credentials that had already lapsed on the day of the inspection.
+     *
+     * The inspector form warns as you type, but a warning you can scroll past is
+     * not a control: these dates are pulled from the profile automatically, so
+     * nobody types them and nobody re-reads them. A registration or insurance
+     * date that expired before the inspection took place then prints on a signed
+     * certificate as though it were current.
+     *
+     * Judged against the inspection date, not today. Writing a certificate up a
+     * fortnight after the visit is normal, and the question that matters is
+     * whether the cover was in force when the work was done.
+     */
+    const lapsedOnInspection = (value?: string): boolean => {
+      if (!value || !formData.inspectionDate) return false;
+      const expiry = new Date(`${value}T23:59:59`);
+      const inspected = new Date(`${formData.inspectionDate}T00:00:00`);
+      if (Number.isNaN(expiry.getTime()) || Number.isNaN(inspected.getTime())) return false;
+      return expiry.getTime() < inspected.getTime();
+    };
+
+    if (lapsedOnInspection(formData.registrationExpiry as string | undefined)) {
+      errors.push({
+        field: 'registrationExpiry',
+        message: 'Scheme registration had expired on the date of inspection',
+        severity: 'error',
+        tab: 'inspector',
+      });
+    }
+    if (lapsedOnInspection(formData.insuranceExpiry as string | undefined)) {
+      errors.push({
+        field: 'insuranceExpiry',
+        message: 'Insurance had expired on the date of inspection',
+        severity: 'error',
+        tab: 'inspector',
+      });
+    }
+
+    /*
+     * An address the certificate cannot reach.
+     *
+     * A warning, not a block — a certificate is perfectly valid handed over on
+     * paper, and an empty email field is normal. What is not normal is typing an
+     * address, issuing, and believing it was delivered. Same test as the client
+     * form so the two surfaces cannot disagree.
+     */
+    const clientEmail = String(formData.clientEmail || '').trim();
+    if (clientEmail.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clientEmail)) {
+      warnings.push({
+        field: 'clientEmail',
+        message: 'Client email will not receive the certificate — check for a typo',
+        severity: 'warning',
+        tab: 'details',
+      });
+    }
+
     // ── Certificate tab ────────────────────────────────────────
     if (!formData.overallAssessment) {
       errors.push({
@@ -232,18 +298,49 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
      * a certificate being issued, but an empty observation on any of them is
      * still worth surfacing before it prints.
      */
-    inspectionItems
-      .filter((i) => ['C2', 'C3', 'FI'].includes(String(i.outcome)))
-      .forEach((item) => {
-        const linked = observations.find((o) => o.inspectionItemId === item.id);
-        if (!linked) return; // "missing entirely" is already reported above for C2
-        if (!linked.description?.trim() || !linked.recommendation?.trim()) {
-          warnings.push({
-            field: `obs-detail-${item.id}`,
-            message: `${item.outcome} observation needs a description and a recommendation: ${item.item?.slice(0, 34)}…`,
-            severity: 'warning',
-            tab: 'inspection',
-          });
+    /*
+     * Walk the observations, not the checklist items.
+     *
+     * This used to iterate `inspectionItems` and look up a linked observation,
+     * so it only ever saw observations born from the checklist. Two routes
+     * bypassed it completely: "Add observation" in the Inspect tab creates a
+     * blank row with no `inspectionItemId`, and every observation raised from
+     * the Validate sheet is unlinked by construction. An electrician could add
+     * one, set it to C1, leave every field empty and issue — the C1/C2 rule
+     * would correctly force "unsatisfactory", so the certificate went out
+     * declaring the installation unsafe with a blank row saying why.
+     *
+     * C1 blocks. Confirmed as a deliberate product decision (Andrew, 7 Aug
+     * 2026) — do not soften it to a warning. Note what is and is not blocked: a
+     * fully-worded C1 on an unsatisfactory certificate issues normally, because
+     * that is precisely what an EICR is for. The only thing stopped is an empty
+     * row coded C1 — a certificate declaring the installation unsafe while
+     * saying nothing about why, which neither the client nor the next
+     * electrician can act on. Everything else warns.
+     */
+    observations
+      .filter((o: CodedObservation) =>
+        ['C1', 'C2', 'C3', 'FI'].includes(String(o.defectCode))
+      )
+      .forEach((obs: CodedObservation, i: number) => {
+        const missing: string[] = [];
+        if (!obs.item?.trim()) missing.push('an item');
+        if (!obs.description?.trim()) missing.push('a description');
+        if (!obs.recommendation?.trim()) missing.push('a recommendation');
+        if (!missing.length) return;
+
+        const label = obs.item?.trim()
+          ? `: ${obs.item.trim().slice(0, 34)}…`
+          : ` (observation ${i + 1})`;
+        const entry = {
+          field: `obs-detail-${obs.id ?? i}`,
+          message: `${obs.defectCode} observation needs ${missing.join(' and ')}${label}`,
+          tab: 'inspection' as const,
+        };
+        if (obs.defectCode === 'C1') {
+          errors.push({ ...entry, severity: 'error' as const });
+        } else {
+          warnings.push({ ...entry, severity: 'warning' as const });
         }
       });
 

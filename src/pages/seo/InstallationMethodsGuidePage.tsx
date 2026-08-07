@@ -722,7 +722,7 @@ export default function InstallationMethodsGuidePage() {
   return (
     <GuideTemplate
       title="Cable Installation Methods BS 7671 | Reference Methods UK"
-      description="Complete guide to cable installation reference methods under BS 7671. Methods A, B, C, E, F and G explained with correction factors for grouping…"
+      description="Complete guide to cable installation reference methods under BS 7671. Methods A, B, C, E, F and G explained with correction factors for grouping."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

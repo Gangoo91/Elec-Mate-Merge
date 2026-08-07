@@ -147,9 +147,7 @@ export const FormulaReference = ({
         className
       )}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {name}
-      </span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{name}</span>
 
       <div className="text-center py-3 px-4 rounded-lg bg-black/30">
         <code className="text-[18px] sm:text-[20px] font-mono text-white">{formula}</code>

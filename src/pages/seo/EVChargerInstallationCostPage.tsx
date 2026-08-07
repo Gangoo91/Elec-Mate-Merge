@@ -581,7 +581,7 @@ export default function EVChargerInstallationCostPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Cost UK 2026 | Complete Price Guide"
-      description="How much does EV charger installation cost in the UK in 2026? Complete price guide covering 7kW home chargers, 22kW commercial units…"
+      description="How much does EV charger installation cost in the UK in 2026? Complete price guide covering 7kW home chargers, 22kW commercial units."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -446,7 +446,7 @@ export default function PolarityTestingPage() {
   return (
     <GuideTemplate
       title="Polarity Testing Guide BS 7671 | Reversed Polarity and"
-      description="Complete guide to polarity testing under BS 7671 for UK electricians. Covers visual inspection first, live polarity checks…"
+      description="Complete guide to polarity testing under BS 7671 for UK electricians. Covers visual inspection first, live polarity checks."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

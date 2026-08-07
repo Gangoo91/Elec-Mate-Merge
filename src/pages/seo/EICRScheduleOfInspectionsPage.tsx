@@ -7,9 +7,9 @@ import { ClipboardCheck, FileCheck2, ShieldCheck, Zap, FileText, Camera, Eye } f
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'EICR Schedule of Inspections | Appendix 6 Walk-Through';
+const PAGE_TITLE = 'Schedule of Inspections: All 8 EICR Sections';
 const PAGE_DESCRIPTION =
-  'EICR Schedule of Inspections per BS 7671 Appendix 6: DB equipment, wiring, current-using kit, isolation. C1/C2/C3 coding tips + common observation traps.';
+  "BS 7671 Appendix 6 schedule of inspections: the residential form runs 8 sections, 1.0 intake equipment to 8.0 prosumer's LV. No item may be left blank.";
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
@@ -18,12 +18,12 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'overview', label: 'Overview' },
-  { id: 'distribution-equipment', label: 'Section 1: Distribution Equipment' },
-  { id: 'wiring-systems', label: 'Section 2: Wiring Systems' },
-  { id: 'current-using-equipment', label: 'Section 3: Current-Using Equipment' },
-  { id: 'protective-measures', label: 'Section 4: Protective Measures' },
-  { id: 'isolation-switching', label: 'Section 5: Isolation & Switching' },
-  { id: 'miscellaneous', label: 'Section 6: Miscellaneous' },
+  { id: 'distribution-equipment', label: 'Distribution Equipment' },
+  { id: 'wiring-systems', label: 'Wiring Systems' },
+  { id: 'current-using-equipment', label: 'Current-Using Equipment' },
+  { id: 'protective-measures', label: 'Earthing, Bonding & Protective Measures' },
+  { id: 'isolation-switching', label: 'Isolation & Switching' },
+  { id: 'miscellaneous', label: 'Labelling, Notices & Documentation' },
   { id: 'common-observations', label: 'Common Observations' },
   { id: 'inspection-tips', label: 'Tips for Thorough Inspection' },
   { id: 'faq', label: 'FAQ' },
@@ -31,40 +31,40 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The EICR schedule of inspections follows the BS 7671 Appendix 6 model form and covers six main sections: distribution equipment, wiring systems, current-using equipment, protective measures, isolation and switching, and miscellaneous items.',
-  'Each item in the schedule is marked as satisfactory (tick), unsatisfactory (cross), not applicable (N/A), or limitation (LIM) — every item must be addressed and none should be left blank.',
+  'The EICR schedule of inspections follows the BS 7671 Appendix 6 model form. The Condition Report Schedule of Inspection for residential and similar premises with up to a 100 A supply runs 1.0 intake equipment (visual only), 2.0 arrangements for other sources such as microgenerators, 3.0 earthing/bonding arrangements, 4.0 consumer unit(s)/distribution board(s), 5.0 distribution/final circuits, 6.0 location(s) containing a bath or shower, 7.0 other Part 7 special installations or locations, and 8.0 prosumer’s low voltage electrical installation(s).',
+  'The outcome boxes on the Appendix 6 form are: acceptable condition (tick), unacceptable condition (C1 or C2), improvement recommended (C3), further investigation (FI), not verified (NV), limitation (LIM), and not applicable (N/A) — every item must be addressed and none should be left blank.',
   'Common C2 observations include missing CPCs, absent RCD protection where required, damaged consumer unit enclosures, and lack of main protective bonding to services.',
   'Common C3 observations include absence of SPD protection, old wiring colours not re-identified, and lack of circuit charts at the distribution board.',
   'Elec-Mate has the complete Schedule of Inspections built into the EICR form matching BS 7671 Appendix 6 — tick items as you walk the installation, and any unticked items are flagged before you can complete the certificate.',
-  'A4:2026 introduced new requirements relevant to domestic EICRs: Reg 411.3.4 mandates 30 mA RCD protection for AC lighting circuits in domestic premises; Reg 421.1.7 recommends AFDDs on AC final circuits to mitigate arc-fault fire risk. Both are codeable observations on a domestic EICR.',
+  'Two requirements that older installations commonly fail: Reg 411.3.4 (in force since BS 7671:2018) requires 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic premises; Reg 421.1.7 requires AFDDs on single-phase AC final circuits supplying socket-outlets not exceeding 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and only recommends them for all other premises. Both are codeable observations on a domestic EICR.',
 ];
 
 const faqs = [
   {
     question: 'What is the EICR schedule of inspections?',
     answer:
-      'The EICR schedule of inspections is a structured checklist that forms part of the Electrical Installation Condition Report (EICR) as defined in BS 7671 Appendix 6. It lists all the items that must be visually inspected during a periodic inspection of an electrical installation. The schedule is divided into sections covering distribution equipment, wiring systems, current-using equipment, protective measures, isolation and switching, and miscellaneous items. For each item, the inspector records whether it is satisfactory, unsatisfactory, not applicable, or subject to a limitation. The schedule of inspections is separate from the schedule of test results — the inspection covers visual checks that do not require test instruments, while the test results cover electrical measurements such as continuity, insulation resistance, earth fault loop impedance, and RCD operating times.',
+      'The EICR schedule of inspections is a structured checklist that forms part of the Electrical Installation Condition Report (EICR) as defined in BS 7671 Appendix 6. It lists all the items that must be visually inspected during a periodic inspection of an electrical installation. On the Appendix 6 Condition Report Schedule of Inspection for residential and similar premises with up to a 100 A supply, the sections are 1.0 intake equipment (visual inspection only), 2.0 presence of adequate arrangements for other sources such as microgenerators, 3.0 earthing/bonding arrangements, 4.0 consumer unit(s)/distribution board(s), 5.0 distribution/final circuits, 6.0 location(s) containing a bath or shower, 7.0 other Part 7 special installations or locations, and 8.0 prosumer’s low voltage electrical installation(s). The larger version of the form adds separate headings for other methods of protection, distribution circuits, final circuits, isolation and switching, and current-using equipment (permanently connected). For each item, the inspector records the outcome using the codes printed on the form: acceptable condition, C1, C2, C3, FI, NV (not verified), LIM (limitation) or N/A. The schedule of inspections is separate from the schedule of test results — the inspection covers visual checks that do not require test instruments, while the test results cover electrical measurements such as continuity, insulation resistance, earth fault loop impedance, and RCD operating times.',
   },
   {
     question: 'Do I need to check every item on the schedule of inspections?',
     answer:
-      'Yes. Every item on the schedule of inspections must be addressed. You should not leave any items blank. For each item, record one of the following: a tick (satisfactory), a cross (unsatisfactory — which should then be recorded as an observation with a classification code), N/A (not applicable — for example, if there is no three-phase equipment in a single-phase domestic installation), or LIM (limitation — if you were unable to inspect that item due to access restrictions, concealed wiring, or other practical limitations). Leaving items blank on the schedule is one of the most common reasons for EICR rejection by competent person scheme providers. If an item does not apply to the installation, mark it N/A. If you could not inspect it, mark it LIM and record the limitation in the extent and limitations section of the report.',
+      'Yes. Every item on the schedule of inspections must be addressed. You should not leave any items blank. The Appendix 6 form prints the permitted outcomes at the top of every page, and you record one of them against each item: a tick (acceptable condition); C1 or C2 (unacceptable condition — which must also be recorded as an observation in Section K of the report); C3 (improvement recommended); FI (further investigation); NV (not verified); N/A (not applicable — for example, if the installation contains no bath or shower); or LIM (limitation — if you were unable to inspect that item due to access restrictions, concealed wiring, or other practical limitations). Note that C3 and FI are advisory: BS 7671 states they do not affect the overall assessment of the installation. Leaving items blank on the schedule is one of the most common reasons for EICR rejection by competent person scheme providers. If an item does not apply to the installation, mark it N/A. If you could not inspect it, mark it LIM and record the limitation in the extent and limitations section of the report.',
   },
   {
     question:
       'What is the difference between the schedule of inspections and the schedule of test results?',
     answer:
-      'The schedule of inspections covers visual inspection items — things you can check by looking at the installation without using test instruments. This includes the condition of the consumer unit, the condition of wiring, the presence of earthing and bonding, the condition of accessories, and the suitability of the installation for its environment. The schedule of test results covers electrical measurements made with calibrated test instruments — continuity of protective conductors (R1+R2), insulation resistance (in megohms), polarity, earth fault loop impedance (Zs in ohms), RCD operating times (in milliseconds), and prospective fault current. Both schedules are required parts of the EICR and must be completed for every inspection. The visual inspection is typically carried out first as a walk-through of the installation, followed by dead testing (continuity and insulation resistance) and then live testing (loop impedance, RCD, polarity).',
+      'The schedule of inspections covers visual inspection items — things you can check by looking at the installation without using test instruments. This includes the condition of the consumer unit, the condition of wiring, the presence of earthing and bonding, the condition of accessories, and the suitability of the installation for its environment. The schedule of test results covers electrical measurements made with calibrated test instruments — continuity of protective conductors (R1+R2), insulation resistance (in megohms), polarity, earth fault loop impedance (Zs in ohms), RCD operating times (in milliseconds), and prospective fault current. Both schedules are required parts of the EICR and must be completed for every inspection. The visual inspection is typically carried out first as a walk-through of the installation, followed by dead testing — continuity, insulation resistance and polarity, which Regulation 643.6 requires to be verified before the installation is energised — and then live testing (earth fault loop impedance, prospective fault current and RCD operation).',
   },
   {
     question: 'What are the most common C2 observations found during visual inspection?',
     answer:
-      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.2 requires extraneous-conductive-parts liable to introduce a dangerous potential difference to be connected to the main earthing terminal; Regulation 544.1.1 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
+      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.2 requires extraneous-conductive-parts liable to introduce a dangerous potential difference to be connected to the main earthing terminal; Regulation 544.1.1 governs bonding conductor sizing); absence of 30 mA RCD additional protection on AC final circuits supplying luminaires in domestic premises, required by Regulation 411.3.4; incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
   },
   {
     question: 'How do I record an unsatisfactory item on the schedule of inspections?',
     answer:
-      'When you find an item on the schedule of inspections that is unsatisfactory, you should mark the item with a cross on the schedule. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the appropriate classification code (C1, C2, C3, or FI). The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.1 / 544.1.1." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
+      'When you find an item on the schedule of inspections that is unacceptable, you enter the classification code against that item on the schedule — C1, C2, C3 or FI — rather than a plain cross. You must then record the deficiency as an observation in the observations section of the EICR, with a description of the issue, its location, and the same classification code. The description should be specific enough that a different electrician could locate and rectify the issue from your description alone. For example, rather than writing "bonding missing," write "Main protective bonding to incoming water service absent at point of entry, utility cupboard under stairs — Regulation 411.3.1.2 / 544.1.1." Include the relevant BS 7671 regulation reference where applicable. The classification code should reflect the severity of the risk: C1 for immediate danger, C2 for potentially dangerous conditions, C3 for improvements recommended, or FI if further investigation is needed to determine the classification.',
   },
   {
     question: 'Can I use the Elec-Mate app for the schedule of inspections on site?',
@@ -96,13 +96,28 @@ const sections = [
           .
         </p>
         <p>
-          The schedule is divided into six main sections, each covering a different aspect of the
-          installation. Every item must be addressed — satisfactory, unsatisfactory, not applicable,
-          or limitation. Unsatisfactory items must be recorded as observations with the appropriate{' '}
+          On the Appendix 6 Condition Report Schedule of Inspection for residential and similar
+          premises with up to a 100 A supply, the sections are 1.0 intake equipment (visual
+          inspection only), 2.0 presence of adequate arrangements for other sources such as
+          microgenerators, 3.0 earthing/bonding arrangements, 4.0 consumer unit(s)/distribution
+          board(s), 5.0 distribution/final circuits, 6.0 location(s) containing a bath or shower,
+          7.0 other Part 7 special installations or locations, and 8.0 prosumer&rsquo;s low voltage
+          electrical installation(s). The larger version of the form breaks the same ground into
+          more headings, adding other methods of protection, distribution circuits, final circuits,
+          isolation and switching, and current-using equipment (permanently connected). BS 7671
+          notes that the schedule is not exhaustive and may be reduced or expanded to suit the
+          installation. The walk-through below groups those items the way most inspectors work
+          through a property rather than following the form line by line.
+        </p>
+        <p>
+          Every item must be addressed. The outcome boxes printed on the form are acceptable
+          condition (tick), unacceptable condition (C1 or C2), improvement recommended (C3), further
+          investigation (FI), not verified (NV), limitation (LIM) and not applicable (N/A). Items
+          coded C1, C2, C3 or FI must also be recorded as observations with the appropriate{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
             classification code
-          </SEOInternalLink>{' '}
-          (C1, C2, C3, or FI).
+          </SEOInternalLink>
+          . C3 and FI are advisory and do not affect the overall assessment.
         </p>
         <p>
           The visual inspection is typically the first phase of the periodic inspection process.
@@ -122,14 +137,15 @@ const sections = [
   },
   {
     id: 'distribution-equipment',
-    heading: 'Section 1: Distribution Equipment',
+    heading: 'Distribution Equipment: Consumer Units and Boards',
     content: (
       <>
         <p>
-          Section 1 of the schedule covers the condition and compliance of the distribution
-          equipment — consumer units, distribution boards, main switches, RCDs, RCBOs, MCBs, fuses,
-          and SPDs. This is typically the starting point of the visual inspection because the
-          distribution board is the heart of the installation.
+          On the Appendix 6 form this is item 4.0, consumer unit(s)/distribution board(s). It covers
+          the condition and compliance of the distribution equipment — consumer units, distribution
+          boards, main switches, RCDs, RCBOs, MCBs, fuses, and SPDs. This is typically the starting
+          point of the visual inspection because the distribution board is the heart of the
+          installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -155,9 +171,11 @@ const sections = [
               <span>
                 <strong>Circuit identification:</strong> Are all circuits clearly identified with a
                 circuit chart or schedule? Does the chart correspond to the actual circuit
-                arrangement? (Regulation 514.9.1 — note: A4:2026 introduced an exception for certain
-                domestic premises; check applicability before coding absent charts as C3 in domestic
-                installations)
+                arrangement? (Regulation 514.9.1 — note the exception: the requirement need not be
+                applied for domestic (household) premises or similar installations where an initial
+                verification certificate or an EICR, complete with the guidance for recipients, has
+                been issued to the person ordering the work. Check applicability before coding
+                absent charts in domestic installations.)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -171,49 +189,61 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Presence of SPDs:</strong> For installations where SPDs are required
-                (Regulation 443), are they present and in good condition? Check the status indicator
-                on the SPD if fitted.
+                (Section 443), are they present and in good condition? Check the status indicator on
+                the SPD if fitted.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AFDDs (arc fault detection devices):</strong> Regulation 421.1.7 (A4:2026)
-                recommends AFDDs on AC final circuits of a fixed installation to mitigate fire risk
-                from arc fault currents. Absence is typically coded C3 on new or rewired domestic
-                installations. Note the regulation is recommendatory (not mandatory).
+                <strong>AFDDs (arc fault detection devices):</strong> Regulation 421.1.7 requires
+                AFDDs to BS EN 62606 on single-phase AC final circuits supplying socket-outlets
+                rated not exceeding 32 A in high rise residential buildings, houses in multiple
+                occupation, purpose-built student accommodation and care homes. For all other
+                premises the same regulation only <em>recommends</em> them, so absence in an
+                ordinary dwelling is typically coded C3 at most. On the Appendix 6 form the item is
+                &ldquo;Confirmation of indication that AFDD(s) are operational&rdquo; (421.1.7;
+                532.6; 651.2(e)).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD quarterly test notice:</strong> Is the notice advising the user to test
-                the RCD quarterly present? (Regulation 514.12 — note: A4:2026 introduced an
-                exception for domestic premises in certain situations; verify whether the exception
-                applies before coding absence as C3 in a domestic installation)
+                <strong>RCD six-monthly test notice:</strong> Is the notice advising the user to
+                test the RCD six-monthly by pressing the test button present? The Appendix 6 form
+                item reads &ldquo;Presence of RCD six-monthly test notice, where required&rdquo;
+                (Regulation 514.12.2). Note the exception: the requirement need not be applied for
+                domestic (household) premises or similar installations where an initial verification
+                certificate or an EICR, complete with the guidance for recipients, has been issued
+                to the person ordering the work — verify whether it applies before coding absence in
+                a domestic installation.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Common C2 observations in this section include:{' '}
-          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
-          with a combustible (plastic) enclosure in a domestic premises where Regulation 421.1.201
-          requires a non-combustible (or non-combustible-enclosed) enclosure, missing or damaged
-          covers exposing live busbars, and absence of circuit identification.
+          The classic C2 in this section is missing or damaged covers exposing live busbars in the{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>. A
+          combustible (plastic) enclosure in domestic premises, and absence of circuit
+          identification, are ordinarily improvement items (C3) rather than C2 — the notes for the
+          person producing the report in Appendix 6 state that an installation designed to an
+          earlier version of BS 7671, and which does not fully comply with the current version, is
+          not necessarily unsafe for continued use or in need of upgrading. Regulation 421.1.201,
+          which requires domestic consumer units to have a non-combustible enclosure or be enclosed
+          in one, is not retrospective.
         </p>
       </>
     ),
   },
   {
     id: 'wiring-systems',
-    heading: 'Section 2: Wiring Systems',
+    heading: 'Wiring Systems: Distribution and Final Circuits',
     content: (
       <>
         <p>
-          Section 2 covers the condition of the wiring systems throughout the installation — cables,
-          containment (trunking, conduit, cable tray), cable supports, and the routing of cables
-          through the building.
+          Item 5.0 on the residential form, distribution/final circuits, covers the condition of the
+          wiring systems throughout the installation — cables, containment (trunking, conduit, cable
+          tray), cable supports, and the routing of cables through the building.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -273,13 +303,14 @@ const sections = [
   },
   {
     id: 'current-using-equipment',
-    heading: 'Section 3: Current-Using Equipment',
+    heading: 'Current-Using Equipment and Accessories',
     content: (
       <>
         <p>
-          Section 3 covers the condition of the fixed current-using equipment connected to the
-          installation — socket outlets, light fittings, switches, cooker outlets, shaver supply
-          units, immersion heaters, fixed appliances, and other accessories.
+          The current-using equipment (permanently connected) heading covers the condition of the
+          fixed current-using equipment connected to the installation — socket outlets, light
+          fittings, switches, cooker outlets, shaver supply units, immersion heaters, fixed
+          appliances, and other accessories.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -330,13 +361,14 @@ const sections = [
   },
   {
     id: 'protective-measures',
-    heading: 'Section 4: Protective Measures',
+    heading: 'Earthing, Bonding and Protective Measures',
     content: (
       <>
         <p>
-          Section 4 is critically important — it covers the protective measures that prevent
-          electric shock and fire. This section checks that the installation has adequate protection
-          for the people using it and for the building itself.
+          Item 3.0 on the residential form, earthing/bonding arrangements, is critically important —
+          with the additional-protection items in 4.0 and 5.0 it covers the protective measures that
+          prevent electric shock and fire. This section checks that the installation has adequate
+          protection for the people using it and for the building itself.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -346,10 +378,12 @@ const sections = [
               <span>
                 <strong>Main protective bonding:</strong> Are main protective bonding conductors
                 connected to incoming water, gas, oil, and other metallic services? Regulation
-                411.3.1.1 requires exposed-conductive-parts to be connected to a protective
-                conductor; Regulation 544.1.1 governs bonding conductor sizing — under PME (TN-C-S),
-                Table 54.8 sets the minimum at 10 mm² copper where the PEN conductor is 35 mm² or
-                less. Check at the point of entry of each service.
+                411.3.1.2 requires extraneous-conductive-parts liable to introduce a dangerous
+                potential difference to be connected to the main earthing terminal (411.3.1.1 is
+                protective earthing — the CPC requirement — not bonding); Regulation 544.1.1 governs
+                bonding conductor sizing — under PME (TN-C-S), Table 54.8 sets the minimum at 10 mm²
+                copper where the PEN conductor is 35 mm² or less. Check at the point of entry of
+                each service.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -372,11 +406,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection — domestic lighting circuits (A4:2026):</strong> Regulation
-                411.3.4 requires that, within domestic (household) premises, AC final circuits
-                supplying luminaires shall have additional protection by an RCD with a rated
-                residual operating current not exceeding 30 mA. Absence of RCD protection on
-                domestic lighting circuits is a codeable C2 observation introduced by A4:2026.
+                <strong>RCD protection — domestic lighting circuits:</strong> Regulation 411.3.4
+                requires that, within domestic (household) premises, additional protection by an RCD
+                with a rated residual operating current not exceeding 30 mA shall be provided for AC
+                final circuits supplying luminaires. This has been in BS 7671 since the 2018
+                edition, so a large number of older installations will not comply and it is a
+                routinely codeable observation on a domestic EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -418,13 +453,13 @@ const sections = [
   },
   {
     id: 'isolation-switching',
-    heading: 'Section 5: Isolation and Switching',
+    heading: 'Isolation and Switching',
     content: (
       <>
         <p>
-          Section 5 covers the means of isolation and switching — the switches, isolators, and
-          disconnecting devices that allow the installation or individual circuits to be safely
-          disconnected for maintenance, fault finding, or emergency purposes.
+          The isolation and switching heading covers the means of isolation and switching — the
+          switches, isolators, and disconnecting devices that allow the installation or individual
+          circuits to be safely disconnected for maintenance, fault finding, or emergency purposes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -464,9 +499,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fireman's switch:</strong> Where required (for example, for exterior
-                luminous signs above 230V or high-voltage discharge lighting installations), is the
-                fireman's switch present, correctly positioned, and clearly labelled in red?
+                <strong>Firefighter&rsquo;s switch:</strong> Regulation 537.4.2 requires one in the
+                low-voltage circuit supplying outdoor lighting installations operating at a voltage
+                exceeding low voltage, indoor discharge lighting installations operating at a
+                voltage exceeding low voltage, and specific equipment in certain premises subject to
+                the fire and rescue authority&rsquo;s requirements or to licensing conditions. It
+                does not apply to a portable discharge lighting luminaire or a sign rated not more
+                than 100 W supplied from an accessible socket-outlet. Where one is fitted, check it
+                is easily visible and accessible (537.4.3) and marked with its ON and OFF positions
+                and the words &ldquo;FIREFIGHTER&rsquo;S SWITCH&rdquo; or &ldquo;FIRE SWITCH&rdquo;
+                in letters not less than 10 mm high (537.4.4).
               </span>
             </li>
           </ul>
@@ -476,12 +518,13 @@ const sections = [
   },
   {
     id: 'miscellaneous',
-    heading: 'Section 6: Miscellaneous',
+    heading: 'Labelling, Notices and Documentation',
     content: (
       <>
         <p>
-          Section 6 covers items that do not fit neatly into the other five sections but are
-          important for the overall assessment of the installation.
+          The labelling, notices and documentation items are spread across the form rather than
+          gathered in one place, but they are important for the overall assessment of the
+          installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Items to Check</h3>
@@ -490,19 +533,22 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Warning and caution labels:</strong> Are all required warning labels
-                present? This includes RCD quarterly test notices (Regulation 514.12 — A4:2026
-                introduced an exception for domestic premises in certain situations), dual supply
-                warnings (where applicable), voltage warnings, and labels indicating the type of
-                earthing system.
+                present? This includes the RCD six-monthly test notice (Regulation 514.12.2, subject
+                to the domestic exception), the next-inspection recommendation notice (514.12.1,
+                same exception), the alternative or additional supplies warning notice where
+                applicable (514.15.1), voltage warning notices where a voltage exceeding 230 V to
+                earth would not normally be expected (514.10.1), and the &ldquo;Safety Electrical
+                Connection &ndash; Do Not Remove&rdquo; earthing and bonding labels (514.13.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Diagrams and documentation:</strong> Are circuit diagrams, schedules, and
-                as-installed drawings available and up to date? (Regulation 514.9.1 requires that a
-                durable circuit chart or schedule is provided at or near each distribution board —
-                A4:2026 introduced an exception for certain domestic premises.)
+                as-installed drawings available and up to date? (Regulation 514.9.1 requires a
+                durable copy of the schedule relating to a distribution board to be provided within
+                or adjacent to each distribution board, and any symbol used to comply with IEC 60617
+                — subject to the same domestic exception as the notices above.)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -525,10 +571,13 @@ const sections = [
               <span>
                 <strong>Additional protection requirements:</strong> Where the current edition of BS
                 7671 requires protection that was not required when the installation was originally
-                installed (such as RCD protection for socket outlet circuits, 30 mA RCD protection
-                for domestic lighting circuits per Reg 411.3.4 A4:2026, or AFDDs per Reg 421.1.7
-                A4:2026), has it been assessed and recorded? Absence of AFDDs on new or rewired
-                domestic installations is typically coded C3 (Reg 421.1.7 is recommendatory).
+                installed (30 mA RCD protection for socket-outlets rated not exceeding 32 A per Reg
+                411.3.3, 30 mA RCD protection for AC final circuits supplying luminaires in domestic
+                premises per Reg 411.3.4, or AFDDs per Reg 421.1.7), has it been assessed and
+                recorded? In an ordinary dwelling Reg 421.1.7 only recommends AFDDs, so absence is
+                typically coded C3 at most; in a high rise residential building, HMO, purpose-built
+                student accommodation or care home it is a requirement for socket-outlet circuits
+                rated not exceeding 32 A.
               </span>
             </li>
           </ul>
@@ -555,8 +604,10 @@ const sections = [
                 Absent main protective bonding to water, gas, or oil services (Reg 411.3.1.2 /
                 544.1.1)
               </li>
-              <li>No RCD protection on socket outlet circuits up to 32A</li>
-              <li>No 30 mA RCD on domestic lighting circuits (Reg 411.3.4, A4:2026)</li>
+              <li>No RCD protection on socket-outlets rated up to 32 A (Reg 411.3.3)</li>
+              <li>
+                No 30 mA RCD on AC final circuits supplying luminaires in a dwelling (Reg 411.3.4)
+              </li>
               <li>Damaged consumer unit enclosure with exposed live parts</li>
               <li>Inadequate earthing conductor (undersized or damaged)</li>
               <li>Reversed polarity at socket outlets or light fittings</li>
@@ -567,13 +618,14 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-2">Common C3 Observations</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>
-                Absence of AFDD on new/rewired domestic installation (Reg 421.1.7, A4:2026 —
-                recommendatory)
+                Absence of AFDDs on socket-outlet circuits in an ordinary dwelling (Reg 421.1.7 —
+                recommended, not required, outside HRRBs, HMOs, purpose-built student accommodation
+                and care homes)
               </li>
-              <li>Absence of SPD protection (Regulation 443 requirements)</li>
+              <li>Absence of SPD protection (Section 443 requirements)</li>
               <li>Old wiring colours (red/black) not re-identified at the distribution board</li>
-              <li>No circuit chart or schedule at the distribution board</li>
-              <li>Absence of RCD quarterly test notice</li>
+              <li>No circuit chart or schedule at the distribution board (Reg 514.9.1)</li>
+              <li>Absence of RCD six-monthly test notice (Reg 514.12.2)</li>
               <li>Consumer unit enclosure is combustible (plastic) in a domestic premises</li>
               <li>
                 Supplementary bonding absent in bathroom (where no longer required if conditions
@@ -726,7 +778,7 @@ export default function EICRScheduleOfInspectionsPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-15"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"
@@ -736,12 +788,12 @@ export default function EICRScheduleOfInspectionsPage() {
           EICR Schedule of Inspections: <span className="text-yellow-400">What to Check</span>
         </>
       }
-      heroSubtitle="The complete guide to the EICR schedule of inspections per BS 7671 Appendix 6. Every section explained — distribution equipment, wiring systems, current-using equipment, protective measures, isolation and switching, and miscellaneous items. Common C2 and C3 observations for each section, plus practical tips for a thorough visual inspection."
+      heroSubtitle="The complete guide to the EICR schedule of inspections per BS 7671 Appendix 6. Every part explained — intake equipment, earthing and bonding arrangements, consumer units and distribution boards, distribution and final circuits, isolation and switching, bath or shower locations and other special locations. Common C2 and C3 observations, plus practical tips for a thorough visual inspection."
       readingTime={12}
       answerBox={{
         question: 'What is the schedule of inspections on an EICR?',
         answer:
-          'The schedule of inspections is the visual-inspection checklist that accompanies an EICR, based on the model forms in BS 7671 Appendix 6. It works through the installation section by section — intake and distribution equipment, wiring systems, current-using equipment, special locations, and isolation and switching — recording each item as acceptable or noting a defect with a classification code (C1, C2, C3 or FI). Every relevant item must be checked before the report can be issued.',
+          'The schedule of inspections is the visual-inspection checklist that accompanies an EICR, based on the model forms in BS 7671 Appendix 6. It works through the installation section by section — intake equipment, arrangements for other sources such as microgenerators, earthing and bonding arrangements, consumer units and distribution boards, distribution and final circuits, locations containing a bath or shower, other Part 7 special locations, and prosumer’s low voltage installations — recording each item as an acceptable condition or noting a defect with a classification code (C1, C2, C3 or FI), or as NV, LIM or N/A. Every relevant item must be addressed before the report can be issued.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

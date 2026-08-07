@@ -19,6 +19,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { motorStartingCurrentContent } from './content/motor-starting-current';
 import {
@@ -309,578 +310,594 @@ const MotorStartingCurrentCalculator = () => {
       title="Motor Starting Current Calculator"
       description="Calculate starting current, cable sizing, and protection for motors per BS 7671"
     >
-      {/* Motor Details */}
-      <CalculatorSection title="Motor Details">
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Motor Power"
-            unit="kW"
-            type="text"
-            inputMode="decimal"
-            value={power}
-            onChange={setPower}
-            placeholder="e.g., 15"
-            hint="Rated motor power from nameplate"
-          />
-          <CalculatorInput
-            label="Rated Current"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={ratedCurrent}
-            onChange={setRatedCurrent}
-            placeholder="Optional"
-            hint="Nameplate current if known"
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Supply Voltage"
-            value={voltage}
-            onChange={setVoltage}
-            options={voltageOptions}
-          />
-          <CalculatorSelect
-            label="Phases"
-            value={phases}
-            onChange={setPhases}
-            options={phaseOptions}
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Efficiency"
-            type="text"
-            inputMode="decimal"
-            value={efficiency}
-            onChange={setEfficiency}
-            placeholder="e.g., 0.85"
-            /* The old hint gave "IE3: 0.85, IE4: 0.90" as if efficiency were a
-               constant per IE class. It is a function of rated power and pole
-               count (IEC 60034-30-1), so the nameplate is the only right
-               source and no fixed figure is offered. */
-            hint="From the motor nameplate"
-          />
-          <CalculatorInput
-            label="Power Factor"
-            type="text"
-            inputMode="decimal"
-            value={powerFactor}
-            onChange={setPowerFactor}
-            placeholder="e.g., 0.85"
-            hint="Typical: 0.8-0.9"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Motor Details */}
+            <CalculatorSection title="Motor Details">
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Motor Power"
+                  unit="kW"
+                  type="text"
+                  inputMode="decimal"
+                  value={power}
+                  onChange={setPower}
+                  placeholder="e.g., 15"
+                  hint="Rated motor power from nameplate"
+                />
+                <CalculatorInput
+                  label="Rated Current"
+                  unit="A"
+                  type="text"
+                  inputMode="decimal"
+                  value={ratedCurrent}
+                  onChange={setRatedCurrent}
+                  placeholder="Optional"
+                  hint="Nameplate current if known"
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Supply Voltage"
+                  value={voltage}
+                  onChange={setVoltage}
+                  options={voltageOptions}
+                />
+                <CalculatorSelect
+                  label="Phases"
+                  value={phases}
+                  onChange={setPhases}
+                  options={phaseOptions}
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Efficiency"
+                  type="text"
+                  inputMode="decimal"
+                  value={efficiency}
+                  onChange={setEfficiency}
+                  placeholder="e.g., 0.85"
+                  /* The old hint gave "IE3: 0.85, IE4: 0.90" as if efficiency were a
+                 constant per IE class. It is a function of rated power and pole
+                 count (IEC 60034-30-1), so the nameplate is the only right
+                 source and no fixed figure is offered. */
+                  hint="From the motor nameplate"
+                />
+                <CalculatorInput
+                  label="Power Factor"
+                  type="text"
+                  inputMode="decimal"
+                  value={powerFactor}
+                  onChange={setPowerFactor}
+                  placeholder="e.g., 0.85"
+                  hint="Typical: 0.8-0.9"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
 
-      <CalculatorDivider category={CAT} />
+            <CalculatorDivider category={CAT} />
 
-      {/* Starting & Protection */}
-      <CalculatorSection title="Starting & Protection">
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Starting Method"
-            value={startingMethod}
-            onChange={setStartingMethod}
-            options={startingMethodOptions}
-          />
-          <CalculatorSelect
-            label="Load Type"
-            value={loadType}
-            onChange={setLoadType}
-            options={loadTypeOptions}
-          />
-        </CalculatorInputGrid>
-        <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Starting Time"
-            unit="sec"
-            type="text"
-            inputMode="decimal"
-            value={startingTime}
-            onChange={setStartingTime}
-            placeholder="e.g., 2"
-            hint="Time to reach full speed"
-          />
-          <CalculatorInput
-            label="MCB Rating"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={breakerRating}
-            onChange={setBreakerRating}
-            placeholder="Optional"
-            hint="Checked against Reg 433.1.1"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
+            {/* Starting & Protection */}
+            <CalculatorSection title="Starting & Protection">
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Starting Method"
+                  value={startingMethod}
+                  onChange={setStartingMethod}
+                  options={startingMethodOptions}
+                />
+                <CalculatorSelect
+                  label="Load Type"
+                  value={loadType}
+                  onChange={setLoadType}
+                  options={loadTypeOptions}
+                />
+              </CalculatorInputGrid>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorInput
+                  label="Starting Time"
+                  unit="sec"
+                  type="text"
+                  inputMode="decimal"
+                  value={startingTime}
+                  onChange={setStartingTime}
+                  placeholder="e.g., 2"
+                  hint="Time to reach full speed"
+                />
+                <CalculatorInput
+                  label="MCB Rating"
+                  unit="A"
+                  type="text"
+                  inputMode="decimal"
+                  value={breakerRating}
+                  onChange={setBreakerRating}
+                  placeholder="Optional"
+                  hint="Checked against Reg 433.1.1"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
 
-      {/* Installation Details - Collapsible */}
-      <Collapsible open={showInstallation} onOpenChange={setShowInstallation}>
-        <CollapsibleTrigger className="w-full flex items-center justify-between min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-          <span>Installation Details</span>
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 transition-transform duration-200',
-              showInstallation && 'rotate-180'
-            )}
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="pt-2 space-y-3">
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Cable Length"
-              unit="m"
-              type="text"
-              inputMode="decimal"
-              value={cableLength}
-              onChange={setCableLength}
-              placeholder="e.g., 50"
-              hint="Distance from DB"
-            />
-            <CalculatorInput
-              label="Cable Size"
-              unit="mm²"
-              type="text"
-              inputMode="decimal"
-              value={cableSize}
-              onChange={setCableSize}
-              placeholder="Optional"
-              hint="Checked against Reg 433.1.1"
-            />
-          </CalculatorInputGrid>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Ambient Temp"
-              unit="°C"
-              type="text"
-              inputMode="decimal"
-              value={serviceTemperature}
-              onChange={setServiceTemperature}
-              placeholder="e.g., 40"
-              hint="Table 4B1 (Ca)"
-            />
-            <CalculatorSelect
-              label="Cable Type"
-              value={cableType}
-              onChange={setCableType}
-              options={cableTypeOptions}
-            />
-          </CalculatorInputGrid>
-          <CalculatorInputGrid columns={2}>
-            <CalculatorSelect
-              label="Installation Method"
-              value={installationMethod}
-              onChange={setInstallationMethod}
-              options={installationMethodOptions}
-            />
-            <CalculatorSelect
-              label="Circuits in Group"
-              value={groupingCircuits}
-              onChange={setGroupingCircuits}
-              options={groupingCircuitOptions}
-            />
-          </CalculatorInputGrid>
-          <CalculatorInputGrid columns={1}>
-            <CalculatorSelect
-              label="Grouping Arrangement"
-              value={groupingArrangement}
-              onChange={setGroupingArrangement}
-              options={groupingArrangementOptions}
-            />
-          </CalculatorInputGrid>
-        </CollapsibleContent>
-      </Collapsible>
+            {/* Installation Details - Collapsible */}
+            <Collapsible open={showInstallation} onOpenChange={setShowInstallation}>
+              <CollapsibleTrigger className="w-full flex items-center justify-between min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                <span>Installation Details</span>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 transition-transform duration-200',
+                    showInstallation && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-2 space-y-3">
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Cable Length"
+                    unit="m"
+                    type="text"
+                    inputMode="decimal"
+                    value={cableLength}
+                    onChange={setCableLength}
+                    placeholder="e.g., 50"
+                    hint="Distance from DB"
+                  />
+                  <CalculatorInput
+                    label="Cable Size"
+                    unit="mm²"
+                    type="text"
+                    inputMode="decimal"
+                    value={cableSize}
+                    onChange={setCableSize}
+                    placeholder="Optional"
+                    hint="Checked against Reg 433.1.1"
+                  />
+                </CalculatorInputGrid>
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Ambient Temp"
+                    unit="°C"
+                    type="text"
+                    inputMode="decimal"
+                    value={serviceTemperature}
+                    onChange={setServiceTemperature}
+                    placeholder="e.g., 40"
+                    hint="Table 4B1 (Ca)"
+                  />
+                  <CalculatorSelect
+                    label="Cable Type"
+                    value={cableType}
+                    onChange={setCableType}
+                    options={cableTypeOptions}
+                  />
+                </CalculatorInputGrid>
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorSelect
+                    label="Installation Method"
+                    value={installationMethod}
+                    onChange={setInstallationMethod}
+                    options={installationMethodOptions}
+                  />
+                  <CalculatorSelect
+                    label="Circuits in Group"
+                    value={groupingCircuits}
+                    onChange={setGroupingCircuits}
+                    options={groupingCircuitOptions}
+                  />
+                </CalculatorInputGrid>
+                <CalculatorInputGrid columns={1}>
+                  <CalculatorSelect
+                    label="Grouping Arrangement"
+                    value={groupingArrangement}
+                    onChange={setGroupingArrangement}
+                    options={groupingArrangementOptions}
+                  />
+                </CalculatorInputGrid>
+              </CollapsibleContent>
+            </Collapsible>
 
-      {/* Actions */}
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate}
-        calculateLabel="Calculate"
-        showReset={!!result}
-      />
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={result.bs7671Compliant ? 'pass' : 'warning'}
-              label={result.complianceStatus}
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero Value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Full Load Current</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.fullLoadCurrent.toFixed(1)} A
-            </p>
-            <p className="text-sm text-white mt-2">
-              Starting: {result.startingCurrent.toFixed(0)}A ({result.startingMultiplier.toFixed(1)}
-              ×) · Cable: {result.recommendedCableSize}
-            </p>
-          </div>
-
-          {/* Result Values */}
-          <ResultsGrid columns={3}>
-            <ResultValue
-              label="Starting Current"
-              value={result.startingCurrent.toFixed(0)}
-              unit="A"
+            {/* Actions */}
+            <CalculatorActions
               category={CAT}
-              size="sm"
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate}
+              calculateLabel="Calculate"
+              showReset={!!result}
             />
-            <ResultValue
-              label="Start Multiplier"
-              value={`${result.startingMultiplier.toFixed(1)}×`}
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Running VD"
-              value={result.voltageDropRunning.toFixed(1)}
-              unit="%"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={result.bs7671Compliant ? 'pass' : 'warning'}
+                    label={result.complianceStatus}
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
 
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Starting kVA"
-              value={result.startingKva.toFixed(1)}
-              unit="kVA"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Starting VD"
-              value={result.voltageDropStarting.toFixed(1)}
-              unit="%"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="I²t Thermal"
-              value={(result.thermalStress / 1000).toFixed(1)}
-              unit="kA²s"
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Min Cable"
-              value={result.minimumCableSize !== null ? result.minimumCableSize.toString() : '—'}
-              unit="mm²"
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
-
-          {/* Analysis */}
-          <div className="space-y-2">
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white font-medium">Cable Analysis</p>
-              <p className="text-sm text-white mt-1">{result.cableAnalysis}</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white font-medium">
-                Reg 433.1.1 Coordination (Ib ≤ In ≤ Iz)
-              </p>
-              <p className="text-sm text-white mt-1">{result.currentCapacityCheck}</p>
-              <p className="text-sm text-white mt-1">{result.deratingSummary}</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white font-medium">Protection Device</p>
-              <p className="text-sm text-white mt-1">{result.protectionAnalysis}</p>
-            </div>
-          </div>
-
-          {/* Warnings */}
-          {result.warnings.length > 0 && (
-            <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-              <div className="space-y-1">
-                {result.warnings.map((warning, idx) => (
-                  <p key={idx} className="text-sm text-white">
-                    {warning}
+                {/* Hero Value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Full Load Current</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.fullLoadCurrent.toFixed(1)} A
                   </p>
-                ))}
-              </div>
-            </div>
-          )}
+                  <p className="text-sm text-white mt-2">
+                    Starting: {result.startingCurrent.toFixed(0)}A (
+                    {result.startingMultiplier.toFixed(1)}
+                    ×) · Cable: {result.recommendedCableSize}
+                  </p>
+                </div>
 
-          <CalculatorDivider category={CAT} />
+                {/* Result Values */}
+                <ResultsGrid columns={3}>
+                  <ResultValue
+                    label="Starting Current"
+                    value={result.startingCurrent.toFixed(0)}
+                    unit="A"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Start Multiplier"
+                    value={`${result.startingMultiplier.toFixed(1)}×`}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Running VD"
+                    value={result.voltageDropRunning.toFixed(1)}
+                    unit="%"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Input values',
-                formula: `Motor: ${power}kW | ${voltage}V | ${phases}-phase | η=${efficiency} | cosφ=${powerFactor} | ${startingMethod}`,
-              },
-              {
-                label: 'Full load current',
-                formula:
-                  phases === '3'
-                    ? `I = P ÷ (√3 × V × η × cosφ) = ${power}000 ÷ (1.732 × ${voltage} × ${efficiency} × ${powerFactor})`
-                    : `I = P ÷ (V × η × cosφ) = ${power}000 ÷ (${voltage} × ${efficiency} × ${powerFactor})`,
-                value: `${result.fullLoadCurrent.toFixed(1)} A`,
-              },
-              {
-                label: 'Starting current',
-                formula: `I_start = FLC × multiplier = ${result.fullLoadCurrent.toFixed(1)} × ${result.startingMultiplier.toFixed(1)}`,
-                value: `${result.startingCurrent.toFixed(0)} A`,
-                description: `${startingMethod} starting method`,
-              },
-              {
-                label: 'Starting kVA',
-                formula:
-                  phases === '3'
-                    ? `S = √3 × V × I_start ÷ 1000 = 1.732 × ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`
-                    : `S = V × I_start ÷ 1000 = ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`,
-                value: `${result.startingKva.toFixed(1)} kVA`,
-              },
-              {
-                label: 'Cable sizing',
-                formula: `It ≥ In ÷ (Ca × Cg × Cc) — Appendix 4 §5.1.1, on ${result.referenceMethodLabel}`,
-                value: result.recommendedCableSize,
-                description: result.deratingSummary,
-              },
-              {
-                label: 'Voltage drop',
-                formula: 'ΔU = (mV/A/m × Ib × L) ÷ 1000 — Appendix 4 §6 (tabulated value covers all circuit conductors)',
-                value: `Running: ${result.voltageDropRunning.toFixed(1)}% (Table 4Ab limit ${result.voltageDropLimit}%) | Starting: ${result.voltageDropStarting.toFixed(1)}%`,
-                description:
-                  'BS 7671 sets no numeric limit on the starting drop — Reg 525.203 defers to the motor product standard or the manufacturer.',
-              },
-              {
-                label: 'Thermal stress',
-                formula: `I²t = I_start² × t = ${result.startingCurrent.toFixed(0)}² × ${startingTime}`,
-                value: `${(result.thermalStress / 1000).toFixed(1)} kA²s`,
-                description: 'Reported only — BS 7671 sets no I²t limit for starting current.',
-              },
-              {
-                label: 'Protection recommendation',
-                value: result.protectionAnalysis,
-              },
-            ]}
-          />
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Starting kVA"
+                    value={result.startingKva.toFixed(1)}
+                    unit="kVA"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Starting VD"
+                    value={result.voltageDropStarting.toFixed(1)}
+                    unit="%"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="I²t Thermal"
+                    value={(result.thermalStress / 1000).toFixed(1)}
+                    unit="kA²s"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Min Cable"
+                    value={
+                      result.minimumCableSize !== null ? result.minimumCableSize.toString() : '—'
+                    }
+                    unit="mm²"
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[...result.whatThisMeans, ...result.practicalGuidance].map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {result.recommendations.length > 0 && (
-                  <div
-                    className="pt-2 border-t"
-                    style={{ borderColor: `${config.gradientFrom}15` }}
-                  >
-                    {/* Heading was "BS 7671 Recommendations" while the list carried
-                        a 552.1.2 shall softened to "recommended" and an 11 kW DOL
-                        threshold BS 7671 does not contain. */}
-                    <p className="text-sm text-white font-medium mb-2">BS 7671 Requirements</p>
-                    <ul className="space-y-2">
-                      {result.recommendations.map((rec, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                            style={{ backgroundColor: config.gradientFrom }}
-                          />
-                          <span className="text-white">{rec}</span>
-                        </li>
-                      ))}
-                    </ul>
+                {/* Analysis */}
+                <div className="space-y-2">
+                  <div className="p-3 rounded-lg bg-white/5">
+                    <p className="text-sm text-white font-medium">Cable Analysis</p>
+                    <p className="text-sm text-white mt-1">{result.cableAnalysis}</p>
                   </div>
-                )}
-
-                {result.notes.length > 0 && (
-                  <div
-                    className="pt-2 border-t"
-                    style={{ borderColor: `${config.gradientFrom}15` }}
-                  >
-                    <p className="text-sm text-white font-medium mb-2">
-                      What this calculator does not check
-                    </p>
-                    <ul className="space-y-2">
-                      {result.notes.map((note, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                            style={{ backgroundColor: config.gradientFrom }}
-                          />
-                          <span className="text-white">{note}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 552.1.1',
-                      desc: 'Equipment suitable for at least the motor full-load current; cumulative starting effects on intermittent duty',
-                    },
-                    {
-                      reg: 'Regulation 552.1.2',
-                      desc: 'Motors above 0.37 kW shall have control equipment incorporating overload protection',
-                    },
-                    {
-                      reg: 'Regulation 552.1.3',
-                      desc: 'Means to prevent automatic restarting after a supply failure',
-                    },
-                    // 435.1 is "Protection afforded by one device" inside Section
-                    // 435, Coordination of overload and fault current protection.
-                    // Overload protection is Section 433.
-                    {
-                      reg: 'Regulation 433.1.1',
-                      desc: 'Ib ≤ In ≤ Iz, and I₂ ≤ 1.45 Iz (see 433.1.201)',
-                    },
-                    // Table 41.3 is maximum Zs for circuit-breakers, not
-                    // disconnection times — that is Table 41.1.
-                    { reg: 'Table 41.1', desc: 'Maximum disconnection times' },
-                    {
-                      reg: 'Regulation 411.3.2.2',
-                      desc: 'Automatic disconnection times — verify Zs separately',
-                    },
-                    { reg: 'Table 4Ab (Appendix 4 §6.4)', desc: 'Voltage drop limits' },
-                    {
-                      reg: 'Regulation 525.203',
-                      desc: 'A greater drop is permitted during motor starting, to the product standard or manufacturer data',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="space-y-1">
-                    {/* These ranges are typical machine data. BS 7671 tabulates
-                        no starting multipliers, so they are not presented as a
-                        BS 7671 figure. The engine now uses the mid-point of each
-                        range shown here — it previously used values below every
-                        range on this panel. */}
+                  <div className="p-3 rounded-lg bg-white/5">
                     <p className="text-sm text-white font-medium">
-                      Typical Starting Multipliers (not a BS 7671 figure)
+                      Reg 433.1.1 Coordination (Ib ≤ In ≤ Iz)
                     </p>
-                    <p className="text-sm text-white">DOL: 6-8× FLC</p>
-                    <p className="text-sm text-white">Star-Delta: 2-3× FLC</p>
-                    <p className="text-sm text-white">Soft Start: 2-4× FLC</p>
-                    <p className="text-sm text-white">VFD: 1-2× FLC</p>
-                    <p className="text-sm text-white">Auto-transformer: 3-4× FLC</p>
+                    <p className="text-sm text-white mt-1">{result.currentCapacityCheck}</p>
+                    <p className="text-sm text-white mt-1">{result.deratingSummary}</p>
                   </div>
-                  <div className="space-y-1">
-                    {/* Table 4Ab: 3% is the LIGHTING figure. A motor is "other
-                        uses" — 5%. There is no BS 7671 starting-drop limit; the
-                        old panel printed "Starting: 10% max" and "DOL: ≤11kW
-                        recommended", neither of which is in the standard. */}
-                    <p className="text-sm text-white font-medium">Voltage Drop — Table 4Ab</p>
-                    <p className="text-sm text-white">Lighting: 3%</p>
-                    <p className="text-sm text-white">Other uses (incl. motors): 5%</p>
-                    <p className="text-sm text-white">Private LV supply: 6% / 8%</p>
-                    <p className="text-sm text-white">
-                      Starting: no BS 7671 limit — Reg 525.203
-                    </p>
+                  <div className="p-3 rounded-lg bg-white/5">
+                    <p className="text-sm text-white font-medium">Protection Device</p>
+                    <p className="text-sm text-white mt-1">{result.protectionAnalysis}</p>
                   </div>
                 </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
 
-      {/* Formula Reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Motor Starting Current"
-        formula="I_start = I_FLC × Starting Multiplier"
-        variables={[
-          { symbol: 'I_FLC', description: 'Full load current (A)' },
-          {
-            symbol: 'Multiplier',
-            description:
-              'Typical machine data (BS 7671 tabulates none): DOL=6-8×, Star-Delta=2-3×, Soft Start=2-4×, VFD=1-2×',
-          },
-          { symbol: 'I²t', description: 'Thermal stress (A²s)' },
-        ]}
+                {/* Warnings */}
+                {result.warnings.length > 0 && (
+                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                    <div className="space-y-1">
+                      {result.warnings.map((warning, idx) => (
+                        <p key={idx} className="text-sm text-white">
+                          {warning}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Input values',
+                      formula: `Motor: ${power}kW | ${voltage}V | ${phases}-phase | η=${efficiency} | cosφ=${powerFactor} | ${startingMethod}`,
+                    },
+                    {
+                      label: 'Full load current',
+                      formula:
+                        phases === '3'
+                          ? `I = P ÷ (√3 × V × η × cosφ) = ${power}000 ÷ (1.732 × ${voltage} × ${efficiency} × ${powerFactor})`
+                          : `I = P ÷ (V × η × cosφ) = ${power}000 ÷ (${voltage} × ${efficiency} × ${powerFactor})`,
+                      value: `${result.fullLoadCurrent.toFixed(1)} A`,
+                    },
+                    {
+                      label: 'Starting current',
+                      formula: `I_start = FLC × multiplier = ${result.fullLoadCurrent.toFixed(1)} × ${result.startingMultiplier.toFixed(1)}`,
+                      value: `${result.startingCurrent.toFixed(0)} A`,
+                      description: `${startingMethod} starting method`,
+                    },
+                    {
+                      label: 'Starting kVA',
+                      formula:
+                        phases === '3'
+                          ? `S = √3 × V × I_start ÷ 1000 = 1.732 × ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`
+                          : `S = V × I_start ÷ 1000 = ${voltage} × ${result.startingCurrent.toFixed(0)} ÷ 1000`,
+                      value: `${result.startingKva.toFixed(1)} kVA`,
+                    },
+                    {
+                      label: 'Cable sizing',
+                      formula: `It ≥ In ÷ (Ca × Cg × Cc) — Appendix 4 §5.1.1, on ${result.referenceMethodLabel}`,
+                      value: result.recommendedCableSize,
+                      description: result.deratingSummary,
+                    },
+                    {
+                      label: 'Voltage drop',
+                      formula:
+                        'ΔU = (mV/A/m × Ib × L) ÷ 1000 — Appendix 4 §6 (tabulated value covers all circuit conductors)',
+                      value: `Running: ${result.voltageDropRunning.toFixed(1)}% (Table 4Ab limit ${result.voltageDropLimit}%) | Starting: ${result.voltageDropStarting.toFixed(1)}%`,
+                      description:
+                        'BS 7671 sets no numeric limit on the starting drop — Reg 525.203 defers to the motor product standard or the manufacturer.',
+                    },
+                    {
+                      label: 'Thermal stress',
+                      formula: `I²t = I_start² × t = ${result.startingCurrent.toFixed(0)}² × ${startingTime}`,
+                      value: `${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+                      description:
+                        'Reported only — BS 7671 sets no I²t limit for starting current.',
+                    },
+                    {
+                      label: 'Protection recommendation',
+                      value: result.protectionAnalysis,
+                    },
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[...result.whatThisMeans, ...result.practicalGuidance].map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {result.recommendations.length > 0 && (
+                        <div
+                          className="pt-2 border-t"
+                          style={{ borderColor: `${config.gradientFrom}15` }}
+                        >
+                          {/* Heading was "BS 7671 Recommendations" while the list carried
+                          a 552.1.2 shall softened to "recommended" and an 11 kW DOL
+                          threshold BS 7671 does not contain. */}
+                          <p className="text-sm text-white font-medium mb-2">
+                            BS 7671 Requirements
+                          </p>
+                          <ul className="space-y-2">
+                            {result.recommendations.map((rec, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm">
+                                <span
+                                  className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                  style={{ backgroundColor: config.gradientFrom }}
+                                />
+                                <span className="text-white">{rec}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {result.notes.length > 0 && (
+                        <div
+                          className="pt-2 border-t"
+                          style={{ borderColor: `${config.gradientFrom}15` }}
+                        >
+                          <p className="text-sm text-white font-medium mb-2">
+                            What this calculator does not check
+                          </p>
+                          <ul className="space-y-2">
+                            {result.notes.map((note, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm">
+                                <span
+                                  className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                  style={{ backgroundColor: config.gradientFrom }}
+                                />
+                                <span className="text-white">{note}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── BS 7671 Reference ── */}
+                <Collapsible open={showReference} onOpenChange={setShowReference}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>BS 7671 Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showReference && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          {
+                            reg: 'Regulation 552.1.1',
+                            desc: 'Equipment suitable for at least the motor full-load current; cumulative starting effects on intermittent duty',
+                          },
+                          {
+                            reg: 'Regulation 552.1.2',
+                            desc: 'Motors above 0.37 kW shall have control equipment incorporating overload protection',
+                          },
+                          {
+                            reg: 'Regulation 552.1.3',
+                            desc: 'Means to prevent automatic restarting after a supply failure',
+                          },
+                          // 435.1 is "Protection afforded by one device" inside Section
+                          // 435, Coordination of overload and fault current protection.
+                          // Overload protection is Section 433.
+                          {
+                            reg: 'Regulation 433.1.1',
+                            desc: 'Ib ≤ In ≤ Iz, and I₂ ≤ 1.45 Iz (see 433.1.201)',
+                          },
+                          // Table 41.3 is maximum Zs for circuit-breakers, not
+                          // disconnection times — that is Table 41.1.
+                          { reg: 'Table 41.1', desc: 'Maximum disconnection times' },
+                          {
+                            reg: 'Regulation 411.3.2.2',
+                            desc: 'Automatic disconnection times — verify Zs separately',
+                          },
+                          { reg: 'Table 4Ab (Appendix 4 §6.4)', desc: 'Voltage drop limits' },
+                          {
+                            reg: 'Regulation 525.203',
+                            desc: 'A greater drop is permitted during motor starting, to the product standard or manufacturer data',
+                          },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="grid grid-cols-2 gap-3 pt-2">
+                        <div className="space-y-1">
+                          {/* These ranges are typical machine data. BS 7671 tabulates
+                          no starting multipliers, so they are not presented as a
+                          BS 7671 figure. The engine now uses the mid-point of each
+                          range shown here — it previously used values below every
+                          range on this panel. */}
+                          <p className="text-sm text-white font-medium">
+                            Typical Starting Multipliers (not a BS 7671 figure)
+                          </p>
+                          <p className="text-sm text-white">DOL: 6-8× FLC</p>
+                          <p className="text-sm text-white">Star-Delta: 2-3× FLC</p>
+                          <p className="text-sm text-white">Soft Start: 2-4× FLC</p>
+                          <p className="text-sm text-white">VFD: 1-2× FLC</p>
+                          <p className="text-sm text-white">Auto-transformer: 3-4× FLC</p>
+                        </div>
+                        <div className="space-y-1">
+                          {/* Table 4Ab: 3% is the LIGHTING figure. A motor is "other
+                          uses" — 5%. There is no BS 7671 starting-drop limit; the
+                          old panel printed "Starting: 10% max" and "DOL: ≤11kW
+                          recommended", neither of which is in the standard. */}
+                          <p className="text-sm text-white font-medium">Voltage Drop — Table 4Ab</p>
+                          <p className="text-sm text-white">Lighting: 3%</p>
+                          <p className="text-sm text-white">Other uses (incl. motors): 5%</p>
+                          <p className="text-sm text-white">Private LV supply: 6% / 8%</p>
+                          <p className="text-sm text-white">
+                            Starting: no BS 7671 limit — Reg 525.203
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula Reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Motor Starting Current"
+              formula="I_start = I_FLC × Starting Multiplier"
+              variables={[
+                { symbol: 'I_FLC', description: 'Full load current (A)' },
+                {
+                  symbol: 'Multiplier',
+                  description:
+                    'Typical machine data (BS 7671 tabulates none): DOL=6-8×, Star-Delta=2-3×, Soft Start=2-4×, VFD=1-2×',
+                },
+                { symbol: 'I²t', description: 'Thermal stress (A²s)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={motorStartingCurrentContent} category={CAT} />}
       />
-      <CalculatorEditorial content={motorStartingCurrentContent} category={CAT} />
     </CalculatorCard>
   );
 };

@@ -639,7 +639,7 @@ export default function BS7671Amendment4Page() {
   return (
     <GuideTemplate
       title="BS 7671 Amendment 4 2026 | Upcoming Changes UK"
-      description="Everything we know about BS 7671 Amendment 4 expected in 2026. Anticipated changes to energy storage, EV charging, smart installations…"
+      description="Everything we know about BS 7671 Amendment 4 expected in 2026. Anticipated changes to energy storage, EV charging, smart installations."
       datePublished="2025-11-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

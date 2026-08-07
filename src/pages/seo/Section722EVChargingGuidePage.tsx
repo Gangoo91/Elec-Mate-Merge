@@ -41,8 +41,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Each EV charging point gets its own dedicated final circuit with appropriate RCD protection. This is the settled position in the IET Code of Practice for EV Charging Equipment Installation rather than a single numbered regulation in Section 722 — worth knowing if you are asked to cite it.',
-  'Regulation 722.411.4.1 restricts PME (TN-C-S) earthing for EV charging. The trigger is precise: a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. Where that applies, the PME facility must not be used for the protective conductor contact unless one of the alternative methods in 722.411.4 (b) to (e) is applied.',
+  'Each EV charging point gets its own dedicated final circuit with appropriate RCD protection. The IET On-Site Guide states it directly at 4.6.4 — a dedicated circuit shall be provided for the connection to electric vehicles — and the IET Code of Practice for EV Charging Equipment Installation carries the practical detail. There is no single numbered regulation for it in Section 722, which is worth knowing if you are asked to cite it.',
+  'Regulation 722.411.4.1 restricts PME (TN-C-S) earthing for EV charging. The trigger is precise: a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. Where that applies, the PME facility must not be used as the means of earthing for the protective conductor contact unless one of the alternative methods in 722.411.4.1 (b) to (e) is applied.',
   'Regulation 722.531.3 requires RCD protection for EV charging circuits. A charger with an integral RDC-DD (to BS IEC 62955:2018) enables use of a Type A RCD; without integral DC leakage detection, a Type B RCD is required.',
   'Load management (smart charging) is essential where the existing supply cannot support the additional EV charging demand without exceeding the supply capacity.',
   'The IET Code of Practice for Electric Vehicle Charging Equipment Installation provides detailed guidance supplementing BS 7671 Section 722.',
@@ -52,12 +52,12 @@ const faqs = [
   {
     question: 'Why can I not use the PME earth for an outdoor EV charger?',
     answer:
-      'Regulation 722.411.4.1 restricts the use of PME (Protective Multiple Earthing, i.e. TN-C-S) earthing for EV charging. Get the trigger condition right, because it is narrower than it is often quoted: the restriction applies to a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. It is not about livestock, and it is not framed around the building equipotential zone. The concern is that a loss of the PEN conductor (combined neutral and earth) in the DNO supply cable would cause the exposed-conductive-parts of the EV charger — and the vehicle connected to it — to rise to a dangerous potential relative to true earth. Because the vehicle is in contact with the ground (via its tyres, and the user is standing on the ground), this creates a shock risk that the building main bonding cannot mitigate. An earth electrode (a TT arrangement for the EV circuit) is one permitted answer, but it is not the only one — BS 7671 sets out alternatives (b) to (e), which include a device that disconnects the supply on detecting a dangerous voltage between the charging equipment CPC and Earth. Note that such a device must measure CPC-to-Earth: measuring CPC-to-neutral, or CPC-to-main-earthing-terminal, does not give equivalent safety during a PEN failure, because the neutral of a TN-C-S supply can no longer be relied on as a reference to Earth.',
+      'Regulation 722.411.4.1 restricts the use of PME (Protective Multiple Earthing, i.e. TN-C-S) earthing for EV charging. Get the trigger condition right, because it is narrower than it is often quoted: the restriction applies to a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. It is not about livestock, and it is not framed around the building equipotential zone. The concern is that a loss of the PEN conductor (combined neutral and earth) in the DNO supply cable would cause the exposed-conductive-parts of the EV charger — and the vehicle connected to it — to rise to a dangerous potential relative to true earth. Because the vehicle is in contact with the ground (via its tyres, and the user is standing on the ground), this creates a shock risk that the building main bonding cannot mitigate. Connecting the main earthing terminal to an installation earth electrode under method (b) is one permitted answer, but it is not the only one — BS 7671 sets out alternatives (b) to (e), which include a device that disconnects the supply on detecting a dangerous voltage between the charging equipment CPC and Earth. Note that method (b) does not turn the circuit into a TT circuit: the PME earthing facility is retained and an electrode is added alongside it. NOTE 3 to Regulation 722.411.4.1 specifically cautions that creating a TT earthing system for the charging equipment, or for the whole installation, as an alternative to methods (b) to (e) may not be an appropriate solution, because sufficient separation from buried metalwork connected to the supply PEN conductor usually cannot be achieved. Note that such a device must measure CPC-to-Earth: measuring CPC-to-neutral, or CPC-to-main-earthing-terminal, does not give equivalent safety during a PEN failure, because the neutral of a TN-C-S supply can no longer be relied on as a reference to Earth.',
   },
   {
     question: 'Do I need a Type B RCD for every EV charger?',
     answer:
-      'Not necessarily. Regulation 722.531.3 requires RCD protection for EV charging circuits. The type depends on the charger design. If the equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) meeting BS IEC 62955:2018, a Type A RCD (30 mA) is sufficient — the RDC-DD handles DC fault current detection to 6 mA, which is what prevents a standard Type A from being used on its own. Most modern Mode 3 smart chargers include an integral RDC-DD; the manufacturer data sheet will confirm this. If the charger does NOT include DC leakage protection, a Type B or Type B+ RCD is required, as it detects both AC and DC residual currents. Type B RCDs are significantly more expensive than Type A, which is why chargers with integral RDC-DD are the cost-effective choice. Always verify against the charger manufacturer data sheet and installation manual.',
+      'Not necessarily. Regulation 722.531.3 requires RCD protection for EV charging circuits, and Regulation 722.531.3.101 is the clause that governs the device selection — it is the regulation Appendix 1 ties to BS IEC 62955:2018 (RDC-DD) and BS EN 62423 (Type F and Type B RCDs). The type depends on the charger design. If the equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) meeting BS IEC 62955:2018, a Type A RCD (30 mA) is sufficient — the RDC-DD handles DC fault current detection to 6 mA, which is what prevents a standard Type A from being used on its own. Most modern Mode 3 smart chargers include an integral RDC-DD; the manufacturer data sheet will confirm this. If the charger does NOT include DC leakage protection, a Type B or Type B+ RCD is required, as it detects both AC and DC residual currents. Type B RCDs are significantly more expensive than Type A, which is why chargers with integral RDC-DD are the cost-effective choice. Always verify against the charger manufacturer data sheet and installation manual.',
   },
   {
     question: 'What cable size do I need for a 7.4kW EV charger?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'What earth electrode resistance is acceptable for an EV charger TT circuit?',
     answer:
-      'The answer depends on the earthing arrangement. Where an earth electrode is used under Regulation 722.411.4(b) on a PME (TN-C-S) supply, the design criterion is specific to Section 722: the electrode resistance must be low enough that the voltage between the main earthing terminal (MET) and true earth does not exceed 70 V RMS in the event of an open-circuit fault in the PEN conductor of the DNO supply. Annex A722, Item A722.3 gives guidance on calculating the maximum electrode resistance to meet this 70 V RMS limit. This is a more stringent requirement than the standard TT formula. Where the EV circuit operates as a standalone TT circuit (no PME at all), the general rule applies: Ra × IΔn must not exceed 50 V. With a 30 mA RCD: 50 V ÷ 0.03 A = 1,667 ohms maximum. In practice, achieving below 200 ohms is good practice. The electrode resistance must be tested and recorded on the EIC.',
+      'The answer depends on the earthing arrangement. Where an earth electrode is used under Regulation 722.411.4.1(b) on a PME (TN-C-S) supply, the design criterion is specific to Section 722: the electrode resistance must be low enough that the voltage between the main earthing terminal (MET) and true earth does not exceed 70 V RMS in the event of an open-circuit fault in the PEN conductor of the DNO supply. Annex A722, Item A722.3 gives guidance on calculating the maximum electrode resistance to meet this 70 V RMS limit. This is a more stringent requirement than the standard TT formula. Where the EV circuit operates as a standalone TT circuit (no PME at all), the general rule applies: Ra × IΔn must not exceed 50 V. With a 30 mA RCD: 50 V ÷ 0.03 A = 1,667 ohms maximum. In practice, achieving below 200 ohms is good practice — NOTE 1 to Item A722.3 states that earth electrodes with a resistance above 200 ohms may be unstable, and caps the calculated value at 200 ohms. The electrode resistance must be tested and recorded on the EIC.',
   },
   {
     question: 'Do I need to notify the DNO when installing an EV charger?',
@@ -191,12 +191,13 @@ const sections = [
         <p>
           Each EV charging point should be supplied by its own dedicated final circuit — a separate
           MCB or RCBO at the distribution board for each charger, with no other loads sharing it.
-          This is the settled position in the IET Code of Practice for Electric Vehicle Charging
-          Equipment Installation, which GN3 directs you to for EV-specific requirements, and it
-          follows from the continuous-duty nature of the load rather than from a single numbered
-          regulation. Do not cite Regulation 722.312 for it — that group deals with system earthing
-          and conductor arrangement, which is where 722.312.2.1 (no PEN conductor in the charging
-          circuit) sits.
+          The IET On-Site Guide puts it plainly at 4.6.4: a dedicated circuit shall be provided for
+          the connection to electric vehicles, conforming to Section 722 of BS 7671. The detail sits
+          in the IET Code of Practice for Electric Vehicle Charging Equipment Installation, which
+          GN3 directs you to for EV-specific requirements. There is no single numbered regulation in
+          Section 722 that says it — so do not cite Regulation 722.312 for it. That group deals with
+          system earthing and conductor arrangement, which is where 722.312.2.1 (no PEN conductor in
+          the charging circuit) sits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,12 +246,16 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 722.531.3 requires RCD protection for EV charging circuits. The type of RCD
-          depends on the charger design. Where the equipment includes a built-in RDC-DD (Residual
-          Direct Current Detecting Device) to BS IEC 62955:2018, a Type A RCD is permitted. Without
-          integral DC leakage detection, a Type B RCD is required. Note: Regulation 722.531.3.101 is
-          a separate requirement covering transformer placement and the one-charger-per-transformer
-          rule — it is not the RCD selection regulation.
+          Regulation 722.531.3 requires RCD protection for EV charging circuits, and Regulation
+          722.531.3.101 is the clause that governs which device you select — it is the regulation
+          Appendix 1 of BS 7671 ties to BS IEC 62955:2018 (RDC-DD for Mode 3 charging) and to
+          BS EN 62423 (Type F and Type B RCDs). The type of RCD depends on the charger design. Where
+          the equipment includes a built-in RDC-DD (Residual Direct Current Detecting Device) to
+          BS IEC 62955:2018, a Type A RCD is permitted. Without integral DC leakage detection, a
+          Type B RCD is required. Separately, where an EV charging point is supplied through an
+          isolating transformer under the electrical separation route, Regulation 722.413.1.2 limits
+          each unearthed source to one vehicle, and Figure A722 in the Annex shows the 30 mA RCD on
+          the transformer secondary placed as close to the transformer as possible.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -309,20 +314,23 @@ const sections = [
           </p>
         </div>
         <p>
-          Under A4:2026, the structure of Regulation 722.411.4.1 changed. Indent (a) was deleted
-          (Reg 722.826.3.201 records this deletion). A new indent (iv) was added as an alternative
-          solution. The current A4:2026 regulation provides methods (b), (c), (d), (e), and the
-          newly added (iv) — a PME earthing facility must not be used directly for an outdoor EV
-          charging point protective conductor contact unless one of these alternatives is applied.
-          The Annex to Part 722 has also been redrafted, with updated guidance on method (c) (the
-          voltage-monitoring disconnect device). Always apply the A4:2026 text; earlier editions
-          with indent (a) are superseded.
+          Get the amendment history right, because it is routinely mis-stated. Indent (a) of
+          Regulation 722.411.4.1 was deleted by BS 7671:2018+A2:2022, and the printed A4:2026 text
+          still carries it as "Deleted by BS 7671:2018+A2:2022". The methods available in the
+          current text are therefore (b), (c), (d) and (e) — four provisions, which is why the
+          regulation is so often described that way. A2:2022 also redrafted the Annex to Section
+          722: it now gives guidance on the earth electrode for method (b) at Item A722.3 and on the
+          voltage-monitoring device of method (c) at Item A722.4. There is no indent (iv) in the
+          current regulation — that phrasing belongs to the introduction to Amendment 1:2020 and
+          does not appear in the A4:2026 regulation text. Regulation 722.826.3.201 is a separate
+          matter entirely; it concerns prosumer's electrical installations.
         </p>
         <p>
           So: where the charger is on a PME supply and the charging point is outdoors, or might
           reasonably be expected to be used to charge a vehicle outdoors, the PME facility must not
-          serve the protective conductor contact unless one of the alternatives in 722.411.4 (b) to
-          (e) is used. An earth electrode is one of them, not the only one.
+          serve as the means of earthing for the protective conductor contact unless one of the
+          alternatives in 722.411.4.1 (b) to (e) is used. An installation earth electrode under (b)
+          is one of them, not the only one.
         </p>
       </>
     ),
@@ -341,10 +349,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode (TT for EV circuit)</strong>: install a local earth rod and
-                connect it to the EV charger circuit protective conductor. The charger circuit
-                operates as TT, protected by a 30mA RCD. The main installation remains TN-C-S. This
-                is the most common solution.
+                <strong>Installation earth electrode — method (b)</strong>: connect the main
+                earthing terminal of the installation to an installation earth electrode by a
+                protective conductor complying with Regulation 544.1.1. The PME earthing facility is
+                retained; this is not a conversion of the charger circuit to TT. NOTE 3 to
+                Regulation 722.411.4.1 warns that creating a TT earthing system for the charging
+                equipment, or for the whole installation, as an alternative to methods (b) to (e)
+                may not be an appropriate solution, because sufficient separation from buried
+                metalwork connected to the supply PEN conductor usually cannot be achieved. Where
+                the electrode's protective conductor is buried in the ground, its cross-sectional
+                area must be not less than that given in Table 54.1.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -376,7 +390,7 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
-            70 V RMS Design Criterion (Reg 722.411.4(b))
+            70 V RMS Design Criterion (Reg 722.411.4.1(b))
           </h3>
           <p className="text-white text-sm leading-relaxed">
             Where an earth electrode is used under method (b), the electrode resistance must be
@@ -476,8 +490,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage drop</strong>: BS 7671 limits voltage drop to 5% for lighting and 5%
-                for other uses (from the origin of the installation). For a 32A circuit, voltage
+                <strong>Voltage drop</strong>: Table 4Ab of Appendix 4 gives 3% for lighting and 5%
+                for other uses, measured from the origin of the installation, for a low voltage
+                installation supplied directly from a public distribution system. An EV charger is
+                an "other use", so 5% applies. For a 32A circuit, voltage
                 drop must be checked carefully on longer runs. Use the{' '}
                 <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
@@ -572,7 +588,12 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>RCD operation (x1 and x5 rated residual current, plus ramp test)</span>
+              <span>
+                RCD operation — a single alternating current test at the rated residual operating
+                current (IΔn). A4:2026 deleted Table 3A from Appendix 3, so the old ½x / 1x / 5x
+                sequence no longer applies. Regulation 643.8 deems the RCD verified where it
+                disconnects within 300 ms for a general non-delay type
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -659,8 +680,8 @@ const sections = [
 export default function Section722EVChargingGuidePage() {
   return (
     <GuideTemplate
-      title="Section 722 BS 7671: Every EV Charger Rule Explained (2026)"
-      description="BS 7671 Section 722 for UK EV charger installs: PME earthing restriction, Type A RCD + 6mA DC leakage, dedicated circuit, cable sizing, earth electrode option."
+      title="BS 7671 Section 722: EV Charger PME 722.411.4.1"
+      description="722.411.4.1 restricts PME earthing for outdoor EV charge points. Type A 30mA RCD only with an integral RDC-DD, else Type B. 7.4kW = 32A dedicated circuit."
       datePublished="2026-03-27"
       dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}

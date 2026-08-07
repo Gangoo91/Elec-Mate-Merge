@@ -20,7 +20,7 @@ export const module6Questions: Question[] = [
     options: [
       'the lowest possible installation cost above all other factors',
       'safety and functionality at reasonable cost',
-      'the maximum number of circuits the supply can physically accommodate',
+      'the maximum number of circuits the supply can carry',
       'compliance with manufacturer instructions in place of BS 7671',
     ],
     correctAnswer: 1,
@@ -64,9 +64,9 @@ export const module6Questions: Question[] = [
     question: 'Assessment of general characteristics at the start of design includes:',
     options: [
       'purpose of the installation, supply characteristics and environmental conditions',
-      'only the rating of the incoming protective device',
-      'the colour coding of conductors to be used throughout',
-      'the final test results recorded on completion',
+      'the incoming device rating alone, since all other characteristics follow from it',
+      'the conductor colour identification and labelling scheme for the finished work',
+      'the schedule of test results recorded once the installation is complete',
     ],
     correctAnswer: 0,
     explanation:
@@ -156,7 +156,7 @@ export const module6Questions: Question[] = [
       'install the maximum cable size available regardless of cost',
       'leave all spare ways in the board permanently isolated',
       'allow for reasonably anticipated additions to the installation',
-      'ignore future needs, as additions are the client’s responsibility',
+      'size only for present demand, as later additions are a separate job',
     ],
     correctAnswer: 2,
     explanation:
@@ -258,10 +258,10 @@ export const module6Questions: Question[] = [
     id: 17,
     question: 'Electromagnetic compatibility (EMC) in design ensures that:',
     options: [
-      'all circuits operate at the same frequency',
+      'all circuits within the installation operate at the same supply frequency',
       'equipment does not cause, or suffer from, electromagnetic interference',
-      'cables are kept as short as physically possible',
-      'only metallic wiring systems are ever used',
+      'cable routes are kept as short as physically possible to limit radiated noise',
+      'only metallic wiring systems are used, since plastic offers no screening',
     ],
     correctAnswer: 1,
     explanation:
@@ -364,9 +364,9 @@ export const module6Questions: Question[] = [
     question: 'Fault protection (protection against indirect contact) ensures that:',
     options: [
       'automatic disconnection or other measures prevent shock from exposed-conductive-parts',
-      'live parts are placed out of reach during normal use',
-      'the installation is divided into a sufficient number of circuits',
-      'conductors are correctly identified by colour',
+      'live parts are placed out of reach or behind barriers during normal service',
+      'the installation is divided into enough circuits to limit danger and inconvenience',
+      'conductors are identified by the correct colours so live parts can be recognised',
     ],
     correctAnswer: 0,
     explanation:
@@ -393,10 +393,10 @@ export const module6Questions: Question[] = [
     id: 26,
     question: 'Selection of equipment for a design requires considering:',
     options: [
-      'the brand name preferred by the wholesaler',
-      'only the rated voltage of the equipment',
+      'the brand favoured by the wholesaler and its availability from stock',
+      'the rated voltage alone, as the current is limited by the protective device',
       'voltage, current, frequency, power and environmental conditions',
-      'the date the equipment was manufactured',
+      'the date of manufacture, since older equipment must be derated',
     ],
     correctAnswer: 2,
     explanation:
@@ -424,9 +424,9 @@ export const module6Questions: Question[] = [
     question: 'Standard circuit arrangements exist for:',
     options: [
       'common applications such as ring finals, radials and lighting circuits',
-      'every conceivable installation without exception',
-      'hazardous areas and explosive atmospheres only',
-      'circuits exceeding 100 A only',
+      'every conceivable installation, so that design calculation is never needed',
+      'hazardous areas and explosive atmospheres, which cannot be designed freely',
+      'circuits exceeding 100 A, where individual design becomes impractical',
     ],
     correctAnswer: 0,
     explanation:
@@ -846,9 +846,9 @@ export const module6Questions: Question[] = [
     question: 'Data-centre load calculations are typically based on:',
     options: [
       'watts per square metre with little diversity, due to continuous high loads',
-      'domestic diversity factors applied per rack',
-      'lighting load estimates for the building',
-      'the rating of a single socket-outlet',
+      'domestic diversity factors applied to each rack to allow for staggered use',
+      'the general lighting load of the building, scaled up for the equipment rooms',
+      'the rating of a single socket-outlet multiplied by the number of racks',
     ],
     correctAnswer: 0,
     explanation:
@@ -908,7 +908,7 @@ export const module6Questions: Question[] = [
       'theoretically zero',
       'equal to the line current',
       'three times the line current',
-      'equal to the sum of the three phase currents',
+      'the sum of the three phase currents',
     ],
     correctAnswer: 0,
     explanation:
@@ -920,10 +920,10 @@ export const module6Questions: Question[] = [
     id: 61,
     question: 'Harmonic currents affect neutral conductor sizing because:',
     options: [
-      'harmonics always cancel completely in the neutral',
+      'harmonics cancel completely in the neutral, so it may be reduced in size',
       'triple-N (third-order) harmonics add in the neutral rather than cancelling',
-      'they reduce the current in every phase conductor',
-      'they only affect the earthing conductor',
+      'they reduce the current in each line conductor, easing the neutral loading',
+      'they flow only in the circuit protective conductor and not in the neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -950,7 +950,7 @@ export const module6Questions: Question[] = [
     id: 63,
     question: 'When assessing demand for a dwelling with EV charging, the designer should:',
     options: [
-      'ignore the EV charger as it is a minor load',
+      'treat the EV charger as a minor load needing no allowance',
       'subtract the EV charger load from the total demand',
       'apply the lighting diversity figure to the charger',
       'add the EV charger load with appropriate diversity',
@@ -997,10 +997,10 @@ export const module6Questions: Question[] = [
     id: 66,
     question: 'The three main factors that govern cable sizing are:',
     options: [
-      'colour, length and manufacturer',
-      'cost, appearance and availability',
+      'insulation colour, the length of the run and the cable manufacturer',
+      'cost, appearance and the availability of the cable from the wholesaler',
       'current-carrying capacity, voltage drop and fault (thermal) protection',
-      'ambient temperature, humidity and altitude',
+      'ambient temperature, humidity and height above sea level',
     ],
     correctAnswer: 2,
     explanation:
@@ -1028,9 +1028,9 @@ export const module6Questions: Question[] = [
     question: 'Derating (correction) factors reduce a cable’s capacity to account for:',
     options: [
       'higher ambient temperature, grouping and thermal insulation',
-      'longer cable runs and voltage drop',
-      'the rating of the protective device',
-      'the colour of the cable insulation',
+      'longer cable runs and the resulting increase in voltage drop',
+      'the rated current of the overcurrent protective device',
+      'the colour and thickness of the cable insulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1102,10 +1102,10 @@ export const module6Questions: Question[] = [
     id: 73,
     question: 'Voltage drop in smaller cables is calculated essentially from:',
     options: [
-      'V = I² × R',
+      'V = I² × R (using the power dissipated in the cable)',
       'V = I × R (using tabulated mV/A/m values)',
-      'V = P / I',
-      'V = I / R',
+      'V = P / I (from the load power and the load current)',
+      'V = I / R (current divided by the cable resistance)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1132,9 +1132,9 @@ export const module6Questions: Question[] = [
     id: 75,
     question: 'For a circuit with Ib = 25 A and a corrected cable capacity (Iz) of 24 A, the cable is:',
     options: [
-      'correctly sized, with an adequate margin',
-      'oversized for the design current',
-      'suitable only if a 30 mA RCD is fitted',
+      'correctly sized, since Ib and Iz are within one ampere of each other',
+      'oversized, because the cable capacity exceeds the design current',
+      'acceptable, provided a 30 mA RCD is fitted to the circuit',
       'undersized, because the design current exceeds the cable capacity',
     ],
     correctAnswer: 3,
@@ -1148,9 +1148,9 @@ export const module6Questions: Question[] = [
     question: 'The mV/A/m value used in voltage-drop calculations:',
     options: [
       'varies with cable size and construction and is taken from tables',
-      'is a fixed value for all cables',
-      'depends only on the length of the run',
-      'is the same as the cable’s current rating',
+      'is a single fixed value applying to every size of copper cable',
+      'depends only on the length of the run and the load current',
+      'is identical to the tabulated current-carrying capacity of the cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -1177,10 +1177,10 @@ export const module6Questions: Question[] = [
     id: 78,
     question: 'The adiabatic equation for protective-conductor sizing uses:',
     options: [
-      'S = I × t × k',
-      'S = k / √(I²t)',
+      'S = I × t × k, multiplying current, disconnection time and the constant',
+      'S = k / √(I²t), dividing the conductor constant by the let-through energy',
       'S = √(I²t) / k, relating fault current, time and a conductor constant',
-      'S = V / (I × R)',
+      'S = V / (I × R), derived from the voltage across the fault path',
     ],
     correctAnswer: 2,
     explanation:
@@ -1222,10 +1222,10 @@ export const module6Questions: Question[] = [
     id: 81,
     question: 'Steel-wire-armoured (SWA) cable is typically used for:',
     options: [
-      'flexible connections to moving equipment',
+      'flexible final connections to moving or vibrating equipment',
       'underground and external installations requiring mechanical protection',
-      'concealed wiring within plasterboard walls',
-      'extra-low-voltage signalling circuits',
+      'concealed wiring within plasterboard partitions and stud walls',
+      'extra-low-voltage signalling and data circuits inside buildings',
     ],
     correctAnswer: 1,
     explanation:
@@ -1252,9 +1252,9 @@ export const module6Questions: Question[] = [
     id: 83,
     question: 'For earth-fault protection, the cable/device combination must achieve disconnection within:',
     options: [
-      '0.1 s for all circuits without exception',
-      '10 s for final circuits and 30 s for distribution',
-      '1 s for every circuit irrespective of type',
+      '0.1 s for every circuit, irrespective of the system or circuit type',
+      '10 s for final circuits and 30 s for distribution circuits',
+      '1 s for every circuit, whether it is a final or a distribution circuit',
       'the time specified for the circuit type (0.4 s for final, 5 s for distribution)',
     ],
     correctAnswer: 3,
@@ -1312,9 +1312,9 @@ export const module6Questions: Question[] = [
     id: 87,
     question: 'Fire-performance cables (e.g. fire-resistant, LSHF) are selected for:',
     options: [
-      'underground cable runs requiring armour',
-      'flexible connections to portable equipment',
-      'extra-low-voltage control wiring only',
+      'underground runs where the armouring gives mechanical protection',
+      'flexible connections to portable and hand-held equipment',
+      'extra-low-voltage control and signalling wiring only',
       'emergency circuits, escape routes and limiting the spread of fire',
     ],
     correctAnswer: 3,
@@ -1388,9 +1388,9 @@ export const module6Questions: Question[] = [
     question: 'Ring final circuit cables are typically 2.5 mm² because:',
     options: [
       'two parallel paths share the current, which suits a 32 A protective device',
-      'a single 2.5 mm² conductor can carry 32 A alone',
-      'larger cables cannot fit into socket-outlet terminals',
-      '2.5 mm² is the only size permitted for sockets',
+      'a single 2.5 mm² conductor can carry 32 A in any installation method',
+      'larger conductors will not fit the terminals of BS 1363 socket-outlets',
+      '2.5 mm² is the only size permitted for socket-outlet circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -1402,10 +1402,10 @@ export const module6Questions: Question[] = [
     id: 93,
     question: 'For circuits in potentially explosive atmospheres, cable selection must:',
     options: [
-      'use the smallest available cross-section',
+      'use the smallest cross-section available to limit the stored energy',
       'meet the specific requirements for the hazardous-area classification',
-      'omit the protective conductor',
-      'use only flexible cables',
+      'omit the protective conductor to avoid circulating earth currents',
+      'use flexible cables only, so that joints are avoided within the zone',
     ],
     correctAnswer: 1,
     explanation:
@@ -1462,10 +1462,10 @@ export const module6Questions: Question[] = [
     id: 97,
     question: 'Busbars are typically used instead of cables when:',
     options: [
-      'very small currents must be distributed',
+      'very small currents must be distributed to many separate final circuits',
       'high currents require more effective heat dissipation and robust connections',
-      'flexible connections to moving equipment are needed',
-      'circuits are buried underground',
+      'flexible connections are needed to equipment that moves or vibrates',
+      'circuits are buried underground and need mechanical protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -1524,10 +1524,10 @@ export const module6Questions: Question[] = [
     id: 101,
     question: 'Protection coordination (discrimination) means:',
     options: [
-      'all upstream devices operate together on any fault',
+      'all upstream devices operate together so the fault is cleared quickly',
       'only the device nearest the fault operates, leaving other circuits unaffected',
-      'the main switch always operates first on a fault',
-      'no device operates until the fault clears itself',
+      'the main switch always operates first, isolating the whole installation',
+      'no device operates until the fault current falls to a safe level',
     ],
     correctAnswer: 1,
     explanation:
@@ -1554,9 +1554,9 @@ export const module6Questions: Question[] = [
     id: 103,
     question: 'Time-current characteristics of protective devices are important for:',
     options: [
-      'selecting the colour of the device casing',
-      'calculating the supply voltage',
-      'estimating the building’s lighting load',
+      'confirming that the rated current is at least the design current',
+      'calculating the nominal supply voltage at the origin of the circuit',
+      'estimating the connected lighting load of the building being designed',
       'understanding how devices respond at different fault-current levels',
     ],
     correctAnswer: 3,
@@ -1644,10 +1644,10 @@ export const module6Questions: Question[] = [
     id: 109,
     question: 'RCD coordination between upstream and downstream RCDs requires:',
     options: [
-      'identical 30 mA RCDs at every level',
+      'identical 30 mA instantaneous RCDs at every level, so both clear the fault',
       'an S-type (time-delayed) RCD upstream with appropriate current/time discrimination',
-      'a lower-rated RCD upstream than downstream',
-      'no time delay anywhere in the system',
+      'an upstream RCD of lower residual operating current than the downstream one',
+      'instantaneous operation at every level, with no time delay anywhere',
     ],
     correctAnswer: 1,
     explanation:
@@ -1674,9 +1674,9 @@ export const module6Questions: Question[] = [
     id: 111,
     question: 'The breaking capacity of a protective device must be:',
     options: [
-      'no greater than the circuit’s normal load current',
-      'equal to the device’s rated current',
-      'half the prospective fault current',
+      'no greater than the normal load current of the circuit it protects',
+      'equal to the rated current of the device, since that is what it interrupts',
+      'half the prospective fault current, as the two poles share it',
       'at least equal to the prospective fault current at its point of installation',
     ],
     correctAnswer: 3,
@@ -1704,10 +1704,10 @@ export const module6Questions: Question[] = [
     id: 113,
     question: 'Cascading (series rating) allows:',
     options: [
-      'downstream devices to have a higher rating than the supply',
+      'downstream devices to have a higher rated current than the incoming supply',
       'downstream devices of lower breaking capacity, if properly coordinated with the upstream device',
-      'the omission of breaking-capacity requirements entirely',
-      'two devices to share the same enclosure',
+      'the breaking-capacity requirement to be omitted for downstream devices entirely',
+      'two devices to share one enclosure and one common set of terminals',
     ],
     correctAnswer: 1,
     explanation:
@@ -1719,10 +1719,10 @@ export const module6Questions: Question[] = [
     id: 114,
     question: 'The purpose of current limiting in a protective device is to:',
     options: [
-      'increase the fault current to ensure fast operation',
-      'maintain a constant current during a fault',
+      'increase the fault current so that the device operates more quickly',
+      'hold the fault current constant until the device finally clears it',
       'reduce the actual fault current by operating before the prospective peak is reached',
-      'delay operation until the fault current peaks',
+      'delay operation until the fault current has reached its peak value',
     ],
     correctAnswer: 2,
     explanation:
@@ -1794,9 +1794,9 @@ export const module6Questions: Question[] = [
     id: 119,
     question: 'When MCBs and fuses are used together, achieving coordination requires:',
     options: [
-      'using devices of identical rated current only',
-      'placing the fuse downstream of the MCB in every case',
-      'ignoring the device curves and relying on ratings alone',
+      'using devices of identical rated current so that both react together',
+      'placing the fuse downstream of the MCB in every case, as fuses are faster',
+      'comparing rated currents alone, since the device curves add nothing',
       'analysis of the time-current curves to ensure the correct operating sequence',
     ],
     correctAnswer: 3,
@@ -1810,9 +1810,9 @@ export const module6Questions: Question[] = [
     question: 'Ground-fault (earth-fault) protection in large systems provides:',
     options: [
       'additional earth-fault detection with adjustable settings for coordination',
-      'protection against overload only',
-      'a substitute for main protective bonding',
-      'protection against overvoltage transients',
+      'protection against overload only, leaving faults to the main device',
+      'a substitute for main protective bonding of extraneous-conductive-parts',
+      'protection against overvoltage transients entering from the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -1914,9 +1914,9 @@ export const module6Questions: Question[] = [
     id: 127,
     question: 'For transformer secondary protection, the device must consider:',
     options: [
-      'the lighting load of the building',
-      'the colour of the transformer enclosure',
-      'the ambient noise level of the room',
+      'only the primary-side rated current, since the turns ratio is fixed',
+      'the ambient temperature of the room alone, applied as a derating factor',
+      'the connected lighting load, as this sets the disconnection time',
       'the effect of transformer impedance on the available fault current',
     ],
     correctAnswer: 3,
@@ -1930,9 +1930,9 @@ export const module6Questions: Question[] = [
     question: 'Arc-flash protection measures in design include:',
     options: [
       'fast-acting protective devices and arc-resistant equipment where appropriate',
-      'increasing the let-through energy of devices',
-      'removing protective devices to reduce arcing',
-      'using larger enclosures with no other change',
+      'increasing the let-through energy of the devices so faults clear sooner',
+      'removing protective devices, since their contacts are the source of arcing',
+      'using larger enclosures, with no change to the protective devices',
     ],
     correctAnswer: 0,
     explanation:
@@ -2021,10 +2021,10 @@ export const module6Questions: Question[] = [
     id: 134,
     question: 'A TN-C-S (PME) system uses:',
     options: [
-      'separate PE and N conductors throughout the supply',
-      'a local earth electrode in place of a supply earth',
+      'separate PE and N conductors throughout the supply and the installation',
+      'a local earth electrode at the installation in place of a supply earth',
       'a combined PEN conductor in the supply, separated into PE and N at the origin',
-      'a combined PEN conductor throughout the installation',
+      'a combined PEN conductor carried throughout the whole installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2081,10 +2081,10 @@ export const module6Questions: Question[] = [
     id: 138,
     question: 'Supplementary bonding is required in locations where:',
     options: [
-      'the load current is particularly high',
-      'cables are run underground',
+      'the load current is particularly high for the size of cable used',
+      'cables are run underground between separate buildings',
       'the risk of electric shock is increased, such as in bathrooms',
-      'three-phase supplies are present',
+      'a three-phase supply is present within the same building',
     ],
     correctAnswer: 2,
     explanation:
@@ -2141,10 +2141,10 @@ export const module6Questions: Question[] = [
     id: 142,
     question: 'In a TT system, the earth-electrode resistance must be low enough to:',
     options: [
-      'allow a fuse to operate within 5 seconds',
-      'eliminate the need for an RCD entirely',
+      'allow the overcurrent protective device alone to disconnect within 5 seconds',
+      'remove the need for an RCD, as the electrode itself provides the protection',
       'ensure the RCD operates so that the touch voltage does not exceed 50 V (Ra × IΔn ≤ 50 V)',
-      'keep the supply voltage within tolerance',
+      'keep the supply voltage at the origin within the declared tolerance',
     ],
     correctAnswer: 2,
     explanation:
@@ -2156,9 +2156,9 @@ export const module6Questions: Question[] = [
     id: 143,
     question: 'Types of earth electrode include:',
     options: [
-      'PVC conduit and trunking',
-      'flexible cords and flexes',
-      'fuses and circuit-breakers',
+      'PVC conduit, trunking and other cable-management systems',
+      'flexible cords, flexes and their associated connecting devices',
+      'fuses, circuit-breakers and residual current devices',
       'rods, tapes, plates, foundation electrodes and structural steelwork',
     ],
     correctAnswer: 3,
@@ -2172,9 +2172,9 @@ export const module6Questions: Question[] = [
     question: 'PME supplies have specific bonding requirements because:',
     options: [
       'loss of the supply PEN conductor could make installation metalwork live',
-      'PME supplies always have a higher fault current',
-      'PME supplies use a local earth electrode',
-      'PME bonding reduces the supply voltage',
+      'PME supplies always give a higher prospective fault current at the origin',
+      'PME supplies rely on a local earth electrode at the installation',
+      'the bonding conductor reduces the voltage drop in the supply cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -2246,10 +2246,10 @@ export const module6Questions: Question[] = [
     id: 149,
     question: 'Functional earthing differs from protective earthing in that it:',
     options: [
-      'replaces the need for protective earthing',
+      'replaces the need for protective earthing where equipment is sensitive',
       'provides earthing for correct equipment operation rather than for safety',
-      'carries the full fault current of the circuit',
-      'connects extraneous-conductive-parts together',
+      'carries the full prospective fault current of the circuit it serves',
+      'connects extraneous-conductive-parts together at the main earthing bar',
     ],
     correctAnswer: 1,
     explanation:
@@ -2292,9 +2292,9 @@ export const module6Questions: Question[] = [
     question: 'Automatic disconnection of supply (ADS) relies on:',
     options: [
       'the earth-fault loop impedance being low enough for the protective device to operate',
-      'a high earth-electrode resistance',
-      'the supply voltage being above nominal',
-      'the absence of any protective conductor',
+      'the earth-electrode resistance being high enough to limit the fault current',
+      'the supply voltage remaining above its nominal value during the fault',
+      'the absence of a protective conductor, so that no fault current flows',
     ],
     correctAnswer: 0,
     explanation:
@@ -2306,10 +2306,10 @@ export const module6Questions: Question[] = [
     id: 153,
     question: 'For an outbuilding supplied from the main building, the earthing arrangement should:',
     options: [
-      'always extend the PME earth without restriction',
+      'always extend the PME earth, since it is the supply earth for the property',
       'consider whether PME conditions permit extension, or whether a local TT system is needed',
-      'never include any earthing at all',
-      'rely solely on the outbuilding’s metal cladding',
+      'omit any earthing arrangement, as the outbuilding is a separate structure',
+      'rely on the metal cladding of the outbuilding as the earth electrode',
     ],
     correctAnswer: 1,
     explanation:
@@ -2352,9 +2352,9 @@ export const module6Questions: Question[] = [
     question: 'A metallic water installation pipe requires main bonding where:',
     options: [
       'it enters the building (or within 600 mm of the internal stopcock)',
-      'it passes the consumer unit',
-      'it connects to the first tap',
-      'it is buried beneath the property',
+      'it passes closest to the consumer unit, wherever that may be',
+      'it connects to the first draw-off tap inside the building',
+      'it is buried beneath the property, before it enters',
     ],
     correctAnswer: 0,
     explanation:
@@ -2366,10 +2366,10 @@ export const module6Questions: Question[] = [
     id: 157,
     question: 'A plastic section in a metallic water system affects bonding because:',
     options: [
-      'the whole pipe no longer needs any bonding',
+      'the pipework no longer needs any bonding at all once plastic is present',
       'the metal sections each side may need individual bonding assessment',
-      'the plastic itself must be bonded',
-      'the bonding must be doubled in size',
+      'the plastic section itself must be bonded to maintain continuity',
+      'the bonding conductor must be doubled in cross-sectional area',
     ],
     correctAnswer: 1,
     explanation:
@@ -2381,10 +2381,10 @@ export const module6Questions: Question[] = [
     id: 158,
     question: 'A metallic oil supply pipe typically requires bonding where it is:',
     options: [
-      'made of plastic throughout',
-      'buried below the property only',
+      'made of plastic throughout its run into the building',
+      'buried below the property, before it comes above ground',
       'metal and within the building (an extraneous-conductive-part)',
-      'fitted with a non-metallic tank',
+      'connected to a non-metallic storage tank outside',
     ],
     correctAnswer: 2,
     explanation:
@@ -2396,9 +2396,9 @@ export const module6Questions: Question[] = [
     id: 159,
     question: 'In a bathroom, supplementary bonding (where required) connects:',
     options: [
-      'only the metal bath to the cold-water pipe',
-      'the lighting circuit to the shower circuit',
-      'the supply neutral to the local pipework',
+      'only the metal bath to the nearest cold-water pipe in the room',
+      'the lighting circuit protective conductor to the shower circuit',
+      'the supply neutral conductor to the local metallic pipework',
       'all simultaneously accessible extraneous- and exposed-conductive-parts together',
     ],
     correctAnswer: 3,
@@ -2474,9 +2474,9 @@ export const module6Questions: Question[] = [
     question: 'Equipment in bathroom zone 1 must have a minimum degree of protection of:',
     options: [
       'IPX4 (or IPX5 where water jets are used for cleaning)',
-      'IP20 in all cases',
-      'IPX8 in all cases',
-      'IP2X with no water rating',
+      'IP20, since zone 1 is above the level of the bath',
+      'IPX8, as fittings in zone 1 may be immersed',
+      'IP2X only, with no requirement for a water rating',
     ],
     correctAnswer: 0,
     explanation:
@@ -2488,10 +2488,10 @@ export const module6Questions: Question[] = [
     id: 165,
     question: 'Swimming-pool installations must consider:',
     options: [
-      'a single zone with standard domestic requirements',
+      'a single zone throughout, treated in the same way as an ordinary domestic room',
       'zones with strict requirements, including SELV and supplementary bonding where applicable',
-      'no special measures beyond an RCD',
-      'the lighting load of the building only',
+      'no special measures beyond RCD protection of every circuit',
+      'the lighting load of the building, which sets the zone boundaries',
     ],
     correctAnswer: 1,
     explanation:
@@ -2518,9 +2518,9 @@ export const module6Questions: Question[] = [
     id: 167,
     question: 'Construction-site installations require:',
     options: [
-      'standard domestic accessories throughout',
-      'no RCD protection on socket circuits',
-      'only fixed wiring with no flexible cables',
+      'standard domestic accessories throughout, provided they are new',
+      'socket-outlet circuits without RCD protection, as supplies are temporary',
+      'fixed wiring only, with flexible cables prohibited on site',
       'reduced voltage where appropriate, RCD protection and robust equipment',
     ],
     correctAnswer: 3,
@@ -2548,10 +2548,10 @@ export const module6Questions: Question[] = [
     id: 169,
     question: 'In agricultural and horticultural premises, socket-outlet circuits must be protected by:',
     options: [
-      'a 100 mA RCD only',
+      'a 100 mA RCD, as livestock tolerate a higher leakage current',
       'an RCD with a rated residual operating current not exceeding 30 mA',
-      'overcurrent protection alone, with no RCD',
-      'a 300 mA RCD only',
+      'overcurrent protection alone, with no RCD on socket circuits',
+      'a 300 mA RCD, matched to the fire-protection requirement',
     ],
     correctAnswer: 1,
     explanation:
@@ -2563,10 +2563,10 @@ export const module6Questions: Question[] = [
     id: 170,
     question: 'Caravan-park electrical design must provide:',
     options: [
-      'standard BS 1363 13 A sockets at each pitch',
-      'a single shared RCD for the whole park',
+      'standard BS 1363 13 A socket-outlets at each pitch, one for each caravan',
+      'a single shared RCD covering the whole park, sited at the origin',
       'correctly rated BS EN 60309 socket-outlets with individual RCD protection at each pitch',
-      'unprotected socket-outlets at each pitch',
+      'socket-outlets at each pitch protected by overcurrent devices only',
     ],
     correctAnswer: 2,
     explanation:
@@ -2578,9 +2578,9 @@ export const module6Questions: Question[] = [
     id: 171,
     question: 'Marina electrical installations must consider:',
     options: [
-      'high ambient temperatures only',
-      'the lighting load of nearby buildings',
-      'the absence of any earthing requirement',
+      'high ambient temperatures only, as other factors are unchanged',
+      'the lighting load of the buildings on the shore side of the berth',
+      'the use of PME earthing throughout, as on any shore installation',
       'water proximity, floating structures and the harsh marine environment',
     ],
     correctAnswer: 3,
@@ -2608,10 +2608,10 @@ export const module6Questions: Question[] = [
     id: 173,
     question: 'Solar PV installation design must include:',
     options: [
-      'only AC isolation at the consumer unit',
+      'AC isolation at the consumer unit only, as the DC side is fixed',
       'DC-system considerations, isolation provisions and specific labelling',
-      'no isolation, as the array is inherently safe',
-      'standard lighting-circuit protection only',
+      'no isolation, since the array is inherently safe when disconnected',
+      'standard lighting-circuit protection applied to the whole system',
     ],
     correctAnswer: 1,
     explanation:
@@ -2623,10 +2623,10 @@ export const module6Questions: Question[] = [
     id: 174,
     question: 'Electric-vehicle charging installations require:',
     options: [
-      'a shared circuit with the kitchen ring final',
-      'no RCD, as the charger provides its own protection',
+      'a shared circuit taken from the existing kitchen ring final',
+      'no RCD, since the charging equipment provides its own protection',
       'dedicated circuits with appropriate RCD protection and compliant equipment',
-      'standard 13 A socket-outlets without protection',
+      'standard 13 A socket-outlets with no additional protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -2638,9 +2638,9 @@ export const module6Questions: Question[] = [
     id: 175,
     question: 'Medical locations have specific requirements for:',
     options: [
-      'the colour of the wall sockets only',
-      'reduced bonding to limit fault current',
-      'standard domestic protection throughout',
+      'the colour of the socket-outlets used in each patient area',
+      'reduced bonding, to limit the fault current reaching the patient',
+      'standard domestic levels of protection throughout the building',
       'IT systems, equipotential bonding and supply reliability in critical areas',
     ],
     correctAnswer: 3,
@@ -2743,10 +2743,10 @@ export const module6Questions: Question[] = [
     id: 182,
     question: 'Supplies to mobile or transportable units must include:',
     options: [
-      'a permanent fixed-wiring connection only',
-      'no earthing, because the unit is mobile',
+      'a permanent fixed-wiring connection only, with no plug and socket',
+      'no earthing arrangement, because the unit is not fixed in contact with earth',
       'appropriate connection means and protective measures for their mobile use',
-      'standard domestic accessories without protection',
+      'standard domestic accessories, with no additional protective measures',
     ],
     correctAnswer: 2,
     explanation:
@@ -2805,10 +2805,10 @@ export const module6Questions: Question[] = [
     id: 186,
     question: 'Design documentation must include:',
     options: [
-      'the contractor’s pricing and profit margin',
-      'photographs of the completed decoration',
+      'the pricing build-up and profit margin agreed with the contractor',
+      'photographs of the completed decoration and finishes',
       'sufficient information to verify the design and enable safe operation',
-      'the supplier’s tariff details',
+      'the tariff details agreed with the electricity supplier',
     ],
     correctAnswer: 2,
     explanation:
@@ -2865,10 +2865,10 @@ export const module6Questions: Question[] = [
     id: 190,
     question: 'Design calculations should demonstrate:',
     options: [
-      'the cheapest possible material selection',
-      'the contractor’s preferred working methods',
+      'the cheapest possible selection of materials for the installation',
+      'the working methods preferred by the installing contractor',
       'compliance with cable-sizing, protection and voltage-drop requirements',
-      'the supplier’s connection charges',
+      'the connection charges quoted by the electricity supplier',
     ],
     correctAnswer: 2,
     explanation:
@@ -2896,9 +2896,9 @@ export const module6Questions: Question[] = [
     question: 'Cable schedules should include:',
     options: [
       'cable types, sizes, routes and the associated protective devices',
-      'the colour scheme of the consumer unit',
-      'the labour rates for installation',
-      'the supply network operator’s details',
+      'the colour scheme chosen for the consumer unit and enclosures',
+      'the labour rates used to price the installation work',
+      'the contact details of the distribution network operator',
     ],
     correctAnswer: 0,
     explanation:
@@ -2940,9 +2940,9 @@ export const module6Questions: Question[] = [
     id: 195,
     question: 'Design risk assessments should identify:',
     options: [
-      'the cheapest available components',
-      'the contractor’s preferred suppliers',
-      'the supply tariff and metering details',
+      'the cheapest components available from the wholesaler',
+      'the suppliers preferred by the installing contractor',
+      'the supply tariff and the metering arrangements',
       'hazards and the mitigation measures incorporated in the design',
     ],
     correctAnswer: 3,
@@ -2956,9 +2956,9 @@ export const module6Questions: Question[] = [
     question: 'Technical specifications define:',
     options: [
       'the performance requirements and the standards to be met',
-      'the colour scheme of the building',
-      'the contractor’s profit margin',
-      'the date the supply was connected',
+      'the colour scheme chosen for the building interior',
+      'the profit margin agreed with the contractor',
+      'the date on which the supply was connected',
     ],
     correctAnswer: 0,
     explanation:
@@ -2970,10 +2970,10 @@ export const module6Questions: Question[] = [
     id: 197,
     question: 'Operation and maintenance (O&M) manuals should include:',
     options: [
-      'the contractor’s pricing breakdown',
+      'the pricing breakdown and final account submitted by the contractor',
       'information for the safe operation and maintenance of the installation',
-      'the architect’s decorative drawings',
-      'the supplier’s tariff schedule',
+      'the decorative drawings and finishes specified by the architect',
+      'the tariff schedule published by the electricity supplier',
     ],
     correctAnswer: 1,
     explanation:
@@ -3002,7 +3002,7 @@ export const module6Questions: Question[] = [
     options: [
       'made verbally without any record',
       'left for the next contractor to discover',
-      'ignored if they appear minor',
+      'recorded only if they affect the final account',
       'documented and verified to ensure continued compliance',
     ],
     correctAnswer: 3,
@@ -3016,9 +3016,9 @@ export const module6Questions: Question[] = [
     question: 'BIM (Building Information Modelling) in electrical design provides:',
     options: [
       'integrated design information and coordination with other building services',
-      'a substitute for BS 7671 compliance',
-      'a method of pricing the installation only',
-      'an automatic test result for every circuit',
+      'a substitute for demonstrating compliance with the Wiring Regulations',
+      'a method of pricing the installation, with no design function',
+      'an automatic set of test results for every circuit modelled',
     ],
     correctAnswer: 0,
     explanation:

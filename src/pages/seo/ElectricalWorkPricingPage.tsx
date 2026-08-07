@@ -654,7 +654,7 @@ export default function ElectricalWorkPricingPage() {
     <GuideTemplate
       noindex
       title="Electrical Work Pricing Guide | Jobs & Costs UK 2026"
-      description="Complete guide to UK electrical work prices in 2026. Socket installation, consumer unit change, full rewire, EV charger, lighting…"
+      description="Complete guide to UK electrical work prices in 2026. Socket installation, consumer unit change, full rewire, EV charger, lighting."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

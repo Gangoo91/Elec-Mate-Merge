@@ -472,7 +472,7 @@ export default function ElectricianPrestonPage() {
       noindex={true}
       localArea="Preston"
       title="Electrician in Preston | Local Electricians 2026"
-      description="Find qualified electricians in Preston. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, rewiring…"
+      description="Find qualified electricians in Preston. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

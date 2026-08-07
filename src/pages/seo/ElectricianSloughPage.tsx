@@ -469,7 +469,7 @@ export default function ElectricianSloughPage() {
       noindex={true}
       localArea="Slough"
       title="Electrician in Slough | Local Electricians 2026"
-      description="Find qualified electricians in Slough. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades…"
+      description="Find qualified electricians in Slough. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

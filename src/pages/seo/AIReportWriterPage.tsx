@@ -409,7 +409,7 @@ export default function AIReportWriterPage() {
   return (
     <ToolTemplate
       title="AI Report Writer | Electrical Reports & Proposals"
-      description="Generate professional electrical reports and proposals with AI. Inspection summaries, condition reports, client proposals…"
+      description="Generate professional electrical reports and proposals with AI. Inspection summaries, condition reports, client proposals."
       datePublished="2025-08-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

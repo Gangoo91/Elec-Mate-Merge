@@ -16,6 +16,7 @@ import {
   ResultsGrid,
   CalculatorFormula,
   FormulaReference,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -28,7 +29,6 @@ const OhmsLawCalculator = () => {
   const [solveFor, setSolveFor] = useState('auto');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showBsRegs, setShowBsRegs] = useState(false);
   const [result, setResult] = useState<{
     voltage?: number;
     current?: number;
@@ -278,327 +278,294 @@ const OhmsLawCalculator = () => {
       title="Ohm's Law Calculator"
       description="Enter any two values to calculate the remaining electrical parameters"
     >
-      {/* Solve For Selector */}
-      <CalculatorSelect
-        label="Solve For (Optional)"
-        value={solveFor}
-        onChange={setSolveFor}
-        placeholder="What are you trying to find?"
-        options={[
-          { value: 'auto', label: 'Auto-detect from inputs' },
-          { value: 'voltage', label: 'Voltage (V)' },
-          { value: 'current', label: 'Current (I)' },
-          { value: 'resistance', label: 'Resistance (R)' },
-          { value: 'power', label: 'Power (P)' },
-        ]}
-      />
+      <CalculatorPanes
+        form={
+          <>
+            {/* Solve For Selector */}
+            <CalculatorSelect
+              label="Solve For (Optional)"
+              value={solveFor}
+              onChange={setSolveFor}
+              placeholder="What are you trying to find?"
+              options={[
+                { value: 'auto', label: 'Auto-detect from inputs' },
+                { value: 'voltage', label: 'Voltage (V)' },
+                { value: 'current', label: 'Current (I)' },
+                { value: 'resistance', label: 'Resistance (R)' },
+                { value: 'power', label: 'Power (P)' },
+              ]}
+            />
 
-      {/* Input Grid */}
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Voltage"
-          unit="V"
-          type="text"
-          inputMode="decimal"
-          placeholder="230"
-          value={voltage}
-          onChange={setVoltage}
-          hint="UK domestic: 230V"
-          error={errors.voltage}
-        />
-        <CalculatorInput
-          label="Current"
-          unit="A"
-          type="text"
-          inputMode="decimal"
-          placeholder="10"
-          value={current}
-          onChange={setCurrent}
-          hint="Measured or design current"
-          error={errors.current}
-        />
-        <CalculatorInput
-          label="Resistance"
-          unit="Ω"
-          type="text"
-          inputMode="decimal"
-          placeholder="23"
-          value={resistance}
-          onChange={setResistance}
-          hint="Load resistance"
-          error={errors.resistance}
-        />
-        <CalculatorInput
-          label="Power"
-          unit="W"
-          type="text"
-          inputMode="decimal"
-          placeholder="2300"
-          value={power}
-          onChange={setPower}
-          hint="Active power consumption"
-          error={errors.power}
-        />
-      </CalculatorInputGrid>
-
-      {errors.general && (
-        <Alert className="border-red-500/30 bg-red-500/10">
-          <AlertTriangle className="h-4 w-4 text-red-500" />
-          <AlertDescription className="text-red-200">{errors.general}</AlertDescription>
-        </Alert>
-      )}
-
-      {/* Action Buttons */}
-      <CalculatorActions
-        category="power"
-        onCalculate={calculateOhmsLaw}
-        onReset={reset}
-        isDisabled={!hasValidInputs}
-      />
-
-      {/* Results — everything flows within the same card */}
-      {result && (
-        <>
-          <CalculatorDivider category="power" />
-
-          {/* Calculated Values */}
-          <div className="space-y-4 animate-fade-in">
-            <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Formula
-              </span>
-              <p className="text-[13px] text-white font-mono">{result.formula}</p>
-            </div>
-
-            <ResultsGrid columns={2}>
-              <ResultValue
+            {/* Input Grid */}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
                 label="Voltage"
-                value={result.voltage?.toFixed(2) || '0'}
                 unit="V"
-                category="power"
+                type="text"
+                inputMode="decimal"
+                placeholder="230"
+                value={voltage}
+                onChange={setVoltage}
+                hint="UK domestic: 230V"
+                error={errors.voltage}
               />
-              <ResultValue
+              <CalculatorInput
                 label="Current"
-                value={result.current?.toFixed(3) || '0'}
                 unit="A"
-                category="power"
+                type="text"
+                inputMode="decimal"
+                placeholder="10"
+                value={current}
+                onChange={setCurrent}
+                hint="Measured or design current"
+                error={errors.current}
               />
-              <ResultValue
+              <CalculatorInput
                 label="Resistance"
-                value={result.resistance?.toFixed(2) || '0'}
                 unit="Ω"
-                category="power"
+                type="text"
+                inputMode="decimal"
+                placeholder="23"
+                value={resistance}
+                onChange={setResistance}
+                hint="Load resistance"
+                error={errors.resistance}
               />
-              <ResultValue
+              <CalculatorInput
                 label="Power"
-                value={result.power?.toFixed(2) || '0'}
                 unit="W"
-                category="power"
+                type="text"
+                inputMode="decimal"
+                placeholder="2300"
+                value={power}
+                onChange={setPower}
+                hint="Active power consumption"
+                error={errors.power}
               />
-            </ResultsGrid>
+            </CalculatorInputGrid>
 
-            {result.currentAt230V && result.currentAt230V > 0 && (
-              <div className="rounded-xl p-3 bg-white/[0.04]">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-                  <span className="text-sm text-white">Current at 230V (per phase):</span>
-                  <span className="text-amber-400 font-mono text-lg font-bold">
-                    {result.currentAt230V.toFixed(2)} A
+            {errors.general && (
+              <Alert className="border-red-500/30 bg-red-500/10">
+                <AlertTriangle className="h-4 w-4 text-red-500" />
+                <AlertDescription className="text-red-200">{errors.general}</AlertDescription>
+              </Alert>
+            )}
+
+            {/* Action Buttons */}
+            <CalculatorActions
+              category="power"
+              onCalculate={calculateOhmsLaw}
+              onReset={reset}
+              isDisabled={!hasValidInputs}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* Results — everything flows within the same card */}
+            {result && (
+              <>
+                <CalculatorDivider category="power" />
+
+                {/* Calculated Values */}
+                <div className="space-y-4 animate-fade-in">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                      Formula
+                    </span>
+                    <p className="text-[13px] text-white font-mono">{result.formula}</p>
+                  </div>
+
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Voltage"
+                      value={result.voltage?.toFixed(2) || '0'}
+                      unit="V"
+                      category="power"
+                    />
+                    <ResultValue
+                      label="Current"
+                      value={result.current?.toFixed(3) || '0'}
+                      unit="A"
+                      category="power"
+                    />
+                    <ResultValue
+                      label="Resistance"
+                      value={result.resistance?.toFixed(2) || '0'}
+                      unit="Ω"
+                      category="power"
+                    />
+                    <ResultValue
+                      label="Power"
+                      value={result.power?.toFixed(2) || '0'}
+                      unit="W"
+                      category="power"
+                    />
+                  </ResultsGrid>
+
+                  {result.currentAt230V && result.currentAt230V > 0 && (
+                    <div className="rounded-xl p-3 bg-white/[0.04]">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                        <span className="text-sm text-white">Current at 230V (per phase):</span>
+                        <span className="text-amber-400 font-mono text-lg font-bold">
+                          {result.currentAt230V.toFixed(2)} A
+                        </span>
+                      </div>
+                      <p className="text-xs text-white mt-1">
+                        For 3-phase systems: Total power ÷ 3 phases ÷ 230V line-to-neutral voltage
+                      </p>
+                    </div>
+                  )}
+
+                  {result.protectionGuidance && (
+                    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4">
+                      <p className="text-[13px] text-white leading-relaxed">
+                        {result.protectionGuidance}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* How It Worked Out */}
+                {result.calculationSteps && result.calculationSteps.length > 0 && (
+                  <>
+                    <CalculatorDivider category="power" />
+
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg" style={{ background: '#a78bfa20' }}>
+                          <BookOpen className="h-4 w-4 text-purple-400" />
+                        </div>
+                        <h3 className="font-semibold text-white">How It Worked Out</h3>
+                      </div>
+
+                      {/* Input Values Summary */}
+                      <div className="space-y-2">
+                        <p className="text-[13px] text-white">Your input values:</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {result.inputValues?.V && (
+                            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                              V = {result.inputValues.V} V
+                            </span>
+                          )}
+                          {result.inputValues?.I && (
+                            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                              I = {result.inputValues.I} A
+                            </span>
+                          )}
+                          {result.inputValues?.R && (
+                            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                              R = {result.inputValues.R} Ω
+                            </span>
+                          )}
+                          {result.inputValues?.P && (
+                            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                              P = {result.inputValues.P} W
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <CalculatorFormula
+                        category="power"
+                        steps={getFormulaSteps()}
+                        title="Calculation Steps"
+                        defaultOpen={true}
+                      />
+
+                      {/* Ohm's Law Triangle Reference */}
+                      <FormulaReference
+                        category="power"
+                        name="Ohm's Law Formulas"
+                        formula="V = I × R"
+                        variables={[
+                          { symbol: 'V', description: 'Voltage in Volts' },
+                          { symbol: 'I', description: 'Current in Amps' },
+                          { symbol: 'R', description: 'Resistance in Ohms' },
+                          { symbol: 'P', description: 'Power in Watts' },
+                        ]}
+                      />
+                    </div>
+                  </>
+                )}
+
+                {/* What This Means */}
+                <CalculatorDivider category="power" />
+
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-elec-yellow">Current Rating Requirements</strong>{' '}
+                          {'—'} Cables and protective devices must be rated for at least{' '}
+                          {result.current?.toFixed(1)}A continuously. Consider derating factors per
+                          BS 7671 Table 4D5.
+                        </p>
+                      </div>
+
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-elec-yellow">Voltage Drop Compliance</strong>{' '}
+                          {'—'} BS 7671 limits: 3% for lighting, 5% for power circuits. For{' '}
+                          {result.current?.toFixed(1)}
+                          A, calculate cable length carefully.
+                        </p>
+                      </div>
+
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-elec-yellow">Protection Coordination</strong>{' '}
+                          {'—'} Protective device rating (In) must coordinate: Ib {'≤'} In {'≤'} Iz.{' '}
+                          {result.protectionGuidance}
+                        </p>
+                      </div>
+
+                      {result.current && result.current > 16 && (
+                        <div className="border-l-2 border-amber-400/40 pl-3">
+                          <p className="text-sm text-white">
+                            <strong className="text-amber-300">High Current Considerations</strong>{' '}
+                            {'—'} Currents above 16A generate significant heat. Consider cable
+                            heating effects and installation method derating factors.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* BS 7671 Guidance */}
+
+                {/* Quick Formula Reference */}
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    Ohm's law
                   </span>
+                  <p className="text-[13px] text-white leading-relaxed font-mono">
+                    V = I{'×'}R, I = V/R, R = V/I, P = V{'×'}I = I{'²×'}R = V{'²'}/R
+                  </p>
                 </div>
-                <p className="text-xs text-white mt-1">
-                  For 3-phase systems: Total power ÷ 3 phases ÷ 230V line-to-neutral voltage
-                </p>
-              </div>
+              </>
             )}
-
-            {result.protectionGuidance && (
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4">
-                <p className="text-[13px] text-white leading-relaxed">
-                  {result.protectionGuidance}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* How It Worked Out */}
-          {result.calculationSteps && result.calculationSteps.length > 0 && (
-            <>
-              <CalculatorDivider category="power" />
-
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg" style={{ background: '#a78bfa20' }}>
-                    <BookOpen className="h-4 w-4 text-purple-400" />
-                  </div>
-                  <h3 className="font-semibold text-white">How It Worked Out</h3>
-                </div>
-
-                {/* Input Values Summary */}
-                <div className="space-y-2">
-                  <p className="text-[13px] text-white">Your input values:</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {result.inputValues?.V && (
-                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
-                        V = {result.inputValues.V} V
-                      </span>
-                    )}
-                    {result.inputValues?.I && (
-                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
-                        I = {result.inputValues.I} A
-                      </span>
-                    )}
-                    {result.inputValues?.R && (
-                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
-                        R = {result.inputValues.R} Ω
-                      </span>
-                    )}
-                    {result.inputValues?.P && (
-                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
-                        P = {result.inputValues.P} W
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <CalculatorFormula
-                  category="power"
-                  steps={getFormulaSteps()}
-                  title="Calculation Steps"
-                  defaultOpen={true}
-                />
-
-                {/* Ohm's Law Triangle Reference */}
-                <FormulaReference
-                  category="power"
-                  name="Ohm's Law Formulas"
-                  formula="V = I × R"
-                  variables={[
-                    { symbol: 'V', description: 'Voltage in Volts' },
-                    { symbol: 'I', description: 'Current in Amps' },
-                    { symbol: 'R', description: 'Resistance in Ohms' },
-                    { symbol: 'P', description: 'Power in Watts' },
-                  ]}
-                />
-              </div>
-            </>
-          )}
-
-          {/* What This Means */}
-          <CalculatorDivider category="power" />
-
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-blue-300">Current Rating Requirements</strong> {'—'}{' '}
-                    Cables and protective devices must be rated for at least{' '}
-                    {result.current?.toFixed(1)}A continuously. Consider derating factors per BS
-                    7671 Table 4D5.
-                  </p>
-                </div>
-
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-blue-300">Voltage Drop Compliance</strong> {'—'} BS 7671
-                    limits: 3% for lighting, 5% for power circuits. For {result.current?.toFixed(1)}
-                    A, calculate cable length carefully.
-                  </p>
-                </div>
-
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-blue-300">Protection Coordination</strong> {'—'}{' '}
-                    Protective device rating (In) must coordinate: Ib {'≤'} In {'≤'} Iz.{' '}
-                    {result.protectionGuidance}
-                  </p>
-                </div>
-
-                {result.current && result.current > 16 && (
-                  <div className="border-l-2 border-amber-400/40 pl-3">
-                    <p className="text-sm text-white">
-                      <strong className="text-amber-300">High Current Considerations</strong> {'—'}{' '}
-                      Currents above 16A generate significant heat. Consider cable heating effects
-                      and installation method derating factors.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* BS 7671 Guidance */}
-          <Collapsible open={showBsRegs} onOpenChange={setShowBsRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  BS 7671 Regs at a Glance
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showBsRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">433.1</strong> {'—'} Overcurrent protection
-                    must not exceed conductor current-carrying capacity
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">525</strong> {'—'} Voltage drop limits: 3%
-                    for lighting, 5% for other circuits
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">523</strong> {'—'} Current-carrying capacity
-                    includes grouping and temperature derating
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">434.5.2</strong> {'—'} ADS fault protection
-                    requirements
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Quick Formula Reference */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Ohm's law
-            </span>
-            <p className="text-[13px] text-white leading-relaxed font-mono">
-              V = I{'×'}R, I = V/R, R = V/I, P = V{'×'}I = I{'²×'}R = V{'²'}/R
-            </p>
-          </div>
-        </>
-      )}
-      <CalculatorEditorial content={ohmsLawContent} category="power" />
+          </>
+        }
+        footer={<CalculatorEditorial content={ohmsLawContent} category="power" />}
+      />
     </CalculatorCard>
   );
 };

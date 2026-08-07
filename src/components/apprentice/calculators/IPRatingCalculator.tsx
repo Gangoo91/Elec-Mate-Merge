@@ -14,6 +14,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { ipRatingContent } from './content/ip-rating';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -147,7 +148,10 @@ const SUPPLEMENTARY_LETTERS: Record<string, string> = {
  * (Reg 416.2.1, echoed in Regs 412.2.2 and 422.3.11).
  */
 const COMMON_RATINGS: { rating: string; use: string }[] = [
-  { rating: 'IP2X', use: 'Basic protection minimum for enclosures/barriers — Reg 416.2.1 (or IPXXB)' },
+  {
+    rating: 'IP2X',
+    use: 'Basic protection minimum for enclosures/barriers — Reg 416.2.1 (or IPXXB)',
+  },
   {
     rating: 'IP4X',
     use: 'Readily accessible horizontal top surface of an enclosure — Reg 416.2.2 (or IPXXD)',
@@ -480,369 +484,389 @@ const IPRatingCalculator = () => {
       title="IP Rating Decoder"
       description="Decode Ingress Protection ratings to BS EN 60529"
     >
-      {/* First Digit — Solid Protection */}
-      <CalculatorSection title="Solid Object Protection">
-        <CalculatorSelect
-          label="First digit (0-6, or X if not specified)"
-          value={solidDigit}
-          onChange={setSolidDigit}
-          options={solidOptions}
-          placeholder="Select solid protection level"
-          hint="Choose X to decode an IPX-form code such as IPX4 or IPX7"
-        />
-      </CalculatorSection>
-
-      {/* Second Digit — Liquid Protection */}
-      <CalculatorSection title="Liquid Protection">
-        <CalculatorSelect
-          label="Second digit (0-9, or X if not specified)"
-          value={liquidDigit}
-          onChange={setLiquidDigit}
-          options={liquidOptions}
-          placeholder="Select liquid protection level"
-          hint="Choose X to decode an IP_X-form code such as IP2X or IP4X"
-        />
-      </CalculatorSection>
-
-      {/* Additional letter — access to hazardous parts (BS EN 60529) */}
-      <CalculatorSection title="Additional Letter (Optional)">
-        <CalculatorSelect
-          label="Access to hazardous parts"
-          value={additionalLetter}
-          onChange={setAdditionalLetter}
-          options={additionalLetterOptions}
-          placeholder="None"
-          hint="BS 7671 uses these constantly — IPXXB (Reg 417.3.2), IPXXD (Regs 416.2.2, 740.526)"
-        />
-      </CalculatorSection>
-
-      {/* Supplementary Letters */}
-      <CalculatorSection title="Supplementary Letters (Optional)">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {Object.entries(SUPPLEMENTARY_LETTERS).map(([letter, desc]) => {
-            const checked =
-              letter === 'H' ? suppH : letter === 'M' ? suppM : letter === 'S' ? suppS : suppW;
-            const setter =
-              letter === 'H'
-                ? setSuppH
-                : letter === 'M'
-                  ? setSuppM
-                  : letter === 'S'
-                    ? setSuppS
-                    : setSuppW;
-
-            return (
-              <label
-                key={letter}
-                className={cn(
-                  'flex items-center gap-3 p-3.5 rounded-lg cursor-pointer min-h-[44px] touch-manipulation transition-all',
-                  checked
-                    ? 'bg-white/10 border-2'
-                    : 'bg-white/5 border border-white/10 hover:bg-white/[0.07]'
-                )}
-                style={checked ? { borderColor: config.gradientFrom } : undefined}
-              >
-                <div
-                  className={cn(
-                    'flex items-center justify-center h-5 w-5 rounded border-2 shrink-0 transition-all',
-                    checked ? 'border-transparent' : 'border-white/20 bg-white/10'
-                  )}
-                  style={checked ? { backgroundColor: config.gradientFrom } : undefined}
-                >
-                  {checked && <Check className="h-3.5 w-3.5 text-black" />}
-                </div>
-                <div>
-                  <span className="text-sm font-medium text-white">{letter}</span>
-                  <p className="text-xs text-white">{desc}</p>
-                </div>
-              </label>
-            );
-          })}
-        </div>
-      </CalculatorSection>
-
-      {/* ── Live IP Shield Visual ── */}
-      {(solidDigit !== '' || liquidDigit !== '') && (
-        <div
-          className="rounded-xl p-4 border transition-all"
-          style={{
-            borderColor: `${config.gradientFrom}20`,
-            background: `${config.gradientFrom}08`,
-          }}
-        >
-          <div className="flex items-center justify-between gap-4">
-            {/* Left — solid rings */}
-            <div className="flex flex-col items-center gap-1.5">
-              <SolidShield level={solidNum ?? 0} />
-              <span className="text-xs text-white font-medium">Solids</span>
-              {solidDigit !== '' && (
-                <span className="text-xs text-white">{SOLID_PROTECTION[solidDigit]?.short}</span>
-              )}
-            </div>
-
-            {/* Centre — live IP code */}
-            <div className="text-center flex-1">
-              <p
-                className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {liveCode}
-              </p>
-              <p className="text-xs text-white mt-1">BS EN 60529</p>
-            </div>
-
-            {/* Right — liquid droplet */}
-            <div className="flex flex-col items-center gap-1.5">
-              <LiquidShield level={liquidNum ?? 0} />
-              <span className="text-xs text-white font-medium">Liquids</span>
-              {liquidDigit !== '' && (
-                <span className="text-xs text-white">{LIQUID_PROTECTION[liquidDigit]?.short}</span>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Reset button (standalone — no dead Calculate button) */}
-      {(solidDigit !== '' || liquidDigit !== '') && (
-        <button
-          onClick={handleReset}
-          className="w-full h-11 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white hover:bg-white/10 transition-colors touch-manipulation"
-        >
-          Reset
-        </button>
-      )}
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge status={result.suitability} label={result.suitabilityLabel} />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">IP Rating</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.code}
-            </p>
-            <p className="text-sm text-white mt-2">BS EN 60529 Ingress Protection</p>
-          </div>
-
-          {/* Protection details */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Solid Protection"
-              value={result.solid.short}
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Liquid Protection"
-              value={result.liquid.short}
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
-
-          {/* Detailed descriptions */}
-          <div className="space-y-2">
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-xs text-white font-medium mb-1">
-                First Digit ({solidDigit}) — Solids
-              </p>
-              <p className="text-sm text-white">{result.solid.description}</p>
-            </div>
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-xs text-white font-medium mb-1">
-                Second Digit ({liquidDigit}) — Liquids
-              </p>
-              <p className="text-sm text-white">{result.liquid.description}</p>
-            </div>
-          </div>
-
-          {/* Additional letter — access to hazardous parts */}
-          {result.addLetter && (
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
-              <p className="text-xs text-white font-medium">
-                Additional Letter — Access to Hazardous Parts
-              </p>
-              <p className="text-sm text-white">
-                <span className="font-medium">{result.addLetter}:</span>{' '}
-                {ADDITIONAL_LETTERS[result.addLetter]}
-              </p>
-            </div>
-          )}
-
-          {/* Supplementary letters */}
-          {result.suppLetters.length > 0 && (
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
-              <p className="text-xs text-white font-medium">Supplementary Letters</p>
-              {result.suppLetters.map((letter) => (
-                <p key={letter} className="text-sm text-white">
-                  <span className="font-medium">{letter}:</span> {SUPPLEMENTARY_LETTERS[letter]}
-                </p>
-              ))}
-            </div>
-          )}
-
-          <CalculatorDivider category={CAT} />
-
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
+      <CalculatorPanes
+        form={
+          <>
+            {/* First Digit — Solid Protection */}
+            <CalculatorSection title="Solid Object Protection">
+              <CalculatorSelect
+                label="First digit (0-6, or X if not specified)"
+                value={solidDigit}
+                onChange={setSolidDigit}
+                options={solidOptions}
+                placeholder="Select solid protection level"
+                hint="Choose X to decode an IPX-form code such as IPX4 or IPX7"
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <p className="text-sm text-white">
-                  An <span className="font-medium">{result.code}</span> rated enclosure is{' '}
-                  {solidsGloss(result.solidNum)} and {waterGloss(result.liquidNum)}.
-                </p>
-                <div className="space-y-1">
-                  <p className="text-sm text-white font-medium">Typical Applications</p>
-                  <ul className="space-y-1">
-                    {typicalApplications(result.solidNum, result.liquidNum).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+            </CalculatorSection>
 
-          {/* ── Common Ratings Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <span>Common IP Ratings</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
+            {/* Second Digit — Liquid Protection */}
+            <CalculatorSection title="Liquid Protection">
+              <CalculatorSelect
+                label="Second digit (0-9, or X if not specified)"
+                value={liquidDigit}
+                onChange={setLiquidDigit}
+                options={liquidOptions}
+                placeholder="Select liquid protection level"
+                hint="Choose X to decode an IP_X-form code such as IP2X or IP4X"
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-2"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {COMMON_RATINGS.map((item) => {
-                    const isCurrentRating = currentRating === item.rating;
-                    return (
-                      <li
-                        key={item.rating}
+            </CalculatorSection>
+
+            {/* Additional letter — access to hazardous parts (BS EN 60529) */}
+            <CalculatorSection title="Additional Letter (Optional)">
+              <CalculatorSelect
+                label="Access to hazardous parts"
+                value={additionalLetter}
+                onChange={setAdditionalLetter}
+                options={additionalLetterOptions}
+                placeholder="None"
+                hint="BS 7671 uses these constantly — IPXXB (Reg 417.3.2), IPXXD (Regs 416.2.2, 740.526)"
+              />
+            </CalculatorSection>
+
+            {/* Supplementary Letters */}
+            <CalculatorSection title="Supplementary Letters (Optional)">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {Object.entries(SUPPLEMENTARY_LETTERS).map(([letter, desc]) => {
+                  const checked =
+                    letter === 'H'
+                      ? suppH
+                      : letter === 'M'
+                        ? suppM
+                        : letter === 'S'
+                          ? suppS
+                          : suppW;
+                  const setter =
+                    letter === 'H'
+                      ? setSuppH
+                      : letter === 'M'
+                        ? setSuppM
+                        : letter === 'S'
+                          ? setSuppS
+                          : setSuppW;
+
+                  return (
+                    <label
+                      key={letter}
+                      className={cn(
+                        'flex items-center gap-3 p-3.5 rounded-lg cursor-pointer min-h-[44px] touch-manipulation transition-all',
+                        checked
+                          ? 'bg-white/10 border-2'
+                          : 'bg-white/5 border border-white/10 hover:bg-white/[0.07]'
+                      )}
+                      style={checked ? { borderColor: config.gradientFrom } : undefined}
+                    >
+                      <div
                         className={cn(
-                          'flex items-start gap-2 text-sm rounded-lg p-2 -mx-1 transition-colors',
-                          isCurrentRating ? 'bg-white/10' : ''
+                          'flex items-center justify-center h-5 w-5 rounded border-2 shrink-0 transition-all',
+                          checked ? 'border-transparent' : 'border-white/20 bg-white/10'
                         )}
-                        style={
-                          isCurrentRating
-                            ? { outline: `1px solid ${config.gradientFrom}40` }
-                            : undefined
-                        }
+                        style={checked ? { backgroundColor: config.gradientFrom } : undefined}
                       >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                          style={{ backgroundColor: config.gradientFrom }}
-                        />
-                        <span className="text-white">
-                          <span className="font-medium">{item.rating}:</span> {item.use}
-                          {isCurrentRating && (
-                            <span
-                              className="ml-2 text-xs font-medium px-1.5 py-0.5 rounded"
-                              style={{
-                                backgroundColor: `${config.gradientFrom}20`,
-                                color: config.gradientFrom,
-                              }}
-                            >
-                              Current
-                            </span>
-                          )}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <p className="text-xs text-white pt-2 border-t border-white/10">
-                  BS EN 60529 defines the IP code. Always check manufacturer specifications for
-                  exact conditions.
-                </p>
+                        {checked && <Check className="h-3.5 w-3.5 text-black" />}
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-white">{letter}</span>
+                        <p className="text-xs text-white">{desc}</p>
+                      </div>
+                    </label>
+                  );
+                })}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
+            </CalculatorSection>
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="IP Code Format"
-        formula="IP [Solids 0-6 or X] [Water 0-9 or X] [Additional A-D] [Supplementary H/M/S/W]"
-        variables={[
-          { symbol: 'IP', description: 'Ingress Protection prefix' },
-          {
-            symbol: '1st',
-            description: 'First characteristic numeral — solid objects / access (0-6, or X)',
-          },
-          {
-            symbol: '2nd',
-            description: 'Second characteristic numeral — water ingress (0-9, or X)',
-          },
-          {
-            symbol: 'Add.',
-            description:
-              'Additional letter A-D — access to hazardous parts (BS 7671 uses IPXXB and IPXXD)',
-          },
-          {
-            symbol: 'Supp.',
-            description: 'Supplementary letter H, M, S or W — equipment-specific information',
-          },
-          {
-            symbol: 'X',
-            description:
-              'Stands in for a numeral that is not specified — used for BOTH positions (IP2X, IPX4, IPXXD)',
-          },
-        ]}
+            {/* ── Live IP Shield Visual ── */}
+            {(solidDigit !== '' || liquidDigit !== '') && (
+              <div
+                className="rounded-xl p-4 border transition-all"
+                style={{
+                  borderColor: `${config.gradientFrom}20`,
+                  background: `${config.gradientFrom}08`,
+                }}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  {/* Left — solid rings */}
+                  <div className="flex flex-col items-center gap-1.5">
+                    <SolidShield level={solidNum ?? 0} />
+                    <span className="text-xs text-white font-medium">Solids</span>
+                    {solidDigit !== '' && (
+                      <span className="text-xs text-white">
+                        {SOLID_PROTECTION[solidDigit]?.short}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Centre — live IP code */}
+                  <div className="text-center flex-1">
+                    <p
+                      className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {liveCode}
+                    </p>
+                    <p className="text-xs text-white mt-1">BS EN 60529</p>
+                  </div>
+
+                  {/* Right — liquid droplet */}
+                  <div className="flex flex-col items-center gap-1.5">
+                    <LiquidShield level={liquidNum ?? 0} />
+                    <span className="text-xs text-white font-medium">Liquids</span>
+                    {liquidDigit !== '' && (
+                      <span className="text-xs text-white">
+                        {LIQUID_PROTECTION[liquidDigit]?.short}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Reset button (standalone — no dead Calculate button) */}
+            {(solidDigit !== '' || liquidDigit !== '') && (
+              <button
+                onClick={handleReset}
+                className="w-full h-11 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white hover:bg-white/10 transition-colors touch-manipulation"
+              >
+                Reset
+              </button>
+            )}
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge status={result.suitability} label={result.suitabilityLabel} />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">IP Rating</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.code}
+                  </p>
+                  <p className="text-sm text-white mt-2">BS EN 60529 Ingress Protection</p>
+                </div>
+
+                {/* Protection details */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Solid Protection"
+                    value={result.solid.short}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Liquid Protection"
+                    value={result.liquid.short}
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* Detailed descriptions */}
+                <div className="space-y-2">
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <p className="text-xs text-white font-medium mb-1">
+                      First Digit ({solidDigit}) — Solids
+                    </p>
+                    <p className="text-sm text-white">{result.solid.description}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <p className="text-xs text-white font-medium mb-1">
+                      Second Digit ({liquidDigit}) — Liquids
+                    </p>
+                    <p className="text-sm text-white">{result.liquid.description}</p>
+                  </div>
+                </div>
+
+                {/* Additional letter — access to hazardous parts */}
+                {result.addLetter && (
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
+                    <p className="text-xs text-white font-medium">
+                      Additional Letter — Access to Hazardous Parts
+                    </p>
+                    <p className="text-sm text-white">
+                      <span className="font-medium">{result.addLetter}:</span>{' '}
+                      {ADDITIONAL_LETTERS[result.addLetter]}
+                    </p>
+                  </div>
+                )}
+
+                {/* Supplementary letters */}
+                {result.suppLetters.length > 0 && (
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
+                    <p className="text-xs text-white font-medium">Supplementary Letters</p>
+                    {result.suppLetters.map((letter) => (
+                      <p key={letter} className="text-sm text-white">
+                        <span className="font-medium">{letter}:</span>{' '}
+                        {SUPPLEMENTARY_LETTERS[letter]}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <p className="text-sm text-white">
+                        An <span className="font-medium">{result.code}</span> rated enclosure is{' '}
+                        {solidsGloss(result.solidNum)} and {waterGloss(result.liquidNum)}.
+                      </p>
+                      <div className="space-y-1">
+                        <p className="text-sm text-white font-medium">Typical Applications</p>
+                        <ul className="space-y-1">
+                          {typicalApplications(result.solidNum, result.liquidNum).map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-white">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── Common Ratings Reference ── */}
+                <Collapsible open={showReference} onOpenChange={setShowReference}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <span>Common IP Ratings</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showReference && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-2"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {COMMON_RATINGS.map((item) => {
+                          const isCurrentRating = currentRating === item.rating;
+                          return (
+                            <li
+                              key={item.rating}
+                              className={cn(
+                                'flex items-start gap-2 text-sm rounded-lg p-2 -mx-1 transition-colors',
+                                isCurrentRating ? 'bg-white/10' : ''
+                              )}
+                              style={
+                                isCurrentRating
+                                  ? { outline: `1px solid ${config.gradientFrom}40` }
+                                  : undefined
+                              }
+                            >
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                style={{ backgroundColor: config.gradientFrom }}
+                              />
+                              <span className="text-white">
+                                <span className="font-medium">{item.rating}:</span> {item.use}
+                                {isCurrentRating && (
+                                  <span
+                                    className="ml-2 text-xs font-medium px-1.5 py-0.5 rounded"
+                                    style={{
+                                      backgroundColor: `${config.gradientFrom}20`,
+                                      color: config.gradientFrom,
+                                    }}
+                                  >
+                                    Current
+                                  </span>
+                                )}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <p className="text-xs text-white pt-2 border-t border-white/10">
+                        BS EN 60529 defines the IP code. Always check manufacturer specifications
+                        for exact conditions.
+                      </p>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="IP Code Format"
+              formula="IP [Solids 0-6 or X] [Water 0-9 or X] [Additional A-D] [Supplementary H/M/S/W]"
+              variables={[
+                { symbol: 'IP', description: 'Ingress Protection prefix' },
+                {
+                  symbol: '1st',
+                  description: 'First characteristic numeral — solid objects / access (0-6, or X)',
+                },
+                {
+                  symbol: '2nd',
+                  description: 'Second characteristic numeral — water ingress (0-9, or X)',
+                },
+                {
+                  symbol: 'Add.',
+                  description:
+                    'Additional letter A-D — access to hazardous parts (BS 7671 uses IPXXB and IPXXD)',
+                },
+                {
+                  symbol: 'Supp.',
+                  description: 'Supplementary letter H, M, S or W — equipment-specific information',
+                },
+                {
+                  symbol: 'X',
+                  description:
+                    'Stands in for a numeral that is not specified — used for BOTH positions (IP2X, IPX4, IPXXD)',
+                },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={ipRatingContent} category={CAT} />}
       />
-      <CalculatorEditorial content={ipRatingContent} category={CAT} />
     </CalculatorCard>
   );
 };

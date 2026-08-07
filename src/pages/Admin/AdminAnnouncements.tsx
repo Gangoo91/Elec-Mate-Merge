@@ -440,7 +440,7 @@ export default function AdminAnnouncements() {
                 'flex-1 h-10 rounded-full text-[13px] font-semibold touch-manipulation transition-colors',
                 channelView === c.key
                   ? 'bg-elec-yellow text-black'
-                  : 'text-white/70 hover:text-white'
+                  : 'text-white hover:text-white'
               )}
             >
               {c.label}
@@ -637,9 +637,9 @@ export default function AdminAnnouncements() {
                                 <p className="text-[13px] font-semibold text-white truncate">
                                   {pvTitle}
                                 </p>
-                                <span className="text-[10px] text-white/40 shrink-0">now</span>
+                                <span className="text-[10px] text-white shrink-0">now</span>
                               </div>
-                              <p className="text-[12px] text-white/70 line-clamp-3 mt-0.5">
+                              <p className="text-[12px] text-white line-clamp-3 mt-0.5">
                                 {pvBody}
                               </p>
                             </div>
@@ -651,7 +651,7 @@ export default function AdminAnnouncements() {
                               className="mt-2 w-full h-32 object-cover rounded-xl border border-white/[0.08]"
                             />
                           )}
-                          <p className="text-[10px] text-white/30 text-center mt-2">
+                          <p className="text-[10px] text-white text-center mt-2">
                             Lock screen preview
                           </p>
                         </div>
@@ -671,7 +671,7 @@ export default function AdminAnnouncements() {
                           />
                           <div className="min-w-0">
                             <p className="text-[13px] font-semibold text-white">{pvTitle}</p>
-                            <p className="text-[12px] text-white/70 mt-0.5">{pvBody}</p>
+                            <p className="text-[12px] text-white mt-0.5">{pvBody}</p>
                           </div>
                         </div>
                       )}
@@ -953,15 +953,15 @@ export default function AdminAnnouncements() {
                             : setFormData({ ...formData, image_url: e.target.value })
                         }
                         placeholder="Image URL (optional) — rich notification"
-                        className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-xl text-base text-white placeholder:text-white/40 focus:border-elec-yellow"
+                        className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-xl text-base text-white placeholder:text-white/25 focus:border-elec-yellow"
                       />
-                      <p className="text-[11px] text-white/50">
+                      <p className="text-[11px] text-white">
                         Rich image shows on web and Android now; iOS needs a Notification Service
                         Extension (app build).
                       </p>
                     </div>
 
-                    <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80 flex items-center justify-between">
+                    <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white flex items-center justify-between">
                       <span>Estimated reach</span>
                       <span className="font-semibold text-white tabular-nums">
                         {reachCount === null
@@ -971,7 +971,7 @@ export default function AdminAnnouncements() {
                     </div>
 
                     {editAnnouncement?.push_sent_at && (
-                      <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white/80">
+                      <div className="px-4 py-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] text-white">
                         Last sent {relativeTime(new Date(editAnnouncement.push_sent_at))} ·{' '}
                         {editAnnouncement.push_delivered_count ?? 0}/
                         {editAnnouncement.push_recipient_count ?? 0} delivered ·{' '}
@@ -987,7 +987,7 @@ export default function AdminAnnouncements() {
                           <p className="text-[13px] font-semibold text-white">
                             Send &ldquo;{pushConfirm.title}&rdquo; to everyone?
                           </p>
-                          <p className="text-[12px] text-white/70 leading-snug">
+                          <p className="text-[12px] text-white leading-snug">
                             Pushes to all users in the selected roles with notifications on
                             {reachCount !== null ? ` (≈ ${reachCount} people)` : ''}. This
                             can&rsquo;t be undone.
@@ -1035,17 +1035,17 @@ export default function AdminAnnouncements() {
                               Send to audience
                             </button>
                           </div>
-                          <p className="text-[11px] text-white/50">
+                          <p className="text-[11px] text-white">
                             Test it on your own device first. &ldquo;Send to audience&rdquo; pushes
                             to everyone in the selected roles who has notifications on.
                           </p>
                         </>
                       )
                     ) : (
-                      <p className="text-[11px] text-white/50">
-                        Tap <span className="text-white/80">Create Announcement</span> below — it
-                        saves and the <span className="text-white/80">Send test to me</span> /
-                        <span className="text-white/80"> Send to everyone</span> buttons appear
+                      <p className="text-[11px] text-white">
+                        Tap <span className="text-white">Create Announcement</span> below — it
+                        saves and the <span className="text-white">Send test to me</span> /
+                        <span className="text-white"> Send to everyone</span> buttons appear
                         next.
                       </p>
                     )}

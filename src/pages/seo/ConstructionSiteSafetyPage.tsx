@@ -811,7 +811,7 @@ export default function ConstructionSiteSafetyPage() {
   return (
     <GuideTemplate
       title="Construction Site Safety for Electricians | Complete Guide"
-      description="Comprehensive construction site safety guide for electricians. Covers site induction, CDM 2015 duties, CSCS card requirements, PPE…"
+      description="Comprehensive construction site safety guide for electricians. Covers site induction, CDM 2015 duties, CSCS card requirements, PPE."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

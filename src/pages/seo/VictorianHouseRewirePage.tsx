@@ -604,7 +604,7 @@ export default function VictorianHouseRewirePage() {
   return (
     <GuideTemplate
       title="Rewiring a Victorian House UK | Victorian Property"
-      description="Complete guide to rewiring a Victorian house in the UK. Rubber and lead-sheathed wiring dangers, knob-and-tube systems, cast iron consumer units…"
+      description="Complete guide to rewiring a Victorian house in the UK. Rubber and lead-sheathed wiring dangers, knob-and-tube systems, cast iron consumer units."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

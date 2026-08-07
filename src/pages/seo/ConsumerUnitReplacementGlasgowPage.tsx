@@ -481,7 +481,7 @@ export default function ConsumerUnitReplacementGlasgowPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Glasgow | Fuse Board Upgrade Cost"
-      description="How much does a consumer unit replacement cost in Glasgow in 2026? Local pricing, Scottish building regulations, what to expect…"
+      description="How much does a consumer unit replacement cost in Glasgow in 2026? Local pricing, Scottish building regulations, what to expect."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

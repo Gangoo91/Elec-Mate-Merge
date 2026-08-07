@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Generator earthing in a TN-S installation uses a separate earth electrode at the generator, with the generator neutral bonded to the electrode — the generator is not bonded to the site mains earth when operating in island mode.',
   'Diesel fuel storage above 1,500 litres requires Planning Permission and must comply with the Control of Pollution (Oil Storage) (England) Regulations 2001, including a secondary containment bund sized for 110% of the largest tank volume.',
   'Load bank testing at 100% rated load for a minimum of 2 hours annually verifies generator performance and burns off wet stacking deposits in diesel engines running on light load during routine weekly tests.',
-  'BS 7671:2018+A4:2026 Reg 551.7.1(d) prohibits connecting a generator (or other source) to the load side of an RCD under the conditions specified in that regulation — a common wiring mistake in ATS panels that must be avoided.',
+  'Where a generating set may run in parallel with another source, BS 7671:2018+A4:2026 Reg 551.7.1(d) prohibits connecting the source to the load side of any RCD providing additional protection (Reg 415.1) that is shared with other circuits, unless that RCD disconnects all live conductors including the neutral — a common wiring mistake in closed-transition ATS panels.',
   'A portable generator that is isolated from earth may only supply: (a) one or more Class II items; or (b) one Class I item; or (c) one or more Class II items together with one Class I item — never more than one Class I item simultaneously (OSG Reg 2.4.3).',
   'Where a rotary generating set is used as a safety source (emergency lighting, fire systems, hospitals), it must conform to BS ISO 8528-12 — a mandatory requirement under BS 7671:2018+A4:2026 Reg 560.6.13.',
 ];
@@ -246,16 +246,22 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                A4:2026 — Reg 551.7.1(d): Generator Must Not Connect to RCD Load Side
+                A4:2026 — Reg 551.7.1(d): Connecting a Source to the Load Side of a Shared RCD
               </p>
               <p className="text-white/90 text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Reg 551.7.1(d) introduces an explicit prohibition: a generator
-                (or other source such as an inverter) must not be connected to the load side of an
-                RCD under the conditions specified in that regulation. This is a common wiring
-                mistake in ATS panels where the generator output is inadvertently terminated on the
-                RCD-protected side of the distribution board. Verify the connection point on both
-                the mains and generator sides of any ATS panel and confirm compliance before
-                completing the Electrical Installation Certificate.
+                Amendment 4 redrafted Reg 551.7.1 and added indents (c) and (d). Section 551.7
+                applies where a generating set may operate in parallel with another source, so it
+                catches closed-transition (make-before-break) ATS arrangements. Indent (d) states
+                that, except where the RCD disconnects all live conductors including the neutral
+                conductor, a source of supply shall not be connected to the load side of any RCD
+                providing additional protection in accordance with Reg 415.1 that is shared with
+                other circuits. Indent (b) separately requires that where an RCD provides additional
+                protection for the circuit connecting the generating set to the installation, that
+                RCD shall disconnect all live conductors including the neutral. Together they rule
+                out a common panel error — terminating the generator output on the RCD-protected
+                side of a board where that RCD also feeds other circuits. Verify the connection point
+                on both the mains and generator sides of any ATS panel before completing the
+                Electrical Installation Certificate.
               </p>
             </div>
           </div>
@@ -328,11 +334,16 @@ const sections = [
     content: (
       <>
         <p>
-          A portable generator that is isolated from earth (i.e., has no connection between its
-          neutral and a local earth electrode) presents a specific shock risk: there is no earth
-          fault reference, so a fault to an earthed Class I enclosure will not necessarily cause a
-          protective device to operate. The On-Site Guide (OSG) Reg 2.4.3 addresses this by
-          restricting the combinations of equipment that may be connected to such a generator.
+          A portable generator that is isolated from earth — the windings isolated from the mass of
+          Earth and from the protective conductor, with no connection between the chassis or the
+          earth connection of the socket-outlets and either live conductor of the winding —
+          presents a specific shock risk. The arrangement is a form of electrical separation
+          (BS 7671 Section 413): basic protection comes from basic insulation, barriers or
+          enclosures, and fault protection from simple separation of the circuit from other circuits
+          and from Earth. There is no earth fault reference, so a fault to an earthed Class I
+          enclosure will not necessarily cause a protective device to operate. The On-Site Guide
+          (OSG) Reg 2.4.3 addresses this by restricting the combinations of equipment that may be
+          connected to such a generator.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -340,11 +351,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted permutation (a) — Class II only</strong>: a portable generator
-                isolated from earth may supply one or more items of Class II (double-insulated)
-                equipment. Because Class II equipment relies on supplementary insulation rather than
-                a protective earth conductor, the absence of an earth reference on the generator
-                does not create a shock risk. This is the safest and most common configuration for
-                site power tools.
+                isolated from earth may supply one or more items of Class II equipment. Because Class
+                II equipment relies on double or reinforced insulation rather than a protective earth
+                conductor, the absence of an earth reference on the generator does not create a shock
+                risk. This is the safest and most common configuration for site power tools.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -352,9 +362,11 @@ const sections = [
               <span>
                 <strong>Permitted permutation (b) — one Class I item only</strong>: a portable
                 generator isolated from earth may supply a single item of Class I equipment (which
-                has a protective earth conductor). Only one Class I item is permitted because the
-                absence of an earth reference means a concurrent fault on a second Class I item
-                would not be detected.
+                has a protective earth conductor). Only one Class I item is permitted because on a
+                separated system a first fault goes undetected — it does not cause a protective
+                device to operate. If a second Class I item then develops a fault, a person touching
+                both can become the path for current flowing between the exposed-conductive-parts of
+                the two faulty items.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,12 +414,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loss of mains (LoM) protection</strong> — G99 requires that generators above
-                the threshold are fitted with loss of mains detection to disconnect from the network
-                if the mains supply fails (anti-islanding protection). The generator must not
-                continue to supply the network when mains power has been lost, as this creates a
-                hazard for DNO staff working on the network under the belief that it is
-                de-energised.
+                <strong>Loss of mains (LoM) protection</strong> — BS 7671 Reg 551.7.4 already
+                requires means of automatic switching to disconnect the generating set from the
+                public distribution system on loss of that supply, or on deviation of the voltage or
+                frequency at the supply terminals from declared values; Reg 551.7.5 requires means to
+                prevent connection under the same conditions. For a set with an output exceeding
+                16 A, Reg 551.7.4 states the type of protection and its sensitivity and operating
+                times shall be agreed with the distributor — which in Great Britain is done through
+                the G99 application. The generator must not continue to supply the network when
+                mains power has been lost, as this creates a hazard for DNO staff working on the
+                network under the belief that it is de-energised.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -453,9 +469,12 @@ const sections = [
       <>
         <p>
           Generator earthing requires careful design to ensure safe operation both when the
-          generator is running in island mode (mains disconnected) and during changeover. The
-          earthing approach depends on whether the ATS is three-pole or four-pole, and on the site
-          mains earthing system (TN-S, TN-C-S, or TT).
+          generator is running in island mode (mains disconnected) and during changeover. BS 7671
+          Reg 551.4.3.2.1 is the governing requirement: protection by automatic disconnection of
+          supply shall not rely upon the connection to the earthed point of the public supply when
+          the generator is operating as a switched alternative to a TN system, and a suitable means
+          of earthing shall be provided. The earthing approach then depends on whether the ATS is
+          three-pole or four-pole, and on the site mains earthing system (TN-S, TN-C-S, or TT).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -728,16 +747,21 @@ const sections = [
             <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                A4:2026 Certification Requirements — Reg 133.1.3 and the 411.9.3 Checklist
+                A4:2026 Certification Requirements — Reg 133.1.3 and the Schedule of Inspections
               </p>
               <p className="text-white/90 text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Reg 133.1.3 now requires that certain equipment usage is
-                explicitly recorded on the appropriate Part 6 electrical certification. For
-                generator installations, the Reg 411.9.3 commissioning checklist includes a specific
-                item confirming that adequate arrangements for a generating set operating as a
-                switched alternative to the public supply are provided in accordance with Reg 551.6
-                — this confirmation must appear on the EIC. The Elec-Mate EIC app captures this
-                field so the certification record is complete before you leave site.
+                BS 7671:2018+A4:2026 Reg 133.1.3 requires that where equipment is not in accordance
+                with Reg 133.1.1, or is used outside the scope of its standard, the designer or other
+                person specifying the installation confirms it provides at least the same degree of
+                safety, and that such use is recorded as a departure on the appropriate electrical
+                certification specified in Part 6. Separately, the Part 6 Schedule of Inspections
+                carries dedicated line items for generators: adequate arrangements where a generating
+                set operates as a switched alternative to the public supply (551.6), adequate
+                arrangements where it operates in parallel with the public supply (551.7), and a
+                dedicated earthing arrangement independent of that of the public supply
+                (551.4.3.2.1). These must be signed off on the certification for a generator
+                installation. The Elec-Mate EIC app captures these fields so the certification record
+                is complete before you leave site.
               </p>
             </div>
           </div>
@@ -747,18 +771,23 @@ const sections = [
             <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                A4:2026 Reg 421.1.7 — AFDD Recommendation for Generator-Fed Fixed Installations
+                A4:2026 Reg 421.1.7 — AFDDs Are Now Required in Four Premises Types
               </p>
               <p className="text-white/90 text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 Reg 421.1.7 recommends the installation of arc fault detection
-                devices (AFDDs) in AC final circuits of fixed installations to mitigate the risk of
-                fire from arc fault currents. This recommendation applies to generator-fed fixed
-                installations in the same way as mains-fed installations — where a generator
-                supplies a building's final circuits, consider AFDD protection as part of the
-                installation design, particularly in higher-risk premises (sleeping risk, older
-                wiring, high fire consequence). Note that the regulation uses recommendatory wording
-                rather than a mandatory 'shall', but the recommendation should be recorded in the
-                design rationale and discussed with the client.
+                Amendment 4 redrafted Reg 421.1.7. It is no longer purely a recommendation: AFDDs
+                conforming to BS EN 62606 <strong>shall</strong> be provided for single-phase AC
+                final circuits supplying socket-outlets with a rated current not exceeding 32 A in
+                (a) high rise residential buildings (HRRBs), (b) houses in multiple occupation
+                (HMOs), (c) purpose-built student accommodation and (d) care homes. Note 1 to the
+                regulation treats an HRRB as a residential building over 18 m in height or in excess
+                of six storeys, whichever is met first. For all other premises the use of AFDDs is
+                recommended for the same single-phase socket-outlet circuits not exceeding 32 A.
+                Where used, AFDDs shall be placed at the origin of the circuit to be protected. This
+                applies to generator-fed fixed installations in the same way as mains-fed ones — so
+                where a generator supplies a building's final circuits, first check whether the
+                premises fall into one of the four mandatory categories, and record the decision
+                either way in the design rationale. Using AFDDs does not obviate the need to apply
+                the other protective measures in BS 7671.
               </p>
             </div>
           </div>
@@ -799,8 +828,8 @@ const sections = [
 export default function GeneratorInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Generator Installation Guide UK | Standby Generator"
-      description="Complete guide to standby generator installation in the UK. ATS and manual changeover switches, G99 DNO requirements, generator earthing…"
+      title="Standby Generator Installation: ATS, G99 & TN-S"
+      description="Standby generator installation as a switched alternative supply: ATS transfer in 15–45s, G99 applies above 16 A per phase, TN-S earth, 110% fuel bund."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -818,7 +847,7 @@ export default function GeneratorInstallationGuidePage() {
       answerBox={{
         question: 'What are the BS 7671 requirements for a standby generator?',
         answer:
-          'A standby generator is a switched alternative supply under BS 7671 Section 551. The installation must prevent the generator and the public supply being connected in parallel unless designed for it — normally via a changeover or automatic transfer switch that switches all live conductors. Where an RCD provides additional protection on the generator circuit it must disconnect all live conductors including the neutral (Reg 551.6.2), and the earthing/neutral arrangement must suit the system. A grid-connected (G99) install also needs DNO approval.',
+          'A standby generator is a switched alternative supply under BS 7671 Section 551. Reg 551.6.1 requires precautions complying with Chapter 46 and Section 537 so the generator cannot operate in parallel with the public supply — an interlock between the changeover devices, a system of locks with a single transferable key, a three-position break-before-make changeover switch, an automatic changeover switching device with a suitable interlock, or equivalent. Reg 551.4.3.2.1 requires a dedicated means of earthing: automatic disconnection must not rely on the earthed point of the public supply when the generator runs as a switched alternative to a TN system. Where the set may also run in parallel, Reg 551.7.1(b) requires any RCD providing additional protection on the generator circuit to disconnect all live conductors including the neutral, and a grid-connected (G99) install needs DNO approval.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

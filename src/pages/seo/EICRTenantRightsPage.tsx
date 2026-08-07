@@ -498,7 +498,7 @@ export default function EICRTenantRightsPage() {
   return (
     <GuideTemplate
       title="Tenant Rights for EICR UK | Renters' Electrical Safety Guide"
-      description="Tenants' guide to EICR rights in the private rented sector. Your right to a copy of the EICR within 28 days, what to do if your landlord refuses…"
+      description="Tenants' guide to EICR rights in the private rented sector. Your right to a copy of the EICR within 28 days, what to do if your landlord refuses."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

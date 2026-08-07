@@ -186,7 +186,7 @@ export default function RegulationsIntelligenceProgress({
         <CardContent className="pt-6">
           <div className="flex items-center justify-center gap-2">
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span className="text-sm text-muted-foreground">Loading status...</span>
+            <span className="text-sm text-white">Loading status...</span>
           </div>
         </CardContent>
       </Card>
@@ -216,11 +216,11 @@ export default function RegulationsIntelligenceProgress({
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Progress</span>
+              <span className="text-white">Progress</span>
               <span className="font-medium">0%</span>
             </div>
             <Progress value={0} className="h-2" />
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-white">
               <span>0 / 170 batches</span>
               <span>~25-30 min with parallel processing</span>
             </div>
@@ -230,7 +230,7 @@ export default function RegulationsIntelligenceProgress({
             <Badge variant="outline" className="text-xs justify-center">
               GPT-5 Model Enabled
             </Badge>
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-white text-center">
               Click "Start Enrichment" above to begin processing
             </p>
           </div>
@@ -294,7 +294,7 @@ export default function RegulationsIntelligenceProgress({
               </div>
             </div>
             {!keepalive.isPaused && (
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <div className="flex items-center justify-between text-xs text-white">
                 <span>Next refresh in: {keepalive.secondsUntilNext}s</span>
                 {keepalive.lastPingTime && (
                   <span>
@@ -304,18 +304,18 @@ export default function RegulationsIntelligenceProgress({
               </div>
             )}
             {keepalive.isPaused && (
-              <p className="text-xs text-muted-foreground">Auto-refresh paused</p>
+              <p className="text-xs text-white">Auto-refresh paused</p>
             )}
           </div>
         )}
 
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Progress</span>
+            <span className="text-white">Progress</span>
             <span className="font-medium">{percentage.toFixed(1)}%</span>
           </div>
           <Progress value={percentage} className="h-2" />
-          <div className="flex justify-between text-xs text-muted-foreground">
+          <div className="flex justify-between text-xs text-white">
             <span>
               {status.processed.toLocaleString()} / {status.total.toLocaleString()} processed
             </span>
@@ -325,27 +325,27 @@ export default function RegulationsIntelligenceProgress({
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
-            <p className="text-muted-foreground">Batches</p>
+            <p className="text-white">Batches</p>
             <p className="font-medium">
               {status.completedBatches} / {status.totalBatches}
             </p>
           </div>
           <div>
-            <p className="text-muted-foreground">Processing</p>
+            <p className="text-white">Processing</p>
             <p className="font-medium">{status.processingBatches}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Failed</p>
+            <p className="text-white">Failed</p>
             <p className="font-medium">{status.failed}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Skipped</p>
+            <p className="text-white">Skipped</p>
             <p className="font-medium">{status.skipped}</p>
           </div>
         </div>
 
         {status.lastUpdate && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Last update: {new Date(status.lastUpdate).toLocaleTimeString()}
           </p>
         )}

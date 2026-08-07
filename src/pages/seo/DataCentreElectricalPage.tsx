@@ -633,7 +633,7 @@ export default function DataCentreElectricalPage() {
   return (
     <GuideTemplate
       title="Data Centre Electrical Installation UK | Critical Power"
-      description="Complete guide to data centre electrical installation in the UK. UPS systems, dual power feeds, PDUs, N+1 redundancy, Tier classifications…"
+      description="Complete guide to data centre electrical installation in the UK. UPS systems, dual power feeds, PDUs, N+1 redundancy, Tier classifications."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

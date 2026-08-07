@@ -1,296 +1,103 @@
 /**
- * ElectricalHub — composed from the same editorial primitives as the main
- * Dashboard (VerdictHero + HeadlineStats + hairline-grid hub cards).
+ * ElectricianHub — the top-level hub, rebuilt on the shared hub primitives.
  *
- * Structure mirrors EditorialDashboard:
- *   ——   VerdictHero       — greeting + verdict + CTA
- *   01   AT A GLANCE       — HeadlineStats (live business KPIs)
- *   02   CORE TOOLS        — hairline grid of tool cards
- *   03   IDENTITY          — Elec-ID + Elec-AI cards
- *   04   STAY CURRENT      — Industry / Career / Worker tools
- *   05   LATEST JOBS       — LatestJobsWidget (matching grid)
+ * This page was the third dialect of the same layout. HubPrimitives was
+ * extracted precisely to stop that happening — its own header names the
+ * pattern it absorbed: "numbered `01 · AT A GLANCE` eyebrows over flat cells in
+ * a hairline grid". That was this file. So a user moving between the
+ * Electrician Hub and the Business Hub, one tap apart, met two different
+ * products: a 56px "Hello, ANDREW." over 240px editorial cells here, compact
+ * KPIs over flat cards there.
  *
- * Hairline grid: gap-px + bg-white/[0.06] background + bg-[hsl(0_0%_10%)]
- * cells + yellow hairline along the top. One yellow accent per row max.
+ * What went, and why:
+ *
+ *   The hero (~430px, the whole first screen). Its verdict line — "6 quotes
+ *   live, £36.8k in motion, 8 invoices to chase" — was the stat strip
+ *   immediately below it, rewritten as a sentence. The only load-bearing part
+ *   was the chase-overdue prompt, which is now HubAlertLine and appears only
+ *   when something is actually overdue.
+ *
+ *   The double numbering. Sections ran `01 · AT A GLANCE` … `05 · LATEST JOBS`
+ *   while the cards inside section `02` were numbered `01`, `02`, `03` again.
+ *   Neither order meant anything.
+ *
+ *   The greys. text-white/55, /60 and /90 throughout, plus elec-yellow/80 —
+ *   all of it renders grey or muddy on this ground and none of it is allowed.
+ *
+ *   The volt wash on the CTA. `bg-elec-yellow/10` behind volt text goes brown.
+ *   Volt is solid, or it is text.
  */
 
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
-import { cn } from '@/lib/utils';
 import {
-  useDashboardData,
   DashboardDataProvider,
   useSharedDashboardData,
 } from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
-import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useWorkerSeat } from '@/hooks/useWorkerSeat';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubQuickStart,
+  HubToolGrid,
+  HubWorkList,
+  HubSectionHeading,
+  HubKpi,
+  HubKpiRow,
+  type HubTool,
+  type HubQuickAction,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
+import { MateBar } from '@/components/business-hub/MateBar';
+import { Assistant } from '@/components/business-hub/Assistant';
+import { useSparkTasks } from '@/hooks/useSparkTasks';
+import { useUnfinishedCertificates } from '@/hooks/useUnfinishedCertificates';
+import { certificateHref, certificateTypeLabel } from '@/utils/certificate-href';
+import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 
-// ────────────────────────────────────────────────────────────────────────
-// EditorialToolGrid — same hairline-grid DNA as EditorialHubGrid, smaller.
-// Each cell: index + eyebrow + title + description + meta + Open arrow.
-// ────────────────────────────────────────────────────────────────────────
+// Exact — see Dashboard.tsx. Three pages were rounding this differently.
+const money = (v: number) =>
+  `£${Math.round(v).toLocaleString('en-GB')}`;
 
-interface ToolCard {
-  id: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  to: string;
-  meta?: string;
-  comingSoon?: boolean;
-}
-
-// ────────────────────────────────────────────────────────────────────────
-// Date eyebrow — same shape as CollegeOverviewSection
-// ────────────────────────────────────────────────────────────────────────
-
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
-// ────────────────────────────────────────────────────────────────────────
-// Page masthead — sticky text-only nav, exact pattern from CollegeDashboard
-// ────────────────────────────────────────────────────────────────────────
-
-const PageMasthead = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center h-12 gap-4 sm:gap-6">
-          <button
-            type="button"
-            onClick={() => navigate('/dashboard')}
-            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-          >
-            ← Back
-          </button>
-          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-              Electrician
-            </span>
-            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-              Electrician Hub
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ────────────────────────────────────────────────────────────────────────
-// Hero — exact pattern from CollegeOverviewSection
-// ────────────────────────────────────────────────────────────────────────
-
-const Hero = ({
-  firstName,
-  verdict,
-  cta,
-}: {
-  firstName: string;
-  verdict: string;
-  cta?: { label: string; href: string };
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="relative pt-2 sm:pt-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>{dateEyebrow()}</Eyebrow>
-    </motion.div>
-
-    <motion.h1
-      variants={itemVariants}
-      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
-    >
-      <span className="text-elec-yellow">Hello, </span>
-      <span className="text-white uppercase">{firstName}.</span>
-    </motion.h1>
-
-    <motion.p
-      variants={itemVariants}
-      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-    >
-      {verdict}
-    </motion.p>
-
-    {cta && (
-      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-        <Link
-          to={cta.href}
-          className={cn(
-            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
-            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-          )}
-        >
-          <span>{cta.label}</span>
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-        </Link>
-      </motion.div>
-    )}
-  </motion.section>
-);
-
-const EditorialToolGrid = ({
-  number,
-  label,
-  cards,
-  columns = 'three',
-  trailing,
-}: {
-  number: string;
-  label: string;
-  cards: ToolCard[];
-  columns?: 'two' | 'three';
-  trailing?: React.ReactNode;
-}) => {
-  const navigate = useNavigate();
-  if (cards.length === 0) return null;
-
-  const colClass =
-    columns === 'two' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
-
-  return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-4"
-    >
-      <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-        <Eyebrow>
-          {number} · {label}
-        </Eyebrow>
-        {trailing}
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          colClass
-        )}
-      >
-        {/* Yellow hairline ceiling */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-        {cards.map((card, i) => (
-          <button
-            key={card.id}
-            type="button"
-            onClick={() => navigate(card.to)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
-          >
-            <div className="flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  · {card.eyebrow}
-                </span>
-              </div>
-              {card.comingSoon && (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded">
-                  Soon
-                </span>
-              )}
-            </div>
-
-            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-              {card.title}
-            </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
-              {card.description}
-            </p>
-
-            <div className="flex-grow" />
-
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">
-                {card.meta ?? 'Open'}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </div>
-          </button>
-        ))}
-      </motion.div>
-    </motion.section>
-  );
-};
-
-// ────────────────────────────────────────────────────────────────────────
-// Inner page — must be inside DashboardDataProvider
-// ────────────────────────────────────────────────────────────────────────
+const DAY = 86_400_000;
+const daysSince = (d: Date) => Math.floor((Date.now() - d.getTime()) / DAY);
 
 const ElectricalHubInner = () => {
+  const navigate = useNavigate();
   const [showSetupWizard, setShowSetupWizard] = useState(false);
   const { profile } = useAuth();
   const data = useSharedDashboardData();
   // Drives the Worker Tools card — an active employer seat is what grants it.
   const { data: hasWorkerSeat = false } = useWorkerSeat(profile?.id);
+  const unfinishedCerts = useUnfinishedCertificates();
+  const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
 
-  const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
+  const [mateOpen, setMateOpen] = useState(false);
+  const openMate = () => setMateOpen(true);
 
-  // Editorial verdict: short, business-aware, ends with a full stop.
-  const { verdict, cta } = useMemo(() => {
-    const parts: string[] = [];
-    if (data.business.activeQuotes > 0) {
-      parts.push(
-        `${data.business.activeQuotes} ${data.business.activeQuotes === 1 ? 'quote' : 'quotes'} live`
-      );
+  // ⌘K / Ctrl+K opens Mate from anywhere on the page — same binding as the
+  // Business Hub, so the shortcut doesn't change meaning between two pages
+  // one tap apart.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setMateOpen(true);
+      }
     }
-    if (data.business.quoteValue > 0) {
-      parts.push(`${data.business.formattedQuoteValue} in motion`);
-    }
-    if (data.business.overdueInvoices > 0) {
-      parts.push(
-        `${data.business.overdueInvoices} ${data.business.overdueInvoices === 1 ? 'invoice' : 'invoices'} to chase`
-      );
-    }
-    const verdict =
-      parts.length > 0
-        ? `${parts.join(', ')}.`
-        : 'Quiet day. Use the calm to push a quote out or finish a draft cert.';
-
-    // CTA points to the most useful next thing
-    const cta =
-      data.business.overdueInvoices > 0
-        ? { label: 'Chase overdue', href: '/electrician/invoices?filter=overdue' }
-        : data.business.activeQuotes > 0
-          ? { label: 'Open quotes', href: '/electrician/quotes' }
-          : { label: 'Open certificates', href: '/electrician/inspection-testing' };
-
-    return { verdict, cta };
-  }, [data]);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // Onboarding gate
   const { data: profileData } = useQuery({
@@ -386,155 +193,304 @@ const ElectricalHubInner = () => {
   const canSeeWorkerTools =
     hasWorkerSeat || WORKER_TOOLS_ALLOWLIST.includes(profile?.id ?? '');
 
-  const coreTools: ToolCard[] = [
+  const { business, certificates } = data;
+
+  /*
+   * `certificates.expiringSoon` is a repurposed field — reports carry no
+   * expiry, so the hook fills it with drafts/in-progress (see its comment).
+   * That is the number worth leading with: "140 on file" is a total that only
+   * ever goes up and that you would never act on.
+   */
+  const certsInProgress = certificates.expiringSoon;
+
+  /*
+   * ── Needs you ────────────────────────────────────────────────────────
+   *
+   * Certificates, not money. The Business Hub's list already itemises every
+   * overdue invoice and quiet quote, and this page sits one tap above it —
+   * repeating those four rows here would be the third place the same £6,027
+   * appears.
+   *
+   * What only this page can show is the certificate backlog: 33 documents
+   * started and never issued, the oldest from January. That is unbilled work
+   * and, for anything already tested on site, a client still waiting on their
+   * paperwork. Money gets a single summary row that hands off to the Business
+   * Hub rather than restating it.
+   */
+  const needsYou = useMemo<HubWorkItem[]>(() => {
+    const items: HubWorkItem[] = unfinishedCerts.map((c) => {
+      const age = daysSince(c.updatedAt);
+      return {
+        id: `cert-${c.id}`,
+        title: c.clientName
+          ? `${certificateTypeLabel(c.reportType)} — ${c.clientName}`
+          : `${certificateTypeLabel(c.reportType)} (no client yet)`,
+        reason:
+          age === 0
+            ? 'Started today, not issued'
+            : `Untouched for ${age} day${age === 1 ? '' : 's'}`,
+        // Volt once it has been sitting long enough that the reader has
+        // forgotten it exists. A cert left over the weekend is not a problem.
+        urgent: age >= 30,
+        to: certificateHref(c.reportType, c.reportId),
+      };
+    });
+
+    if (business.overdueInvoices > 0) {
+      items.push({
+        id: 'overdue-money',
+        title: `${business.overdueInvoices} invoice${business.overdueInvoices === 1 ? '' : 's'} overdue`,
+        reason: 'Chase these in the Business Hub',
+        trailing: money(business.overdueValue),
+        urgent: true,
+        to: '/electrician/invoices?filter=overdue',
+      });
+    }
+
+    return items;
+  }, [unfinishedCerts, business.overdueInvoices, business.overdueValue]);
+
+  // ── Start something ──────────────────────────────────────────────────
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'New certificate',
+      description: 'EICR, EIC or Minor Works',
+      onClick: () => navigate('/electrician/inspection-testing'),
+      primary: true,
+    },
+    {
+      title: 'New quote',
+      description: 'Price up a job',
+      onClick: () => navigate('/electrician/quotes'),
+    },
+    {
+      title: 'New job',
+      description: 'Open a project',
+      onClick: () => navigate('/electrician/projects'),
+    },
+    {
+      title: 'Run a calculation',
+      description: 'Cable, Zs, volt drop',
+      onClick: () => navigate('/electrician/calculations'),
+    },
+  ];
+
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   *
+   * Three or four cards each, never five to seven. The grid is auto-fit at
+   * four tracks, and auto-fit collapses tracks that are empty for the whole
+   * grid but not for a single row — so the old eight-card "CORE TOOLS" block
+   * wrapped and left a hole. Splitting it into two fours also survives the
+   * renewables gate, which removes a card for everyone not on the allowlist:
+   * "Specialist" is four with it and three without, and both fill the row.
+   */
+  /*
+   * Core tools carry NO figures, and that is the opposite of the rule the
+   * Business Hub follows — deliberately, because the two pages are answering
+   * different questions.
+   *
+   * The Business Hub's cards cover twenty-one areas its four KPIs never touch,
+   * so a card reporting a number is a card earning its slot. Here, Core tools
+   * maps almost one-to-one onto the KPI row 200px above it: certs in progress,
+   * open jobs, quotes to send. Printing those again turns four live figures
+   * into eight, and the whole reason the old hero came out is that saying the
+   * same number twice makes neither of them feel urgent.
+   *
+   * So the KPI row owns the numbers and the verdicts; these say what is
+   * inside. It also makes the group uniform — four cards, one shape.
+   */
+  const coreTools: HubTool[] = [
     {
       id: 'certificates',
-      eyebrow: 'Certs',
       title: 'Certificates',
-      description: 'EICR, EIC and Minor Works.',
       to: '/electrician/inspection-testing',
-      meta:
-        data.certificates.total > 0
-          ? `${data.certificates.total} on file`
-          : 'Start your first cert',
+      description: 'EICR, EIC and Minor Works.',
     },
     {
       id: 'business',
-      eyebrow: 'Money',
       title: 'Business',
-      description: 'Quotes, invoices and customers.',
       to: '/electrician/business',
-      meta:
-        data.business.activeQuotes > 0
-          ? `${data.business.activeQuotes} active · ${data.business.formattedQuoteValue}`
-          : 'Send your first quote',
+      description: 'Quotes, invoices and customers.',
     },
     {
       id: 'projects',
-      eyebrow: 'Work',
       title: 'Jobs',
-      description: 'Every job — quotes, certs and invoices in one place.',
       to: '/electrician/projects',
-      meta:
-        data.business.activeProjects > 0
-          ? `${data.business.activeProjects} active`
-          : 'Set up your first job',
+      description: 'Every job — quotes, certs and invoices in one place.',
     },
     {
+      // No "BS 7671" eyebrow. It was the only card in the group carrying one,
+      // which dropped its title a line below its three siblings — and the
+      // description already says cable sizing, Zs and fault current, which
+      // could not be anything else.
       id: 'calculations',
-      eyebrow: 'BS 7671',
       title: 'Calculations',
-      description: 'Cable sizing, voltage drop, Zs, fault current.',
+      description: 'Cable sizing, voltage drop, Zs and fault current.',
       to: '/electrician/calculations',
-      meta: '60+ calculators',
     },
-    {
-      id: 'renewables',
-      eyebrow: 'Green',
-      title: 'Renewables',
-      description: 'Solar, battery, EV and heat pump — design to certificate.',
-      to: '/electrician/renewables',
-      meta: 'New',
-    },
+  ];
+
+  const specialistTools: HubTool[] = [
     {
       id: 'site-safety',
-      eyebrow: 'Safety',
       title: 'Site safety',
       description: 'Risk assessments and RAMS.',
       to: '/electrician/site-safety',
-      meta: 'Generate a RAMS',
     },
     {
       id: 'ai-tools',
-      eyebrow: 'AI',
       title: 'AI tools',
       description: 'Smart analysis, design and report writing.',
       to: '/electrician-tools/ai-tooling',
-      meta: '5 specialists',
     },
     {
       id: 'build-partners',
-      eyebrow: 'Design',
       title: 'Build partners',
       description: 'Cost engineering and circuit design.',
       to: '/electrician/agent-selector',
-      meta: 'AI-led',
+    },
+    {
+      id: 'renewables',
+      title: 'Renewables',
+      description: 'Solar, battery, EV and heat pump — design to certificate.',
+      to: '/electrician/renewables',
     },
   ].filter((c) => c.id !== 'renewables' || canSeeRenewables);
 
-  const identityTools: ToolCard[] = [
+  const yourAccount: HubTool[] = [
     {
       id: 'worker-tools',
-      eyebrow: 'My employer',
       title: 'Worker Tools',
       description: 'Your jobs, tasks, clock-in, timesheets and sign-offs.',
       to: '/electrician/worker-tools',
-      meta: 'Joined a firm? Start here',
     },
     {
       id: 'elec-id',
-      eyebrow: 'Profile',
       title: 'My Elec-ID',
       description: 'Worker-owned trade card with QR share.',
       to: '/elec-id',
-      meta: 'Share your card',
     },
     {
       id: 'elec-ai',
-      eyebrow: 'Assistant',
       title: 'Elec-AI',
       description: 'Your personal electrical advisor.',
       to: '/electrician-tools/ai-tooling/assistant',
-      meta: 'Open chat',
     },
   ].filter((c) => c.id !== 'worker-tools' || canSeeWorkerTools);
 
-  const moreTools: ToolCard[] = [
+  const stayCurrent: HubTool[] = [
     {
       id: 'industry-updates',
-      eyebrow: 'News',
       title: 'Industry updates',
       description: 'Standards changes and trade news.',
       to: '/electrician/safety-shares/news',
-      meta: 'Updated daily',
     },
     {
       id: 'career',
-      eyebrow: 'Career',
       title: 'Career progression',
       description: 'Plan your pathway from Level 2 to AM2.',
       to: '/electrician/career-progression',
-      meta: 'Build your route',
     },
   ];
 
   return (
     <>
-      <PageMasthead />
+      <HubMasthead title="Electrician Hub" backTo="/dashboard" />
 
-      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-        <Hero firstName={firstName} verdict={verdict} cta={cta} />
+      <HubBody>
+        {/* August Referral Race — everyone, whole campaign, not dismissible.
+            Self-hides after 31 Aug. */}
+        <ReferralRaceCard />
 
-        <HeadlineStats number="01" label="AT A GLANCE" />
+        {/* Mate first, exactly as on the Business Hub — same row, same ⌘K.
+            The overdue alert line that used to sit here has gone: it printed
+            "£6.1k out" directly above an Overdue KPI reading £6.1k, which is
+            the duplication the old hero was deleted for. The KPI says it once,
+            with the verdict and the invoice count attached. */}
+        <MateBar onOpen={openMate} />
 
-        <EditorialToolGrid number="02" label="CORE TOOLS" cards={coreTools} />
+        {/* Start something FIRST. These pages opened with state — how much you
+            are owed, what is unfinished — and put the handful of things you might
+            actually begin below all of it. Someone opening the app on a van seat is
+            far more often here to start a cert than to read a figure, and the
+            figures are still one scroll away. */}
+        <HubQuickStart label="Start something" items={quickStart} />
 
-        <EditorialToolGrid number="03" label="IDENTITY" cards={identityTools} columns="two" />
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Certs in progress"
+            value={String(certsInProgress)}
+            verdict={certsInProgress > 0 ? 'Finish and issue these' : 'Nothing part-written'}
+            context={certificates.total > 0 ? `${certificates.total} on file` : undefined}
+            sentiment="neutral"
+            onClick={() => navigate('/electrician/inspection-testing')}
+          />
+          <HubKpi
+            label="Open jobs"
+            value={String(business.activeProjects)}
+            verdict={business.activeProjects > 0 ? 'On the go right now' : 'Nothing open'}
+            onClick={() => navigate('/electrician/projects')}
+          />
+          <HubKpi
+            label="Pipeline"
+            value={money(business.quoteValue)}
+            verdict={
+              business.activeQuotes > 0
+                ? `${business.activeQuotes} quote${business.activeQuotes === 1 ? '' : 's'} with clients`
+                : 'Nothing out with a client'
+            }
+            // When the pipeline is empty, the useful thing is not the zero —
+            // it is that there are quotes sitting in drafts that would fill it.
+            context={
+              business.activeQuotes === 0 && business.draftQuotes > 0
+                ? `${business.draftQuotes} priced up, not sent`
+                : undefined
+            }
+            onClick={() => navigate('/electrician/quotes')}
+          />
+          <HubKpi
+            label="Overdue"
+            value={money(business.overdueValue)}
+            sentiment={business.overdueInvoices > 0 ? 'bad' : 'neutral'}
+            direction={business.overdueInvoices > 0 ? 'up' : 'flat'}
+            verdict={
+              business.overdueInvoices > 0 ? 'Chase the oldest first' : 'Nothing overdue'
+            }
+            context={
+              business.overdueInvoices > 0
+                ? `${business.overdueInvoices} invoice${business.overdueInvoices === 1 ? '' : 's'}`
+                : 'All invoices within terms'
+            }
+            onClick={() => navigate('/electrician/invoices?filter=overdue')}
+          />
+        </HubKpiRow>
 
-        <EditorialToolGrid number="04" label="STAY CURRENT" cards={moreTools} columns="two" />
+        <HubWorkList items={needsYou} unit="job" />
 
-        {/* 05 · LATEST JOBS — section header + widget below */}
+        <HubToolGrid label="Core tools" cards={coreTools} columns="four" />
+
+        <HubToolGrid label="Specialist" cards={specialistTools} columns="four" />
+
+        <HubToolGrid label="Your account" cards={yourAccount} columns="four" />
+
+        <HubToolGrid label="Stay current" cards={stayCurrent} columns="four" />
+
         <motion.section
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-4"
+          className="space-y-3"
         >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <Eyebrow>05 · LATEST JOBS</Eyebrow>
+          <motion.div variants={itemVariants} className="flex items-center justify-between gap-4">
+            <HubSectionHeading>Latest jobs</HubSectionHeading>
+            {/* h-11 + negative margin: a full 44px target that still sits flush
+                with the heading. An 11px bare text link measured 13px tall,
+                which is a miss on a phone and against house rules. */}
             <Link
               to="/electrician/job-vacancies"
-              className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow transition-colors touch-manipulation"
+              className="-my-2 -mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold text-elec-yellow touch-manipulation"
             >
               See all →
             </Link>
@@ -543,7 +499,17 @@ const ElectricalHubInner = () => {
             <LatestJobsWidget />
           </motion.div>
         </motion.section>
-      </div>
+      </HubBody>
+
+      <Assistant
+        isOpen={mateOpen}
+        onClose={() => setMateOpen(false)}
+        currentTasks={tasks}
+        onSave={saveTask}
+        onUpdate={updateTask}
+        onMarkDone={markDone}
+        onDelete={deleteTask}
+      />
 
       <SetupWizard
         isOpen={showSetupWizard}
@@ -554,10 +520,6 @@ const ElectricalHubInner = () => {
     </>
   );
 };
-
-// ────────────────────────────────────────────────────────────────────────
-// Outer wrapper — provides SEO + DashboardDataProvider context
-// ────────────────────────────────────────────────────────────────────────
 
 const ElectricalHub = () => {
   useSEO({
@@ -574,11 +536,11 @@ const ElectricalHub = () => {
   });
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+    <HubPage>
       <DashboardDataProvider>
         <ElectricalHubInner />
       </DashboardDataProvider>
-    </div>
+    </HubPage>
   );
 };
 

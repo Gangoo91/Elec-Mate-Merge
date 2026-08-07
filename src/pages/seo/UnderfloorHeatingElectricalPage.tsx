@@ -606,8 +606,8 @@ const sections = [
 export default function UnderfloorHeatingElectricalPage() {
   return (
     <GuideTemplate
-      title="Underfloor Heating Electrical | Wiring & Circuit Guide"
-      description="Complete guide to electric underfloor heating wiring. Cable vs mat systems, dedicated circuit requirements, thermostat wiring, RCD protection…"
+      title="Underfloor Heating Wiring: Thermostat, 30mA RCD"
+      description="How to wire electric underfloor heating: dedicated radial circuit, 16A or 20A MCB, 30mA RCD, thermostat and floor sensor terminals, 500V insulation test."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

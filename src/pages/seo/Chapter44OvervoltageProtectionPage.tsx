@@ -713,7 +713,7 @@ export default function Chapter44OvervoltageProtectionPage() {
   return (
     <GuideTemplate
       title="Chapter 44 BS 7671 | Overvoltage & SPD Requirements"
-      description="Complete guide to Chapter 44 of BS 7671 — overvoltage protection and SPD requirements. Risk assessment under Regulation 443.4, Type 1/2/3 SPDs…"
+      description="Complete guide to Chapter 44 of BS 7671 — overvoltage protection and SPD requirements. Risk assessment under Regulation 443.4, Type 1/2/3 SPDs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

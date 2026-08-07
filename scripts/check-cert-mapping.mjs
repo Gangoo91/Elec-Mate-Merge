@@ -37,6 +37,8 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { probePayload, templatePaths, isRendered } from './lib/payload-probe.mjs';
+import { FIXTURES } from './lib/cert-fixtures.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BASELINE = join(ROOT, 'scripts', 'cert-mapping-baseline.json');
@@ -112,11 +114,25 @@ const CERTS = [
   { id: 'eicr', name: 'EICR', templateId: '178C3DA6-99D0-490C-A031-23AD55A1134C',
     formatter: 'src/utils/eicrJsonFormatter.ts', schema: 'eicr', edge: 'generate-eicr-pdf',
     template: 'eicr-certificate-template.html',
-    // ⚠️ NOT in docs/templates: this 25-Jul snapshot references ZERO address
-    // variables, so it is demonstrably not the live template. Coverage is on,
-    // but treat EICR's NOT-PRINTED column as unverified until the live
-    // template is pulled from PDFMonkey.
-    templatePath: 'docs/pdfmonkey-eicr-template.html', components: 'src/components/eicr' },
+    // ⚠️ Previously marked "demonstrably not the live template — references
+    // ZERO address variables". That evidence was wrong. The template carries
+    // five address references, all nested: installation_details.address (x2),
+    // client_details.client_address, and both declarations.*.address. A flat
+    // search for `installation_address` returns 0 — which is the same
+    // nested-path blind spot that inflates the NOT-PRINTED column itself, and
+    // the reason that column reads far worse than reality for this cert.
+    // Whether this file matches the live PDFMonkey template is still
+    // unconfirmed; the stated reason for doubting it was simply untrue.
+    //
+    // The July rewrite stopped printing eight supply/intake fields the older
+    // template carried (tails size/length, intake cable size/type, DNO name,
+    // service entry, supplementary bonding size, supply phases). That was
+    // deliberate — they are not wanted on the certificate, and seven of them
+    // are no longer asked for either: they survive only as empty defaults in
+    // EICRFormProvider. Do not "restore" them.
+    // `phases` is the one exception — still a live field in
+    // SupplyCharacteristicsSection, still not printed.
+    templatePath: 'docs/templates/eicr-certificate-template.html', components: 'src/components/eicr' },
   { id: 'eic', name: 'EIC', templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947',
     formatter: 'src/utils/eicJsonFormatter.ts', schema: 'eic', edge: 'generate-eic-pdf',
     template: 'eic-certificate-template.html',
@@ -126,7 +142,13 @@ const CERTS = [
   // formatter column reads that file. Its schema is `minor-works-schema.ts`,
   // which doesn't match the `<id>-payload-schema.ts` convention, hence null.
   { id: 'minor-works', name: 'Minor Works', templateId: 'E57A0DC9-5D3C-4BF4-9A96-18D27579A742',
-    formatter: 'src/components/pdf/MinorWorksPdfGenerator.tsx', schema: null, edge: 'generate-minor-works-pdf',
+    // The payload is assembled SERVER-SIDE by transformFormDataForTemplate()
+    // inside the edge function, not by the frontend formatter — unlike every
+    // other cert here. Probing the frontend measures the wrong layer (it is
+    // close to a passthrough of formData), so this stays on static analysis
+    // until the probe can run the edge transform. Its numbers are an upper
+    // bound; see the ⚠️ banner in docs/cert-field-maps/minor-works.md.
+    formatter: 'src/utils/minorWorksJsonFormatter.ts', schema: 'minor-works', edge: 'generate-minor-works-pdf',
     template: 'minor-works-pdfmonkey-template.html', components: 'src/components/minor-works' },
   { id: 'fire-alarm-g7', name: 'Fire alarm G7 (modification)', templateId: '5ECD2939-5CE2-4E98-8E47-32F25975C352',
     formatter: 'src/utils/fireAlarmG7JsonFormatter.ts', tabs: /^FAG7/, schema: 'fire-alarm', edge: 'generate-fire-alarm-pdf',
@@ -260,7 +282,20 @@ function analyse(cert) {
   // this the checker reports every one of them as an unsourced template variable.
   if (cert.defaults) fSrc += '\n' + (read(cert.defaults) || '');
 
-  const sSrc = cert.schema ? read(`supabase/functions/_shared/${cert.schema}-payload-schema.ts`) : null;
+  /*
+   * Two naming conventions exist. Nearly every cert is
+   * `<id>-payload-schema.ts`, but Minor Works is `minor-works-schema.ts` — and
+   * because the resolver only knew the first, its config was set to
+   * `schema: null` and the report said Minor Works had no payload guard at all.
+   * It has a 146-field Zod schema that the edge function `safeParse`s on every
+   * render. Try both names rather than let a filename decide the answer.
+   */
+  const schemaFile = cert.schema
+    ? ['-payload-schema.ts', '-schema.ts']
+        .map((suffix) => `supabase/functions/_shared/${cert.schema}${suffix}`)
+        .find((f) => read(f))
+    : null;
+  const sSrc = schemaFile ? read(schemaFile) : null;
   const eSrc = read(`supabase/functions/${cert.edge}/index.ts`) || '';
 
   const emitted = formatterKeys(fSrc);
@@ -271,9 +306,39 @@ function analyse(cert) {
   const real = (k) => !NOISE.has(k) && !rendered.has(k);
   // A key is only "not printed" if the template never mentions it in ANY form —
   // including as a loop field (`{{ d.zone }}`) or a flat/nested twin.
-  const notPrinted = [...emitted]
+  let notPrinted = [...emitted]
     .filter((k) => real(k) && !tSrc.includes(k) && !hasRenderedTwin(k, tSrc))
     .sort();
+
+  /*
+   * Where a fixture exists, replace the guess with the truth.
+   *
+   * Everything above infers the payload by regexing the formatter's source.
+   * That counts intermediate objects as payload keys and cannot follow a field
+   * into a nested path, which on the EICR produced 117 "dropped" fields against
+   * a real figure of zero — while the check sat in CI looking green. Running the
+   * formatter leaves nothing to infer. See scripts/lib/payload-probe.mjs.
+   */
+  let probedLeaves = null;
+  let hollowArrays = [];
+  if (PROBED[cert.id]) {
+    const refs = templatePaths(tSrc);
+    notPrinted = PROBED[cert.id].paths.filter((path) => !isRendered(path, refs)).sort();
+    probedLeaves = PROBED[cert.id].paths.length;
+    /*
+     * An array the fixture never seeded contributes `foo[]` and nothing inside
+     * it, so every field within is invisible to this analysis and NOT PRINTED
+     * is quietly understated. That is how the EICR probed "fully" while its
+     * entire schedule of tests — 34 columns — was missing, and how testing-only
+     * reported on a board with no circuits in it.
+     *
+     * Photo arrays are excluded: a certificate with no photos is a normal
+     * certificate, and seeding them would only add noise.
+     */
+    hollowArrays = PROBED[cert.id].paths
+      .filter((path) => path.endsWith('[empty]') && !/photo|image/i.test(path))
+      .sort();
+  }
 
   // A variable the template prints that nothing supplies renders as empty. This
   // is the mirror-image bug and is just as silent.
@@ -313,12 +378,16 @@ function analyse(cert) {
     .filter((k) => !fSrc.includes(k) && !fSrc.includes(snake(k)))
     .sort();
 
-  const onScreen = notPrinted.filter((k) => components.includes(camel(k)));
+  // A probed entry is a dotted path (`installation_details.occupier`), so ask the
+  // component index about its leaf — `camel('installation_details.occupier')`
+  // matches nothing and would report every probed field as off-form.
+  const leafOf = (k) => k.replace(/\[\]/g, '').split('.').pop();
+  const onScreen = notPrinted.filter((k) => components.includes(camel(leafOf(k))));
 
   return {
     ...cert,
     liquid: liquidBalance(tSrc),
-    schemaWired: cert.schema ? eSrc.includes(`${cert.schema}-payload-schema`) : null,
+    schemaWired: cert.schema ? eSrc.includes(`${cert.schema}-payload-schema`) || eSrc.includes(`${cert.schema}-schema`) : null,
     driftReported: eSrc.includes('schema_drift'),
     neverRead,
     counts: {
@@ -326,12 +395,14 @@ function analyse(cert) {
       emitted: emitted.size,
       declared: declared ? declared.size : null,
       notPrinted: notPrinted.length,
+      probedLeaves,
+      hollowArrays: hollowArrays.length,
       onScreen: onScreen.length,
       unsourced: unsourced.length,
       notInSchema: notInSchema.length,
       schemaOnly: schemaOnly.length,
     },
-    notPrinted, onScreen, unsourced, notInSchema, schemaOnly,
+    notPrinted, onScreen, unsourced, notInSchema, schemaOnly, probedLeaves, hollowArrays,
   };
 }
 
@@ -360,6 +431,19 @@ function writeFieldMap(r) {
   ];
 
   if (r.notPrinted.length) {
+    lines.push(
+      r.counts.probedLeaves == null
+        ? '> ⚠️ **Static analysis.** This certificate has no fixture in ' +
+          '`scripts/lib/cert-fixtures.mjs`, so the payload below was inferred by ' +
+          'reading the formatter\'s source rather than running it. Intermediate ' +
+          'objects are counted as payload keys and a field that moved into a ' +
+          'nested path reads as dropped when it is not. Treat this list as an ' +
+          'upper bound, not a defect list — add a fixture to get a real answer.'
+        : `> ✅ **Probed.** The formatter was run against a fixture and returned ` +
+          `${r.counts.probedLeaves} leaf paths. The list below is what the template ` +
+          `genuinely never renders.`,
+      ''
+    );
     lines.push(`## Collected but never printed (${r.notPrinted.length})`, '',
       'The formatter puts these in the payload and the template renders none of them.',
       r.onScreen.length ? `**${r.onScreen.length} appear in a form component** (marked ✎) — likely dropped data.` : '',
@@ -409,11 +493,38 @@ const wantDocs = args.includes('--docs');
 const ci = args.includes('--ci');
 const only = args.filter((a) => !a.startsWith('--'));
 
-const results = CERTS.filter((c) => !only.length || only.includes(c.id)).map(analyse);
+/*
+ * Probe every certificate that has a fixture, before analysing any of them.
+ *
+ * A cert without a fixture is not silently trusted: its row is marked `static`
+ * in the SOURCE column, because inferring a payload from source code is a guess
+ * and the report should say which numbers are guesses.
+ */
+const selected = CERTS.filter((c) => !only.length || only.includes(c.id));
+const PROBED = {};
+for (const cert of selected) {
+  const fixture = FIXTURES[cert.id];
+  if (!fixture) continue;
+  try {
+    PROBED[cert.id] = await probePayload({
+      formatter: cert.formatter,
+      exportName: fixture.exportName,
+      fixture: fixture.data,
+      reportId: fixture.reportId,
+    });
+  } catch (err) {
+    // A fixture that no longer runs is worse than none — it looks verified and
+    // is not. Say so loudly rather than falling back without comment.
+    console.error(`\n  ⚠️  ${cert.id}: fixture failed to run — ${err.message}`);
+    console.error('      Falling back to static analysis for this certificate.\n');
+  }
+}
+
+const results = selected.map(analyse);
 
 const pad = (s, n) => String(s).padEnd(n);
 console.log('\nCertificate pipeline:  form -> formatter -> schema -> template\n');
-console.log(`${pad('CERT', 28)}${pad('EMITS', 7)}${pad('UNREAD', 8)}${pad('NOT PRINTED', 13)}${pad('(ON FORM)', 11)}${pad('BLANK', 7)}${pad('SCHEMA', 8)}LIQUID`);
+console.log(`${pad('CERT', 28)}${pad('EMITS', 7)}${pad('UNREAD', 8)}${pad('NOT PRINTED', 13)}${pad('(ON FORM)', 11)}${pad('BLANK', 7)}${pad('SCHEMA', 8)}${pad('LIQUID', 8)}SOURCE`);
 console.log('-'.repeat(96));
 for (const r of results) {
   if (r.error) { console.log(`${pad(r.id, 30)}ERROR  ${r.error}`); continue; }
@@ -422,8 +533,24 @@ for (const r of results) {
     pad(r.id, 28) + pad(r.counts.emitted, 7) + pad(r.counts.neverRead, 8) +
     pad(r.counts.notPrinted, 13) + pad(r.counts.onScreen, 11) +
     pad(r.counts.unsourced, 7) + pad(schemaFlag, 8) +
-    (r.liquid === 'balanced' ? 'ok' : r.liquid)
+    pad(r.liquid === 'balanced' ? 'ok' : r.liquid, 8) +
+    // Which numbers on this row can be trusted. `probed` means the formatter was
+    // actually run and NOT PRINTED is a finding; `static` means the payload was
+    // inferred from source, so that column is an upper bound and nothing more.
+    (r.counts.probedLeaves == null ? 'static' : `probed(${r.counts.probedLeaves})`)
   );
+}
+
+const hollow = results.filter((r) => r.hollowArrays?.length);
+if (hollow.length) {
+  console.log(
+    '\nFixtures with arrays the formatter reads but the fixture never seeds —\n' +
+    'everything inside them is invisible to this check:\n'
+  );
+  for (const r of hollow)
+    console.log(`  ${r.id}: ${r.hollowArrays.join(', ')}`);
+  console.log('\n  Seed them in scripts/lib/cert-fixtures.mjs. Discover the names with:');
+  console.log("    grep -oE '(formData|data)\\.\\w+ *(\\|\\||\\?\\?) *\\[\\]' src/utils/<formatter>.ts\n");
 }
 
 const totalOnScreen = results.reduce((n, r) => n + (r.counts?.onScreen || 0), 0);
@@ -450,6 +577,17 @@ if (ci) {
       regressions.push(`${r.id}: form fields the formatter ignores ${was.neverRead} -> ${r.counts.neverRead}`);
     if (r.counts.unsourced > was.unsourced)
       regressions.push(`${r.id}: blank template variables ${was.unsourced} -> ${r.counts.unsourced}`);
+    /*
+     * A certificate that was probed and is now static has silently lost its
+     * only real check — the fixture stopped running and everything fell back to
+     * inferring the payload from source. That reads as a green build with a
+     * quieter number, which is exactly how a broken guard survives. Treat the
+     * downgrade itself as the regression; the warning printed above says why.
+     */
+    if (was.probed && r.counts.probedLeaves == null)
+      regressions.push(
+        `${r.id}: fixture no longer runs — fell back to static analysis (its numbers are now guesses)`
+      );
   }
   if (regressions.length) {
     console.error('REGRESSIONS:\n' + regressions.map((s) => `  - ${s}`).join('\n') + '\n');
@@ -460,7 +598,8 @@ if (ci) {
 
 if (args.includes('--write-baseline')) {
   const out = {};
-  for (const r of results) if (!r.error) out[r.id] = { notPrinted: r.counts.notPrinted, unsourced: r.counts.unsourced, neverRead: r.counts.neverRead };
+  for (const r of results) if (!r.error) out[r.id] = { notPrinted: r.counts.notPrinted,
+      probed: r.counts.probedLeaves != null, unsourced: r.counts.unsourced, neverRead: r.counts.neverRead };
   writeFileSync(BASELINE, JSON.stringify(out, null, 2) + '\n');
   console.log(`Baseline written to ${BASELINE}\n`);
 }

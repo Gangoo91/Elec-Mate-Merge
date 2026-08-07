@@ -423,7 +423,7 @@ export default function CVBuilderElectricianPage() {
   return (
     <ToolTemplate
       title="CV Builder for Electricians | Professional CV Tool"
-      description="Build a professional electrician CV with templates designed for the electrical trade. Highlight qualifications, ECS card details, specialist skills…"
+      description="Build a professional electrician CV with templates designed for the electrical trade. Highlight qualifications, ECS card details, specialist skills."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

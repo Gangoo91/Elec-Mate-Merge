@@ -530,7 +530,7 @@ export default function SolarPanelInstallationLeedsPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Leeds 2025 | Solar PV Yorkshire"
-      description="Complete guide to solar panel installation in Leeds and West Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee…"
+      description="Complete guide to solar panel installation in Leeds and West Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

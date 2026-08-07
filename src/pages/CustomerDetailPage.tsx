@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCustomer, useCustomers, Customer } from '@/hooks/inspection/useCustomers';
@@ -387,7 +388,7 @@ export default function CustomerDetailPage() {
       >
         {/* Hero */}
         <motion.div variants={itemVariants}>
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06] p-4 sm:p-5">
+          <div className={cn('relative overflow-hidden rounded-2xl border border-white/[0.18] p-4 sm:p-5', CARD_SURFACE)}>
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.16] bg-white/[0.10] sm:h-14 sm:w-14">
                 <span className="text-[14px] font-semibold text-white sm:text-[15px]">

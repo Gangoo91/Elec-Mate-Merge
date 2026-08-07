@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'How does the JIB agreement apply to Birmingham electricians?',
     answer:
-      'Birmingham falls under the standard JIB national rate (not the London plus rate). For 2025–2026, the JIB Approved Electrician standard rate is approximately £20.50 to £21.50 per hour, equating to £39,000 to £41,000 per year for a 38-hour week. The JIB rate is a minimum; many Birmingham M&E contractors pay above JIB rates for experienced electricians, particularly on large projects where retaining a consistent workforce is important. Electricians working on JIB-covered contracts are entitled to sick pay, holiday pay, and death and disability benefits under the JIB rules, in addition to the base wage.',
+      'Birmingham falls under the JIB National Standard rate (not the London Zone rate). Under the JIB determination effective 5 January 2026, the Approved Electrician rate is £20.08 per hour on the headline Transport Provided column (£21.19 Own Transport, £18.61 Shop Employed), equating to about £39,700 per year for a 38-hour week. For comparison, the Electrician grade is £18.38 per hour and the Site or Installation Technician grade is £22.70 per hour, both Transport Provided. The JIB rate is a minimum; many Birmingham M&E contractors pay above JIB rates for experienced electricians, particularly on large projects where retaining a consistent workforce is important. Electricians working on JIB-covered contracts are entitled to sick pay, holiday pay, and death and disability benefits under the JIB rules, in addition to the base wage.',
   },
   {
     question: 'What qualifications increase earnings the most for Birmingham electricians?',

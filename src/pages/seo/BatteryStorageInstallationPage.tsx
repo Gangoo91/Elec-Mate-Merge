@@ -533,7 +533,7 @@ export default function BatteryStorageInstallationPage() {
   return (
     <GuideTemplate
       title="Home Battery Storage Installation UK | Energy Storage Guide"
-      description="Complete guide to home battery storage installation in the UK. Battery types (lithium-ion, LFP), popular systems (Tesla Powerwall, GivEnergy, SolarEdge…"
+      description="Complete guide to home battery storage installation in the UK. Battery types (lithium-ion, LFP), popular systems (Tesla Powerwall, GivEnergy, SolarEdge."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

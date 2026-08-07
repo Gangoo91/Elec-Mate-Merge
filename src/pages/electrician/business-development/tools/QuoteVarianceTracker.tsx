@@ -13,18 +13,20 @@ import {
   FileText,
   CheckCircle,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
   CalculatorResult,
+  ResultHeadline,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { varianceSummary, ON_TARGET_TOLERANCE_PERCENT } from '@/data/job-costing';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 /** A percentage that cannot be computed prints as a dash, never as 0%. */
 const pct = (n: number | null) => (n === null ? '—' : `${n > 0 ? '+' : ''}${n.toFixed(1)}%`);
 
@@ -125,30 +127,12 @@ const QuoteVarianceTracker = () => {
         <link rel="canonical" href="/electrician/business-development/tools/quote-variance" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <TrendingUp
-                className="h-6 w-6 sm:h-7 sm:w-7"
-                style={{ color: config.gradientFrom }}
-              />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Quote vs Actual Tracker
-              </h1>
-              <p className="text-sm text-white">Capture variances to refine your pricing</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Quote vs Actual Tracker"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -157,10 +141,7 @@ const QuoteVarianceTracker = () => {
           badge="Finance"
         >
           {/* Quote Details */}
-          <div className="flex items-center gap-2 mb-3">
-            <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Labour Hours</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Labour Hours</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -196,10 +177,7 @@ const QuoteVarianceTracker = () => {
           />
 
           {/* Materials */}
-          <div className="flex items-center gap-2 mb-3 mt-4">
-            <Package className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Materials</span>
-          </div>
+          <h3 className="mb-3 mt-4 text-[13px] font-semibold tracking-tight text-white">Materials</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -236,7 +214,7 @@ const QuoteVarianceTracker = () => {
 
           {/* Notes */}
           <div className="flex items-center gap-2 mb-2 mt-4">
-            <FileText className="h-4 w-4 text-blue-400" />
+            <FileText className="h-4 w-4 text-elec-yellow" />
             <span className="text-sm font-medium text-white">Variance Notes</span>
           </div>
 
@@ -244,7 +222,7 @@ const QuoteVarianceTracker = () => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="E.g., Client changed sockets from 6 to 10 mid-job, extra materials needed..."
-            className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[16px] placeholder:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+            className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[16px] placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/60 resize-none"
           />
           <p className="text-xs text-white mt-1">
             Document why the variance occurred to improve future estimates
@@ -267,10 +245,21 @@ const QuoteVarianceTracker = () => {
 
         {/* Results */}
         <CalculatorResult category="business">
-          <div className="flex items-center gap-2 mb-4">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Variance Summary</span>
-          </div>
+          <ResultHeadline
+            label={totalVar === null ? 'Nothing quoted to compare against' : totalVar > 0 ? 'Over your quote' : 'Under your quote'}
+            value={totalVar === null ? '—' : currency(Math.abs(totalVar))}
+            tone={totalVar !== null && totalVar > 0 ? 'negative' : 'default'}
+            aside={totalVarPercent === null ? undefined : `${Math.abs(totalVarPercent).toFixed(1)}%`}
+            caption={
+              totalVar === null
+                ? 'Enter what you quoted to see how the job actually landed.'
+                : totalVar > 0
+                  ? 'This job cost more than you priced it at.'
+                  : 'This job came in under what you priced it at.'
+            }
+          />
+
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Variance Summary</h3>
 
           <div className="space-y-3">
             {/* Hours Variance */}
@@ -367,11 +356,11 @@ const QuoteVarianceTracker = () => {
 
         {/* What This Means */}
         <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-          <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+          <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
             <CollapsibleTrigger className="agent-collapsible-trigger w-full">
               <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-blue-300">
+                <Info className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm sm:text-base font-medium text-elec-yellow">
                   Why Track Variance?
                 </span>
               </div>
@@ -384,25 +373,25 @@ const QuoteVarianceTracker = () => {
             </CollapsibleTrigger>
 
             <CollapsibleContent className="p-4 pt-0">
-              <ul className="space-y-2 text-sm text-blue-200/80">
+              <ul className="space-y-2 text-sm text-elec-yellow/80">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
-                  <strong className="text-blue-300">Build feedback loop:</strong> Track where quotes
+                  <span className="text-elec-yellow mt-1">•</span>
+                  <strong className="text-elec-yellow">Build feedback loop:</strong> Track where quotes
                   differ from reality
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
-                  <strong className="text-blue-300">Spot patterns:</strong> Certain job types may
+                  <span className="text-elec-yellow mt-1">•</span>
+                  <strong className="text-elec-yellow">Spot patterns:</strong> Certain job types may
                   always overrun
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
-                  <strong className="text-blue-300">Protect margins:</strong> Add contingency for
+                  <span className="text-elec-yellow mt-1">•</span>
+                  <strong className="text-elec-yellow">Protect margins:</strong> Add contingency for
                   risky work types
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
-                  <strong className="text-blue-300">Client discussions:</strong> Data helps justify
+                  <span className="text-elec-yellow mt-1">•</span>
+                  <strong className="text-elec-yellow">Client discussions:</strong> Data helps justify
                   price adjustments
                 </li>
               </ul>

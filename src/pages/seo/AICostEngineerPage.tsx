@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'AI Cost Engineer | Electrical Job Estimator | Elec-Mate';
+const PAGE_TITLE = 'AI Cost Engineer | Electrical Job Estimator';
 const PAGE_DESCRIPTION =
   'Accurate UK electrical job cost estimates from AI. Itemised materials, labour rates, regional adjustments, BS 7671 compliant specifications.';
 

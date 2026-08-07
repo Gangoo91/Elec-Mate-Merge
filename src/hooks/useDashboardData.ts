@@ -14,7 +14,14 @@ import { useActiveJobs } from '@/hooks/useJobs';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { QUERY_PRESETS, QUERY_KEYS } from '@/lib/queryConfig';
-import { differenceInDays, isPast, addHours } from 'date-fns';
+import { differenceInDays } from 'date-fns';
+import {
+  isInvoiceOverdue,
+  isInvoicePaid,
+  isInvoiceDraft,
+  getInvoiceOutstanding,
+} from '@/utils/invoice-status';
+import { isQuoteLive } from '@/utils/quote-status';
 
 export interface DashboardUserData {
   name: string;
@@ -35,6 +42,8 @@ export interface DashboardLearningData {
 
 export interface DashboardBusinessData {
   activeQuotes: number;
+  /** Priced up but never sent — the actionable half of an empty pipeline. */
+  draftQuotes: number;
   pendingQuotes: number;
   quoteValue: number;
   formattedQuoteValue: string;
@@ -185,34 +194,62 @@ export function useDashboardData(): DashboardData {
 
   // Business data from quotes and invoices
   const businessData = useMemo((): DashboardBusinessData => {
-    // Filter active/pending quotes
-    const activeQuotes =
-      savedQuotes?.filter(
-        (q) => q.status === 'sent' || q.status === 'pending' || q.status === 'draft'
-      ) || [];
+    /*
+     * A pipeline is what is still WINNABLE. Neither of these measured that.
+     *
+     * `activeQuotes` counted `status === 'draft'` as live, so quotes that had
+     * been priced up and never sent to anybody were reported as being with the
+     * client. And `quoteValue` summed every quote row on the account —
+     * accepted, rejected, superseded, draft — under the label "pipeline" and
+     * "in motion". On the founder's own account that printed "6 quotes live,
+     * £36.8k in motion" when the number genuinely awaiting a client decision
+     * was zero, and £36.8k was the lifetime total of 11 quotes.
+     *
+     * Wrong in the flattering direction is the dangerous kind: it says the
+     * pipeline is healthy on exactly the days it is empty, and it disagreed
+     * with the Business Hub, which had the honest number one click away.
+     *
+     * `isQuoteLive` is the shared rule — sent, undecided, and not yet past its
+     * expiry date. Drafts get their own count so surfaces can prompt for the
+     * thing that actually needs doing: send them.
+     */
+    const activeQuotes = savedQuotes?.filter(isQuoteLive) || [];
+
+    const draftQuotes = savedQuotes?.filter((q) => q.status === 'draft') || [];
 
     const pendingQuotes =
       savedQuotes?.filter((q) => q.status === 'sent' && q.acceptance_status === 'pending') || [];
 
-    // Calculate total pipeline value (ALL quotes - matches QuotesPage)
-    const quoteValue = savedQuotes?.reduce((sum, q) => sum + (q.total || 0), 0) || 0;
+    const quoteValue = activeQuotes.reduce((sum, q) => sum + (q.total || 0), 0);
     const formattedQuoteValue =
       quoteValue >= 1000
         ? `£${(quoteValue / 1000).toFixed(1)}k`
         : `£${quoteValue.toLocaleString()}`;
 
-    // Invoice calculations
-    const unpaidInvoices = invoices?.filter((i) => i.invoice_status !== 'paid') || [];
+    // Invoice calculations.
+    //
+    // Both buckets exclude drafts and both come from the SHARED helper, so
+    // this page can no longer disagree with the Business Hub. It did: this
+    // read `invoice_status !== 'paid'`, which counts invoices that were typed
+    // up and never sent, and reported exactly double the overdue figure the
+    // Business Hub showed for the same account. Overdue is a subset of
+    // unpaid, so they must be filtered by the same rule or the smaller number
+    // can exceed the larger.
+    const unpaidInvoices =
+      invoices?.filter((i) => !isInvoicePaid(i) && !isInvoiceDraft(i)) || [];
 
-    const overdueInvoices = unpaidInvoices.filter((i) => {
-      if (!i.invoice_due_date) return false;
-      return isPast(addHours(new Date(i.invoice_due_date), 24));
-    });
+    const overdueInvoices = unpaidInvoices.filter(isInvoiceOverdue);
 
-    const overdueValue = overdueInvoices.reduce((sum, i) => sum + (i.total || 0), 0);
+    // What is still OWED, not the invoice's face value. This summed `total`,
+    // so a £244 invoice with a £99 deposit already banked counted as £244 —
+    // and the dashboard hero told the founder he was owed £6,126 while the
+    // Business Hub, one click away, said £6,027. The £99 gap was that deposit.
+    // `getInvoiceOutstanding` is the shared helper both should have used.
+    const overdueValue = overdueInvoices.reduce((sum, i) => sum + getInvoiceOutstanding(i), 0);
 
     return {
       activeQuotes: activeQuotes.length,
+      draftQuotes: draftQuotes.length,
       pendingQuotes: pendingQuotes.length,
       quoteValue,
       formattedQuoteValue,
@@ -244,12 +281,9 @@ export function useDashboardData(): DashboardData {
   const actions = useMemo((): DashboardActionItem[] => {
     const items: DashboardActionItem[] = [];
 
-    // Urgent: Overdue invoices
-    const overdueInvoicesList =
-      invoices?.filter((i) => {
-        if (!i.invoice_due_date || i.invoice_status === 'paid') return false;
-        return isPast(addHours(new Date(i.invoice_due_date), 24));
-      }) || [];
+    // Urgent: Overdue invoices. Same shared rule — a third hand-rolled copy
+    // of it lived here, and it too counted drafts.
+    const overdueInvoicesList = invoices?.filter(isInvoiceOverdue) || [];
 
     overdueInvoicesList.slice(0, 2).forEach((inv) => {
       const daysOverdue = differenceInDays(new Date(), new Date(inv.invoice_due_date!));

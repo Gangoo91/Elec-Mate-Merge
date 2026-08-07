@@ -10,6 +10,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { downloadScopePDF } from '@/utils/scope-pdf';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteVisit } from '@/types/siteVisit';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 interface SiteVisitSignOffStepProps {
   visit: SiteVisit;
@@ -217,13 +218,13 @@ export const SiteVisitSignOffStep = ({
         <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
           Client sign-off
         </h2>
-        <p className="mt-1 text-[12.5px] text-white/65">
+        <p className="mt-1 text-[12.5px] text-white">
           Hand the device to the client to sign the scope of works.
         </p>
       </div>
 
       {/* Locked scope summary card */}
-      <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+      <div className="flex items-center gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.12]">
           <Lock className="h-4 w-4 text-elec-yellow" />
         </div>
@@ -231,7 +232,7 @@ export const SiteVisitSignOffStep = ({
           <p className="truncate text-[14px] font-medium text-white">
             {visit.propertyAddress || 'Site Visit'}
           </p>
-          <p className="text-[12px] text-white/65">
+          <p className="text-[12px] text-white">
             {totalRooms} room{totalRooms !== 1 ? 's' : ''} · {totalItems} item
             {totalItems !== 1 ? 's' : ''}
           </p>
@@ -263,14 +264,14 @@ export const SiteVisitSignOffStep = ({
         <>
           {/* Client name input */}
           <div className="space-y-1.5">
-            <label className="text-[11.5px] font-medium text-white/65">
+            <label className="text-[11.5px] font-medium text-white">
               Client name <span className="text-elec-yellow">*</span>
             </label>
             <Input
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
               placeholder="Who's signing — appears on the PDF"
-              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+              className={inputCn}
               autoCapitalize="words"
               autoComplete="off"
               enterKeyHint="done"
@@ -319,7 +320,7 @@ export const SiteVisitSignOffStep = ({
             </Button>
           ) : (
             <div className="space-y-2 border-t border-white/[0.06] pt-3">
-              <p className="text-center text-xs text-white/65">
+              <p className="text-center text-xs text-white">
                 Send a link for the client to sign remotely — this page updates the moment they sign
               </p>
               <ScopeShareButton visit={visit} assumptions={assumptions} />
@@ -341,7 +342,7 @@ export const SiteVisitSignOffStep = ({
               <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400">
                 Scope signed
               </div>
-              <p className="mt-0.5 text-[12.5px] text-white/65">
+              <p className="mt-0.5 text-[12.5px] text-white">
                 Signed by {clientName} ·{' '}
                 {signedAt
                   ? new Date(signedAt).toLocaleDateString('en-GB', {
@@ -405,7 +406,7 @@ export const SiteVisitSignOffStep = ({
               <FileText className="mr-2 h-5 w-5" />
               Send to quote wizard →
             </Button>
-            <p className="text-center text-[12px] text-white/55">
+            <p className="text-center text-[12px] text-white">
               Pre-fills materials from your scope into the quote builder
             </p>
           </div>

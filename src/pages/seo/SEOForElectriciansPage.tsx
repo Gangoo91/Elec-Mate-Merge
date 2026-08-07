@@ -613,7 +613,7 @@ export default function SEOForElectriciansPage() {
   return (
     <GuideTemplate
       title="SEO for Electricians UK | How to Rank on Google as an"
-      description="Complete SEO guide for UK electricians. Google Business Profile optimisation, local citations, on-page SEO, review generation, link building…"
+      description="Complete SEO guide for UK electricians. Google Business Profile optimisation, local citations, on-page SEO, review generation, link building."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

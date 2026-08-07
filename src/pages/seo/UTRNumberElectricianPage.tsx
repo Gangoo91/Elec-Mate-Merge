@@ -525,7 +525,7 @@ export default function UTRNumberElectricianPage() {
   return (
     <GuideTemplate
       title="UTR Number for Electricians UK | Self-Assessment"
-      description="Everything UK electricians need to know about UTR numbers — what a Unique Taxpayer Reference is, how to register for self-assessment with HMRC…"
+      description="Everything UK electricians need to know about UTR numbers — what a Unique Taxpayer Reference is, how to register for self-assessment with HMRC."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -387,7 +387,7 @@ export default function MODDefenceSiteElectricalPage() {
   return (
     <GuideTemplate
       title="MOD Defence Site Electrical Work UK | BPSS, SC, Def Stan"
-      description="Complete guide to electrical work on MOD defence estates in the UK. Security clearance (BPSS, SC, DV), Def Stan 61-12 standard, SQEP requirements…"
+      description="Complete guide to electrical work on MOD defence estates in the UK. Security clearance (BPSS, SC, DV), Def Stan 61-12 standard, SQEP requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

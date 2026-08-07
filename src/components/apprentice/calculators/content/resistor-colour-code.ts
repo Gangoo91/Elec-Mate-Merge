@@ -35,11 +35,7 @@ export const resistorColourCodeContent: CalculatorContent = {
       { label: 'Multiplier', value: 'Red (×100)' },
       { label: 'Tolerance', value: 'Gold (±5%)' },
     ],
-    steps: [
-      'Digits = 1, 0 → 10',
-      'Multiplier red = ×100',
-      '10 × 100 = 1000 Ω',
-    ],
+    steps: ['Digits = 1, 0 → 10', 'Multiplier red = ×100', '10 × 100 = 1000 Ω'],
     result: '1 kΩ ±5%.',
   },
 
@@ -48,6 +44,7 @@ export const resistorColourCodeContent: CalculatorContent = {
   _grounding: {
     status: 'verified',
     generatedAt: '2026-06-01',
-    notes: 'Component reference (IEC 60062 colour sequence). Decoder logic exact; no governing UK installation standard.',
+    notes:
+      'Component reference (IEC 60062 colour sequence). Decoder logic exact; no governing UK installation standard.',
   },
 };

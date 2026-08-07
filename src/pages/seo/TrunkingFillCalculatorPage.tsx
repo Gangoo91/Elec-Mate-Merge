@@ -162,9 +162,9 @@ const howToSchema = {
 
 export default function TrunkingFillCalculatorPage() {
   useSEO({
-    title: 'Trunking Fill Calculator | 45% Space Factor',
+    title: 'Trunking Size Calculator: 45% Max Cable Fill',
     description:
-      'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard UK sizes, mixed cable types…',
+      "Max fill is 45% of the trunking's internal CSA. Enter your cables, get the minimum trunking size — 16 x 16 to 150 x 150 mm, plus compartment mode.",
   });
 
   return (

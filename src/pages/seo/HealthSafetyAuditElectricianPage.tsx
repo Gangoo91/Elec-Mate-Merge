@@ -605,7 +605,7 @@ export default function HealthSafetyAuditElectricianPage() {
   return (
     <GuideTemplate
       title="Health & Safety Audit for Electrical Contractors | H&S"
-      description="CDM 2015 duties for electricians, RAMS (Risk Assessment and Method Statement), Permit to Work systems, CHAS accreditation, Safe Contractor, ISO 45001…"
+      description="CDM 2015 duties for electricians, RAMS (Risk Assessment and Method Statement), Permit to Work systems, CHAS accreditation, Safe Contractor, ISO 45001."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

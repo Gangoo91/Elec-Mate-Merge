@@ -562,7 +562,7 @@ export default function CaravanMotorHomeElectricalPage() {
   return (
     <GuideTemplate
       title="Caravan & Motorhome Electrical Guide UK | 12V & 230V Systems"
-      description="Complete guide to caravan and motorhome electrical systems — leisure batteries, solar charging, mains hookup, inverters, 12V DC systems…"
+      description="Complete guide to caravan and motorhome electrical systems — leisure batteries, solar charging, mains hookup, inverters, 12V DC systems."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

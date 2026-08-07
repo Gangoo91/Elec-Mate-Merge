@@ -28,6 +28,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { rcdDiscriminationContent } from './content/rcd-discrimination';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -171,8 +172,7 @@ const RCDDiscriminationCalculator = () => {
         riskLevel = 'low';
         recommendation =
           'Excellent discrimination achieved. S-type upstream provides reliable selective operation per BS 7671 requirements.';
-        regulatoryReference =
-          'BS 7671 Regulation 536.4.1.4 — Selectivity between RCDs';
+        regulatoryReference = 'BS 7671 Regulation 536.4.1.4 — Selectivity between RCDs';
       } else if (timeDifference >= 150 && currentRatio >= 2) {
         complianceStatus = 'marginal';
         riskLevel = 'medium';
@@ -339,501 +339,524 @@ const RCDDiscriminationCalculator = () => {
       title="RCD Discrimination Calculator"
       description="Analyse RCD discrimination for selective operation per BS 7671"
     >
-      {/* ── Upstream RCD ── */}
-      <CalculatorSection title="Upstream RCD (Main Protection)">
-        <div className="flex items-center gap-2 mb-1">
-          <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
-          <span className="text-xs text-white">Main incomer or distribution board RCD</span>
-        </div>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Rating (IΔn)"
-            value={upstreamRCD.rating}
-            onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, rating: value }))}
-            options={rcdRatings}
-            placeholder="Select rating"
-          />
-          <CalculatorSelect
-            label="RCD Type"
-            value={upstreamRCD.type}
-            onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, type: value }))}
-            options={rcdTypes}
-            placeholder="Select type"
-          />
-          <CalculatorSelect
-            label="Installation Location"
-            value={upstreamRCD.installationLocation}
-            onChange={(value) =>
-              setUpstreamRCD((prev) => ({ ...prev, installationLocation: value }))
-            }
-            options={installationLocations}
-            placeholder="Select location"
-          />
-          <CalculatorSelect
-            label="Earthing System"
-            value={upstreamRCD.earthingSystem}
-            onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, earthingSystem: value }))}
-            options={earthingSystems}
-            placeholder="Select system"
-          />
-        </CalculatorInputGrid>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="upstream-delay"
-            checked={upstreamRCD.hasTimeDelay}
-            onCheckedChange={(checked) =>
-              setUpstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
-            }
-          />
-          <label
-            htmlFor="upstream-delay"
-            className="text-sm text-white touch-manipulation cursor-pointer"
-          >
-            Custom time delay
-          </label>
-        </div>
-
-        {upstreamRCD.hasTimeDelay && (
-          <CalculatorInput
-            label="Trip Time"
-            unit="ms"
-            type="text"
-            inputMode="decimal"
-            value={upstreamRCD.customTripTime}
-            onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, customTripTime: value }))}
-            placeholder="Enter trip time in milliseconds"
-          />
-        )}
-      </CalculatorSection>
-
-      <CalculatorDivider category={CAT} />
-
-      {/* ── Downstream RCD ── */}
-      <CalculatorSection title="Downstream RCD (Circuit Protection)">
-        <div className="flex items-center gap-2 mb-1">
-          <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-          <span className="text-xs text-white">Final circuit or local RCD protection</span>
-        </div>
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Rating (IΔn)"
-            value={downstreamRCD.rating}
-            onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, rating: value }))}
-            options={rcdRatings}
-            placeholder="Select rating"
-          />
-          <CalculatorSelect
-            label="RCD Type"
-            value={downstreamRCD.type}
-            onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, type: value }))}
-            options={rcdTypes}
-            placeholder="Select type"
-          />
-        </CalculatorInputGrid>
-
-        <CalculatorSelect
-          label="Circuit Type"
-          value={downstreamRCD.circuitType}
-          onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, circuitType: value }))}
-          options={circuitTypes}
-          placeholder="Select circuit type"
-        />
-
-        <CalculatorInput
-          label="Load Current (Optional)"
-          unit="A"
-          type="text"
-          inputMode="decimal"
-          value={downstreamRCD.loadCurrent}
-          onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, loadCurrent: value }))}
-          placeholder="Enter load current"
-          hint="For leakage current assessment"
-        />
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="downstream-delay"
-            checked={downstreamRCD.hasTimeDelay}
-            onCheckedChange={(checked) =>
-              setDownstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
-            }
-          />
-          <label
-            htmlFor="downstream-delay"
-            className="text-sm text-white touch-manipulation cursor-pointer"
-          >
-            Custom time delay
-          </label>
-        </div>
-
-        {downstreamRCD.hasTimeDelay && (
-          <CalculatorInput
-            label="Trip Time"
-            unit="ms"
-            type="text"
-            inputMode="decimal"
-            value={downstreamRCD.customTripTime}
-            onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, customTripTime: value }))}
-            placeholder="Enter trip time in milliseconds"
-          />
-        )}
-      </CalculatorSection>
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={calculateDiscrimination}
-        onReset={handleReset}
-        isDisabled={!canCalculate}
-        calculateLabel="Analyse Discrimination"
-        showReset={!!result}
-      />
-
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={
-                result.complianceStatus === 'compliant'
-                  ? 'pass'
-                  : result.complianceStatus === 'marginal'
-                    ? 'warning'
-                    : 'fail'
-              }
-              label={result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'}
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
-
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Current Ratio</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.currentRatio.toFixed(1)}:1
-            </p>
-            <p className="text-sm text-white mt-2">
-              {result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'} —{' '}
-              {result.timeDifference}ms time difference
-            </p>
-          </div>
-
-          {/* Result cards */}
-          <ResultsGrid columns={3}>
-            <ResultValue
-              label="Risk Level"
-              value={result.riskLevel.toUpperCase()}
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Current Ratio"
-              value={`${result.currentRatio.toFixed(1)}:1`}
-              category={CAT}
-              size="sm"
-            />
-            <ResultValue
-              label="Time Difference"
-              value={`${result.timeDifference}ms`}
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
-
-          {/* Pass/fail checks */}
-          <div className="space-y-2">
-            <div
-              className={cn(
-                'flex items-center justify-between p-3 rounded-lg border text-sm',
-                result.currentRatio >= 3
-                  ? 'bg-green-500/5 border-green-500/20'
-                  : 'bg-red-500/5 border-red-500/20'
-              )}
-            >
-              <div className="flex items-center gap-2">
-                {result.currentRatio >= 3 ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <XCircle className="h-4 w-4 text-red-400 shrink-0" />
-                )}
-                <span className="text-white font-medium">Current Ratio ≥ 3:1</span>
+      <CalculatorPanes
+        form={
+          <>
+            {/* ── Upstream RCD ── */}
+            <CalculatorSection title="Upstream RCD (Main Protection)">
+              <div className="flex items-center gap-2 mb-1">
+                <Shield className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="text-xs text-white">Main incomer or distribution board RCD</span>
               </div>
-              <span className="text-white shrink-0 ml-2">{result.currentRatio.toFixed(1)}:1</span>
-            </div>
 
-            <div
-              className={cn(
-                'flex items-center justify-between p-3 rounded-lg border text-sm',
-                result.timeDifference >= 200
-                  ? 'bg-green-500/5 border-green-500/20'
-                  : 'bg-red-500/5 border-red-500/20'
-              )}
-            >
-              <div className="flex items-center gap-2">
-                {result.timeDifference >= 200 ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <XCircle className="h-4 w-4 text-red-400 shrink-0" />
-                )}
-                <span className="text-white font-medium">Time Delay ≥ 200ms</span>
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Rating (IΔn)"
+                  value={upstreamRCD.rating}
+                  onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, rating: value }))}
+                  options={rcdRatings}
+                  placeholder="Select rating"
+                />
+                <CalculatorSelect
+                  label="RCD Type"
+                  value={upstreamRCD.type}
+                  onChange={(value) => setUpstreamRCD((prev) => ({ ...prev, type: value }))}
+                  options={rcdTypes}
+                  placeholder="Select type"
+                />
+                <CalculatorSelect
+                  label="Installation Location"
+                  value={upstreamRCD.installationLocation}
+                  onChange={(value) =>
+                    setUpstreamRCD((prev) => ({ ...prev, installationLocation: value }))
+                  }
+                  options={installationLocations}
+                  placeholder="Select location"
+                />
+                <CalculatorSelect
+                  label="Earthing System"
+                  value={upstreamRCD.earthingSystem}
+                  onChange={(value) =>
+                    setUpstreamRCD((prev) => ({ ...prev, earthingSystem: value }))
+                  }
+                  options={earthingSystems}
+                  placeholder="Select system"
+                />
+              </CalculatorInputGrid>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="upstream-delay"
+                  checked={upstreamRCD.hasTimeDelay}
+                  onCheckedChange={(checked) =>
+                    setUpstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
+                  }
+                />
+                <label
+                  htmlFor="upstream-delay"
+                  className="text-sm text-white touch-manipulation cursor-pointer"
+                >
+                  Custom time delay
+                </label>
               </div>
-              <span className="text-white shrink-0 ml-2">{result.timeDifference}ms</span>
-            </div>
-          </div>
 
-          {/* Recommendation */}
-          <div className="p-3 rounded-lg bg-white/[0.04] border border-white/5 text-sm text-white">
-            {result.recommendation}
-          </div>
+              {upstreamRCD.hasTimeDelay && (
+                <CalculatorInput
+                  label="Trip Time"
+                  unit="ms"
+                  type="text"
+                  inputMode="decimal"
+                  value={upstreamRCD.customTripTime}
+                  onChange={(value) =>
+                    setUpstreamRCD((prev) => ({ ...prev, customTripTime: value }))
+                  }
+                  placeholder="Enter trip time in milliseconds"
+                />
+              )}
+            </CalculatorSection>
 
-          {/* Improvements Required */}
-          {result.improvements.length > 0 && (
-            <div className="space-y-1.5">
-              <p className="text-sm font-medium text-white">Required Improvements</p>
-              {result.improvements.map((improvement, index) => (
-                <div key={index} className="flex items-start gap-2 text-sm text-white">
-                  <AlertTriangle className="h-3.5 w-3.5 text-orange-400 mt-0.5 shrink-0" />
-                  {improvement}
-                </div>
-              ))}
-            </div>
-          )}
+            <CalculatorDivider category={CAT} />
 
-          <CalculatorDivider category={CAT} />
+            {/* ── Downstream RCD ── */}
+            <CalculatorSection title="Downstream RCD (Circuit Protection)">
+              <div className="flex items-center gap-2 mb-1">
+                <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                <span className="text-xs text-white">Final circuit or local RCD protection</span>
+              </div>
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Upstream RCD (main protection)',
-                formula: `${result.upstreamRating}mA | ${upstreamRCD.type} | Trip time: ${result.upstreamTime}ms`,
-                description: `The upstream device at ${result.upstreamRating}mA must trip SLOWER than the downstream device — allowing the closer device to clear the fault first.`,
-              },
-              {
-                label: 'Downstream RCD (circuit protection)',
-                formula: `${result.downstreamRating}mA | ${downstreamRCD.type} | Trip time: ${result.downstreamTime}ms`,
-                description: `The downstream device at ${result.downstreamRating}mA should trip FIRST during a fault on its protected circuit, isolating only the faulty circuit.`,
-              },
-              {
-                label: 'Current ratio check',
-                formula: `Upstream / Downstream = ${result.upstreamRating} / ${result.downstreamRating}`,
-                value: `${result.currentRatio.toFixed(1)}:1 ${result.currentRatio >= 3 ? '(meets minimum 3:1)' : '(BELOW minimum 3:1)'}`,
-                description:
-                  result.currentRatio >= 3
-                    ? 'The upstream RCD has a sufficiently higher rating — it will not respond to fault currents that only affect the downstream device.'
-                    : 'The current ratings are too close together. The upstream device may trip simultaneously with the downstream device during a fault, causing total loss of supply.',
-              },
-              {
-                label: 'Time delay check',
-                formula: `Upstream − Downstream = ${result.upstreamTime} − ${result.downstreamTime}`,
-                value: `${result.timeDifference}ms ${result.timeDifference >= 200 ? '(meets 200ms minimum)' : '(BELOW 200ms minimum for S-type)'}`,
-                description:
-                  result.timeDifference >= 200
-                    ? 'Adequate time separation — the downstream device has enough time to clear the fault before the upstream device responds.'
-                    : 'Insufficient time delay. Without adequate separation, both devices may trip together. Use an S-type (selective) RCD upstream for a built-in time delay.',
-              },
-              {
-                label: 'Overall assessment',
-                value: result.discriminates
-                  ? `DISCRIMINATES — ${result.complianceStatus} with BS 7671`
-                  : `NO DISCRIMINATION — ${result.complianceStatus}`,
-                description: result.discriminates
-                  ? 'The RCD arrangement provides selective operation. Only the faulty circuit will trip, keeping healthy circuits live.'
-                  : 'Both RCDs are likely to trip simultaneously during a fault, causing total loss of supply. Review the recommendations above to achieve discrimination.',
-              },
-            ]}
-          />
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Rating (IΔn)"
+                  value={downstreamRCD.rating}
+                  onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, rating: value }))}
+                  options={rcdRatings}
+                  placeholder="Select rating"
+                />
+                <CalculatorSelect
+                  label="RCD Type"
+                  value={downstreamRCD.type}
+                  onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, type: value }))}
+                  options={rcdTypes}
+                  placeholder="Select type"
+                />
+              </CalculatorInputGrid>
 
-          {/* ── What This Means ── */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>What This Means</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showGuidance && 'rotate-180'
-                )}
+              <CalculatorSelect
+                label="Circuit Type"
+                value={downstreamRCD.circuitType}
+                onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, circuitType: value }))}
+                options={circuitTypes}
+                placeholder="Select circuit type"
               />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-4"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Why Discrimination Matters</p>
-                  <p className="text-sm text-white">
-                    Without discrimination, a fault on one circuit trips the main RCD — killing
-                    power to the entire installation. With proper discrimination, only the faulty
-                    circuit trips while everything else stays live. This is especially important in
-                    commercial premises, care homes, and any installation where total loss of supply
-                    creates a safety risk.
+
+              <CalculatorInput
+                label="Load Current (Optional)"
+                unit="A"
+                type="text"
+                inputMode="decimal"
+                value={downstreamRCD.loadCurrent}
+                onChange={(value) => setDownstreamRCD((prev) => ({ ...prev, loadCurrent: value }))}
+                placeholder="Enter load current"
+                hint="For leakage current assessment"
+              />
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="downstream-delay"
+                  checked={downstreamRCD.hasTimeDelay}
+                  onCheckedChange={(checked) =>
+                    setDownstreamRCD((prev) => ({ ...prev, hasTimeDelay: !!checked }))
+                  }
+                />
+                <label
+                  htmlFor="downstream-delay"
+                  className="text-sm text-white touch-manipulation cursor-pointer"
+                >
+                  Custom time delay
+                </label>
+              </div>
+
+              {downstreamRCD.hasTimeDelay && (
+                <CalculatorInput
+                  label="Trip Time"
+                  unit="ms"
+                  type="text"
+                  inputMode="decimal"
+                  value={downstreamRCD.customTripTime}
+                  onChange={(value) =>
+                    setDownstreamRCD((prev) => ({ ...prev, customTripTime: value }))
+                  }
+                  placeholder="Enter trip time in milliseconds"
+                />
+              )}
+            </CalculatorSection>
+
+            <CalculatorActions
+              category={CAT}
+              onCalculate={calculateDiscrimination}
+              onReset={handleReset}
+              isDisabled={!canCalculate}
+              calculateLabel="Analyse Discrimination"
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={
+                      result.complianceStatus === 'compliant'
+                        ? 'pass'
+                        : result.complianceStatus === 'marginal'
+                          ? 'warning'
+                          : 'fail'
+                    }
+                    label={result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'}
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
+
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Current Ratio</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.currentRatio.toFixed(1)}:1
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    {result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'} —{' '}
+                    {result.timeDifference}ms time difference
                   </p>
                 </div>
+
+                {/* Result cards */}
+                <ResultsGrid columns={3}>
+                  <ResultValue
+                    label="Risk Level"
+                    value={result.riskLevel.toUpperCase()}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Current Ratio"
+                    value={`${result.currentRatio.toFixed(1)}:1`}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Time Difference"
+                    value={`${result.timeDifference}ms`}
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
+
+                {/* Pass/fail checks */}
                 <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">How to Achieve Discrimination</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Current grading: Upstream RCD must be at least 3× the downstream rating (e.g.,
-                      100mA upstream, 30mA downstream)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Time grading: Use an S-type (selective) RCD upstream — it has a built-in delay
-                      of at least 200ms, giving the downstream device time to trip first
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Both conditions must be met — current grading alone is not enough if both
-                      devices have the same trip speed
-                    </li>
-                  </ul>
+                  <div
+                    className={cn(
+                      'flex items-center justify-between p-3 rounded-lg border text-sm',
+                      result.currentRatio >= 3
+                        ? 'bg-green-500/5 border-green-500/20'
+                        : 'bg-red-500/5 border-red-500/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      {result.currentRatio >= 3 ? (
+                        <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                      ) : (
+                        <XCircle className="h-4 w-4 text-red-400 shrink-0" />
+                      )}
+                      <span className="text-white font-medium">Current Ratio ≥ 3:1</span>
+                    </div>
+                    <span className="text-white shrink-0 ml-2">
+                      {result.currentRatio.toFixed(1)}:1
+                    </span>
+                  </div>
+
+                  <div
+                    className={cn(
+                      'flex items-center justify-between p-3 rounded-lg border text-sm',
+                      result.timeDifference >= 200
+                        ? 'bg-green-500/5 border-green-500/20'
+                        : 'bg-red-500/5 border-red-500/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      {result.timeDifference >= 200 ? (
+                        <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                      ) : (
+                        <XCircle className="h-4 w-4 text-red-400 shrink-0" />
+                      )}
+                      <span className="text-white font-medium">Time Delay ≥ 200ms</span>
+                    </div>
+                    <span className="text-white shrink-0 ml-2">{result.timeDifference}ms</span>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-white font-medium">Common Setups That Work</p>
-                  <ul className="space-y-1">
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Domestic: 100mA S-Type upstream + 30mA Type A downstream (3.3:1 ratio, 200ms+
-                      delay)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Commercial: 300mA S-Type main + 30mA RCBOs on final circuits (10:1 ratio)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-white">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      Industrial: 500mA S-Type incomer + 100mA sub-mains + 30mA final circuits
-                      (cascaded)
-                    </li>
-                  </ul>
+
+                {/* Recommendation */}
+                <div className="p-3 rounded-lg bg-white/[0.04] border border-white/5 text-sm text-white">
+                  {result.recommendation}
                 </div>
-                {result.practicalGuidance.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="text-sm text-white font-medium">For This Installation</p>
-                    <ul className="space-y-1">
-                      {result.practicalGuidance.map((guidance, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-white">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                            style={{ backgroundColor: config.gradientFrom }}
-                          />
-                          {guidance}
-                        </li>
-                      ))}
-                    </ul>
+
+                {/* Improvements Required */}
+                {result.improvements.length > 0 && (
+                  <div className="space-y-1.5">
+                    <p className="text-sm font-medium text-white">Required Improvements</p>
+                    {result.improvements.map((improvement, index) => (
+                      <div key={index} className="flex items-start gap-2 text-sm text-white">
+                        <AlertTriangle className="h-3.5 w-3.5 text-orange-400 mt-0.5 shrink-0" />
+                        {improvement}
+                      </div>
+                    ))}
                   </div>
                 )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* ── BS 7671 Reference ── */}
-          <Collapsible open={showReference} onOpenChange={setShowReference}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
-              <span>BS 7671 Reference</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform duration-200',
-                  showReference && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-2">
-              <div
-                className="p-3 rounded-xl border space-y-3"
-                style={{
-                  borderColor: `${config.gradientFrom}15`,
-                  background: `${config.gradientFrom}05`,
-                }}
-              >
-                <ul className="space-y-2">
-                  {[
-                    {
-                      reg: 'Regulation 536.4.1.4',
-                      desc: 'Coordination between RCDs — discrimination requirements',
-                    },
-                    {
-                      reg: 'Regulation 536.4.1',
-                      desc: 'Selectivity of RCDs — time and current grading',
-                    },
-                    {
-                      reg: 'Regulation 411.3.3',
-                      desc: 'Additional protection — 30mA RCD for socket outlets and mobile equipment',
-                    },
-                    {
-                      reg: 'GN3 Chapter 13',
-                      desc: 'RCD testing — procedures for selectivity verification',
-                    },
-                  ].map((item) => (
-                    <li key={item.reg} className="flex items-start gap-2 text-sm">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                        style={{ backgroundColor: config.gradientFrom }}
-                      />
-                      <span className="text-white">
-                        <span className="font-medium">{item.reg}:</span> {item.desc}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      )}
+                <CalculatorDivider category={CAT} />
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="RCD Discrimination Rules"
-        formula="Time delay ≥ 200ms AND Current ratio ≥ 3:1"
-        variables={[
-          { symbol: 'Time delay', description: 'Upstream trip time − downstream trip time (ms)' },
-          { symbol: 'Current ratio', description: 'Upstream IΔn ÷ downstream IΔn' },
-          { symbol: 'S-type', description: 'Time-delayed RCD for selectivity' },
-        ]}
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
+                    {
+                      label: 'Upstream RCD (main protection)',
+                      formula: `${result.upstreamRating}mA | ${upstreamRCD.type} | Trip time: ${result.upstreamTime}ms`,
+                      description: `The upstream device at ${result.upstreamRating}mA must trip SLOWER than the downstream device — allowing the closer device to clear the fault first.`,
+                    },
+                    {
+                      label: 'Downstream RCD (circuit protection)',
+                      formula: `${result.downstreamRating}mA | ${downstreamRCD.type} | Trip time: ${result.downstreamTime}ms`,
+                      description: `The downstream device at ${result.downstreamRating}mA should trip FIRST during a fault on its protected circuit, isolating only the faulty circuit.`,
+                    },
+                    {
+                      label: 'Current ratio check',
+                      formula: `Upstream / Downstream = ${result.upstreamRating} / ${result.downstreamRating}`,
+                      value: `${result.currentRatio.toFixed(1)}:1 ${result.currentRatio >= 3 ? '(meets minimum 3:1)' : '(BELOW minimum 3:1)'}`,
+                      description:
+                        result.currentRatio >= 3
+                          ? 'The upstream RCD has a sufficiently higher rating — it will not respond to fault currents that only affect the downstream device.'
+                          : 'The current ratings are too close together. The upstream device may trip simultaneously with the downstream device during a fault, causing total loss of supply.',
+                    },
+                    {
+                      label: 'Time delay check',
+                      formula: `Upstream − Downstream = ${result.upstreamTime} − ${result.downstreamTime}`,
+                      value: `${result.timeDifference}ms ${result.timeDifference >= 200 ? '(meets 200ms minimum)' : '(BELOW 200ms minimum for S-type)'}`,
+                      description:
+                        result.timeDifference >= 200
+                          ? 'Adequate time separation — the downstream device has enough time to clear the fault before the upstream device responds.'
+                          : 'Insufficient time delay. Without adequate separation, both devices may trip together. Use an S-type (selective) RCD upstream for a built-in time delay.',
+                    },
+                    {
+                      label: 'Overall assessment',
+                      value: result.discriminates
+                        ? `DISCRIMINATES — ${result.complianceStatus} with BS 7671`
+                        : `NO DISCRIMINATION — ${result.complianceStatus}`,
+                      description: result.discriminates
+                        ? 'The RCD arrangement provides selective operation. Only the faulty circuit will trip, keeping healthy circuits live.'
+                        : 'Both RCDs are likely to trip simultaneously during a fault, causing total loss of supply. Review the recommendations above to achieve discrimination.',
+                    },
+                  ]}
+                />
+
+                {/* ── What This Means ── */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>What This Means</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-4"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Why Discrimination Matters</p>
+                        <p className="text-sm text-white">
+                          Without discrimination, a fault on one circuit trips the main RCD —
+                          killing power to the entire installation. With proper discrimination, only
+                          the faulty circuit trips while everything else stays live. This is
+                          especially important in commercial premises, care homes, and any
+                          installation where total loss of supply creates a safety risk.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">
+                          How to Achieve Discrimination
+                        </p>
+                        <ul className="space-y-1">
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Current grading: Upstream RCD must be at least 3× the downstream rating
+                            (e.g., 100mA upstream, 30mA downstream)
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Time grading: Use an S-type (selective) RCD upstream — it has a built-in
+                            delay of at least 200ms, giving the downstream device time to trip first
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Both conditions must be met — current grading alone is not enough if
+                            both devices have the same trip speed
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-white font-medium">Common Setups That Work</p>
+                        <ul className="space-y-1">
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Domestic: 100mA S-Type upstream + 30mA Type A downstream (3.3:1 ratio,
+                            200ms+ delay)
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Commercial: 300mA S-Type main + 30mA RCBOs on final circuits (10:1
+                            ratio)
+                          </li>
+                          <li className="flex items-start gap-2 text-sm text-white">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            Industrial: 500mA S-Type incomer + 100mA sub-mains + 30mA final circuits
+                            (cascaded)
+                          </li>
+                        </ul>
+                      </div>
+                      {result.practicalGuidance.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-sm text-white font-medium">For This Installation</p>
+                          <ul className="space-y-1">
+                            {result.practicalGuidance.map((guidance, index) => (
+                              <li key={index} className="flex items-start gap-2 text-sm text-white">
+                                <span
+                                  className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                                  style={{ backgroundColor: config.gradientFrom }}
+                                />
+                                {guidance}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* ── BS 7671 Reference ── */}
+                <Collapsible open={showReference} onOpenChange={setShowReference}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+                    <span>BS 7671 Reference</span>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 transition-transform duration-200',
+                        showReference && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pt-2">
+                    <div
+                      className="p-3 rounded-xl border space-y-3"
+                      style={{
+                        borderColor: `${config.gradientFrom}15`,
+                        background: `${config.gradientFrom}05`,
+                      }}
+                    >
+                      <ul className="space-y-2">
+                        {[
+                          {
+                            reg: 'Regulation 536.4.1.4',
+                            desc: 'Coordination between RCDs — discrimination requirements',
+                          },
+                          {
+                            reg: 'Regulation 536.4.1',
+                            desc: 'Selectivity of RCDs — time and current grading',
+                          },
+                          {
+                            reg: 'Regulation 411.3.3',
+                            desc: 'Additional protection — 30mA RCD for socket outlets and mobile equipment',
+                          },
+                          {
+                            reg: 'GN3 Chapter 13',
+                            desc: 'RCD testing — procedures for selectivity verification',
+                          },
+                        ].map((item) => (
+                          <li key={item.reg} className="flex items-start gap-2 text-sm">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                              style={{ backgroundColor: config.gradientFrom }}
+                            />
+                            <span className="text-white">
+                              <span className="font-medium">{item.reg}:</span> {item.desc}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
+
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="RCD Discrimination Rules"
+              formula="Time delay ≥ 200ms AND Current ratio ≥ 3:1"
+              variables={[
+                {
+                  symbol: 'Time delay',
+                  description: 'Upstream trip time − downstream trip time (ms)',
+                },
+                { symbol: 'Current ratio', description: 'Upstream IΔn ÷ downstream IΔn' },
+                { symbol: 'S-type', description: 'Time-delayed RCD for selectivity' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={rcdDiscriminationContent} category={CAT} />}
       />
-      <CalculatorEditorial content={rcdDiscriminationContent} category={CAT} />
     </CalculatorCard>
   );
 };

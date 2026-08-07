@@ -601,7 +601,7 @@ export default function OutdoorSocketFaultFindingPage() {
   return (
     <GuideTemplate
       title="Outdoor Socket Not Working | External Socket Fault Finding"
-      description="Outdoor socket fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, weatherproof requirements…"
+      description="Outdoor socket fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, weatherproof requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

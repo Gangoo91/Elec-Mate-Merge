@@ -12,13 +12,13 @@ import {
   Info,
   RotateCcw,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
   CalculatorResult,
+  ResultHeadline,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
@@ -28,8 +28,10 @@ import {
   FLAT_RATE_SCHEME,
   VAT_SCHEME_THRESHOLDS,
 } from '@/data/uk-tax-rates';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const money = (n: number) => `£${n.toLocaleString('en-GB')}`;
 
 const VATSchemeComparison: React.FC = () => {
@@ -44,8 +46,14 @@ const VATSchemeComparison: React.FC = () => {
   const [flatRate, setFlatRate] = React.useState(String(FLAT_RATE_SCHEME.generalConstruction));
   const [vatRate, setVatRate] = React.useState('20');
   const [vatRegistered, setVatRegistered] = React.useState(true);
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = React.useState(false);
+  const [calculated, setCalculated] = React.useState(true);
   const [showBreakdown, setShowBreakdown] = React.useState(false);
   const [showReference, setShowReference] = React.useState(false);
 
@@ -97,7 +105,6 @@ const VATSchemeComparison: React.FC = () => {
     setFlatRate(String(FLAT_RATE_SCHEME.generalConstruction));
     setVatRate('20');
     setVatRegistered(true);
-    setCalculated(false);
   };
 
   const isValid = annualRevenueNum > 0;
@@ -113,27 +120,12 @@ const VATSchemeComparison: React.FC = () => {
         <link rel="canonical" href="/electrician/business-development/tools/vat-scheme" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Percent className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                VAT Scheme Comparison
-              </h1>
-              <p className="text-sm text-white">Compare Standard vs Flat Rate VAT</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="VAT Scheme Comparison"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -142,10 +134,7 @@ const VATSchemeComparison: React.FC = () => {
           badge="VAT"
         >
           {/* Business Details Section */}
-          <div className="flex items-center gap-2 mb-3">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Business Details</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Business Details</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -156,7 +145,6 @@ const VATSchemeComparison: React.FC = () => {
               value={annualRevenue}
               onChange={(val) => {
                 setAnnualRevenue(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 120000"
               hint="Revenue ex VAT"
@@ -170,7 +158,6 @@ const VATSchemeComparison: React.FC = () => {
               value={labourShare}
               onChange={(val) => {
                 setLabourShare(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 60"
               hint={`Materials: ${materialsShareNum}%`}
@@ -178,10 +165,7 @@ const VATSchemeComparison: React.FC = () => {
           </div>
 
           {/* VAT Settings Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Percent className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">VAT Settings</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">VAT Settings</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -192,7 +176,6 @@ const VATSchemeComparison: React.FC = () => {
               value={flatRate}
               onChange={(val) => {
                 setFlatRate(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 9.5"
               hint="14.5% labour-only, 9.5% general — less 1% in year 1"
@@ -206,7 +189,6 @@ const VATSchemeComparison: React.FC = () => {
               value={vatRate}
               onChange={(val) => {
                 setVatRate(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 20"
               hint="Standard 20%, Reduced 5%"
@@ -220,7 +202,6 @@ const VATSchemeComparison: React.FC = () => {
               <button
                 onClick={() => {
                   setVatRegistered(true);
-                  setCalculated(false);
                 }}
                 className={cn(
                   'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -239,7 +220,6 @@ const VATSchemeComparison: React.FC = () => {
               <button
                 onClick={() => {
                   setVatRegistered(false);
-                  setCalculated(false);
                 }}
                 className={cn(
                   'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -331,20 +311,33 @@ const VATSchemeComparison: React.FC = () => {
                 'flex items-center gap-2 p-3 rounded-xl border',
                 diff > 0
                   ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-blue-500/10 border-blue-500/30'
+                  : 'bg-white/[0.04] border-white/[0.10]'
               )}
             >
               {diff > 0 ? (
                 <CheckCircle className="h-5 w-5 text-green-400" />
               ) : (
-                <CheckCircle className="h-5 w-5 text-blue-400" />
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
               )}
               <span
-                className={cn('font-medium text-sm', diff > 0 ? 'text-green-400' : 'text-blue-400')}
+                className={cn('font-medium text-sm', diff > 0 ? 'text-green-400' : 'text-elec-yellow')}
               >
                 {betterScheme} saves you {currency(annualSaving)}/year
               </span>
             </div>
+
+            {/* The answer this page exists to give is WHICH scheme and BY HOW
+                MUCH. That was a 14px line above two equally-weighted panels,
+                so the user had to compare the panels themselves to work out
+                what they had just been told. */}
+            <CalculatorResult category="business">
+              <ResultHeadline
+                label="Better scheme for you"
+                value={betterScheme}
+                aside={`saves ${currency(annualSaving)}/year`}
+                caption={`Standard ${currency(standardVatPayable)} against flat rate ${currency(frsVatPayable)} on your figures. Re-check whenever your materials mix changes.`}
+              />
+            </CalculatorResult>
 
             {/* Scheme Comparison Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -364,7 +357,7 @@ const VATSchemeComparison: React.FC = () => {
                 <div className="text-center">
                   <p className="text-sm text-white mb-1">Flat Rate VAT</p>
                   <div
-                    className={cn('text-2xl font-bold', diff <= 0 ? 'text-blue-400' : 'text-white')}
+                    className={cn('text-2xl font-bold', diff <= 0 ? 'text-elec-yellow' : 'text-white')}
                   >
                     {currency(frsVatPayable)}
                   </div>
@@ -421,11 +414,11 @@ const VATSchemeComparison: React.FC = () => {
 
             {/* Detailed Breakdown */}
             <Collapsible open={showBreakdown} onOpenChange={setShowBreakdown}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Detailed Breakdown
                     </span>
                   </div>
@@ -468,7 +461,7 @@ const VATSchemeComparison: React.FC = () => {
 
                     {/* Flat Rate Breakdown */}
                     <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-blue-400 mb-3">
+                      <h4 className="text-sm font-medium text-elec-yellow mb-3">
                         Flat Rate VAT Scheme
                       </h4>
                       <div className="space-y-2 text-sm">
@@ -503,7 +496,7 @@ const VATSchemeComparison: React.FC = () => {
                         </p>
                       ) : (
                         <p className="text-sm text-white">
-                          <strong className="text-blue-400">Flat Rate VAT</strong> is better because
+                          <strong className="text-elec-yellow">Flat Rate VAT</strong> is better because
                           despite not reclaiming input VAT, you save {currency(annualSaving)}{' '}
                           annually with simplified accounting and the lower flat rate percentage.
                         </p>
@@ -519,7 +512,7 @@ const VATSchemeComparison: React.FC = () => {
         {/* Prompt to Calculate */}
         {!calculated && vatRegistered && (
           <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
-            <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+            <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
             <h3 className="text-white text-lg font-semibold mb-2">Ready to Compare</h3>
             <p className="text-white text-sm">
               Enter your annual revenue and labour/materials split above, then click "Compare

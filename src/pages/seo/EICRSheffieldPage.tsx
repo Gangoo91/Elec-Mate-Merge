@@ -691,7 +691,7 @@ export default function EICRSheffieldPage() {
   return (
     <GuideTemplate
       title="EICR Sheffield | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Sheffield for 2026. Landlord legal requirements, Sheffield property challenges, observation codes explained…"
+      description="EICR costs in Sheffield for 2026. Landlord legal requirements, Sheffield property challenges, observation codes explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

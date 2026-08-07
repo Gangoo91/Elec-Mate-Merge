@@ -600,7 +600,7 @@ export default function UnderfloorHeatingElectricalCostPage() {
   return (
     <GuideTemplate
       title="Underfloor Heating Electrical Cost UK 2026 | Price Guide"
-      description="How much does electric underfloor heating cost in 2026? Complete UK price guide covering heating mats, cables, thermostats, dedicated circuits…"
+      description="How much does electric underfloor heating cost in 2026? Complete UK price guide covering heating mats, cables, thermostats, dedicated circuits."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

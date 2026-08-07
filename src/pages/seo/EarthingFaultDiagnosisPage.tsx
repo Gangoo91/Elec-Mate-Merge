@@ -669,7 +669,7 @@ export default function EarthingFaultDiagnosisPage() {
   return (
     <GuideTemplate
       title="Earthing Fault Diagnosis | Finding Earth Faults"
-      description="How to find earth faults in electrical installations. Expert guide covering insulation resistance testing, the half-split method…"
+      description="How to find earth faults in electrical installations. Expert guide covering insulation resistance testing, the half-split method."
       datePublished="2025-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

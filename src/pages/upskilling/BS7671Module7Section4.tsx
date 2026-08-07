@@ -46,7 +46,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Reg 710.421.1.7 (new in A4) explicitly PROHIBITS the use of AFDDs in Group 0 and Group 2 medical locations. The rationale is exactly the opposite of the AFDD safety case in dwellings: in a theatre, an AFDD nuisance trip during a heart-lung-bypass procedure would put a patient at greater risk than the arc-fault the AFDD might detect. The IT system + IMD + supplementary bonding architecture in Group 2 is designed to TOLERATE a first earth fault without disconnection — adding an AFDD that would disconnect on any anomaly defeats that architecture. Group 1 is permitted (not prohibited), but Group 0 and Group 2 are barred outright.',
+      'Reg 710.421.1.7 (introduced by Amendment 2:2022) explicitly PROHIBITS the use of AFDDs in Group 0 and Group 2 medical locations. The rationale is exactly the opposite of the AFDD safety case in dwellings: in a theatre, an AFDD nuisance trip during a heart-lung-bypass procedure would put a patient at greater risk than the arc-fault the AFDD might detect. The IT system + IMD + supplementary bonding architecture in Group 2 is designed to TOLERATE a first earth fault without disconnection — adding an AFDD that would disconnect on any anomaly defeats that architecture. Group 1 is permitted (not prohibited), but Group 0 and Group 2 are barred outright.',
   },
   {
     id: 'm7s4-it-system',
@@ -123,7 +123,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'Reg 710.421.1.7 (new in A4) addresses AFDDs in medical locations. What does it say?',
+    question: 'Reg 710.421.1.7 (introduced by Amendment 2:2022) addresses AFDDs in medical locations. What does it say?',
     options: [
       'AFDDs are mandatory throughout Section 710',
       'AFDDs are mandatory in Group 1 only',
@@ -215,7 +215,7 @@ const faqItems = [
     question:
       'Does Reg 710.421.1.7 (AFDD prohibition) apply retrospectively to existing medical installations?',
     answer:
-      'No. Reg 710.421.1.7 is new in A4 (in force 15 April 2026) and applies to NEW design. For existing installations: (a) if AFDDs were never fitted, no action is required; (b) if AFDDs were fitted before A4 to a Group 0 or Group 2 location and the medical-equipment manufacturer expresses no compatibility concern, the installation can continue but should be flagged as a deviation from the current edition on the next EICR (typically C3); (c) if there have been actual nuisance trips affecting clinical care, the AFDDs should be removed and the deviation closed out as a C2 because patient safety is materially affected.',
+      'No. Reg 710.421.1.7 is introduced by Amendment 2:2022 (in force 15 April 2026) and applies to NEW design. For existing installations: (a) if AFDDs were never fitted, no action is required; (b) if AFDDs were fitted before A4 to a Group 0 or Group 2 location and the medical-equipment manufacturer expresses no compatibility concern, the installation can continue but should be flagged as a deviation from the current edition on the next EICR (typically C3); (c) if there have been actual nuisance trips affecting clinical care, the AFDDs should be removed and the deviation closed out as a C2 because patient safety is materially affected.',
   },
   {
     question:
@@ -298,7 +298,7 @@ const BS7671Module7Section4 = () => {
           <TLDR
             points={[
               'Section 710 classifies medical locations into Group 0 (no applied parts — ordinary BS 7671), Group 1 (applied parts in normal procedures — supplementary bonding, SELV preferred for applied parts), and Group 2 (life-supporting / intra-cardiac — IT system mandatory, IMD continuous monitoring, LPS supplementary bonding ≤ 0.2 Ω, SELV 25 V).',
-              'Reg 710.421.1.7 (new in A4) PROHIBITS AFDDs in Group 0 and Group 2 medical locations — preserving supply continuity for life-supporting equipment is more important than arc-fault detection.',
+              'Reg 710.421.1.7 (introduced by Amendment 2:2022) PROHIBITS AFDDs in Group 0 and Group 2 medical locations — preserving supply continuity for life-supporting equipment is more important than arc-fault detection.',
               'Section 729 sets minimum operating-gangway widths (0.7 m restricted, 1.0 m general) and headroom (2.0 m). Section 740 applies to temporary fairground / show installations: 30 mA RCD on sockets, IP44+ enclosures, TT with verified Ra × IΔn ≤ 50 V where DNO earth is not provided.',
             ]}
           />
@@ -428,7 +428,7 @@ const BS7671Module7Section4 = () => {
           <ConceptBlock
             title="Why AFDDs are PROHIBITED in Group 0 and Group 2"
             plainEnglish="The AFDD safety case in dwellings is that an arc-fault is more dangerous than a nuisance trip. In Group 0 medical (corridors, fire-alarm spurs, life-safety lighting), a nuisance trip can disconnect critical safety circuits with no commensurate benefit. In Group 2 (theatres, ICU), the IT-system architecture is designed to TOLERATE a first earth fault without disconnection — fitting an AFDD that interrupts on any waveform anomaly fights the entire design philosophy."
-            onSite="Reg 710.421.1.7 (new in A4) is unambiguous: AFDDs SHALL NOT be installed in Group 0 or Group 2 medical locations. Group 1 is permitted but not required — confirm compatibility with the medical-equipment manufacturer before installing. The prohibition applies to NEW design under A4; existing AFDDs in Group 0 / Group 2 should be assessed for removal at the next EICR (typically C2 if there have been actual nuisance trips affecting clinical care, C3 otherwise)."
+            onSite="Reg 710.421.1.7 (introduced by Amendment 2:2022) is unambiguous: AFDDs SHALL NOT be installed in Group 0 or Group 2 medical locations. Group 1 is permitted but not required — confirm compatibility with the medical-equipment manufacturer before installing. The prohibition applies to NEW design under A4; existing AFDDs in Group 0 / Group 2 should be assessed for removal at the next EICR (typically C2 if there have been actual nuisance trips affecting clinical care, C3 otherwise)."
           >
             <p>
               The AFDD safety case rests on a probabilistic trade-off: an arc-fault produces a
@@ -446,7 +446,7 @@ const BS7671Module7Section4 = () => {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 710.421.1.7 — AFDDs in medical locations (NEW IN A4)"
+            source="BS 7671:2018+A4:2026 · Reg 710.421.1.7 — AFDDs in medical locations (introduced by Amendment 2:2022)"
             clause="In Group 0 and Group 2 medical locations, arc fault detection devices (AFDDs) according to BS EN 62606 shall not be installed. In Group 1 medical locations, the use of AFDDs is permitted where compatibility with the medical electrical equipment is confirmed by the equipment manufacturer."
             meaning="Outright prohibition for Group 0 and Group 2. Permitted for Group 1 ONLY with manufacturer compatibility confirmation. The prohibition is new in A4 — pre-A4 designs may have AFDDs in Group 0 or Group 2 locations and these should be assessed for removal under the current edition."
             cite="BS 7671:2018+A4:2026, Reg 710.421.1.7 (in force from 15 April 2026)"
@@ -644,7 +644,7 @@ const BS7671Module7Section4 = () => {
           <KeyTakeaways
             points={[
               'Section 710 classifies medical locations into three groups by PROCEDURE, not by room type. Group 0: no applied parts (ordinary BS 7671). Group 1: applied parts in normal procedures (supplementary bonding, SELV preference). Group 2: life-supporting / intra-cardiac (IT system, IMD, LPS at 0.2 Ω, SELV 25 V).',
-              'Reg 710.421.1.7 (new in A4) PROHIBITS AFDDs in Group 0 and Group 2 medical locations. Permitted in Group 1 only with manufacturer compatibility confirmation. The prohibition reflects the design philosophy that supply continuity for life-supporting equipment is more important than arc-fault detection.',
+              'Reg 710.421.1.7 (introduced by Amendment 2:2022) PROHIBITS AFDDs in Group 0 and Group 2 medical locations. Permitted in Group 1 only with manufacturer compatibility confirmation. The prohibition reflects the design philosophy that supply continuity for life-supporting equipment is more important than arc-fault detection.',
               'Reg 710.413.1.5 tightens the SELV upper limit to 25 V AC / 60 V DC ripple-free in Group 2 (vs 50 V / 120 V in general Section 414) because cannulated patients have bypassed skin resistance.',
               'Reg 710.415.2 requires supplementary equipotential bonding to a low-impedance LPS bus in every Group 2 location, with resistance from any bonded item to the bus ≤ 0.2 Ω. Verify with a calibrated micro-ohmmeter.',
               'Section 729 (operating gangways): 0.7 m restricted, 1.0 m general, 2.0 m headroom, outward-opening doors. Section 740 (temporary installations — fairgrounds): 30 mA RCD on sockets, IP44+ enclosures, TT verification (Ra × IΔn ≤ 50 V), BS EN 60309-2 industrial connectors.',

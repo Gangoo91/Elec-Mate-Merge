@@ -4,16 +4,31 @@ import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   ShieldAlert,
-  Lock,
   AlertTriangle,
   CheckCircle2,
   FileCheck2,
   ClipboardCheck,
-  Zap,
   FileText,
   BookOpen,
   Scale,
 } from 'lucide-react';
+
+// -------------------------------------------------------------------
+// Shared presentation classes
+// -------------------------------------------------------------------
+
+/** Edge-to-edge on phones, inset card from sm: up. */
+const cardCn =
+  '-mx-4 my-5 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] ' +
+  'p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+/** Same shell, but the child is a horizontally scrolling table. */
+const tableShellCn =
+  '-mx-4 my-5 overflow-x-auto border-y border-white/[0.14] ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x';
+
+const thCn = 'px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white';
+const tdCn = 'px-4 py-3 align-top text-sm text-white';
 
 // -------------------------------------------------------------------
 // Data
@@ -32,10 +47,10 @@ const tocItems = [
   { id: 'gs38', label: 'HSE Guidance Note GS38' },
   { id: 'procedure', label: 'Safe Isolation Procedure: 6 Steps' },
   { id: 'key-references', label: 'Key References for Safe Isolation' },
-  { id: 'test-instruments', label: 'Test Instruments and GS38 Requirements' },
+  { id: 'test-instruments', label: 'Test Instruments in Practice' },
   { id: 'proving-dead', label: 'Proving Dead' },
-  { id: 'locking-off', label: 'Locking Off and Multi-Lock Hasps' },
-  { id: 'bs7671-isolation', label: 'BS 7671 Isolation Requirements' },
+  { id: 'locking-off', label: 'Locking Off and Warning Notices' },
+  { id: 'bs7671-isolation', label: 'How BS 7671 Supports Safe Isolation' },
   { id: 'complex-isolations', label: 'Complex Isolations' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
@@ -43,55 +58,60 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The legal requirement for safe isolation comes from the Electricity at Work Regulations 1989, specifically Regulation 12 (means for cutting off the supply) and Regulation 13 (precautions for work on equipment made dead).',
-  'HSE Guidance Note GS38 specifies the requirements for test equipment used during safe isolation — test leads with CAT III or CAT IV rating, fused probes, shrouded connectors, and insulated shaft with only the probe tip exposed.',
-  'The safe isolation procedure follows the prove-isolate-prove sequence: prove the voltage indicator is working on a known live source, isolate the circuit, then prove dead at the point of work.',
-  'After isolation, the isolation point must be secured against re-energisation using a lock, locking-off device, or multi-lock hasp where multiple operatives are working simultaneously.',
-  'The HSE specifies that a GS38-compliant voltage indicator (not a multimeter used alone) must be used for proving dead — a single approved voltage indicator with CAT rating appropriate to the voltage.',
-  "The IET On-Site Guide (Chapter 12 / Reg 12.5) provides the 'Minimum Stages for Safe Isolation' checklist, incorporating the HSG85 working dead hierarchy. These are the minimum stages every UK installer must follow.",
-  'For inspection and testing (EICR) work, the IET Guidance Note 3 is explicit: where testing does not require the circuit to be live, the installation or part shall be made dead and safely isolated before the test is performed.',
+  'The legal requirement comes from the Electricity at Work Regulations 1989 — Regulation 12 (means for cutting off the supply and for isolation) and Regulation 13 (precautions for work on equipment made dead). Neither is qualified by "so far as is reasonably practicable".',
+  'Regulation 12(2) defines isolation as disconnection and separation from every source of electrical energy in such a way that the disconnection and separation is secure. Securing the isolation point is part of the legal definition, not an optional extra.',
+  'GS38 is HSE guidance, not statute. It carries no legal force of its own, but it is the HSE’s account of what "suitable" test equipment means under Regulation 4(4) of the EAW Regulations — so departing from it means proving suitability another way.',
+  'The sequence is prove — isolate — secure — prove dead — prove again: demonstrate the voltage indicator works on a known live source, isolate, lock off, prove dead at the point of work, then re-prove the indicator.',
+  'The HSE prefers a dedicated two-pole voltage indicator over a multimeter for proving dead. A multimeter’s high input impedance can display a phantom voltage from capacitive coupling on a circuit that really is dead.',
+  'BS 7671 does not set the safe isolation procedure — it provides the means. Section 462 requires an isolator for every circuit, Regulation 462.3 recognises padlocking and lockable enclosures, and Regulation 514.11.1 requires a warning notice wherever live parts cannot be isolated by a single device.',
+  'For inspection and testing, IET Guidance Note 3 (Regulation 1.1) is explicit: where testing does not require the installation to be live, it shall be made dead and safely isolated before the test. BS 7671 Regulation 642.1 adds that inspection shall normally be done with that part disconnected from the supply.',
 ];
 
 const faqs = [
   {
+    question: 'Is GS38 statutory?',
+    answer:
+      'No. HSE Guidance Note GS38 is guidance, not law, and it is not an Approved Code of Practice — it carries no special legal status of its own. What is statutory is Regulation 4(4) of the Electricity at Work Regulations 1989: any equipment provided for the purpose of protecting people working on or near electrical equipment shall be suitable for the use for which it is provided, be maintained in a condition suitable for that use, and be properly used. GS38 is the HSE’s own published account of what "suitable" means for test leads, probes and voltage indicators. Following it is the straightforward way to show the duty has been met; departing from it is not automatically an offence, but it leaves you having to demonstrate suitability by some other route — typically after an incident, to an HSE inspector. IET Guidance Note 3 reinforces the point, stating that the safety procedures in GS38 shall be observed when using electrical test equipment.',
+  },
+  {
     question: 'What are Regulations 12 and 13 of the Electricity at Work Regulations 1989?',
     answer:
-      'Regulation 12 requires that electrical equipment that may give rise to danger shall not be used unless suitable means exist to cut off the supply of electrical energy to that equipment safely. This requires that a means of isolation is available for every piece of equipment — a means that can be operated without risk to the operator. Regulation 13 requires that adequate precautions shall be taken to prevent electrical equipment from becoming electrically charged, or being re-energised, while work is carried out on or near it. This is the legal basis for the prove-isolate-prove sequence and the use of locks, permits to work, and physical barriers. Both regulations are absolute — there is no qualification that the duties apply "where reasonably practicable." Compliance is mandatory.',
+      'Regulation 12 requires that, where necessary to prevent danger, suitable means shall be available for cutting off the supply of electrical energy to any electrical equipment and for the isolation of any electrical equipment — including, where appropriate, methods of identifying circuits. Regulation 12(2) then defines isolation as the disconnection and separation of the equipment from every source of electrical energy in such a way that the disconnection and separation is secure. Regulation 13 requires that adequate precautions shall be taken to prevent equipment made dead for work from becoming electrically charged during that work, where danger may thereby arise. Neither regulation is qualified by "so far as is reasonably practicable" — both are absolute duties. Regulation 29 provides a defence of having taken all reasonable steps and exercised all due diligence, but that is a defence raised at trial, not a relaxation of the duty on site.',
   },
   {
     question: 'What does GS38 require for electrical test equipment?',
     answer:
-      'HSE Guidance Note GS38 "Electrical test equipment for use by electricians" specifies that test leads, probes, and clips used for electrical testing should: be rated at the voltage and category of the circuit being tested (CAT III 1000V or CAT IV 600V for most fixed installation work); have test leads with good insulation, an acceptable current-carrying capacity, and fused clips where appropriate; have probes with insulated shafts with only a small tip of conductor exposed (no more than 4mm of bare metal at the tip); and have shrouded connectors to prevent accidental contact with adjacent live terminals. GS38 also covers the requirements for voltage detectors used for proving dead — they should be the GS38-compliant type with integral test facility.',
+      'GS38 "Electrical test equipment for use by electricians" sets out what the HSE regards as suitable test leads, probes, clips and voltage indicators. In outline: leads and probes should be rated for the measurement category and voltage of the circuit being tested (CAT III or CAT IV for fixed installation work); leads should have adequate insulation, adequate current-carrying capacity and, where the instrument manufacturer advises it, fuses; probes should have insulated shafts with only a short length of exposed metal tip; and connectors should be shrouded so they cannot bridge adjacent live terminals. GS38 also covers voltage detectors used for proving dead, which should either have an integral proving facility or be used with a separate proving unit. IET Guidance Note 3 notes that GS38 requires leads and probes to suit the insulation overvoltage category in which the test is being carried out, and cross-refers to BS EN 61010-1 for how CAT markings are interpreted.',
   },
   {
     question: 'Can I use a multimeter alone to prove dead?',
     answer:
-      'A multimeter can be used as part of the proving-dead process but should not be the only instrument used. The HSE strongly recommends using a dedicated voltage indicator (a two-pole tester designed for this purpose) as the primary proving-dead instrument. Multimeters can give misleading readings in some circumstances — for example, on a high-impedance input they may indicate a low voltage on a capacitively coupled circuit that appears dead but is not truly isolated. An approved two-pole voltage indicator, used in conjunction with a proving unit (to confirm the tester is working before and after proving dead), provides the most reliable indication of a dead circuit. The HSE guidance is clear: prove with an approved indicator, not a multimeter alone.',
+      'A multimeter can be used as a secondary check but should not be the only instrument used. The HSE prefers a dedicated two-pole voltage indicator designed for the purpose as the primary proving-dead instrument. Multimeters can mislead: on the voltage range the input impedance is very high, typically around 10 megohms, so capacitive coupling from adjacent cables can produce a reading on a circuit that really is dead — and, conversely, an unnoticed range or function selection can produce no reading on a circuit that is live. An approved two-pole voltage indicator used with a proving unit, so the tester is confirmed working before and after, gives the most reliable indication.',
   },
   {
     question: 'What is a proving unit and why is it needed?',
     answer:
-      'A proving unit (also called a test lamp or test instrument proving device) is a small battery-powered unit that provides a known voltage (typically 50V to 240V AC) so that the voltage indicator can be verified as working before and after proving dead. The prove-test-prove sequence requires: proving the voltage indicator works by testing on a known live source (which can be the circuit itself before isolation, or a proving unit), then testing for dead at the isolation point and at the point of work, then proving the voltage indicator still works afterwards using the proving unit again. This confirms that a negative (dead) reading was not caused by a faulty instrument.',
+      'A proving unit is a small battery-powered device that generates a known voltage so the voltage indicator can be shown to be working before and after proving dead. The sequence is: prove the indicator on a known live source — a proving unit, or the circuit itself before it is switched off; test for dead at the point of work; then prove the indicator again. The final step is the one people skip and the one that matters, because it is what rules out the possibility that the "dead" reading came from an instrument that had failed between the two tests. IET Guidance Note 3 requires the absence of voltage to be verified after isolation, using a suitable voltage indicator in line with GS38.',
   },
   {
     question: 'What is a multi-lock hasp and when is it used?',
     answer:
-      'A multi-lock hasp is a device that allows multiple padlocks to be fitted to a single isolation point, so that no single individual can remove all the locks and re-energise the circuit. It is used when multiple operatives are working simultaneously on a circuit or piece of equipment. Each operative fits their own padlock to the hasp when they start work and removes it only when they are clear. The isolation cannot be re-energised until all padlocks are removed, which means all operatives must have finished and confirmed they are clear before the circuit can be re-energised. Multi-lock hasps are essential on larger commercial and industrial sites where multiple trades work on the same plant.',
+      'A multi-lock hasp is a device that allows several padlocks to be fitted to one isolation point, so no single individual can remove all the locks and re-energise the circuit. It is used where more than one operative is working on the same circuit or item of plant. Each operative fits their own padlock when they start and removes it only when they are clear, so the isolation cannot be released until everyone has confirmed they are finished. Multi-lock hasps are standard on larger commercial and industrial sites where several trades work on the same plant. BS 7671 Regulation 462.3 lists padlocking as one of the recognised ways of preventing unintentional or inadvertent closure of an isolating device.',
   },
   {
     question: 'What should I do if I cannot lock off the isolation point?',
     answer:
-      'Where a physical lock cannot be fitted to the isolation point (for example, where the consumer unit does not have provision for a lock), alternative precautions must be taken. Options include: removing the fuse or MCB and keeping it in your possession (the most common approach for domestic work — carry the fuse in your pocket); placing a warning label and barrier notice on the consumer unit clearly stating the circuit is isolated and work is in progress; posting a colleague to guard the consumer unit while work is carried out; or using a temporary insulating cover over the isolation device. For MCB-only consumer units without fuse removal, an MCB lock-off device (a clamp that physically prevents the MCB from being switched on) can be fitted. Simply turning off the MCB is not sufficient — it must be secured against accidental re-energisation.',
+      'Where a padlock cannot be fitted, other precautions must be taken so the isolation is still secure — Regulation 12(2) of the EAW Regulations makes security part of the definition of isolation. Options include: removing the fuse or fuse carrier and keeping it in your possession, which is the usual approach on domestic rewireable and cartridge fuse boards; fitting an MCB lock-off clip, which physically prevents the breaker being switched back on and normally takes a padlock; placing a warning notice on the board stating that the circuit is isolated and work is in progress; or posting someone to guard the isolation point where nothing else is available. BS 7671 Regulation 462.3 also recognises locating the device within a lockable space or enclosure, or adjacent to the equipment being worked on. Simply switching the MCB off is not sufficient on its own.',
   },
   {
     question: 'Does safe isolation apply during EICR inspection and testing work?',
     answer:
-      'Yes. The IET Guidance Note 3 (GN3, 9th Edition, A4:2026) is explicit on this point: where testing does not require the equipment or part of an installation to be live, the installation or part shall be made dead and safely isolated prior to performing the test (GN3 Reg 1.1). This means that continuity tests, insulation resistance tests, ring final circuit tests, and earth fault loop impedance tests performed with the supply off all require safe isolation to be carried out first. Only tests that inherently require a live supply — such as RCD trip-time testing, prospective fault current measurement, and earth fault loop impedance testing under certain conditions — are exempt from this requirement. For all other EICR tests, the prove-isolate-secure-prove sequence must be followed before connecting test leads. Inspectors should record the voltage indicator and test instrument details in the EICR certificate to demonstrate GS38 compliance.',
+      'Yes. IET Guidance Note 3, Regulation 1.1, is explicit: where testing does not require the equipment or part of an installation to be live, the installation or part shall be made dead and safely isolated before the test is performed. BS 7671 Regulation 642.1 makes the same point for the inspection itself — inspection shall precede testing and shall normally be done with that part of the installation under inspection disconnected from the supply — and Regulation 641.4 requires precautions to be taken to avoid danger to persons and livestock, and damage to property and installed equipment, during inspection and testing. So continuity, insulation resistance and ring final circuit testing all need safe isolation first. Only tests that inherently require a live supply, such as earth fault loop impedance and RCD operation, are carried out live, and Guidance Note 3 asks the inspector to consider in each case whether the live test is necessary at all. Record the test instruments used on the certificate so the GS38-compliant kit is documented.',
   },
   {
     question: 'Does safe isolation apply to domestic electrical work?',
     answer:
-      'Yes. The Electricity at Work Regulations 1989 apply to all electrical work, including domestic electrical work carried out by electricians. There is no domestic exemption. For domestic work, the practical approach is: switch off the circuit MCB at the consumer unit, remove the fuse carrier (if rewireable fuse board) or use an MCB lock-off device, carry the fuse or lock in your pocket, place a warning label on the consumer unit, and prove dead at the point of work before starting. For work at the consumer unit itself, the supply to the consumer unit must be isolated at the meter tails (by the DNO or meter operator in most cases, as consumer units are live at the meter tails even when the main switch is off). Under no circumstances should work be carried out on live conductors in domestic premises.',
+      'Yes. The Electricity at Work Regulations 1989 apply to all electrical work carried out at work, including domestic work carried out by an electrician. There is no domestic exemption. In practice: switch off the circuit breaker at the consumer unit, fit an MCB lock-off device or remove the fuse carrier and keep it on you, put a warning notice on the board, and prove dead at the point of work before starting. Note that a single-pole MCB breaks only the line conductor — on a TT installation, isolation requires all live conductors including the neutral to be disconnected. For work on the consumer unit itself, the meter tails and the supplier’s cut-out remain live even with the main switch off; withdrawing the service fuse is the distributor’s or meter operator’s job and must be arranged with them, not done on your own initiative. Working live is permitted only in the narrow circumstances of Regulation 14 of the EAW Regulations, and in domestic premises those conditions are almost never met.',
   },
 ];
 
@@ -143,8 +163,134 @@ const relatedPages: RelatedPage[] = [
 ];
 
 // -------------------------------------------------------------------
-// Sections
+// Section content
 // -------------------------------------------------------------------
+
+const procedureSteps = [
+  {
+    title: 'Identify the circuit',
+    body: 'Identify the circuit to be isolated and confirm which protective device controls it. In a well-labelled board this is straightforward; in an unlabelled one, use a plug-in circuit tracer or careful load switching. Never take a label at face value — verify it. Regulation 12 of the EAW Regulations specifically includes methods of identifying circuits within the "suitable means" it requires.',
+  },
+  {
+    title: 'Select and prove the voltage indicator',
+    body: 'Select a GS38-compliant two-pole voltage indicator. Prove it works on a known live source — a proving unit, or the circuit itself before you switch off. It must give a positive indication on a known live source before you can rely on it to confirm anything is dead.',
+  },
+  {
+    title: 'Isolate the circuit',
+    body: 'Switch off the breaker, withdraw the fuse, or open the isolator. A single-pole MCB breaks only the line conductor, leaving the neutral connected. BS 7671 Regulation 461.2 allows this in TN-S and TN-C-S systems where protective equipotential bonding is installed and the neutral is reliably connected to Earth; on a TT or IT system, isolation requires all live conductors to be disconnected.',
+  },
+  {
+    title: 'Secure the isolation point',
+    body: 'Lock off the device, fit an MCB lock-off clip, or withdraw the fuse and keep it on you, and add a warning notice. Regulation 12(2) of the EAW Regulations makes the security of the disconnection part of the definition of isolation. Where several operatives are working, use a multi-lock hasp so each holds their own lock.',
+  },
+  {
+    title: 'Prove dead at the point of work',
+    body: 'Test at the actual point of work, not just at the board. Test every conductor combination — line to neutral, line to earth, neutral to earth. Any indication on any combination means the circuit is not dead: stop and investigate before going any further.',
+  },
+  {
+    title: 'Prove the indicator is still working',
+    body: 'Re-test the voltage indicator on the proving unit or a known live source. If it no longer responds, the dead reading in step 5 proves nothing — stop, replace the instrument and start the proving sequence again.',
+  },
+];
+
+const catRows = [
+  {
+    cat: 'CAT II',
+    where: 'Appliances and equipment downstream of a socket-outlet',
+    use: 'Plug-in loads',
+  },
+  {
+    cat: 'CAT III',
+    where: 'Fixed installation wiring — distribution boards, final circuits, socket-outlets',
+    use: 'Most fixed-wiring work',
+  },
+  {
+    cat: 'CAT IV',
+    where: 'The origin of the installation — supply intake, meter tails and main switch',
+    use: 'Origin / intake work',
+  },
+];
+
+const instrumentRows = [
+  {
+    factor: 'Proving dead',
+    vi: 'Designed for it — the HSE’s preferred instrument',
+    mm: 'Secondary check only, never on its own',
+  },
+  {
+    factor: 'Input impedance',
+    vi: 'Lower — rejects capacitive coupling',
+    mm: 'High, typically around 10 MΩ — can show a phantom voltage',
+  },
+  {
+    factor: 'Range selection',
+    vi: 'None — a clear go / no-go indication',
+    mm: 'May auto-range, with a settling delay',
+  },
+  {
+    factor: 'Prove before and after',
+    vi: 'Integral prove facility or a separate proving unit',
+    mm: 'Relies on a separate known live source',
+  },
+];
+
+const lockOffRows = [
+  {
+    method: 'Withdraw the fuse or carrier and keep it',
+    suited: 'Rewireable and cartridge fuse boards; single-operative domestic work',
+  },
+  {
+    method: 'MCB lock-off clip with padlock',
+    suited: 'Standard MCB consumer units where there is no fuse to remove',
+  },
+  {
+    method: 'Padlock on the isolator or switch-disconnector',
+    suited: 'Boards and equipment with built-in provision for a padlock',
+  },
+  {
+    method: 'Multi-lock hasp',
+    suited: 'More than one operative on the same circuit or item of plant',
+  },
+  {
+    method: 'Lockable enclosure or cupboard',
+    suited: 'Plant rooms and intake rooms — recognised by Regulation 462.3',
+  },
+];
+
+const bs7671Rows = [
+  {
+    reg: '462.1.201',
+    text: 'A main linked switch or linked circuit-breaker shall be provided as near as practicable to the origin of every installation as a means of switching the supply on load and as a means of isolation. A main switch intended for operation by ordinary persons, for example in a household installation, shall interrupt both live conductors of a single-phase supply.',
+  },
+  {
+    reg: '462.2',
+    text: 'Every circuit shall be provided with isolation means for all live conductors, except as detailed in Regulation 461.2. Provision may be made for isolating a group of circuits by a common means if the service conditions allow this.',
+  },
+  {
+    reg: '462.3',
+    text: 'Devices for isolation shall be designed and/or installed so as to prevent unintentional or inadvertent closure. The examples given are: located within a lockable space or lockable enclosure; padlocking; located adjacent to the associated equipment.',
+  },
+  {
+    reg: '462.4',
+    text: 'Where residual electrical energy is potentially present, suitable means shall be provided for its discharge, with a warning label giving the discharge time before the enclosure can be safely opened where relevant.',
+  },
+  {
+    reg: '537.2.3',
+    text: 'Devices for isolation shall be designed for overvoltage category III or IV — the exception being the plug of a plug and socket-outlet combination identified in Table 537.4 as suitable for isolation.',
+  },
+  {
+    reg: '537.2.6',
+    text: 'Means of isolation shall preferably be a multipole switching device disconnecting all applicable poles, although single-pole devices situated adjacent to each other are not excluded, subject to Regulation 461.2.',
+  },
+  {
+    reg: '537.2.7',
+    text: 'Each device used for isolation shall be clearly identified by position or durable marking to indicate the installation or circuit it isolates.',
+  },
+  {
+    reg: '514.11.1',
+    text: 'A durable warning notice shall be fixed in each position where there are live parts which are not capable of being isolated by a single device. The location of each disconnector shall be indicated unless there is no possibility of confusion.',
+  },
+];
 
 const sections = [
   {
@@ -152,44 +298,64 @@ const sections = [
     heading: 'Legal Basis for Safe Isolation',
     content: (
       <>
+        <div className={cardCn}>
+          <p className="text-xs font-semibold uppercase tracking-wide text-elec-yellow">
+            The sequence, in one line
+          </p>
+          <p className="mt-2 text-base font-semibold leading-relaxed text-white">
+            Identify → prove the indicator → isolate → secure → prove dead at the point of work →
+            prove the indicator again.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white">
+            Six steps, in that order, every time. The legal duty is Regulations 12 and 13 of the
+            Electricity at Work Regulations 1989. BS 7671 makes sure a suitable means of isolation
+            is there to use, and HSE Guidance Note GS38 covers the instrument you prove dead with.
+          </p>
+        </div>
         <p>
-          Safe isolation is not a recommendation — it is a legal requirement. The Electricity at
-          Work Regulations 1989 (EAW Regulations) place absolute duties on employers and employees
-          to ensure that electrical work is carried out safely, and safe isolation is the foundation
-          of safe electrical working practice.
+          Safe isolation is not a recommendation. The Electricity at Work Regulations 1989 (the EAW
+          Regulations) place duties on employers, the self-employed and employees to ensure
+          electrical work is carried out safely, and safe isolation is the foundation of working
+          dead. Two regulations do most of the work:
         </p>
-        <p>Two regulations are specifically relevant:</p>
-        <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">
-              Regulation 12 — Means of Isolation
+        <div className="grid gap-4 sm:grid-cols-2 my-5">
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
+            <h3 className="mb-3 text-lg font-bold text-white">
+              Regulation 12 — cutting off the supply and isolation
             </h3>
-            <p className="text-white text-sm leading-relaxed">
-              Regulation 12 requires that adequate means shall exist to cut off the supply of
-              electrical energy to any equipment. This means every circuit must have a means of
-              isolation — a switch, MCB, isolator, or fuse — that can be operated safely without
-              exposing the operator to risk. The means of isolation must be accessible and capable
-              of being secured against unintentional re-energisation.
+            <p className="text-sm leading-relaxed text-white">
+              Where necessary to prevent danger, suitable means — including, where appropriate,
+              methods of identifying circuits — shall be available for cutting off the supply of
+              electrical energy to any equipment and for the isolation of any equipment. Regulation
+              12(2) then defines isolation as disconnection and separation from every source of
+              electrical energy{' '}
+              <strong>in such a way that the disconnection and separation is secure</strong>.
+              Locking off is not an add-on to isolation; it is part of what the word means.
             </p>
           </div>
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <h3 className="font-bold text-white text-lg mb-3">
-              Regulation 13 — Precautions for Dead Working
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
+            <h3 className="mb-3 text-lg font-bold text-white">
+              Regulation 13 — precautions for work on equipment made dead
             </h3>
-            <p className="text-white text-sm leading-relaxed">
-              Regulation 13 requires that adequate precautions shall be taken to prevent equipment
-              that has been made dead from becoming electrically charged while work is in progress.
-              This requires locking off, tagging, and testing. The regulation is absolute — there is
-              no "where reasonably practicable" qualification. Non-compliance is a criminal offence.
+            <p className="text-sm leading-relaxed text-white">
+              Adequate precautions shall be taken to prevent equipment that has been made dead, in
+              order to prevent danger while work is carried out on or near it, from becoming
+              electrically charged during that work where danger may thereby arise. In practice that
+              means locking off, warning notices and proving dead at the point of work.
             </p>
           </div>
         </div>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          These are absolute duties, and what that means
+        </h3>
         <p>
-          Breaches of the EAW Regulations that result in an accident can lead to prosecution under
-          the Health and Safety at Work etc. Act 1974, potentially resulting in an unlimited fine
-          and up to 2 years' imprisonment for individuals. Beyond the legal consequences, an
-          electrical accident — particularly a fatality — has devastating personal consequences.
-          Safe isolation is non-negotiable.
+          Neither regulation is qualified by &lsquo;so far as is reasonably practicable&rsquo;.
+          Regulation 29 of the EAW Regulations does provide a defence of having taken all reasonable
+          steps and exercised all due diligence — but that is a defence argued at trial, not a
+          relaxation of the duty on site. A breach is prosecuted under the Health and Safety at Work
+          etc. Act 1974: on indictment, an unlimited fine and up to two years&rsquo; imprisonment for
+          an individual. Beyond that, an electrical accident — particularly a fatality — has
+          consequences that no penalty describes.
         </p>
       </>
     ),
@@ -199,102 +365,124 @@ const sections = [
     heading: 'HSE Guidance Note GS38',
     content: (
       <>
+        <div className={cardCn}>
+          <p className="text-xs font-semibold uppercase tracking-wide text-elec-yellow">
+            Is GS38 statutory?
+          </p>
+          <p className="mt-2 text-base font-semibold leading-relaxed text-white">
+            No — GS38 is HSE guidance, not law. The duty it interprets is.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white">
+            GS38 has no legal force of its own and is not an Approved Code of Practice. What is
+            statutory is Regulation 4(4) of the EAW Regulations: equipment provided to protect
+            people working on or near electrical equipment shall be suitable for the use for which
+            it is provided, be maintained in a condition suitable for that use, and be properly
+            used. GS38 is the HSE&rsquo;s published account of what &lsquo;suitable&rsquo; means for
+            test leads, probes and voltage indicators — so working outside it is not automatically an
+            offence, but it leaves you proving suitability some other way, usually after an incident.
+          </p>
+        </div>
         <p>
-          HSE Guidance Note GS38 ("Electrical test equipment for use by electricians") sets out the
-          requirements for the test equipment used during safe isolation and electrical testing.
-          GS38 is not a legal standard in itself, but it represents the HSE's interpretation of what
-          constitutes suitable test equipment under the EAW Regulations, and failure to comply with
-          GS38 in the event of an accident will make it very difficult to demonstrate that adequate
-          precautions were taken.
+          GS38, &lsquo;Electrical test equipment for use by electricians&rsquo;, sets out what the
+          HSE regards as suitable test equipment for use during safe isolation and electrical
+          testing. IET Guidance Note 3 reinforces it directly, stating that the testing safety
+          procedures detailed in GS38 shall be observed when using electrical test equipment.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-semibold text-white text-base mb-4">
-            GS38 Requirements for Test Equipment
-          </h3>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          What GS38 asks of your test kit
+        </h3>
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>CAT rating</strong> — test instruments must be rated for the installation
-                category in which they are used. For fixed domestic and commercial installations,
-                CAT III 1000V or CAT IV 600V is required. CAT rating indicates the instrument's
-                ability to withstand transient overvoltages (voltage spikes) without being damaged
-                or causing a flashover.
+                <strong>Measurement category rating</strong> — instruments, leads and probes must be
+                rated for the category and voltage of the circuit under test. For fixed domestic and
+                commercial installations that means CAT III or CAT IV. The rating describes the
+                transient overvoltage the equipment can withstand without breaking down.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>Fused test leads</strong> — test leads should be fused at an appropriate
-                rating (typically 500mA or 1A) to limit the energy released in the event of an
-                accidental short circuit. Unfused test leads connected to a voltage source can draw
-                very large fault currents in the event of a short.
+                <strong>Fused leads where the manufacturer advises them</strong> — fuses limit the
+                energy released if a probe bridges to a live part. Guidance Note 3 notes that some
+                manufacturers permit non-fused leads where the instrument itself has built-in
+                protection; follow the instrument instructions, and remember that internal protection
+                does not extend to the leads.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>Shrouded connectors</strong> — the connectors where the test leads plug into
-                the instrument must be shrouded (insulated) to prevent accidental contact with
-                adjacent live terminals.
+                <strong>Shrouded connectors</strong> — where the leads plug into the instrument, the
+                connectors must be shrouded so they cannot be touched or bridge adjacent terminals.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>Insulated probes</strong> — probe shafts must be insulated with only a small
-                tip of metal exposed — no more than 4mm of bare metal at the probe tip. Long bare
-                metal probe shafts create a risk of bridging adjacent terminals.
+                <strong>Insulated probes with a short exposed tip</strong> — probe shafts insulated,
+                with only a short length of metal exposed at the tip, plus finger barriers. Long bare
+                shafts bridge adjacent terminals in a crowded board.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>Integral prove facility</strong> — voltage indicators used for proving dead
-                should have an integral test facility (proving unit function) or should be used with
-                a separate proving unit.
+                <strong>A way of proving the indicator</strong> — a voltage indicator used for
+                proving dead should have an integral prove facility, or be used with a separate
+                proving unit.
               </span>
             </li>
           </ul>
         </div>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          Matching the CAT rating to where you are working
+        </h3>
         <p>
-          The CAT (measurement category) rating tells you where an instrument and its leads can be
-          used safely. The higher the category, the closer to the supply origin — and the larger the
-          potential transient overvoltage — the equipment is designed to withstand. Match the rating
-          to where you are working:
+          The measurement category tells you how close to the supply origin an instrument and its
+          leads can safely be used. The closer to the origin, the larger the transient overvoltage
+          the equipment has to survive.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4 overflow-hidden">
-          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
-            <div className="col-span-3">CAT rating</div>
-            <div className="col-span-6">Where it applies</div>
-            <div className="col-span-3">Typical use</div>
-          </div>
-          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white">
-            <div className="col-span-3 font-bold">CAT II</div>
-            <div className="col-span-6">Appliances and equipment downstream of a socket-outlet</div>
-            <div className="col-span-3">Plug-in loads</div>
-          </div>
-          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white">
-            <div className="col-span-3 font-bold">CAT III</div>
-            <div className="col-span-6">
-              Fixed installation wiring — distribution boards, final circuits, socket-outlets and
-              fixed wiring
-            </div>
-            <div className="col-span-3">Most fixed-wiring work</div>
-          </div>
-          <div className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 text-sm text-white">
-            <div className="col-span-3 font-bold">CAT IV</div>
-            <div className="col-span-6">
-              The origin of the installation — supply intake, meter tails and the main switch
-            </div>
-            <div className="col-span-3">Origin / intake work</div>
-          </div>
-          <p className="text-white/60 text-xs px-2 pt-3">
-            For most fixed installation work a CAT III 1000&nbsp;V or CAT IV 600&nbsp;V rated
-            instrument and matching leads are appropriate. The whole setup — instrument, leads and
-            probes — must carry the rating; the lowest-rated component sets the safe limit.
-          </p>
+        <div className={tableShellCn}>
+          <table className="w-full min-w-[560px] border-collapse text-left">
+            <caption className="sr-only">
+              Measurement category ratings and where each applies
+            </caption>
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th scope="col" className={thCn}>
+                  CAT rating
+                </th>
+                <th scope="col" className={thCn}>
+                  Where it applies
+                </th>
+                <th scope="col" className={thCn}>
+                  Typical use
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {catRows.map((row) => (
+                <tr key={row.cat} className="border-b border-white/[0.08] last:border-b-0">
+                  <th scope="row" className={`${tdCn} whitespace-nowrap font-bold`}>
+                    {row.cat}
+                  </th>
+                  <td className={tdCn}>{row.where}</td>
+                  <td className={tdCn}>{row.use}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+        <p className="text-sm leading-relaxed text-white">
+          For most fixed installation work a CAT III 1000&nbsp;V or CAT IV 600&nbsp;V instrument with
+          matching leads is appropriate. The whole set-up carries the rating — instrument, leads and
+          probes — and the lowest-rated component sets the safe limit. BS 7671 applies the same logic
+          to the installation itself: Regulation 537.2.3 requires devices for isolation to be
+          designed for overvoltage category III or IV.
+        </p>
       </>
     ),
   },
@@ -304,103 +492,29 @@ const sections = [
     content: (
       <>
         <p>
-          The safe isolation procedure follows a defined sequence that must not be shortened or
-          modified. The sequence is sometimes described as "prove-isolate-secure-prove" and is based
-          on the principle that the voltage indicator must be demonstrated to be working before it
-          is used to prove a circuit dead.
+          The sequence must not be shortened or reordered. It rests on one principle: the voltage
+          indicator has to be shown to be working, both before and after it is used to declare a
+          circuit dead.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+        <div className={cardCn}>
           <ol className="space-y-5 text-white">
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                1
-              </span>
-              <div>
-                <strong>Identify the circuit</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Identify the circuit to be isolated and confirm which protective device controls
-                  it. In a well-labelled consumer unit this is straightforward; in an unlabelled or
-                  poorly labelled board, plug-in circuit tracers or careful load testing is
-                  required. Never assume a label is correct — verify.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                2
-              </span>
-              <div>
-                <strong>Select and prove the voltage indicator</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Select a GS38-compliant voltage indicator. Prove that it is functioning by testing
-                  on a known live source — this can be a proving unit, or by testing at the circuit
-                  itself before switching off. The indicator must give a positive reading on a known
-                  live source before being used to confirm dead.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                3
-              </span>
-              <div>
-                <strong>Isolate the circuit</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Switch off the MCB, remove the fuse, open the isolator, or operate the relevant
-                  isolation device. For single-pole MCBs in a domestic consumer unit, this switches
-                  off only the live conductor — the neutral may still be connected to the circuit. A
-                  double-pole switch ensures both live and neutral are isolated.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                4
-              </span>
-              <div>
-                <strong>Secure the isolation point</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Lock off the isolation device, remove the fuse and carry it, fit an MCB lock-off
-                  device, or post a colleague to guard the isolation point. Place warning notices.
-                  For multi-operative working, use a multi-lock hasp so each operative has their own
-                  lock.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                5
-              </span>
-              <div>
-                <strong>Prove dead at the point of work</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Test at the actual point of work — not just at the consumer unit — to confirm the
-                  circuit is dead. Test all conductors: live to earth, live to neutral, neutral to
-                  earth. A positive reading on any combination indicates the circuit is not dead —
-                  stop and investigate before proceeding.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                6
-              </span>
-              <div>
-                <strong>Prove the indicator is still working</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  After proving dead, re-test the voltage indicator on a known live source (proving
-                  unit or adjacent live circuit) to confirm it is still functioning. If it does not
-                  respond, the "dead" reading in step 5 may have been caused by a faulty instrument
-                  — stop work and re-prove with a functioning instrument.
-                </p>
-              </div>
-            </li>
+            {procedureSteps.map((step, i) => (
+              <li key={step.title} className="flex items-start gap-4">
+                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-elec-yellow text-sm font-bold text-black">
+                  {i + 1}
+                </span>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p className="mt-1 text-sm leading-relaxed text-white">{step.body}</p>
+                </div>
+              </li>
+            ))}
           </ol>
         </div>
         <p>
-          The procedure is now complete. Work can proceed on the isolated circuit. Do not remove the
-          locking device or warning notice until work is complete and the circuit is ready to be
-          re-energised.
+          Work can now proceed. The locking device and warning notice stay in place until the work is
+          finished and the circuit is ready to be re-energised — and it is re-energised by the person
+          who isolated it, after checking nobody is still working on it.
         </p>
       </>
     ),
@@ -411,61 +525,67 @@ const sections = [
     content: (
       <>
         <p>
-          Safe isolation sits at the intersection of statutory law, HSE guidance, and the BS 7671
-          ecosystem. The four documents every UK electrician should be familiar with are:
+          Safe isolation sits across statutory law, HSE guidance and the BS 7671 ecosystem. No single
+          document holds all of it — BS 7671 itself does not set out a safe isolation procedure at
+          all. These are the documents that do.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>Electricity at Work Regulations 1989 — Regulations 12 and 13</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  The statutory foundation. Regulation 12 requires adequate means for cutting off
-                  the supply; Regulation 13 requires precautions to prevent dead equipment from
-                  becoming live while work is in progress. Both are absolute duties — no "reasonably
-                  practicable" qualification.
-                </p>
-              </div>
+        <div className={cardCn}>
+          <ul className="space-y-5 text-white">
+            <li>
+              <strong>Electricity at Work Regulations 1989 — Regulations 12, 13 and 4(4)</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                The statutory foundation. Regulation 12 requires suitable means for cutting off the
+                supply and for isolation, and defines isolation as a secure disconnection and
+                separation. Regulation 13 requires precautions to stop dead equipment becoming live
+                during work. Regulation 4(4) requires the protective equipment you use — including
+                test instruments — to be suitable, maintained and properly used.
+              </p>
             </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>
-                  HSE Guidance Note GS38 — Electrical test equipment for use by electricians
-                </strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Sets the requirements for test leads, probes, and voltage indicators used in safe
-                  isolation — CAT rating, fused leads, insulated probe shafts, shrouded connectors,
-                  and integral prove facility. GS38 is the HSE's practical interpretation of what
-                  constitutes suitable test equipment under the EAW Regulations.
-                </p>
-              </div>
+            <li>
+              <strong>
+                HSE Guidance Note GS38 — Electrical test equipment for use by electricians
+              </strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                The HSE&rsquo;s practical account of suitable test equipment: measurement category,
+                fusing, insulated probes, shrouded connectors and the means of proving the indicator.
+                Guidance, not law, but the reference point against which your kit will be judged.
+              </p>
             </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>IET On-Site Guide (9th Edition, A4:2026) — Chapter 12 / Appendix M</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  Chapter 12 of the On-Site Guide provides the &lsquo;Minimum Stages for Safe
-                  Isolation&rsquo; checklist — a stepwise procedure presented as the minimum that
-                  shall be followed before working on any circuit. The OSG also reproduces the key
-                  &lsquo;working dead&rsquo; principles from HSG85 for practical installer
-                  reference. (OSG Reg 12.5)
-                </p>
-              </div>
+            <li>
+              <strong>HSE HSG85 — Electricity at work: Safe working practices</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                The HSE&rsquo;s detailed guidance on safe electrical working, including the key
+                principles of the working dead procedure. It also places responsibility on managers
+                to establish a system of rules and procedures wherever electrical work is carried
+                out — a duty that stays with the premises management even when contractors are
+                engaged. Free to download from the HSE.
+              </p>
             </li>
-            <li className="flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>HSE HSG85 — Electricity at Work: Safe Working Practices</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  HSG85 sets out the HSE's detailed guidance on safe electrical working, including
-                  the &lsquo;working dead&rsquo; hierarchy — the sequence of steps that must be
-                  followed to identify, isolate, secure, and verify dead before work begins. The
-                  On-Site Guide incorporates HSG85 principles at Regulation 12.5.
-                </p>
-              </div>
+            <li>
+              <strong>IET On-Site Guide — Appendix M, &lsquo;Safe working practices&rsquo;</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                Appendix M is where the On-Site Guide puts its safe isolation guidance, reproducing
+                the key principles of the working dead procedure from HSG85 and stressing that
+                modern installations may have more than one source of supply. The Guide&rsquo;s
+                requirements for the isolation devices themselves sit separately at Section 5.1.
+              </p>
+            </li>
+            <li>
+              <strong>IET Guidance Note 3 — Regulation 1.1</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                For inspection and testing: where testing does not require the equipment or part of
+                an installation to be live, the installation or part shall be made dead and safely
+                isolated before the test is performed. Guidance Note 3 also requires the absence of
+                voltage to be verified after isolation, and the GS38 procedures to be observed.
+              </p>
+            </li>
+            <li>
+              <strong>Electrical Safety First — Best Practice Guide 2</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                Guidance on the management of electrical safety and safe isolation procedures for low
+                voltage installations. Referenced by both the On-Site Guide and Guidance Note 3 as
+                recognised best practice, and free to download.
+              </p>
             </li>
           </ul>
         </div>
@@ -474,41 +594,46 @@ const sections = [
   },
   {
     id: 'test-instruments',
-    heading: 'Test Instruments and GS38 Requirements in Practice',
+    heading: 'Test Instruments in Practice',
     content: (
       <>
         <p>
-          Choosing the right test instruments is not just about compliance — it is about safety.
-          Substandard test leads are one of the most common causes of electrical accidents in the
-          trade.
+          Choosing the right instruments is not just about compliance. Substandard test leads are one
+          of the most common causes of electrical accidents in the trade — and Guidance Note 3
+          requires the condition of probes and leads to be checked before any live test.
         </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
+        <div className={cardCn}>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-400" />
               <span>
-                <strong>Check the CAT rating on your test leads</strong> — not just the instrument.
-                Many electricians have CAT III or CAT IV rated instruments but use cheap test leads
-                with no CAT rating, which voids the GS38 compliance of the entire setup. Replace
-                leads that do not display a CAT rating.
+                <strong>Check the CAT rating on the leads, not just the instrument</strong> — a CAT
+                IV meter on unrated leads is a CAT-nothing set-up. The lowest-rated component in the
+                chain sets the limit. Replace any lead that does not display a rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-400" />
               <span>
-                <strong>Inspect leads before each use</strong> — test leads deteriorate with use.
-                Check for cracked insulation, exposed conductors near the probe or connector,
-                damaged fuses (if the lead has a fuse in the probe body), and bent or damaged probe
-                tips. Damaged leads must be replaced immediately.
+                <strong>Inspect leads before every use</strong> — cracked insulation, exposed
+                conductor near the probe or connector, a blown fuse in the probe body, a bent or
+                loose tip. Damaged leads are replaced, not taped up.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
               <span>
-                <strong>Carry a proving unit</strong> — a proving unit is a small, inexpensive
-                device that allows you to verify the voltage indicator is working on any job site
-                where there may not be a convenient adjacent live source to test on. They cost less
-                than £20 and could save your life.
+                <strong>Carry a proving unit</strong> — it removes any dependence on finding a
+                convenient adjacent live source, and it is the only way to complete the final prove
+                once everything nearby has been isolated.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-400" />
+              <span>
+                <strong>Ask whether the live test is needed at all</strong> — Guidance Note 3 asks
+                the inspector to consider, in each case, whether a particular live test is necessary
+                before undertaking it. The safest live test is the one you did not need to do.
               </span>
             </li>
           </ul>
@@ -522,102 +647,74 @@ const sections = [
     content: (
       <>
         <p>
-          "Proving dead" — confirming that a circuit is not live at the point of work — is the most
-          critical step in safe isolation. The HSE is specific about how this must be done.
+          Proving dead — confirming a circuit is not live at the point of work — is the step that
+          everything else exists to support. An approved two-pole voltage indicator is the correct
+          instrument for it. A multimeter can be a secondary check, but not the primary one.
         </p>
-        <p>
-          An approved voltage indicator (a two-pole voltage tester designed for proving dead) is the
-          correct instrument. A multimeter can be used as a secondary check but should not be the
-          primary proving instrument. The reasons are:
-        </p>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Multimeter high input impedance</strong> — a multimeter on the voltage range
-                has a very high input impedance (typically 10 megohms). This means it can display a
-                significant voltage reading from capacitive coupling in adjacent cables, even when
-                the circuit is truly isolated. A two-pole voltage indicator has a lower impedance
-                and will not give false readings from capacitive coupling.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Multimeter auto-ranging delays</strong> — some multimeters have an
-                auto-ranging function that takes a moment to settle on the correct range. If voltage
-                is applied suddenly, the reading may be incorrect during the settling period.
-              </span>
-            </li>
-          </ul>
+        <div className={tableShellCn}>
+          <table className="w-full min-w-[620px] border-collapse text-left">
+            <caption className="sr-only">
+              Two-pole voltage indicator compared with a multimeter for proving dead
+            </caption>
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th scope="col" className={thCn}>
+                  Factor
+                </th>
+                <th scope="col" className={thCn}>
+                  Two-pole voltage indicator
+                </th>
+                <th scope="col" className={thCn}>
+                  Multimeter
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {instrumentRows.map((row) => (
+                <tr key={row.factor} className="border-b border-white/[0.08] last:border-b-0">
+                  <th scope="row" className={`${tdCn} font-semibold`}>
+                    {row.factor}
+                  </th>
+                  <td className={`${tdCn} text-green-300`}>{row.vi}</td>
+                  <td className={tdCn}>{row.mm}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <p>
-          The HSE approved voltage indicator must be used in accordance with the prove-test-prove
-          sequence. This confirms both that the circuit is dead and that the instrument used to make
-          that determination was functioning correctly.
+          The two failure modes to understand are the reason for the preference. A multimeter on the
+          voltage range has an input impedance of around 10 megohms, high enough that capacitive
+          coupling from adjacent cables can produce a readable voltage on a conductor that is
+          genuinely dead — which trains people to distrust a real warning. And an auto-ranging meter
+          takes a moment to settle, so a reading taken immediately after the probes land can be
+          wrong. A two-pole indicator has a lower impedance, no range to select and a clear go /
+          no-go indication.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
-          <h3 className="font-semibold text-white text-base mb-2 px-2 pt-2">
-            Two-pole voltage indicator vs multimeter
-          </h3>
-          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
-            <div className="col-span-4">Factor</div>
-            <div className="col-span-4">Two-pole voltage indicator</div>
-            <div className="col-span-4">Multimeter</div>
-          </div>
-          {[
-            {
-              factor: 'Primary proving-dead use',
-              vi: 'Designed for it — HSE preferred instrument',
-              mm: 'Secondary check only, not on its own',
-            },
-            {
-              factor: 'Input impedance',
-              vi: 'Lower — rejects capacitive coupling',
-              mm: 'High (typically ~10 MΩ) — can show phantom voltage',
-            },
-            {
-              factor: 'Range selection',
-              vi: 'No selection — clear go / no-go indication',
-              mm: 'May auto-range with a settling delay',
-            },
-            {
-              factor: 'Prove before and after',
-              vi: 'Integral or separate proving unit',
-              mm: 'Relies on a separate known source',
-            },
-          ].map((row) => (
-            <div
-              key={row.factor}
-              className="grid grid-cols-12 gap-2 rounded-xl bg-white/[0.03] border border-white/10 px-2 py-3 mb-2 text-sm text-white last:mb-0"
-            >
-              <div className="col-span-4 font-semibold">{row.factor}</div>
-              <div className="col-span-4 text-green-300">{row.vi}</div>
-              <div className="col-span-4 text-white/70">{row.mm}</div>
-            </div>
-          ))}
-        </div>
-        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
-          <h4 className="font-bold text-white mb-2">Prove dead on every conductor combination</h4>
-          <p className="text-white text-sm mb-3 leading-relaxed">
-            At the point of work, test every combination — a single test is not enough. For a
-            single-phase circuit that is line, neutral and earth:
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          Test every conductor combination
+        </h3>
+        <div className={cardCn}>
+          <p className="mb-3 text-sm leading-relaxed text-white">
+            At the point of work, one test is not enough. For a single-phase circuit with line,
+            neutral and earth, test all three combinations:
           </p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {['Line to neutral', 'Line to earth', 'Neutral to earth'].map((combo) => (
               <div
                 key={combo}
-                className="rounded-xl bg-black/30 border border-white/[0.14] px-2 py-3 text-center text-sm font-semibold text-white"
+                className="rounded-xl border border-white/[0.14] bg-black/30 px-3 py-3 text-center text-sm font-semibold text-white"
               >
                 {combo}
               </div>
             ))}
           </div>
-          <p className="text-white/70 text-xs mt-3">
-            Any reading on any combination means the circuit is not dead — stop and investigate.
-            Borrowed neutrals and shared CPCs can leave a conductor live even when the controlling
-            device is off.
+          <p className="mt-3 text-sm leading-relaxed text-white">
+            Any indication on any combination means the circuit is not dead — stop and investigate.
+            Borrowed neutrals, shared CPCs and second supplies all leave conductors live with the
+            controlling device off. BS 7671 Regulation 537.1.2 requires a durable warning notice
+            wherever an item of equipment or enclosure contains live parts connected to more than one
+            supply; on an unfamiliar installation, do not assume that notice was ever fitted.
           </p>
         </div>
       </>
@@ -629,73 +726,54 @@ const sections = [
     content: (
       <>
         <p>
-          After isolating the circuit, the isolation point must be secured against re-energisation.
-          Simply switching off the MCB is not sufficient — another person could switch it back on
-          without being aware that work is in progress.
+          Once the circuit is isolated, the isolation point has to be secured. Switching the MCB off
+          is not enough — someone else can switch it back on without knowing anyone is working.
+          Regulation 12(2) of the EAW Regulations builds security into the definition of isolation,
+          and BS 7671 Regulation 462.3 requires devices for isolation to be designed or installed so
+          as to prevent unintentional or inadvertent closure.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Remove the fuse</strong> — for rewireable fuse boards and old fuse carriers,
-                remove the fuse carrier and carry it in your pocket. No fuse = no current. This is
-                the most common approach for domestic work.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>MCB lock-off device</strong> — a plastic clip that fits over the MCB and
-                prevents it from being switched on. Available with a padlock hole so the device can
-                be locked. Suitable for any MCB in a standard consumer unit.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Padlock on an isolator or switch</strong> — purpose-designed isolators and
-                switch-disconnectors often have provisions for a padlock. A padlock provides
-                positive security — the circuit cannot be re-energised without the key.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Warning notice</strong> — a warning notice ("Do not switch on — work in
-                progress") should be attached to the consumer unit or isolation point in all cases,
-                even when a physical locking device is also used. Warning notices alert others to
-                the situation and provide a clear indication of who is responsible for the
-                isolation.
-              </span>
-            </li>
-          </ul>
+        <div className={tableShellCn}>
+          <table className="w-full min-w-[520px] border-collapse text-left">
+            <caption className="sr-only">Securing methods and what each suits</caption>
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th scope="col" className={thCn}>
+                  Method
+                </th>
+                <th scope="col" className={thCn}>
+                  Best suited to
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {lockOffRows.map((row) => (
+                <tr key={row.method} className="border-b border-white/[0.08] last:border-b-0">
+                  <th scope="row" className={`${tdCn} font-semibold`}>
+                    {row.method}
+                  </th>
+                  <td className={tdCn}>{row.suited}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <p>Match the securing method to the board and the job:</p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
-          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
-            <div className="col-span-5">Method</div>
-            <div className="col-span-7">Best suited to</div>
-          </div>
-          {[
-            { m: 'Remove fuse / carrier and keep it', s: 'Rewireable or cartridge fuse boards, single-operative domestic work' },
-            { m: 'MCB lock-off clip with padlock', s: 'Standard MCB consumer units with no fuse to remove' },
-            { m: 'Padlock on isolator / switch-disconnector', s: 'Boards and equipment with built-in provision for a padlock' },
-            { m: 'Multi-lock hasp', s: 'Multiple operatives on one circuit or item of plant' },
-          ].map((row) => (
-            <div
-              key={row.m}
-              className="grid grid-cols-12 gap-2 rounded-xl bg-white/[0.03] border border-white/10 px-2 py-3 mb-2 text-sm text-white last:mb-0"
-            >
-              <div className="col-span-5 font-semibold">{row.m}</div>
-              <div className="col-span-7 text-white/70">{row.s}</div>
-            </div>
-          ))}
-          <p className="text-white/60 text-xs px-2 pt-2">
-            BS 7671 Regulation 462.3 recognises padlocking and lockable enclosures as means of
-            preventing unintentional re-closure. A warning notice should accompany every method.
-          </p>
-        </div>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          The warning notice is not optional decoration
+        </h3>
+        <p>
+          A notice — &lsquo;Do not switch on, work in progress&rsquo;, with your name on it — goes on
+          the board alongside whatever physical device you have fitted, every time. It tells the next
+          person what is happening and who owns the isolation.
+        </p>
+        <p>
+          BS 7671 requires notices in its own right, too. Regulation 514.11.1 requires a durable
+          warning notice in each position where there are live parts that cannot be isolated by a
+          single device, indicating the location of each disconnector. Regulation 537.1.2 requires a
+          warning notice wherever an installation, item of equipment or enclosure contains live parts
+          connected to more than one supply, positioned so that anyone about to gain access is warned
+          of the need to isolate every supply. Those notices are your first clue that a board is not
+          as simple as it looks.
+        </p>
       </>
     ),
   },
@@ -705,55 +783,72 @@ const sections = [
     content: (
       <>
         <p>
-          The legal duty to isolate comes from the Electricity at Work Regulations 1989, but BS 7671
-          (the IET Wiring Regulations) determines that the means of isolation you rely on actually
-          exists and is fit for the job. BS 7671 defines isolation as the function intended to make
-          dead, for reasons of safety, all or a discrete section of an installation by separating it
-          from every source of electrical energy. Chapter 46 and Section 537 set out where isolation
-          devices must be provided and how they must behave.
+          The duty to isolate comes from the EAW Regulations; BS 7671 makes sure the means of
+          isolation you rely on exists, is fit for the job and can be secured. BS 7671 defines
+          isolation as the function intended to make dead, for reasons of safety, all or a discrete
+          section of the installation by separating it from every source of electrical energy —
+          wording that lines up closely with Regulation 12(2). Chapter 46 and Section 537 set out
+          where isolation devices go and how they must behave.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-2 sm:p-4 my-4">
-          <div className="grid grid-cols-12 gap-2 px-2 py-2 text-xs font-semibold text-white/60 uppercase tracking-wide">
-            <div className="col-span-3">Regulation</div>
-            <div className="col-span-9">Requirement</div>
-          </div>
-          {[
-            {
-              reg: '462.1.201',
-              text: 'A main linked switch or linked circuit-breaker shall be provided as near as practicable to the origin of every installation, as a means of switching the supply on load and as a means of isolation. A main switch intended for operation by ordinary persons (for example in a household installation) shall interrupt both live conductors of a single-phase supply.',
-            },
-            {
-              reg: '462.2',
-              text: 'Every circuit shall be provided with a means of isolation for all live conductors, except as detailed in Regulation 461.2. A group of circuits may be isolated by a common means where the service conditions allow it.',
-            },
-            {
-              reg: '462.3',
-              text: 'Devices for isolation shall be designed and/or installed to prevent unintentional or inadvertent closure. The examples given are: located within a lockable space or enclosure; padlocking; or located adjacent to the associated equipment.',
-            },
-            {
-              reg: '462.4',
-              text: 'Where residual electrical energy may be present, suitable means shall be provided for its discharge, with a warning label indicating the discharge time before the enclosure can be safely opened where relevant.',
-            },
-          ].map((row) => (
-            <div
-              key={row.reg}
-              className="grid grid-cols-12 gap-2 rounded-xl bg-blue-900/30 border border-blue-700/40 px-2 py-3 mb-2 text-sm text-white last:mb-0"
-            >
-              <div className="col-span-3 font-bold">{row.reg}</div>
-              <div className="col-span-9 leading-relaxed">{row.text}</div>
-            </div>
-          ))}
+        <div className={tableShellCn}>
+          <table className="w-full min-w-[600px] border-collapse text-left">
+            <caption className="sr-only">
+              BS 7671 regulations relevant to isolation and lock-off
+            </caption>
+            <thead>
+              <tr className="border-b border-white/[0.14]">
+                <th scope="col" className={thCn}>
+                  Regulation
+                </th>
+                <th scope="col" className={thCn}>
+                  Requirement
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {bs7671Rows.map((row) => (
+                <tr key={row.reg} className="border-b border-white/[0.08] last:border-b-0">
+                  <th scope="row" className={`${tdCn} whitespace-nowrap font-bold`}>
+                    {row.reg}
+                  </th>
+                  <td className={`${tdCn} leading-relaxed`}>{row.text}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          Not every switch is a device for isolation
+        </h3>
         <p>
-          Regulation 462.3 is the link between the wiring regulations and the lock-off practice
-          covered above — padlocking and lockable enclosures are written into BS 7671 itself as
-          recognised ways to stop a device being re-closed. Section 537 then sets the device-level
-          requirements, with Table 537.4 giving guidance on selecting protective, isolation and
-          switching devices and their relevant product standards. When you choose an isolator,
-          switch-disconnector or lock-off arrangement, you are working to these requirements.
+          Section 537 sets the device-level requirements, and Table 537.4 — &lsquo;Guidance on the
+          selection of protective, isolation and switching devices&rsquo; — is the lookup that tells
+          you which device does which job, against which product standard. Two points from it are
+          worth carrying around. A device only counts as suitable for isolation where it is marked
+          with the symbol for isolation, IEC 60617 identity number S00288. And on a TT or IT system,
+          isolation requires disconnection of all the live conductors, neutral included — the
+          single-pole allowance in Regulation 461.2 is a TN-S and TN-C-S concession, not a general
+          one.
         </p>
-        <p className="text-white/70 text-sm">
-          Recording isolation and the test instruments used is part of completing an{' '}
+        <p>
+          The requirements do not stop at selection. Regulation 537.2.7 requires every isolating
+          device to be clearly identified, by position or durable marking, to show what it isolates —
+          which is exactly the circuit identification Regulation 12 of the EAW Regulations calls for,
+          and the reason an unlabelled board is a safe isolation problem as well as a paperwork one.
+        </p>
+        <h3 className="mt-6 mb-2 text-base font-semibold text-white">
+          Isolation during inspection and testing
+        </h3>
+        <p>
+          Part 6 assumes dead working as the default. Regulation 642.1 states that inspection shall
+          precede testing and shall normally be done with that part of the installation under
+          inspection disconnected from the supply, and Regulation 641.4 requires precautions to be
+          taken to avoid danger to persons and livestock, and damage to property and installed
+          equipment, during inspection and testing. Guidance Note 3 puts the same duty in procedural
+          terms at Regulation 1.1.
+        </p>
+        <p className="text-sm leading-relaxed text-white">
+          Recording the isolation and the instruments used is part of completing an{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. For the wider
           inspection workflow, see the{' '}
@@ -771,40 +866,41 @@ const sections = [
     content: (
       <>
         <p>
-          For larger commercial and industrial installations where multiple operatives work
-          simultaneously on the same plant or equipment, a more structured approach to isolation and
-          lock-off is required. A permit to work system and multi-lock hasps are the standard
-          approach.
+          On larger commercial and industrial installations, where several operatives work on the
+          same plant, isolation needs a structure around it: multi-lock hasps and a permit to work.
+          The On-Site Guide makes the same point for modern domestic and small commercial work — an
+          installation with solar PV, battery storage or a generator may have more than one source of
+          supply, and isolating the incoming supply does not necessarily make the installation dead.
         </p>
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <ul className="space-y-4 text-white">
-            <li className="flex items-start gap-3">
-              <ShieldAlert className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>Multi-lock hasp</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  A multi-lock hasp is a steel bar with multiple padlock holes. It is fitted to the
-                  isolation point (preventing re-energisation), and each operative working on the
-                  circuit fits their own padlock to the hasp. The isolation cannot be removed until
-                  all padlocks are removed — which requires every operative to confirm they are
-                  clear. Each operative carries their own key; no single person can re-energise the
-                  circuit while other padlocks remain.
-                </p>
-              </div>
+        <div className={cardCn}>
+          <ul className="space-y-5 text-white">
+            <li>
+              <strong>Multi-lock hasp</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                A steel bar with multiple padlock holes, fitted to the isolation point. Every
+                operative working on the circuit fits their own padlock and keeps their own key. The
+                isolation cannot be released until the last lock comes off, so no one person can
+                re-energise the circuit while anybody else is still working.
+              </p>
             </li>
-            <li className="flex items-start gap-3">
-              <ShieldAlert className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <strong>Permit to work</strong>
-                <p className="text-white text-sm mt-1 leading-relaxed">
-                  A permit to work is a formal document that identifies the equipment to be worked
-                  on, the isolation points that have been locked off, the persons authorised to
-                  carry out the work, and the precautions in place. It is signed off by a competent
-                  person (the permit issuer) and by the person receiving the permit. Permits to work
-                  are required for high-voltage work and are best practice for complex low- voltage
-                  work on large installations.
-                </p>
-              </div>
+            <li>
+              <strong>Permit to work</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                A formal document identifying the equipment, the isolation points that have been
+                locked off, the people authorised to do the work and the precautions in place, signed
+                by the issuer and by the person receiving it. Required for high voltage work and
+                standard practice for complex low voltage work on large installations.
+              </p>
+            </li>
+            <li>
+              <strong>Multiple supplies</strong>
+              <p className="mt-1 text-sm leading-relaxed text-white">
+                Where an installation, item of equipment or enclosure contains live parts connected
+                to more than one supply, BS 7671 Regulation 537.1.2 requires a durable warning notice
+                so that anyone gaining access is warned of the need to isolate every supply, unless
+                an interlocking arrangement isolates all the circuits together. Prove dead after
+                isolating each source, not after the first.
+              </p>
             </li>
           </ul>
         </div>
@@ -822,44 +918,33 @@ const sections = [
     content: (
       <>
         <p>
-          Safe isolation must be carried out on every job, every time — there are no exceptions for
-          "quick jobs" or for circuits that appear dead because a switch is off. The switch might be
-          wrong, the circuit might be double-switched, or there might be a borrowing arrangement.
-          Always prove dead before touching.
+          Safe isolation happens on every job, every time. There is no exemption for a quick job, and
+          a circuit is not dead because a switch is off — the switch may be the wrong one, the
+          circuit may be fed from two places, or there may be a borrowed neutral. Prove it dead
+          before you touch it.
         </p>
-        <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
-            <div className="flex items-start gap-4">
-              <ShieldAlert className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">Essential Kit for Safe Isolation</h4>
-                <ul className="text-white text-sm space-y-1 mt-1">
-                  <li>GS38-compliant voltage indicator (two-pole tester)</li>
-                  <li>Proving unit to verify the indicator is working</li>
-                  <li>GS38-compliant test leads with CAT III or CAT IV rating</li>
-                  <li>MCB lock-off devices (carry several)</li>
-                  <li>Warning notices ("Do not switch on")</li>
-                  <li>Multi-lock hasp for multi-operative jobs</li>
-                </ul>
-              </div>
-            </div>
+        <div className="my-5 space-y-4">
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
+            <h4 className="mb-2 font-bold text-white">Essential kit for safe isolation</h4>
+            <ul className="space-y-1 text-sm text-white">
+              <li>GS38-compliant two-pole voltage indicator</li>
+              <li>Proving unit, so the indicator can be proved anywhere</li>
+              <li>GS38-compliant test leads rated CAT III or CAT IV</li>
+              <li>MCB lock-off devices — carry several, in more than one pattern</li>
+              <li>Padlocks with your own keys</li>
+              <li>Warning notices (&lsquo;Do not switch on&rsquo;) and a marker pen</li>
+              <li>Multi-lock hasp for multi-operative jobs</li>
+            </ul>
           </div>
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <div className="flex items-start gap-4">
-              <FileCheck2 className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="font-bold text-white mb-1">
-                  Record Safe Isolation in Your Certificate
-                </h4>
-                <p className="text-white text-sm leading-relaxed">
-                  The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
-                  certificates include sections for recording the test instruments used, including
-                  the voltage indicator and multimeter details. Always complete these sections —
-                  they provide a record that GS38-compliant instruments were used.
-                </p>
-              </div>
-            </div>
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5">
+            <h4 className="mb-2 font-bold text-white">Record the instruments in your certificate</h4>
+            <p className="text-sm leading-relaxed text-white">
+              The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> both include
+              sections for the test instruments used. Complete them — they are the record that
+              suitable, GS38-compliant equipment was used on that job, on that date, and Regulation
+              4(4) of the EAW Regulations puts the burden of showing suitability on you.
+            </p>
           </div>
         </div>
       </>
@@ -875,9 +960,9 @@ export default function SafeIsolationProcedureGuidePage() {
   return (
     <GuideTemplate
       title="6 Step Safe Isolation Procedure | GS38"
-      description="Master the 6 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove method, GS38 test instrument rules, multi-lock hasps."
+      description="The 6 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove, GS38 test instrument rules, lock-off methods and the BS 7671 regulations behind them."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Procedure Guide"
@@ -893,7 +978,7 @@ export default function SafeIsolationProcedureGuidePage() {
       answerBox={{
         question: 'What is the safe isolation procedure for electricians?',
         answer:
-          'Safe isolation follows a prove-isolate-secure-prove sequence: identify the circuit, prove your GS38 voltage indicator works on a known live source, switch off and isolate, secure the isolation point with a lock or by removing the fuse, prove dead at the point of work testing all conductors, then re-prove the indicator still works. It is a legal duty under the Electricity at Work Regulations 1989.',
+          'Safe isolation follows a prove-isolate-secure-prove sequence: identify the circuit, prove your GS38 voltage indicator works on a known live source, switch off and isolate, secure the isolation point with a lock or by removing the fuse, prove dead at the point of work testing all conductor combinations, then re-prove the indicator still works. It is a legal duty under Regulations 12 and 13 of the Electricity at Work Regulations 1989.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

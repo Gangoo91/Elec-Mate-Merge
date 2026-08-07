@@ -584,7 +584,7 @@ export default function LandlordElectricalSafetyLiverpoolPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Liverpool | EICR Requirements"
-      description="Landlord electrical safety requirements in Liverpool. 2020 Regulations explained, Liverpool City Council enforcement and selective licensing…"
+      description="Landlord electrical safety requirements in Liverpool. 2020 Regulations explained, Liverpool City Council enforcement and selective licensing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

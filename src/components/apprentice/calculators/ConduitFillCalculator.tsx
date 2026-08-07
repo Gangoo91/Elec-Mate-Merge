@@ -13,6 +13,7 @@ import {
   ResultsGrid,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 // FIX (consolidation): cable overall diameters / cross-sectional areas were inlined here and
 // disagreed with the shared module on every row. Cable OD is manufacturer data, not BS 7671 data,
@@ -53,7 +54,6 @@ const ConduitFillCalculator = () => {
   const [bendCount, setBendCount] = useState('0');
   const [fillTarget, setFillTarget] = useState('40');
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showRegs, setShowRegs] = useState(false);
   const [showFormula, setShowFormula] = useState(false);
   const [result, setResult] = useState<{
     fillPercentage: number;
@@ -233,408 +233,352 @@ const ConduitFillCalculator = () => {
       title="Conduit Fill Calculator"
       description="Space-factor check with grouping to BS 7671 Table 4C1"
     >
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Conduit Material"
-          value={conduitMaterial}
-          onChange={setConduitMaterial}
-          options={[
-            { value: 'pvc', label: 'PVC' },
-            { value: 'steel', label: 'Steel' },
-          ]}
-        />
-        <CalculatorSelect
-          label="Conduit Size"
-          value={conduitSize}
-          onChange={setConduitSize}
-          options={conduitSizeOptions}
-          placeholder="Select size"
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Cable Size"
-          value={cableSize}
-          onChange={setCableSize}
-          options={cableSizeOptions}
-          placeholder="Select cable size"
-        />
-        <CalculatorInput
-          label="Number of Cables"
-          type="text"
-          inputMode="numeric"
-          value={cableQuantity}
-          onChange={setCableQuantity}
-          placeholder="Enter quantity"
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Circuits in Conduit"
-          type="text"
-          inputMode="numeric"
-          value={circuits}
-          onChange={setCircuits}
-          placeholder="1"
-        />
-        <CalculatorSelect
-          label="Fill Target (space factor)"
-          value={fillTarget}
-          onChange={setFillTarget}
-          options={[
-            { value: '30', label: '30% (Conservative)' },
-            { value: '35', label: '35% (Runs with bends)' },
-            { value: '40', label: '40% (Typical maximum)' },
-          ]}
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Run Length (m)"
-          type="text"
-          inputMode="decimal"
-          value={runLength}
-          onChange={setRunLength}
-          placeholder="e.g. 8"
-        />
-        <CalculatorSelect
-          label="Number of 90° Bends"
-          value={bendCount}
-          onChange={setBendCount}
-          options={[
-            { value: '0', label: 'Straight run' },
-            { value: '1', label: '1 bend' },
-            { value: '2', label: '2 bends' },
-            { value: '3', label: '3 bends' },
-            { value: '4', label: '4 bends' },
-          ]}
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorActions
-        category="cable"
-        onCalculate={calculateConduitFill}
-        onReset={resetCalculator}
-        isDisabled={!hasValidInputs()}
-      />
-
-      {result && (
-        <>
-          <CalculatorDivider category="cable" />
-
-          <div className="space-y-4 animate-fade-in">
-            {/* Status Chip */}
-            <div
-              className={cn(
-                'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
-                result.suitable
-                  ? 'bg-green-500/10 border border-green-500/20'
-                  : 'bg-red-500/10 border border-red-500/20'
-              )}
-            >
-              {result.suitable ? (
-                <CheckCircle2 className="h-4 w-4 text-green-400" />
-              ) : (
-                <AlertTriangle className="h-4 w-4 text-red-400" />
-              )}
-              <span
-                className={cn(
-                  'text-sm font-semibold',
-                  result.suitable ? 'text-green-300' : 'text-red-300'
-                )}
-              >
-                {result.suitable ? 'Within Space Factor' : 'Exceeds Space Factor'}
-              </span>
-            </div>
-
-            {/* Hero Value */}
-            <div className="rounded-xl p-4 bg-white/[0.04]">
-              <p className="text-sm text-white mb-1">Fill Percentage</p>
-              <div
-                className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {result.fillPercentage}%
-              </div>
-              <p className="text-sm text-white mt-1">Space factor: {result.spaceFactor}%</p>
-            </div>
-
-            {/* Result Details */}
-            <ResultsGrid columns={2}>
-              <ResultValue
-                label="Max Cables"
-                value={result.maxCables.toString()}
-                category="cable"
-                size="sm"
+      <CalculatorPanes
+        form={
+          <>
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Conduit Material"
+                value={conduitMaterial}
+                onChange={setConduitMaterial}
+                options={[
+                  { value: 'pvc', label: 'PVC' },
+                  { value: 'steel', label: 'Steel' },
+                ]}
               />
-              <ResultValue
-                label="Grouping Cg"
-                value={result.groupingFactor.toFixed(2)}
-                category="cable"
-                size="sm"
+              <CalculatorSelect
+                label="Conduit Size"
+                value={conduitSize}
+                onChange={setConduitSize}
+                options={conduitSizeOptions}
+                placeholder="Select size"
               />
-              <ResultValue
-                label="Current Cables"
+            </CalculatorInputGrid>
+
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Cable Size"
+                value={cableSize}
+                onChange={setCableSize}
+                options={cableSizeOptions}
+                placeholder="Select cable size"
+              />
+              <CalculatorInput
+                label="Number of Cables"
+                type="text"
+                inputMode="numeric"
                 value={cableQuantity}
-                category="cable"
-                size="sm"
+                onChange={setCableQuantity}
+                placeholder="Enter quantity"
               />
-              <ResultValue
-                label="Bend Radius (typical)"
-                value={result.bendRadius.toString()}
-                unit="mm"
-                category="cable"
-                size="sm"
-              />
-              <ResultValue
-                label="Est. Pull Tension"
-                value={result.pullTension > 0 ? `~${result.pullTension}` : '—'}
-                unit={result.pullTension > 0 ? 'N' : undefined}
-                category="cable"
-                size="sm"
-              />
-            </ResultsGrid>
+            </CalculatorInputGrid>
 
-            {/* Warnings */}
-            {result.warnings.length > 0 && (
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                  <div className="space-y-1 text-sm text-white">
-                    {result.warnings.map((warning, index) => (
-                      <p key={index}>{warning}</p>
-                    ))}
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Circuits in Conduit"
+                type="text"
+                inputMode="numeric"
+                value={circuits}
+                onChange={setCircuits}
+                placeholder="1"
+              />
+              <CalculatorSelect
+                label="Fill Target (space factor)"
+                value={fillTarget}
+                onChange={setFillTarget}
+                options={[
+                  { value: '30', label: '30% (Conservative)' },
+                  { value: '35', label: '35% (Runs with bends)' },
+                  { value: '40', label: '40% (Typical maximum)' },
+                ]}
+              />
+            </CalculatorInputGrid>
+
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Run Length (m)"
+                type="text"
+                inputMode="decimal"
+                value={runLength}
+                onChange={setRunLength}
+                placeholder="e.g. 8"
+              />
+              <CalculatorSelect
+                label="Number of 90° Bends"
+                value={bendCount}
+                onChange={setBendCount}
+                options={[
+                  { value: '0', label: 'Straight run' },
+                  { value: '1', label: '1 bend' },
+                  { value: '2', label: '2 bends' },
+                  { value: '3', label: '3 bends' },
+                  { value: '4', label: '4 bends' },
+                ]}
+              />
+            </CalculatorInputGrid>
+
+            <CalculatorActions
+              category="cable"
+              onCalculate={calculateConduitFill}
+              onReset={resetCalculator}
+              isDisabled={!hasValidInputs()}
+            />
+          </>
+        }
+        result={
+          <>
+            {result && (
+              <>
+                <CalculatorDivider category="cable" />
+
+                <div className="space-y-4 animate-fade-in">
+                  {/* Status Chip */}
+                  <div
+                    className={cn(
+                      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
+                      result.suitable
+                        ? 'bg-green-500/10 border border-green-500/20'
+                        : 'bg-red-500/10 border border-red-500/20'
+                    )}
+                  >
+                    {result.suitable ? (
+                      <CheckCircle2 className="h-4 w-4 text-green-400" />
+                    ) : (
+                      <AlertTriangle className="h-4 w-4 text-red-400" />
+                    )}
+                    <span
+                      className={cn(
+                        'text-sm font-semibold',
+                        result.suitable ? 'text-green-300' : 'text-red-300'
+                      )}
+                    >
+                      {result.suitable ? 'Within Space Factor' : 'Exceeds Space Factor'}
+                    </span>
                   </div>
-                </div>
-              </div>
-            )}
-          </div>
 
-          <CalculatorDivider category="cable" />
+                  {/* Hero Value */}
+                  <div className="rounded-xl p-4 bg-white/[0.04]">
+                    <p className="text-sm text-white mb-1">Fill Percentage</p>
+                    <div
+                      className="text-4xl font-bold bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }}
+                    >
+                      {result.fillPercentage}%
+                    </div>
+                    <p className="text-sm text-white mt-1">Space factor: {result.spaceFactor}%</p>
+                  </div>
 
-          {/* How It Worked Out - Collapsible */}
-          {selectedCable && cableQuantity && conduitSize && (
-            <Collapsible open={showFormula} onOpenChange={setShowFormula}>
-              <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-                <div className="flex items-center gap-3">
-                  <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-white">
-                    How It Worked Out
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-4 w-4 text-white transition-transform duration-200',
-                    showFormula && 'rotate-180'
+                  {/* Result Details */}
+                  <ResultsGrid columns={2}>
+                    <ResultValue
+                      label="Max Cables"
+                      value={result.maxCables.toString()}
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Grouping Cg"
+                      value={result.groupingFactor.toFixed(2)}
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Current Cables"
+                      value={cableQuantity}
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Bend Radius (typical)"
+                      value={result.bendRadius.toString()}
+                      unit="mm"
+                      category="cable"
+                      size="sm"
+                    />
+                    <ResultValue
+                      label="Est. Pull Tension"
+                      value={result.pullTension > 0 ? `~${result.pullTension}` : '—'}
+                      unit={result.pullTension > 0 ? 'N' : undefined}
+                      category="cable"
+                      size="sm"
+                    />
+                  </ResultsGrid>
+
+                  {/* Warnings */}
+                  {result.warnings.length > 0 && (
+                    <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                        <div className="space-y-1 text-sm text-white">
+                          {result.warnings.map((warning, index) => (
+                            <p key={index}>{warning}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   )}
-                />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent className="pt-2">
-                <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                  <div>
-                    <div className="text-xs text-purple-400 mb-1">
-                      Step 1: Cable cross-sectional area
-                    </div>
-                    <div>
-                      {selectedCable.size}mm² {selectedCable.typeLabel}, Ø
-                      {selectedCable.overallDiameter}mm
-                    </div>
-                    <div className="text-white font-bold">
-                      A = {selectedCable.crossSectionalArea}mm²
-                    </div>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <div className="text-xs text-purple-400 mb-1">Step 2: Total cable area</div>
-                    <div>
-                      Total = A × qty = {selectedCable.crossSectionalArea} × {cableQuantity}
-                    </div>
-                    <div className="text-white font-bold">
-                      Total ={' '}
-                      {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(1)}
-                      mm²
-                    </div>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <div className="text-xs text-purple-400 mb-1">Step 3: Fill percentage</div>
-                    <div>Fill = (Cable Area ÷ Conduit Bore Area) × 100</div>
-                    <div>
-                      Fill = (
-                      {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(1)} ÷{' '}
-                      {
-                        conduitData[conduitMaterial as keyof typeof conduitData][
-                          conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
-                        ].area
-                      }
-                      ) × 100
-                    </div>
-                    <div className="text-white font-bold">Fill = {result.fillPercentage}%</div>
-                  </div>
-
-                  <div className="pt-2 border-t border-purple-500/20">
-                    <div className="text-xs text-purple-400 mb-1">
-                      Step 4: Grouping factor (Table 4C1, bunched)
-                    </div>
-                    <div>
-                      {circuits} circuit{parseInt(circuits) === 1 ? '' : 's'} bunched in the conduit
-                    </div>
-                    <div className="text-white font-bold">
-                      Cg = {result.groupingFactor.toFixed(2)}
-                    </div>
-                  </div>
                 </div>
-              </CollapsibleContent>
-            </Collapsible>
-          )}
 
-          {/* What This Means - Collapsible */}
-          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <Info className="h-4 w-4 text-blue-400" />
-                <span className="text-sm sm:text-base font-medium text-white">What This Means</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showGuidance && 'rotate-180'
+                <CalculatorDivider category="cable" />
+
+                {/* How It Worked Out - Collapsible */}
+                {selectedCable && cableQuantity && conduitSize && (
+                  <Collapsible open={showFormula} onOpenChange={setShowFormula}>
+                    <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                      <div className="flex items-center gap-3">
+                        <Calculator className="h-4 w-4 text-purple-400" />
+                        <span className="text-sm sm:text-base font-medium text-white">
+                          How It Worked Out
+                        </span>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform duration-200',
+                          showFormula && 'rotate-180'
+                        )}
+                      />
+                    </CollapsibleTrigger>
+
+                    <CollapsibleContent className="pt-2">
+                      <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                        <div>
+                          <div className="text-xs text-purple-400 mb-1">
+                            Step 1: Cable cross-sectional area
+                          </div>
+                          <div>
+                            {selectedCable.size}mm² {selectedCable.typeLabel}, Ø
+                            {selectedCable.overallDiameter}mm
+                          </div>
+                          <div className="text-white font-bold">
+                            A = {selectedCable.crossSectionalArea}mm²
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-purple-500/20">
+                          <div className="text-xs text-purple-400 mb-1">
+                            Step 2: Total cable area
+                          </div>
+                          <div>
+                            Total = A × qty = {selectedCable.crossSectionalArea} × {cableQuantity}
+                          </div>
+                          <div className="text-white font-bold">
+                            Total ={' '}
+                            {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(
+                              1
+                            )}
+                            mm²
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-purple-500/20">
+                          <div className="text-xs text-purple-400 mb-1">
+                            Step 3: Fill percentage
+                          </div>
+                          <div>Fill = (Cable Area ÷ Conduit Bore Area) × 100</div>
+                          <div>
+                            Fill = (
+                            {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(
+                              1
+                            )}{' '}
+                            ÷{' '}
+                            {
+                              conduitData[conduitMaterial as keyof typeof conduitData][
+                                conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
+                              ].area
+                            }
+                            ) × 100
+                          </div>
+                          <div className="text-white font-bold">
+                            Fill = {result.fillPercentage}%
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-purple-500/20">
+                          <div className="text-xs text-purple-400 mb-1">
+                            Step 4: Grouping factor (Table 4C1, bunched)
+                          </div>
+                          <div>
+                            {circuits} circuit{parseInt(circuits) === 1 ? '' : 's'} bunched in the
+                            conduit
+                          </div>
+                          <div className="text-white font-bold">
+                            Cg = {result.groupingFactor.toFixed(2)}
+                          </div>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
                 )}
-              />
-            </CollapsibleTrigger>
 
-            <CollapsibleContent className="pt-2">
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Fill percentage</strong> affects cable pulling
-                    difficulty and heat dissipation.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Space factor</strong> is a quick area check. The
-                    definitive UK sizing method is the On-Site Guide cable-factor / conduit-factor
-                    tables, which are indexed by run length and number of bends — always confirm
-                    against those.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Grouping (Cg)</strong> is separate from fill.
-                    Two circuits bunched in one conduit already derate to 0.80, whatever the cable
-                    size.
-                  </p>
-                </div>
-                <div className="border-l-2 border-blue-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Pull tension</strong> here is an indicative
-                    engineering estimate only — BS 7671 publishes no pulling-tension method.
-                  </p>
-                </div>
+                {/* What This Means - Collapsible */}
+                <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                  <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-4 w-4 text-white" />
+                      <span className="text-sm sm:text-base font-medium text-white">
+                        What This Means
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white transition-transform duration-200',
+                        showGuidance && 'rotate-180'
+                      )}
+                    />
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pt-2">
+                    <div className="space-y-3 pl-1">
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Fill percentage</strong> affects cable
+                          pulling difficulty and heat dissipation.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Space factor</strong> is a quick area
+                          check. The definitive UK sizing method is the On-Site Guide cable-factor /
+                          conduit-factor tables, which are indexed by run length and number of bends
+                          — always confirm against those.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Grouping (Cg)</strong> is separate from
+                          fill. Two circuits bunched in one conduit already derate to 0.80, whatever
+                          the cable size.
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-white/[0.14] pl-3">
+                        <p className="text-sm text-white">
+                          <strong className="text-white">Pull tension</strong> here is an indicative
+                          engineering estimate only — BS 7671 publishes no pulling-tension method.
+                        </p>
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            )}
+
+            {/* Formula Reference */}
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+              <div className="flex items-start gap-2">
+                <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                <p className="text-sm text-white">
+                  <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Bore Area) × 100. Indicative
+                  area check — confirm against the On-Site Guide cable-factor tables, and apply Cg
+                  separately.
+                </p>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Regs at a Glance - Collapsible */}
-          <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-amber-400" />
-                <span className="text-sm sm:text-base font-medium text-white">
-                  Regs at a Glance
-                </span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200',
-                  showRegs && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-
-            <CollapsibleContent className="pt-2">
-              {/*
-                FIX: this panel previously presented "1 cable 53% / 2 cables 31% / 3+ cables 40% /
-                with bends 35%" as BS EN 61386-1 requirements. BS EN 61386 is a conduit PRODUCT
-                standard — BS 7671 cites it only for corrosion class, impact class, flame
-                propagation and the fire test (Regs 422.3.4, 522.16, 527.1.5, 705.522.16). It
-                contains no fill percentages, and none of 53/31/35 appears in BS 7671, GN3 or the
-                On-Site Guide.
-              */}
-              <div className="space-y-3 pl-1">
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">BS 7671:</strong> states no numeric conduit fill
-                    percentage. Conduit capacity is an On-Site Guide topic (OSG 2.4; OSG 7.25,
-                    Table 4.6 / Appendix H) using cable factors and conduit factors.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Space factor:</strong> the ~40% figure used here
-                    is the working limit the On-Site Guide conduit factors are built on, not a
-                    regulation. Reduce it for long runs and multiple bends.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Reg 523.5 / Table 4C1:</strong> group rating
-                    factors apply to groups containing more than one circuit — bunched or enclosed,
-                    2 circuits 0.80, 3 circuits 0.70, 4 circuits 0.65.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Reg 522.8.3:</strong> the radius of every bend
-                    shall be such that cables are not damaged and terminations are not stressed. No
-                    numeric radius is given — the figure shown is a typical former size.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Reg 522.8.6:</strong> a wiring system intended
-                    for drawing conductors in or out shall have adequate means to do so. Its note
-                    covers pulling tensions, lubricants and intermediate pulling equipment.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">Reg 522.8.1:</strong> the use of any lubricants
-                    that can have a detrimental effect on the cable or wiring system is not
-                    permitted.
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-white">BS EN 61386:</strong> the conduit product
-                    standard — corrosion class, impact class and flame propagation. It is not a
-                    source of fill limits.
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </>
-      )}
-
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-white">
-            <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Bore Area) × 100. Indicative area
-            check — confirm against the On-Site Guide cable-factor tables, and apply Cg separately.
-          </p>
-        </div>
-      </div>
-      <CalculatorEditorial content={conduitFillContent} category="cable" />
+            </div>
+          </>
+        }
+        footer={<CalculatorEditorial content={conduitFillContent} category="cable" />}
+      />
     </CalculatorCard>
   );
 };

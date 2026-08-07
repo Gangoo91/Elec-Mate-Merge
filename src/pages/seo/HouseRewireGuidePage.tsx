@@ -22,7 +22,7 @@ export default function HouseRewireGuidePage() {
   return (
     <GuideTemplate
       title="House Rewire Guide UK | What's Involved & What to Expect"
-      description="Complete guide to house rewiring in the UK. Signs you need a rewire, what's involved in first fix and second fix, typical timeline for a 3-bed house…"
+      description="Complete guide to house rewiring in the UK. Signs you need a rewire, what's involved in first fix and second fix, typical timeline for a 3-bed house."
       datePublished="2025-05-01"
       dateModified="2026-06-10"
       breadcrumbs={[

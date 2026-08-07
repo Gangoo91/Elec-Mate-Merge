@@ -468,7 +468,7 @@ export default function ElectricianSunderlandPage() {
       noindex={true}
       localArea="Sunderland"
       title="Electrician in Sunderland | Local Electricians 2026"
-      description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs…"
+      description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

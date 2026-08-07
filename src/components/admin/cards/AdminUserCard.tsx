@@ -114,9 +114,9 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
                 )}
               </div>
               {user.email ? (
-                <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                <p className="text-xs text-white truncate">{user.email}</p>
               ) : (
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="text-xs text-white truncate">
                   @{user.username || 'unknown'}
                 </p>
               )}
@@ -161,7 +161,7 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
             </div>
 
             {/* Chevron - hidden on mobile */}
-            <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 hidden sm:block" />
+            <ChevronRight className="h-4 w-4 text-white shrink-0 hidden sm:block" />
           </div>
         </div>
       </CardContent>

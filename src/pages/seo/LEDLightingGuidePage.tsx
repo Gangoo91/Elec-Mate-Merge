@@ -21,7 +21,7 @@ export default function LEDLightingGuidePage() {
   return (
     <GuideTemplate
       title="LED Lighting Guide | Choosing, Installing & Dimming"
-      description="Complete guide to LED lighting for electricians and homeowners. Covers LED technology, colour temperature, lumens vs watts, dimmable drivers…"
+      description="Complete guide to LED lighting for electricians and homeowners. Covers LED technology, colour temperature, lumens vs watts, dimmable drivers."
       datePublished="2025-07-01"
       dateModified="2026-06-10"
       breadcrumbs={[

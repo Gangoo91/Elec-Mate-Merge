@@ -528,7 +528,7 @@ export default function NurseryElectricalCostPage() {
   return (
     <GuideTemplate
       title="Nursery Electrical Cost 2026 | UK Childcare Premises Guide"
-      description="How much does nursery electrical installation cost in 2026? UK guide covering child safety, fire alarm, emergency lighting, LST heating…"
+      description="How much does nursery electrical installation cost in 2026? UK guide covering child safety, fire alarm, emergency lighting, LST heating."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

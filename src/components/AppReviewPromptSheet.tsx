@@ -1,12 +1,15 @@
 /**
  * AppReviewPromptSheet.tsx
  *
- * Bottom sheet shown after positive moments on native (cert generated, quote sent).
- * Asks nicely before triggering the native App Store / Google Play review dialog.
- * Styled to match BiometricPromptSheet.
+ * Bottom sheet shown after positive moments on native (cert generated, quote
+ * sent, invoice paid). Asks before triggering the native App Store / Google
+ * Play review flow.
+ *
+ * Gating lives in useAppReview.ts; the sheet is mounted once by
+ * <AppReviewPromptHost> at the app root.
  */
 
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 
@@ -19,36 +22,37 @@ interface AppReviewPromptSheetProps {
 const AppReviewPromptSheet = ({ open, onRate, onDismiss }: AppReviewPromptSheetProps) => {
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onDismiss()}>
-      <SheetContent side="bottom" className="rounded-t-2xl p-0 border-t border-white/10">
-        <div className="flex flex-col items-center px-6 pt-8 pb-10 gap-5">
-          {/* Icon */}
-          <div className="w-16 h-16 rounded-2xl bg-elec-yellow/15 flex items-center justify-center">
-            <Star className="h-8 w-8 text-elec-yellow fill-elec-yellow/30" />
+      <SheetContent side="bottom" className="rounded-t-2xl border-t border-white/10 p-0">
+        {/* Extra bottom padding clears the iPhone home indicator. */}
+        <div className="flex flex-col items-center gap-5 px-6 pt-8 pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
+          {/* Five stars read as "leave a rating" faster than a single icon. */}
+          <div className="flex items-center gap-1.5" aria-hidden="true">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className="h-7 w-7 fill-elec-yellow text-elec-yellow" />
+            ))}
           </div>
 
-          {/* Title + description */}
-          <div className="text-center space-y-2">
-            <h2 className="text-xl font-bold text-white">Enjoying Elec-Mate?</h2>
-            <p className="text-[15px] text-white leading-relaxed max-w-[300px]">
-              It would mean the world to us if you could spare 30 seconds to leave a rating. It
-              helps other electricians and apprentices find us.
-            </p>
+          <div className="space-y-2 text-center">
+            {/* SheetTitle, not a bare h2 — Radix needs it for the dialog label. */}
+            <SheetTitle className="text-xl font-bold text-white">Enjoying Elec-Mate?</SheetTitle>
+            <SheetDescription className="max-w-[300px] text-[15px] leading-relaxed text-white">
+              A rating helps other electricians and apprentices find us. It takes about 30 seconds.
+            </SheetDescription>
           </div>
 
-          {/* Actions */}
-          <div className="w-full space-y-3 mt-1">
+          <div className="mt-1 w-full space-y-3">
             <Button
               onClick={onRate}
-              className="w-full h-13 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation"
+              className="h-12 w-full touch-manipulation rounded-2xl bg-elec-yellow text-[16px] font-semibold text-black hover:bg-elec-yellow/90"
             >
               Sure, happy to
             </Button>
             <Button
               variant="outline"
               onClick={onDismiss}
-              className="w-full h-13 rounded-2xl text-[15px] font-medium bg-transparent border-2 border-white/10 text-white hover:bg-white/5 touch-manipulation"
+              className="h-12 w-full touch-manipulation rounded-2xl border-2 border-white/10 bg-transparent text-[15px] font-medium text-white hover:bg-white/5"
             >
-              Not Now
+              Not now
             </Button>
           </div>
         </div>

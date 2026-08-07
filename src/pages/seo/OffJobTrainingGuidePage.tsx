@@ -617,7 +617,7 @@ export default function OffJobTrainingGuidePage() {
   return (
     <GuideTemplate
       title="Off-the-Job Training Hours | Apprentice Guide UK"
-      description="What counts as off-the-job training for UK electrical apprentices, how to log evidence…"
+      description="What counts as off-the-job training for UK electrical apprentices, how to log evidence."
       datePublished="2025-10-15"
       dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}

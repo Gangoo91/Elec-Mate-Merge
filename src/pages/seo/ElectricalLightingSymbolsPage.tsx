@@ -21,7 +21,7 @@ const keyTakeaways = [
   'Emergency light symbols differentiate maintained (lit in normal use) from non-maintained (illuminates only on mains failure). BS 5266-1 requires monthly function tests + annual 3-hour duration tests.',
   'Exit sign symbols to BS EN 1838 indicate the direction of escape — always mounted above doors on escape routes and at every change of direction.',
   'Fire-rated downlight symbols are required where the downlight breaches a fire-rated ceiling, such as flats, loft conversions, and ceilings between dwellings.',
-  'Elec-Mate generates correct BS EN 60617 lighting symbols on every circuit drawing, emergency lighting layout and certificate.',
+  'Elec-Mate generates correct IEC 60617 lighting symbols on every circuit drawing, emergency lighting layout and certificate.',
 ];
 
 const faqs = [
@@ -56,14 +56,14 @@ const relatedPages = [
   {
     href: '/guides/electrical-symbols-chart',
     title: 'Electrical Symbols Chart (Full Library)',
-    description: 'All 114 BS EN 60617 symbols grouped by category — the master reference.',
+    description: 'All 114 IEC 60617 symbols grouped by category — the master reference.',
     icon: 'PenTool',
     category: 'Reference',
   },
   {
     href: '/guides/how-to-read-wiring-diagram',
     title: 'How to Read a Wiring Diagram',
-    description: 'Apply BS EN 60617 symbols to interpret installation drawings.',
+    description: 'Apply IEC 60617 symbols to interpret installation drawings.',
     icon: 'BookOpen',
     category: 'Guide',
   },
@@ -78,7 +78,7 @@ const relatedPages = [
   {
     href: '/ai-diagram-builder',
     title: 'AI Diagram Builder',
-    description: 'Drag-and-drop BS EN 60617 symbols into a working circuit drawing.',
+    description: 'Drag-and-drop IEC 60617 symbols into a working circuit drawing.',
     icon: 'ShieldCheck',
     category: 'Tool',
   },
@@ -91,7 +91,7 @@ const sections = [
     content: (
       <>
         <p>
-          Below are every lighting symbols on the Elec-Mate symbol library, drawn to BS EN 60617.
+          Below are every lighting symbols on the Elec-Mate symbol library, drawn to IEC 60617.
           Right-click any symbol to save the SVG, or use the{' '}
           <SEOInternalLink href="/ai-diagram-builder">AI Diagram Builder</SEOInternalLink> to drag
           them directly into a circuit drawing.
@@ -107,10 +107,10 @@ const sections = [
       <>
         <p>
           Every lighting symbol used on UK electrical drawings — pendant to high bay, plus emergency
-          lighting and exit signs to BS 5266 and BS EN 1838 — drawn to BS EN 60617.
+          lighting and exit signs to BS 5266 and BS EN 1838 — drawn to IEC 60617.
         </p>
         <p>
-          Each symbol is drawn to <strong>BS EN 60617</strong> — the UK adoption of the
+          Each symbol is drawn to <strong>IEC 60617</strong> — the UK adoption of the
           international IEC 60617 standard for graphical symbols on electrical diagrams. The same
           symbols appear on{' '}
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
@@ -119,14 +119,14 @@ const sections = [
         <p>
           Looking for symbols in a different category? See the full{' '}
           <SEOInternalLink href="/guides/electrical-symbols-chart">
-            BS EN 60617 symbol library
+            IEC 60617 symbol library
           </SEOInternalLink>{' '}
           covering switches, sockets, lighting, distribution, safety, containment, equipment,
           mechanical, renewables, controls and architectural symbols.
         </p>
         <SEOAppBridge
           title="Use these symbols in real drawings"
-          description="The Elec-Mate AI Diagram Builder gives you every BS EN 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
+          description="The Elec-Mate AI Diagram Builder gives you every IEC 60617 symbol on a draggable canvas — perfect for circuit diagrams, certificate schedules…"
           ctaText="Open the Diagram Builder"
           ctaHref="/ai-diagram-builder"
         />
@@ -138,8 +138,8 @@ const sections = [
 export default function ElectricalLightingSymbolsPage() {
   return (
     <GuideTemplate
-      title="Lighting Symbols | BS EN 60617 Light Fitting Reference"
-      description="Pendant, ceiling, downlight, wall, bulkhead, high bay, fluorescent, LED strip, emergency light…"
+      title="Lighting Symbols | IEC 60617 Light Fitting Reference"
+      description="Pendant, ceiling, downlight, wall, bulkhead, high bay, fluorescent, LED strip, emergency light."
       datePublished="2026-05-18"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -149,17 +149,17 @@ export default function ElectricalLightingSymbolsPage() {
       heroTitle={
         <>
           Lighting Symbols:{' '}
-          <span className="text-yellow-400">BS EN 60617 reference for UK electricians</span>
+          <span className="text-yellow-400">IEC 60617 reference for UK electricians</span>
         </>
       }
-      heroSubtitle="Every lighting symbol used on UK electrical drawings — pendant to high bay, plus emergency lighting and exit signs to BS 5266 and BS EN 1838 — drawn to BS EN 60617."
+      heroSubtitle="Every lighting symbol used on UK electrical drawings — pendant to high bay, plus emergency lighting and exit signs to BS 5266 and BS EN 1838 — drawn to IEC 60617."
       readingTime={6}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       faqHeading="FAQ — Lighting Symbols"
       relatedPages={relatedPages}
-      ctaHeading="Use BS EN 60617 symbols in working drawings"
+      ctaHeading="Use IEC 60617 symbols in working drawings"
       ctaSubheading="Drag-and-drop circuit diagrams. EICR + EIC schedules with correct symbols. Built for UK electricians. 7-day free trial."
     />
   );

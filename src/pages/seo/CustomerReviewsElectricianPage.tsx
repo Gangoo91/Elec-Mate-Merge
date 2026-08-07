@@ -533,7 +533,7 @@ export default function CustomerReviewsElectricianPage() {
   return (
     <GuideTemplate
       title="Getting Customer Reviews as an Electrician UK | Review"
-      description="How to get more Google, Checkatrade, and Trustpilot reviews as a UK electrician. When and how to ask, dealing with negative reviews, QR code cards…"
+      description="How to get more Google, Checkatrade, and Trustpilot reviews as a UK electrician. When and how to ask, dealing with negative reviews, QR code cards."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

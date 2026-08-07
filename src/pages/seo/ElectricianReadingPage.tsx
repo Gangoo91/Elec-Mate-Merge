@@ -576,7 +576,7 @@ export default function ElectricianReadingPage() {
     <GuideTemplate
       localArea="Reading"
       title="Electrician in Reading | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Reading. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian terrace rewiring…"
+      description="Find qualified, registered electricians in Reading. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian terrace rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -545,7 +545,7 @@ export default function LandlordElectricalSafetyManchesterPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Manchester | EICR Requirements"
-      description="Landlord electrical safety requirements in Manchester. 2020 Regulations, selective licensing, HMO requirements, penalties up to £30,000, tenant rights…"
+      description="Landlord electrical safety requirements in Manchester. 2020 Regulations, selective licensing, HMO requirements, penalties up to £30,000, tenant rights."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

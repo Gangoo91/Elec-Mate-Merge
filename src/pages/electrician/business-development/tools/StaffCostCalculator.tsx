@@ -16,7 +16,6 @@ import {
   BookOpen,
   Info,
 } from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -24,6 +23,7 @@ import {
   CalculatorInput,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
@@ -37,8 +37,10 @@ import {
   employerPensionOn,
   priceFromMargin,
 } from '@/data/ukRates';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
-const currency = (n: number) => `£${n.toFixed(2)}`;
+const currency = (n: number) =>
+  `£${(n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 const StaffCostCalculator: React.FC = () => {
   const config = CALCULATOR_CONFIG['business'];
@@ -60,8 +62,14 @@ const StaffCostCalculator: React.FC = () => {
   const [trainingYear, setTrainingYear] = React.useState('600');
   const [utilisation, setUtilisation] = React.useState('65');
   const [targetMargin, setTargetMargin] = React.useState('20');
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = React.useState(false);
+  const [calculated, setCalculated] = React.useState(true);
   const [showBreakdown, setShowBreakdown] = React.useState(false);
   const [showReference, setShowReference] = React.useState(false);
 
@@ -129,7 +137,6 @@ const StaffCostCalculator: React.FC = () => {
     setTrainingYear('600');
     setUtilisation('65');
     setTargetMargin('20');
-    setCalculated(false);
   };
 
   const isValid = basePayHrNum > 0 && weeklyHoursNum > 0;
@@ -145,28 +152,13 @@ const StaffCostCalculator: React.FC = () => {
         <link rel="canonical" href="/electrician/business-development/tools/staff-cost" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Users className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Staff Cost Calculator
-              </h1>
-              <p className="text-sm text-white">Calculate true employment costs</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+        <HubMasthead
+          section="Business"
+          title="Staff Cost Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -175,10 +167,7 @@ const StaffCostCalculator: React.FC = () => {
           badge="Employment"
         >
           {/* Basic Pay Section */}
-          <div className="flex items-center gap-2 mb-3">
-            <Users className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Basic Pay Details</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Basic Pay Details</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <CalculatorInput
@@ -189,7 +178,6 @@ const StaffCostCalculator: React.FC = () => {
               value={basePayHr}
               onChange={(val) => {
                 setBasePayHr(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 26"
               hint="Hourly wage"
@@ -203,7 +191,6 @@ const StaffCostCalculator: React.FC = () => {
               value={weeklyHours}
               onChange={(val) => {
                 setWeeklyHours(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 37.5"
               hint="JIB standard week: 37.5 (NWR 3.1)"
@@ -217,7 +204,6 @@ const StaffCostCalculator: React.FC = () => {
               value={paidWeeks}
               onChange={(val) => {
                 setPaidWeeks(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 52"
               hint="Per year"
@@ -225,10 +211,7 @@ const StaffCostCalculator: React.FC = () => {
           </div>
 
           {/* Employment Costs Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Receipt className="h-4 w-4 text-purple-400" />
-            <span className="text-sm font-medium text-white">Employment Costs</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Employment Costs</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -239,7 +222,6 @@ const StaffCostCalculator: React.FC = () => {
               value={holidaysDays}
               onChange={(val) => {
                 setHolidaysDays(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 28"
               hint="Statutory 5.6 weeks = 28 days (inc bank hols)"
@@ -253,7 +235,6 @@ const StaffCostCalculator: React.FC = () => {
               value={sickDays}
               onChange={(val) => {
                 setSickDays(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 3"
               hint="Average/year"
@@ -267,7 +248,6 @@ const StaffCostCalculator: React.FC = () => {
               value={niRate}
               onChange={(val) => {
                 setNiRate(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 15"
               hint={`${UK_EMPLOYER_COSTS.taxYear}: 15% above £${UK_EMPLOYER_COSTS.employerNISecondaryThresholdAnnual.toLocaleString('en-GB')}`}
@@ -281,7 +261,6 @@ const StaffCostCalculator: React.FC = () => {
               value={pensionRate}
               onChange={(val) => {
                 setPensionRate(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 3"
               hint="3% of qualifying earnings (£6,240–£50,270)"
@@ -289,10 +268,7 @@ const StaffCostCalculator: React.FC = () => {
           </div>
 
           {/* Equipment Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Wrench className="h-4 w-4 text-orange-400" />
-            <span className="text-sm font-medium text-white">Equipment & Overheads</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Equipment & Overheads</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -303,7 +279,6 @@ const StaffCostCalculator: React.FC = () => {
               value={vanYear}
               onChange={(val) => {
                 setVanYear(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 4200"
               hint="Lease, fuel, insurance"
@@ -317,7 +292,6 @@ const StaffCostCalculator: React.FC = () => {
               value={toolsYear}
               onChange={(val) => {
                 setToolsYear(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 1000"
               hint="Replacements"
@@ -331,7 +305,6 @@ const StaffCostCalculator: React.FC = () => {
               value={insuranceYear}
               onChange={(val) => {
                 setInsuranceYear(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 1500"
               hint="Public liability"
@@ -345,7 +318,6 @@ const StaffCostCalculator: React.FC = () => {
               value={trainingYear}
               onChange={(val) => {
                 setTrainingYear(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 600"
               hint="Courses, certs"
@@ -353,10 +325,7 @@ const StaffCostCalculator: React.FC = () => {
           </div>
 
           {/* Efficiency Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Target className="h-4 w-4 text-green-400" />
-            <span className="text-sm font-medium text-white">Efficiency & Margins</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Efficiency & Margins</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -367,7 +336,6 @@ const StaffCostCalculator: React.FC = () => {
               value={utilisation}
               onChange={(val) => {
                 setUtilisation(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 65"
               hint="Billable % of time"
@@ -381,7 +349,6 @@ const StaffCostCalculator: React.FC = () => {
               value={targetMargin}
               onChange={(val) => {
                 setTargetMargin(val);
-                setCalculated(false);
               }}
               placeholder="e.g., 20"
               hint="Profit target"
@@ -423,21 +390,11 @@ const StaffCostCalculator: React.FC = () => {
             {/* Key Results */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CalculatorResult category="business">
-                <div className="text-center">
-                  <p className="text-sm text-white mb-1">True Hourly Cost</p>
-                  <div
-                    className="text-3xl font-bold"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}
-                  >
-                    {currency(loadedHourlyCost)}/hr
-                  </div>
-                  <p className="text-xs text-white mt-1">Fully loaded cost</p>
-                </div>
+                <ResultHeadline
+                  label="What they really cost per billable hour"
+                  value={`${currency(loadedHourlyCost)}/hr`}
+                  caption="Base pay plus employer NI, holiday and pension, spread over the hours you can actually bill — not the hours you pay for."
+                />
               </CalculatorResult>
 
               <CalculatorResult category="business">
@@ -483,11 +440,11 @@ const StaffCostCalculator: React.FC = () => {
 
             {/* Cost Breakdown */}
             <Collapsible open={showBreakdown} onOpenChange={setShowBreakdown}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Cost Breakdown
                     </span>
                   </div>
@@ -575,9 +532,9 @@ const StaffCostCalculator: React.FC = () => {
                       <span className="text-white">Billable at {utilisationNum}%</span>
                       <span className="text-white font-mono">{effectiveHours.toFixed(0)} hrs</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 font-medium bg-blue-500/10 px-2 rounded">
-                      <span className="text-blue-300">= True Hourly Cost</span>
-                      <span className="text-blue-400 font-mono text-base">
+                    <div className="flex justify-between items-center py-2 font-medium bg-white/[0.04] px-2 rounded">
+                      <span className="text-elec-yellow">= True Hourly Cost</span>
+                      <span className="text-elec-yellow font-mono text-base">
                         {currency(loadedHourlyCost)}/hr
                       </span>
                     </div>
@@ -597,7 +554,7 @@ const StaffCostCalculator: React.FC = () => {
         {/* Prompt to Calculate */}
         {!calculated && (
           <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
-            <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+            <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
             <h3 className="text-white text-lg font-semibold mb-2">Ready to Calculate</h3>
             <p className="text-white text-sm">
               Enter your staff costs and overheads above, then click "Calculate Cost" to see the

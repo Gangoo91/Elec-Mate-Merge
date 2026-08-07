@@ -22,14 +22,14 @@ export function ClarificationBlock({ clarification, onAnswer }: ClarificationBlo
         <HelpCircle
           className={cn(
             'h-4 w-4 shrink-0 mt-0.5',
-            answered ? 'text-white/40' : 'text-amber-300'
+            answered ? 'text-white' : 'text-amber-300'
           )}
         />
         <div className="flex-1 min-w-0">
           <p
             className={cn(
               'text-[10px] font-bold uppercase tracking-[0.16em] mb-0.5',
-              answered ? 'text-white/40' : 'text-amber-300'
+              answered ? 'text-white' : 'text-amber-300'
             )}
           >
             {answered ? 'Answered' : 'Quick check'}
@@ -38,7 +38,7 @@ export function ClarificationBlock({ clarification, onAnswer }: ClarificationBlo
             {clarification.question}
           </p>
           {clarification.context && (
-            <p className="text-[12px] text-white/55 mt-0.5 leading-snug">
+            <p className="text-[12px] text-white mt-0.5 leading-snug">
               {clarification.context}
             </p>
           )}
@@ -58,7 +58,7 @@ export function ClarificationBlock({ clarification, onAnswer }: ClarificationBlo
                 answered
                   ? isPicked
                     ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
-                    : 'bg-white/[0.02] text-white/30 border border-white/[0.05] cursor-not-allowed'
+                    : 'bg-white/[0.02] text-white border border-white/[0.05] cursor-not-allowed'
                   : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] hover:border-white/[0.2]'
               )}
             >

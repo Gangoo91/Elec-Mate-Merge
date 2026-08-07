@@ -845,7 +845,7 @@ export default function EICRBristolPage() {
   return (
     <GuideTemplate
       title="EICR Bristol | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Bristol for 2026. Landlord legal requirements, HMO licensing, Georgian property challenges in Clifton, observation codes explained…"
+      description="EICR costs in Bristol for 2026. Landlord legal requirements, HMO licensing, Georgian property challenges in Clifton, observation codes explained."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

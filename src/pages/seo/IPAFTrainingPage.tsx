@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'IPAF Training Course Online | MEWP Safety | Elec-Mate';
+const PAGE_TITLE = 'IPAF Training Course Online | MEWP Safety';
 const PAGE_DESCRIPTION =
   'IPAF training online: MEWP categories, pre-use checks, safe operation, emergency procedures. Mock exams + AI-powered study tools.';
 

@@ -17,6 +17,7 @@ import {
   CalculatorEditorial,
   FormulaReference,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { adiabaticContent } from './content/adiabatic';
@@ -288,302 +289,314 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
       title="Adiabatic Equation Calculator"
       description="Calculate minimum cable CSA to withstand fault current per BS 7671"
     >
-      <CalculatorSelect
-        label="Input Mode"
-        value={mode}
-        onChange={(v) => setMode(v as 'current' | 'zs')}
-        options={modeOptions}
-      />
-
-      {mode === 'current' ? (
-        <CalculatorInput
-          label="Prospective Fault Current (I)"
-          unit="A"
-          type="text"
-          inputMode="decimal"
-          value={faultCurrent}
-          onChange={setFaultCurrent}
-          placeholder="e.g., 1000"
-          error={errors.faultCurrent}
-          hint="Prospective fault current at connection point"
-        />
-      ) : (
-        <div className="space-y-4">
-          <CalculatorInputGrid columns={2}>
-            <CalculatorInput
-              label="Earth Fault Loop Impedance (Zs)"
-              unit="Ω"
-              type="text"
-              inputMode="decimal"
-              value={zs}
-              onChange={setZs}
-              placeholder="e.g., 0.35"
-              error={errors.zs}
+      <CalculatorPanes
+        form={
+          <>
+            <CalculatorSelect
+              label="Input Mode"
+              value={mode}
+              onChange={(v) => setMode(v as 'current' | 'zs')}
+              options={modeOptions}
             />
-            <CalculatorInput
-              label="Supply Voltage (Uo)"
-              unit="V"
-              type="text"
-              inputMode="decimal"
-              value={voltage}
-              onChange={setVoltage}
-              placeholder="230"
-              error={errors.voltage}
-            />
-          </CalculatorInputGrid>
 
-          {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
-            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-              <div className="flex items-center gap-2 text-sm">
-                <Zap className="h-4 w-4 text-orange-400" />
-                <span className="text-white">Calculated fault current:</span>
-                <span className="font-mono font-bold text-orange-400">
-                  {computeFaultCurrent.toFixed(0)} A
-                </span>
+            {mode === 'current' ? (
+              <CalculatorInput
+                label="Prospective Fault Current (I)"
+                unit="A"
+                type="text"
+                inputMode="decimal"
+                value={faultCurrent}
+                onChange={setFaultCurrent}
+                placeholder="e.g., 1000"
+                error={errors.faultCurrent}
+                hint="Prospective fault current at connection point"
+              />
+            ) : (
+              <div className="space-y-4">
+                <CalculatorInputGrid columns={2}>
+                  <CalculatorInput
+                    label="Earth Fault Loop Impedance (Zs)"
+                    unit="Ω"
+                    type="text"
+                    inputMode="decimal"
+                    value={zs}
+                    onChange={setZs}
+                    placeholder="e.g., 0.35"
+                    error={errors.zs}
+                  />
+                  <CalculatorInput
+                    label="Supply Voltage (Uo)"
+                    unit="V"
+                    type="text"
+                    inputMode="decimal"
+                    value={voltage}
+                    onChange={setVoltage}
+                    placeholder="230"
+                    error={errors.voltage}
+                  />
+                </CalculatorInputGrid>
+
+                {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
+                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Zap className="h-4 w-4 text-orange-400" />
+                      <span className="text-white">Calculated fault current:</span>
+                      <span className="font-mono font-bold text-orange-400">
+                        {computeFaultCurrent.toFixed(0)} A
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
-        </div>
-      )}
+            )}
 
-      <CalculatorSelect
-        label="Disconnection Time"
-        value={timePreset}
-        onChange={setTimePreset}
-        options={timePresetOptions}
-      />
-
-      {timePreset === 'custom' && (
-        <CalculatorInput
-          label="Custom Time (t)"
-          unit="s"
-          type="text"
-          inputMode="decimal"
-          value={disconnectionTime}
-          onChange={setDisconnectionTime}
-          placeholder="e.g., 0.4"
-          error={errors.disconnectionTime}
-        />
-      )}
-
-      <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Conductor Material"
-          value={material}
-          onChange={setMaterial}
-          options={materialOptions}
-        />
-        <CalculatorSelect
-          label="Insulation / Max Temp"
-          value={maxTemp}
-          onChange={setMaxTemp}
-          options={tempOptions}
-        />
-      </CalculatorInputGrid>
-
-      {/* Advanced Options */}
-      <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-        {/* A rule-separated section, not a tinted box. Every field above it is
-            an underline on a transparent ground; a filled rounded panel here was
-            the one thing on the card that looked like it came from a different
-            design. Hierarchy comes from the rule and the type, per the system. */}
-        <div className="border-t border-white/[0.1] pt-1">
-          <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-1 py-2 text-sm font-medium text-white hover:text-white/90 transition-colors touch-manipulation">
-            <span>Advanced Options</span>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 transition-transform duration-200',
-                showAdvanced && 'rotate-180'
-              )}
+            <CalculatorSelect
+              label="Disconnection Time"
+              value={timePreset}
+              onChange={setTimePreset}
+              options={timePresetOptions}
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="px-4 pb-4">
-            <CalculatorInput
-              label="Custom k Factor (optional)"
-              type="text"
-              inputMode="decimal"
-              value={customK}
-              onChange={setCustomK}
-              placeholder={`Default: ${effectiveK}`}
-              hint="Override material-based k factor from BS 7671 Table 54.3"
-            />
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
 
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate}
-        showReset={!!result}
-      />
+            {timePreset === 'custom' && (
+              <CalculatorInput
+                label="Custom Time (t)"
+                unit="s"
+                type="text"
+                inputMode="decimal"
+                value={disconnectionTime}
+                onChange={setDisconnectionTime}
+                placeholder="e.g., 0.4"
+                error={errors.disconnectionTime}
+              />
+            )}
 
-      {/* ── Results ── */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          {/* Status + Copy */}
-          <div className="flex items-center justify-between">
-            <ResultBadge
-              status={result.isCompliant ? 'pass' : 'warning'}
-              label={
-                result.isCompliant
-                  ? `${result.material.charAt(0).toUpperCase() + result.material.slice(1)}, ${INSULATION_LABEL[result.maxTemp] ?? result.maxTemp} (k=${result.k})`
-                  : 'Review Required'
-              }
-            />
-            <button
-              onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
-          </div>
+            <CalculatorInputGrid columns={2}>
+              <CalculatorSelect
+                label="Conductor Material"
+                value={material}
+                onChange={setMaterial}
+                options={materialOptions}
+              />
+              <CalculatorSelect
+                label="Insulation / Max Temp"
+                value={maxTemp}
+                onChange={setMaxTemp}
+                options={tempOptions}
+              />
+            </CalculatorInputGrid>
 
-          {/* Hero value */}
-          <div className="text-center py-3">
-            <p className="text-sm font-medium text-white mb-1">Standard Cable Size</p>
-            <p
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              }}
-            >
-              {result.roundedCsa} mm²
-            </p>
-            <p className="text-sm text-white mt-2">
-              Minimum required: {result.minimumCsa.toFixed(2)} mm²
-            </p>
-          </div>
+            {/* Advanced Options */}
+            <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+              {/* A rule-separated section, not a tinted box. Every field above it is
+              an underline on a transparent ground; a filled rounded panel here was
+              the one thing on the card that looked like it came from a different
+              design. Hierarchy comes from the rule and the type, per the system. */}
+              <div className="border-t border-white/[0.1] pt-1">
+                <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-1 py-2 text-sm font-medium text-white hover:text-white/90 transition-colors touch-manipulation">
+                  <span>Advanced Options</span>
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 transition-transform duration-200',
+                      showAdvanced && 'rotate-180'
+                    )}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="px-4 pb-4">
+                  <CalculatorInput
+                    label="Custom k Factor (optional)"
+                    type="text"
+                    inputMode="decimal"
+                    value={customK}
+                    onChange={setCustomK}
+                    placeholder={`Default: ${effectiveK}`}
+                    hint="Override material-based k factor from BS 7671 Table 54.3"
+                  />
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
 
-          {/* Result cards */}
-          <ResultsGrid columns={2}>
-            <ResultValue
-              label="Minimum CSA"
-              value={result.minimumCsa.toFixed(2)}
-              unit="mm²"
+            <CalculatorActions
               category={CAT}
-              size="sm"
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate}
+              showReset={!!result}
             />
-            <ResultValue
-              label="Safety Margin"
-              value={`${result.safetyMargin.toFixed(1)}%`}
-              category={CAT}
-              size="sm"
-            />
-          </ResultsGrid>
+          </>
+        }
+        result={
+          <>
+            {/* ── Results ── */}
+            {result && (
+              <div className="space-y-4 animate-fade-in">
+                {/* Status + Copy */}
+                <div className="flex items-center justify-between">
+                  <ResultBadge
+                    status={result.isCompliant ? 'pass' : 'warning'}
+                    label={
+                      result.isCompliant
+                        ? `${result.material.charAt(0).toUpperCase() + result.material.slice(1)}, ${INSULATION_LABEL[result.maxTemp] ?? result.maxTemp} (k=${result.k})`
+                        : 'Review Required'
+                    }
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy'}
+                  </button>
+                </div>
 
-          {/* Safety margin indicator */}
-          {result.roundedCsa !== result.minimumCsa && (
-            <div className="flex items-center justify-between p-3 rounded-lg border text-sm bg-green-500/5 border-green-500/20">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                <span className="text-white font-medium">Safety Margin</span>
-              </div>
-              <span className="text-white shrink-0 ml-2">
-                {result.roundedCsa}mm² is {result.safetyMargin.toFixed(1)}% above minimum
-              </span>
-            </div>
-          )}
+                {/* Hero value */}
+                <div className="text-center py-3">
+                  <p className="text-sm font-medium text-white mb-1">Standard Cable Size</p>
+                  <p
+                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  >
+                    {result.roundedCsa} mm²
+                  </p>
+                  <p className="text-sm text-white mt-2">
+                    Minimum required: {result.minimumCsa.toFixed(2)} mm²
+                  </p>
+                </div>
 
-          {/* Compliance notes */}
-          {result.complianceNotes.length > 0 && (
-            <div
-              className={cn(
-                'p-3 rounded-lg border text-sm',
-                result.isCompliant
-                  ? 'bg-amber-500/5 border-amber-500/20'
-                  : 'bg-red-500/5 border-red-500/20'
-              )}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle
-                  className={cn('h-4 w-4', result.isCompliant ? 'text-amber-400' : 'text-red-400')}
-                />
-                <span className="text-white font-medium">Compliance Notes</span>
-              </div>
-              <ul className="space-y-1">
-                {result.complianceNotes.map((note, index) => (
-                  <li key={index} className="flex items-start gap-2 text-white">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                      style={{ backgroundColor: config.gradientFrom }}
-                    />
-                    {note}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                {/* Result cards */}
+                <ResultsGrid columns={2}>
+                  <ResultValue
+                    label="Minimum CSA"
+                    value={result.minimumCsa.toFixed(2)}
+                    unit="mm²"
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Safety Margin"
+                    value={`${result.safetyMargin.toFixed(1)}%`}
+                    category={CAT}
+                    size="sm"
+                  />
+                </ResultsGrid>
 
-          <CalculatorDivider category={CAT} />
+                {/* Safety margin indicator */}
+                {result.roundedCsa !== result.minimumCsa && (
+                  <div className="flex items-center justify-between p-3 rounded-lg border text-sm bg-green-500/5 border-green-500/20">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                      <span className="text-white font-medium">Safety Margin</span>
+                    </div>
+                    <span className="text-white shrink-0 ml-2">
+                      {result.roundedCsa}mm² is {result.safetyMargin.toFixed(1)}% above minimum
+                    </span>
+                  </div>
+                )}
 
-          {/* ── How It Worked Out ── */}
-          <CalculatorFormula
-            category={CAT}
-            title="How It Worked Out"
-            defaultOpen
-            steps={[
-              {
-                label: 'Input values',
-                formula: `I = ${result.usedFaultCurrent.toFixed(0)} A | t = ${result.disconnectionTime} s | k = ${result.k} (${result.material} @ ${result.maxTemp}°C)`,
-                description: `The k factor of ${result.k} comes from BS 7671 Table 54.3 — it represents how much energy ${result.material} can absorb per mm² before the insulation (rated ${result.maxTemp}°C) is damaged.`,
-              },
-              ...(result.zsMode && result.zsValue && result.voltage
-                ? [
+                {/* Compliance notes */}
+                {result.complianceNotes.length > 0 && (
+                  <div
+                    className={cn(
+                      'p-3 rounded-lg border text-sm',
+                      result.isCompliant
+                        ? 'bg-amber-500/5 border-amber-500/20'
+                        : 'bg-red-500/5 border-red-500/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle
+                        className={cn(
+                          'h-4 w-4',
+                          result.isCompliant ? 'text-amber-400' : 'text-red-400'
+                        )}
+                      />
+                      <span className="text-white font-medium">Compliance Notes</span>
+                    </div>
+                    <ul className="space-y-1">
+                      {result.complianceNotes.map((note, index) => (
+                        <li key={index} className="flex items-start gap-2 text-white">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                            style={{ backgroundColor: config.gradientFrom }}
+                          />
+                          {note}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <CalculatorDivider category={CAT} />
+
+                {/* ── How It Worked Out ── */}
+                <CalculatorFormula
+                  category={CAT}
+                  title="How It Worked Out"
+                  defaultOpen
+                  steps={[
                     {
-                      label: 'Fault current from Zs',
-                      formula: `I = Uo / Zs = ${result.voltage} / ${result.zsValue}`,
-                      value: `${result.usedFaultCurrent.toFixed(0)} A`,
-                      description:
-                        'Fault current calculated from measured loop impedance. This is the maximum current that would flow during a dead short at this point in the circuit.',
+                      label: 'Input values',
+                      formula: `I = ${result.usedFaultCurrent.toFixed(0)} A | t = ${result.disconnectionTime} s | k = ${result.k} (${result.material} @ ${result.maxTemp}°C)`,
+                      description: `The k factor of ${result.k} comes from BS 7671 Table 54.3 — it represents how much energy ${result.material} can absorb per mm² before the insulation (rated ${result.maxTemp}°C) is damaged.`,
                     },
-                  ]
-                : []),
-              {
-                label: 'Minimum CSA',
-                formula: `S = I × √t / k = ${result.usedFaultCurrent.toFixed(0)} × √${result.disconnectionTime} / ${result.k}`,
-                value: `${result.minimumCsa.toFixed(2)} mm²`,
-                description:
-                  'This is the smallest conductor that can carry the fault current for the disconnection time without the insulation exceeding its maximum temperature.',
-              },
-              {
-                label: 'Round up to standard size',
-                formula: `${result.minimumCsa.toFixed(2)} mm² → next standard cable size`,
-                value: `${result.roundedCsa} mm²`,
-                description:
-                  'Cables only come in standard sizes. We round up to the next available size to ensure the cable is never undersized.',
-              },
-              {
-                label: 'Safety margin',
-                value: `${result.safetyMargin.toFixed(1)}% above minimum requirement`,
-                description:
-                  result.safetyMargin > 50
-                    ? 'Generous safety margin — the selected standard size is well above the minimum. This gives extra protection against unexpected fault conditions.'
-                    : result.safetyMargin > 10
-                      ? 'Adequate safety margin above the calculated minimum.'
-                      : 'Tight margin — the cable only just meets the requirement. Consider using the next size up for additional protection.',
-              },
-            ]}
-          />
+                    ...(result.zsMode && result.zsValue && result.voltage
+                      ? [
+                          {
+                            label: 'Fault current from Zs',
+                            formula: `I = Uo / Zs = ${result.voltage} / ${result.zsValue}`,
+                            value: `${result.usedFaultCurrent.toFixed(0)} A`,
+                            description:
+                              'Fault current calculated from measured loop impedance. This is the maximum current that would flow during a dead short at this point in the circuit.',
+                          },
+                        ]
+                      : []),
+                    {
+                      label: 'Minimum CSA',
+                      formula: `S = I × √t / k = ${result.usedFaultCurrent.toFixed(0)} × √${result.disconnectionTime} / ${result.k}`,
+                      value: `${result.minimumCsa.toFixed(2)} mm²`,
+                      description:
+                        'This is the smallest conductor that can carry the fault current for the disconnection time without the insulation exceeding its maximum temperature.',
+                    },
+                    {
+                      label: 'Round up to standard size',
+                      formula: `${result.minimumCsa.toFixed(2)} mm² → next standard cable size`,
+                      value: `${result.roundedCsa} mm²`,
+                      description:
+                        'Cables only come in standard sizes. We round up to the next available size to ensure the cable is never undersized.',
+                    },
+                    {
+                      label: 'Safety margin',
+                      value: `${result.safetyMargin.toFixed(1)}% above minimum requirement`,
+                      description:
+                        result.safetyMargin > 50
+                          ? 'Generous safety margin — the selected standard size is well above the minimum. This gives extra protection against unexpected fault conditions.'
+                          : result.safetyMargin > 10
+                            ? 'Adequate safety margin above the calculated minimum.'
+                            : 'Tight margin — the cable only just meets the requirement. Consider using the next size up for additional protection.',
+                    },
+                  ]}
+                />
 
-          {/* ── Grounded guidance + standards ── */}
-          <CalculatorEditorial content={adiabaticContent} category={CAT} />
-        </div>
-      )}
+                {/* ── Grounded guidance + standards ── */}
+              </div>
+            )}
 
-      {/* Formula reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Adiabatic Equation"
-        formula="S = I × √t / k"
-        variables={[
-          { symbol: 'S', description: 'Minimum CSA (mm²)' },
-          { symbol: 'I', description: 'Fault current (A)' },
-          { symbol: 't', description: 'Disconnection time (s)' },
-          { symbol: 'k', description: 'Material factor (Table 54.3)' },
-        ]}
+            {/* Formula reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Adiabatic Equation"
+              formula="S = I × √t / k"
+              variables={[
+                { symbol: 'S', description: 'Minimum CSA (mm²)' },
+                { symbol: 'I', description: 'Fault current (A)' },
+                { symbol: 't', description: 'Disconnection time (s)' },
+                { symbol: 'k', description: 'Material factor (Table 54.3)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={adiabaticContent} category={CAT} />}
       />
     </CalculatorCard>
   );

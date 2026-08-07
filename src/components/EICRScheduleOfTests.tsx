@@ -55,6 +55,7 @@ import { MobileHorizontalScrollTable } from './mobile/MobileHorizontalScrollTabl
 import TestInstrumentInfo from './TestInstrumentInfo';
 import TestMethodInfo from './TestMethodInfo';
 import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
+import type { ZsBasis } from '@/utils/regulationChecker/zsValidator';
 import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
 import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
@@ -336,6 +337,39 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showAIReview, setShowAIReview] = useState(false);
   // Whole-schedule validate — the board whose circuits are being checked.
   const [validateBoardId, setValidateBoardId] = useState<string | null>(null);
+  /**
+   * The circuit a flagged cell was tapped on, so the sheet opens on it.
+   *
+   * Null when Validate is opened from the toolbar — that is a review of the
+   * whole board and has no single circuit to land on.
+   */
+  const [validateFocusId, setValidateFocusId] = useState<string | null>(null);
+
+  /**
+   * Which maximum a measured Zs is judged against — see `ZsBasis`.
+   *
+   * Certificate-wide rather than per board: the basis is a judgement about how
+   * the readings were taken, and an EICR that applied two different acceptance
+   * criteria to two boards in the same house would be indefensible.
+   */
+  /*
+   * Read from the certificate, not from component state.
+   *
+   * The basis decides which circuits fail, so it is part of how this EICR was
+   * assessed and has to travel with it. Held in local state it survived until
+   * the first reload and then silently reverted to 100 — every circuit caught
+   * by the 0.8 correction quietly passing again, with nothing on screen to say
+   * the standard had moved. Certificates already written have no stored value
+   * and fall back to 100, which is the basis they were judged on.
+   */
+  const zsBasis: ZsBasis = formData.zsBasis === 80 ? 80 : 100;
+  const setZsBasis = useCallback(
+    (basis: ZsBasis) => onUpdate('zsBasis', basis),
+    [onUpdate]
+  );
+
+  /** Whether the grid marks non-compliant cells and rows. Never hides findings. */
+  const [showChecks, setShowChecks] = useState(true);
   // ELE-1493 — board the Find & replace tool was opened from (desktop only).
   const [findReplaceBoardId, setFindReplaceBoardId] = useState<string | null>(null);
   // ELE-1494 — row multi-select (desktop only).
@@ -1141,17 +1175,43 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       const boardId = circuit.boardId || MAIN_BOARD_ID;
       const { warnings } = checkRegulationCompliance(
         circuit,
-        formData.earthingArrangement as string | undefined
+        formData.earthingArrangement as string | undefined,
+        zsBasis
       );
       if (warnings.length > 0) counts.set(boardId, (counts.get(boardId) ?? 0) + warnings.length);
     }
     return counts;
-  }, [testResults, formData.earthingArrangement]);
+  }, [testResults, formData.earthingArrangement, zsBasis]);
 
   const countBoardIssues = useCallback(
     (boardId: string) => boardIssueCounts.get(boardId) ?? 0,
     [boardIssueCounts]
   );
+
+  /**
+   * Flip the order of one board's circuits.
+   *
+   * Rebuilt in place rather than sorted: `testResults` holds every board's
+   * circuits in one array, so the reversed run has to go back into exactly the
+   * positions it came from or the boards interleave. Circuit numbers are left
+   * alone — they identify the way in the board, and renumbering them here would
+   * silently rewrite what was recorded on site.
+   */
+  const reverseBoardOrder = useCallback((boardId: string) => {
+    setTestResults((prev) => {
+      const positions: number[] = [];
+      prev.forEach((c, i) => {
+        if ((c.boardId || MAIN_BOARD_ID) === boardId) positions.push(i);
+      });
+      if (positions.length < 2) return prev;
+      const next = [...prev];
+      const reversed = positions.map((i) => prev[i]).reverse();
+      positions.forEach((pos, i) => {
+        next[pos] = reversed[i];
+      });
+      return next;
+    });
+  }, []);
 
   const createBoardTools = useCallback(
     (boardId: string): BoardToolCallbacks => ({
@@ -1159,14 +1219,30 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         setActiveBoardId(boardId);
         setShowBoardCapture(true);
       },
-      onValidate: () => setValidateBoardId(boardId),
+      onValidate: () => {
+        setValidateFocusId(null);
+        setValidateBoardId(boardId);
+      },
       validateIssueCount: countBoardIssues(boardId),
       onFindReplace: () => setFindReplaceBoardId(boardId),
       onVoiceToggle: toggleVoice,
       voiceActive,
       voiceConnecting,
+      onReverseOrder: () => reverseBoardOrder(boardId),
+      zsBasis,
+      onZsBasisChange: setZsBasis,
+      showChecks,
+      onShowChecksChange: setShowChecks,
     }),
-    [toggleVoice, voiceActive, voiceConnecting, countBoardIssues]
+    [
+      toggleVoice,
+      voiceActive,
+      voiceConnecting,
+      countBoardIssues,
+      reverseBoardOrder,
+      zsBasis,
+      showChecks,
+    ]
   );
 
   // Completion stats — ELE-1501. Spare ways and device rows are excluded from
@@ -2634,20 +2710,29 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     <div className="pb-20 lg:pb-4">
       {/* ELE-1475 — duplicate circuit numbers reach the PDF, so surface them
           before the cert is issued rather than after a customer spots it. */}
+      {/* Neutral surface, accent on one small element.
+          This was `bg-orange-500/10` with `text-orange-200` body copy. Orange
+          at 10% over a near-black ground does not read as orange — it reads
+          as mud, and the tinted body text goes dingy with it. The warning is
+          carried by a solid amber dot at full opacity, which stays clean, and
+          the surface keeps the app's own card recipe. */}
       {duplicateCircuitCount > 0 && (
-        <div className="-mx-4 mb-3 border-y border-orange-500/30 bg-orange-500/10 p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+        <div className="-mx-4 mb-3 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <div className="flex items-start gap-2.5">
+            <span aria-hidden className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+            <div className="min-w-0 flex-1">
           <p className="text-[15px] font-semibold text-white">
             {duplicateCircuitCount === 1
               ? '1 circuit shares its number with another'
               : `${duplicateCircuitCount} circuits share their number with another`}
           </p>
-          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             Circuit numbers must be unique on each board — this prints on the certificate.
           </p>
           {/* ELE-1484 — the moment they hit this is the moment they need to
               know a device row exists, so say it here rather than in a help
               page nobody opens. */}
-          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
             If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—) in
             its way box — it then holds no number.
           </p>
@@ -2658,6 +2743,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           >
             Renumber circuits
           </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -3033,7 +3120,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       </Button>
                       <Button
                         className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[12px] font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
-                        onClick={() => setValidateBoardId(board.id)}
+                        onClick={() => {
+                          setValidateFocusId(null);
+                          setValidateBoardId(board.id);
+                        }}
                       >
                         Validate
                         {countBoardIssues(board.id) ? (
@@ -3069,6 +3159,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           onBulkFieldUpdate={handleBulkFieldUpdate}
                           onMoveUp={reorderTestResultUp}
                           onMoveDown={reorderTestResultDown}
+                          zsBasis={zsBasis}
+                          showChecks={showChecks}
+                          onOpenWarning={(circuitId) => {
+                            const circuit = testResults.find((c) => c.id === circuitId);
+                            setValidateFocusId(circuitId);
+                            setValidateBoardId(circuit?.boardId || MAIN_BOARD_ID);
+                          }}
                         />
                       )}
 
@@ -3254,6 +3351,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     onBulkFieldUpdate={handleBulkFieldUpdate}
                     earthingArrangement={formData.earthingArrangement}
                     isRowSelected={selection.isSelected}
+                    /* A flagged cell opens the Validate sheet for that board.
+                       The sheet already renders the finding with its numbers,
+                       its provenance and the C1/C2/C3/FI picker — the cell is
+                       a way in, not a second place to state the rule. */
+                    zsBasis={zsBasis}
+                    showChecks={showChecks}
+                    onOpenWarning={(circuitId) => {
+                      const circuit = testResults.find((c) => c.id === circuitId);
+                      setValidateFocusId(circuitId);
+                      setValidateBoardId(circuit?.boardId || MAIN_BOARD_ID);
+                    }}
                     onToggleRowSelect={(id, shiftKey) =>
                       selection.toggle(
                         id,
@@ -3406,7 +3514,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           panel below the desktop table that a phone never renders. */}
       <ScheduleValidateSheet
         open={validateBoardId !== null}
-        onOpenChange={(o) => !o && setValidateBoardId(null)}
+        onOpenChange={(o) => {
+          if (!o) {
+            setValidateBoardId(null);
+            setValidateFocusId(null);
+          }
+        }}
         testResults={testResults.filter(
           (c) => (c.boardId || MAIN_BOARD_ID) === validateBoardId
         )}
@@ -3414,6 +3527,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         boardName={
           distributionBoards.find((b) => b.id === validateBoardId)?.name || undefined
         }
+        focusCircuitId={validateFocusId}
+        zsBasis={zsBasis}
         onCreateObservation={handleCreateObservation}
       />
 

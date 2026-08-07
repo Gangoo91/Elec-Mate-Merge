@@ -15,7 +15,7 @@ export default function EnrichmentMonitor() {
           <Database className="w-8 h-8 text-primary" />
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold">Enrichment Console</h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Fast, accurate, complete - zero missed batches
             </p>
           </div>

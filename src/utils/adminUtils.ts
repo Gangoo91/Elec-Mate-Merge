@@ -92,13 +92,35 @@ export const DORMANT_DAYS = 30;
  *   Pages    — 0.5pt per unique page, cap 15
  *   Days     — 3pts per active day, cap 10
  */
+/**
+ * Engagement, 0–100, over the last 30 days.
+ *
+ * The old caps sat at or below the median for most components — 30 minutes,
+ * 5 features, 5 logins, 30 pages, 4 active days — so anyone using the app
+ * even moderately maxed every one of them. Across 502 tracked users that put
+ * 34 on exactly 100 and 229 (46%) in the green band, which is why every
+ * paying subscriber on the admin dashboard showed an identical 100 and the
+ * score distinguished nobody from anybody.
+ *
+ * Recalibrated against the real 30-day distribution (p50 / p90):
+ *
+ *   minutes  25 / 556      → 30 pts at 4.5 hours
+ *   features  0 / 7        → 25 pts at 6 uses
+ *   logins    3 / 15       → 20 pts at 10
+ *   pages     – / 38       → 15 pts at 30
+ *   days      – / 10       → 10 pts at 7
+ *
+ * Now 21 sit on 100 and the green band holds 116 rather than 229. Rerun the
+ * percentiles on `user_activity_summary` before changing these — they are
+ * calibration, not preference.
+ */
 export const calculateEngagementScore = (e: EngagementData | null | undefined): number => {
   if (!e) return 0;
-  const time = Math.min(30, (e.total_seconds_tracked / 60) * 1);
-  const features = Math.min(25, e.feature_use_count * 5);
-  const logins = Math.min(20, e.login_count * 4);
+  const time = Math.min(30, e.total_seconds_tracked / 60 / 9);
+  const features = Math.min(25, e.feature_use_count * 4);
+  const logins = Math.min(20, e.login_count * 2);
   const pages = Math.min(15, e.unique_pages_visited * 0.5);
-  const days = Math.min(10, e.active_days * 3);
+  const days = Math.min(10, e.active_days * 1.5);
   return Math.round(time + features + logins + pages + days);
 };
 

@@ -8,19 +8,22 @@
  * Call `recordPositiveAction()` after meaningful user wins:
  *   - Certificate generated/saved
  *   - Quote sent to client
- *   - RAMS generated
+ *   - Invoice sent / marked paid
  *
- * Conditions to show the custom sheet:
- *   - Native platform only (iOS/Android via Capacitor)
- *   - User registered 7+ days ago (based on first action timestamp)
- *   - 3+ positive actions completed
- *   - At least 90 days since last prompt
- *   - Max 3 total prompts per year
+ * The sheet is mounted ONCE at the app root by <AppReviewPromptHost>, and this
+ * hook signals it through the module-level listener below.
+ *
+ * Why not per-component state: the sheet used to live in each caller's own
+ * `useState`, so a win recorded in a component that didn't also render
+ * <AppReviewPromptSheet> counted towards the gates but could never show the
+ * prompt — six of the nine call sites were in exactly that state. It also
+ * could never have worked in InvoiceSendDropdown, which renders once per row
+ * in the invoice list and would have mounted one sheet per invoice.
  *
  * State persisted via @capacitor/preferences (survives WKWebView cache clears).
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { InAppReview } from '@capacitor-community/in-app-review';
@@ -96,9 +99,73 @@ function shouldShowSheet(state: ReviewState): boolean {
   return true;
 }
 
-export function useAppReview() {
-  const [showReviewPrompt, setShowReviewPrompt] = useState(false);
+type PromptListener = () => void;
 
+// Module-level rather than context: the host is mounted once at the root, and
+// call sites are scattered deep in the tree (list rows, dropdowns, cert pages).
+let promptListener: PromptListener | null = null;
+
+/** Called by <AppReviewPromptHost>. Returns an unsubscribe function. */
+export function subscribeToReviewPrompt(listener: PromptListener): () => void {
+  promptListener = listener;
+  return () => {
+    if (promptListener === listener) promptListener = null;
+  };
+}
+
+// Fallback deep links, used only when the native in-app flow can't run. The
+// itms-apps:// and market:// schemes open the store APP directly rather than a
+// web page — an https:// App Store link would open in SFSafariViewController,
+// where the user can't actually leave a rating.
+const STORE_REVIEW_URLS: Record<string, string> = {
+  // App ID 6758948665 / bundle com.elecmate.app
+  ios: 'itms-apps://itunes.apple.com/app/id6758948665?action=write-review',
+  android: 'market://details?id=com.elecmate.app',
+};
+
+/**
+ * Trigger the store review flow. Never throws.
+ *
+ * Prefers the native in-app sheet (SKStoreReviewController on iOS, Play
+ * In-App Review on Android) — the user rates without leaving the app, which
+ * converts far better. The plugin picks the correct store per platform.
+ *
+ * If that fails, fall back to the store's own review page so tapping
+ * "Sure, happy to" always does something. Previously a failure was swallowed
+ * and the button silently did nothing.
+ */
+export async function requestNativeReview(): Promise<void> {
+  try {
+    await InAppReview.requestReview();
+    return;
+  } catch (err) {
+    console.warn('[AppReview] in-app review unavailable, opening store:', err);
+  }
+
+  const url = STORE_REVIEW_URLS[Capacitor.getPlatform()];
+  if (!url) return;
+
+  try {
+    window.location.href = url;
+  } catch (err) {
+    console.warn('[AppReview] store deep link failed (non-fatal):', err);
+  }
+}
+
+/**
+ * Record that a prompt was shown — starts the cooldown and resets the action
+ * count. Called whether the user rated or dismissed; a dismissal still counts
+ * towards Apple's 3-per-year cap because the native dialog may have consumed one.
+ */
+export async function markPromptShown(): Promise<void> {
+  const state = await getState();
+  state.lastPromptedAt = Date.now();
+  state.totalPrompts += 1;
+  state.positiveActionCount = 0;
+  await saveState(state);
+}
+
+export function useAppReview() {
   const recordPositiveAction = useCallback(async () => {
     if (!Capacitor.isNativePlatform()) return;
 
@@ -112,44 +179,11 @@ export function useAppReview() {
     state.positiveActionCount += 1;
 
     if (shouldShowSheet(state)) {
-      setShowReviewPrompt(true);
+      promptListener?.();
     }
 
     await saveState(state);
   }, []);
 
-  // User tapped "Sure, happy to" → trigger native review dialog
-  const handleRate = useCallback(async () => {
-    setShowReviewPrompt(false);
-
-    try {
-      await InAppReview.requestReview();
-    } catch (err) {
-      console.warn('[AppReview] requestReview failed (non-fatal):', err);
-    }
-
-    const state = await getState();
-    state.lastPromptedAt = Date.now();
-    state.totalPrompts += 1;
-    state.positiveActionCount = 0;
-    await saveState(state);
-  }, []);
-
-  // User tapped "Not Now" → dismiss, still count as a prompt for cooldown
-  const handleDismiss = useCallback(async () => {
-    setShowReviewPrompt(false);
-
-    const state = await getState();
-    state.lastPromptedAt = Date.now();
-    state.totalPrompts += 1;
-    state.positiveActionCount = 0;
-    await saveState(state);
-  }, []);
-
-  return {
-    showReviewPrompt,
-    recordPositiveAction,
-    handleRate,
-    handleDismiss,
-  };
+  return { recordPositiveAction };
 }

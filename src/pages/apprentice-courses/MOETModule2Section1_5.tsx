@@ -7,7 +7,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electrical Symbols and Conventions - MOET Module 2 Section 1.5';
 const DESCRIPTION =
-  'Comprehensive guide to BS EN 60617 electrical symbols, circuit diagram conventions, schematic vs wiring diagrams, single-line notation, IEC vs ANSI symbols, terminal identification and reading manufacturer drawings for maintenance technicians.';
+  'Comprehensive guide to IEC 60617 electrical symbols, circuit diagram conventions, schematic vs wiring diagrams, single-line notation, IEC vs ANSI symbols, terminal identification and reading manufacturer drawings for maintenance technicians.';
 
 const quickCheckQuestions = [
   {
@@ -16,13 +16,13 @@ const quickCheckQuestions = [
       'Which international standard defines the graphical symbols used in electrical circuit diagrams?',
     options: [
       'BS EN 61439',
-      'BS EN 60617',
+      'IEC 60617',
       'BS 7671:2018',
       'BS EN 61008',
     ],
     correctIndex: 1,
     explanation:
-      'BS EN 60617 (identical to IEC 60617) is the international standard for graphical symbols used in electrotechnical documentation. It defines symbols for components, connections, and devices used in circuit diagrams, schematic diagrams, and wiring diagrams. BS 7671 references these symbols but does not define them.',
+      'IEC 60617 (identical to IEC 60617) is the international standard for graphical symbols used in electrotechnical documentation. It defines symbols for components, connections, and devices used in circuit diagrams, schematic diagrams, and wiring diagrams. BS 7671 references these symbols but does not define them.',
   },
   {
     id: 'diagram-type',
@@ -69,7 +69,7 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'The BS EN 60617 symbol for a normally open (NO) contact is:',
+    question: 'The IEC 60617 symbol for a normally open (NO) contact is:',
     options: [
       'A circle with a diagonal line through it',
       'Two parallel lines with a gap (the moving contact shown open)',
@@ -301,7 +301,7 @@ const MOETModule2Section1_5 = () => {
             </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
               <li className="pl-1">
-                <strong>Standard:</strong> BS EN 60617 (IEC 60617) defines graphical symbols
+                <strong>Standard:</strong> IEC 60617 (IEC 60617) defines graphical symbols
               </li>
               <li className="pl-1">
                 <strong>Diagram types:</strong> Schematic (logical), wiring (physical), single-line
@@ -341,7 +341,7 @@ const MOETModule2Section1_5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              'Identify common electrical symbols per BS EN 60617 for circuit components',
+              'Identify common electrical symbols per IEC 60617 for circuit components',
               'Distinguish between schematic diagrams, wiring diagrams and single-line diagrams',
               'Read single-line distribution diagrams for commercial and industrial installations',
               'Interpret relay and contactor cross-referencing in control circuit drawings',
@@ -359,15 +359,15 @@ const MOETModule2Section1_5 = () => {
         {/* Divider */}
         <hr className="border-white/5 mb-12" />
 
-        {/* Section 01: BS EN 60617 Symbol Standard */}
+        {/* Section 01: IEC 60617 Symbol Standard */}
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS EN 60617 — The Symbol Standard
+            IEC 60617 — The Symbol Standard
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS EN 60617 (identical to IEC 60617) is the international standard for graphical
+              IEC 60617 (identical to IEC 60617) is the international standard for graphical
               symbols used in diagrams for electrotechnical documentation. It provides a
               comprehensive library of standardised symbols that enable electrical engineers,
               designers, and maintenance technicians across the world to read and understand each
@@ -1163,7 +1163,7 @@ const MOETModule2Section1_5 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Key Standards</p>
                 <ul className="space-y-0.5">
-                  <li>BS EN 60617 — Graphical symbols</li>
+                  <li>IEC 60617 — Graphical symbols</li>
                   <li>IEC 60445 — Terminal marking</li>
                   <li>IEC 60034-8 — Motor terminal designations</li>
                   <li>IEC 60947-5-1 — Contact terminal numbering</li>

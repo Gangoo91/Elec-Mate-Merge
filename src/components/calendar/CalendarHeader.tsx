@@ -10,9 +10,6 @@ import {
   Share2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/integrations/supabase/client';
-import { copyToClipboard } from '@/utils/clipboard';
-import { toast } from '@/hooks/use-toast';
 import CalendarViewSwitcher from './CalendarViewSwitcher';
 import type { CalendarView } from '@/types/calendar';
 
@@ -82,28 +79,18 @@ const CalendarHeader = ({
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, [menuOpen]);
 
-  const handleShareBookingLink = async () => {
+  /*
+   * Straight to the booking page rather than the OS share sheet.
+   *
+   * The sheet listed WhatsApp and Mail on a phone and looked like a send
+   * screen, but on desktop `navigator.share` does not exist — so this fell
+   * through to a silent clipboard copy and appeared to do nothing at all.
+   * `/electrician/booking` sends properly on both, and also shows what the
+   * link has actually brought in.
+   */
+  const handleOpenBookingPage = () => {
     setMenuOpen(false);
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) {
-      toast({ title: 'Please sign in to share your booking link', variant: 'destructive' });
-      return;
-    }
-    const url = `${window.location.origin}/book/${user.id}`;
-    const shareData = { title: 'Book an appointment', text: 'Book a time slot with me:', url };
-
-    if (navigator.share && navigator.canShare?.(shareData)) {
-      try {
-        await navigator.share(shareData);
-      } catch {
-        // Cancelled — not an error.
-      }
-    } else {
-      const ok = await copyToClipboard(url);
-      if (ok) toast({ title: 'Booking link copied to clipboard' });
-    }
+    navigate('/electrician/booking');
   };
 
   return (
@@ -169,11 +156,11 @@ const CalendarHeader = ({
               <div className="absolute right-0 top-12 z-50 min-w-[220px] overflow-hidden rounded-xl border border-white/[0.12] bg-neutral-900 py-1 shadow-xl shadow-black/40">
                 <button
                   type="button"
-                  onClick={handleShareBookingLink}
+                  onClick={handleOpenBookingPage}
                   className="flex h-11 w-full items-center gap-2.5 px-3 text-left text-[13.5px] font-medium text-white hover:bg-white/[0.06] touch-manipulation"
                 >
                   <Share2 className="h-4 w-4 text-elec-yellow" />
-                  Share booking link
+                  Booking link
                 </button>
                 <button
                   type="button"

@@ -54,7 +54,7 @@ export const RoomTemplateSelector = ({
         {/* Visible skip — was buried at the bottom of the expanded card */}
         <button
           onClick={onDismiss}
-          className="flex h-9 items-center rounded-full px-3 text-[12px] font-medium text-white/60 touch-manipulation hover:text-white active:bg-white/[0.06]"
+          className="flex h-11 items-center rounded-xl px-3.5 text-[13px] font-semibold text-white touch-manipulation hover:text-white active:bg-white/[0.06]"
         >
           Skip
         </button>
@@ -69,7 +69,7 @@ export const RoomTemplateSelector = ({
               className="min-h-[48px] flex-shrink-0 rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-left text-sm font-medium text-white transition-colors touch-manipulation hover:border-elec-yellow/40 active:scale-[0.97]"
             >
               {template.label}
-              <span className="mt-0.5 block text-[10px] uppercase tracking-[0.14em] text-white/45">
+              <span className="mt-0.5 block text-[10px] uppercase tracking-[0.14em] text-white">
                 {template.rooms.length} rooms
               </span>
             </button>
@@ -88,7 +88,7 @@ export const RoomTemplateSelector = ({
                 className={`flex min-h-[44px] items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.98] ${
                   checkedRooms.has(idx)
                     ? 'border border-elec-yellow/50 bg-elec-yellow/[0.12] text-white'
-                    : 'border border-white/[0.06] bg-white/[0.03] text-white/75'
+                    : 'border border-white/[0.06] bg-white/[0.03] text-white'
                 }`}
               >
                 <div

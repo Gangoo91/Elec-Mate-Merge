@@ -657,7 +657,7 @@ export default function ElectricianCardiffPage() {
     <GuideTemplate
       localArea="Cardiff"
       title="Electrician in Cardiff | Find Electricians 2026"
-      description="Find qualified electricians in Cardiff. Welsh Building Regulations, WPD DNO, Cardiff Bay regeneration, Victorian terraces in Pontcanna and Canton…"
+      description="Find qualified electricians in Cardiff. Welsh Building Regulations, WPD DNO, Cardiff Bay regeneration, Victorian terraces in Pontcanna and Canton."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

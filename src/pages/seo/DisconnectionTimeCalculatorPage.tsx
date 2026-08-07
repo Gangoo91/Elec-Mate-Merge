@@ -17,8 +17,8 @@ import {
 export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Disconnection Time Calculator (BS 7671): Instant Pass/Fail"
-      description="Check any circuit against BS 7671 Table 41.1 in seconds — pick the circuit type and the calculator shows the maximum disconnection time and whether your Zs achieves it. Free, no signup."
+      title="Max Disconnection Times: TN 0.4s, TT 0.2s, 5s"
+      description="BS 7671 Table 41.1 max disconnection times: 0.4s for TN final circuits up to 63A, 0.2s for TT, 5s for distribution circuits. Free Zs pass/fail check."
       datePublished="2026-01-20"
       dateModified="2026-06-10"
       breadcrumbs={[

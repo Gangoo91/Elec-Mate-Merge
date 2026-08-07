@@ -487,7 +487,7 @@ export default function LoftConversionElectricalCostPage() {
   return (
     <GuideTemplate
       title="Loft Conversion Electrical Cost UK | Circuits, Costs & Part"
-      description="How much does loft conversion electrical work cost in the UK? Typical costs £1,800–£5,000. Covers required circuits, consumer unit upgrades…"
+      description="How much does loft conversion electrical work cost in the UK? Typical costs £1,800–£5,000. Covers required circuits, consumer unit upgrades."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

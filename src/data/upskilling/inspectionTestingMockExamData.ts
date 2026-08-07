@@ -291,9 +291,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'Which regulation introduced mandatory electrical safety checks for private rented properties in England?',
     options: [
       'Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
-      'The Electricity at Work Regulations 1989',
-      'Part P of the Building Regulations 2005',
-      'The Landlord and Tenant Act 1985',
+      'The Electricity at Work Regulations 1989, as enforced by the Health and Safety Executive',
+      'Part P of the Building Regulations, covering electrical safety in domestic dwellings',
+      'The Housing Health and Safety Rating System introduced by the Housing Act 2004',
     ],
     correctAnswer: 0,
     explanation:
@@ -701,9 +701,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'When is live working permitted?',
     options: [
       'Only when dead working is unreasonable and suitable precautions are taken',
-      'Whenever it would save time on the job',
-      'Only on circuits operating below 400V',
-      'At any time provided rubber gloves are worn',
+      'Whenever working dead would delay the job and the customer has agreed to it',
+      'Only on circuits operating below 400 V, since the shock risk is then acceptable',
+      'At any time provided insulating gloves and a rubber matting are used',
     ],
     correctAnswer: 0,
     explanation:
@@ -719,8 +719,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Any voltage that could cause injury',
       'Only where the nominal voltage exceeds 1000 V AC',
-      'Only on three-phase supplies at 400 V and above',
-      'Only where the prospective fault current exceeds 6 kA',
+      'Three-phase supplies at 400 V, not 230 V circuits',
+      'Any circuit above extra-low voltage, excluding SELV',
     ],
     correctAnswer: 0,
     explanation:
@@ -1474,10 +1474,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What items should be disconnected before testing insulation resistance?',
     options: [
-      'Only the main switch and the protective devices',
+      'The main switch and the circuit protective devices, but nothing downstream',
       'Electronic equipment, capacitors, indicating devices, and surge protectors',
-      'All socket outlets and lighting accessories',
-      'The earthing and main bonding conductors',
+      'All socket outlets, lighting accessories and their fixed wiring',
+      'The earthing conductor and the main protective bonding conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1715,9 +1715,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'Why is earth fault loop impedance testing important?',
     options: [
-      'To verify the insulation resistance of the circuit',
-      'To confirm correct polarity at the consumer unit',
-      'To check the continuity of the main bonding conductors',
+      'To verify the insulation resistance between live conductors and earth',
+      'To confirm the polarity of every connection at the consumer unit',
+      'To check the continuity of the main protective bonding conductors',
       'To ensure protective devices disconnect quickly enough under fault conditions',
     ],
     correctAnswer: 3,
@@ -1784,10 +1784,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'On an installation with no extraneous parallel earth paths, why is a measured Zs usually lower than the value calculated for the circuit at its operating temperature?',
     options: [
-      'The test instrument always reads slightly high',
-      'The supply voltage rises during the test',
+      'The test instrument applies a correction factor that reduces the displayed value',
+      'The supply voltage rises slightly during the test, reducing the impedance',
       'The conductors are near ambient temperature when tested, so their resistance is lower',
-      'The test current is too small to develop the full impedance',
+      'The test current is too small to develop the full impedance of the circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -2052,15 +2052,16 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 119,
     question:
-      'What is the maximum disconnection time for a 30mA RCD at 5 times rated residual current?',
+      'Under BS 7671:2018+A4:2026, within what range must a delay \'S\' type RCD disconnect when tested at IΔn?',
     options: [
-      '1 second',
-      '150ms',
-      '300ms',
-      '40ms',
+      'Within 300 ms, the same as a general non-delay device',
+      'Between 130 ms minimum and 500 ms maximum',
+      'Between 40 ms minimum and 300 ms maximum',
+      'Within 200 ms, with no minimum non-actuating time',
     ],
-    correctAnswer: 3,
-    explanation: 'At 5 times rated current, an RCD must disconnect within 40ms.',
+    correctAnswer: 1,
+    explanation:
+      'A4:2026 states that regardless of RCD Type, effectiveness is deemed verified where the device disconnects, on an alternating current test at the rated residual operating current, within 300 ms maximum for a general non-delay type, or between 130 ms minimum and 500 ms maximum for a delay S type.',
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'Trip Times',
@@ -2429,7 +2430,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What should be functionally tested on a lighting circuit?',
     options: [
-      'The insulation resistance between switch terminals',
+      'Measuring the insulation resistance between the switch terminals',
       'The earth fault loop impedance at each light fitting',
       'Switching, dimming (if applicable), and correct operation of controls',
       'The prospective fault current at the lighting point',
@@ -2497,10 +2498,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What does a socket tester indicate about polarity?',
     options: [
-      'The exact earth fault loop impedance at the socket',
-      'The insulation resistance between the socket terminals',
+      'The exact earth fault loop impedance measured at the socket terminals',
+      'The insulation resistance between line, neutral and the earth terminal',
       'Whether phase, neutral and earth are correctly connected using LED indicators',
-      'The disconnection time of the protective device',
+      'The disconnection time of the protective device supplying the socket',
     ],
     correctAnswer: 2,
     explanation:
@@ -3563,15 +3564,17 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 209,
-    question: 'What is the maximum trip time for a general RCD at 5 times rated current?',
+    question:
+      'Appendix 3 Table 3A gave time/current performance criteria for RCDs. What is its status under Amendment 4?',
     options: [
-      '100ms',
-      '40ms',
-      '200ms',
-      '300ms',
+      'Retained, but applying only to Type B and Type F residual current devices',
+      'Moved into Appendix 6 and now applies only to periodic inspection work',
+      'Deleted — verification now uses a single AC test at IΔn regardless of RCD Type',
+      'Retained for general non-delay devices and deleted for delay S types only',
     ],
-    correctAnswer: 1,
-    explanation: 'At 5 times rated current, maximum trip time is 40ms.',
+    correctAnswer: 2,
+    explanation:
+      'Table 3A (Time/current performance criteria for RCDs) in Appendix 3 has been deleted. The previous requirement to test according to that table no longer applies; a single alternating current test at IΔn is used for verification regardless of RCD Type.',
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'Trip Times',
@@ -3958,9 +3961,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is a TT earthing system?',
     options: [
       'Installation has its own earth electrode',
-      'A separate earth conductor provided from the transformer',
-      'Combined PEN in the supply, separated at the installation',
-      'Combined neutral and earth throughout supply and installation',
+      'A separate earth conductor from the transformer',
+      'Combined PEN separated at the intake position',
+      'Combined neutral and earth throughout the supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -4384,10 +4387,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 257,
     question: 'Where are IT earthing systems commonly used?',
     options: [
-      'Standard domestic dwellings supplied by the DNO',
+      'Standard domestic dwellings supplied directly from the DNO\'s network',
       'Critical systems like operating theatres where first fault must not cause shutdown',
-      'Construction sites and temporary installations',
-      'Outdoor lighting and garden socket circuits',
+      'Construction sites and other temporary installations fed from a generator',
+      'Outdoor lighting and garden socket circuits requiring RCD protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -4727,8 +4730,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     options: [
       'Replace the MCB with a higher rated device',
       'Investigate the cause before continuing',
-      'Reset it repeatedly until it stays in',
-      'Ignore it and move on to the next circuit',
+      'Fit a temporary link across the device and retest',
+      'Record it as a satisfactory result and continue',
     ],
     correctAnswer: 1,
     explanation:
@@ -4793,10 +4796,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 281,
     question: 'What is the main purpose of ADS?',
     options: [
-      'To limit the prospective fault current at the origin',
+      'To limit the prospective fault current at the origin of the installation',
       'To disconnect supply automatically under fault conditions before shock becomes dangerous',
-      'To maintain all conductive parts at the same potential',
-      'To protect against transient overvoltages from lightning',
+      'To maintain all simultaneously accessible conductive parts at one potential',
+      'To protect the installation against transient overvoltages from lightning',
     ],
     correctAnswer: 1,
     explanation:
@@ -4930,7 +4933,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 289,
     question: 'What test verifies SWA armouring continuity?',
     options: [
-      'Insulation resistance test from armouring to live conductors',
+      'Insulation resistance test from armouring to cores',
       'Continuity test from armouring to MET',
       'Loop impedance test between armouring and neutral',
       'RCD test applied across the armouring gland',
@@ -4948,7 +4951,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is a clean earth or technical earth used for?',
     options: [
       'Providing the main protective earth for the whole installation',
-      'Carrying fault current back to the supply transformer',
+      'A low-impedance return path for fault current to the transformer',
       'Sensitive electronic equipment requiring low-noise earth reference',
       'Bonding all extraneous-conductive-parts together',
     ],
@@ -4982,9 +4985,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is MICC cable particularly used for?',
     options: [
       'Fire alarm systems and emergency circuits requiring fire resistance',
-      'Buried supply cables on TT earthing systems',
-      'Flexible connections to portable equipment',
-      'Data and telecommunications cabling only',
+      'Buried supply cables on TT systems needing mechanical protection',
+      'Flexible final connections to portable equipment and hand tools',
+      'Data and telecommunications cabling in commercial buildings',
     ],
     correctAnswer: 0,
     explanation:
@@ -5087,7 +5090,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'To provide a CPC for every cable it carries',
       'To increase the current rating of the cables',
       'Support and protection for cables',
-      'To provide environmental sealing at cable terminations',
+      'To seal cable terminations against water ingress',
     ],
     correctAnswer: 2,
     explanation:
@@ -5142,7 +5145,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'Amendment 4 deleted Table 3A of Appendix 3. Regulation 643.7.3.201 now deems effectiveness verified where the device disconnects within the stated time on an alternating current test at IΔn, whatever the RCD type — AC, A, F or B. A general non-delay device must operate within 300 ms. The 5x test still has a place in fault-finding but is no longer part of the required verification.',
+      'Amendment 4 deleted Table 3A of Appendix 3. Regulation 643.8 now deems effectiveness verified where the device disconnects within the stated time on an alternating current test at IΔn, whatever the RCD type — AC, A, F or B. A general non-delay device must operate within 300 ms. The 5x test still has a place in fault-finding but is no longer part of the required verification.',
     section: 'A4:2026',
     difficulty: 'advanced',
     topic: 'RCD Verification',
@@ -5237,9 +5240,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 307,
     question: 'Why do Table 41.3 rows for Type B and Type C circuit-breakers show a single Zs value rather than separate 0.4 s and 5 s figures?',
     options: [
-      'Because the 5 s column was deleted by Amendment 4 for all breaker types',
-      'Because the difference between the two times is within measurement tolerance',
-      'Because 5 s values apply only where the circuit also has RCD protection',
+      'Because the 5 s column was deleted by Amendment 4 for every type of protective device',
+      'Because the difference between the two disconnection times is within measurement tolerance',
+      'Because 5 s values apply only where the circuit is additionally protected by an RCD',
       'Because a circuit-breaker clears an earth fault on its magnetic trip, which is effectively instantaneous',
     ],
     correctAnswer: 3,
@@ -5288,10 +5291,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 310,
     question: 'An EV charging point is fitted outdoors on a PME supply. What does Regulation 722.411.4.1 require?',
     options: [
-      'PME may be used provided the charging equipment carries an IP44 rating or better',
-      'An earth electrode must always be installed, as it is the only permitted alternative',
+      'PME may be used outdoors provided the charging equipment carries an IP44 rating or better and is RCD protected',
+      'An earth electrode must always be installed, as a TT arrangement is the only permitted alternative to PME',
       'The PME facility must not serve the protective conductor contact unless an alternative in 722.411.4 (b) to (e) is applied',
-      'PME may be used where the charge point is within the building\'s equipotential zone',
+      'PME may be used where the charge point is mounted on the building and lies within its main equipotential zone',
     ],
     correctAnswer: 2,
     explanation:
@@ -5305,9 +5308,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 311,
     question: 'A device fitted to satisfy Regulation 722.411.4.1 monitors voltage to detect a PEN failure. Between which points must it measure?',
     options: [
-      'Between the charging equipment CPC and the consumer\'s main earthing terminal',
-      'Between the charging equipment CPC and the supply neutral conductor',
-      'Between the line conductor and the charging equipment CPC',
+      'Between the charge point CPC and the main earthing terminal',
+      'Between the charge point CPC and the supply neutral',
+      'Between the line conductor and the charge point CPC',
       'Between the charging equipment CPC and Earth',
     ],
     correctAnswer: 3,
@@ -5323,9 +5326,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'A domestic swimming pool is supplied from a PME earthing facility. What does Section 702 require?',
     options: [
       'PME may be used, with an earth mat or electrode of suitably low resistance connected to the supplementary bonding',
-      'PME must not be used; the installation must be converted to TT throughout',
-      'PME may be used provided all pool circuits have 10 mA RCD protection',
-      'PME must not be used unless the pool is wholly indoors and covered when not in use',
+      'PME must not be used at all; the whole installation has to be converted to a TT system with its own electrode',
+      'PME may be used provided every circuit serving the pool has additional protection by a 30 mA RCD',
+      'PME must not be used unless the pool is wholly indoors and kept covered whenever it is not in use',
     ],
     correctAnswer: 0,
     explanation:
@@ -5526,8 +5529,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 324,
     question: 'A surge protective device is being considered. Under Regulation 443.4.1, when must protection be provided?',
     options: [
-      'On every installation without exception since Amendment 2',
-      'Only in commercial and industrial installations above 100 A',
+      'On every installation without exception since Amendment 2 was published',
+      'In commercial and industrial installations with a supply above 100 A',
       'Only where the supply is taken from an overhead distribution line',
       'Where the consequence of an overvoltage could cause serious injury or loss of life',
     ],
@@ -5572,6 +5575,359 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     difficulty: 'advanced',
     topic: 'Insulation Resistance',
     category: 'Insulation Resistance',
+  },
+
+  // ── Initial verification and certification (added 2026-08-07) ──────────
+  // The 2391-50 Initial Verification paper had only 9 genuinely
+  // initial-verification questions in a 326-question bank, so it was really
+  // the common bank with periodic items removed. Every key below is grounded
+  // in bs7671_facets (A4:2026) — Reg 644.4, 644.4.201, 644.4.202, 643.3,
+  // 132.13 and the Appendix 6 changes — not recalled.
+  {
+    id: 327,
+    question: 'A consumer unit is replaced in an existing dwelling with no other alteration to the circuits. Which certificate is required?',
+    options: [
+      'A Minor Electrical Installation Works Certificate, since no new circuit has been added and the existing circuits are unchanged',
+      'An Electrical Installation Certificate, because replacing a distribution board or consumer unit requires initial verification',
+      'An Electrical Installation Condition Report, because the existing circuits are reconnected to new protective devices',
+      'No certificate at all, provided the replacement is like-for-like and the circuits are not otherwise altered',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 644.4.201 requires an Electrical Installation Certificate on completion of the verification of a new installation, or an addition or alteration to an existing installation, including the replacement of a distribution board or consumer unit.',
+    section: 'Certification',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 328,
+    question: 'Under Regulation 644.4, who issues the Electrical Installation Certificate?',
+    options: [
+      'The person or persons responsible for the design, construction and verification, taking account of their respective responsibilities',
+      'The scheme provider the contractor is registered with, once the notification has been accepted and the work logged',
+      'Whichever competent person carried out the final live testing, regardless of who designed or installed the work',
+      'The local authority building control body, after the notifiable work has been inspected and approved',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 644.4 places the duty on the person or persons responsible for the design, construction and verification of the installation, who issue the certificate to the person ordering the work, taking account of their respective responsibilities.',
+    section: 'Certification',
+    difficulty: 'basic',
+    topic: 'Certification',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 329,
+    question: 'To whom must the Electrical Installation Certificate be issued?',
+    options: [
+      'To the person ordering the work, that is the client who commissioned the installation or alteration',
+      'To the distribution network operator, who holds the record for the supply to the premises',
+      'To the occupier of the premises, whether or not they commissioned the work themselves',
+      'To the building control body, which retains it as the permanent record for the property',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 644.4 requires the Electrical Installation Certificate to be issued to the person ordering the work, i.e. the client or person who commissioned the installation or alteration.',
+    section: 'Certification',
+    difficulty: 'basic',
+    topic: 'Certification',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 330,
+    question: 'A defect is found while inspecting and testing a new installation. When may the Electrical Installation Certificate be issued?',
+    options: [
+      'Once the defect has been corrected and any necessary re-testing carried out to demonstrate compliance',
+      'Immediately, provided the defect is recorded in the comments box and reported to the client in writing',
+      'Once the client has accepted the defect in writing and agreed a date for it to be put right later',
+      'Immediately, as long as the defective circuit is left isolated and clearly labelled as out of service',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Where a defect or omission is revealed during the inspection and testing of a new installation, it must be corrected before the Electrical Installation Certificate is issued, with remedial work and re-testing as necessary to demonstrate compliance.',
+    section: 'Certification',
+    difficulty: 'intermediate',
+    topic: 'Certification',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 331,
+    question: 'Initial verification is required for which of the following?',
+    options: [
+      'Entirely new installations only, since existing installations are covered by periodic inspection instead',
+      'New installations, and also additions and alterations to existing installations, before being put into service',
+      'New installations and any rewire, but not the addition of a single circuit to an existing board',
+      'New installations in commercial premises only, with domestic work covered by self-certification',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The initial verification requirement applies not only to entirely new installations but also to additions and alterations to existing installations. Any such work must be inspected and tested before being put into service.',
+    section: 'Introduction',
+    difficulty: 'basic',
+    topic: 'Scope of Initial Verification',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 332,
+    question: 'What is the status of the example checklist of inspection items added to Appendix 6 at Amendment 4?',
+    options: [
+      'It is guidance only and is not required to be provided with the certificate',
+      'It is mandatory and must be completed and issued alongside every certificate',
+      'It replaces the schedule of inspections entirely for all initial verifications',
+      'It is required only where the installation includes a special location',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The Appendix 6 schedule of inspections was simplified for initial verification and a new example checklist of items requiring inspection was added. That checklist is guidance only and is not required to be provided with the certificate.',
+    section: 'Certification',
+    difficulty: 'advanced',
+    topic: 'Documentation',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 333,
+    question: 'The Electrical Installation Certificate issued on completion of verification must be based on which model?',
+    options: [
+      'The model given in Appendix 6 of BS 7671, which is the normative template for the certificate',
+      'The model published by the scheme provider the contractor is registered with at the time',
+      'The model given in Appendix 4 of BS 7671, alongside the current-carrying capacity tables',
+      'Any format the contractor chooses, provided the required test results are all recorded',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 644.4.201 requires the Electrical Installation Certificate to be based on the model given in Appendix 6 of BS 7671, which makes the Appendix 6 form the normative template.',
+    section: 'Certification',
+    difficulty: 'intermediate',
+    topic: 'Documentation',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 334,
+    question: 'In what format may an Electrical Installation Certificate or Minor Works Certificate be produced?',
+    options: [
+      'In written or electronic form, both being permitted for the original certificate or a copy',
+      'In written form only, with electronic copies acceptable purely for the contractor\'s records',
+      'In electronic form only, since paper certificates are no longer recognised for notification',
+      'In written form, unless the client has agreed in advance to accept an electronic version',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 644.4.202 addresses the permitted formats for Electrical Installation Certificates and Minor Electrical Installation Works Certificates, covering the media, written or electronic, used for original certificates or their copies.',
+    section: 'Certification',
+    difficulty: 'advanced',
+    topic: 'Documentation',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 335,
+    question: 'A 250 V DC insulation resistance test is used because connected equipment could be damaged. What must be recorded?',
+    options: [
+      'That a 250 V DC test was performed, and the reason for adapting the test method',
+      'Only the resulting value, since the test voltage used is a matter for the tester',
+      'That the circuit was disconnected, with no need to note the voltage applied',
+      'That equipment was present, since the reduced test voltage is then the default option',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Where a 250 V DC insulation resistance test is used as permitted by Regulation 643.3, the installer records that a 250 V DC test was performed and the reason for it, equipment influence or risk of damage, on the schedule of inspections and tests. This gives traceability of the adapted method.',
+    section: 'Insulation Resistance',
+    difficulty: 'advanced',
+    topic: 'Documentation',
+    category: 'Visual Inspection & Documentation',
+  },
+  {
+    id: 336,
+    question: 'When the initial verification is made, what must happen to the documentation on device selection for coordination?',
+    options: [
+      'It is added to the design documentation, making the coordination evidence part of the formal design record',
+      'It is retained by the installer only, as coordination is a construction rather than a design matter',
+      'It is sent to the manufacturer of the protective devices so the selection can be confirmed',
+      'It is attached to the periodic report instead, since coordination is verified at the first inspection',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'When the initial verification is made, the documentation concerning the selection of devices for coordination is added to the design documentation in accordance with Regulation 132.13, making the coordination evidence part of the formal design record.',
+    section: 'Certification',
+    difficulty: 'advanced',
+    topic: 'Documentation',
+    category: 'Visual Inspection & Documentation',
+  },
+
+  // ── Initial verification: test sequence and instruments (added 2026-08-07) ──
+  // Read straight off the printed BS 7671:2018+A4:2026, Regulation 643.1 and
+  // 643.2.1: the 643.2-to-643.6 order before energisation, the earth electrode
+  // exception, the repeat-preceding-tests rule, BS EN 61557 instruments and
+  // BS EN 60079-17 for explosive atmospheres.
+  {
+    id: 337,
+    question: 'Which tests must be carried out before the installation is energised, and in what order?',
+    options: [
+      'The tests of 643.2 to 643.6 in that order — continuity, insulation resistance, SELV/PELV or separation, floors and walls, polarity',
+      'Any of the dead tests in whatever order suits site access, provided all of them are completed before energisation',
+      'Insulation resistance first, then continuity, then polarity, with the remainder carried out as live tests',
+      'Continuity and polarity only, with insulation resistance carried out once the supply is on',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 643.1 requires that the tests of Regulations 643.2 to 643.6, where relevant, are carried out in that order before the installation is energised: continuity of conductors, insulation resistance, protection by SELV/PELV or electrical separation, insulation resistance of floors and walls, and polarity.',
+    section: 'Introduction',
+    difficulty: 'intermediate',
+    topic: 'Test Sequence',
+    category: 'Introduction & Fundamentals',
+  },
+  {
+    id: 338,
+    question: 'An installation incorporates an earth electrode. Which further test must be completed before energisation?',
+    options: [
+      'The prospective fault current measurement, taken at the origin of the installation',
+      'The earth electrode resistance test, which must also precede energisation',
+      'The RCD operating time test, carried out at the first socket-outlet on each circuit',
+      'The functional test of the main switch and any residual current devices fitted',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.1 states that where the installation incorporates an earth electrode, the test of Regulation 643.7.2 (earth electrode resistance) shall also be carried out before the installation is energised.',
+    section: 'Introduction',
+    difficulty: 'advanced',
+    topic: 'Test Sequence',
+    category: 'Introduction & Fundamentals',
+  },
+  {
+    id: 339,
+    question: 'A test during initial verification indicates a failure to comply. After the fault is rectified, what must be repeated?',
+    options: [
+      'Only the test that failed, since the earlier results were recorded before the fault arose',
+      'Every test in the sequence, because a single failure invalidates the whole verification',
+      'That test, and any preceding test whose results may have been influenced by the fault',
+      'No test needs repeating provided the rectification is recorded on the certificate',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 643.1 requires that if any test indicates a failure to comply, that test and any preceding test whose results may have been influenced by the fault shall be repeated after the fault has been rectified.',
+    section: 'Introduction',
+    difficulty: 'intermediate',
+    topic: 'Test Sequence',
+    category: 'Introduction & Fundamentals',
+  },
+  {
+    id: 340,
+    question: 'Which standard governs the choice of measuring instruments for the tests of Chapter 64?',
+    options: [
+      'BS EN 61557, with other equipment permitted if performance and safety are no lesser',
+      'BS EN 60898, which sets the accuracy classes for installation test instruments',
+      'BS 7671 Appendix 6, which lists the approved instruments for each test',
+      'BS EN 61439, which covers the verification of assemblies and their instruments',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 643.1 requires measuring instruments and monitoring equipment and methods to be chosen in accordance with the relevant parts of BS EN 61557. Where other measuring equipment is used, it must provide no lesser degree of performance and safety.',
+    section: 'Introduction',
+    difficulty: 'intermediate',
+    topic: 'Test Instruments',
+    category: 'Introduction & Fundamentals',
+  },
+  {
+    id: 341,
+    question: 'Testing is to be undertaken in a potentially explosive atmosphere. Which standard sets the safety precautions?',
+    options: [
+      'BS EN 60079-17, covering inspection and maintenance in explosive atmospheres',
+      'BS EN 61557-6, which covers the effectiveness of residual current devices',
+      'BS EN 62305, which deals with protection of structures against lightning',
+      'BS EN 60529, which classifies degrees of protection provided by enclosures',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 643.1 states that when undertaking testing in a potentially explosive atmosphere, appropriate safety precautions in accordance with BS EN 60079-17 are necessary.',
+    section: 'Introduction',
+    difficulty: 'advanced',
+    topic: 'Test Instruments',
+    category: 'Introduction & Fundamentals',
+  },
+  {
+    id: 342,
+    question: 'Under Regulation 643.2.1, continuity of conductors is verified by measuring the resistance of which conductors?',
+    options: [
+      'Line conductors only, the protective conductor being proved by loop impedance',
+      'Protective conductors, including protective bonding conductors',
+      'Neutral and protective conductors, but not the main protective bonding',
+      'Every conductor in the installation, including the supply tails',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.2.1 requires the continuity of conductors and connections to exposed-conductive-parts and extraneous-conductive-parts to be verified by a measurement of resistance of protective conductors, including protective bonding conductors.',
+    section: 'Continuity',
+    difficulty: 'basic',
+    topic: 'Continuity',
+    category: 'Continuity Testing',
+  },
+  {
+    id: 343,
+    question: 'On a TN system, how is compliance with the requirements for automatic disconnection verified?',
+    options: [
+      'By measuring the earth electrode resistance and comparing it with the RCD rating',
+      'By confirming the protective device rating matches the cable current-carrying capacity',
+      'By measuring earth fault loop impedance and comparing it with the maximum permitted Zs',
+      'By operating the device by hand and confirming that all live conductors are isolated',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'For a TN system, verification requires measurement of the earth fault loop impedance, with the measured Zs compared against the maximum value derived from the supply voltage, the protective device characteristics and the disconnection times of Regulation 411.4.',
+    section: 'Earth Fault Loop Impedance',
+    difficulty: 'intermediate',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Earth Fault Loop Impedance',
+  },
+  {
+    id: 344,
+    question: 'On a TT system, a measurement of the earth electrode resistance RA is not practicable. What is permitted?',
+    options: [
+      'The measured value of external earth fault loop impedance may be used instead',
+      'The declared value from the distributor may be entered without any measurement',
+      'The test may be omitted where a 30 mA residual current device is installed',
+      'A calculated value based on soil type and electrode length may be recorded',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Verification for a TT system requires measurement of the resistance of the earth electrode for exposed-conductive-parts. A note to the regulation states that where a measurement of RA is not practicable, the measured value of external earth fault loop impedance may be used.',
+    section: 'Earth Fault Loop Impedance',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Earth Fault Loop Impedance',
+  },
+  {
+    id: 345,
+    question: 'Effectiveness of the protective measure has been confirmed at a point downstream of an RCD. How may the installation beyond that point be proved?',
+    options: [
+      'By repeating the full loop impedance measurement at every accessory downstream',
+      'By confirmation of the continuity of the protective conductors downstream',
+      'By a further RCD operating time test taken at the most distant point',
+      'By an insulation resistance test between line and earth on each final circuit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where the effectiveness of the protective measure has been confirmed at a point located downstream of an RCD, the protection of the installation downstream from that point may be proved by confirmation of the continuity of the protective conductors.',
+    section: 'Earth Fault Loop Impedance',
+    difficulty: 'advanced',
+    topic: 'Earth Fault Loop Impedance',
+    category: 'Earth Fault Loop Impedance',
+  },
+  {
+    id: 346,
+    question: 'Which test is the first of the sequence carried out before the installation is energised?',
+    options: [
+      'Polarity',
+      'Insulation resistance',
+      'Continuity of conductors',
+      'Earth fault loop impedance',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Regulation 643.1 sets the order: the tests of 643.2 to 643.6 are carried out in that order before energisation, and 643.2 is continuity of conductors.',
+    section: 'Continuity',
+    difficulty: 'basic',
+    topic: 'Test Sequence',
+    category: 'Introduction & Fundamentals',
   },
 ];
 

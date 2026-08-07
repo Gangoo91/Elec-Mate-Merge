@@ -602,7 +602,7 @@ export default function BuildingRegsElectricalPage() {
   return (
     <GuideTemplate
       title="Building Regulations Electrical | Approved Document P"
-      description="Complete guide to Building Regulations for electrical work in UK dwellings. Approved Document P requirements, notifiable work types…"
+      description="Complete guide to Building Regulations for electrical work in UK dwellings. Approved Document P requirements, notifiable work types."
       datePublished="2025-03-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -774,7 +774,7 @@ const sections = [
 export default function ElectricityAtWorkRegsPage() {
   return (
     <GuideTemplate
-      title="Electricity at Work Regulations 1989: Electrician's Guide | Elec-Mate"
+      title="Electricity at Work Regulations 1989: Electrician's Guide"
       description="Complete guide to the Electricity at Work Regulations 1989 for electricians and employers. Regulation 4 (systems &amp; EICR), Regulation 12 (safe isolation), Regulation 14 (live working), Regulation 16 (competence)."
       datePublished="2025-04-15"
       dateModified="2026-06-10"

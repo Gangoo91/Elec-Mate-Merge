@@ -290,7 +290,7 @@ const CashFlowPlanner = () => {
             />
           ) : (
             <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center">
-              <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+              <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
               <h3 className="text-white font-semibold mb-2">No Data Yet</h3>
               <p className="text-white text-sm">
                 Add income and expenses to see your cash flow chart
@@ -317,7 +317,7 @@ const CashFlowPlanner = () => {
             />
           ) : (
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-              <Info className="h-8 w-8 text-blue-400 mx-auto mb-2 opacity-50" />
+              <Info className="h-8 w-8 text-elec-yellow mx-auto mb-2 opacity-50" />
               <h3 className="text-white font-medium text-sm mb-1">Get Started</h3>
               <p className="text-white text-xs">
                 Add income streams and expenses to see your financial health summary
@@ -341,14 +341,14 @@ const CashFlowPlanner = () => {
 // Empty state component
 const EmptyState = ({ onShowTemplates }: { onShowTemplates: () => void }) => (
   <div className="p-8 rounded-xl border border-white/10 bg-white/5 text-center">
-    <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+    <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
     <h3 className="text-white text-lg font-semibold mb-2">No Data Yet</h3>
     <p className="text-white text-sm mb-4">
       Add income streams and expenses to see your projections.
     </p>
     <button
       onClick={onShowTemplates}
-      className="h-10 px-4 rounded-xl font-medium text-sm bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+      className="h-10 px-4 rounded-xl font-medium text-sm bg-white/[0.04] text-white hover:bg-white/[0.04] transition-colors"
     >
       Use a Template
     </button>

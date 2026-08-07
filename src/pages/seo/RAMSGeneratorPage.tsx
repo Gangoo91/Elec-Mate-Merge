@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'RAMS Generator for Electricians | AI Risk Assessments | Elec-Mate';
+const PAGE_TITLE = 'RAMS Generator for Electricians | AI Risk Assessments';
 const PAGE_DESCRIPTION =
   'Generate RAMS for electrical work using AI: CDM 2015 compliant, COSHH integration, site-specific hazards. Built for UK electricians.';
 

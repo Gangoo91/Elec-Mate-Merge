@@ -31,7 +31,8 @@ export const heatPumpContent: CalculatorContent = {
   ],
 
   workedExample: {
-    scenario: '90 m² modern semi, good insulation (≈70 W/m²), Southern England (design −2 °C, indoor 21 °C).',
+    scenario:
+      '90 m² modern semi, good insulation (≈70 W/m²), Southern England (design −2 °C, indoor 21 °C).',
     inputs: [
       { label: 'Floor area', value: '90 m²' },
       { label: 'Heat loss factor', value: '70 W/m²' },

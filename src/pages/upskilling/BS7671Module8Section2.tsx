@@ -465,7 +465,7 @@ const BS7671Module8Section2 = () => {
             onSite="AFDD presence is a yes/no on the form, but the design rationale (why fitted / why omitted) belongs on the certificate's design declaration. A4 also adds AFDD operational testing to the live-test sequence — push the test button, confirm trip."
           >
             <p>
-              Reg 421.1.7 (added in A4) recommends — and in some occupancies mandates — Arc Fault
+              Reg 421.1.7 (introduced by Amendment 2:2022) recommends — and in some occupancies mandates — Arc Fault
               Detection Devices on AC final circuits up to 32 A. The recommendation hardens to a
               "shall" in higher-risk sleeping-accommodation occupancies. The cert column, the design
               declaration and the operational test together form the AFDD compliance trail.

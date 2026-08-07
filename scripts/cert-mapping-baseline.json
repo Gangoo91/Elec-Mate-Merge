@@ -1,81 +1,121 @@
 {
   "emergency-lighting": {
-    "notPrinted": 20,
+    "notPrinted": 55,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "pat-testing": {
-    "notPrinted": 4,
+    "notPrinted": 5,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 1
   },
   "solar-pv": {
-    "notPrinted": 19,
+    "notPrinted": 39,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 1
   },
   "bess": {
-    "notPrinted": 4,
+    "notPrinted": 12,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "lightning-protection": {
-    "notPrinted": 2,
+    "notPrinted": 23,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "smoke-co-alarm": {
-    "notPrinted": 1,
+    "notPrinted": 2,
+    "probed": true,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "fire-alarm-log-book": {
+    "notPrinted": 0,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "g98-commissioning": {
-    "notPrinted": 6,
+    "notPrinted": 16,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "g99-commissioning": {
-    "notPrinted": 5,
+    "notPrinted": 15,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "disconnection": {
     "notPrinted": 1,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "testing-only": {
-    "notPrinted": 2,
+    "notPrinted": 4,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "ev-charging": {
-    "notPrinted": 29,
+    "notPrinted": 34,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "fire-alarm-g1": {
     "notPrinted": 6,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "fire-alarm-g2": {
-    "notPrinted": 171,
+    "notPrinted": 197,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 1
   },
   "fire-alarm-g3": {
-    "notPrinted": 2,
+    "notPrinted": 3,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
   "fire-alarm-g6": {
-    "notPrinted": 2,
+    "notPrinted": 4,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   },
+  "eicr": {
+    "notPrinted": 312,
+    "probed": true,
+    "unsourced": 0,
+    "neverRead": 8
+  },
+  "eic": {
+    "notPrinted": 79,
+    "probed": true,
+    "unsourced": 12,
+    "neverRead": 0
+  },
+  "minor-works": {
+    "notPrinted": 11,
+    "probed": false,
+    "unsourced": 117,
+    "neverRead": 86
+  },
   "fire-alarm-g7": {
-    "notPrinted": 2,
+    "notPrinted": 3,
+    "probed": true,
     "unsourced": 0,
     "neverRead": 0
   }

@@ -33,7 +33,7 @@ export default function KnowledgeUploader() {
     <div className="container mx-auto py-8 space-y-8 pb-20">
       <div>
         <h1 className="text-3xl font-bold mb-2">Knowledge Base Uploader</h1>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Upload and process technical documents to populate the AI knowledge base
         </p>
       </div>

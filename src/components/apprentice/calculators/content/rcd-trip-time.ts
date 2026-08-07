@@ -58,7 +58,10 @@ export const rcdTripTimeContent: CalculatorContent = {
       citation: 'Regulation 411.3.4',
       clauseText:
         'Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires.',
-      sourceFacetIds: ['a2131a09-3b30-4981-8133-ac07d4dd6114', '4cbd1301-62fc-417f-86a6-1fffefc7e6d1'],
+      sourceFacetIds: [
+        'a2131a09-3b30-4981-8133-ac07d4dd6114',
+        '4cbd1301-62fc-417f-86a6-1fffefc7e6d1',
+      ],
     },
   ],
 

@@ -642,7 +642,7 @@ export default function StudentHouseElectricalPage() {
   return (
     <GuideTemplate
       title="Student House Electrical Safety UK | Guide for Landlords &"
-      description="Student house electrical safety guide for landlords and students in the UK. EICR requirements, HMO considerations, common student electrical hazards…"
+      description="Student house electrical safety guide for landlords and students in the UK. EICR requirements, HMO considerations, common student electrical hazards."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

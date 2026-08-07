@@ -26,7 +26,7 @@ interface SurveyAnalysisPanelProps {
 /** Numbered eyebrow header — the section language used across v2 */
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
       {children}
     </div>
   );
@@ -75,18 +75,18 @@ function CostSummary({
             {gbp(totalGbp)}
           </p>
         </div>
-        <p className="pb-1 text-[11px] capitalize text-white/45">{summary.confidence} confidence</p>
+        <p className="pb-1 text-[11px] capitalize text-white">{summary.confidence} confidence</p>
       </div>
 
       <div className="mt-4 overflow-hidden rounded-xl border border-white/[0.08]">
         <div className="flex items-center justify-between bg-white/[0.02] px-3.5 py-2.5">
-          <span className="text-[13px] text-white/75">Materials</span>
+          <span className="text-[13px] text-white">Materials</span>
           <span className="text-[13px] font-medium tabular-nums text-white">
             {gbp(materialsGbp)}
           </span>
         </div>
         <div className="flex items-center justify-between border-t border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5">
-          <span className="text-[13px] text-white/75">Labour · {labour.total_hours}h</span>
+          <span className="text-[13px] text-white">Labour · {labour.total_hours}h</span>
           <span className="text-[13px] font-medium tabular-nums text-white">
             {gbp(summary.labour_gbp)}
           </span>
@@ -96,8 +96,8 @@ function CostSummary({
             key={i}
             className="flex items-center justify-between border-t border-white/[0.05] py-2 pl-7 pr-3.5"
           >
-            <span className="text-[12px] text-white/55">{task.task}</span>
-            <span className="text-[12px] tabular-nums text-white/55">{task.hours}h</span>
+            <span className="text-[12px] text-white">{task.task}</span>
+            <span className="text-[12px] tabular-nums text-white">{task.hours}h</span>
           </div>
         ))}
       </div>
@@ -134,7 +134,7 @@ function EditableMaterialsTable({
     <div>
       <div className="flex items-center justify-between">
         <SectionEyebrow>MATERIALS · {items.length}</SectionEyebrow>
-        <span className="text-[11px] text-white/45">Tap any field to edit</span>
+        <span className="text-[11px] text-white">Tap any field to edit</span>
       </div>
       <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
         {items.map((item, i) => (
@@ -150,7 +150,7 @@ function EditableMaterialsTable({
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove item"
-                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-white/40 transition-colors hover:text-red-400 active:bg-white/[0.06] touch-manipulation"
+                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:text-red-400 active:bg-white/[0.06] touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -167,9 +167,9 @@ function EditableMaterialsTable({
                 placeholder="unit"
                 className={cn(fieldCls, 'h-11 w-16 text-center text-[12px]')}
               />
-              <span className="text-[12px] text-white/40">×</span>
+              <span className="text-[12px] text-white">×</span>
               <div className="relative min-w-0 flex-1">
-                <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[13px] text-white/70">
+                <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[13px] text-white">
                   £
                 </span>
                 <DecimalInput
@@ -187,7 +187,7 @@ function EditableMaterialsTable({
         <button
           type="button"
           onClick={add}
-          className="flex h-11 w-full items-center justify-center gap-1.5 border-t border-white/[0.08] text-[12px] font-medium text-white/60 transition-colors hover:text-white active:bg-white/[0.04] touch-manipulation"
+          className="flex h-11 w-full items-center justify-center gap-1.5 border-t border-white/[0.08] text-[12px] font-medium text-white transition-colors hover:text-white active:bg-white/[0.04] touch-manipulation"
         >
           <Plus className="h-3.5 w-3.5" />
           Add item
@@ -215,8 +215,8 @@ function RegulatoryFlags({ flags }: { flags: RegulatoryFlag[] }) {
             <SeverityDot severity={flag.severity} />
             <div className="min-w-0 flex-1">
               <p className="text-[12.5px] font-medium text-white">{flag.regulation}</p>
-              <p className="mt-0.5 text-[12px] leading-snug text-white/65">{flag.description}</p>
-              {flag.room && <p className="mt-1 text-[11px] text-white/45">{flag.room}</p>}
+              <p className="mt-0.5 text-[12px] leading-snug text-white">{flag.description}</p>
+              {flag.room && <p className="mt-1 text-[11px] text-white">{flag.room}</p>}
             </div>
           </div>
         ))}
@@ -241,7 +241,7 @@ function CableSizing({ items }: { items: SurveyAnalysisResult['cable_sizing'] })
           >
             <div className="min-w-0 flex-1">
               <p className="text-[13px] text-white">{item.circuit}</p>
-              <p className="mt-0.5 truncate text-[11px] text-white/45">
+              <p className="mt-0.5 truncate text-[11px] text-white">
                 {item.cable_type} · {item.ref_method}
               </p>
             </div>
@@ -275,7 +275,7 @@ function CircuitRecommendations({
           >
             <div className="min-w-0 flex-1">
               <p className="text-[13px] text-white">{item.room}</p>
-              <p className="mt-0.5 truncate text-[11px] text-white/45">
+              <p className="mt-0.5 truncate text-[11px] text-white">
                 {item.circuit_type} · {item.protection}
               </p>
             </div>
@@ -303,7 +303,7 @@ function Issues({ issues }: { issues: SurveyIssue[] }) {
             <SeverityDot severity={issue.severity} />
             <div className="min-w-0 flex-1">
               <p className="text-[12.5px] leading-snug text-white">{issue.description}</p>
-              <p className="mt-1 text-[12px] leading-snug text-white/65">→ {issue.action}</p>
+              <p className="mt-1 text-[12px] leading-snug text-white">→ {issue.action}</p>
             </div>
           </div>
         ))}
@@ -343,7 +343,7 @@ function AnalysisProgress({
         <span className="flex-1 text-[13px] font-medium text-white">
           {currentStep || 'Starting analysis…'}
         </span>
-        <span className="text-[12px] tabular-nums text-white/55">{timeStr}</span>
+        <span className="text-[12px] tabular-nums text-white">{timeStr}</span>
       </div>
       <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.08]">
         <div
@@ -351,7 +351,7 @@ function AnalysisProgress({
           style={{ width: `${progress}%` }}
         />
       </div>
-      <p className="mt-2 text-[11px] text-white/45">
+      <p className="mt-2 text-[11px] text-white">
         Live trade prices and BS 7671 checks — up to 2 minutes
       </p>
     </div>
@@ -421,7 +421,7 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
             )}
           </Button>
           {!hasData && (
-            <p className="text-center text-[12px] text-white/55">
+            <p className="text-center text-[12px] text-white">
               Add rooms and items first, then pricing runs automatically
             </p>
           )}
@@ -485,7 +485,7 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
           <button
             onClick={() => startAnalysis(visit)}
             disabled={isStarting}
-            className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg text-[12px] font-medium text-white/55 transition-colors touch-manipulation hover:text-white active:bg-white/[0.04]"
+            className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg text-[12px] font-medium text-white transition-colors touch-manipulation hover:text-white active:bg-white/[0.04]"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Re-run pricing

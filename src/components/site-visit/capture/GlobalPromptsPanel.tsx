@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { PromptAnswerOptions } from './PromptAnswerOptions';
 import { getGlobalPrompts } from '@/data/siteVisit/smartPrompts';
 import type { PropertyType } from '@/types/siteVisit';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 interface GlobalPromptsPanelProps {
   getResponse: (promptKey: string) => string | undefined;
@@ -55,7 +56,7 @@ export const GlobalPromptsPanel = ({
             const value = getResponse(prompt.key) || '';
             return (
               <div key={prompt.key} className="space-y-1">
-                <label className="text-[11.5px] font-medium text-white/65">{prompt.question}</label>
+                <label className="text-[11.5px] font-medium text-white">{prompt.question}</label>
                 {prompt.helpText && <p className="text-[11px] text-white">{prompt.helpText}</p>}
 
                 {prompt.inputType === 'select' && prompt.options && (
@@ -80,7 +81,7 @@ export const GlobalPromptsPanel = ({
                     onChange={(e) =>
                       setResponse(prompt.key, e.target.value, undefined, prompt.question)
                     }
-                    className="h-11 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+                    className={inputCn}
                     placeholder="Enter response..."
                     autoCapitalize="sentences"
                     enterKeyHint="done"

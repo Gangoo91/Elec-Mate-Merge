@@ -44,7 +44,7 @@ const keyTakeaways = [
   'NHBC Standards Chapter 8.1 sets minimum requirements for electrical installations in new build homes registered with NHBC. The installation must also comply with BS 7671:2018+A4:2026.',
   'An Electrical Installation Certificate (EIC) must be issued for each dwelling, and the work must be notified under Part P of the Building Regulations.',
   'Reference labour benchmarks (2026): full house rewire 35–55 hours / £3,500–£5,500; consumer unit change 4–6 hours / £450–£750. Use these as a sanity check when pricing a new-build first-fix package.',
-  'BS 7671:2018+A4:2026 introduced two key changes for new build consumer unit design: Reg 411.3.4 mandates 30 mA RCD protection on all AC lighting circuits in domestic premises; Reg 421.1.7 recommends AFDDs (arc fault detection devices) on AC final circuits to reduce fire risk from arc faults. Both affect material and pricing for new build work.',
+  'Two BS 7671 requirements shape new build consumer unit design. Reg 411.3.4 requires 30 mA RCD additional protection for AC final circuits supplying luminaires within domestic premises. Reg 421.1.7 requires AFDDs (arc fault detection devices) on single-phase AC final circuits supplying socket-outlets rated up to 32 A in high rise residential buildings, HMOs, purpose-built student accommodation and care homes, and recommends them for all other premises. Both affect material and pricing for new build work.',
 ];
 
 const faqs = [
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'How many socket outlets are needed in a new build?',
     answer:
-      'There is no regulatory minimum in BS 7671, but NHBC Standards and good practice guidelines recommend minimum provisions: living room 4 to 6 double sockets, kitchen 6 to 8 doubles (including dedicated circuits for oven, hob, fridge, dishwasher, and washing machine), bedrooms 2 to 4 doubles each, hallway 1 to 2 doubles, bathroom 1 shaver socket (no standard sockets unless supplied via an isolating transformer or located in Zone 3 outside the splash zone). Most mid-range specifications exceed these minimums significantly.',
+      'There is no regulatory minimum in BS 7671, but NHBC Standards and good practice guidelines recommend minimum provisions: living room 4 to 6 double sockets, kitchen 6 to 8 doubles (including dedicated circuits for oven, hob, fridge, dishwasher, and washing machine), bedrooms 2 to 4 doubles each, hallway 1 to 2 doubles, and a shaver supply unit to BS EN 61558-2-5 in the bathroom. Section 701 of BS 7671 divides a location containing a bath or shower into zones 0, 1 and 2 only, and Regulation 701.512.3 prohibits ordinary socket-outlets within 2.50 m horizontally of the zone 1 boundary — only SELV socket-outlets to Section 414 and shaver supply units to BS EN 61558-2-5 may be installed closer. Most mid-range specifications exceed these minimums significantly.',
   },
   {
     question: 'Do new builds need EV charger pre-wiring?',
     answer:
-      'Since June 2022, the Building Regulations (Approved Document S) require new dwellings with associated parking to have an EV charge point installed — not just pre-wired. The minimum requirement is a 7kW Mode 3 smart charge point. The electrical installation must include a dedicated 32A radial circuit from the consumer unit to the charge point location, with appropriate RCD protection per Regulation 411.3.3 of BS 7671. Budget £800 to £1,200 per dwelling for the charge point, cable run, and dedicated circuit.',
+      'Since June 2022, the Building Regulations (Approved Document S) require new dwellings with associated parking to have an EV charge point installed — not just pre-wired. The minimum requirement is a 7kW Mode 3 smart charge point. The electrical installation must include a dedicated 32A radial circuit from the consumer unit to the charge point location, with the RCD protection required by Section 722 of BS 7671 for electric vehicle charging installations (Regulation 722.531.3). Budget £800 to £1,200 per dwelling for the charge point, cable run, and dedicated circuit.',
   },
   {
     question: 'How long does electrical installation take on a new build house?',
@@ -283,9 +283,11 @@ const sections = [
                 <strong>Premium specification: £70 to £85/m²</strong> — High-density socket
                 provision, LED downlights throughout, structured Cat6A data wiring, underfloor
                 heating controls (wiring only), multi-room audio pre-wire, comprehensive external
-                and garden lighting, EV charger installation, AFDDs (arc fault detection devices,
-                recommended under BS 7671 Reg 421.1.7 A4:2026) on final circuits, brushed steel or
-                chrome accessories. Typical for premium developers and self-build projects.
+                and garden lighting, EV charger installation, AFDDs (arc fault detection devices —
+                recommended by BS 7671 Reg 421.1.7 for single-phase socket-outlet final circuits up
+                to 32 A in an ordinary dwelling, and required in high rise residential buildings,
+                HMOs, purpose-built student accommodation and care homes), brushed steel or chrome
+                accessories. Typical for premium developers and self-build projects.
               </span>
             </li>
           </ul>
@@ -410,28 +412,32 @@ const sections = [
           pack to the buyer.
         </p>
         <p>
-          Under Regulation 443.4 of BS 7671:2018+A4:2026, a risk assessment determines whether SPD
-          (surge protection device) protection is required. For most new build homes supplied via an
-          overhead or mixed network, the risk assessment supports SPD installation. Note that Reg
-          443.4 also provides an exception: single dwelling units may be excluded from the
-          requirement to provide transient overvoltage protection where the specified conditions are
-          met. In practice, NHBC expectations and good industry guidance mean SPDs are routinely
-          included in new build consumer units — but the regulatory basis is a risk assessment, not
-          an unconditional mandate.
+          Regulation 443.4.1 of BS 7671:2018+A4:2026 requires protection against transient
+          overvoltages — in practice an SPD (surge protection device) — where the consequence of an
+          overvoltage could result in serious injury to, or loss of, human life, or in significant
+          financial or data loss. For all other cases, including ordinary dwellings, protection
+          shall be provided <em>unless</em> the owner of the installation declares it is not
+          required because any loss or damage is tolerable and they accept the risk. The old
+          risk-assessment method (Regulation 443.5) and its calculated risk level annex have been
+          deleted. The practical effect for new build is that an SPD is the default: price one into
+          every consumer unit unless the developer gives you a written declaration to omit it.
         </p>
         <p>
-          Under Regulation 411.3.4 (introduced by A4:2026), all AC final circuits supplying
-          luminaires within domestic premises must have additional protection by a 30 mA RCD. This
-          means every lighting circuit in a new build dwelling requires RCD protection — typically
-          delivered via RCBOs in a fully-protected consumer unit. This is a direct A4:2026 change
-          that affects every new build consumer unit design.
+          Under Regulation 411.3.4, all AC final circuits supplying luminaires within domestic
+          (household) premises must have additional protection by an RCD with a rated residual
+          operating current not exceeding 30 mA. This means every lighting circuit in a new build
+          dwelling requires RCD protection — typically delivered via RCBOs in a fully-protected
+          consumer unit.
         </p>
         <p>
-          Regulation 421.1.7 (introduced by A4:2026) recommends the installation of arc fault
-          detection devices (AFDDs) in AC final circuits of a fixed installation to mitigate the
-          risk of fire from arc fault currents. The wording is advisory rather than mandatory, but
-          AFDDs are increasingly expected on premium new build specifications and are a growing
-          industry-standard inclusion.
+          Regulation 421.1.7 requires arc fault detection devices (AFDDs) conforming to
+          BS EN 62606 on single-phase AC final circuits supplying socket-outlets with a rated
+          current not exceeding 32 A in high rise residential buildings, houses in multiple
+          occupation, purpose-built student accommodation and care homes. For all other premises —
+          including ordinary new build houses — AFDDs are recommended rather than required, but
+          they are increasingly expected on premium specifications. Where AFDDs are used they must
+          be placed at the origin of the circuit protected. If you are wiring apartment blocks over
+          18 m or in excess of six storeys, treat AFDDs as a priced-in requirement, not an upgrade.
         </p>
       </>
     ),
@@ -506,10 +512,10 @@ const sections = [
 export default function NewBuildElectricalCostPage() {
   return (
     <GuideTemplate
-      title="New Build Electrical Cost Per m² UK 2026 | Real Pricing"
-      description="What it actually costs to wire a new house in 2026: £35–£85/m² breakdown — first fix, second fix, DB + DNO connection. Domestic vs spec-build pricing."
+      title="New Build Electrical Cost: 3-Bed £4,500–£8,000"
+      description="Wiring a new build: £35–£85/m² — basic £35–£45, mid £50–£65, premium £70–£85. A 90m² 3-bed costs £4,500–£8,000: first fix, second fix, consumer unit, EIC."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

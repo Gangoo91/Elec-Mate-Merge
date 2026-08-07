@@ -46,14 +46,14 @@ const keyTakeaways = [
   'Distribution board layout diagrams show the physical arrangement of devices, busbar connections, and circuit identification for consumer units and distribution boards.',
   'Cable routing diagrams illustrate cable paths through the building with containment types, cable sizes, and route lengths marked clearly.',
   'As-built drawings document the completed installation for handover, showing the actual installed configuration rather than the original design.',
-  'All diagrams use standard UK electrical symbols to BS EN 60617 and can be exported as PDF, PNG, or SVG for inclusion in certification documentation.',
+  'All diagrams use standard UK electrical symbols to IEC 60617 and can be exported as PDF, PNG, or SVG for inclusion in certification documentation.',
 ];
 
 const faqs = [
   {
     question: 'What types of diagram can the AI generate?',
     answer:
-      'The AI Diagram Builder generates four main types of electrical diagram. First, circuit schematic diagrams that show the electrical connections between components using standard symbols — these are the diagrams you would include in a circuit design or reference when fault-finding. Second, distribution board layout diagrams that show the physical arrangement of protective devices in a consumer unit or distribution board. Third, cable routing diagrams that show the paths cables take through the building, including containment types, cable sizes, and route lengths. Fourth, as-built drawings that document the actual installed configuration of the complete electrical installation for handover to the client. Each diagram type uses standard UK electrical symbols to BS EN 60617.',
+      'The AI Diagram Builder generates four main types of electrical diagram. First, circuit schematic diagrams that show the electrical connections between components using standard symbols — these are the diagrams you would include in a circuit design or reference when fault-finding. Second, distribution board layout diagrams that show the physical arrangement of protective devices in a consumer unit or distribution board. Third, cable routing diagrams that show the paths cables take through the building, including containment types, cable sizes, and route lengths. Fourth, as-built drawings that document the actual installed configuration of the complete electrical installation for handover to the client. Each diagram type uses standard UK electrical symbols to IEC 60617.',
   },
   {
     question: 'Can the AI generate a diagram from a text description?',
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'Do the diagrams use standard UK electrical symbols?',
     answer:
-      'Yes. All diagrams use the standard electrical symbols specified in BS EN 60617 (Graphical symbols for diagrams). This includes the correct symbols for MCBs, RCBOs, RCDs, isolators, switches, socket outlets, lighting points, fused connection units, junction boxes, and all other common components. Using standardised symbols means the diagrams are universally understood by other electricians, building inspectors, and anyone else who needs to read them. The symbols are the same ones used in IET publications, training materials, and examination papers, so they are immediately familiar to any UK-qualified electrician.',
+      'Yes. All diagrams use the standard electrical symbols specified in IEC 60617 (Graphical symbols for diagrams). This includes the correct symbols for MCBs, RCBOs, RCDs, isolators, switches, socket outlets, lighting points, fused connection units, junction boxes, and all other common components. Using standardised symbols means the diagrams are universally understood by other electricians, building inspectors, and anyone else who needs to read them. The symbols are the same ones used in IET publications, training materials, and examination papers, so they are immediately familiar to any UK-qualified electrician.',
   },
   {
     question: 'Can I include the diagrams in my certification documents?',
@@ -138,7 +138,7 @@ const features = [
     icon: CircuitBoard,
     title: 'Circuit Schematic Diagrams',
     description:
-      'Generate circuit schematics from a text description. Every protective device, cable, and connection shown with standard BS EN 60617 symbols.',
+      'Generate circuit schematics from a text description. Every protective device, cable, and connection shown with standard IEC 60617 symbols.',
   },
   {
     icon: Layers,
@@ -183,7 +183,7 @@ const howToSteps = [
   },
   {
     name: 'Review the generated diagram',
-    text: 'The AI produces a complete diagram using standard BS EN 60617 symbols. Review the layout, connections, and annotations for accuracy.',
+    text: 'The AI produces a complete diagram using standard IEC 60617 symbols. Review the layout, connections, and annotations for accuracy.',
   },
   {
     name: 'Edit and annotate',
@@ -232,7 +232,7 @@ const sections = [
           include the diagrams in client-facing documentation.
         </p>
         <p>
-          All diagrams use the standard electrical symbols specified in BS EN 60617, ensuring they
+          All diagrams use the standard electrical symbols specified in IEC 60617, ensuring they
           are universally understood by other electricians, inspectors, and building professionals.
           Diagrams can be exported as PDF, PNG, or SVG for inclusion in any documentation format.
         </p>
@@ -256,7 +256,7 @@ const sections = [
           (consumer unit, distribution board, or sub-distribution board hierarchy), each protective
           device with its type and rating (MCB, RCBO, RCD, MCCB), each circuit with its cable type,
           size, and route length, and the final circuit accessories and loads. The diagram includes
-          the correct BS EN 60617 symbols for every component.
+          the correct IEC 60617 symbols for every component.
         </p>
         <p>
           For domestic installations, a typical schematic shows the consumer unit with all its
@@ -277,7 +277,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate circuit diagrams in seconds"
-          description="Describe the installation and the AI produces a professional circuit schematic with standard BS EN 60617 symbols. Export as PDF for your EIC documentation."
+          description="Describe the installation and the AI produces a professional circuit schematic with standard IEC 60617 symbols. Export as PDF for your EIC documentation."
           icon={CircuitBoard}
         />
       </>
@@ -419,7 +419,7 @@ export default function AIDiagramBuilderPage() {
   return (
     <ToolTemplate
       title="AI Diagram Builder | Circuit & Wiring Diagrams"
-      description="Generate professional electrical diagrams with AI. Circuit schematics, distribution board layouts, cable routing diagrams…"
+      description="Generate professional electrical diagrams with AI. Circuit schematics, distribution board layouts, cable routing diagrams."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
@@ -432,7 +432,7 @@ export default function AIDiagramBuilderPage() {
           <span className="text-yellow-400">Professional Diagrams from Plain English</span>
         </>
       }
-      heroSubtitle="Generate circuit schematics, distribution board layouts, cable routing diagrams, and as-built drawings by describing the installation in plain English. Standard BS EN 60617 symbols, export as PDF, PNG, or SVG."
+      heroSubtitle="Generate circuit schematics, distribution board layouts, cable routing diagrams, and as-built drawings by describing the installation in plain English. Standard IEC 60617 symbols, export as PDF, PNG, or SVG."
       heroFeaturePills={[
         { icon: CircuitBoard, label: 'Circuit Schematics' },
         { icon: Layers, label: 'Board Layouts' },

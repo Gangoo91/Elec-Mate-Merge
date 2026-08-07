@@ -620,7 +620,7 @@ export default function HeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Heat Pump Electrical Requirements | Supply & Circuit Guide"
-      description="Complete guide to heat pump electrical requirements for UK electricians. Single phase vs three phase supply, cable sizing, MCB rating…"
+      description="Complete guide to heat pump electrical requirements for UK electricians. Single phase vs three phase supply, cable sizing, MCB rating."
       datePublished="2025-08-10"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

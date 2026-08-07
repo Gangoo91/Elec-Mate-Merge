@@ -505,8 +505,8 @@ const sections = [
 export default function UnsatisfactoryEICRPage() {
   return (
     <GuideTemplate
-      title="Unsatisfactory EICR | What Happens Next? | Elec-Mate"
-      description="What makes an EICR unsatisfactory, landlord obligations (28-day deadline, £30,000 penalties), electrician duty of care, remedial work requirements…"
+      title="Unsatisfactory EICR | What Happens Next?"
+      description="What makes an EICR unsatisfactory, landlord obligations (28-day deadline, £30,000 penalties), electrician duty of care, remedial work requirements."
       datePublished="2025-04-22"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

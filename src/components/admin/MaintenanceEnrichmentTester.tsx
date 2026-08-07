@@ -237,7 +237,7 @@ export function MaintenanceEnrichmentTester() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-1">
                       <span className="font-semibold text-sm">{result.phase}</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-white">
                         {new Date(result.timestamp).toLocaleTimeString()}
                       </span>
                     </div>
@@ -245,7 +245,7 @@ export function MaintenanceEnrichmentTester() {
 
                     {result.data && (
                       <details className="mt-2">
-                        <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground">
+                        <summary className="text-xs text-white cursor-pointer hover:text-foreground">
                           View Data
                         </summary>
                         <pre className="mt-2 text-xs bg-background p-2 rounded overflow-x-auto">

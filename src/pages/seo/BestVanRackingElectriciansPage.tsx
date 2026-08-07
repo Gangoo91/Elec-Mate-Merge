@@ -743,7 +743,7 @@ export default function BestVanRackingElectriciansPage() {
   return (
     <GuideTemplate
       title="Best Van Racking for Electricians 2026 | Systems Compared"
-      description="Honest comparison of the best van racking systems for UK electricians in 2026. Sortimo, Bott Smartvan, Van Guard, Modul-System…"
+      description="Honest comparison of the best van racking systems for UK electricians in 2026. Sortimo, Bott Smartvan, Van Guard, Modul-System."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

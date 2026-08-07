@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -26,11 +25,13 @@ import {
   CalculatorSelect,
   CalculatorResult,
   ResultValue,
+  ResultHeadline,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface PricingInputs {
   materialsCost: number;
@@ -46,8 +47,14 @@ const STORAGE_KEY = 'pricing_strategy_scenarios';
 const PricingStrategyCalculator = () => {
   const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
+  // Results are LIVE. This was `useState(false)`, so a calculator with every
+  // input already populated refused to answer until you pressed a button,
+  // showing a dead "Ready to Calculate" panel in the meantime. Every value
+  // needed is in state on first render, so there is nothing to wait for.
+  // The `isValid` guards downstream still hold results back when the inputs
+  // genuinely do not make sense.
 
-  const [calculated, setCalculated] = useState(false);
+  const [calculated, setCalculated] = useState(true);
   const [inputs, setInputs] = useState<PricingInputs>({
     materialsCost: 1100,
     labourHours: 8,
@@ -78,7 +85,6 @@ const PricingStrategyCalculator = () => {
   };
 
   const update = (k: keyof PricingInputs, v: string) => {
-    setCalculated(false);
     const parsed = parseFloat(v) || 0;
     setInputs((p) => ({ ...p, [k]: validateInput(isFinite(parsed) ? parsed : 0, k) }));
   };
@@ -179,7 +185,6 @@ const PricingStrategyCalculator = () => {
     });
     setVatRegistered(true);
     setVatRate(20);
-    setCalculated(false);
   };
 
   const formatCurrency = (n: number) => {
@@ -230,27 +235,12 @@ const PricingStrategyCalculator = () => {
         <link rel="canonical" href="/electrician/business-development/tools/pricing-strategy" />
       </Helmet>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2.5 rounded-xl border"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                borderColor: `${config.gradientFrom}30`,
-              }}
-            >
-              <Target className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Pricing Strategy Calculator
-              </h1>
-              <p className="text-sm text-white">Build profitable quotes with margins</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <HubMasthead
+          section="Business"
+          title="Pricing Strategy Calculator"
+          backTo="/electrician/business-development/tools"
+        />
 
         <CalculatorCard
           category="business"
@@ -259,10 +249,7 @@ const PricingStrategyCalculator = () => {
           badge="Pricing"
         >
           {/* Job Costs Section */}
-          <div className="flex items-center gap-2 mb-3">
-            <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Job Costs</span>
-          </div>
+          <h3 className="mb-3 text-[13px] font-semibold tracking-tight text-white">Job Costs</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
@@ -299,18 +286,18 @@ const PricingStrategyCalculator = () => {
             hint="Your charge-out rate (UK avg: £45-65)"
           />
 
+          {/* Was a 12px text link measuring 16px tall — a tiny clickable text
+              link, which the mobile rules disallow outright. Now a proper 44px
+              target that reads as the cross-reference it is. */}
           <Link
             to="/electrician/business-development/tools/hourly-rate"
-            className="text-blue-400 text-xs inline-flex items-center gap-1 hover:underline mt-1"
+            className="mt-1 inline-flex h-11 items-center gap-1.5 rounded-lg border border-white/[0.12] bg-white/[0.04] px-3 text-[12.5px] font-medium text-elec-yellow transition-colors touch-manipulation hover:border-elec-yellow/40 hover:bg-white/[0.07]"
           >
-            <LinkIcon className="h-3 w-3" /> Calculate your ideal hourly rate
+            <LinkIcon className="h-3.5 w-3.5" /> Work out your hourly rate
           </Link>
 
           {/* Business Strategy Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Target className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">Business Strategy</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">Business Strategy</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorSelect
@@ -342,10 +329,7 @@ const PricingStrategyCalculator = () => {
           />
 
           {/* VAT Section */}
-          <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
-            <Percent className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white">VAT Configuration</span>
-          </div>
+          <h3 className="mb-3 mt-6 pt-4 border-t border-white/10 text-[13px] font-semibold tracking-tight text-white">VAT Configuration</h3>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
@@ -355,7 +339,6 @@ const PricingStrategyCalculator = () => {
                   onClick={() => {
                     setVatRegistered(true);
                     setVatRate(20);
-                    setCalculated(false);
                   }}
                   className={cn(
                     'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -375,7 +358,6 @@ const PricingStrategyCalculator = () => {
                   onClick={() => {
                     setVatRegistered(false);
                     setVatRate(0);
-                    setCalculated(false);
                   }}
                   className={cn(
                     'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
@@ -400,7 +382,6 @@ const PricingStrategyCalculator = () => {
                 value={String(vatRate)}
                 onChange={(val) => {
                   setVatRate(parseFloat(val));
-                  setCalculated(false);
                 }}
                 options={vatOptions.filter((o) => o.value !== '0')}
               />
@@ -461,21 +442,12 @@ const PricingStrategyCalculator = () => {
             {/* Primary Result Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <CalculatorResult category="business">
-                <div className="text-center">
-                  <p className="text-sm text-white mb-1">Net Price (ex VAT)</p>
-                  <div
-                    className="text-3xl font-bold"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}
-                  >
-                    {formatCurrency(result.netAfterDiscount)}
-                  </div>
-                  <p className="text-xs text-white mt-1">Quote this to customer</p>
-                </div>
+                <ResultHeadline
+                  label="Quote this price"
+                  value={formatCurrency(result.netAfterDiscount)}
+                  aside={vatRegistered ? `${formatCurrency(result.totalGross)} inc VAT` : 'ex VAT'}
+                  caption={`Covers ${formatCurrency(result.subtotalNet)} of cost and overhead at a ${result.achievedMargin.toFixed(1)}% margin.`}
+                />
               </CalculatorResult>
 
               {vatRegistered && (
@@ -539,11 +511,11 @@ const PricingStrategyCalculator = () => {
 
             {/* Step-by-Step Breakdown */}
             <Collapsible open={showBreakdown} onOpenChange={setShowBreakdown}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <BarChart3 className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <BarChart3 className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       Detailed Calculation Breakdown
                     </span>
                   </div>
@@ -603,9 +575,9 @@ const PricingStrategyCalculator = () => {
                         </span>
                       </div>
                     )}
-                    <div className="flex justify-between items-center py-2 font-medium bg-blue-500/10 px-2 rounded">
-                      <span className="text-blue-300">= Net Price (ex VAT)</span>
-                      <span className="text-blue-400 font-mono text-base">
+                    <div className="flex justify-between items-center py-2 font-medium bg-white/[0.04] px-2 rounded">
+                      <span className="text-elec-yellow">= Net Price (ex VAT)</span>
+                      <span className="text-elec-yellow font-mono text-base">
                         {formatCurrency(result.netAfterDiscount)}
                       </span>
                     </div>
@@ -659,7 +631,7 @@ const PricingStrategyCalculator = () => {
                               color: 'white',
                             }}
                           />
-                          <Bar dataKey="value" fill="#60a5fa" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="value" fill="#FFC800" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
@@ -694,11 +666,11 @@ const PricingStrategyCalculator = () => {
 
             {/* Guidance Section */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#FFC80015' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
-                    <Info className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm sm:text-base font-medium text-blue-300">
+                    <Info className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-sm sm:text-base font-medium text-elec-yellow">
                       How to Use This Calculator
                     </span>
                   </div>
@@ -713,36 +685,36 @@ const PricingStrategyCalculator = () => {
                 <CollapsibleContent className="p-4 pt-0">
                   <div className="space-y-4 text-sm">
                     <div>
-                      <h5 className="font-medium text-blue-300 mb-1">1. Enter Your Job Costs</h5>
-                      <p className="text-blue-200/70">
+                      <h5 className="font-medium text-elec-yellow mb-1">1. Enter Your Job Costs</h5>
+                      <p className="text-elec-yellow/70">
                         Input materials cost, estimated hours, and hourly rate. Be realistic with
                         labour hours to maintain profitability.
                       </p>
                     </div>
                     <div>
-                      <h5 className="font-medium text-blue-300 mb-1">2. Set Business Strategy</h5>
-                      <p className="text-blue-200/70">
+                      <h5 className="font-medium text-elec-yellow mb-1">2. Set Business Strategy</h5>
+                      <p className="text-elec-yellow/70">
                         Typical overhead: 20-25% for small businesses. Target margin: 15-25%
                         depending on competition.
                       </p>
                     </div>
                     <div>
-                      <h5 className="font-medium text-blue-300 mb-1">3. Configure VAT</h5>
-                      <p className="text-blue-200/70">
+                      <h5 className="font-medium text-elec-yellow mb-1">3. Configure VAT</h5>
+                      <p className="text-elec-yellow/70">
                         Most electrical work is 20% VAT. Some energy-efficiency installations
                         qualify for 5% reduced rate.
                       </p>
                     </div>
-                    <div className="bg-blue-500/10 rounded-lg p-3 mt-4">
-                      <h5 className="font-medium text-blue-300 mb-2">
+                    <div className="bg-white/[0.04] rounded-lg p-3 mt-4">
+                      <h5 className="font-medium text-elec-yellow mb-2">
                         Example: Consumer Unit Replacement
                       </h5>
-                      <p className="text-xs text-blue-200/70 leading-relaxed">
+                      <p className="text-xs text-elec-yellow/70 leading-relaxed">
                         £800 materials + 6h @ £50/hr (£300) + 22% overhead (£242) = £1,342 base
                         <br />+ 18% margin (£242) ={' '}
-                        <strong className="text-blue-300">£1,584 net</strong>
+                        <strong className="text-elec-yellow">£1,584 net</strong>
                         <br />+ 20% VAT (£317) ={' '}
-                        <strong className="text-blue-300">£1,901 total</strong>
+                        <strong className="text-elec-yellow">£1,901 total</strong>
                       </p>
                     </div>
                   </div>
@@ -755,7 +727,7 @@ const PricingStrategyCalculator = () => {
         {/* Prompt to Calculate */}
         {!calculated && (
           <div className="p-6 rounded-xl border border-white/10 bg-white/5 text-center">
-            <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
+            <Info className="h-10 w-10 text-elec-yellow mx-auto mb-3 opacity-50" />
             <h3 className="text-white text-lg font-semibold mb-2">Ready to Calculate</h3>
             <p className="text-white text-sm">
               Enter your job costs and business strategy above, then click "Calculate Pricing" to

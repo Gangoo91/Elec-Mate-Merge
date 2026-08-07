@@ -558,7 +558,7 @@ export default function DrillGuideElectriciansPage() {
   return (
     <GuideTemplate
       title="Drill Guide for Electricians 2026 | SDS Plus, Cordless,"
-      description="Complete drill guide for UK electricians. SDS Plus vs SDS Max vs standard combi drills, 18V vs 54V cordless platforms…"
+      description="Complete drill guide for UK electricians. SDS Plus vs SDS Max vs standard combi drills, 18V vs 54V cordless platforms."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -724,7 +724,7 @@ export default function EICRForCommercialPremisesPage() {
   return (
     <GuideTemplate
       title="EICR for Commercial Premises | Requirements UK"
-      description="Complete guide to EICR requirements for commercial premises in the UK. Health and Safety at Work Act obligations, Electricity at Work Regulations 1989…"
+      description="Complete guide to EICR requirements for commercial premises in the UK. Health and Safety at Work Act obligations, Electricity at Work Regulations 1989."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

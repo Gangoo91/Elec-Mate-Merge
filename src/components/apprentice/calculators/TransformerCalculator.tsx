@@ -18,6 +18,7 @@ import {
   FormulaReference,
   CalculatorEditorial,
   CALCULATOR_CONFIG,
+  CalculatorPanes,
 } from '@/components/calculators/shared';
 import { transformerContent } from './content/transformer-calculator';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -256,544 +257,557 @@ const TransformerCalculator = () => {
       title="Transformer Calculator"
       description="Comprehensive transformer calculations with BS 7671 18th Edition compliance"
     >
-      {/* Preset selectors */}
-      <CalculatorSection>
-        <CalculatorInputGrid>
-          <CalculatorSelect
-            label="Primary Voltage"
-            value={primaryVoltage}
-            onChange={setPrimaryVoltage}
-            options={transformerPresets.voltages.primary}
-            placeholder="Select or type below"
-          />
-          <CalculatorSelect
-            label="Secondary Voltage"
-            value={secondaryVoltage}
-            onChange={setSecondaryVoltage}
-            options={transformerPresets.voltages.secondary}
-            placeholder="Select or type below"
-          />
-        </CalculatorInputGrid>
-      </CalculatorSection>
+      <CalculatorPanes
+        form={
+          <>
+            {/* Preset selectors */}
+            <CalculatorSection>
+              <CalculatorInputGrid>
+                <CalculatorSelect
+                  label="Primary Voltage"
+                  value={primaryVoltage}
+                  onChange={setPrimaryVoltage}
+                  options={transformerPresets.voltages.primary}
+                  placeholder="Select or type below"
+                />
+                <CalculatorSelect
+                  label="Secondary Voltage"
+                  value={secondaryVoltage}
+                  onChange={setSecondaryVoltage}
+                  options={transformerPresets.voltages.secondary}
+                  placeholder="Select or type below"
+                />
+              </CalculatorInputGrid>
+            </CalculatorSection>
 
-      {/* Manual voltage inputs (if preset doesn't match) */}
-      <CalculatorInputGrid>
-        <CalculatorInput
-          label="Primary Voltage (V)"
-          type="number"
-          inputMode="numeric"
-          value={primaryVoltage}
-          onChange={setPrimaryVoltage}
-          placeholder="e.g. 11000"
-          unit="V"
-        />
-        <CalculatorInput
-          label="Secondary Voltage (V)"
-          type="number"
-          inputMode="numeric"
-          value={secondaryVoltage}
-          onChange={setSecondaryVoltage}
-          placeholder="e.g. 400"
-          unit="V"
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorSelect
-        label="kVA Rating"
-        value={kvaRating}
-        onChange={setKvaRating}
-        options={transformerPresets.kvaRatings}
-        placeholder="Select rating"
-      />
-
-      <CalculatorInputGrid>
-        <CalculatorInput
-          label="Power Factor"
-          type="number"
-          inputMode="decimal"
-          value={powerFactor}
-          onChange={setPowerFactor}
-          placeholder="0.85"
-          hint="Load power factor (0.1–1.0)"
-        />
-        <CalculatorSelect
-          label="Phase Configuration"
-          value={phase}
-          onChange={setPhase}
-          options={[
-            { value: 'single', label: 'Single Phase' },
-            { value: 'three', label: 'Three Phase' },
-          ]}
-        />
-      </CalculatorInputGrid>
-
-      <CalculatorSelect
-        label="Percentage Impedance"
-        value={percentImpedance}
-        onChange={setPercentImpedance}
-        options={transformerPresets.impedances}
-        hint="Transformer impedance at rated voltage"
-      />
-
-      {/* Advanced Settings Toggle */}
-      <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-        <CollapsibleTrigger
-          className={cn(
-            'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
-            'text-sm font-medium text-white',
-            'hover:bg-white/5 transition-all touch-manipulation'
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            <span>Advanced Settings</span>
-          </div>
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 transition-transform duration-200',
-              showAdvanced && 'rotate-180'
-            )}
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="pt-2">
-          <div
-            className="rounded-xl border p-3 space-y-3"
-            style={{
-              borderColor: `${config.gradientFrom}15`,
-              background: `${config.gradientFrom}05`,
-            }}
-          >
+            {/* Manual voltage inputs (if preset doesn't match) */}
             <CalculatorInputGrid>
               <CalculatorInput
-                label="Frequency"
+                label="Primary Voltage (V)"
                 type="number"
                 inputMode="numeric"
-                value={frequency}
-                onChange={setFrequency}
-                placeholder="50"
-                unit="Hz"
+                value={primaryVoltage}
+                onChange={setPrimaryVoltage}
+                placeholder="e.g. 11000"
+                unit="V"
               />
               <CalculatorInput
-                label="Ambient Temperature"
+                label="Secondary Voltage (V)"
                 type="number"
                 inputMode="numeric"
-                value={ambientTemp}
-                onChange={setAmbientTemp}
-                placeholder="40"
-                unit="°C"
+                value={secondaryVoltage}
+                onChange={setSecondaryVoltage}
+                placeholder="e.g. 400"
+                unit="V"
               />
             </CalculatorInputGrid>
 
             <CalculatorSelect
-              label="Connection Type"
-              value={connectionType}
-              onChange={setConnectionType}
-              options={transformerPresets.connections}
-              hint="Vector group notation"
+              label="kVA Rating"
+              value={kvaRating}
+              onChange={setKvaRating}
+              options={transformerPresets.kvaRatings}
+              placeholder="Select rating"
             />
 
-            <CalculatorInput
-              label="Source Fault Level"
-              type="number"
-              inputMode="numeric"
-              value={sourceFaultLevel}
-              onChange={setSourceFaultLevel}
-              placeholder="100"
-              unit="MVA"
-              hint="Upstream fault level (optional)"
-            />
-
-            <CalculatorInput
-              label="Altitude"
-              type="number"
-              inputMode="numeric"
-              value={altitude}
-              onChange={setAltitude}
-              placeholder="0"
-              unit="m"
-              hint="Installation altitude above sea level"
-            />
-
-            <div className="flex items-center gap-3 min-h-11 touch-manipulation">
-              <Checkbox
-                id="harmonics"
-                checked={harmonics}
-                onCheckedChange={(checked) => setHarmonics(checked === true)}
-                className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+            <CalculatorInputGrid>
+              <CalculatorInput
+                label="Power Factor"
+                type="number"
+                inputMode="decimal"
+                value={powerFactor}
+                onChange={setPowerFactor}
+                placeholder="0.85"
+                hint="Load power factor (0.1–1.0)"
               />
-              <label
-                htmlFor="harmonics"
-                className="text-sm font-medium text-white cursor-pointer touch-manipulation"
+              <CalculatorSelect
+                label="Phase Configuration"
+                value={phase}
+                onChange={setPhase}
+                options={[
+                  { value: 'single', label: 'Single Phase' },
+                  { value: 'three', label: 'Three Phase' },
+                ]}
+              />
+            </CalculatorInputGrid>
+
+            <CalculatorSelect
+              label="Percentage Impedance"
+              value={percentImpedance}
+              onChange={setPercentImpedance}
+              options={transformerPresets.impedances}
+              hint="Transformer impedance at rated voltage"
+            />
+
+            {/* Advanced Settings Toggle */}
+            <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+              <CollapsibleTrigger
+                className={cn(
+                  'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
+                  'text-sm font-medium text-white',
+                  'hover:bg-white/5 transition-all touch-manipulation'
+                )}
               >
-                Harmonic loads present (K-factor rated)
-              </label>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      <CalculatorActions
-        category={CAT}
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-        isDisabled={!canCalculate}
-        showReset={!!result}
-      />
-
-      {/* ──────── Results ──────── */}
-      {result &&
-        (() => {
-          const compliance = getComplianceStatus(result);
-          const badgeStatus: 'pass' | 'warning' | 'fail' =
-            compliance.status === 'compliant'
-              ? 'pass'
-              : compliance.status === 'caution'
-                ? 'warning'
-                : 'fail';
-
-          return (
-            <>
-              <CalculatorDivider category={CAT} />
-
-              {/* Status + Copy */}
-              <div className="flex items-center justify-between">
-                <ResultBadge status={badgeStatus} label={compliance.status.toUpperCase()} />
-                <button
-                  onClick={handleCopy}
-                  className="flex items-center gap-1.5 px-3 min-h-11 rounded-lg text-sm text-white hover:bg-white/5 transition-colors touch-manipulation"
-                >
-                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  {copied ? 'Copied' : 'Copy'}
-                </button>
-              </div>
-
-              {/* Hero: Secondary Current */}
-              <div className="text-center py-4">
-                <p className="text-sm font-medium text-white mb-1">Secondary Current</p>
-                <p
-                  className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                <div className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  <span>Advanced Settings</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 transition-transform duration-200',
+                    showAdvanced && 'rotate-180'
+                  )}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-2">
+                <div
+                  className="rounded-xl border p-3 space-y-3"
                   style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    borderColor: `${config.gradientFrom}15`,
+                    background: `${config.gradientFrom}05`,
                   }}
                 >
-                  {result.secondaryRatedCurrent.toFixed(1)}
-                </p>
-                <p className="text-lg font-medium text-white mt-1">Amperes</p>
-                <p className="text-sm text-white mt-1">
-                  {result.transformerType} transformer — {result.voltageRatio.toFixed(2)}:1 ratio
-                </p>
-              </div>
+                  <CalculatorInputGrid>
+                    <CalculatorInput
+                      label="Frequency"
+                      type="number"
+                      inputMode="numeric"
+                      value={frequency}
+                      onChange={setFrequency}
+                      placeholder="50"
+                      unit="Hz"
+                    />
+                    <CalculatorInput
+                      label="Ambient Temperature"
+                      type="number"
+                      inputMode="numeric"
+                      value={ambientTemp}
+                      onChange={setAmbientTemp}
+                      placeholder="40"
+                      unit="°C"
+                    />
+                  </CalculatorInputGrid>
 
-              {/* Key Metrics */}
-              <ResultsGrid columns={2}>
-                <ResultValue
-                  label="Primary Current"
-                  value={result.primaryRatedCurrent.toFixed(1)}
-                  unit="A"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Real Power"
-                  value={result.kw.toFixed(1)}
-                  unit="kW"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Efficiency"
-                  value={`${(result.efficiency * 100).toFixed(1)}`}
-                  unit="%"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Fault Current"
-                  value={(result.transformerFaultCurrent / 1000).toFixed(2)}
-                  unit="kA"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Voltage Regulation"
-                  value={`${(result.voltageRegulation * 100).toFixed(2)}`}
-                  unit="%"
-                  category={CAT}
-                  size="sm"
-                />
-                <ResultValue
-                  label="Reactive Power"
-                  value={result.kvar.toFixed(1)}
-                  unit="kVAr"
-                  category={CAT}
-                  size="sm"
-                />
-                {/* FIX: combinedFaultCurrent was computed from the "Source Fault Level"
-                    advanced input and then never rendered, so that input was a no-op. The
-                    upstream source contribution is part of determining the PFC at the point
-                    concerned (Reg 434.1) and it is the figure the breaking capacity in
-                    Reg 434.5.1 has to be checked against. */}
-                {result.combinedFaultCurrent !== undefined && (
-                  <ResultValue
-                    label="Fault Current (incl. source)"
-                    value={(result.combinedFaultCurrent / 1000).toFixed(2)}
-                    unit="kA"
-                    category={CAT}
-                    size="sm"
+                  <CalculatorSelect
+                    label="Connection Type"
+                    value={connectionType}
+                    onChange={setConnectionType}
+                    options={transformerPresets.connections}
+                    hint="Vector group notation"
                   />
-                )}
-              </ResultsGrid>
 
-              {/* Protection Requirements */}
-              <CalculatorSection>
-                <p className="text-sm font-medium text-white mb-2">Protection Requirements</p>
-                <ResultsGrid columns={2}>
-                  <ResultValue
-                    label="Recommended MCCB"
-                    value={`${getRecommendedMCCB(result.secondaryRatedCurrent)}`}
-                    unit="A"
-                    category={CAT}
-                    size="sm"
+                  <CalculatorInput
+                    label="Source Fault Level"
+                    type="number"
+                    inputMode="numeric"
+                    value={sourceFaultLevel}
+                    onChange={setSourceFaultLevel}
+                    placeholder="100"
+                    unit="MVA"
+                    hint="Upstream fault level (optional)"
                   />
-                  <ResultValue
-                    label="Breaking Capacity"
-                    value={getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))}
-                    category={CAT}
-                    size="sm"
-                  />
-                  {/* Labelled "typical": BS 7671 gives no inrush multiplier and no inrush
-                      duration — it treats inrush qualitatively only. These are indicative
-                      BS EN 60076 figures and must be confirmed against the actual unit. */}
-                  <ResultValue
-                    label="Inrush Current (typical)"
-                    value={(result.inrushCurrent / 1000).toFixed(1)}
-                    unit="kA"
-                    category={CAT}
-                    size="sm"
-                  />
-                  <ResultValue
-                    label="Inrush Duration (typical)"
-                    value={`${result.inrushDuration}`}
-                    unit="s"
-                    category={CAT}
-                    size="sm"
-                  />
-                </ResultsGrid>
-              </CalculatorSection>
 
-              {/* Derating factors (if applicable) */}
-              {(result.temperatureDerating || result.altitudeDerating) && (
-                <CalculatorSection>
-                  <p className="text-sm font-medium text-white mb-2">Derating Factors</p>
-                  <ResultsGrid columns={2}>
-                    {result.temperatureDerating && (
-                      <ResultValue
-                        label="Temperature Derating"
-                        value={`${(result.temperatureDerating * 100).toFixed(0)}`}
-                        unit="%"
-                        category={CAT}
-                        size="sm"
-                      />
-                    )}
-                    {result.altitudeDerating && (
-                      <ResultValue
-                        label="Altitude Derating"
-                        value={`${(result.altitudeDerating * 100).toFixed(0)}`}
-                        unit="%"
-                        category={CAT}
-                        size="sm"
-                      />
-                    )}
-                  </ResultsGrid>
-                  {/* The old "Harmonic Derating 86%" tile has been removed: 0.86 is the
-                      BS 7671 Appendix 4 §5.5 rating factor for CABLES carrying third-harmonic
-                      current (banded on THD), not a transformer kVA derating. The harmonic
-                      duty is now surfaced as cable/neutral guidance instead. */}
-                </CalculatorSection>
-              )}
+                  <CalculatorInput
+                    label="Altitude"
+                    type="number"
+                    inputMode="numeric"
+                    value={altitude}
+                    onChange={setAltitude}
+                    placeholder="0"
+                    unit="m"
+                    hint="Installation altitude above sea level"
+                  />
 
-              {/* Warnings */}
-              {result.warnings.length > 0 && (
-                <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
-                  {result.warnings.map((warning, idx) => (
-                    <p key={idx} className="text-sm text-white flex items-start gap-2">
-                      <span className="text-amber-400 mt-0.5">!</span>
-                      {warning}
-                    </p>
-                  ))}
+                  <div className="flex items-center gap-3 min-h-11 touch-manipulation">
+                    <Checkbox
+                      id="harmonics"
+                      checked={harmonics}
+                      onCheckedChange={(checked) => setHarmonics(checked === true)}
+                      className="border-white/40 data-[state=checked]:bg-amber-400 data-[state=checked]:border-amber-400 data-[state=checked]:text-black"
+                    />
+                    <label
+                      htmlFor="harmonics"
+                      className="text-sm font-medium text-white cursor-pointer touch-manipulation"
+                    >
+                      Harmonic loads present (K-factor rated)
+                    </label>
+                  </div>
                 </div>
-              )}
+              </CollapsibleContent>
+            </Collapsible>
 
-              {/* How It Worked Out */}
-              <CalculatorFormula
-                category={CAT}
-                steps={getFormulaSteps()}
-                title="How It Worked Out"
-                defaultOpen
-              />
+            <CalculatorActions
+              category={CAT}
+              onCalculate={handleCalculate}
+              onReset={handleReset}
+              isDisabled={!canCalculate}
+              showReset={!!result}
+            />
+          </>
+        }
+        result={
+          <>
+            {/* ──────── Results ──────── */}
+            {result &&
+              (() => {
+                const compliance = getComplianceStatus(result);
+                const badgeStatus: 'pass' | 'warning' | 'fail' =
+                  compliance.status === 'compliant'
+                    ? 'pass'
+                    : compliance.status === 'caution'
+                      ? 'warning'
+                      : 'fail';
 
-              {/* What This Means */}
-              <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-                <CollapsibleTrigger
-                  className={cn(
-                    'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
-                    'text-sm font-medium text-white',
-                    'hover:bg-white/5 transition-all touch-manipulation'
-                  )}
-                >
-                  <span>What This Means</span>
-                  <ChevronDown
-                    className={cn(
-                      'h-4 w-4 transition-transform duration-200',
-                      showGuidance && 'rotate-180'
-                    )}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pt-2">
-                  <div
-                    className="rounded-xl border p-3 space-y-2"
-                    style={{
-                      borderColor: `${config.gradientFrom}15`,
-                      background: `${config.gradientFrom}05`,
-                    }}
-                  >
-                    <p className="text-sm text-white">
-                      This {result.transformerType} transformer{' '}
-                      {result.voltageRatio > 1
-                        ? 'reduces'
-                        : result.voltageRatio < 1
-                          ? 'increases'
-                          : 'maintains'}{' '}
-                      the voltage level with a {result.voltageRatio.toFixed(2)}:1 ratio.
-                    </p>
-                    <p className="text-sm text-white">
-                      At {(result.efficiency * 100).toFixed(1)}% efficiency, approximately{' '}
-                      {((1 - result.efficiency) * 100).toFixed(1)}% of energy is lost as heat (
-                      {result.totalLoss.toFixed(1)} kW total losses).
-                    </p>
-                    <p className="text-sm text-white">
-                      The prospective fault current of{' '}
-                      {(getDesignFaultCurrent(result) / 1000).toFixed(1)} kA requires switchgear
-                      with {getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))} breaking
-                      capacity (Reg 434.5.1).
-                    </p>
-                    <p className="text-sm text-white">
-                      A {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB is the smallest
-                      standard rating not less than the full-load secondary current, satisfying Reg
-                      433.1.1(a). You must still confirm the cable&apos;s current-carrying capacity
-                      Iz is not less than that rating before selecting it — Reg 433.1.1(b). Consider
-                      soft-start if inrush current ({(result.inrushCurrent / 1000).toFixed(1)} kA)
-                      causes supply issues.
-                    </p>
-                    {result.voltageRegulation > 0.05 && (
-                      <p className="text-sm text-white">
-                        High voltage regulation — consider a tap changer or voltage stabiliser.
-                      </p>
-                    )}
-                    {result.efficiency < 0.95 && (
-                      <p className="text-sm text-white">
-                        Consider upgrading to a higher efficiency transformer for long-term energy
-                        savings.
-                      </p>
-                    )}
-                    {compliance.issues.length > 0 && (
-                      <p className="text-sm text-white">
-                        Issues flagged: {compliance.issues.join(', ')}.
-                      </p>
-                    )}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
+                return (
+                  <>
+                    <CalculatorDivider category={CAT} />
 
-              {/* BS 7671 Reference */}
-              <Collapsible open={showReference} onOpenChange={setShowReference}>
-                <CollapsibleTrigger
-                  className={cn(
-                    'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
-                    'text-sm font-medium text-white',
-                    'hover:bg-white/5 transition-all touch-manipulation'
-                  )}
-                >
-                  <span>BS 7671 Reference</span>
-                  <ChevronDown
-                    className={cn(
-                      'h-4 w-4 transition-transform duration-200',
-                      showReference && 'rotate-180'
-                    )}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pt-2">
-                  <div
-                    className="rounded-xl border p-3 space-y-2"
-                    style={{
-                      borderColor: `${config.gradientFrom}15`,
-                      background: `${config.gradientFrom}05`,
-                    }}
-                  >
-                    {result.recommendations.map((rec, idx) => (
-                      <p key={idx} className="text-sm text-white">
-                        {rec}
-                      </p>
-                    ))}
-                    {/* FIX — three of these citations were wrong:
-                        - "Reg 551.1: Transformer installation requirements". Section 551 is
-                          LOW VOLTAGE GENERATING SETS and 551.1 is its Scope. Removed.
-                        - "Reg 555.1: Transformer selection and application". Section 555 is
-                          TRANSFORMERS, but its single clause 555.1 is titled "Autotransformers
-                          and step-up transformers" — it does not cover the step-down
-                          double-wound unit this calculator defaults to. Retitled.
-                        - "Reg 434.5.2: Prospective fault current determination". Determination
-                          is Reg 434.1; 434.5.1 is breaking capacity; 434.5.2 is the operating
-                          characteristic required where a device sits upstream of a change in
-                          the circuit (Reg 434.2.2). Replaced with 434.1 and 434.5.1.
-                        - "411.3" is only the section heading "Requirements for fault
-                          protection"; the operative clause for earthing a transformer neutral
-                          point in a TN system is 411.4.2. */}
-                    <p className="text-sm text-white">
-                      Reg 434.1: The prospective fault current shall be determined at every
-                      relevant point of the installation, by calculation, measurement or enquiry
-                    </p>
-                    <p className="text-sm text-white">
-                      Reg 434.5.1: Device breaking capacity shall be not less than the maximum
-                      prospective fault current at its point of installation
-                    </p>
-                    <p className="text-sm text-white">
-                      Reg 433.1.1: Ib ≤ In ≤ Iz — the device rating must also not exceed the
-                      current-carrying capacity of the cable it protects
-                    </p>
-                    <p className="text-sm text-white">
-                      Reg 411.4.2: In a TN system the neutral point or midpoint of the supply
-                      system shall be earthed
-                    </p>
-                    <p className="text-sm text-white">
-                      Reg 555.1: Autotransformers and step-up transformers (555.1.2 — a step-up
-                      autotransformer shall not be connected to an IT system)
-                    </p>
-                    <p className="text-sm text-white">
-                      BS EN 60076: Power transformer specification — efficiency, losses, inrush
-                      and thermal derating are covered there, not by BS 7671
-                    </p>
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </>
-          );
-        })()}
+                    {/* Status + Copy */}
+                    <div className="flex items-center justify-between">
+                      <ResultBadge status={badgeStatus} label={compliance.status.toUpperCase()} />
+                      <button
+                        onClick={handleCopy}
+                        className="flex items-center gap-1.5 px-3 min-h-11 rounded-lg text-sm text-white hover:bg-white/5 transition-colors touch-manipulation"
+                      >
+                        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        {copied ? 'Copied' : 'Copy'}
+                      </button>
+                    </div>
 
-      {/* Formula Reference (always visible) */}
-      <FormulaReference
-        category={CAT}
-        name="Transformer Calculations"
-        formula="Is = (kVA × 1000) / (√3 × Vs)"
-        variables={[
-          { symbol: 'Is', description: 'Secondary current (A)' },
-          { symbol: 'kVA', description: 'Transformer rating' },
-          { symbol: 'Vs', description: 'Secondary voltage (V)' },
-          { symbol: 'Z%', description: 'Impedance percentage' },
-          { symbol: 'Isc', description: 'Prospective fault current (A)' },
-        ]}
+                    {/* Hero: Secondary Current */}
+                    <div className="text-center py-4">
+                      <p className="text-sm font-medium text-white mb-1">Secondary Current</p>
+                      <p
+                        className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                        }}
+                      >
+                        {result.secondaryRatedCurrent.toFixed(1)}
+                      </p>
+                      <p className="text-lg font-medium text-white mt-1">Amperes</p>
+                      <p className="text-sm text-white mt-1">
+                        {result.transformerType} transformer — {result.voltageRatio.toFixed(2)}:1
+                        ratio
+                      </p>
+                    </div>
+
+                    {/* Key Metrics */}
+                    <ResultsGrid columns={2}>
+                      <ResultValue
+                        label="Primary Current"
+                        value={result.primaryRatedCurrent.toFixed(1)}
+                        unit="A"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Real Power"
+                        value={result.kw.toFixed(1)}
+                        unit="kW"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Efficiency"
+                        value={`${(result.efficiency * 100).toFixed(1)}`}
+                        unit="%"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Fault Current"
+                        value={(result.transformerFaultCurrent / 1000).toFixed(2)}
+                        unit="kA"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Voltage Regulation"
+                        value={`${(result.voltageRegulation * 100).toFixed(2)}`}
+                        unit="%"
+                        category={CAT}
+                        size="sm"
+                      />
+                      <ResultValue
+                        label="Reactive Power"
+                        value={result.kvar.toFixed(1)}
+                        unit="kVAr"
+                        category={CAT}
+                        size="sm"
+                      />
+                      {/* FIX: combinedFaultCurrent was computed from the "Source Fault Level"
+                      advanced input and then never rendered, so that input was a no-op. The
+                      upstream source contribution is part of determining the PFC at the point
+                      concerned (Reg 434.1) and it is the figure the breaking capacity in
+                      Reg 434.5.1 has to be checked against. */}
+                      {result.combinedFaultCurrent !== undefined && (
+                        <ResultValue
+                          label="Fault Current (incl. source)"
+                          value={(result.combinedFaultCurrent / 1000).toFixed(2)}
+                          unit="kA"
+                          category={CAT}
+                          size="sm"
+                        />
+                      )}
+                    </ResultsGrid>
+
+                    {/* Protection Requirements */}
+                    <CalculatorSection>
+                      <p className="text-sm font-medium text-white mb-2">Protection Requirements</p>
+                      <ResultsGrid columns={2}>
+                        <ResultValue
+                          label="Recommended MCCB"
+                          value={`${getRecommendedMCCB(result.secondaryRatedCurrent)}`}
+                          unit="A"
+                          category={CAT}
+                          size="sm"
+                        />
+                        <ResultValue
+                          label="Breaking Capacity"
+                          value={getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))}
+                          category={CAT}
+                          size="sm"
+                        />
+                        {/* Labelled "typical": BS 7671 gives no inrush multiplier and no inrush
+                        duration — it treats inrush qualitatively only. These are indicative
+                        BS EN 60076 figures and must be confirmed against the actual unit. */}
+                        <ResultValue
+                          label="Inrush Current (typical)"
+                          value={(result.inrushCurrent / 1000).toFixed(1)}
+                          unit="kA"
+                          category={CAT}
+                          size="sm"
+                        />
+                        <ResultValue
+                          label="Inrush Duration (typical)"
+                          value={`${result.inrushDuration}`}
+                          unit="s"
+                          category={CAT}
+                          size="sm"
+                        />
+                      </ResultsGrid>
+                    </CalculatorSection>
+
+                    {/* Derating factors (if applicable) */}
+                    {(result.temperatureDerating || result.altitudeDerating) && (
+                      <CalculatorSection>
+                        <p className="text-sm font-medium text-white mb-2">Derating Factors</p>
+                        <ResultsGrid columns={2}>
+                          {result.temperatureDerating && (
+                            <ResultValue
+                              label="Temperature Derating"
+                              value={`${(result.temperatureDerating * 100).toFixed(0)}`}
+                              unit="%"
+                              category={CAT}
+                              size="sm"
+                            />
+                          )}
+                          {result.altitudeDerating && (
+                            <ResultValue
+                              label="Altitude Derating"
+                              value={`${(result.altitudeDerating * 100).toFixed(0)}`}
+                              unit="%"
+                              category={CAT}
+                              size="sm"
+                            />
+                          )}
+                        </ResultsGrid>
+                        {/* The old "Harmonic Derating 86%" tile has been removed: 0.86 is the
+                        BS 7671 Appendix 4 §5.5 rating factor for CABLES carrying third-harmonic
+                        current (banded on THD), not a transformer kVA derating. The harmonic
+                        duty is now surfaced as cable/neutral guidance instead. */}
+                      </CalculatorSection>
+                    )}
+
+                    {/* Warnings */}
+                    {result.warnings.length > 0 && (
+                      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
+                        {result.warnings.map((warning, idx) => (
+                          <p key={idx} className="text-sm text-white flex items-start gap-2">
+                            <span className="text-amber-400 mt-0.5">!</span>
+                            {warning}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* How It Worked Out */}
+                    <CalculatorFormula
+                      category={CAT}
+                      steps={getFormulaSteps()}
+                      title="How It Worked Out"
+                      defaultOpen
+                    />
+
+                    {/* What This Means */}
+                    <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+                      <CollapsibleTrigger
+                        className={cn(
+                          'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
+                          'text-sm font-medium text-white',
+                          'hover:bg-white/5 transition-all touch-manipulation'
+                        )}
+                      >
+                        <span>What This Means</span>
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 transition-transform duration-200',
+                            showGuidance && 'rotate-180'
+                          )}
+                        />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-2">
+                        <div
+                          className="rounded-xl border p-3 space-y-2"
+                          style={{
+                            borderColor: `${config.gradientFrom}15`,
+                            background: `${config.gradientFrom}05`,
+                          }}
+                        >
+                          <p className="text-sm text-white">
+                            This {result.transformerType} transformer{' '}
+                            {result.voltageRatio > 1
+                              ? 'reduces'
+                              : result.voltageRatio < 1
+                                ? 'increases'
+                                : 'maintains'}{' '}
+                            the voltage level with a {result.voltageRatio.toFixed(2)}:1 ratio.
+                          </p>
+                          <p className="text-sm text-white">
+                            At {(result.efficiency * 100).toFixed(1)}% efficiency, approximately{' '}
+                            {((1 - result.efficiency) * 100).toFixed(1)}% of energy is lost as heat
+                            ({result.totalLoss.toFixed(1)} kW total losses).
+                          </p>
+                          <p className="text-sm text-white">
+                            The prospective fault current of{' '}
+                            {(getDesignFaultCurrent(result) / 1000).toFixed(1)} kA requires
+                            switchgear with{' '}
+                            {getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))} breaking
+                            capacity (Reg 434.5.1).
+                          </p>
+                          <p className="text-sm text-white">
+                            A {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB is the
+                            smallest standard rating not less than the full-load secondary current,
+                            satisfying Reg 433.1.1(a). You must still confirm the cable&apos;s
+                            current-carrying capacity Iz is not less than that rating before
+                            selecting it — Reg 433.1.1(b). Consider soft-start if inrush current (
+                            {(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues.
+                          </p>
+                          {result.voltageRegulation > 0.05 && (
+                            <p className="text-sm text-white">
+                              High voltage regulation — consider a tap changer or voltage
+                              stabiliser.
+                            </p>
+                          )}
+                          {result.efficiency < 0.95 && (
+                            <p className="text-sm text-white">
+                              Consider upgrading to a higher efficiency transformer for long-term
+                              energy savings.
+                            </p>
+                          )}
+                          {compliance.issues.length > 0 && (
+                            <p className="text-sm text-white">
+                              Issues flagged: {compliance.issues.join(', ')}.
+                            </p>
+                          )}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+
+                    {/* BS 7671 Reference */}
+                    <Collapsible open={showReference} onOpenChange={setShowReference}>
+                      <CollapsibleTrigger
+                        className={cn(
+                          'flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg',
+                          'text-sm font-medium text-white',
+                          'hover:bg-white/5 transition-all touch-manipulation'
+                        )}
+                      >
+                        <span>BS 7671 Reference</span>
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 transition-transform duration-200',
+                            showReference && 'rotate-180'
+                          )}
+                        />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-2">
+                        <div
+                          className="rounded-xl border p-3 space-y-2"
+                          style={{
+                            borderColor: `${config.gradientFrom}15`,
+                            background: `${config.gradientFrom}05`,
+                          }}
+                        >
+                          {result.recommendations.map((rec, idx) => (
+                            <p key={idx} className="text-sm text-white">
+                              {rec}
+                            </p>
+                          ))}
+                          {/* FIX — three of these citations were wrong:
+                          - "Reg 551.1: Transformer installation requirements". Section 551 is
+                            LOW VOLTAGE GENERATING SETS and 551.1 is its Scope. Removed.
+                          - "Reg 555.1: Transformer selection and application". Section 555 is
+                            TRANSFORMERS, but its single clause 555.1 is titled "Autotransformers
+                            and step-up transformers" — it does not cover the step-down
+                            double-wound unit this calculator defaults to. Retitled.
+                          - "Reg 434.5.2: Prospective fault current determination". Determination
+                            is Reg 434.1; 434.5.1 is breaking capacity; 434.5.2 is the operating
+                            characteristic required where a device sits upstream of a change in
+                            the circuit (Reg 434.2.2). Replaced with 434.1 and 434.5.1.
+                          - "411.3" is only the section heading "Requirements for fault
+                            protection"; the operative clause for earthing a transformer neutral
+                            point in a TN system is 411.4.2. */}
+                          <p className="text-sm text-white">
+                            Reg 434.1: The prospective fault current shall be determined at every
+                            relevant point of the installation, by calculation, measurement or
+                            enquiry
+                          </p>
+                          <p className="text-sm text-white">
+                            Reg 434.5.1: Device breaking capacity shall be not less than the maximum
+                            prospective fault current at its point of installation
+                          </p>
+                          <p className="text-sm text-white">
+                            Reg 433.1.1: Ib ≤ In ≤ Iz — the device rating must also not exceed the
+                            current-carrying capacity of the cable it protects
+                          </p>
+                          <p className="text-sm text-white">
+                            Reg 411.4.2: In a TN system the neutral point or midpoint of the supply
+                            system shall be earthed
+                          </p>
+                          <p className="text-sm text-white">
+                            Reg 555.1: Autotransformers and step-up transformers (555.1.2 — a
+                            step-up autotransformer shall not be connected to an IT system)
+                          </p>
+                          <p className="text-sm text-white">
+                            BS EN 60076: Power transformer specification — efficiency, losses,
+                            inrush and thermal derating are covered there, not by BS 7671
+                          </p>
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </>
+                );
+              })()}
+
+            {/* Formula Reference (always visible) */}
+            <FormulaReference
+              category={CAT}
+              name="Transformer Calculations"
+              formula="Is = (kVA × 1000) / (√3 × Vs)"
+              variables={[
+                { symbol: 'Is', description: 'Secondary current (A)' },
+                { symbol: 'kVA', description: 'Transformer rating' },
+                { symbol: 'Vs', description: 'Secondary voltage (V)' },
+                { symbol: 'Z%', description: 'Impedance percentage' },
+                { symbol: 'Isc', description: 'Prospective fault current (A)' },
+              ]}
+            />
+          </>
+        }
+        footer={<CalculatorEditorial content={transformerContent} category={CAT} />}
       />
-      <CalculatorEditorial content={transformerContent} category={CAT} />
     </CalculatorCard>
   );
 };

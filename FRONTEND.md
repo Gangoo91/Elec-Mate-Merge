@@ -84,7 +84,7 @@ Newer cert types (Fire Alarm, EV, Emergency Lighting, Solar PV, PAT) use dedicat
 - **Project ref:** `jtwygbeceundfgnkirof`
 - **URL:** `https://jtwygbeceundfgnkirof.supabase.co`
 - **Client:** `src/lib/client.ts`
-- 277 tables, 316 edge functions
+- 663 tables (+36 views), 476 deployed edge functions — verified 2026-08-07
 
 ### Key Tables
 
