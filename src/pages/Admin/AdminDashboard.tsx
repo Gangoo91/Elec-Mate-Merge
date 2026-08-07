@@ -287,7 +287,9 @@ export default function AdminDashboard() {
         .eq('is_trial_cancelled', true)
         .gte('trial_end', sevenDaysAgo)
         .in('subscription_source', ['app_store', 'play_store'])
-        .order('trial_end', { ascending: false });
+        // Ascending: whoever loses access soonest is who you can still
+        // catch. Descending buried them at the bottom of the card.
+        .order('trial_end', { ascending: true });
       return (data || []) as Array<{
         id: string;
         full_name: string | null;
@@ -332,7 +334,7 @@ export default function AdminDashboard() {
       // The generated Supabase types are regenerated on a schedule and do not
       // know this function yet — same reason the get_at_risk_subscribers call
       // above casts.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { data, error } = await supabase.rpc('count_at_risk_subscribers' as any, {
         p_days: 30,
       });
@@ -825,482 +827,441 @@ export default function AdminDashboard() {
           column boundary — that is what the wrapper below is for.
         */}
         <div className="lg:columns-2 lg:gap-6 [&>*]:mb-5 lg:[&>*]:mb-6 [&>*]:break-inside-avoid">
-
-        {/* Live users ────────────────────────────────────── */}
-        <ListCard>
-          <ListCardHeader
-            tone="green"
-            title="On the app now"
-            meta={
-              <span className="flex items-center gap-1.5">
-                <PulseDot tone="green" />
-                <span className="text-[11px] text-green-400 font-medium tabular-nums">
-                  {liveUserCount} online
-                </span>
-              </span>
-            }
-            action={
-              (onlineUsers?.length || 0) > 5
-                ? showAllOnline
-                  ? 'Show less'
-                  : `Show all ${onlineUsers?.length}`
-                : undefined
-            }
-            onAction={
-              (onlineUsers?.length || 0) > 5 ? () => setShowAllOnline(!showAllOnline) : undefined
-            }
-          />
-          {liveHotspots.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 px-4 sm:px-5 pt-3.5 pb-0.5">
-              {liveHotspots.map(([area, n]) => (
-                <span
-                  key={area}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-1 text-[11px] text-white"
-                >
-                  <span className="truncate max-w-[140px]">{area}</span>
-                  <span className="text-elec-yellow font-semibold tabular-nums">{n}</span>
-                </span>
-              ))}
-            </div>
-          )}
-          {!onlineUsers || onlineUsers.length === 0 ? (
-            <EmptyState
-              title="No active users"
-              description="When users are on-app, they'll appear here."
-            />
-          ) : (
-            <ListBody>
-              {onlineUsers.slice(0, showAllOnline ? onlineUsers.length : 5).map((activity) => {
-                const lastSeenMs = new Date(activity.last_seen).getTime();
-                const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
-                const isOnline = diffMins < 5;
-                const profile = activity.profiles;
-                const currentPage = (
-                  activity.current_page?.replace(/^\//, '').split('/')[0] || 'Home'
-                ).trim();
-                const di = activity.device_info as { isMobile?: boolean; platform?: string } | null;
-                const platform = di?.platform || '';
-                const deviceLabel =
-                  platform === 'iPhone'
-                    ? 'iPhone'
-                    : platform === 'iPad'
-                      ? 'iPad'
-                      : platform === 'MacIntel'
-                        ? 'Mac'
-                        : platform === 'Win32'
-                          ? 'Windows'
-                          : di?.isMobile
-                            ? 'Mobile'
-                            : 'Web';
-                const DeviceIcon = di?.isMobile ? Smartphone : Monitor;
-                const sessionMs = activity.session_started_at
-                  ? Date.now() - new Date(activity.session_started_at).getTime()
-                  : 0;
-                const sessionMin = Math.max(0, Math.floor(sessionMs / 60000));
-                const sessionLabel =
-                  sessionMin >= 60
-                    ? `${Math.floor(sessionMin / 60)}h ${sessionMin % 60}m`
-                    : `${sessionMin}m`;
-                return (
-                  <ListRow
-                    key={activity.user_id}
-                    lead={<Avatar initials={getInitials(profile?.full_name)} online={isOnline} />}
-                    title={profile?.full_name || 'Unknown'}
-                    subtitle={
-                      isOnline
-                        ? `Active now · ${sessionLabel} · ${currentPage}`
-                        : `${diffMins}m ago · ${currentPage}`
-                    }
-                    trailing={
-                      <span className="flex items-center gap-1 text-[11px] text-white">
-                        <DeviceIcon className="h-3.5 w-3.5 shrink-0" />
-                        <span className="hidden sm:inline">{deviceLabel}</span>
-                      </span>
-                    }
-                    onClick={() => {
-                      const matched = baseUsers?.find((u) => u.id === activity.user_id);
-                      if (matched) setSelectedUser(matched);
-                    }}
-                  />
-                );
-              })}
-            </ListBody>
-          )}
-        </ListCard>
-
-        {/* Recent signups ───────────────────────────────── */}
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="Recent signups"
-            meta={
-              <span className="text-[11px] text-white tabular-nums">
-                {stats?.signupsThisWeek ?? 0} this week
-              </span>
-            }
-            action={
-              (stats?.recentSignups?.length || 0) > 5
-                ? showAllSignups
-                  ? 'Show less'
-                  : `Show ${stats?.recentSignups?.length} most recent`
-                : undefined
-            }
-            onAction={
-              (stats?.recentSignups?.length || 0) > 5
-                ? () => setShowAllSignups(!showAllSignups)
-                : undefined
-            }
-          />
-          <ListBody>
-            {stats?.recentSignups?.slice(0, showAllSignups ? 50 : 5).map((user) => {
-              const status = user.subscribed
-                ? { label: 'Pro', tone: 'emerald' as Tone }
-                : user.stripe_customer_id
-                  ? { label: 'Checkout', tone: 'orange' as Tone }
-                  : { label: 'Free', tone: 'amber' as Tone };
-              return (
-                <ListRow
-                  key={user.id}
-                  lead={<Avatar initials={getInitials(user.full_name)} />}
-                  title={user.full_name || 'Unknown'}
-                  subtitle={user.email}
-                  trailing={
-                    <>
-                      <Pill tone={status.tone}>{status.label}</Pill>
-                      {/* Shown on mobile too — the row reflows now, so the
-                          name no longer has to fight the metadata for width. */}
-                      <span className="text-[11px] font-medium text-white tabular-nums">
-                        {signupWhen(user.created_at).when}
-                      </span>
-                      <span className="text-[11px] text-white tabular-nums">
-                        {signupWhen(user.created_at).relative}
-                      </span>
-                    </>
-                  }
-                  onClick={() => setSelectedUser(user)}
-                />
-              );
-            })}
-          </ListBody>
-        </ListCard>
-
-        {/* Mobile subscribers ──────────────────────────── */}
-        {(rcLivePaid > 0 ||
-          rcLiveTrials > 0 ||
-          (rcStats?.trialUsers?.length ?? 0) > 0 ||
-          (rcStats?.paidUsers?.length ?? 0) > 0) && (
-          <div ref={mobileSubsRef}>
-            <ListCard>
-              <ListCardHeader
-                tone="blue"
-                title="Mobile subscribers"
-                meta={
-                  <span className="flex items-center gap-1.5">
-                    <PulseDot tone="green" />
-                    <span className="text-[11px] text-white">Live from RevenueCat</span>
-                  </span>
-                }
-                action={syncing ? 'Syncing…' : 'Sync RC'}
-                onAction={syncing ? undefined : syncRC}
-              />
-              <div className="px-4 sm:px-5 pt-4">
-                <StatStrip
-                  columns={3}
-                  stats={[
-                    { label: 'Paid', value: rcLivePaid, tone: 'emerald' },
-                    { label: 'Trials', value: rcLiveTrials, tone: 'blue' },
-                    { label: 'MRR', value: `£${Math.round(rcMrr)}` },
-                  ]}
-                />
-                {rcHasDivergence && (
-                  <div className="mt-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 px-4 py-3 flex items-start gap-2.5">
-                    <Dot tone="amber" className="mt-1.5" />
-                    <div className="min-w-0">
-                      <div className="text-[12px] font-semibold text-amber-300 leading-tight">
-                        {rcPaidDivergence &&
-                          (rcPaidDelta > 0
-                            ? `${rcPaidDelta} paid sub${rcPaidDelta === 1 ? '' : 's'} in RC not matched in DB`
-                            : `${Math.abs(rcPaidDelta)} stale paid sub${Math.abs(rcPaidDelta) === 1 ? '' : 's'} in DB`)}
-                        {rcPaidDivergence && rcTrialDivergence && ' · '}
-                        {rcTrialDivergence &&
-                          (rcTrialDelta > 0
-                            ? `${rcTrialDelta} trial${rcTrialDelta === 1 ? '' : 's'} in RC not matched`
-                            : `${Math.abs(rcTrialDelta)} stale trial${Math.abs(rcTrialDelta) === 1 ? '' : 's'} in DB`)}
-                      </div>
-                      <div className="mt-0.5 text-[11px] text-amber-300/70">
-                        Tap Sync RC to reconcile
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Collapsible groups */}
-              {sortedPaidUsers.length > 0 && (
-                <>
-                  <div className="border-t border-white/[0.06] mt-4" />
-                  <GroupHeader
-                    tone="emerald"
-                    label="Paid"
-                    count={sortedPaidUsers.length}
-                    open={showPaid}
-                    onClick={() => setShowPaid(!showPaid)}
-                  />
-                  {showPaid && (
-                    <ListBody>
-                      {sortedPaidUsers.map((u) => {
-                        const matched = baseUsers?.find((bu) => bu.id === u.id);
-                        const score = calculateEngagementScore(u.engagement);
-                        const since = daysSinceActive(u.engagement?.last_activity);
-                        const dormantDays = since !== null && since >= DORMANT_DAYS ? since : null;
-                        return (
-                          <ListRow
-                            key={u.id}
-                            accent="emerald"
-                            lead={<EngagementRing score={score} />}
-                            title={u.full_name}
-                            subtitle={
-                              <span className="capitalize">
-                                {u.subscription_tier?.replace('_', ' ')}
-                                {u.engagement && (
-                                  <>
-                                    {' · '}
-                                    {formatTimeShort(u.engagement.total_seconds_tracked)}
-                                    {' · '}
-                                    {u.engagement.unique_pages_visited}p{' · '}
-                                    {u.engagement.login_count} logins
-                                  </>
-                                )}
-                              </span>
-                            }
-                            trailing={
-                              <>
-                                {dormantDays !== null && (
-                                  <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
-                                    {dormantDays}d quiet
-                                  </Pill>
-                                )}
-                                {/* Redundant on mobile — the whole section is paying users */}
-                                <Pill tone="emerald" className="hidden sm:inline-flex">
-                                  Paying
-                                </Pill>
-                              </>
-                            }
-                            onClick={() => matched && setSelectedUser(matched)}
-                          />
-                        );
-                      })}
-                    </ListBody>
-                  )}
-                </>
-              )}
-
-              {sortedActiveTrials.length > 0 && (
-                <>
-                  <div className="border-t border-white/[0.06]" />
-                  <GroupHeader
-                    tone="blue"
-                    label="Trials"
-                    count={sortedActiveTrials.length}
-                    open={showTrials}
-                    onClick={() => setShowTrials(!showTrials)}
-                  />
-                  {showTrials && (
-                    <ListBody>
-                      {sortedActiveTrials.map((t) => {
-                        const daysLeft = t.trial_end
-                          ? differenceInDays(parseISO(t.trial_end), new Date())
-                          : null;
-                        const matched = baseUsers?.find((bu) => bu.id === t.id);
-                        const urgencyTone: Tone =
-                          daysLeft !== null && daysLeft <= 1
-                            ? 'red'
-                            : daysLeft !== null && daysLeft <= 3
-                              ? 'orange'
-                              : 'blue';
-                        const score = calculateEngagementScore(t.engagement);
-                        const since = daysSinceActive(t.engagement?.last_activity);
-                        const dormantDays = since !== null && since >= DORMANT_DAYS ? since : null;
-                        return (
-                          <ListRow
-                            key={t.id}
-                            accent="blue"
-                            lead={<EngagementRing score={score} />}
-                            title={t.full_name}
-                            subtitle={
-                              <span className="capitalize">
-                                {t.subscription_tier?.replace('_', ' ')}
-                                {t.engagement && (
-                                  <>
-                                    {' · '}
-                                    {formatTimeShort(t.engagement.total_seconds_tracked)}
-                                    {' · '}
-                                    {t.engagement.unique_pages_visited}p{' · '}
-                                    {t.engagement.login_count} logins
-                                  </>
-                                )}
-                              </span>
-                            }
-                            trailing={
-                              <>
-                                {dormantDays !== null && (
-                                  <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
-                                    {dormantDays}d quiet
-                                  </Pill>
-                                )}
-                                <Pill tone={urgencyTone}>
-                                  {daysLeft !== null
-                                    ? daysLeft <= 0
-                                      ? 'Today'
-                                      : `${daysLeft}d`
-                                    : 'Trial'}
-                                </Pill>
-                              </>
-                            }
-                            onClick={() => matched && setSelectedUser(matched)}
-                          />
-                        );
-                      })}
-                    </ListBody>
-                  )}
-                </>
-              )}
-
-              {sortedCancelledTrials.length > 0 && (
-                <>
-                  <div className="border-t border-white/[0.06]" />
-                  <GroupHeader
-                    tone="red"
-                    label="Cancelled"
-                    count={sortedCancelledTrials.length}
-                    open={showCancelled}
-                    onClick={() => setShowCancelled(!showCancelled)}
-                  />
-                  {showCancelled && (
-                    <ListBody>
-                      {sortedCancelledTrials.map((t) => {
-                        const daysLeft = t.trial_end
-                          ? differenceInDays(parseISO(t.trial_end), new Date())
-                          : null;
-                        const matched = baseUsers?.find((bu) => bu.id === t.id);
-                        const score = calculateEngagementScore(t.engagement);
-                        return (
-                          <ListRow
-                            key={t.id}
-                            accent="red"
-                            lead={<EngagementRing score={score} />}
-                            title={t.full_name}
-                            subtitle={
-                              <span className="capitalize">
-                                {t.subscription_tier?.replace('_', ' ')}
-                              </span>
-                            }
-                            trailing={
-                              <Pill tone="red">
-                                Cancelled
-                                {daysLeft !== null && daysLeft > 0 ? ` · ${daysLeft}d` : ''}
-                              </Pill>
-                            }
-                            onClick={() => matched && setSelectedUser(matched)}
-                          />
-                        );
-                      })}
-                    </ListBody>
-                  )}
-                </>
-              )}
-            </ListCard>
-          </div>
-        )}
-
-        {/* Churn risk — paying users gone quiet (pre-churn) ─ */}
-        {atRiskSubs && atRiskSubs.length > 0 && (
+          {/* Live users ────────────────────────────────────── */}
           <ListCard>
             <ListCardHeader
-              tone="orange"
-              title="At risk of leaving"
+              tone="green"
+              title="On the app now"
               meta={
-                <span className="text-[11px] text-orange-400 font-medium tabular-nums">
-                  {atRiskTotal ?? atRiskSubs.length} paying · quiet 30d+
+                <span className="flex items-center gap-1.5">
+                  <PulseDot tone="green" />
+                  <span className="text-[11px] text-green-400 font-medium tabular-nums">
+                    {liveUserCount} online
+                  </span>
                 </span>
               }
               action={
-                atRiskSubs.length > 6
-                  ? showAllAtRisk
+                (onlineUsers?.length || 0) > 5
+                  ? showAllOnline
                     ? 'Show less'
-                    : `Show all ${atRiskSubs.length}`
+                    : `Show all ${onlineUsers?.length}`
                   : undefined
               }
-              onAction={atRiskSubs.length > 6 ? () => setShowAllAtRisk(!showAllAtRisk) : undefined}
+              onAction={
+                (onlineUsers?.length || 0) > 5 ? () => setShowAllOnline(!showAllOnline) : undefined
+              }
+            />
+            {liveHotspots.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 px-4 sm:px-5 pt-3.5 pb-0.5">
+                {liveHotspots.map(([area, n]) => (
+                  <span
+                    key={area}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-1 text-[11px] text-white"
+                  >
+                    <span className="truncate max-w-[140px]">{area}</span>
+                    <span className="text-elec-yellow font-semibold tabular-nums">{n}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+            {!onlineUsers || onlineUsers.length === 0 ? (
+              <EmptyState
+                title="No active users"
+                description="When users are on-app, they'll appear here."
+              />
+            ) : (
+              <ListBody>
+                {onlineUsers.slice(0, showAllOnline ? onlineUsers.length : 5).map((activity) => {
+                  const lastSeenMs = new Date(activity.last_seen).getTime();
+                  const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
+                  const isOnline = diffMins < 5;
+                  const profile = activity.profiles;
+                  const currentPage = (
+                    activity.current_page?.replace(/^\//, '').split('/')[0] || 'Home'
+                  ).trim();
+                  const di = activity.device_info as {
+                    isMobile?: boolean;
+                    platform?: string;
+                  } | null;
+                  const platform = di?.platform || '';
+                  const deviceLabel =
+                    platform === 'iPhone'
+                      ? 'iPhone'
+                      : platform === 'iPad'
+                        ? 'iPad'
+                        : platform === 'MacIntel'
+                          ? 'Mac'
+                          : platform === 'Win32'
+                            ? 'Windows'
+                            : di?.isMobile
+                              ? 'Mobile'
+                              : 'Web';
+                  const DeviceIcon = di?.isMobile ? Smartphone : Monitor;
+                  const sessionMs = activity.session_started_at
+                    ? Date.now() - new Date(activity.session_started_at).getTime()
+                    : 0;
+                  const sessionMin = Math.max(0, Math.floor(sessionMs / 60000));
+                  const sessionLabel =
+                    sessionMin >= 60
+                      ? `${Math.floor(sessionMin / 60)}h ${sessionMin % 60}m`
+                      : `${sessionMin}m`;
+                  return (
+                    <ListRow
+                      key={activity.user_id}
+                      lead={<Avatar initials={getInitials(profile?.full_name)} online={isOnline} />}
+                      title={profile?.full_name || 'Unknown'}
+                      subtitle={
+                        isOnline
+                          ? `Active now · ${sessionLabel} · ${currentPage}`
+                          : `${diffMins}m ago · ${currentPage}`
+                      }
+                      trailing={
+                        <span className="flex items-center gap-1 text-[11px] text-white">
+                          <DeviceIcon className="h-3.5 w-3.5 shrink-0" />
+                          <span className="hidden sm:inline">{deviceLabel}</span>
+                        </span>
+                      }
+                      onClick={() => {
+                        const matched = baseUsers?.find((u) => u.id === activity.user_id);
+                        if (matched) setSelectedUser(matched);
+                      }}
+                    />
+                  );
+                })}
+              </ListBody>
+            )}
+          </ListCard>
+
+          {/* Recent signups ───────────────────────────────── */}
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Recent signups"
+              meta={
+                <span className="text-[11px] text-white tabular-nums">
+                  {stats?.signupsThisWeek ?? 0} this week
+                </span>
+              }
+              action={
+                (stats?.recentSignups?.length || 0) > 5
+                  ? showAllSignups
+                    ? 'Show less'
+                    : `Show ${stats?.recentSignups?.length} most recent`
+                  : undefined
+              }
+              onAction={
+                (stats?.recentSignups?.length || 0) > 5
+                  ? () => setShowAllSignups(!showAllSignups)
+                  : undefined
+              }
             />
             <ListBody>
-              {atRiskSubs.slice(0, showAllAtRisk ? atRiskSubs.length : 6).map((u) => {
-                const matched = baseUsers?.find((bu) => bu.id === u.user_id);
-                const tone: Tone = u.days_quiet >= 60 ? 'red' : 'orange';
+              {stats?.recentSignups?.slice(0, showAllSignups ? 50 : 5).map((user) => {
+                const status = user.subscribed
+                  ? { label: 'Pro', tone: 'emerald' as Tone }
+                  : user.stripe_customer_id
+                    ? { label: 'Checkout', tone: 'orange' as Tone }
+                    : { label: 'Free', tone: 'amber' as Tone };
                 return (
                   <ListRow
-                    key={u.user_id}
-                    accent={tone}
-                    lead={<Avatar initials={getInitials(u.full_name)} />}
-                    title={u.full_name || 'Unknown'}
-                    subtitle={
-                      <span className="capitalize">
-                        {(u.subscription_tier || 'paid').replace('_', ' ')}
-                        {u.subscription_source
-                          ? ` · ${u.subscription_source.replace('_', ' ')}`
-                          : ''}
-                      </span>
-                    }
+                    key={user.id}
+                    lead={<Avatar initials={getInitials(user.full_name)} />}
+                    title={user.full_name || 'Unknown'}
+                    subtitle={user.email}
                     trailing={
-                      <Pill tone={tone}>
-                        {u.days_quiet >= 9999 ? 'never active' : `${u.days_quiet}d quiet`}
-                      </Pill>
+                      <>
+                        <Pill tone={status.tone}>{status.label}</Pill>
+                        {/* Shown on mobile too — the row reflows now, so the
+                          name no longer has to fight the metadata for width. */}
+                        <span className="text-[11px] font-medium text-white tabular-nums">
+                          {signupWhen(user.created_at).when}
+                        </span>
+                        <span className="text-[11px] text-white tabular-nums">
+                          {signupWhen(user.created_at).relative}
+                        </span>
+                      </>
                     }
-                    onClick={() => matched && setSelectedUser(matched)}
+                    onClick={() => setSelectedUser(user)}
                   />
                 );
               })}
             </ListBody>
           </ListCard>
-        )}
 
-        {/* Recently churned ──────────────────────────── */}
-        {churnedUsers && churnedUsers.length > 0 && (
-          <ListCard>
-            <ListCardHeader
-              tone="red"
-              title="Recently left"
-              meta={<Pill tone="red">{churnedUsers.length}</Pill>}
-            />
-            <GroupHeader
-              tone="red"
-              label="Cancelled trials"
-              count={churnedUsers.length}
-              open={showChurned}
-              onClick={() => setShowChurned(!showChurned)}
-            />
-            {showChurned && (
+          {/* Mobile subscribers ──────────────────────────── */}
+          {(rcLivePaid > 0 ||
+            rcLiveTrials > 0 ||
+            (rcStats?.trialUsers?.length ?? 0) > 0 ||
+            (rcStats?.paidUsers?.length ?? 0) > 0) && (
+            <div ref={mobileSubsRef}>
+              <ListCard>
+                <ListCardHeader
+                  tone="blue"
+                  title="Mobile subscribers"
+                  meta={
+                    <span className="flex items-center gap-1.5">
+                      <PulseDot tone="green" />
+                      <span className="text-[11px] text-white">Live from RevenueCat</span>
+                    </span>
+                  }
+                  action={syncing ? 'Syncing…' : 'Sync RC'}
+                  onAction={syncing ? undefined : syncRC}
+                />
+                <div className="px-4 sm:px-5 pt-4">
+                  <StatStrip
+                    columns={3}
+                    stats={[
+                      { label: 'Paid', value: rcLivePaid, tone: 'emerald' },
+                      { label: 'Trials', value: rcLiveTrials, tone: 'blue' },
+                      { label: 'MRR', value: `£${Math.round(rcMrr)}` },
+                    ]}
+                  />
+                  {rcHasDivergence && (
+                    <div className="mt-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 px-4 py-3 flex items-start gap-2.5">
+                      <Dot tone="amber" className="mt-1.5" />
+                      <div className="min-w-0">
+                        <div className="text-[12px] font-semibold text-amber-300 leading-tight">
+                          {rcPaidDivergence &&
+                            (rcPaidDelta > 0
+                              ? `${rcPaidDelta} paid sub${rcPaidDelta === 1 ? '' : 's'} in RC not matched in DB`
+                              : `${Math.abs(rcPaidDelta)} stale paid sub${Math.abs(rcPaidDelta) === 1 ? '' : 's'} in DB`)}
+                          {rcPaidDivergence && rcTrialDivergence && ' · '}
+                          {rcTrialDivergence &&
+                            (rcTrialDelta > 0
+                              ? `${rcTrialDelta} trial${rcTrialDelta === 1 ? '' : 's'} in RC not matched`
+                              : `${Math.abs(rcTrialDelta)} stale trial${Math.abs(rcTrialDelta) === 1 ? '' : 's'} in DB`)}
+                        </div>
+                        <div className="mt-0.5 text-[11px] text-amber-300/70">
+                          Tap Sync RC to reconcile
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Collapsible groups */}
+                {sortedPaidUsers.length > 0 && (
+                  <>
+                    <div className="border-t border-white/[0.06] mt-4" />
+                    <GroupHeader
+                      tone="emerald"
+                      label="Paid"
+                      count={sortedPaidUsers.length}
+                      open={showPaid}
+                      onClick={() => setShowPaid(!showPaid)}
+                    />
+                    {showPaid && (
+                      <ListBody>
+                        {sortedPaidUsers.map((u) => {
+                          const matched = baseUsers?.find((bu) => bu.id === u.id);
+                          const score = calculateEngagementScore(u.engagement);
+                          const since = daysSinceActive(u.engagement?.last_activity);
+                          const dormantDays =
+                            since !== null && since >= DORMANT_DAYS ? since : null;
+                          return (
+                            <ListRow
+                              key={u.id}
+                              accent="emerald"
+                              lead={<EngagementRing score={score} />}
+                              title={u.full_name}
+                              subtitle={
+                                <span className="capitalize">
+                                  {u.subscription_tier?.replace('_', ' ')}
+                                  {u.engagement && (
+                                    <>
+                                      {' · '}
+                                      {formatTimeShort(u.engagement.total_seconds_tracked)}
+                                      {' · '}
+                                      {u.engagement.unique_pages_visited}p{' · '}
+                                      {u.engagement.login_count} logins
+                                    </>
+                                  )}
+                                </span>
+                              }
+                              trailing={
+                                <>
+                                  {dormantDays !== null && (
+                                    <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
+                                      {dormantDays}d quiet
+                                    </Pill>
+                                  )}
+                                  {/* Redundant on mobile — the whole section is paying users */}
+                                  <Pill tone="emerald" className="hidden sm:inline-flex">
+                                    Paying
+                                  </Pill>
+                                </>
+                              }
+                              onClick={() => matched && setSelectedUser(matched)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    )}
+                  </>
+                )}
+
+                {sortedActiveTrials.length > 0 && (
+                  <>
+                    <div className="border-t border-white/[0.06]" />
+                    <GroupHeader
+                      tone="blue"
+                      label="Trials"
+                      count={sortedActiveTrials.length}
+                      open={showTrials}
+                      onClick={() => setShowTrials(!showTrials)}
+                    />
+                    {showTrials && (
+                      <ListBody>
+                        {sortedActiveTrials.map((t) => {
+                          const daysLeft = t.trial_end
+                            ? differenceInDays(parseISO(t.trial_end), new Date())
+                            : null;
+                          const matched = baseUsers?.find((bu) => bu.id === t.id);
+                          const urgencyTone: Tone =
+                            daysLeft !== null && daysLeft <= 1
+                              ? 'red'
+                              : daysLeft !== null && daysLeft <= 3
+                                ? 'orange'
+                                : 'blue';
+                          const score = calculateEngagementScore(t.engagement);
+                          const since = daysSinceActive(t.engagement?.last_activity);
+                          const dormantDays =
+                            since !== null && since >= DORMANT_DAYS ? since : null;
+                          return (
+                            <ListRow
+                              key={t.id}
+                              accent="blue"
+                              lead={<EngagementRing score={score} />}
+                              title={t.full_name}
+                              subtitle={
+                                <span className="capitalize">
+                                  {t.subscription_tier?.replace('_', ' ')}
+                                  {t.engagement && (
+                                    <>
+                                      {' · '}
+                                      {formatTimeShort(t.engagement.total_seconds_tracked)}
+                                      {' · '}
+                                      {t.engagement.unique_pages_visited}p{' · '}
+                                      {t.engagement.login_count} logins
+                                    </>
+                                  )}
+                                </span>
+                              }
+                              trailing={
+                                <>
+                                  {dormantDays !== null && (
+                                    <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
+                                      {dormantDays}d quiet
+                                    </Pill>
+                                  )}
+                                  <Pill tone={urgencyTone}>
+                                    {daysLeft !== null
+                                      ? daysLeft <= 0
+                                        ? 'Today'
+                                        : `${daysLeft}d`
+                                      : 'Trial'}
+                                  </Pill>
+                                </>
+                              }
+                              onClick={() => matched && setSelectedUser(matched)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    )}
+                  </>
+                )}
+
+                {sortedCancelledTrials.length > 0 && (
+                  <>
+                    <div className="border-t border-white/[0.06]" />
+                    <GroupHeader
+                      tone="red"
+                      label="Cancelled"
+                      count={sortedCancelledTrials.length}
+                      open={showCancelled}
+                      onClick={() => setShowCancelled(!showCancelled)}
+                    />
+                    {showCancelled && (
+                      <ListBody>
+                        {sortedCancelledTrials.map((t) => {
+                          const daysLeft = t.trial_end
+                            ? differenceInDays(parseISO(t.trial_end), new Date())
+                            : null;
+                          const matched = baseUsers?.find((bu) => bu.id === t.id);
+                          const score = calculateEngagementScore(t.engagement);
+                          return (
+                            <ListRow
+                              key={t.id}
+                              accent="red"
+                              lead={<EngagementRing score={score} />}
+                              title={t.full_name}
+                              subtitle={
+                                <span className="capitalize">
+                                  {t.subscription_tier?.replace('_', ' ')}
+                                </span>
+                              }
+                              trailing={
+                                <Pill tone="red">
+                                  Cancelled
+                                  {daysLeft !== null && daysLeft > 0 ? ` · ${daysLeft}d` : ''}
+                                </Pill>
+                              }
+                              onClick={() => matched && setSelectedUser(matched)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    )}
+                  </>
+                )}
+              </ListCard>
+            </div>
+          )}
+
+          {/* Churn risk — paying users gone quiet (pre-churn) ─ */}
+          {atRiskSubs && atRiskSubs.length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="orange"
+                title="At risk of leaving"
+                meta={
+                  <span className="text-[11px] text-orange-400 font-medium tabular-nums">
+                    {atRiskTotal ?? atRiskSubs.length} paying · quiet 30d+
+                  </span>
+                }
+                action={
+                  atRiskSubs.length > 6
+                    ? showAllAtRisk
+                      ? 'Show less'
+                      : `Show all ${atRiskSubs.length}`
+                    : undefined
+                }
+                onAction={
+                  atRiskSubs.length > 6 ? () => setShowAllAtRisk(!showAllAtRisk) : undefined
+                }
+              />
               <ListBody>
-                {churnedUsers.map((u) => {
-                  const matched = baseUsers?.find((bu) => bu.id === u.id);
+                {atRiskSubs.slice(0, showAllAtRisk ? atRiskSubs.length : 6).map((u) => {
+                  const matched = baseUsers?.find((bu) => bu.id === u.user_id);
+                  const tone: Tone = u.days_quiet >= 60 ? 'red' : 'orange';
                   return (
                     <ListRow
-                      key={u.id}
-                      accent="red"
-                      lead={<EngagementRing score={calculateEngagementScore(null)} />}
+                      key={u.user_id}
+                      accent={tone}
+                      lead={<Avatar initials={getInitials(u.full_name)} />}
                       title={u.full_name || 'Unknown'}
                       subtitle={
                         <span className="capitalize">
-                          {u.subscription_tier?.replace('_', ' ') || u.role || 'User'}
+                          {(u.subscription_tier || 'paid').replace('_', ' ')}
+                          {u.subscription_source
+                            ? ` · ${u.subscription_source.replace('_', ' ')}`
+                            : ''}
                         </span>
                       }
                       trailing={
-                        <Pill tone="red">
-                          {u.trial_end
-                            ? formatDistanceToNow(parseISO(u.trial_end), {
-                                addSuffix: true,
-                              }).replace('about ', '')
-                            : 'Churned'}
+                        <Pill tone={tone}>
+                          {u.days_quiet >= 9999 ? 'never active' : `${u.days_quiet}d quiet`}
                         </Pill>
                       }
                       onClick={() => matched && setSelectedUser(matched)}
@@ -1308,74 +1269,159 @@ export default function AdminDashboard() {
                   );
                 })}
               </ListBody>
-            )}
-          </ListCard>
-        )}
+            </ListCard>
+          )}
 
-        {/* Growth ──────────────────────────────────────── */}
-        <StatStrip
-          columns={2}
-          stats={[
-            {
-              label: 'New this week',
-              value: <AnimatedCounter value={stats?.signupsThisWeek || 0} />,
-              sub: '7-day trailing',
-              tone: 'green',
-              onClick: () => navigate('/admin/analytics'),
-            },
-            {
-              label: 'Conversion',
-              value: <AnimatedCounter value={conversionRate} suffix="%" />,
-              sub: 'Paying ÷ total users',
-              accent: true,
-              onClick: () => navigate('/admin/analytics'),
-            },
-          ]}
-        />
+          {/*
+          Cancelled, but not gone.
+        
+          This card was titled "Recently left" and every row said "in 15 days",
+          "in 22 minutes" — future tense, because nobody on it had actually
+          left. They have cancelled and are running down the remainder of a
+          trial they already paid for. All five still had access when this was
+          written, one of them for another twenty minutes.
+        
+          That makes it the most actionable list on the page — the only people
+          you can still talk out of leaving — so it says what it is, counts
+          down rather than pointing forwards, and leads with whoever runs out
+          first.
+        */}
+          {churnedUsers && churnedUsers.length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="red"
+                title="Cancelled, still have access"
+                meta={
+                  <span className="text-[11px] text-white">{churnedUsers.length} winding down</span>
+                }
+              />
+              <GroupHeader
+                tone="red"
+                label="Soonest to lapse first"
+                count={churnedUsers.length}
+                open={showChurned}
+                onClick={() => setShowChurned(!showChurned)}
+              />
+              {showChurned && (
+                <ListBody>
+                  {churnedUsers.map((u) => {
+                    const matched = baseUsers?.find((bu) => bu.id === u.id);
+                    /*
+                     * Real engagement, from the RevenueCat trial list.
+                     *
+                     * The ring was fed `calculateEngagementScore(null)` — a
+                     * hardcoded null — so it drew a 0 for everyone. Reece Uko
+                     * had six and a quarter hours on the app and rendered
+                     * identically to somebody who used it for five minutes.
+                     */
+                    const rcMatch = rcStats?.trialUsers?.find((t) => t.id === u.id);
+                    const score = calculateEngagementScore(rcMatch?.engagement ?? null);
 
-        {/* Recent subscriptions ──────────────────────── */}
-        {recentSubscriptions.length > 0 && (
-          <ListCard>
-            <ListCardHeader
-              tone="emerald"
-              title="New subscriptions"
-              meta={
-                <span className="text-[11px] text-white tabular-nums">
-                  {recentSubscriptions.length} today
-                </span>
-              }
-            />
-            <ListBody>
-              {recentSubscriptions.map((sub) => {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
-                const tier = tierPill(sub.tier);
-                return (
-                  <ListRow
-                    key={sub.subscriptionId}
-                    lead={<Avatar initials={getInitials(sub.full_name)} />}
-                    title={sub.full_name}
-                    subtitle={sub.customerEmail}
-                    trailing={
-                      <>
-                        <Pill tone={tier.tone}>{tier.label}</Pill>
-                        {/* Secondary on mobile — the name wins */}
-                        <Pill tone={isNewUser ? 'green' : 'blue'} className="hidden sm:inline-flex">
-                          {isNewUser ? 'New' : 'Return'}
-                        </Pill>
-                      </>
-                    }
-                    onClick={() => sub.matchedUser && setSelectedUser(sub.matchedUser)}
-                  />
-                );
-              })}
-            </ListBody>
-          </ListCard>
-        )}
+                    const endsAt = u.trial_end ? parseISO(u.trial_end) : null;
+                    const stillHasAccess = !!endsAt && endsAt.getTime() > Date.now();
+                    const remaining = endsAt
+                      ? formatDistanceToNow(endsAt).replace('about ', '')
+                      : null;
+                    // Under a day means you can still do something today.
+                    const urgent = !!endsAt && endsAt.getTime() - Date.now() < 24 * 60 * 60 * 1000;
 
-        {/* Support inbox ──────────────────────────────── */}
-        {supportMessages && supportMessages.length > 0 && (
+                    return (
+                      <ListRow
+                        key={u.id}
+                        accent="red"
+                        lead={<EngagementRing score={score} />}
+                        title={u.full_name || 'Unknown'}
+                        subtitle={
+                          <span className="capitalize">
+                            {u.subscription_tier?.replace('_', ' ') || u.role || 'User'}
+                          </span>
+                        }
+                        trailing={
+                          <span
+                            className={cn(
+                              'text-[12px] font-semibold tabular-nums',
+                              urgent ? 'text-orange-300' : 'text-white'
+                            )}
+                          >
+                            {stillHasAccess && remaining ? `${remaining} left` : 'Access ended'}
+                          </span>
+                        }
+                        onClick={() => matched && setSelectedUser(matched)}
+                      />
+                    );
+                  })}
+                </ListBody>
+              )}
+            </ListCard>
+          )}
+
+          {/* Growth ──────────────────────────────────────── */}
+          <StatStrip
+            columns={2}
+            stats={[
+              {
+                label: 'New this week',
+                value: <AnimatedCounter value={stats?.signupsThisWeek || 0} />,
+                sub: '7-day trailing',
+                tone: 'green',
+                onClick: () => navigate('/admin/analytics'),
+              },
+              {
+                label: 'Conversion',
+                value: <AnimatedCounter value={conversionRate} suffix="%" />,
+                sub: 'Paying ÷ total users',
+                accent: true,
+                onClick: () => navigate('/admin/analytics'),
+              },
+            ]}
+          />
+
+          {/* Recent subscriptions ──────────────────────── */}
+          {recentSubscriptions.length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="emerald"
+                title="New subscriptions"
+                meta={
+                  <span className="text-[11px] text-white tabular-nums">
+                    {recentSubscriptions.length} today
+                  </span>
+                }
+              />
+              <ListBody>
+                {recentSubscriptions.map((sub) => {
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+                  const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
+                  const tier = tierPill(sub.tier);
+                  return (
+                    <ListRow
+                      key={sub.subscriptionId}
+                      lead={<Avatar initials={getInitials(sub.full_name)} />}
+                      title={sub.full_name}
+                      subtitle={sub.customerEmail}
+                      trailing={
+                        <>
+                          <Pill tone={tier.tone}>{tier.label}</Pill>
+                          {/* Secondary on mobile — the name wins */}
+                          <Pill
+                            tone={isNewUser ? 'green' : 'blue'}
+                            className="hidden sm:inline-flex"
+                          >
+                            {isNewUser ? 'New' : 'Return'}
+                          </Pill>
+                        </>
+                      }
+                      onClick={() => sub.matchedUser && setSelectedUser(sub.matchedUser)}
+                    />
+                  );
+                })}
+              </ListBody>
+            </ListCard>
+          )}
+
+          {/* Support inbox ──────────────────────────────── */}
+          {supportMessages && supportMessages.length > 0 && (
             <ListCard>
               <ListCardHeader
                 tone="yellow"
@@ -1427,8 +1473,7 @@ export default function AdminDashboard() {
                 })}
               </ListBody>
             </ListCard>
-        )}
-
+          )}
         </div>
 
         <UserManagementSheet
