@@ -31,7 +31,7 @@ interface ScheduleSelectionBarProps {
 
 const actionCn =
   'h-9 px-3 rounded-lg border border-white/[0.12] bg-white/[0.06] text-white text-[12.5px] ' +
-  'font-semibold hover:bg-white/[0.12] touch-manipulation';
+  'font-semibold transition-colors duration-150 ease-out hover:bg-white/[0.12] touch-manipulation';
 
 const ScheduleSelectionBar: React.FC<ScheduleSelectionBarProps> = ({
   count,
@@ -54,9 +54,19 @@ const ScheduleSelectionBar: React.FC<ScheduleSelectionBarProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 border-y border-elec-yellow/25 bg-elec-yellow/[0.07]">
-      <span className="text-[13px] font-semibold text-white tabular-nums">
-        {count} selected
+    /* Neutral surface, accent carried by a solid chip.
+       This was `bg-elec-yellow/[0.07]` with a yellow border — and a warm yellow
+       at low opacity over near-black composites to olive-brown, the same muddy
+       result the Validate button had. A dark surface one step lighter than the
+       table separates the bar without tinting anything, and the count reads as
+       a solid chip: full opacity on a small element stays clean. */
+    <div className="flex flex-wrap items-center gap-2 px-4 py-2 border-y border-white/[0.14] bg-[hsl(0_0%_16%)]">
+      {/* Count first and solid — it is the subject of every button to its
+          right, so it should read as a label on the selection, not as body
+          text floating at the far end of an empty bar. */}
+      <span className="inline-flex h-7 items-center gap-1.5 rounded-lg bg-elec-yellow px-2.5 text-[12.5px] font-bold tabular-nums text-black">
+        {count}
+        <span className="font-semibold">selected</span>
       </span>
       {spareCount > 0 && (
         <span className="text-[11.5px] font-medium text-white">
@@ -113,16 +123,21 @@ const ScheduleSelectionBar: React.FC<ScheduleSelectionBarProps> = ({
           Mark N/A
         </Button>
         <Button onClick={onMarkDeviceRow} className={actionCn}>
-          Mark as device row
+          Device row
+        </Button>
+
+        {/* Clear ends the selection; Delete destroys circuits. Sitting them
+            side by side in matching pills invites the wrong one. A hairline
+            separates the destructive action, and only it is tinted. */}
+        <span aria-hidden className="mx-0.5 h-6 w-px shrink-0 bg-white/[0.14]" />
+        <Button onClick={onClear} className={actionCn}>
+          Clear
         </Button>
         <Button
           onClick={onDelete}
-          className="h-9 px-3 rounded-lg border border-red-500/40 bg-transparent text-red-300 text-[12.5px] font-semibold hover:bg-red-500/15 touch-manipulation"
+          className="h-9 px-3 rounded-lg border border-red-400/40 bg-transparent text-red-300 text-[12.5px] font-semibold transition-colors duration-150 ease-out hover:bg-red-500/15 hover:text-red-200 touch-manipulation"
         >
           Delete
-        </Button>
-        <Button onClick={onClear} className={actionCn}>
-          Clear
         </Button>
       </div>
     </div>

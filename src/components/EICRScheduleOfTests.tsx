@@ -52,7 +52,6 @@ import BoardSection, { BoardToolCallbacks } from './testing/BoardSection';
 import BoardManagement from './testing/BoardManagement';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
 import { MobileHorizontalScrollTable } from './mobile/MobileHorizontalScrollTable';
-import MobileSmartAutoFill from './mobile/MobileSmartAutoFill';
 import TestInstrumentInfo from './TestInstrumentInfo';
 import TestMethodInfo from './TestMethodInfo';
 import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
@@ -60,9 +59,6 @@ import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
 import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
 import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
-import TestResultsPhotoCapture from './testing/TestResultsPhotoCapture';
-import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
-import ScribbleToTableDialog from './mobile/ScribbleToTableDialog';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
@@ -338,11 +334,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showBoardCapture, setShowBoardCapture] = useState(false);
   const [detectedCircuits, setDetectedCircuits] = useState<any>(null);
   const [showAIReview, setShowAIReview] = useState(false);
-  const [showTestResultsScan, setShowTestResultsScan] = useState(false);
-  const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
-  const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
-  const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   // Whole-schedule validate — the board whose circuits are being checked.
   const [validateBoardId, setValidateBoardId] = useState<string | null>(null);
   // ELE-1493 — board the Find & replace tool was opened from (desktop only).
@@ -1167,18 +1158,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       onScanBoard: () => {
         setActiveBoardId(boardId);
         setShowBoardCapture(true);
-      },
-      onScanTestResults: () => {
-        setActiveBoardId(boardId);
-        setShowTestResultsScan(true);
-      },
-      onScribbleToTable: () => {
-        setActiveBoardId(boardId);
-        setShowScribbleDialog(true);
-      },
-      onSmartAutoFill: () => {
-        setActiveBoardId(boardId);
-        setShowSmartAutoFillDialog(true);
       },
       onValidate: () => setValidateBoardId(boardId),
       validateIssueCount: countBoardIssues(boardId),
@@ -2209,121 +2188,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   // Test Results Scanner Handlers
-  const handleTestResultsAnalysisComplete = (data: any) => {
-    setExtractedTestResults(data);
-    setShowTestResultsScan(false);
-    setShowTestResultsReview(true);
-  };
 
-  const handleAcceptTestResults = (selectedCircuits: any[]) => {
-    /**
-     * Rows land on the board the scanner was opened from.
-     *
-     * The ELE-1475 comment here used to read "these rows carry no boardId, so
-     * they land on the main CU" — a documented limitation rather than a fixed
-     * one. Scanning a paper schedule while viewing Sub-board 2 therefore put
-     * every row on the Main CU. `handleApplyAICircuits` already resolves the
-     * target this way; scribble-to-table now does too.
-     *
-     * The way numbering follows the target board for the same reason: numbering
-     * from the main CU would collide with ways already used on the sub-board.
-     */
-    const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
-    // Number from the highest way already in use on that board rather than from
-    // the row count, which reuses numbers once a circuit has been deleted.
-    const firstFreeWay = getNextCircuitNumber(testResults, targetBoardId);
-    // Transform extracted test results to TestResult format
-    const transformedResults = selectedCircuits.map((circuit, index) => {
-      const nextId = (testResults.length + index + 1).toString();
-      // Prefer the reference the AI read off the paper schedule; fall back to
-      // the next free way. circuitNumber is the bare number the PDF prints,
-      // circuitRef stays the human label.
-      const wayNumber = String(firstFreeWay + index);
-      const circuitRef = circuit.circuit_reference || `C${wayNumber}`;
-      const circuitNum = deriveCircuitNumber(circuitRef) ?? wayNumber;
-
-      // Derive combined BS Standard (e.g., "MCB (BS EN 60898)")
-      const incomingType: string = circuit.protective_device?.type || '';
-      const upper = incomingType.toUpperCase();
-      const baseType = upper.includes('RCBO')
-        ? 'RCBO'
-        : upper.includes('RCD')
-          ? 'RCD'
-          : upper.includes('MCB')
-            ? 'MCB'
-            : upper.includes('FUSE')
-              ? 'Fuse'
-              : incomingType;
-      const incomingBs: string = circuit.protective_device?.bs_standard || '';
-      const bsFromType = getDefaultBsStandard(baseType || 'MCB');
-      const finalBs =
-        incomingBs && incomingBs.includes('(') ? incomingBs : bsFromType || incomingBs;
-
-      return {
-        id: nextId,
-        boardId: targetBoardId,
-        circuitNumber: circuitNum,
-        circuitDesignation: circuitRef,
-        circuitDescription: circuit.circuit_description || '',
-        circuitType: circuit.circuit_type || '',
-        type: circuit.circuit_type || '',
-        referenceMethod: '',
-        liveSize: circuit.conductor_sizes?.live || '',
-        cpcSize: circuit.conductor_sizes?.cpc || '',
-        protectiveDeviceType: circuit.protective_device?.type || '',
-        protectiveDeviceRating: circuit.protective_device?.rating || '',
-        protectiveDeviceCurve: circuit.protective_device?.curve || '',
-        protectiveDeviceKaRating: circuit.protective_device?.ka_rating || '',
-        protectiveDeviceLocation: circuit.protective_device?.location || '',
-        bsStandard: finalBs,
-        rcdBsStandard: circuit.protective_device?.rcd_details?.bs_standard || '',
-        rcdType: circuit.protective_device?.rcd_details?.rcd_type || '',
-        rcdRatingA: circuit.protective_device?.rcd_details?.rating_a || '',
-        cableSize: circuit.conductor_sizes?.live || '',
-        protectiveDevice: circuit.protective_device?.rating || '',
-        r1r2: circuit.tests?.r1_r2?.value || '',
-        r2: '',
-        ringContinuityLive: circuit.tests?.ring_continuity_live?.value || '',
-        ringContinuityNeutral: circuit.tests?.ring_continuity_neutral?.value || '',
-        ringR1: circuit.tests?.ring_r1_live?.value || '',
-        ringRn: circuit.tests?.ring_rn_neutral?.value || '',
-        ringR2: circuit.tests?.ring_r2_cpc?.value || '',
-        insulationTestVoltage: circuit.tests?.insulation_resistance?.test_voltage || '500',
-        insulationResistance: circuit.tests?.insulation_resistance?.value || '',
-        insulationLiveNeutral: circuit.tests?.insulation_live_neutral?.value || '',
-        insulationLiveEarth: circuit.tests?.insulation_live_earth?.value || '',
-        polarity: circuit.tests?.polarity?.result || '',
-        zs: circuit.tests?.zs?.value || '',
-        maxZs: circuit.tests?.zs?.max_zs || '',
-        pointsServed: circuit.points_served || '',
-        rcdRating: circuit.tests?.rcd_rating || '',
-        rcdOneX: circuit.tests?.rcd_trip_time?.value || '',
-        rcdTestButton: circuit.tests?.rcd_test_button || '',
-        afddTest: circuit.tests?.afdd_test || '',
-        pfc: circuit.tests?.pfc?.value || '',
-        pfcLiveNeutral: circuit.tests?.pfc_live_neutral?.value || '',
-        pfcLiveEarth: circuit.tests?.pfc_live_earth?.value || '',
-        functionalTesting: circuit.tests?.functional_testing || '',
-        notes:
-          '',
-        autoFilled: true,
-      };
-    });
-
-    // Add to existing test results
-    const updatedResults = [...testResults, ...transformedResults];
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-    setShowTestResultsReview(false);
-    setExtractedTestResults(null);
-    // Released here, not on scanner close — the review dialog runs after the
-    // scanner has gone, and it is this handler that needs to know the board.
-    setActiveBoardId(null);
-    const boardName = distributionBoards.find((b) => b.id === targetBoardId)?.name || 'this board';
-    toast.success(
-      `${transformedResults.length} circuit${transformedResults.length === 1 ? '' : 's'} added to ${boardName}`
-    );
-  };
 
   // Normalise AI circuit values to match UI Select options
   const normaliseAICircuit = (circuit: any) => {
@@ -3502,45 +3367,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       )}
 
       {/* Test Results Photo Capture */}
-      {showTestResultsScan && (
-        <>
-          <div className="tool-sheet-overlay" onClick={() => setShowTestResultsScan(false)} />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">AI test results scanner</div>
-              <Button
-                variant="ghost"
-                onClick={() => setShowTestResultsScan(false)}
-                className="h-11 px-3 text-[13px] font-semibold text-white hover:text-white hover:bg-white/10 touch-manipulation"
-              >
-                Close
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <TestResultsPhotoCapture
-                onAnalysisComplete={handleTestResultsAnalysisComplete}
-                onClose={() => setShowTestResultsScan(false)}
-              />
-            </div>
-          </div>
-        </>
-      )}
 
       {/* AI Circuit Review now handled by BoardScannerOverlay's CircuitReviewSheet */}
 
       {/* Test Results Review Dialog */}
-      {showTestResultsReview && extractedTestResults && (
-        <TestResultsReviewDialog
-          open={showTestResultsReview}
-          onClose={() => {
-            setShowTestResultsReview(false);
-            setExtractedTestResults(null);
-          }}
-          extractedData={extractedTestResults}
-          onAccept={handleAcceptTestResults}
-        />
-      )}
 
       {/* Smart Auto-Fill Prompt Dialog */}
       <SmartAutoFillPromptDialog
@@ -3568,61 +3398,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       />
 
       {/* Smart Auto-Fill Dialog */}
-      {showSmartAutoFillDialog && (
-        <>
-          <div className="tool-sheet-overlay" onClick={() => setShowSmartAutoFillDialog(false)} />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">Smart circuit auto-fill</div>
-              <Button
-                variant="ghost"
-                onClick={() => setShowSmartAutoFillDialog(false)}
-                className="h-11 px-3 text-[13px] font-semibold text-white hover:text-white hover:bg-white/10 touch-manipulation"
-              >
-                Close
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} earthingArrangement={formData.earthingArrangement as string | undefined} />
-            </div>
-          </div>
-        </>
-      )}
 
       {/* Scribble to Table Dialog - Mobile Only */}
-      {showScribbleDialog && (
-        <ScribbleToTableDialog
-          onCircuitsAdded={(newCircuits) => {
-            /**
-             * Circuits land on the board the tool was opened from.
-             *
-             * They were appended with no `boardId` at all, so every circuit
-             * scribbled into a sub-board silently arrived on the Main CU — the
-             * board-scoped entry point set `activeBoardId` and nothing read it.
-             * `handleApplyAICircuits` resolves the target the same way; this
-             * matches it rather than inventing a second rule.
-             */
-            const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
-            const placed = newCircuits.map((c) => ({ ...c, boardId: c.boardId || targetBoardId }));
-            const updatedResults = [...testResults, ...placed];
-            setTestResults(updatedResults);
-            onUpdate('scheduleOfTests', updatedResults);
-            setShowScribbleDialog(false);
-            setActiveBoardId(null);
-            const boardName =
-              distributionBoards.find((b) => b.id === targetBoardId)?.name || 'this board';
-            toast.success('Circuits added', {
-              description: `${placed.length} circuit${placed.length === 1 ? '' : 's'} added to ${boardName}`,
-              duration: 2000,
-            });
-          }}
-          onClose={() => {
-            setShowScribbleDialog(false);
-            setActiveBoardId(null);
-          }}
-        />
-      )}
 
       {/* ELE-1487 — whole-schedule validate, reachable from the board toolbar on
           desktop AND mobile. The checks already existed; they were buried in a

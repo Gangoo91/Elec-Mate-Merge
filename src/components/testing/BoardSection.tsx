@@ -26,9 +26,6 @@ const pickerTriggerCn =
 
 export interface BoardToolCallbacks {
   onScanBoard?: () => void;
-  onScanTestResults?: () => void;
-  onScribbleToTable?: () => void;
-  onSmartAutoFill?: () => void;
   onQuickRcdPresets?: () => void;
   onVoiceToggle?: () => void;
   voiceActive?: boolean;
@@ -886,24 +883,41 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         check, then add. Voice sits last as a mode rather than
                         an action. `flex-wrap` lets it fold on a narrow desktop
                         instead of overflowing. */}
+                    {/* Grouped by what the tool does to the schedule, with a
+                        hairline between groups. Eight identical grey buttons
+                        gave the eye nothing to sort by — the difference between
+                        "read a board into the table" and "sweep a value across
+                        it" matters, and one of them is far harder to undo.
+
+                        The tint is carried on the border, not the fill: a
+                        coloured wash on eight buttons turns the toolbar into a
+                        rainbow, whereas a coloured edge groups them and leaves
+                        the bar calm. */}
                     {[
-                      { fn: tools.onScanBoard, label: 'AI scan' },
-                      { fn: tools.onScanTestResults, label: 'Scan results' },
-                      { fn: tools.onScribbleToTable, label: 'Text to circuits' },
-                      { fn: tools.onSmartAutoFill, label: 'Smart fill' },
-                      { fn: tools.onQuickRcdPresets, label: 'RCD presets' },
-                      { fn: tools.onFindReplace, label: 'Find & replace' },
+                      { fn: tools.onScanBoard, label: 'AI scan', group: 'capture' },
+                      { fn: tools.onQuickRcdPresets, label: 'RCD presets', group: 'edit' },
+                      { fn: tools.onFindReplace, label: 'Find & replace', group: 'edit' },
                     ]
                       .filter((t) => t.fn)
-                      .map((t) => (
-                        <Button
-                          key={t.label}
-                          onClick={t.fn}
-                          className="h-11 px-3 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[13px] font-semibold transition-colors duration-150 ease-out hover:bg-white/[0.12] touch-manipulation"
-                        >
-                          {t.label}
-                        </Button>
+                      .map((t, i, arr) => (
+                        <React.Fragment key={t.label}>
+                          {i > 0 && arr[i - 1].group !== t.group && (
+                            <span aria-hidden className="mx-1 h-6 w-px shrink-0 bg-white/[0.14]" />
+                          )}
+                          <Button
+                            onClick={t.fn}
+                            className={cn(
+                              'h-11 px-3 rounded-xl border bg-white/[0.06] text-white text-[13px] font-semibold transition-colors duration-150 ease-out touch-manipulation',
+                              t.group === 'capture'
+                                ? 'border-sky-400/30 hover:bg-sky-400/[0.12]'
+                                : 'border-violet-400/30 hover:bg-violet-400/[0.12]'
+                            )}
+                          >
+                            {t.label}
+                          </Button>
+                        </React.Fragment>
                       ))}
+                    <span aria-hidden className="mx-1 h-6 w-px shrink-0 bg-white/[0.14]" />
                     {tools.onValidate && (
                       <Button
                         onClick={tools.onValidate}

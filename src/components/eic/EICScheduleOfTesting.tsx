@@ -48,7 +48,6 @@ import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
 import { MobileHorizontalScrollTable } from '../mobile/MobileHorizontalScrollTable';
-import MobileSmartAutoFill from '../mobile/MobileSmartAutoFill';
 import QuickRcdPresets from '../QuickRcdPresets';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
@@ -56,9 +55,6 @@ import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
 import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
-import TestResultsPhotoCapture from '../testing/TestResultsPhotoCapture';
-import TestResultsReviewDialog from '../testing/TestResultsReviewDialog';
-import ScribbleToTableDialog from '../mobile/ScribbleToTableDialog';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { toast } from 'sonner';
@@ -280,11 +276,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
 
   const [showPhotoCapture, setShowPhotoCapture] = useState(false);
-  const [showTestResultsScan, setShowTestResultsScan] = useState(false);
-  const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
-  const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [showScribbleDialog, setShowScribbleDialog] = useState(false);
-  const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
@@ -1142,18 +1133,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         setActiveBoardId(boardId);
         setShowPhotoCapture(true);
       },
-      onScanTestResults: () => {
-        setActiveBoardId(boardId);
-        setShowTestResultsScan(true);
-      },
-      onScribbleToTable: () => {
-        setActiveBoardId(boardId);
-        setShowScribbleDialog(true);
-      },
-      onSmartAutoFill: () => {
-        setActiveBoardId(boardId);
-        setShowSmartAutoFillDialog(true);
-      },
       onQuickRcdPresets: () => {
         setActiveBoardId(boardId);
         setShowRcdPresetsDialog(true);
@@ -1472,102 +1451,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   // Test Results Scanner Handlers
-  const handleTestResultsAnalysisComplete = (data: any) => {
-    setExtractedTestResults(data);
-    setShowTestResultsScan(false);
-    setShowTestResultsReview(true);
-  };
 
-  const handleAcceptTestResults = (selectedCircuits: any[]) => {
-    // Scan-test-results opened from a sub-board's tools sets activeBoardId —
-    // circuits must land on THAT board, not fall through to the Main CU
-    // (getCircuitsForBoard treats a missing boardId as main).
-    const targetBoardId = activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
-    const existingBoardCount = getCircuitsForBoard(testResults, targetBoardId).length;
-
-    // Transform extracted test results to TestResult format
-    const transformedResults = selectedCircuits.map((circuit, index) => {
-      const nextId = crypto.randomUUID();
-      const nextCircuitNum = (existingBoardCount + index + 1).toString();
-
-      // Derive combined BS Standard (e.g., "MCB (BS EN 60898)")
-      const incomingType: string = circuit.protective_device?.type || '';
-      const upper = incomingType.toUpperCase();
-      const baseType = upper.includes('RCBO')
-        ? 'RCBO'
-        : upper.includes('RCD')
-          ? 'RCD'
-          : upper.includes('MCB')
-            ? 'MCB'
-            : upper.includes('FUSE')
-              ? 'Fuse'
-              : incomingType;
-      const incomingBs: string = circuit.protective_device?.bs_standard || '';
-      const bsFromType = getDefaultBsStandard(baseType || 'MCB');
-      const finalBs =
-        incomingBs && incomingBs.includes('(') ? incomingBs : bsFromType || incomingBs;
-
-      return {
-        id: nextId,
-        circuitNumber: circuit.circuit_reference || nextCircuitNum,
-        circuitDesignation: circuit.circuit_reference || `Way ${nextCircuitNum}`,
-        circuitDescription: circuit.circuit_description || '',
-        circuitType: circuit.circuit_type || '',
-        type: circuit.circuit_type || '',
-        referenceMethod: '',
-        liveSize: circuit.conductor_sizes?.live || '',
-        cpcSize: circuit.conductor_sizes?.cpc || '',
-        protectiveDeviceType: circuit.protective_device?.type || '',
-        protectiveDeviceRating: circuit.protective_device?.rating || '',
-        protectiveDeviceCurve: circuit.protective_device?.curve || '',
-        protectiveDeviceKaRating: circuit.protective_device?.ka_rating || '',
-        protectiveDeviceLocation: circuit.protective_device?.location || '',
-        bsStandard: finalBs,
-        cableSize: circuit.conductor_sizes?.live || '',
-        protectiveDevice: circuit.protective_device?.rating || '',
-        r1r2: circuit.tests?.r1_r2?.value || '',
-        r2: '',
-        ringContinuityLive: circuit.tests?.ring_continuity_live?.value || '',
-        ringContinuityNeutral: circuit.tests?.ring_continuity_neutral?.value || '',
-        ringR1: '',
-        ringRn: '',
-        ringR2: '',
-        insulationTestVoltage: circuit.tests?.insulation_resistance?.test_voltage || '500',
-        insulationResistance: circuit.tests?.insulation_resistance?.value || '',
-        insulationLiveNeutral: '',
-        insulationLiveEarth: '',
-        polarity: circuit.tests?.polarity?.result || '',
-        zs: circuit.tests?.zs?.value || '',
-        maxZs: circuit.tests?.zs?.max_zs || '',
-        pointsServed: circuit.points_served || '',
-        rcdRating: circuit.tests?.rcd_rating || '',
-        rcdOneX: circuit.tests?.rcd_trip_time?.value || '',
-        rcdTestButton: circuit.tests?.rcd_test_button || '',
-        afddTest: circuit.tests?.afdd_test || '',
-        pfc: circuit.tests?.pfc?.value || '',
-        pfcLiveNeutral: '',
-        pfcLiveEarth: '',
-        functionalTesting: circuit.tests?.functional_testing || '',
-        notes:
-          '',
-        autoFilled: true,
-        typeOfWiring: '',
-        rcdBsStandard: '',
-        rcdType: '',
-        rcdRatingA: '',
-        boardId: targetBoardId,
-      };
-    });
-
-    // Add to existing test results
-    const updatedResults = [...testResults, ...transformedResults];
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-    setShowTestResultsReview(false);
-    setExtractedTestResults(null);
-    setActiveBoardId(null);
-    toast.success(`Added ${transformedResults.length} circuit(s) from test results scan`);
-  };
 
   // Utility function to fix protective device terminology
   // Coerces unknown AI input to a string up front — Sentry REACT-9W
@@ -2998,85 +2882,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       {/* Test Results Photo Capture - Tool Sheet Pattern.
           Closing abandons the flow — clear activeBoardId so a later toolbar
           scan doesn't inherit this board. */}
-      {showTestResultsScan && (
-        <>
-          <div
-            className="tool-sheet-overlay"
-            onClick={() => {
-              setShowTestResultsScan(false);
-              setActiveBoardId(null);
-            }}
-          />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">Scan test results</div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  setShowTestResultsScan(false);
-                  setActiveBoardId(null);
-                }}
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <TestResultsPhotoCapture
-                onAnalysisComplete={handleTestResultsAnalysisComplete}
-                onClose={() => {
-                  setShowTestResultsScan(false);
-                  setActiveBoardId(null);
-                }}
-                renderContentOnly={true}
-              />
-            </div>
-          </div>
-        </>
-      )}
 
       {/* AI Circuit Review now handled by BoardScannerOverlay's CircuitReviewSheet */}
 
       {/* Test Results Review Dialog */}
-      {showTestResultsReview && extractedTestResults && (
-        <TestResultsReviewDialog
-          open={showTestResultsReview}
-          onClose={() => {
-            setShowTestResultsReview(false);
-            setExtractedTestResults(null);
-            setActiveBoardId(null);
-          }}
-          extractedData={extractedTestResults}
-          onAccept={handleAcceptTestResults}
-        />
-      )}
 
       {/* Scribble to Table Dialog */}
-      {showScribbleDialog && (
-        <ScribbleToTableDialog
-          onCircuitsAdded={(newCircuits) => {
-            // Scribble opened from a board's tools targets THAT board — tag the
-            // new circuits so they don't fall through to the Main CU.
-            const targetBoardId =
-              activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
-            const withBoard = newCircuits.map((c: TestResult) => ({
-              ...c,
-              boardId: c.boardId || targetBoardId,
-            }));
-            const updatedResults = [...testResults, ...withBoard];
-            setTestResults(updatedResults);
-            onUpdate('scheduleOfTests', updatedResults);
-            setShowScribbleDialog(false);
-            setActiveBoardId(null);
-            toast.success(`Added ${withBoard.length} circuit(s) from text`);
-          }}
-          onClose={() => {
-            setShowScribbleDialog(false);
-            setActiveBoardId(null);
-          }}
-        />
-      )}
 
       {/* Smart Auto-Fill Dialog */}
       <SmartAutoFillPromptDialog
@@ -3096,36 +2907,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       />
 
       {/* Smart Auto-Fill Dialog - Tool Sheet Pattern */}
-      {showSmartAutoFillDialog && (
-        <>
-          <div
-            className="tool-sheet-overlay"
-            onClick={() => {
-              setShowSmartAutoFillDialog(false);
-              setActiveBoardId(null);
-            }}
-          />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">Smart circuit auto-fill</div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  setShowSmartAutoFillDialog(false);
-                  setActiveBoardId(null);
-                }}
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} earthingArrangement={formData.earthingArrangement as string | undefined} />
-            </div>
-          </div>
-        </>
-      )}
 
       {/* RCD Presets Dialog - Tool Sheet Pattern */}
       {showRcdPresetsDialog && (

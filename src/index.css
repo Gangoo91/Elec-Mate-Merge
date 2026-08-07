@@ -2563,6 +2563,37 @@ input::-webkit-caps-lock-indicator {
     height: 52px;
   }
 
+  /* Value hierarchy.
+     A recorded reading and an empty cell rendered at identical weight, so a
+     board that is half tested looked exactly like one that is finished — the
+     eye had no way to find the gaps. A measured value is the thing the
+     electrician is looking for, so it gets full white and a little more weight;
+     the em-dash placeholder recedes.
+
+     `tabular-nums` is the quiet win: without it 0.42 and 1.11 sit at different
+     widths and a column of readings never lines up. */
+  .sot-table-wrapper td input,
+  .sot-table-wrapper td textarea {
+    color: hsl(0 0% 100%);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sot-table-wrapper td input::placeholder,
+  .sot-table-wrapper td textarea::placeholder {
+    color: hsl(0 0% 100% / 0.28);
+    font-weight: 400;
+  }
+
+  /* Deliberately-not-measured markers (N/A, LIM, N/V) are answers, not gaps —
+     they sit between a reading and a blank: clearly present, clearly not a
+     number. Applied by the cell when the value matches a limitation token. */
+  .sot-table-wrapper td input[data-marker='true'] {
+    color: hsl(0 0% 100% / 0.65);
+    font-weight: 400;
+    font-style: italic;
+  }
+
   /* Table Header - Group Row.
      The table renders border-separate (needed for the sticky columns), so
      borders on <tr> never paint — every horizontal divider is declared on the
@@ -2651,9 +2682,24 @@ input::-webkit-caps-lock-indicator {
 
   /* Horizontal divider on the CELLS (same weight as the header horizontals) —
      tr borders don't paint in border-separate, which the table needs for its
-     sticky columns. Last row skips it: the wrapper border closes the grid. */
+     sticky columns. Last row skips it: the wrapper border closes the grid.
+
+     The VERTICAL rule matters more than it looks. The header cells have carried
+     `border-r` since they were written, but the body cells never did — so the
+     columns were separated across the top and then dissolved the moment the eye
+     dropped into the data. On a 34-column schedule that is the difference
+     between tracking along a row and losing your place in it.
+
+     Deliberately fainter than the header's white/10: on a dark ground a full
+     grid at header weight reads as a cage. At /6 the columns resolve without
+     the lines becoming the loudest thing on screen. */
   .sot-row > td {
     border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+    border-right: 1px solid hsl(0 0% 100% / 0.06);
+  }
+
+  .sot-row > td:last-child {
+    border-right: 0;
   }
 
   .sot-row:last-child > td {
