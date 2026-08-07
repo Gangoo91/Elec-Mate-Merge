@@ -31,6 +31,10 @@ const ReferralShareSheet: React.FC<ReferralShareSheetProps> = ({
   open,
   onOpenChange,
   headline = 'Refer a Mate',
+  // Both sides are rewarded: the mate gets a 100%-off first month applied at
+  // Stripe checkout (create-checkout), the referrer gets a balance credit.
+  // ⚠️ Both mechanisms are Stripe-only — neither fires for App Store / Play
+  // Store billing. See process-referral-reward.
   subline = 'Free month for them. Free month for you.',
   context = 'manual',
 }) => {
@@ -86,66 +90,75 @@ const ReferralShareSheet: React.FC<ReferralShareSheetProps> = ({
     <Drawer.Root open={open} onOpenChange={onOpenChange} shouldScaleBackground={false} noBodyStyles>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[85vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
-          {/* Drag handle */}
-          <div className="flex justify-center pt-3 pb-2">
-            <div className="w-12 h-1.5 rounded-full bg-white/20" />
+        {/* Flush bottom sheet on phones; a centred, floating card from sm: up —
+            it used to stretch the full width of a desktop window, which left the
+            QR marooned in the middle of a very wide, very empty panel. */}
+        <Drawer.Content className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[92vh] w-full max-w-[460px] flex-col rounded-t-[20px] border-t border-white/[0.08] bg-background sm:bottom-5 sm:max-h-[86vh] sm:rounded-[22px] sm:border sm:shadow-2xl sm:shadow-black/60">
+          {/* Drag handle — phones only; there's nothing to drag on desktop */}
+          <div className="flex justify-center pb-1.5 pt-3 sm:hidden">
+            <div className="h-1.5 w-12 rounded-full bg-white/20" />
           </div>
 
           {/* Header */}
-          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <div>
-              <Drawer.Title className="text-lg font-semibold text-white">{headline}</Drawer.Title>
-              <p className="text-sm text-white mt-0.5">{subline}</p>
+          <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4 pt-2 sm:pt-5">
+            <div className="min-w-0">
+              <Drawer.Title className="text-[17px] font-semibold leading-snug text-white">
+                {headline}
+              </Drawer.Title>
+              <p className="mt-1 text-[13px] leading-snug text-white">{subline}</p>
             </div>
             <button
               onClick={() => onOpenChange(false)}
-              className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
+              aria-label="Close"
+              className="-mr-2 -mt-1 flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full hover:bg-white/[0.08]"
             >
-              <X className="w-5 h-5 text-white" />
+              <X className="h-5 w-5 text-white" />
             </button>
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
-            {/* QR Code */}
+          <div className="flex-1 overflow-y-auto px-5 py-5">
+            {/* QR — yellow ring ties it to the campaign card */}
             <div className="flex flex-col items-center">
               <div
                 ref={qrRef}
-                className="w-40 h-40 bg-white rounded-2xl p-3 shadow-xl shadow-black/30 mb-3"
+                className="rounded-2xl bg-white p-3 shadow-xl shadow-black/40 ring-2 ring-elec-yellow/70"
               >
                 <QRCodeSVG
                   value={referralUrl}
-                  size={136}
+                  size={132}
                   bgColor="#ffffff"
-                  fgColor="#1a1a2e"
+                  fgColor="#0A0A0A"
                   level="H"
                   includeMargin={false}
                 />
               </div>
-              <div className="flex items-center gap-2 mb-1">
+
+              <div className="mt-3 flex items-center gap-2">
                 <QrCode className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm font-bold text-white">{referralCode}</span>
+                <span className="text-[15px] font-bold tracking-wide text-white">
+                  {referralCode}
+                </span>
               </div>
-              <p className="text-xs text-white text-center">
-                For business cards, van stickers, or site boards
+              <p className="mt-1 text-center text-[12px] leading-snug text-white">
+                For business cards, van stickers or site boards
               </p>
             </div>
 
             {/* Share URL */}
             <button
               onClick={copyLink}
-              className="w-full flex items-center gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] active:scale-[0.99] transition-all"
+              className="mt-5 flex w-full touch-manipulation items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] p-3 transition-all active:scale-[0.99] active:bg-white/[0.08]"
             >
-              <span className="font-mono text-xs text-white flex-1 truncate text-left">
+              <span className="flex-1 truncate text-left font-mono text-[12px] text-white">
                 {referralUrl}
               </span>
-              <Copy className="h-4 w-4 text-white flex-shrink-0" />
+              <Copy className="h-4 w-4 shrink-0 text-white" />
             </button>
           </div>
 
-          {/* Action buttons */}
-          <div className="p-5 border-t border-white/[0.06] bg-background/80 backdrop-blur-sm space-y-3">
+          {/* Action buttons — extra padding clears the iPhone home indicator */}
+          <div className="space-y-3 border-t border-white/[0.06] bg-background/80 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] backdrop-blur-sm sm:pb-5">
             {/* Primary: WhatsApp */}
             <Button
               onClick={() => {
@@ -168,7 +181,7 @@ const ReferralShareSheet: React.FC<ReferralShareSheetProps> = ({
               <Button
                 variant="outline"
                 onClick={copyLink}
-                className="h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.97]"
+                className="h-12 touch-manipulation rounded-xl border-white/[0.15] bg-transparent text-white hover:bg-white/[0.06] hover:text-white active:scale-[0.97]"
               >
                 <Copy className="h-4 w-4 mr-1.5" />
                 Copy
@@ -176,7 +189,7 @@ const ReferralShareSheet: React.FC<ReferralShareSheetProps> = ({
               <Button
                 variant="outline"
                 onClick={handleDownloadQr}
-                className="h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.97]"
+                className="h-12 touch-manipulation rounded-xl border-white/[0.15] bg-transparent text-white hover:bg-white/[0.06] hover:text-white active:scale-[0.97]"
               >
                 <Download className="h-4 w-4 mr-1.5" />
                 QR
@@ -187,7 +200,7 @@ const ReferralShareSheet: React.FC<ReferralShareSheetProps> = ({
                   shareNative();
                   onOpenChange(false);
                 }}
-                className="h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.97]"
+                className="h-12 touch-manipulation rounded-xl border-white/[0.15] bg-transparent text-white hover:bg-white/[0.06] hover:text-white active:scale-[0.97]"
               >
                 <Share2 className="h-4 w-4 mr-1.5" />
                 Share

@@ -31,6 +31,7 @@ import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { VerdictHero } from '@/components/dashboard/editorial/VerdictHero';
 import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
 import { EditorialHubGrid } from '@/components/dashboard/editorial/EditorialHubGrid';
+import { ReferralRaceCard } from '@/components/referrals/ReferralRaceCard';
 import { MomentumStrip } from '@/components/dashboard/editorial/MomentumStrip';
 import { QuickAccessRow } from '@/components/dashboard/editorial/QuickAccessRow';
 
@@ -151,6 +152,10 @@ const Dashboard = () => {
               while the trial runs; flips to an activation nudge when they
               haven't made anything yet. */}
           <TrialReceiptCard />
+
+          {/* August Referral Race — everyone, whole campaign, not dismissible.
+              Self-hides after 31 Aug. */}
+          <ReferralRaceCard />
 
           {/* Editorial dashboard — single component so it can read the
               shared dashboard context the parent provider mounts. */}

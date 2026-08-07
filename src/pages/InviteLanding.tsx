@@ -92,7 +92,11 @@ export default function InviteLanding() {
         />
       </Helmet>
 
-      <div className="mx-auto flex min-h-[100svh] max-w-lg flex-col px-5 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      {/* Narrow single column on phones; from lg: up it becomes a two-column
+          spread — the offer and the code on the left, what they're actually
+          getting on the right. It used to be a 512px column marooned in the
+          middle of a desktop window. */}
+      <div className="mx-auto flex min-h-[100svh] w-full max-w-lg flex-col px-5 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:max-w-5xl lg:px-8">
         {/* Top nav */}
         <div className="mb-8 flex items-center justify-between">
           <Link to="/" className="text-sm text-white hover:text-white">
@@ -104,8 +108,9 @@ export default function InviteLanding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="flex-1"
+          className="flex-1 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-start lg:gap-14"
         >
+          <div>
           {/* Hero */}
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-yellow-300">
             <Gift className="h-3 w-3" />
@@ -124,14 +129,14 @@ export default function InviteLanding() {
             )}
           </h1>
           <p className="mb-6 text-sm leading-relaxed text-white sm:text-base">
-            The complete platform for UK electricians — certificates, AI assistants, voice quotes,
-            60+ calculators. Sign up with this code to claim your free month on top of the standard
-            7-day trial.
+            The complete platform for UK electricians — certificates, AI assistants, quotes and
+            invoices, 70+ calculators. Sign up with this code to claim your free month on top of the
+            standard 7-day trial.
           </p>
 
           {/* Code display */}
           <div className="mb-6 rounded-2xl border border-white/10 bg-[#111] p-5">
-            <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white/50">
+            <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-white">
               Your invite code
             </p>
             <div className="flex items-center justify-between gap-3">
@@ -197,32 +202,69 @@ export default function InviteLanding() {
                   </a>
                 )}
               </div>
-              <p className="mt-3 text-center text-[11px] text-white/50">
+              <p className="mt-3 text-center text-[11px] text-white">
                 After installing, open the app and sign up with code{' '}
                 <strong className="text-yellow-400">{normalisedCode}</strong>
               </p>
             </div>
           )}
 
-          {/* Social proof */}
-          <div className="mt-6 grid grid-cols-3 gap-2 text-center">
-            {[
-              { icon: Zap, label: '17+ certs' },
-              { icon: Sparkles, label: '5 AI specialists' },
-              { icon: Check, label: '7-day trial' },
-            ].map(({ icon: Icon, label }) => (
-              <div
-                key={label}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
-              >
-                <Icon className="mx-auto mb-1 h-4 w-4 text-yellow-400" />
-                <p className="text-[11px] text-white">{label}</p>
-              </div>
-            ))}
+            {/* Trust chips — canonical counts, see MARKETING-BRAIN */}
+            <div className="mt-6 grid grid-cols-3 gap-2 text-center">
+              {[
+                { icon: Zap, label: '19 cert types' },
+                { icon: Sparkles, label: '5 AI specialists' },
+                { icon: Check, label: '7-day trial' },
+              ].map(({ icon: Icon, label }) => (
+                <div
+                  key={label}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
+                >
+                  <Icon className="mx-auto mb-1 h-4 w-4 text-yellow-400" />
+                  <p className="text-[11px] text-white">{label}</p>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* Right column — what the free month actually gets them. Hidden on
+              phones, where the offer and the CTA are the whole job. */}
+          <aside className="mt-10 hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 lg:mt-0 lg:block">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-yellow-400">
+              What you get
+            </p>
+            <div className="mt-5 space-y-5">
+              {[
+                {
+                  t: 'Certificates, done on site',
+                  d: 'EICR, EIC, Minor Works and every specialist cert — fire alarm, emergency lighting, EV, solar, PAT. Branded PDF emailed before you leave.',
+                },
+                {
+                  t: 'Quotes and invoices',
+                  d: 'Price the job off live material prices, send it, turn it into an invoice in a tap.',
+                },
+                {
+                  t: '70+ calculators',
+                  d: 'Cable sizing, voltage drop, Zs, adiabatic, R1+R2 — all to BS 7671:2018+A4:2026.',
+                },
+                {
+                  t: 'Study Centre',
+                  d: '2391, AM2 and 18th Edition mock exams with a worked explanation on every answer.',
+                },
+              ].map(({ t, d }) => (
+                <div key={t} className="flex gap-3">
+                  <div className="mt-[7px] h-[7px] w-[7px] shrink-0 rounded-sm bg-yellow-400" />
+                  <div>
+                    <p className="text-[15px] font-semibold leading-snug text-white">{t}</p>
+                    <p className="mt-1 text-[13px] leading-relaxed text-white">{d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
         </motion.div>
 
-        <p className="mt-6 text-center text-[11px] text-white/30">Elec-Mate Ltd · Made in the UK</p>
+        <p className="mt-10 text-center text-[11px] text-white">Elec-Mate Ltd · Made in the UK</p>
       </div>
     </div>
   );
