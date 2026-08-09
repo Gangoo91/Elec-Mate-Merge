@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { phaseRotationContent } from './content/phase-rotation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -304,21 +305,14 @@ const PhaseRotationCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero sequence */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Phase Sequence</p>
-                  <p
-                    className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.sequence.split('(')[0].trim()}
-                  </p>
-                  {result.sequence.includes('(') && (
-                    <p className="text-sm text-white mt-1">({result.sequence.split('(')[1]}</p>
-                  )}
-                </div>
+                <ResultHeadline
+                  label="Phase sequence"
+                  value={result.sequence.split('(')[0].trim()}
+                  tone={result.isCorrect ? 'default' : 'negative'}
+                  caption={
+                    result.sequence.includes('(') ? `(${result.sequence.split('(')[1]}` : undefined
+                  }
+                />
 
                 {/* Phase diagram SVG */}
                 <div className="flex justify-center py-2">

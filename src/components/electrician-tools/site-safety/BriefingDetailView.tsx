@@ -369,7 +369,7 @@ export function BriefingDetailView({
               type="button"
               variant="ghost"
               onClick={() => setShowShare(true)}
-              className="mt-4 h-11 w-full touch-manipulation border border-elec-yellow/25 bg-elec-yellow/10 font-semibold text-elec-yellow hover:bg-elec-yellow/20"
+              className="mt-4 h-11 w-full touch-manipulation border border-elec-yellow/35 font-semibold text-elec-yellow hover:border-elec-yellow/60"
             >
               Share for signing
             </Button>

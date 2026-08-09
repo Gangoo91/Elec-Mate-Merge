@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export type ProjectStatus = 'open' | 'active' | 'completed' | 'cancelled';
 export type ProjectPriority = 'low' | 'normal' | 'high' | 'urgent';
@@ -324,6 +325,8 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
 
       const created = mapRow(data, { total: 0, done: 0 });
       setAllProjects((prev) => [created, ...prev]);
+      // Opening a job is one of the clearest "using it for real" signals.
+      void trackUserEvent(user.id, 'feature_use', { eventName: 'project_created' });
       toast({
         title: 'Job created',
         description: `"${input.title}" has been created.`,

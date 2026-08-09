@@ -21,8 +21,6 @@ import {
   Field,
   FormCard,
   SheetShell,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   selectContentClass,
@@ -36,6 +34,7 @@ import { HazardSelect } from './common/HazardSelect';
 import { RiskSelect } from './common/RiskSelect';
 import { ReadinessGate } from './common/ReadinessGate';
 import { hazardCategories } from '@/data/hazards';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 // ─── Types ───
 
@@ -356,12 +355,12 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
         />
       ) : (
         <div className="space-y-6">
-          <ListCard>
+          <SafetyListCard>
             {sorted.map((risk) => {
               const score = risk.likelihood * risk.severity;
               const missingControls = risk.controlMeasures.length === 0;
               return (
-                <ListRow
+                <SafetyListRow
                   key={risk.id}
                   accent={missingControls ? 'red' : bandTone[risk.riskLevel]}
                   title={risk.description}
@@ -392,7 +391,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
 
           {/* Pre-save / pre-export readiness gate */}
           <ReadinessGate items={assessmentReadiness} title="Ready to save?" />
@@ -546,7 +545,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
               />
 
               {currentRisk.controlMeasures.length > 0 ? (
-                <ListCard>
+                <SafetyListCard>
                   {currentRisk.controlMeasures.map((c, i) => (
                     <div key={`${c}-${i}`} className="flex items-center gap-3 px-4 py-3">
                       <span
@@ -571,7 +570,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                       </button>
                     </div>
                   ))}
-                </ListCard>
+                </SafetyListCard>
               ) : (
                 <p className="text-[11px] text-amber-400/90">
                   Record at least one control measure before adding this hazard.

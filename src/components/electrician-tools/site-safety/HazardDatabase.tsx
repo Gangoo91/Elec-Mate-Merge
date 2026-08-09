@@ -206,7 +206,7 @@ const HazardDatabase = () => {
                 {/* Simple Header */}
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-start gap-3 flex-1">
-                    <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                    <div className="p-2 rounded-lg border border-elec-yellow/35">
                       <IconComponent className="h-5 w-5 text-elec-yellow" />
                     </div>
 

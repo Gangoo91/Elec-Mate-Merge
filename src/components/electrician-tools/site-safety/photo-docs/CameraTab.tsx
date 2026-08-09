@@ -350,7 +350,7 @@ export default function CameraTab({
 
         {/* Project header when capturing for specific project */}
         {isProjectLocked && (
-          <div className="px-4 py-3 bg-elec-yellow/10 border-b border-elec-yellow/20">
+          <div className="px-4 py-3 border-b border-elec-yellow/20">
             <p className="text-sm text-white">Adding photo to:</p>
             <p className="text-base font-semibold text-elec-yellow truncate">{initialProject}</p>
           </div>
@@ -448,7 +448,7 @@ export default function CameraTab({
                 onClick={handleCameraCapture}
                 className="w-full max-w-xs aspect-square rounded-2xl bg-[#1e1e1e] border border-white/10 flex flex-col items-center justify-center gap-3 touch-manipulation hover:bg-[#252525] active:bg-[#252525] transition-colors"
               >
-                <div className="w-16 h-16 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full border border-elec-yellow/35 flex items-center justify-center">
                   <Camera className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <div className="text-center">
@@ -701,7 +701,7 @@ export default function CameraTab({
                 disabled={isProjectLocked}
                 className={`mt-2 h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation ${
                   isProjectLocked
-                    ? 'opacity-70 cursor-not-allowed bg-elec-yellow/5 border-elec-yellow/20'
+                    ? 'opacity-70 cursor-not-allowed border border-elec-yellow/35'
                     : ''
                 }`}
               />

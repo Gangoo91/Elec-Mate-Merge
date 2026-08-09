@@ -495,7 +495,7 @@ export default function AllPhotosTab() {
             )}
             {batchMode && (
               <Badge
-                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] h-6 px-2 cursor-pointer"
+                className="border border-elec-yellow/35 text-elec-yellow text-[10px] h-6 px-2 cursor-pointer"
                 onClick={() => {
                   setBatchMode(false);
                   setSelectedPhotos(new Set());
@@ -603,7 +603,7 @@ export default function AllPhotosTab() {
                               e.stopPropagation();
                               setShowAssignAll(true);
                             }}
-                            className="text-[10px] font-semibold text-elec-yellow bg-elec-yellow/10 px-2.5 py-1 rounded-full touch-manipulation active:bg-elec-yellow/20 mr-1"
+                            className="text-[10px] font-semibold text-elec-yellow border border-elec-yellow/35 px-2.5 py-1 rounded-full touch-manipulation active:border-elec-yellow/60 mr-1"
                           >
                             Assign All
                           </button>
@@ -722,7 +722,7 @@ export default function AllPhotosTab() {
                 }}
                 className={`w-full flex items-center gap-3 px-4 h-12 rounded-xl touch-manipulation transition-colors ${
                   sortMode === mode
-                    ? 'bg-elec-yellow/10 text-elec-yellow'
+                    ? 'border border-elec-yellow/35 text-elec-yellow'
                     : 'text-white active:bg-white/5'
                 }`}
               >
@@ -749,7 +749,7 @@ export default function AllPhotosTab() {
                 }}
                 className={`w-full flex items-center gap-3 px-4 h-12 rounded-xl touch-manipulation transition-colors ${
                   groupMode === mode
-                    ? 'bg-elec-yellow/10 text-elec-yellow'
+                    ? 'border border-elec-yellow/35 text-elec-yellow'
                     : 'text-white active:bg-white/5'
                 }`}
               >
@@ -794,7 +794,9 @@ export default function AllPhotosTab() {
                 setShowOverflowMenu(false);
               }}
               className={`w-full flex items-center gap-3 px-4 h-12 rounded-xl touch-manipulation ${
-                batchMode ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white active:bg-white/5'
+                batchMode
+                  ? 'border border-elec-yellow/35 text-elec-yellow'
+                  : 'text-white active:bg-white/5'
               }`}
             >
               <CheckSquare className="h-4 w-4" />
@@ -835,7 +837,7 @@ export default function AllPhotosTab() {
                   key={cat.value}
                   className={`flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all touch-manipulation ${
                     filters.category === cat.value
-                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
+                      ? 'border border-elec-yellow/35 ring-1 ring-elec-yellow'
                       : 'bg-[#1e1e1e] border border-white/10 active:bg-[#252525]'
                   }`}
                   onClick={() => {

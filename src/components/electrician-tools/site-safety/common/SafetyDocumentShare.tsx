@@ -81,7 +81,7 @@ export function SafetyDocumentShare({
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-1 pb-4 border-b border-white/[0.08]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl border border-elec-yellow/35 flex items-center justify-center shrink-0">
               {isNative ? (
                 <Share2 className="h-5 w-5 text-elec-yellow" />
               ) : (

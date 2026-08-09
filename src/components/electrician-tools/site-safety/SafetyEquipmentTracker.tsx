@@ -15,8 +15,6 @@ import {
   FilterBar,
   EmptyState,
   LoadingState,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   type Tone,
@@ -29,6 +27,7 @@ import { fmtCardDate } from './common/SafetyRecordCard';
 import { useShowMore } from '@/hooks/useShowMore';
 import { equipmentCategories } from './equipment/EquipmentCategoryPicker';
 import { cn } from '@/lib/utils';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 // One colour dimension = status.
 function statusTone(status: SafetyEquipment['status']): Tone {
@@ -48,7 +47,7 @@ const STATUS_PILL: Record<Tone, string> = {
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
   orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  yellow: 'border border-elec-yellow/35 text-elec-yellow',
   purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
@@ -456,8 +455,8 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
                 },
               ]}
             >
-              <ListCard>
-                <ListRow
+              <SafetyListCard>
+                <SafetyListRow
                   accent={statusTone(item.status)}
                   onClick={() => setSelectedId(item.id)}
                   title={item.name}
@@ -473,7 +472,7 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
                     </div>
                   }
                 />
-              </ListCard>
+              </SafetyListCard>
             </SwipeableListItem>
           ))}
           {hasMoreEquipment && (

@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { wireGaugeContent } from './content/wire-gauge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -538,18 +539,11 @@ const WireGaugeCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Wire Size</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    AWG {result.wire.awg}
-                  </p>
-                  <p className="text-sm text-white mt-2">{result.wire.metric}mm²</p>
-                </div>
+                <ResultHeadline
+                  label="Wire Size"
+                  value={`AWG ${result.wire.awg}`}
+                  caption={`${result.wire.metric}mm²`}
+                />
 
                 {/* Wire properties */}
                 <ResultsGrid columns={2}>

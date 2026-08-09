@@ -114,8 +114,20 @@ serve(async (req: Request) => {
 
       const newId = created.user?.id;
       if (newId && (grantAccess || collegeId)) {
-        // handle_new_user trigger creates the profile row synchronously, so the
-        // update lands on an existing row.
+        /*
+         * Grant free access / attach the college.
+         *
+         * This relies on `handle_new_user` having created the profile row.
+         * Both outcomes used to be swallowed — `.then(() => {}, () => {})` —
+         * and the address was pushed onto `created` regardless. So if the
+         * trigger had not run, or the update failed, the admin was told the
+         * account was ready while the student hit the paywall on first login.
+         * There are already two accounts in auth.users with no profile row, so
+         * this is not hypothetical.
+         *
+         * The row is now confirmed rather than assumed, and a partial is
+         * reported as a partial.
+         */
         const update: Record<string, unknown> = {};
         if (grantAccess) {
           update.free_access_granted = true;
@@ -123,14 +135,24 @@ serve(async (req: Request) => {
           update.free_access_reason = freeAccessReason;
         }
         if (collegeId) update.college_id = collegeId;
-        await admin
+
+        const { data: updated, error: updateError } = await admin
           .from('profiles')
           .update(update)
           .eq('id', newId)
-          .then(
-            () => {},
-            () => {}
-          );
+          .select('id')
+          .maybeSingle();
+
+        if (updateError || !updated) {
+          // The login exists, but not the thing that makes it usable.
+          result.failed.push({
+            email,
+            reason: updateError
+              ? `account created, but access not granted: ${updateError.message}`
+              : 'account created, but no profile row was found to grant access on',
+          });
+          continue;
+        }
       }
       result.created.push(email);
     }

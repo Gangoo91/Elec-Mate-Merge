@@ -55,7 +55,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={cn(
             'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
-            editor?.isActive('bold') ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white'
+            editor?.isActive('bold') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
           <Bold className="h-3.5 w-3.5" />
@@ -65,7 +65,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           onClick={() => editor?.chain().focus().toggleItalic().run()}
           className={cn(
             'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
-            editor?.isActive('italic') ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white'
+            editor?.isActive('italic') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
           <Italic className="h-3.5 w-3.5" />
@@ -75,7 +75,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           className={cn(
             'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
-            editor?.isActive('bulletList') ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white'
+            editor?.isActive('bulletList') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
           <List className="h-3.5 w-3.5" />
@@ -85,7 +85,7 @@ export function TextBlockSection({ section, mode, onChange }: Props) {
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           className={cn(
             'h-8 w-8 rounded flex items-center justify-center touch-manipulation',
-            editor?.isActive('orderedList') ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white'
+            editor?.isActive('orderedList') ? 'bg-elec-yellow text-black' : 'text-white'
           )}
         >
           <ListOrdered className="h-3.5 w-3.5" />

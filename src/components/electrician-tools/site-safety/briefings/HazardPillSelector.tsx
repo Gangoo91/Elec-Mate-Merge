@@ -157,7 +157,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
                 type="button"
                 onClick={addCustomHazard}
                 disabled={!customHazard.trim()}
-                className="h-11 touch-manipulation bg-elec-yellow px-4 font-semibold text-black hover:bg-elec-yellow/90"
+                className="h-11 touch-manipulation bg-elec-yellow px-4 font-semibold text-black hover:brightness-110"
               >
                 Add
               </Button>

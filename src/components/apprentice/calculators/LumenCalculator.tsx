@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { lumenContent } from './content/lumen';
 
@@ -628,25 +629,19 @@ const LumenCalculator = () => {
                 </div>
 
                 {/* Hero Value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">
-                    {result.type === 'lux-to-lumens' && 'Lumens Required'}
-                    {result.type === 'lumens-to-lux' && 'Illuminance Level'}
-                    {result.type === 'fixtures-needed' && 'Fixtures Needed'}
-                  </p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.primaryValue} {result.primaryUnit}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    Area: {result.areaVal.toFixed(1)} m²
-                    {result.totalPower ? ` · ${result.totalPower.toFixed(1)} W` : ''}
-                  </p>
-                </div>
+                <ResultHeadline
+                  label={
+                    result.type === 'lux-to-lumens'
+                      ? 'Lumens required'
+                      : result.type === 'lumens-to-lux'
+                        ? 'Illuminance level'
+                        : 'Fixtures needed'
+                  }
+                  value={`${result.primaryValue} ${result.primaryUnit}`}
+                  caption={`Area: ${result.areaVal.toFixed(1)} m²${
+                    result.totalPower ? ` · ${result.totalPower.toFixed(1)} W` : ''
+                  }`}
+                />
 
                 {/* Result Values */}
                 <ResultsGrid columns={2}>

@@ -49,7 +49,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
   };
 
   const iconBgMap = {
-    yellow: 'bg-elec-yellow/20 text-elec-yellow',
+    yellow: 'bg-elec-yellow text-black',
     green: 'bg-emerald-500/20 text-emerald-500',
     blue: 'bg-blue-500/20 text-blue-500',
     purple: 'bg-purple-500/20 text-purple-500',
@@ -132,11 +132,7 @@ export function BriefingHeroCard({
       )}
     >
       {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/10 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl" />
-      </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none"></div>
 
       {/* Content */}
       <div className="relative z-10 space-y-5">
@@ -147,7 +143,7 @@ export function BriefingHeroCard({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-              className="p-2.5 md:p-3 rounded-xl md:rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30"
+              className="p-2.5 md:p-3 rounded-xl md:rounded-2xl border border-elec-yellow/35"
             >
               <Shield className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow" />
             </motion.div>
@@ -176,7 +172,7 @@ export function BriefingHeroCard({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20"
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-elec-yellow/35"
           >
             <Sparkles className="h-4 w-4 text-elec-yellow" />
             <span className="text-xs text-elec-yellow font-medium">AI-Powered</span>
@@ -201,7 +197,7 @@ export function BriefingHeroCard({
             onClick={onCreateBriefing}
             className={cn(
               'w-full h-14 text-base font-semibold',
-              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'bg-elec-yellow text-black hover:brightness-110',
               'shadow-lg shadow-elec-yellow/20',
               'transition-all duration-300',
               'hover:shadow-xl hover:shadow-elec-yellow/30',

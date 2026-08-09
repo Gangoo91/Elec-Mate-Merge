@@ -61,7 +61,7 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
             >
               <div className="bg-card border border-elec-yellow/20 rounded-xl p-4 h-full hover:border-elec-yellow/40 transition-all touch-manipulation">
                 {/* Category Badge */}
-                <div className="inline-flex items-center gap-1 bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded-md mb-3">
+                <div className="inline-flex items-center gap-1 border border-elec-yellow/35 text-elec-yellow px-2 py-1 rounded-md mb-3">
                   <span className="text-xs font-semibold">{template.category}</span>
                 </div>
 
@@ -87,7 +87,7 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
                   onClick={() => onTemplateSelect(template.id)}
                   variant="outline"
                   size="sm"
-                  className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
+                  className="w-full border-elec-yellow/30 hover:border-elec-yellow/60"
                   icon={<ArrowRight className="h-4 w-4" />}
                 >
                   Use Template
@@ -100,9 +100,9 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
         {/* Swipe hint (mobile only) */}
         <div className="md:hidden text-center mt-2">
           <p className="text-xs text-white flex items-center justify-center gap-2">
-            <span className="inline-block w-1 h-1 bg-elec-yellow/50 rounded-full animate-pulse" />
+            <span className="inline-block w-1 h-1 border border-elec-yellow/35 rounded-full animate-pulse" />
             Swipe for more templates
-            <span className="inline-block w-1 h-1 bg-elec-yellow/50 rounded-full animate-pulse" />
+            <span className="inline-block w-1 h-1 border border-elec-yellow/35 rounded-full animate-pulse" />
           </p>
         </div>
       </div>

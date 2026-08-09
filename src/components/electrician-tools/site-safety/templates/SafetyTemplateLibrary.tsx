@@ -1,27 +1,7 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Search,
-  FileText,
-  Shield,
-  ClipboardCheck,
-  Wrench,
-  BookOpen,
-  ChevronRight,
-  Loader2,
-  FolderOpen,
-  Edit3,
-  AlertTriangle,
-  ListChecks,
-  Footprints,
-  Share2,
-  Clock,
-  Calendar,
-  Layers,
-} from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, Search, BookOpen, Loader2, FolderOpen } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useSafetyTemplates,
   useUserSafetyDocuments,
@@ -40,12 +20,13 @@ interface SafetyTemplateLibraryProps {
 
 type Tab = 'browse' | 'my-docs';
 
-const CATEGORIES = [
-  { key: 'Risk Assessment', icon: Shield, colour: 'text-red-400' },
-  { key: 'Method Statement', icon: FileText, colour: 'text-blue-400' },
-  { key: 'Safe System of Work', icon: Wrench, colour: 'text-amber-400' },
-  { key: 'Checklist', icon: ClipboardCheck, colour: 'text-green-400' },
-];
+/**
+ * Categories are filter labels, nothing more. They previously carried an icon
+ * and a colour each — red/blue/amber/green — which spent four hues on a
+ * dimension that is not status. In this hub colour means one thing: how urgent
+ * a record is. A document's category is not urgency, so it is set in type.
+ */
+const CATEGORIES = ['Risk Assessment', 'Method Statement', 'Safe System of Work', 'Checklist'];
 
 const STATUS_COLOUR: Record<string, string> = {
   Draft: 'text-amber-400 bg-amber-500/10',
@@ -53,27 +34,6 @@ const STATUS_COLOUR: Record<string, string> = {
   'Review Due': 'text-orange-400 bg-orange-500/10',
   Archived: 'text-white bg-white/[0.06]',
 };
-
-function StatChip({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: number;
-}) {
-  if (value === 0) return null;
-  return (
-    <span
-      className="inline-flex items-center gap-1 text-[10px] text-white bg-white/[0.06] px-1.5 py-0.5 rounded"
-      title={label}
-    >
-      <Icon className="h-3 w-3" />
-      {value}
-    </span>
-  );
-}
 
 function relativeDate(dateStr: string): string {
   const now = Date.now();
@@ -125,6 +85,16 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
 
   const adoptedTemplateIds = new Set((userDocs ?? []).map((d) => d.template_id).filter(Boolean));
 
+  /** Adopted but never taken past Draft — the number the strip reports. */
+  const draftCount = (userDocs ?? []).filter((d) => d.status === 'Draft').length;
+
+  /**
+   * Whether work type distinguishes anything. Today every template is
+   * 'commercial', so printing it on each card tells the reader nothing; the
+   * pill earns its place only once domestic or industrial templates land.
+   */
+  const workTypesVary = new Set((templates ?? []).map((t) => t.work_type).filter(Boolean)).size > 1;
+
   if (viewingTemplate) {
     return (
       <SafetyTemplateViewer
@@ -165,30 +135,40 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           </p>
         </div>
 
-        {/* 3-stat value strip */}
-        <div className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
-          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+        {/* 3-stat strip.
+            The third cell used to read "Time saved ~Nh", computed as adopted × 4.
+            That four hours was invented — no measurement anywhere backs it — and
+            it sat in the largest type on the page. It is replaced by the number
+            that is both true and worth acting on: how many adopted documents are
+            still unfinished. It goes amber only when there are some. */}
+        <div className="-mx-4 grid grid-cols-3 gap-px border-y border-white/[0.06] bg-black sm:mx-0 sm:overflow-hidden sm:rounded-2xl sm:border sm:border-elec-yellow/35">
+          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Available
             </div>
-            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
+            <div className="mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums text-elec-yellow sm:text-[28px]">
               {(templates ?? []).length}
             </div>
           </div>
-          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Adopted
             </div>
-            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
+            <div className="mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums text-white sm:text-[28px]">
               {(userDocs ?? []).length}
             </div>
           </div>
-          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+          <div className={cn('px-4 py-4 sm:px-5 sm:py-5', CARD_SURFACE)}>
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              Time saved
+              Unfinished
             </div>
-            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-white">
-              ~{(userDocs ?? []).length * 4}h
+            <div
+              className={cn(
+                'mt-2 text-[24px] font-semibold leading-none tracking-tight tabular-nums sm:text-[28px]',
+                draftCount > 0 ? 'text-amber-400' : 'text-white'
+              )}
+            >
+              {draftCount}
             </div>
           </div>
         </div>
@@ -224,44 +204,47 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           </button>
         </div>
 
-        {/* Search */}
+        {/* Search — underline, not a box. Was a filled, bordered input, which is
+            the superseded form language; fields are a bottom rule on transparent
+            with the caret and border carrying focus. */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-          <Input
-            placeholder={tab === 'browse' ? 'Search templates...' : 'Search my documents...'}
+          <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+          <input
+            type="search"
+            placeholder={tab === 'browse' ? 'Search templates' : 'Search my documents'}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+            aria-label={tab === 'browse' ? 'Search templates' : 'Search my documents'}
+            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent pl-6 pr-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/25 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 touch-manipulation [color-scheme:dark]"
           />
         </div>
 
         {tab === 'browse' ? (
           <>
-            {/* Category filter */}
-            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
-                  selectedCategory === null
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white border border-white/[0.08]'
-                }`}
-              >
-                All
-              </button>
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.key}
-                  onClick={() => setSelectedCategory(selectedCategory === cat.key ? null : cat.key)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
-                    selectedCategory === cat.key
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.06] text-white border border-white/[0.08]'
-                  }`}
-                >
-                  {cat.key}
-                </button>
-              ))}
+            {/* Category filter. Selected is a SOLID volt fill with black text —
+                the only sanctioned way to fill with volt. h-9 so the row clears
+                a 36px target without the pills turning into slabs. */}
+            <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+              {[null, ...CATEGORIES].map((cat) => {
+                const active = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat ?? 'all'}
+                    type="button"
+                    onClick={() => setSelectedCategory(active ? null : cat)}
+                    aria-pressed={active}
+                    className={cn(
+                      'h-9 shrink-0 whitespace-nowrap rounded-full px-3.5 text-xs font-semibold transition-colors touch-manipulation',
+                      '[-webkit-tap-highlight-color:transparent] active:scale-[0.97]',
+                      active
+                        ? 'bg-elec-yellow text-black'
+                        : 'border border-elec-yellow/35 bg-white/[0.04] text-white hover:border-elec-yellow/60'
+                    )}
+                  >
+                    {cat ?? 'All'}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Templates list */}
@@ -294,31 +277,33 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                   const stepCount = v2Steps > 0 ? v2Steps : stats.steps;
 
                   return (
-                    <motion.button
+                    <button
                       key={template.id}
-                      whileTap={{ scale: 0.99 }}
+                      type="button"
                       onClick={() => setViewingTemplate(template)}
-                      className="w-full text-left bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl hover:border-white/15 active:bg-[hsl(0_0%_12%)] transition-colors touch-manipulation"
+                      className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full')}
                     >
-                      <div className="p-4 sm:p-5 space-y-3">
-                        {/* Pills row */}
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-white/[0.05] text-white">
+                      <div className="space-y-3 p-4 sm:p-5">
+                        {/* Pills row.
+                            Two pills were dropped here because neither carried
+                            information: every template in the library has v2
+                            content, so "BS 7671 compliant" was printed on all of
+                            them, and every template is work_type 'commercial', so
+                            that was printed on all of them too. A badge that is
+                            always on is decoration. Work type returns as soon as
+                            the library holds more than one — see workTypesVary. */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex h-6 items-center rounded-md bg-white/[0.05] px-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
                             {template.category}
                           </span>
-                          {hasV2 && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-elec-yellow/15 text-elec-yellow">
-                              BS 7671 compliant
+                          {workTypesVary && template.work_type && (
+                            <span className="inline-flex h-6 items-center rounded-md px-2 text-[10.5px] font-medium uppercase tracking-[0.12em] text-white">
+                              {template.work_type}
                             </span>
                           )}
                           {isAdopted && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-emerald-500/15 text-emerald-400">
+                            <span className="inline-flex h-6 items-center rounded-md border border-elec-yellow/35 px-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
                               Adopted
-                            </span>
-                          )}
-                          {template.work_type && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] text-white">
-                              {template.work_type}
                             </span>
                           )}
                         </div>
@@ -362,7 +347,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                             {template.regulatory_references.slice(0, 4).map((ref) => (
                               <span
                                 key={ref}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white"
+                                className="inline-flex h-6 items-center rounded-md border border-white/[0.10] bg-white/[0.05] px-2 text-[10.5px] font-medium tabular-nums text-white"
                               >
                                 {ref}
                               </span>
@@ -375,7 +360,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                           </div>
                         )}
                       </div>
-                    </motion.button>
+                    </button>
                   );
                 })}
               </div>
@@ -411,19 +396,31 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                   const hazardCount = v2H > 0 ? v2H : stats.hazards;
                   const stepCount = v2S > 0 ? v2S : stats.steps;
                   const reviewWarning = reviewDateWarning(doc.review_date);
+                  /**
+                   * Whether this document can produce a PDF.
+                   *
+                   * Was `isV2Doc` alone, which blocked export on every v1
+                   * document. The edge function has carried a full v1 renderer
+                   * all along and only fails when there is no structured
+                   * content at all — so the gate was refusing documents the
+                   * backend could already draw. It now asks the real question.
+                   */
+                  const canExport = isV2Doc || (doc.structured_content?.sections?.length ?? 0) > 0;
 
                   return (
-                    <motion.div
+                    <div
                       key={doc.id}
-                      whileTap={{ scale: 0.99 }}
-                      className="bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl hover:border-white/15 transition-colors touch-manipulation"
+                      className={cn(CARD_BASE, CARD_NEUTRAL, 'cursor-default active:scale-100')}
                     >
                       <button
+                        type="button"
                         onClick={() => setEditingDocument(doc)}
-                        className="w-full text-left p-4 sm:p-5 space-y-3"
+                        className="w-full space-y-3 p-4 text-left sm:p-5"
                       >
-                        {/* Pills row */}
-                        <div className="flex items-center gap-2 flex-wrap">
+                        {/* Pills row — status is the one colour dimension, so it
+                            keeps its hue. The always-on compliance badge is gone
+                            for the same reason it went from the browse card. */}
+                        <div className="flex flex-wrap items-center gap-2">
                           <span
                             className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] ${
                               STATUS_COLOUR[doc.status] ?? STATUS_COLOUR.Draft
@@ -431,11 +428,6 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                           >
                             {doc.status}
                           </span>
-                          {isV2Doc && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-elec-yellow/15 text-elec-yellow">
-                              BS 7671 compliant
-                            </span>
-                          )}
                           {reviewWarning === 'overdue' && (
                             <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-red-500/15 text-red-400">
                               Review overdue
@@ -495,27 +487,27 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                         >
                           Edit
                         </button>
-                        {isV2Doc ? (
+                        {canExport ? (
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSharingDocument(doc);
                             }}
-                            className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                            className="text-[12px] font-medium text-white transition-colors hover:text-white touch-manipulation"
                           >
                             Share
                           </button>
                         ) : (
-                          <span
-                            className="text-[11px] font-medium text-amber-400/80"
-                            title="Re-adopt this template from the library to enable PDF generation"
-                          >
-                            ⚠️ Re-adopt to unlock PDF
+                          /* Only reached when the document genuinely holds no
+                             content to draw. The emoji is gone — the house
+                             language carries warnings in colour and words. */
+                          <span className="text-[11.5px] font-medium text-amber-400">
+                            Re-adopt to enable PDF
                           </span>
                         )}
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>

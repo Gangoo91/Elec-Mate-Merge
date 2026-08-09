@@ -8,7 +8,49 @@ import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
 import { ukDate } from '@/utils/certDate';
 
-export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVChargingPayloadType => {
+/**
+ * The methods permitted by Reg 722.411.4.1, spelled out for the certificate.
+ *
+ * Indent (a) was deleted by A2:2022, so the list starts at (b). Anything not in
+ * here is not a permitted method — an RCD in particular cannot detect an open
+ * PEN, and used to be selectable.
+ */
+const PME_MEASURE_LABELS: Record<string, string> = {
+  'earth-electrode': '722.411.4.1(b) — earth electrode, MET to Earth ≤ 70V on PEN fault',
+  'voltage-monitor-cpc':
+    '722.411.4.1(c) — device disconnecting within 5s if CPC-to-Earth exceeds 70V',
+  'voltage-monitor-supply': '722.411.4.1(d) — device disconnecting within 5s outside 207–253V',
+  'alternative-device': '722.411.4.1(e) — alternative device of no lesser safety',
+  'electrical-separation': 'Not applicable — supply electrically separated (722.413)',
+};
+
+/**
+ * Values written by the old options list, which offered methods that Reg
+ * 722.411.4.1 does not permit.
+ *
+ * 15 certificates in the live table recorded `integral-rcd`. Dropping these to
+ * blank would quietly erase what was actually recorded on an issued document,
+ * so they are named and marked instead. They are deliberately NOT selectable
+ * any more — this map exists to render history honestly, not to keep the option
+ * alive.
+ */
+const LEGACY_PME_MEASURE_LABELS: Record<string, string> = {
+  'integral-rcd':
+    'Recorded as "Integral RCD protection in charger" — not a permitted method under Reg 722.411.4.1; an RCD cannot detect an open PEN',
+  'class-ii': 'Recorded as "Class II charger used" — not a permitted method under Reg 722.411.4.1',
+  'protective-bonding':
+    'Recorded as "Additional protective bonding" — not a permitted method under Reg 722.411.4.1',
+  'separated-extra-low':
+    'Recorded as "Separated extra-low voltage" — see Reg 722.413 for the electrical separation route',
+};
+
+/** Permitted method first; otherwise name the legacy value; otherwise pass it through. */
+export const pmeMeasureLabel = (raw: string): string =>
+  PME_MEASURE_LABELS[raw] ?? LEGACY_PME_MEASURE_LABELS[raw] ?? raw;
+
+export const formatEVChargingJson = (
+  formData: Partial<EVChargingFormData>
+): EVChargingPayloadType => {
   // Track which form-data keys we actually read, so reportUnmappedFields() can
   // flag any field the user filled in that never made it into the payload.
   const { keys: accessedKeys, track } = createAccessTracker();
@@ -45,6 +87,12 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     track(`testResults.${key}`);
     return formData.testResults?.[key as keyof typeof formData.testResults] ?? '';
   };
+
+  // Whether the outdoor question was answered at all, kept separate from its
+  // value so "unanswered" and "No" stay distinguishable on the certificate.
+  const rawOutdoors = (formData as EVChargingFormData & Record<string, unknown>)
+    .vehicleChargedOutdoors;
+  const outdoorsAnswered = rawOutdoors === true || rawOutdoors === false;
 
   // Vehicle make: when "Other" is chosen the picker stores the sentinel
   // '__other' in vehicleMake until the free-text is typed. Resolve to the
@@ -139,20 +187,103 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       external_loop_impedance: get('externalLoopImpedance'),
     },
 
+    /*
+     * Next inspection. An installation certificate without one is incomplete,
+     * and this payload had no such field.
+     */
+    next_inspection: {
+      interval_months: get('nextInspectionInterval'),
+      date: getDate('nextInspectionDate'),
+      display: get('nextInspectionDate')
+        ? `${ukDate(get('nextInspectionDate'))}${get('nextInspectionInterval') ? ` (${get('nextInspectionInterval')} months)` : ''}`
+        : 'Not recorded',
+    },
+
+    // Earthing & main protective bonding — Reg 411.3.1.2 / 544.1.1 / 542.3.
+    // Absent from this certificate entirely until now.
+    earthing_bonding: {
+      earthing_conductor_csa: get('earthingConductorCsa'),
+      main_bonding_csa: get('mainBondingSize'),
+      main_bonding_locations: get('mainBondingLocations'),
+      main_bonding_verified: getBool('mainBondingVerified'),
+      main_bonding_na: getBool('mainBondingNA'),
+      main_bonding_display: getBool('mainBondingNA')
+        ? 'No extraneous-conductive-parts requiring bonding'
+        : get('mainBondingSize')
+          ? `${get('mainBondingSize')}mm²${get('mainBondingLocations') ? ` — ${get('mainBondingLocations')}` : ''}`
+          : 'Not recorded',
+    },
+
+    /*
+     * Section 722 design confirmations — 722.312.2.1, 722.410.3.5/.3.6 and
+     * 722.413.1.2. Requirements of the standard that the certificate had no
+     * way to record.
+     */
+    section_722: {
+      no_pen_in_final_circuit: getBool('noPenInFinalCircuit'),
+      no_pen_in_final_circuit_display: getBool('noPenInFinalCircuit')
+        ? 'Confirmed — no PEN conductor in the charging circuit (722.312.2.1)'
+        : 'Not confirmed',
+      prohibited_measures_not_used: getBool('prohibitedMeasuresNotUsed'),
+      prohibited_measures_not_used_display: getBool('prohibitedMeasuresNotUsed')
+        ? 'Confirmed — none of the measures prohibited by 722.410.3.5/.3.6 is used'
+        : 'Not confirmed',
+      separation_single_vehicle: getBool('separationSingleVehicle'),
+      separation_transformer_standard: get('separationTransformerStandard'),
+      separation_display:
+        get('pmeEarthingMeasures') === 'electrical-separation'
+          ? `${getBool('separationSingleVehicle') ? 'One vehicle from one unearthed source' : 'Single-vehicle limit not confirmed'}${
+              get('separationTransformerStandard')
+                ? ` — transformer to ${get('separationTransformerStandard')}`
+                : ''
+            }`
+          : 'Not applicable',
+    },
+
     // PME Considerations (722.411.4.1)
     pme_details: {
       is_pme: getBool('isPME'),
       is_pme_display: getBool('isPME') ? 'Yes' : 'No',
       earthing_measures: get('pmeEarthingMeasures'),
+      // The raw value is a slug; without this the certificate printed
+      // "voltage-monitor-supply" where it should name the method.
+      earthing_measures_display: pmeMeasureLabel(String(get('pmeEarthingMeasures') ?? '')),
       earth_electrode_installed: getBool('earthElectrodeInstalled'),
       earth_electrode_installed_display: getBool('earthElectrodeInstalled') ? 'Yes' : 'No',
       earth_electrode_resistance: get('earthElectrodeResistance'),
+      // The condition that triggers 722.411.4.1 at all. Without it the PDF
+      // showed the earthing measure with nothing to say why it was needed.
+      // Deliberately null, not false, when unanswered. getBool() collapses
+      // null to false, so a template reaching for the raw name would print
+      // "No" on a certificate where nobody answered — reading as "722.411.4.1
+      // does not apply", which is the one wrong answer that hides the whole
+      // requirement. Null renders blank in Liquid; the _display field carries
+      // the wording.
+      vehicle_charged_outdoors: outdoorsAnswered ? getBool('vehicleChargedOutdoors') : null,
+      vehicle_charged_outdoors_display: !outdoorsAnswered
+        ? 'Not recorded'
+        : getBool('vehicleChargedOutdoors')
+          ? 'Yes'
+          : 'No',
+      // 722.411.4.1 (h) and (i) — segregation downstream of a (c)/(d)/(e) device.
+      segregation_confirmed: getBool('openPENSegregationConfirmed'),
+      segregation_confirmed_display: getBool('openPENSegregationConfirmed') ? 'Yes' : 'No',
     },
 
-    // O-PEN Device (IET01:2024)
+    // Open-PEN device — method (c)/(d)/(e) of Reg 722.411.4.1
     open_pen: {
       device_fitted: getBool('openPENDeviceFitted'),
       device_fitted_display: getBool('openPENDeviceFitted') ? 'Yes' : 'No',
+      // Reg 722.411.4.1 permits the functionality to sit inside the charging
+      // equipment for methods (c), (d) and (e). Recording which it is matters:
+      // an integral unit has no separate serial to inspect at the next EICR.
+      device_location: get('openPENDeviceLocation'),
+      device_location_display:
+        get('openPENDeviceLocation') === 'integral'
+          ? 'Integral to the charge point'
+          : get('openPENDeviceLocation') === 'separate'
+            ? 'Separate device'
+            : '',
       manufacturer: get('openPENManufacturer'),
       model: get('openPENModel'),
       serial: get('openPENSerial'),
@@ -227,9 +358,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       supply_capacity_a: get('supplyCapacity'),
       within_capacity: safeCompare(get('maxDemandTotal'), get('supplyCapacity'), 'lte'),
       load_curtailment: getBool('loadManagement'),
-      load_curtailment_display: getBool('loadManagement')
-        ? 'Applied (722.311.201)'
-        : '',
+      load_curtailment_display: getBool('loadManagement') ? 'Applied (722.311.201)' : '',
     },
 
     // Test Results
@@ -296,6 +425,9 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       submitted_display: getBool('dnoNotified') ? 'Yes' : 'No',
       date: getDate('dnoNotificationDate'),
       reference: get('dnoReference'),
+      // ENA Connect Direct application reference — the route the notification
+      // is actually made through.
+      connect_direct_reference: get('connectDirectReference'),
       g98_notification: getBool('g98Notification'),
       g98_display: getBool('g98Notification') ? 'Yes' : 'N/A',
       g99_application: getBool('g99Application'),
@@ -431,6 +563,21 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     pme_earthing_measures: get('pmeEarthingMeasures'),
     earth_electrode_installed: getBool('earthElectrodeInstalled'),
     earth_electrode_resistance: get('earthElectrodeResistance'),
+    vehicle_charged_outdoors: outdoorsAnswered ? getBool('vehicleChargedOutdoors') : null,
+    open_pen_segregation_confirmed: getBool('openPENSegregationConfirmed'),
+    open_pen_device_location: get('openPENDeviceLocation'),
+    earthing_conductor_csa: get('earthingConductorCsa'),
+    main_bonding_csa: get('mainBondingSize'),
+    main_bonding_locations: get('mainBondingLocations'),
+    main_bonding_verified: getBool('mainBondingVerified'),
+    main_bonding_na: getBool('mainBondingNA'),
+    no_pen_in_final_circuit: getBool('noPenInFinalCircuit'),
+    prohibited_measures_not_used: getBool('prohibitedMeasuresNotUsed'),
+    separation_single_vehicle: getBool('separationSingleVehicle'),
+    separation_transformer_standard: get('separationTransformerStandard'),
+    connect_direct_reference: get('connectDirectReference'),
+    next_inspection_interval: get('nextInspectionInterval'),
+    next_inspection_date: getDate('nextInspectionDate'),
 
     // Circuit (flat)
     circuit_designation: get('circuitDesignation'),

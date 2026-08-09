@@ -15,6 +15,7 @@ import {
   getCategoryConfig,
 } from '@/types/expense';
 import { AccountingProvider } from '@/types/accounting';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export const useExpensesStorage = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -201,6 +202,11 @@ export const useExpensesStorage = () => {
           });
           return null;
         }
+
+        void trackUserEvent(user.id, 'feature_use', {
+          eventName: 'expense_logged',
+          eventData: { amount: input.amount ?? 0, category: input.category ?? null },
+        });
 
         const newExpense = convertDbRowToExpense(data);
         setExpenses((prev) => [newExpense, ...prev]);

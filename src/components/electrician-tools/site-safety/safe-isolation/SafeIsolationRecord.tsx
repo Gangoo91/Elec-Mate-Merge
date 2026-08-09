@@ -23,8 +23,6 @@ import {
   Eyebrow,
   Field,
   SheetShell,
-  ListCard,
-  ListRow,
   PrimaryButton,
   type Tone,
 } from '@/components/college/primitives';
@@ -41,6 +39,7 @@ import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { LoadMoreButton } from '../common/LoadMoreButton';
 import { IsolationStepCard, type StepCompletionData } from './IsolationStepCard';
 import { IsolationSummary } from './IsolationSummary';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 type IsoStatus = SafeIsolationRecordType['status'];
 
@@ -535,12 +534,12 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
         />
       ) : (
         <div className="space-y-3">
-          <ListCard>
+          <SafetyListCard>
             {visible.map((record) => {
               const completed = record.steps.filter((s) => s.completed).length;
               const dur = getIsolationDuration(record);
               return (
-                <ListRow
+                <SafetyListRow
                   key={record.id}
                   onClick={() => setSelectedRecord(record)}
                   accent={statusTone(record.status)}
@@ -559,7 +558,7 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
           {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
         </div>
       )}

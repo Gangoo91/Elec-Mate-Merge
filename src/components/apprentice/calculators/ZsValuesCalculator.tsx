@@ -15,10 +15,8 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  ResultValue,
-  ResultsGrid,
+  ResultHeadline,
   CalculatorEditorial,
-  CALCULATOR_CONFIG,
   CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -84,7 +82,6 @@ interface ZsResult {
 }
 
 const ZsValuesCalculator = () => {
-  const config = CALCULATOR_CONFIG['testing'];
   const { toast } = useToast();
 
   // Device selection
@@ -337,14 +334,7 @@ const ZsValuesCalculator = () => {
                 <div className="space-y-4 animate-fade-in">
                   {/* Device chip */}
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
-                      style={{
-                        backgroundColor: `${config.gradientFrom}15`,
-                        border: `1px solid ${config.gradientFrom}30`,
-                        color: config.gradientFrom,
-                      }}
-                    >
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-elec-yellow/40 px-3 py-1 text-xs font-medium text-elec-yellow">
                       {result.deviceDescription}
                     </span>
                     <span className="text-xs text-white">
@@ -352,41 +342,19 @@ const ZsValuesCalculator = () => {
                     </span>
                   </div>
 
-                  {/* Hero: max Zs */}
-                  <div className="rounded-xl p-4 bg-white/[0.04] text-center">
-                    <p className="text-sm text-white mb-1">Maximum Zs (BS 7671)</p>
-                    <div
-                      className="text-4xl font-bold font-mono bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.maxZs.toFixed(2)} Ω
-                    </div>
-                    <p className="text-sm text-white mt-2">
-                      80% test limit:{' '}
-                      <span className="font-semibold font-mono">
-                        {result.testLimit.toFixed(2)} Ω
-                      </span>
-                    </p>
-                  </div>
+                  {/* The tabulated maximum is the regulation figure, so it leads; the
+                      80% value is what you actually compare a cold measurement against,
+                      so it rides alongside rather than in a box of its own.
 
-                  <ResultsGrid columns={2}>
-                    <ResultValue
-                      label="Tabulated (100%)"
-                      value={result.maxZs.toFixed(2)}
-                      unit="Ω"
-                      category="testing"
-                      size="sm"
-                    />
-                    <ResultValue
-                      label="Test Limit (80%)"
-                      value={result.testLimit.toFixed(2)}
-                      unit="Ω"
-                      category="testing"
-                      size="sm"
-                    />
-                  </ResultsGrid>
+                      This was a centred gradient hero stating both numbers, followed
+                      immediately by a two-box grid stating THE SAME TWO NUMBERS again.
+                      Nothing was added by the repetition. */}
+                  <ResultHeadline
+                    label="Maximum Zs (BS 7671)"
+                    value={`${result.maxZs.toFixed(2)} Ω`}
+                    aside={`80% test limit ${result.testLimit.toFixed(2)} Ω`}
+                    caption="Compare a cold measured Zs against the 80% figure; the tabulated value assumes the conductor at its normal operating temperature."
+                  />
 
                   {/* Circuit Zs comparison */}
                   {result.calculatedZs !== null && (

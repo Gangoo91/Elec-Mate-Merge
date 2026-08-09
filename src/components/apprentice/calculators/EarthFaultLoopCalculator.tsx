@@ -29,6 +29,7 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  ResultHeadline,
   ResultBadge,
   CalculatorFormula,
   CalculatorDivider,
@@ -655,23 +656,14 @@ const EarthFaultLoopCalculator = () => {
 
                 {result.type === 'tn' ? (
                   <>
-                    {/* Hero Zs value */}
-                    <div className="text-center py-3">
-                      <p className="text-sm font-medium text-white mb-1">
-                        Earth Fault Loop Impedance (Zs)
-                      </p>
-                      <p
-                        className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
-                        {result.zsValue.toFixed(3)} Ω
-                      </p>
-                      <p className="text-sm text-white mt-2">
-                        Prospective fault current: {result.faultCurrent.toFixed(0)} A
-                      </p>
-                    </div>
+                    {/* Zs is the answer; the fault current it implies rides alongside.
+                        Was a centred 5xl figure over the category gradient — the only
+                        centred element on a left-aligned page. */}
+                    <ResultHeadline
+                      label="Earth fault loop impedance (Zs)"
+                      value={`${result.zsValue.toFixed(3)} Ω`}
+                      aside={`${result.faultCurrent.toFixed(0)} A prospective`}
+                    />
 
                     {/* Max Zs and 80% test limit */}
                     {result.maxZsValue !== null && result.testLimit80 !== null && (
@@ -796,19 +788,16 @@ const EarthFaultLoopCalculator = () => {
                   </>
                 ) : (
                   <>
-                    {/* Hero RA × IΔn value */}
-                    <div className="text-center py-3">
-                      <p className="text-sm font-medium text-white mb-1">RA × IΔn Product</p>
-                      <p
-                        className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
-                        {result.product.toFixed(1)} V
-                      </p>
-                      <p className="text-sm text-white mt-2">Must not exceed 50V</p>
-                    </div>
+                    {/* Reg 411.5.3: Ra × IΔn ≤ 50 V. Over the limit is a fail, so it
+                        renders red rather than volt — volt is the good answer
+                        everywhere else in the app. */}
+                    <ResultHeadline
+                      label="Ra × IΔn"
+                      value={`${result.product.toFixed(1)} V`}
+                      aside="limit 50 V"
+                      tone={result.product > 50 ? 'negative' : 'default'}
+                      caption="Regulation 411.5.3 — the product of the electrode resistance and the rated residual operating current must not exceed 50 V."
+                    />
 
                     <ResultsGrid columns={2}>
                       <ResultValue

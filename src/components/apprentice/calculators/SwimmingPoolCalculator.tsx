@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { swimmingPoolContent } from './content/swimming-pool';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -297,20 +298,11 @@ const SwimmingPoolCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Total Load</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.totalLoad} W
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.totalCurrent} A | {result.supplyRequirements}
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Total Load"
+                  value={`${result.totalLoad} W`}
+                  caption={`${result.totalCurrent} A | ${result.supplyRequirements}`}
+                />
 
                 {/* Key metrics */}
                 <ResultsGrid columns={2}>

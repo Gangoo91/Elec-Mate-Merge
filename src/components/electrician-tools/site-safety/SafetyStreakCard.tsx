@@ -31,7 +31,7 @@ export function SafetyStreakCard({ streak }: SafetyStreakCardProps) {
             <h3 className="text-sm font-bold text-white">Safety Streak</h3>
           </div>
           {unlockedCount > 0 && (
-            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-elec-yellow/35">
               <Trophy className="h-3 w-3 text-elec-yellow" />
               <span className="text-[10px] font-bold text-elec-yellow">
                 {unlockedCount}/{streak.badges.length}
@@ -67,7 +67,7 @@ export function SafetyStreakCard({ streak }: SafetyStreakCardProps) {
                 key={badge.key}
                 className={`flex-1 flex flex-col items-center gap-1.5 p-2 rounded-xl border transition-colors ${
                   badge.unlocked
-                    ? 'bg-elec-yellow/10 border-elec-yellow/20'
+                    ? 'border border-elec-yellow/35'
                     : 'bg-white/[0.02] border-white/[0.06]'
                 }`}
               >

@@ -50,35 +50,35 @@ const COLORS = [
 const LINE_WIDTHS = [2, 4, 6, 8];
 
 const drawArrow = (
-    ctx: CanvasRenderingContext2D,
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    width: number
-  ) => {
-    const headLen = Math.max(15, width * 4);
-    const angle = Math.atan2(y2 - y1, x2 - x1);
+  ctx: CanvasRenderingContext2D,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  width: number
+) => {
+  const headLen = Math.max(15, width * 4);
+  const angle = Math.atan2(y2 - y1, x2 - x1);
 
-    // Line
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
 
-    // Arrowhead
-    ctx.beginPath();
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLen * Math.cos(angle - Math.PI / 6),
-      y2 - headLen * Math.sin(angle - Math.PI / 6)
-    );
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(
-      x2 - headLen * Math.cos(angle + Math.PI / 6),
-      y2 - headLen * Math.sin(angle + Math.PI / 6)
-    );
-    ctx.stroke();
+  // Arrowhead
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(
+    x2 - headLen * Math.cos(angle - Math.PI / 6),
+    y2 - headLen * Math.sin(angle - Math.PI / 6)
+  );
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(
+    x2 - headLen * Math.cos(angle + Math.PI / 6),
+    y2 - headLen * Math.sin(angle + Math.PI / 6)
+  );
+  ctx.stroke();
 };
 
 /**
@@ -105,82 +105,82 @@ const drawAction = (ctx: CanvasRenderingContext2D, action: DrawAction) => {
   switch (action.tool) {
     case 'pen':
     case 'eraser':
-    if (action.points && action.points.length > 1) {
-      ctx.beginPath();
-      ctx.moveTo(action.points[0].x, action.points[0].y);
-      for (let i = 1; i < action.points.length; i++) {
-        ctx.lineTo(action.points[i].x, action.points[i].y);
+      if (action.points && action.points.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(action.points[0].x, action.points[0].y);
+        for (let i = 1; i < action.points.length; i++) {
+          ctx.lineTo(action.points[i].x, action.points[i].y);
+        }
+        ctx.stroke();
       }
-      ctx.stroke();
-    }
-    break;
+      break;
 
     case 'arrow':
-    if (
-      action.startX !== undefined &&
-      action.startY !== undefined &&
-      action.endX !== undefined &&
-      action.endY !== undefined
-    ) {
-      drawArrow(ctx, action.startX, action.startY, action.endX, action.endY, action.lineWidth);
-    }
-    break;
+      if (
+        action.startX !== undefined &&
+        action.startY !== undefined &&
+        action.endX !== undefined &&
+        action.endY !== undefined
+      ) {
+        drawArrow(ctx, action.startX, action.startY, action.endX, action.endY, action.lineWidth);
+      }
+      break;
 
     case 'circle':
-    if (
-      action.startX !== undefined &&
-      action.startY !== undefined &&
-      action.endX !== undefined &&
-      action.endY !== undefined
-    ) {
-      const rx = Math.abs(action.endX - action.startX) / 2;
-      const ry = Math.abs(action.endY - action.startY) / 2;
-      const cx = (action.startX + action.endX) / 2;
-      const cy = (action.startY + action.endY) / 2;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    break;
+      if (
+        action.startX !== undefined &&
+        action.startY !== undefined &&
+        action.endX !== undefined &&
+        action.endY !== undefined
+      ) {
+        const rx = Math.abs(action.endX - action.startX) / 2;
+        const ry = Math.abs(action.endY - action.startY) / 2;
+        const cx = (action.startX + action.endX) / 2;
+        const cy = (action.startY + action.endY) / 2;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      break;
 
     case 'rectangle':
-    if (
-      action.startX !== undefined &&
-      action.startY !== undefined &&
-      action.endX !== undefined &&
-      action.endY !== undefined
-    ) {
-      ctx.beginPath();
-      ctx.strokeRect(
-        action.startX,
-        action.startY,
-        action.endX - action.startX,
-        action.endY - action.startY
-      );
-    }
-    break;
+      if (
+        action.startX !== undefined &&
+        action.startY !== undefined &&
+        action.endX !== undefined &&
+        action.endY !== undefined
+      ) {
+        ctx.beginPath();
+        ctx.strokeRect(
+          action.startX,
+          action.startY,
+          action.endX - action.startX,
+          action.endY - action.startY
+        );
+      }
+      break;
 
     case 'text':
-    if (action.text && action.startX !== undefined && action.startY !== undefined) {
-      ctx.globalCompositeOperation = 'source-over';
-      const fontSize = Math.max(14, action.lineWidth * 4);
-      ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+      if (action.text && action.startX !== undefined && action.startY !== undefined) {
+        ctx.globalCompositeOperation = 'source-over';
+        const fontSize = Math.max(14, action.lineWidth * 4);
+        ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
 
-      // Text background
-      const metrics = ctx.measureText(action.text);
-      const padding = 4;
-      ctx.fillStyle = 'rgba(0,0,0,0.6)';
-      ctx.fillRect(
-        action.startX - padding,
-        action.startY - fontSize - padding,
-        metrics.width + padding * 2,
-        fontSize + padding * 2
-      );
+        // Text background
+        const metrics = ctx.measureText(action.text);
+        const padding = 4;
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        ctx.fillRect(
+          action.startX - padding,
+          action.startY - fontSize - padding,
+          metrics.width + padding * 2,
+          fontSize + padding * 2
+        );
 
-      ctx.fillStyle = action.color;
-      ctx.fillText(action.text, action.startX, action.startY);
-    }
-    break;
+        ctx.fillStyle = action.color;
+        ctx.fillText(action.text, action.startX, action.startY);
+      }
+      break;
   }
 
   ctx.globalCompositeOperation = 'source-over';
@@ -217,35 +217,38 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
     []
   );
 
-  const setupCanvas = useCallback((img: HTMLImageElement) => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+  const setupCanvas = useCallback(
+    (img: HTMLImageElement) => {
+      const canvas = canvasRef.current;
+      const container = containerRef.current;
+      if (!canvas || !container) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+      const containerRect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
 
-    // Fit image to container
-    const scaleX = containerRect.width / img.width;
-    const scaleY = containerRect.height / img.height;
-    const scale = Math.min(scaleX, scaleY);
+      // Fit image to container
+      const scaleX = containerRect.width / img.width;
+      const scaleY = containerRect.height / img.height;
+      const scale = Math.min(scaleX, scaleY);
 
-    const displayWidth = img.width * scale;
-    const displayHeight = img.height * scale;
+      const displayWidth = img.width * scale;
+      const displayHeight = img.height * scale;
 
-    canvas.style.width = `${displayWidth}px`;
-    canvas.style.height = `${displayHeight}px`;
-    canvas.width = displayWidth * dpr;
-    canvas.height = displayHeight * dpr;
+      canvas.style.width = `${displayWidth}px`;
+      canvas.style.height = `${displayHeight}px`;
+      canvas.width = displayWidth * dpr;
+      canvas.height = displayHeight * dpr;
 
-    canvasDimensions.current = { width: displayWidth, height: displayHeight, scale: dpr };
+      canvasDimensions.current = { width: displayWidth, height: displayHeight, scale: dpr };
 
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.scale(dpr, dpr);
-      redrawCanvas(ctx, img, []);
-    }
-  }, [redrawCanvas]);
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.scale(dpr, dpr);
+        redrawCanvas(ctx, img, []);
+      }
+    },
+    [redrawCanvas]
+  );
 
   useEffect(() => {
     const img = new Image();
@@ -257,9 +260,6 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
     };
     img.src = photo.file_url;
   }, [photo.file_url, setupCanvas]);
-
-
-
 
   const getCanvasCoords = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     const canvas = canvasRef.current;

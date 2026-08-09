@@ -5,8 +5,6 @@ import {
   Eyebrow,
   Field,
   FormCard,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   IconButton,
@@ -36,6 +34,7 @@ import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { ReEnergisationSheet } from './ReEnergisationSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 // ─── Status Config ───
 
@@ -505,11 +504,11 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {/* Steps */}
         <motion.div variants={itemVariants} className="space-y-2">
           <Eyebrow className="px-1">GS38 steps</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {record.steps.map((step) => {
               const tone: Tone | undefined = step.completed ? 'emerald' : undefined;
               return (
-                <ListRow
+                <SafetyListRow
                   key={step.stepNumber}
                   accent={tone}
                   lead={
@@ -541,7 +540,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
         </motion.div>
 
         {/* Signatures */}

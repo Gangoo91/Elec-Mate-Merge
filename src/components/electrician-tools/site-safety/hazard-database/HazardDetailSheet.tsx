@@ -9,11 +9,11 @@ import { copyToClipboard as copyText } from '@/utils/clipboard';
 import {
   SheetShell,
   Eyebrow,
-  ListCard,
   PrimaryButton,
   SecondaryButton,
   toneAccent,
 } from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface HazardDetailSheetProps {
   hazard: EnhancedRiskConsequence | null;
@@ -241,7 +241,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               count={hazard.guidanceNotes.length}
               defaultOpen
             >
-              <ListCard>
+              <SafetyListCard>
                 {hazard.guidanceNotes.map((note, i) => (
                   <div
                     key={i}
@@ -253,7 +253,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     <span>{note}</span>
                   </div>
                 ))}
-              </ListCard>
+              </SafetyListCard>
             </CollapsibleSection>
           )}
 
@@ -279,7 +279,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
           {/* Training required */}
           {hazard.trainingRequired && hazard.trainingRequired.length > 0 && (
             <CollapsibleSection title="Training required" count={hazard.trainingRequired.length}>
-              <ListCard>
+              <SafetyListCard>
                 {hazard.trainingRequired.map((training, i) => (
                   <div
                     key={i}
@@ -291,7 +291,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     <span>{training}</span>
                   </div>
                 ))}
-              </ListCard>
+              </SafetyListCard>
             </CollapsibleSection>
           )}
         </SheetShell>

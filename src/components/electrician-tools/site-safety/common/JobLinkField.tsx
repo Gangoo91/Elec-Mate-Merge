@@ -7,16 +7,10 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  Field,
-  SheetShell,
-  ListCard,
-  ListRow,
-  EmptyState,
-  LoadingState,
-} from '@/components/college/primitives';
+import { Field, SheetShell, EmptyState, LoadingState } from '@/components/college/primitives';
 import { safetyInputCn } from './SafetyDocField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { SafetyListCard, SafetyListRow } from './SafetyList';
 
 interface JobLinkFieldProps {
   jobId: string | null;
@@ -92,9 +86,9 @@ export function JobLinkField({
             ) : filtered.length === 0 ? (
               <EmptyState title="No matching projects" description="Try a different search." />
             ) : (
-              <ListCard>
+              <SafetyListCard>
                 {filtered.map((j) => (
-                  <ListRow
+                  <SafetyListRow
                     key={j.id}
                     onClick={() => {
                       onSelect(j.id, j.title || 'Job');
@@ -113,7 +107,7 @@ export function JobLinkField({
                     }
                   />
                 ))}
-              </ListCard>
+              </SafetyListCard>
             )}
           </SheetShell>
         </SheetContent>

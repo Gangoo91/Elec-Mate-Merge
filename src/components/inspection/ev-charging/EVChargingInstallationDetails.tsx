@@ -25,9 +25,6 @@ interface EVChargingInstallationDetailsProps {
   onCustomerIdChange?: (id: string | undefined) => void;
 }
 
-
-
-
 const pickerTriggerCn =
   'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
@@ -139,6 +136,18 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
   // Handle phase change - recalculate current from power
   const handlePhasesChange = (phases: number) => {
     onUpdate('phases', phases);
+    // Keep the Supply tab's `supplyPhases` in step.
+    //
+    // The form carries two phase fields: `phases` (1 | 3, here) and
+    // `supplyPhases` ('single' | 'three', on the Supply tab). Nothing reconciled
+    // them, so they could disagree — and the formatter emits BOTH, as
+    // `installation.phases` and `supply.phases`, which puts two contradictory
+    // phase statements on the same certificate. The voltage-drop calculation
+    // reads `supplyPhases`, so a three-phase job set only here was costed on
+    // single-phase mV/A/m and judged against 230 V instead of 400 V.
+    onUpdate('supplyPhases', phases === 3 ? 'three' : 'single');
+    // Recorded supply voltage follows too, as it does on every other cert.
+    onUpdate('supplyVoltage', phases === 3 ? 400 : 230);
     if (formData.powerRating) {
       const calculatedCurrent = powerToCurrent(formData.powerRating, phases);
       onUpdate('ratedCurrent', calculatedCurrent);
@@ -169,14 +178,13 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
             </Button>
           </div>
         ) : (
-          <ClientSelector
-            onSelectCustomer={handleCustomerSelect}
-            selectedCustomerId={customerId}
-          />
+          <ClientSelector onSelectCustomer={handleCustomerSelect} selectedCustomerId={customerId} />
         )}
 
         <div>
-          <Label htmlFor="clientName" className={labelCn}>Client Name *</Label>
+          <Label htmlFor="clientName" className={labelCn}>
+            Client Name *
+          </Label>
           <Input
             id="clientName"
             placeholder="Enter client name"
@@ -187,7 +195,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label htmlFor="clientTelephone" className={labelCn}>Telephone</Label>
+            <Label htmlFor="clientTelephone" className={labelCn}>
+              Telephone
+            </Label>
             <Input
               id="clientTelephone"
               type="tel"
@@ -198,7 +208,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
             />
           </div>
           <div>
-            <Label htmlFor="clientEmail" className={labelCn}>Email</Label>
+            <Label htmlFor="clientEmail" className={labelCn}>
+              Email
+            </Label>
             <Input
               id="clientEmail"
               type="email"
@@ -210,7 +222,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </div>
         </div>
         <div>
-          <Label htmlFor="clientAddress" className={labelCn}>Address</Label>
+          <Label htmlFor="clientAddress" className={labelCn}>
+            Address
+          </Label>
           <Input
             id="clientAddress"
             placeholder="Full address"
@@ -227,7 +241,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label htmlFor="vehicleMake" className={labelCn}>Vehicle Make</Label>
+            <Label htmlFor="vehicleMake" className={labelCn}>
+              Vehicle Make
+            </Label>
             <MobileSelectPicker
               value={(formData.vehicleMake as string) || ''}
               onValueChange={(value) => {
@@ -257,14 +273,19 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
             )}
           </div>
           <div>
-            <Label htmlFor="vehicleModel" className={labelCn}>Vehicle Model</Label>
+            <Label htmlFor="vehicleModel" className={labelCn}>
+              Vehicle Model
+            </Label>
             {formData.vehicleMake &&
             formData.vehicleMake !== '__other' &&
             getVehicleModels(formData.vehicleMake as string).length > 0 ? (
               <MobileSelectPicker
                 value={(formData.vehicleModel as string) || ''}
                 onValueChange={(value) => onUpdate('vehicleModel', value)}
-                options={getVehicleModels(formData.vehicleMake as string).map((model) => ({ value: model, label: model }))}
+                options={getVehicleModels(formData.vehicleMake as string).map((model) => ({
+                  value: model,
+                  label: model,
+                }))}
                 placeholder="Select model"
                 title="Vehicle Model"
                 triggerClassName={pickerTriggerCn}
@@ -281,7 +302,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </div>
         </div>
         <div>
-          <Label htmlFor="vehicleRegistration" className={labelCn}>Registration</Label>
+          <Label htmlFor="vehicleRegistration" className={labelCn}>
+            Registration
+          </Label>
           <Input
             id="vehicleRegistration"
             placeholder="e.g. AB12 CDE"
@@ -308,7 +331,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
         </label>
 
         <div>
-          <Label htmlFor="installationAddress" className={labelCn}>Installation Address *</Label>
+          <Label htmlFor="installationAddress" className={labelCn}>
+            Installation Address *
+          </Label>
           <Input
             id="installationAddress"
             placeholder="Full address where charger is installed"
@@ -326,7 +351,10 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
               {[
                 { value: 'domestic', label: 'Domestic' },
                 { value: 'commercial', label: 'Commercial' },
-                { value: 'public', label: 'Public' },
+                // Label only — the stored value stays 'public' so saved
+                // certificates are untouched. "On street" is what electricians
+                // and the trade actually call it.
+                { value: 'public', label: 'On Street' },
               ].map((opt) => (
                 <ToggleButton
                   key={opt.value}
@@ -339,7 +367,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </div>
 
           <div>
-            <Label htmlFor="installationDate" className={labelCn}>Installation Date *</Label>
+            <Label htmlFor="installationDate" className={labelCn}>
+              Installation Date *
+            </Label>
             <Input
               id="installationDate"
               type="date"
@@ -367,7 +397,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
         {/* Manual entry fallback for make/model */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label htmlFor="chargerMake" className={labelCn}>Make</Label>
+            <Label htmlFor="chargerMake" className={labelCn}>
+              Make
+            </Label>
             <Input
               id="chargerMake"
               placeholder="e.g. Myenergi"
@@ -380,7 +412,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
             />
           </div>
           <div>
-            <Label htmlFor="chargerModel" className={labelCn}>Model</Label>
+            <Label htmlFor="chargerModel" className={labelCn}>
+              Model
+            </Label>
             <Input
               id="chargerModel"
               placeholder="e.g. Zappi V2.1"
@@ -394,7 +428,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </div>
         </div>
         <div>
-          <Label htmlFor="chargerSerial" className={labelCn}>Serial Number</Label>
+          <Label htmlFor="chargerSerial" className={labelCn}>
+            Serial Number
+          </Label>
           <Input
             id="chargerSerial"
             placeholder="Serial number"
@@ -481,26 +517,39 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
         </div>
 
         {/* Connector compatibility check */}
-        {formData.vehicleMake && formData.vehicleMake !== '__other' && formData.socketType && formData.socketType !== 'n/a' && (() => {
-          const vehicle = findVehicle(formData.vehicleMake as string, formData.vehicleModel as string);
-          if (!vehicle?.connectorType) return null;
-          const chargerSocket = formData.socketType as string;
-          const vc = vehicle.connectorType;
-          const compatible = vc === chargerSocket || (vc === 'CCS' && chargerSocket === 'Type 2') || (chargerSocket === 'CCS' && vc === 'Type 2');
-          if (compatible) return null;
-          return (
-            <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 py-3">
-              <p className="text-sm text-white">
-                <span className="font-semibold">Note:</span> Vehicle uses {vc} connector but charger socket is {chargerSocket}. Verify compatibility.
-              </p>
-            </div>
-          );
-        })()}
+        {formData.vehicleMake &&
+          formData.vehicleMake !== '__other' &&
+          formData.socketType &&
+          formData.socketType !== 'n/a' &&
+          (() => {
+            const vehicle = findVehicle(
+              formData.vehicleMake as string,
+              formData.vehicleModel as string
+            );
+            if (!vehicle?.connectorType) return null;
+            const chargerSocket = formData.socketType as string;
+            const vc = vehicle.connectorType;
+            const compatible =
+              vc === chargerSocket ||
+              (vc === 'CCS' && chargerSocket === 'Type 2') ||
+              (chargerSocket === 'CCS' && vc === 'Type 2');
+            if (compatible) return null;
+            return (
+              <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 py-3">
+                <p className="text-sm text-white">
+                  <span className="font-semibold">Note:</span> Vehicle uses {vc} connector but
+                  charger socket is {chargerSocket}. Verify compatibility.
+                </p>
+              </div>
+            );
+          })()}
 
         {/* Power and Current with bidirectional sync */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label htmlFor="powerRating" className={labelCn}>Power (kW)</Label>
+            <Label htmlFor="powerRating" className={labelCn}>
+              Power (kW)
+            </Label>
             <Input
               id="powerRating"
               type="number"
@@ -508,9 +557,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
               placeholder="e.g. 7.4"
               value={formData.powerRating ?? ''}
               onChange={(e) =>
-                handlePowerChange(
-                  e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
-                )
+                handlePowerChange(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)
               }
               className={inputCn}
             />
@@ -519,16 +566,16 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
             </p>
           </div>
           <div>
-            <Label htmlFor="ratedCurrent" className={labelCn}>Current (A)</Label>
+            <Label htmlFor="ratedCurrent" className={labelCn}>
+              Current (A)
+            </Label>
             <Input
               id="ratedCurrent"
               type="number"
               placeholder="e.g. 32"
               value={formData.ratedCurrent ?? ''}
               onChange={(e) =>
-                handleCurrentChange(
-                  e.target.value === '' ? 0 : parseInt(e.target.value) || 0
-                )
+                handleCurrentChange(e.target.value === '' ? 0 : parseInt(e.target.value) || 0)
               }
               className={inputCn}
             />

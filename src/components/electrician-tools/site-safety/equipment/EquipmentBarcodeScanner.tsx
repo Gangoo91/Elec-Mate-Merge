@@ -250,7 +250,7 @@ export function EquipmentBarcodeScanner({
               {/* Animated scan line — hidden on success */}
               {!scanSuccess && (
                 <motion.div
-                  className="absolute left-[10px] right-[10px] h-[2px] bg-elec-yellow/60"
+                  className="absolute left-[10px] right-[10px] h-[2px] border border-elec-yellow/35"
                   animate={{ top: ['10%', '90%', '10%'] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 />

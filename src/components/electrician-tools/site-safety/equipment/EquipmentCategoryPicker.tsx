@@ -28,7 +28,7 @@ export const equipmentCategories: CategoryOption[] = [
     label: 'Test Equipment',
     icon: Zap,
     color: 'text-elec-yellow',
-    bgColor: 'bg-elec-yellow/10',
+    bgColor: 'border border-elec-yellow/35',
     borderColor: 'border-elec-yellow/30',
   },
   {

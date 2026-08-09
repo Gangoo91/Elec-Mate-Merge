@@ -30,8 +30,10 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { windPowerContent } from './content/wind-power';
+import { SEG_RATE_OPTIONS, SEG_TYPICAL_RATE, CONSUMPTION_OPTIONS } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -131,27 +133,19 @@ const lossesPresets = [
 ];
 
 const electricityPrices = [
-  { value: '0.20', label: '£0.20/kWh (Economy)' },
-  { value: '0.25', label: '£0.25/kWh (Standard)' },
-  { value: '0.30', label: '£0.30/kWh (Peak)' },
-  { value: '0.35', label: '£0.35/kWh (Premium)' },
+  { value: '0.20', label: '£0.20/kWh — fixed deal' },
+  // Ofgem price cap, 1 Jul–30 Sep 2026 (26.11 p/kWh inc VAT) — see data/energyRates.
+  { value: '0.26', label: '£0.26/kWh — Ofgem cap' },
+  { value: '0.30', label: '£0.30/kWh — above cap' },
+  { value: '0.35', label: '£0.35/kWh — premium/peak' },
 ];
 
-const exportRates = [
-  { value: '0.03', label: '£0.03/kWh (Low SEG)' },
-  { value: '0.05', label: '£0.05/kWh (Standard SEG)' },
-  { value: '0.07', label: '£0.07/kWh (Good SEG)' },
-  { value: '0.12', label: '£0.12/kWh (Premium SEG)' },
-];
+const exportRates = [...SEG_RATE_OPTIONS];
 
-const annualConsumptions = [
-  { value: '2900', label: '2,900 kWh (1–2 bed flat)' },
-  { value: '3800', label: '3,800 kWh (3 bed house)' },
-  { value: '4600', label: '4,600 kWh (4 bed house)' },
-  { value: '5500', label: '5,500 kWh (5+ bed house)' },
-  { value: '10000', label: '10,000 kWh (Small business)' },
-  { value: '25000', label: '25,000 kWh (Medium business)' },
-];
+// Ofgem TDCV, Table 1 of the May 2026 decision (implemented 1 July 2026). The old
+// bands were invented house-size labels (2,900 "1–2 bed flat" / 3,800 / 4,600) that
+// ALL sat above the medium household figure of 2,500 kWh.
+const annualConsumptions = CONSUMPTION_OPTIONS;
 
 const selfConsumptionRates = [
   { value: '30', label: '30% (Standard household)' },
@@ -164,17 +158,20 @@ export function WindPowerCalculator() {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
-  const [turbineModel, setTurbineModel] = useState('');
-  const [hubHeight, setHubHeight] = useState('');
-  const [averageWindSpeed, setAverageWindSpeed] = useState('');
-  const [windClass, setWindClass] = useState('');
-  const [terrain, setTerrain] = useState('');
-  const [altitude, setAltitude] = useState('');
-  const [losses, setLosses] = useState('');
-  const [electricityPrice, setElectricityPrice] = useState('');
-  const [exportRate, setExportRate] = useState('');
-  const [annualConsumption, setAnnualConsumption] = useState('');
-  const [selfConsumptionRate, setSelfConsumptionRate] = useState('');
+  const [turbineModel, setTurbineModel] = useState('2.5kW');
+  const [hubHeight, setHubHeight] = useState('15');
+  // Midpoint of the Class 3 band the default windClass selects (15.7–16.8 mph), so
+  // the two pre-filled fields agree and the calculator can produce a result on load
+  // instead of opening with Calculate greyed out.
+  const [averageWindSpeed, setAverageWindSpeed] = useState('16.2');
+  const [windClass, setWindClass] = useState('3');
+  const [terrain, setTerrain] = useState('rough');
+  const [altitude, setAltitude] = useState('0');
+  const [losses, setLosses] = useState('medium');
+  const [electricityPrice, setElectricityPrice] = useState('0.26');
+  const [exportRate, setExportRate] = useState(String(SEG_TYPICAL_RATE));
+  const [annualConsumption, setAnnualConsumption] = useState('2500');
+  const [selfConsumptionRate, setSelfConsumptionRate] = useState('30');
   const [result, setResult] = useState<WindPowerResult | null>(null);
 
   const [showCosts, setShowCosts] = useState(false);
@@ -593,18 +590,10 @@ export function WindPowerCalculator() {
                   </button>
                 </div>
 
-                {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Net Annual Energy</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Net annual energy"
+                  value={`${result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`}
+                />
 
                 {/* Key metrics */}
                 <ResultsGrid columns={2}>

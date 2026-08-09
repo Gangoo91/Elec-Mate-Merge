@@ -516,9 +516,9 @@ export default function UserManagementSheet({
             {/* ── Hero Profile Card ── */}
             <div className="relative px-5 pt-4 pb-5">
               <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
-              <div className="relative flex flex-col items-center text-center">
+              <div className="relative flex flex-col items-center text-center sm:flex-row sm:items-start sm:gap-4 sm:text-left">
                 {/* Avatar + Engagement Ring */}
-                <div className="relative mb-3">
+                <div className="relative mb-3 shrink-0 sm:mb-0">
                   <div className={cn(
                     'w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold ring-2 ring-white/10',
                     colors.bg, colors.text
@@ -546,7 +546,9 @@ export default function UserManagementSheet({
                   )}
                 </div>
 
-                {/* Name + Status */}
+                {/* Everything except the avatar shares one column, so on sm+
+                    it sits beside the avatar instead of below it. */}
+                <div className="flex min-w-0 flex-1 flex-col items-center sm:items-start">
                 <h3 className="text-lg font-bold text-white">{user.full_name || 'Unknown'}</h3>
 
                 {/* Email — tappable */}
@@ -567,11 +569,26 @@ export default function UserManagementSheet({
                       {user.role}
                     </Badge>
                   )}
+                  {/*
+                    Two chips said the same word twice.
+
+                    `role` and `subscription_tier` are separate columns that
+                    usually hold the same thing in different cases — the DB has
+                    317 `electrician` alongside 9 `Electrician`, 85 `employer`
+                    alongside 6 `Employer`. Rendering both gave "Electrician"
+                    next to "electrician". The tier chip now only appears when
+                    it actually adds something the role chip did not.
+                  */}
                   <Badge className={cn(
                     'text-[10px]',
                     user.subscribed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white'
                   )}>
-                    {user.subscribed ? (user.subscription_tier || 'Subscribed') : 'Free'}
+                    {!user.subscribed
+                      ? 'Free'
+                      : user.subscription_tier &&
+                          user.subscription_tier.toLowerCase() !== (user.role || '').toLowerCase()
+                        ? user.subscription_tier
+                        : 'Paying'}
                   </Badge>
                   <Badge className={cn(
                     'text-[10px]',
@@ -589,6 +606,7 @@ export default function UserManagementSheet({
                     <> · Last active {formatDistanceToNow(new Date(activityData.lastActivity), { addSuffix: true })}</>
                   )}
                 </p>
+                </div>
               </div>
             </div>
 
@@ -597,7 +615,7 @@ export default function UserManagementSheet({
               {user.email && (
                 <a
                   href={`mailto:${user.email}`}
-                  className="flex-1 h-11 rounded-xl bg-blue-500/10 ring-1 ring-blue-500/20 flex items-center justify-center gap-2 text-blue-400 text-sm font-medium active:bg-blue-500/20 touch-manipulation transition-colors"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-semibold text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
                 >
                   <Mail className="h-4 w-4" />
                   Email
@@ -625,9 +643,18 @@ export default function UserManagementSheet({
               )}
             </div>
 
-            {/* ── Stats Grid ── */}
-            <div className="px-4 pb-4">
-              <div className="grid grid-cols-4 gap-2">
+            {/*
+              Two columns from lg.
+
+              The four counts, the subscription controls and the activity
+              breakdown were a single stack, so a 2,000px sheet showed a narrow
+              ribbon with the interesting half below the fold. The counts go
+              2x2 beside the breakdown instead of four cells across the top.
+            */}
+            <div className="px-4 pb-4 lg:grid lg:grid-cols-[20rem_minmax(0,1fr)] lg:items-start lg:gap-5">
+              {/* Left column: who they are and what they pay. */}
+              <div className="space-y-3">
+              <div className="grid grid-cols-4 gap-2 lg:grid-cols-2">
                 <div className="text-center p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
                   <p className="text-lg font-bold text-white">
                     {formatTimeSpent(activityData?.totalSecondsTracked || 0)}
@@ -647,9 +674,145 @@ export default function UserManagementSheet({
                   <p className="text-[10px] text-white mt-0.5">Days</p>
                 </div>
               </div>
+
+              {/* Billing lives in the left column, under the counts —
+                  it was stacked below the activity breakdown, which left
+                  this column empty for ~500px and pushed the controls off
+                  the bottom of the sheet. */}
+              <div className="space-y-3">
+            {/* Current Subscription */}
+            <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
+              <h4 className="text-sm font-semibold text-white">
+                Subscription
+              </h4>
+
+              {user.subscribed ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-400" />
+                    <span className="font-medium text-green-400">Active</span>
+                    {user.subscription_tier && (
+                      <Badge className="bg-yellow-500/20 text-yellow-400">
+                        {user.subscription_tier}
+                        {tierPricing[user.subscription_tier]
+                          ? ` · ${tierPricing[user.subscription_tier]}`
+                          : ''}
+                      </Badge>
+                    )}
+                  </div>
+
+                  {user.free_access_granted && (
+                    <div className="flex items-center gap-2 text-sm text-white">
+                      <Gift className="h-4 w-4 text-yellow-400" />
+                      <span>Admin-granted free access</span>
+                    </div>
+                  )}
+
+                  {user.free_access_expires_at && (
+                    <p className="text-sm text-white">
+                      Expires: {format(new Date(user.free_access_expires_at), 'dd MMM yyyy')}
+                    </p>
+                  )}
+
+                  {user.free_access_reason && (
+                    <p className="text-sm text-white">
+                      Reason: {user.free_access_reason}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <XCircle className="h-5 w-5 text-red-400" />
+                  <span className="text-red-400">Not Subscribed</span>
+                </div>
+              )}
             </div>
 
-            <div className="px-4 space-y-3 pb-6">
+            {/* Subscription Management */}
+            <div className="space-y-4 border-t border-white/[0.10] pt-4 mt-4">
+              <h4 className="text-sm font-semibold flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-yellow-400" />
+                Subscription Management
+              </h4>
+
+              {/* Current status display */}
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-white">Current:</span>
+                <Badge>{user.subscription_tier || 'No tier'}</Badge>
+                <Badge variant={user.subscribed ? 'default' : 'outline'}>
+                  {user.subscribed ? 'Subscribed' : 'Not subscribed'}
+                </Badge>
+              </div>
+
+              {/* Extend Trial / Subscription End Date */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Extend Trial / Subscription Until
+                  {user.subscription_end && (
+                    <span className="ml-2 text-xs text-white">
+                      (currently: {format(new Date(user.subscription_end), 'dd MMM yyyy')})
+                    </span>
+                  )}
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    type="date"
+                    value={extendDate}
+                    onChange={(e) => setExtendDate(e.target.value)}
+                    className="h-11 touch-manipulation flex-1"
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                  <Button
+                    onClick={handleExtendTrial}
+                    className="h-11 touch-manipulation bg-green-500 hover:bg-green-600 text-white"
+                    disabled={!extendDate}
+                  >
+                    <Clock className="h-4 w-4 mr-1" />
+                    Extend
+                  </Button>
+                </div>
+              </div>
+
+              {/* Change Subscription Tier */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Subscription Tier</label>
+                <div className="flex gap-2">
+                  <Select value={manageTier} onValueChange={setManageTier}>
+                    <SelectTrigger className="h-11 touch-manipulation flex-1">
+                      <SelectValue placeholder="Select tier" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="free">Free</SelectItem>
+                      <SelectItem value="basic">Basic</SelectItem>
+                      <SelectItem value="pro">Pro</SelectItem>
+                      <SelectItem value="enterprise">Enterprise</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    onClick={handleChangeTier}
+                    className="h-11 touch-manipulation"
+                    disabled={!manageTier || manageTier === user?.subscription_tier}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </div>
+
+              {/* Cancel Subscription */}
+              <Button
+                variant="destructive"
+                onClick={handleCancelSubscription}
+                className="h-11 touch-manipulation w-full"
+              >
+                <XCircle className="h-4 w-4 mr-2" />
+                Cancel Subscription
+              </Button>
+            </div>
+              </div>
+              </div>
+
+            {/* Right column: what they actually do. */}
+            <div className="mt-3 space-y-3 pb-6 lg:mt-0">
 
             {/* Where they spend time */}
             {activityData?.areaBreakdown && activityData.areaBreakdown.length > 0 && (
@@ -657,9 +820,20 @@ export default function UserManagementSheet({
                 <h4 className="text-sm font-semibold text-white">
                   Where they spend time
                 </h4>
+                {/*
+                  Sorted and scaled by TIME.
+
+                  The bar was `page_views / maxViews` under a heading that says
+                  "Where they spend time", beside a number that is time. So a
+                  section with 7 pages and 2 minutes drew a longer bar than one
+                  with 2 pages and 8h 27m — the graphic contradicted the figure
+                  next to it. Order was raw array order, so the biggest number
+                  could sit anywhere in the list.
+                */}
                 <div className="space-y-2">
-                  {activityData.areaBreakdown
+                  {[...activityData.areaBreakdown]
                     .filter((a) => a.page_views > 0)
+                    .sort((a, b) => b.seconds_in_area - a.seconds_in_area)
                     .map((area) => {
                       const areaLabels: Record<string, { label: string; color: string }> = {
                         study_centre: { label: 'Study Centre', color: 'bg-purple-500' },
@@ -675,26 +849,38 @@ export default function UserManagementSheet({
                         other: { label: 'Other', color: 'bg-gray-500' },
                       };
                       const config = areaLabels[area.area] || { label: area.area, color: 'bg-gray-500' };
-                      const maxViews = Math.max(...activityData.areaBreakdown.map((a) => a.page_views));
-                      const pct = maxViews > 0 ? (area.page_views / maxViews) * 100 : 0;
+                      const maxSeconds = Math.max(
+                        ...activityData.areaBreakdown.map((a) => a.seconds_in_area)
+                      );
+                      // A 4px sliver still reads as "some", which is truer than
+                      // an empty track for a section they did visit.
+                      const pct =
+                        maxSeconds > 0
+                          ? Math.max(2, (area.seconds_in_area / maxSeconds) * 100)
+                          : 0;
 
                       return (
                         <div key={area.area} className="space-y-1">
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-white font-medium">{config.label}</span>
                             <div className="flex items-center gap-3 text-xs text-white">
-                              <span>{area.page_views} pages</span>
+                              <span>
+                                {area.page_views} {area.page_views === 1 ? 'page' : 'pages'}
+                              </span>
                               {area.seconds_in_area > 0 && (
                                 <span className="font-medium text-white">
                                   {formatTimeSpent(area.seconds_in_area)}
                                 </span>
                               )}
                               {area.features_used > 0 && (
-                                <span className="text-cyan-400">{area.features_used} actions</span>
+                                <span className="text-cyan-400">
+                                  {area.features_used}{' '}
+                                  {area.features_used === 1 ? 'action' : 'actions'}
+                                </span>
                               )}
                             </div>
                           </div>
-                          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                          <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.10]">
                             <div
                               className={cn('h-full rounded-full transition-all', config.color)}
                               style={{ width: `${pct}%` }}
@@ -808,131 +994,6 @@ export default function UserManagementSheet({
               </div>
             )}
 
-            {/* Current Subscription */}
-            <div className="rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 space-y-3">
-              <h4 className="text-sm font-semibold text-white">
-                Subscription
-              </h4>
-
-              {user.subscribed ? (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                    <span className="font-medium text-green-400">Active</span>
-                    {user.subscription_tier && (
-                      <Badge className="bg-yellow-500/20 text-yellow-400">
-                        {user.subscription_tier} - {tierPricing[user.subscription_tier] || ''}
-                      </Badge>
-                    )}
-                  </div>
-
-                  {user.free_access_granted && (
-                    <div className="flex items-center gap-2 text-sm text-white">
-                      <Gift className="h-4 w-4 text-yellow-400" />
-                      <span>Admin-granted free access</span>
-                    </div>
-                  )}
-
-                  {user.free_access_expires_at && (
-                    <p className="text-sm text-white">
-                      Expires: {format(new Date(user.free_access_expires_at), 'dd MMM yyyy')}
-                    </p>
-                  )}
-
-                  {user.free_access_reason && (
-                    <p className="text-sm text-white">
-                      Reason: {user.free_access_reason}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-red-400" />
-                  <span className="text-red-400">Not Subscribed</span>
-                </div>
-              )}
-            </div>
-
-            {/* Subscription Management */}
-            <div className="space-y-4 border-t border-white/[0.10] pt-4 mt-4">
-              <h4 className="text-sm font-semibold flex items-center gap-2">
-                <CreditCard className="h-4 w-4 text-yellow-400" />
-                Subscription Management
-              </h4>
-
-              {/* Current status display */}
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-white">Current:</span>
-                <Badge>{user.subscription_tier || 'No tier'}</Badge>
-                <Badge variant={user.subscribed ? 'default' : 'outline'}>
-                  {user.subscribed ? 'Subscribed' : 'Not subscribed'}
-                </Badge>
-              </div>
-
-              {/* Extend Trial / Subscription End Date */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">
-                  Extend Trial / Subscription Until
-                  {user.subscription_end && (
-                    <span className="ml-2 text-xs text-white">
-                      (currently: {format(new Date(user.subscription_end), 'dd MMM yyyy')})
-                    </span>
-                  )}
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    type="date"
-                    value={extendDate}
-                    onChange={(e) => setExtendDate(e.target.value)}
-                    className="h-11 touch-manipulation flex-1"
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                  <Button
-                    onClick={handleExtendTrial}
-                    className="h-11 touch-manipulation bg-green-500 hover:bg-green-600 text-white"
-                    disabled={!extendDate}
-                  >
-                    <Clock className="h-4 w-4 mr-1" />
-                    Extend
-                  </Button>
-                </div>
-              </div>
-
-              {/* Change Subscription Tier */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Subscription Tier</label>
-                <div className="flex gap-2">
-                  <Select value={manageTier} onValueChange={setManageTier}>
-                    <SelectTrigger className="h-11 touch-manipulation flex-1">
-                      <SelectValue placeholder="Select tier" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="free">Free</SelectItem>
-                      <SelectItem value="basic">Basic</SelectItem>
-                      <SelectItem value="pro">Pro</SelectItem>
-                      <SelectItem value="enterprise">Enterprise</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    onClick={handleChangeTier}
-                    className="h-11 touch-manipulation"
-                    disabled={!manageTier || manageTier === user?.subscription_tier}
-                  >
-                    Save
-                  </Button>
-                </div>
-              </div>
-
-              {/* Cancel Subscription */}
-              <Button
-                variant="destructive"
-                onClick={handleCancelSubscription}
-                className="h-11 touch-manipulation w-full"
-              >
-                <XCircle className="h-4 w-4 mr-2" />
-                Cancel Subscription
-              </Button>
-            </div>
 
             {/* Actions */}
             {!user.subscribed || user.free_access_granted ? (
@@ -1028,6 +1089,7 @@ export default function UserManagementSheet({
                 </p>
               </div>
             )}
+            </div>
             </div>
           </div>
 

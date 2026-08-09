@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { r1r2Content } from './content/r1r2';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -292,26 +293,12 @@ const R1R2Calculator = () => {
                 <CalculatorDivider category="testing" />
 
                 <div className="space-y-4 animate-fade-in">
-                  {/* Hero value */}
-                  <div className="rounded-xl p-4 bg-white/[0.04] text-center">
-                    <p className="text-sm text-white mb-1">
-                      R1+R2 Total (at {result.temperature}°C)
-                    </p>
-                    <div
-                      className="text-4xl font-bold font-mono bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.r1r2.toFixed(4)} Ω
-                    </div>
-                    <p className="text-sm text-white mt-2">
-                      Expected test reading at ~20°C:{' '}
-                      <span className="font-semibold font-mono">
-                        {result.r1r2AtAmbient.toFixed(4)} Ω
-                      </span>
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label={`R1+R2 total at ${result.temperature}°C`}
+                    value={`${result.r1r2.toFixed(4)} Ω`}
+                    aside={`${result.r1r2AtAmbient.toFixed(4)} Ω at ~20°C`}
+                    caption="The ambient figure is what you should expect to measure on a cold circuit."
+                  />
 
                   <ResultsGrid columns={2}>
                     <ResultValue

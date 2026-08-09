@@ -30,6 +30,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { offGridSystemContent } from './content/off-grid-system';
 import { OFFGRID_PRESETS, getPresetByName } from '@/lib/offgrid-presets';
@@ -364,42 +365,26 @@ export function OffGridSystemCalculator() {
 
                 {/* Hero: Solar + Battery summary */}
                 <div className="grid grid-cols-2 gap-4 py-3">
-                  <div className="text-center p-3 rounded-lg bg-white/5">
-                    <Sun className="h-5 w-5 mx-auto mb-1 text-amber-400" />
-                    <p className="text-xs text-white">Solar Array</p>
-                    <p
-                      className="text-xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {((result.numberOfPanels * parseFloat(panelWattage)) / 1000).toFixed(1)}kW
-                    </p>
-                    <p className="text-xs text-white">
-                      {result.numberOfPanels} × {panelWattage}W
-                    </p>
-                  </div>
-                  <div className="text-center p-3 rounded-lg bg-white/5">
-                    <Battery className="h-5 w-5 mx-auto mb-1 text-white" />
-                    <p className="text-xs text-white">Battery Bank</p>
-                    <p
-                      className="text-xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {(
-                        (result.numberOfBatteries *
-                          parseFloat(batteryCapacity) *
-                          parseFloat(depthOfDischarge)) /
-                        100
-                      ).toFixed(0)}
-                      Ah
-                    </p>
-                    <p className="text-xs text-white">
-                      {result.numberOfBatteries} × {batteryCapacity}Ah
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Solar Array"
+                    value={`${((result.numberOfPanels * parseFloat(panelWattage)) / 1000).toFixed(1)}kW`}
+                    caption={`${result.numberOfPanels} × ${panelWattage}W`}
+                  />
+                  <ResultValue
+                    label="Battery Bank"
+                    value={`${((result.numberOfBatteries * parseFloat(batteryCapacity) * parseFloat(depthOfDischarge)) / 100).toFixed(0)} Ah`}
+                    category={CAT}
+                    size="sm"
+                  />
+                  <ResultValue
+                    label="Batteries"
+
+                    value={`${result.numberOfBatteries} × ${batteryCapacity} Ah`}
+
+                    category={CAT}
+
+                    size="sm"
+                  />
                 </div>
 
                 {/* Key metrics */}

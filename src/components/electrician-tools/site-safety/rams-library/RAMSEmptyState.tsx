@@ -11,7 +11,7 @@ export const RAMSEmptyState = ({ type, searchTerm, onClearFilters }: RAMSEmptySt
   if (type === 'no-documents') {
     return (
       <div className="flex flex-col items-center justify-center py-20 px-4">
-        <div className="w-24 h-24 rounded-3xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center mb-6">
+        <div className="w-24 h-24 rounded-3xl border border-elec-yellow/35 flex items-center justify-center mb-6">
           <FolderOpen className="w-12 h-12 text-elec-yellow/60" />
         </div>
         <h3 className="text-xl font-semibold text-white mb-2">No Documents Yet</h3>

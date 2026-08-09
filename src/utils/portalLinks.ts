@@ -38,6 +38,29 @@ export const PORTAL_LINKS = {
       gradient: 'from-green-500 to-emerald-500',
     },
   },
+  /*
+   * ENA Connect Direct — the DNO notification route for EV charge points and
+   * other low-carbon technology.
+   *
+   * This is a deep link, exactly like the LABC one above. Connect Direct does
+   * support machine-to-machine submission (OpenSolar and Jumptech have built
+   * it), but that needs an ENA partner arrangement — until then this at least
+   * takes the electrician straight there with the reference recorded on the
+   * certificate.
+   */
+  connectDirect: {
+    url: 'https://connect-direct.energynetworks.org/',
+    label: 'ENA Connect Direct',
+    shortLabel: 'Connect Direct',
+    description: 'Notify the DNO of an EV charge point or other low-carbon technology',
+    loginRequired: true,
+    branding: {
+      primary: 'sky-600',
+      secondary: 'sky-700',
+      textOnPrimary: 'white',
+      gradient: 'from-sky-600 to-sky-700',
+    },
+  },
   govBuildingRegs: {
     url: 'https://www.gov.uk/building-regulations-approval',
     label: 'Gov.uk Building Regulations',

@@ -335,7 +335,7 @@ export default function ShareProjectSheet({
                   }}
                   className={`flex-1 h-11 flex items-center justify-center gap-2 rounded-xl text-sm font-medium transition-colors touch-manipulation ${
                     activeTab === key
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      ? 'border border-elec-yellow/35 text-elec-yellow'
                       : 'bg-white/5 border border-transparent text-white active:bg-white/10'
                   }`}
                 >
@@ -353,7 +353,7 @@ export default function ShareProjectSheet({
                 onClick={() => toggleType('all')}
                 className={`flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors touch-manipulation ${
                   selectedTypes.has('all')
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    ? 'border border-elec-yellow/35 text-elec-yellow'
                     : 'bg-white/5 border border-transparent text-white active:bg-white/10'
                 }`}
               >
@@ -369,7 +369,7 @@ export default function ShareProjectSheet({
                     onClick={() => toggleType(type.value)}
                     className={`flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors touch-manipulation ${
                       selectedTypes.has(type.value)
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        ? 'border border-elec-yellow/35 text-elec-yellow'
                         : 'bg-white/5 border border-transparent text-white active:bg-white/10'
                     }`}
                   >

@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { ledDriverContent } from './content/led-driver';
 
@@ -304,22 +305,13 @@ const LEDDriverCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero Value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Recommended Driver</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.nearestStandardDriver}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {connectionType} · {numLeds} LED{parseInt(numLeds) > 1 ? 's' : ''} ·{' '}
-                    {result.totalPower.toFixed(2)}W array
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Recommended driver"
+                  value={result.nearestStandardDriver}
+                  caption={`${connectionType} · ${numLeds} LED${
+                    parseInt(numLeds) > 1 ? 's' : ''
+                  } · ${result.totalPower.toFixed(2)} W array.`}
+                />
 
                 {/* Result Values */}
                 <ResultsGrid columns={2}>

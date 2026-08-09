@@ -21,6 +21,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { powerFactorCorrectionContent } from './content/power-factor-correction';
 import { standardDeviceRatings } from '@/lib/calculators/bs7671-data/protectiveDevices';
@@ -637,20 +638,11 @@ const PowerFactorCorrectionCalculator = () => {
                   </div>
 
                   {/* Hero value */}
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
-                    <p className="text-sm text-white mb-1">Required Correction</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.requiredKVAR.toFixed(1)} kVAR
-                    </div>
-                    <p className="text-sm text-white mt-1">
-                      Nearest standard: {result.capacitorBankSize} kVAR
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Required Correction"
+                    value={`${result.requiredKVAR.toFixed(1)} kVAR`}
+                    caption={`Nearest standard: ${result.capacitorBankSize} kVAR`}
+                  />
 
                   {/* Power Triangle */}
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/5">

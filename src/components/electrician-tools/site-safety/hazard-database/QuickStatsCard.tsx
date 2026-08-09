@@ -45,7 +45,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({ hazards, categor
 
           {/* PPE Required */}
           <div className="text-center">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-1.5">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl border border-elec-yellow/35 mb-1.5">
               <HardHat className="h-5 w-5 text-elec-yellow" />
             </div>
             <p className="text-lg font-bold text-white">{stats.withPPE}</p>

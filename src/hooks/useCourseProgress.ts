@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export interface CourseProgressRow {
   id: string;
@@ -78,6 +79,21 @@ export function useCourseProgress() {
       if (error) {
         console.error('Error recording course progress:', error);
         throw error;
+      }
+
+      /*
+       * Only the completion, not every progress tick.
+       *
+       * `recordProgress` fires as somebody scrolls a section, so tracking each
+       * call would drown `feature_use` in noise and hand a big engagement
+       * score to anyone who scrolled. Finishing a section is the event worth
+       * having.
+       */
+      if (isCompleted) {
+        void trackUserEvent(userId, 'feature_use', {
+          eventName: 'course_section_completed',
+          eventData: { course: input.courseKey, section: input.sectionKey },
+        });
       }
     },
     onSuccess: () => {

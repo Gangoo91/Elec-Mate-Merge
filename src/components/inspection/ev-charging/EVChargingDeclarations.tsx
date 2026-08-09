@@ -7,24 +7,28 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { LoadInstallerButton } from './LoadInstallerButton';
 import { EVSectionHeader } from './EVSectionHeader';
+import { cn } from '@/lib/utils';
 import { inputCn, cardCn, labelCn, textareaCn, checkboxCn } from '@/components/forms/fieldStyles';
 import {
   useEVChargingSmartForm,
   InstallerDetails,
 } from '@/hooks/inspection/useEVChargingSmartForm';
 
+/** Intervals an EV charge point realistically gets. */
+const NEXT_INSPECTION_PRESETS = [
+  { months: 12, label: '1 year' },
+  { months: 24, label: '2 years' },
+  { months: 36, label: '3 years' },
+  { months: 60, label: '5 years' },
+] as const;
+
 interface EVChargingDeclarationsProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: unknown) => void;
 }
 
-
-
-
-
 const selectTriggerCn =
   'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 data-[state=open]:border-elec-yellow data-[state=open]:ring-0 active:bg-transparent';
-
 
 const checkRowCn = 'flex min-h-11 items-center gap-3 touch-manipulation cursor-pointer';
 
@@ -69,8 +73,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             <button
               onClick={() => {
                 onUpdate('ozevGrantApplicable', true);
-                const suggested = formData.installationType === 'domestic' ? 'EVHS'
-                  : formData.installationType === 'commercial' ? 'WCS' : '';
+                const suggested =
+                  formData.installationType === 'domestic'
+                    ? 'EVHS'
+                    : formData.installationType === 'commercial'
+                      ? 'WCS'
+                      : '';
                 if (suggested) onUpdate('ozevScheme', suggested);
               }}
               className="inline-flex h-11 items-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-sm font-medium text-elec-yellow touch-manipulation active:scale-[0.98] transition-transform"
@@ -163,10 +171,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
 
           {/* Auto-fill from Business Settings */}
           {hasSavedInstallerDetails && (
-            <LoadInstallerButton
-              onLoadDetails={handleLoadInstallerDetails}
-              variant="default"
-            />
+            <LoadInstallerButton onLoadDetails={handleLoadInstallerDetails} variant="default" />
           )}
 
           <p className="text-sm text-white/85 leading-relaxed">
@@ -313,6 +318,78 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
         </div>
 
         {/* Building Regulations */}
+        {/*
+          ========== Next Inspection ==========
+
+          The certificate had no next-inspection date at all, which makes it
+          incomplete as an installation certificate.
+
+          Practice on the ground (Sean Mulcahy, 9 Aug 2026): issue the first
+          certificate with a 1-year next inspection, then an annual EICR. 12
+          months is the default for that reason, and it stays editable — the IET
+          Code of Practice sets the recommended intervals and they vary by
+          installation type.
+        */}
+        <div className={cardCn}>
+          <EVSectionHeader title="Next Inspection" />
+
+          <div className="grid grid-cols-4 gap-2">
+            {NEXT_INSPECTION_PRESETS.map((preset) => (
+              <button
+                key={preset.months}
+                type="button"
+                onClick={() => {
+                  onUpdate('nextInspectionInterval', String(preset.months));
+                  const d = new Date();
+                  d.setMonth(d.getMonth() + preset.months);
+                  onUpdate('nextInspectionDate', d.toISOString().split('T')[0]);
+                }}
+                className={cn(
+                  'min-h-11 rounded-xl border text-xs font-medium touch-manipulation transition-colors',
+                  String(formData.nextInspectionInterval) === String(preset.months)
+                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                    : 'border-white/[0.12] bg-white/[0.06] text-white'
+                )}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label htmlFor="nextInspectionInterval" className={labelCn}>
+                Interval (months)
+              </Label>
+              <Input
+                id="nextInspectionInterval"
+                inputMode="numeric"
+                placeholder="e.g. 12"
+                value={(formData.nextInspectionInterval as string) || ''}
+                onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)}
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <Label htmlFor="nextInspectionDate" className={labelCn}>
+                Next inspection date
+              </Label>
+              <Input
+                id="nextInspectionDate"
+                type="date"
+                value={(formData.nextInspectionDate as string) || ''}
+                onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+                className={inputCn}
+              />
+            </div>
+          </div>
+
+          <p className="text-[11px] text-white leading-relaxed">
+            Common practice is a 1-year first inspection, then an annual EICR. Check the IET Code of
+            Practice for the recommended interval for this installation type.
+          </p>
+        </div>
+
         <div className={cardCn}>
           <EVSectionHeader title="Building Regulations" />
 
@@ -357,7 +434,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
         <div className={`${cardCn} lg:col-span-2`}>
           {isComplete ? (
             <p className="text-sm text-white leading-relaxed">
-              <span className="font-semibold text-green-400">Certificate ready for generation.</span>{' '}
+              <span className="font-semibold text-green-400">
+                Certificate ready for generation.
+              </span>{' '}
               All required fields have been completed.
             </p>
           ) : (

@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { FIELD_CN } from '../../common/fieldClasses';
 import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import type {
   HazardTableSection as HazardTableSectionType,
   HazardRow,
@@ -118,17 +119,17 @@ function HazardCard({
         </button>
       </div>
 
-      <Input
+      <input
         value={hazard.hazard}
         onChange={(e) => update({ hazard: e.target.value })}
         placeholder="Hazard description"
-        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+        className={FIELD_CN}
       />
-      <Input
+      <input
         value={hazard.who_at_risk}
         onChange={(e) => update({ who_at_risk: e.target.value })}
         placeholder="Who is at risk"
-        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+        className={FIELD_CN}
       />
 
       <div className="grid grid-cols-3 gap-2">
@@ -172,14 +173,14 @@ function HazardCard({
         <label className="text-[10px] font-semibold text-white block mb-1">Controls</label>
         {hazard.controls.map((c, ci) => (
           <div key={ci} className="flex gap-2 mb-1.5">
-            <Input
+            <input
               value={c}
               onChange={(e) => {
                 const controls = [...hazard.controls];
                 controls[ci] = e.target.value;
                 update({ controls });
               }}
-              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
+              className={cn(FIELD_CN, 'flex-1')}
               placeholder="Control measure"
             />
             <button

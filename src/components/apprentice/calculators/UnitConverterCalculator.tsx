@@ -15,6 +15,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { unitConverterContent } from './content/unit-converter';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -309,20 +310,10 @@ const UnitConverterCalculator = () => {
                 <CalculatorDivider category={CAT} />
 
                 <div className="space-y-4 animate-fade-in">
-                  {/* Hero value */}
-                  <div className="text-center py-3">
-                    <p
-                      className="text-4xl font-bold font-mono bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {formatValue(result)}
-                    </p>
-                    <p className="text-sm text-white mt-1">
-                      {conversionCategories[category].units[toUnit].name}
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label={conversionCategories[category].units[toUnit].name}
+                    value={formatValue(result)}
+                  />
 
                   {/* Conversion formula */}
                   <CalculatorFormula

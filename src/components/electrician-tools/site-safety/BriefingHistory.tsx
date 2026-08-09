@@ -285,7 +285,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
                       {typeInfo.label}
                     </Badge>
                     {briefing.ai_generated && (
-                      <Badge className="bg-elec-yellow/15 text-elec-yellow border-0 text-xs">
+                      <Badge className="bg-elec-yellow text-black border-0 text-xs">
                         <Sparkles className="h-3 w-3 mr-1" />
                         AI
                       </Badge>

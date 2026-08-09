@@ -24,7 +24,7 @@ export const HazardStatsDashboard = ({
     <div className="bg-gradient-to-br from-elec-card/80 to-elec-card/50 rounded-xl border border-border/50 p-4 md:p-6 mb-6 shadow-lg">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-12 h-12 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-lg border border-elec-yellow/35 flex items-center justify-center">
           <Shield className="w-6 h-6 text-elec-yellow" />
         </div>
         <div>

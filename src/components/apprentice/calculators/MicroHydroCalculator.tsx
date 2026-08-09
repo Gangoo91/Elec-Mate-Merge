@@ -19,9 +19,11 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { microHydroContent } from './content/micro-hydro';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { DOMESTIC_IMPORT_RATE } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -136,7 +138,7 @@ const MicroHydroCalculator = () => {
   const [head, setHead] = useState('');
   const [turbineType, setTurbineType] = useState('');
   const [availabilityFactor, setAvailabilityFactor] = useState('85');
-  const [electricityRate, setElectricityRate] = useState('0.15');
+  const [electricityRate, setElectricityRate] = useState(String(DOMESTIC_IMPORT_RATE));
   const [penstockLength, setPenstockLength] = useState('100');
   const [result, setResult] = useState<MicroHydroResult | null>(null);
 
@@ -272,7 +274,7 @@ const MicroHydroCalculator = () => {
     setHead('');
     setTurbineType('');
     setAvailabilityFactor('85');
-    setElectricityRate('0.15');
+    setElectricityRate(String(DOMESTIC_IMPORT_RATE));
     setPenstockLength('100');
     setResult(null);
   }, []);
@@ -425,21 +427,11 @@ const MicroHydroCalculator = () => {
                 </div>
 
                 {/* Hero power output */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Practical Power Output</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.practicalPower.toFixed(1)} kW
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {(result.annualGeneration / 1000).toFixed(1)} MWh/yr ·{' '}
-                    {result.recommendedTurbine} at {(result.turbineEfficiency * 100).toFixed(0)}%
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Practical Power Output"
+                  value={`${result.practicalPower.toFixed(1)} kW`}
+                  caption={`${(result.annualGeneration / 1000).toFixed(1)} MWh/yr ·${' '} ${result.recommendedTurbine} at ${(result.turbineEfficiency * 100).toFixed(0)}%`}
+                />
 
                 {/* Power results */}
                 <ResultsGrid columns={2}>

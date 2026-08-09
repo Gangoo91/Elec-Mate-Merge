@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { emergencyLightingContent } from './content/emergency-lighting';
 import {
@@ -361,20 +362,11 @@ const EmergencyLightingCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Total Luminaires Required</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.totalLuminaires}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.totalPower}W total | {result.shrSpacing}m SHR spacing
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Total Luminaires Required"
+                  value={`${result.totalLuminaires}`}
+                  caption={`${result.totalPower}W total | ${result.shrSpacing}m SHR spacing`}
+                />
 
                 {/* Luminaire Breakdown */}
                 <ResultsGrid columns={2}>

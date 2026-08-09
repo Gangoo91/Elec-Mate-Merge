@@ -18,6 +18,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { earthElectrodeContent } from './content/earth-electrode';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -328,18 +329,11 @@ const EarthElectrodeCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Total Resistance</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.totalResistance.toFixed(1)} Ω
-                  </p>
-                  <p className="text-sm text-white mt-2">Target: ≤{result.target} Ω</p>
-                </div>
+                <ResultHeadline
+                  label="Total Resistance"
+                  value={`${result.totalResistance.toFixed(1)} Ω`}
+                  caption={`Target: ≤${result.target} Ω`}
+                />
 
                 {/* Result cards */}
                 <ResultsGrid columns={2}>

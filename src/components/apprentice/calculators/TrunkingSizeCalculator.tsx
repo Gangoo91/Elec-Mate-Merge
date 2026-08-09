@@ -16,6 +16,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { trunkingSizeContent } from './content/trunking-size';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -327,15 +328,7 @@ const TrunkingSizeCalculator = () => {
               <div className="space-y-4 animate-fade-in">
                 <ResultBadge status={result.status} label={result.statusLabel} />
 
-                {/* Hero recommended size */}
-                <p
-                  className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {result.recommendedSize}
-                </p>
+                <ResultHeadline label="Recommended size" value={result.recommendedSize} />
 
                 <ResultsGrid columns={2}>
                   {isTrunking && (

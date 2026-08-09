@@ -382,7 +382,7 @@ export function SafetyRecordCard({
                 className={cn(
                   'flex-1 h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-medium touch-manipulation active:scale-[0.97] transition-all',
                   action.variant === 'primary'
-                    ? 'bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow'
+                    ? 'border border-elec-yellow/35 text-elec-yellow'
                     : action.variant === 'danger'
                       ? 'bg-red-500/10 border border-red-500/20 text-red-400'
                       : 'bg-white/[0.04] border border-white/[0.08] text-white'

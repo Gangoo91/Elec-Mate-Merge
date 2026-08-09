@@ -377,7 +377,7 @@ export const SavedRAMSLibrary = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+        <div className="p-4 rounded-2xl border border-elec-yellow/35">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
         </div>
         <div className="text-center">
@@ -514,18 +514,18 @@ export const SavedRAMSLibrary = () => {
           {hasActiveFilters && (
             <div className="flex items-center gap-2 pb-3 overflow-x-auto scrollbar-hide">
               {statusFilter !== 'all' && (
-                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1">
+                <Badge className="border border-elec-yellow/35 text-elec-yellow shrink-0 pr-1">
                   {statusFilter}
                   <button
                     onClick={() => setStatusFilter('all')}
-                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5"
+                    className="ml-1 hover:border-elec-yellow/60 rounded p-0.5"
                   >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
               )}
               {dateFilter !== 'all' && (
-                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1">
+                <Badge className="border border-elec-yellow/35 text-elec-yellow shrink-0 pr-1">
                   {dateFilter === '7days'
                     ? 'Last 7 days'
                     : dateFilter === '30days'
@@ -533,18 +533,18 @@ export const SavedRAMSLibrary = () => {
                       : 'Last 90 days'}
                   <button
                     onClick={() => setDateFilter('all')}
-                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5"
+                    className="ml-1 hover:border-elec-yellow/60 rounded p-0.5"
                   >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
               )}
               {locationFilter !== 'all' && (
-                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1 max-w-[150px]">
+                <Badge className="border border-elec-yellow/35 text-elec-yellow shrink-0 pr-1 max-w-[150px]">
                   <span className="truncate">{locationFilter}</span>
                   <button
                     onClick={() => setLocationFilter('all')}
-                    className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5 shrink-0"
+                    className="ml-1 hover:border-elec-yellow/60 rounded p-0.5 shrink-0"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -591,7 +591,7 @@ export const SavedRAMSLibrary = () => {
                 <Button
                   variant="ghost"
                   onClick={() => setShowAll(!showAll)}
-                  className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98]"
+                  className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:border-elec-yellow/60 touch-manipulation active:scale-[0.98]"
                 >
                   {showAll ? (
                     <>
@@ -700,7 +700,7 @@ export const SavedRAMSLibrary = () => {
 
         {/* Bulk Action Bar */}
         {selectedDocIds.size > 0 && (
-          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
+          <div className="flex items-center justify-between p-3 border border-elec-yellow/35 rounded-xl">
             <span className="text-sm text-elec-yellow">
               {selectedDocIds.size} document{selectedDocIds.size !== 1 ? 's' : ''} selected
             </span>
@@ -741,7 +741,7 @@ export const SavedRAMSLibrary = () => {
               variant="ghost"
               size="sm"
               onClick={() => setShowAll(!showAll)}
-              className="text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
+              className="text-elec-yellow hover:text-elec-yellow/80 hover:border-elec-yellow/60"
             >
               {showAll ? (
                 <>
@@ -777,7 +777,7 @@ export const SavedRAMSLibrary = () => {
             <CardHeader className="border-b border-white/5">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-3 text-white">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <div className="p-2 rounded-lg border border-elec-yellow/35">
                     <FileText className="h-5 w-5 text-elec-yellow" />
                   </div>
                   Saved RAMS Documents
@@ -827,7 +827,9 @@ export const SavedRAMSLibrary = () => {
                       key={doc.id}
                       className={cn(
                         'transition-colors',
-                        selectedDocIds.has(doc.id) ? 'bg-elec-yellow/5' : 'hover:bg-white/[0.02]'
+                        selectedDocIds.has(doc.id)
+                          ? 'border border-elec-yellow/35'
+                          : 'hover:bg-white/[0.02]'
                       )}
                     >
                       <td className="px-4 py-3 text-center">
@@ -839,7 +841,7 @@ export const SavedRAMSLibrary = () => {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                          <div className="p-2 rounded-lg border border-elec-yellow/35">
                             <FileText className="h-4 w-4 text-elec-yellow" />
                           </div>
                           <span className="font-medium text-sm text-white">{doc.project_name}</span>
@@ -862,7 +864,7 @@ export const SavedRAMSLibrary = () => {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="bg-transparent border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                            className="bg-transparent border-white/10 hover:border-elec-yellow/30 hover:border-elec-yellow/60 text-white"
                             onClick={() => handleDownload(doc)}
                             disabled={!doc.pdf_url || downloadingId === doc.id}
                           >

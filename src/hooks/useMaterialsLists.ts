@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 /**
  * Canonical form for matching item names on import — trimmed, lower-cased,
@@ -130,6 +131,7 @@ export function useMaterialsLists() {
           .single();
 
         if (error) throw error;
+        void trackUserEvent(user.id, 'feature_use', { eventName: 'materials_list_created' });
 
         const newList = data as MaterialsList;
         setLists((prev) => [newList, ...prev]);

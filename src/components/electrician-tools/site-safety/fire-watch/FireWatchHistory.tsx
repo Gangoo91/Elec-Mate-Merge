@@ -10,12 +10,11 @@ import {
   EmptyState,
   LoadingState,
   Eyebrow,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface FireWatchHistoryProps {
   records: FireWatchRecord[];
@@ -112,7 +111,7 @@ function RecordRow({
 
   return (
     <div>
-      <ListRow
+      <SafetyListRow
         onClick={() => setExpanded((prev) => !prev)}
         accent={statusTone(record.status)}
         title={timeLabel}
@@ -275,11 +274,11 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
         Array.from(grouped.entries()).map(([dateLabel, dateRecords]) => (
           <div key={dateLabel} className="space-y-2.5">
             <Eyebrow>{dateLabel}</Eyebrow>
-            <ListCard>
+            <SafetyListCard>
               {dateRecords.map((record) => (
                 <RecordRow key={record.id} record={record} onStartNewWatch={onStartNewWatch} />
               ))}
-            </ListCard>
+            </SafetyListCard>
           </div>
         ))
       )}

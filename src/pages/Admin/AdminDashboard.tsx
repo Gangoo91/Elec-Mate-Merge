@@ -694,7 +694,7 @@ export default function AdminDashboard() {
           MRR keeps the largest type because it is the one figure the page
           exists to report; the rest are peers.
         */}
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.10] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.10] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
           <button
             onClick={() => navigate('/admin/revenue')}
             className="col-span-2 bg-[hsl(0_0%_10%)] px-4 py-4 text-left transition-colors hover:bg-[hsl(0_0%_13%)] touch-manipulation sm:col-span-3 lg:col-span-2"
@@ -714,24 +714,37 @@ export default function AdminDashboard() {
             </span>
           </button>
 
+          {/*
+            Six metrics beside the MRR cell. Keep this list and the `lg:grid-cols-*`
+            above in step — the MRR cell spans two, so six entries here means
+            eight columns. Add a seventh without widening the grid and the last
+            one wraps onto a row of its own with a dead gap beside it.
+          */}
           {[
             { label: 'Paying', value: allPaying, to: '/admin/revenue', accent: true },
+            {
+              // Live trials across both stores and Stripe — the pipeline that
+              // becomes next month's Paying figure.
+              label: 'On trial',
+              value: totalTrials,
+              to: '/admin/trials',
+            },
             {
               label: 'Founders',
               value: stripeStats?.stripe.tierCounts?.founder || 0,
               to: '/admin/founders',
             },
             {
-              label: 'Signed up today',
+              label: 'New today',
               value: stats?.signupsToday || 0,
               to: '/admin/users?filter=today',
             },
-            { label: 'Users', value: stats?.totalUsers || 0, to: '/admin/users' },
             {
               label: 'Active today',
               value: stats?.activeToday || 0,
               to: '/admin/users?filter=active',
             },
+            { label: 'Users', value: stats?.totalUsers || 0, to: '/admin/users' },
           ].map((m) => (
             <button
               key={m.label}

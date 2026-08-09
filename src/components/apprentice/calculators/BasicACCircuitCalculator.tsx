@@ -14,6 +14,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { basicAcCircuitContent } from './content/basic-ac-circuit';
 
@@ -319,28 +320,14 @@ const BasicACCircuitCalculator = () => {
 
                   {/* Hero — Impedance & Current */}
                   <div className="grid grid-cols-2 gap-4 py-3">
-                    <div className="text-center">
-                      <p className="text-sm text-white mb-1">Impedance (Z)</p>
-                      <div
-                        className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
-                        {results.impedance?.toFixed(2)} Ω
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm text-white mb-1">Current (I)</p>
-                      <div
-                        className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
-                        {results.current?.toFixed(3)} A
-                      </div>
-                    </div>
+                    <ResultHeadline
+                      label="Impedance (Z)"
+                      value={`${results.impedance?.toFixed(2)} Ω`}
+                    />
+                    <ResultHeadline
+                      label="Current (I)"
+                      value={`${results.current?.toFixed(3)} A`}
+                    />
                   </div>
 
                   {/* Result Cards */}

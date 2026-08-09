@@ -325,7 +325,7 @@ export default function PhotoDetailSheet({
                       }}
                     >
                       {/* Pulsing ring */}
-                      <span className="absolute w-6 h-6 rounded-full bg-elec-yellow/30 animate-ping" />
+                      <span className="absolute w-6 h-6 rounded-full border border-elec-yellow/35 animate-ping" />
                       {/* Pin circle */}
                       <span className="relative block w-6 h-6 rounded-full bg-elec-yellow border-2 border-black/30 shadow-lg" />
 
@@ -350,7 +350,7 @@ export default function PhotoDetailSheet({
                         transform: 'translate(-50%, -50%)',
                       }}
                     >
-                      <span className="absolute inset-0 w-6 h-6 rounded-full bg-elec-yellow/30 animate-ping" />
+                      <span className="absolute inset-0 w-6 h-6 rounded-full border border-elec-yellow/35 animate-ping" />
                       <span className="relative block w-6 h-6 rounded-full bg-elec-yellow border-2 border-white shadow-lg" />
                     </div>
                   )}
@@ -418,7 +418,7 @@ export default function PhotoDetailSheet({
                       <button
                         onClick={handleConfirmPin}
                         disabled={!pinText.trim()}
-                        className="h-12 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/40 disabled:opacity-100 touch-manipulation"
+                        className="h-12 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:brightness-110 disabled:bg-white/[0.08] disabled:text-white/40 disabled:opacity-100 touch-manipulation"
                       >
                         Place Pin
                       </button>

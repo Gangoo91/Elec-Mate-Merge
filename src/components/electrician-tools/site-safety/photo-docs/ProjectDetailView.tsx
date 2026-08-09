@@ -307,7 +307,7 @@ export default function ProjectDetailView({
 
         {/* Batch select bar */}
         {batchMode && (
-          <div className="flex-shrink-0 px-3 py-2 bg-elec-yellow/10 border-b border-elec-yellow/20 flex items-center gap-2">
+          <div className="flex-shrink-0 px-3 py-2 border-b border-elec-yellow/20 flex items-center gap-2">
             <span className="text-xs font-medium text-white flex-1">
               {selectedPhotos.size} selected
             </span>

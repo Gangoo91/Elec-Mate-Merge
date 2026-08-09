@@ -10,7 +10,7 @@ export function HeroAIBriefingCard({ onCreateBriefing }: HeroAIBriefingCardProps
   return (
     <div className="bg-card border border-elec-yellow/30 rounded-xl p-6 hover:border-elec-yellow/50 transition-all">
       <div className="flex flex-col items-center text-center gap-4">
-        <div className="h-16 w-16 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
+        <div className="h-16 w-16 rounded-xl border border-elec-yellow/35 flex items-center justify-center">
           <FileText className="h-8 w-8 text-elec-yellow" />
         </div>
 

@@ -1,5 +1,5 @@
 import { Plus, Trash2, PenTool } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { FIELD_CN } from '../../common/fieldClasses';
 import type {
   SignatureBlockSection as SignatureBlockSectionType,
   SignatureEntry,
@@ -85,20 +85,20 @@ export function SignatureBlockSection({ section, mode, onChange }: Props) {
               <Trash2 className="h-3.5 w-3.5" />
             </button>
           </div>
-          <Input
+          <input
             value={entry.role}
             onChange={(e) => updateEntry(i, { role: e.target.value })}
             placeholder="Role (e.g. Assessor, Supervisor)"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+            className={FIELD_CN}
           />
           <div className="grid grid-cols-2 gap-2">
-            <Input
+            <input
               value={entry.name}
               onChange={(e) => updateEntry(i, { name: e.target.value })}
               placeholder="Full name"
-              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+              className={FIELD_CN}
             />
-            <Input
+            <input
               type="date"
               value={entry.date}
               onChange={(e) => updateEntry(i, { date: e.target.value })}

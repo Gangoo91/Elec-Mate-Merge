@@ -109,7 +109,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
                 </div>
               </div>
               {template.is_default && (
-                <Badge className="bg-elec-yellow/20 text-elec-yellow border-0">Popular</Badge>
+                <Badge className="bg-elec-yellow text-black border-0">Popular</Badge>
               )}
             </div>
 

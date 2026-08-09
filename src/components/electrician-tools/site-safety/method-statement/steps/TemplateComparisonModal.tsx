@@ -167,7 +167,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                     <div className="space-y-2 max-h-32 overflow-y-auto">
                       {template.steps.slice(0, 4).map((step, stepIndex) => (
                         <div key={stepIndex} className="flex items-start gap-2">
-                          <div className="w-4 h-4 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
+                          <div className="w-4 h-4 rounded-full bg-elec-yellow text-black flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
                             {stepIndex + 1}
                           </div>
                           <span className="text-xs text-white break-words line-clamp-1">
@@ -243,7 +243,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
           )}
         </ScrollArea>
 
-        <Separator className="bg-elec-yellow/20" />
+        <Separator className="border border-elec-yellow/35" />
 
         <div className="p-6 pt-4 flex-shrink-0">
           <div className="flex items-center justify-between gap-4">

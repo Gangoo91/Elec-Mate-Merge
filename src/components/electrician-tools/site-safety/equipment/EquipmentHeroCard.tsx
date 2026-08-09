@@ -52,7 +52,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
   };
 
   const iconBgMap = {
-    yellow: 'bg-elec-yellow/20 text-elec-yellow',
+    yellow: 'bg-elec-yellow text-black',
     green: 'bg-emerald-500/20 text-emerald-500',
     amber: 'bg-amber-500/20 text-amber-500',
     red: 'bg-red-500/20 text-red-500',
@@ -135,10 +135,7 @@ export function EquipmentHeroCard({
       <div className="h-0.5 bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
 
       {/* Background decoration - ambient glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/5 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-emerald-500/5 blur-3xl" />
-      </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none"></div>
 
       {/* Content */}
       <div className="relative z-10 p-3 space-y-3">
@@ -206,7 +203,7 @@ export function EquipmentHeroCard({
             onClick={onAddEquipment}
             className={cn(
               'w-full h-11 text-sm font-semibold rounded-xl',
-              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'bg-elec-yellow text-black hover:brightness-110',
               'shadow-lg shadow-elec-yellow/25',
               'transition-all duration-300',
               'active:scale-[0.98]'

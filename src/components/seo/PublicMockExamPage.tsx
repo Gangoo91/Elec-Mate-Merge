@@ -304,9 +304,13 @@ export function PublicMockExamPage({
                 passThreshold={passThreshold}
                 difficultyMix={difficultyMix}
                 signupCta={{
-                  label: 'Start Free Trial',
+                  // Names what they get rather than what they start. These are
+                  // logged-out strangers mid-revision — "Start Free Trial" asks
+                  // them to begin a billing relationship; this asks them to open
+                  // the thing they were already looking for.
+                  label: 'Open the full Study Centre — £0 for 7 days',
                   href: `/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`,
-                  subline: 'Free trial · no charge until day 8 · cancel anytime',
+                  subline: 'Cancel any time before day 8 and you are never charged.',
                 }}
                 onSubmitted={handleExamSubmitted}
                 onStarted={handleExamStarted}
@@ -319,7 +323,10 @@ export function PublicMockExamPage({
               deep in the page and we want it immediately. */}
           {examSubmitted && (
             <SEOStickyMobileCTA
-              label="Practise your weak topics"
+              // Leads with the price, not the feature: this bar is what most
+              // people actually see (mobile is 58% of search clicks) and it has
+              // room for one idea. "£0" is the one that removes the objection.
+              label="£0 for 7 days — full access"
               href={`/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`}
               appearAfterScroll={0}
               dismissKey="seo-sticky-cta-mock-exam-v1"

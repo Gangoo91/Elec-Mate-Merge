@@ -17,6 +17,7 @@ import {
   FormulaReference,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { pfcContent } from './content/pfc';
@@ -334,21 +335,11 @@ const PFCCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Prospective Fault Current</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.pfcValue.toFixed(0)} A
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    ({(result.pfcValue / 1000).toFixed(2)} kA)
-                  </p>
-                  <p className="text-xs text-white mt-1">Greatest value — {result.pfcBasis}</p>
-                </div>
+                <ResultHeadline
+                  label="Prospective Fault Current"
+                  value={`${result.pfcValue.toFixed(0)} A`}
+                  caption={`(${(result.pfcValue / 1000).toFixed(2)} kA)`}
+                />
 
                 {/* Result cards — every fault type Appendix 14 asks for, not just the loop */}
                 <ResultsGrid columns={2}>

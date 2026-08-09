@@ -6,11 +6,10 @@ import {
   FilterBar,
   FormCard,
   Eyebrow,
-  ListCard,
-  ListRow,
   EmptyState,
   type Tone,
 } from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface HazardIntegrationStepProps {
   data: MethodStatementData;
@@ -80,9 +79,9 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
       {linkedHazardObjects.length > 0 && (
         <div className="space-y-2">
           <Eyebrow>Linked hazards ({linkedHazardObjects.length})</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {linkedHazardObjects.map((hazard) => (
-              <ListRow
+              <SafetyListRow
                 key={hazard.id}
                 accent="green"
                 title={hazard.name}
@@ -101,7 +100,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                 }
               />
             ))}
-          </ListCard>
+          </SafetyListCard>
         </div>
       )}
 
@@ -123,11 +122,11 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
       ) : (
         <div className="space-y-2">
           <Eyebrow>Hazard database</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {filteredHazards.map((hazard) => {
               const isLinked = linkedHazards.includes(hazard.id);
               return (
-                <ListRow
+                <SafetyListRow
                   key={hazard.id}
                   onClick={() => (isLinked ? onHazardUnlink(hazard.id) : onHazardLink(hazard.id))}
                   accent={isLinked ? 'green' : RISK_TONE[hazard.riskLevel]}
@@ -149,7 +148,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
         </div>
       )}
     </div>

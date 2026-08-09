@@ -78,7 +78,7 @@ export function SmartTextarea({ value, onChange, className, ...props }: SmartTex
               key={`${s.start}-${i}`}
               type="button"
               onClick={() => handleApplySuggestion(s)}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 text-[11px] text-elec-yellow font-medium touch-manipulation active:scale-[0.97] transition-all"
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-elec-yellow/35 text-[11px] text-elec-yellow font-medium touch-manipulation active:scale-[0.97] transition-all"
             >
               <span className="line-through text-white opacity-60">{s.original}</span>
               <span>&rarr;</span>

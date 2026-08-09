@@ -13,6 +13,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { conduitBendingContent } from './content/conduit-bending';
 import { cn } from '@/lib/utils';
@@ -496,21 +497,11 @@ const ConduitBendingCalculator = () => {
                     </span>
                   </div>
 
-                  {/* Hero Value */}
-                  <div className="rounded-xl p-4 bg-white/[0.04]">
-                    <p className="text-sm text-white mb-1">{result.bendType}</p>
-                    <div
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      First Mark: {result.firstBendMark.toFixed(1)} mm
-                    </div>
-                    <p className="text-sm text-white mt-1">
-                      Min. bend radius for {conduitSize}mm conduit: {result.minBendRadius}mm
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label={`${result.bendType} — first mark`}
+                    value={`${result.firstBendMark.toFixed(1)} mm`}
+                    caption={`Minimum bend radius for ${conduitSize} mm conduit: ${result.minBendRadius} mm.`}
+                  />
 
                   <ResultsGrid columns={2}>
                     {result.secondBendMark > 0 && (

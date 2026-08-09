@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQuery } from '@tanstack/react-query';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export interface Customer {
   id: string;
@@ -115,6 +116,8 @@ export const useCustomers = () => {
       });
 
       if (error) throw error;
+
+      void trackUserEvent(user.id, 'feature_use', { eventName: 'customer_added' });
 
       toast({
         title: 'Customer saved',

@@ -22,6 +22,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { cableDeratingContent } from './content/cable-derating';
 
@@ -662,18 +663,11 @@ const CableDeratingCalculator = () => {
                   </div>
 
                   {/* Hero Value */}
-                  <div className="rounded-xl p-4 bg-white/[0.04]">
-                    <p className="text-sm text-white mb-1">Derated Cable Capacity</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.finalRating.toFixed(1)} A
-                    </div>
-                    <p className="text-sm text-white mt-2">Base: {baseRating}A</p>
-                  </div>
+                  <ResultHeadline
+                    label="Derated Cable Capacity"
+                    value={`${result.finalRating.toFixed(1)} A`}
+                    caption={`Base: ${baseRating}A`}
+                  />
 
                   {/* Derating Factors */}
                   <div className="space-y-3">

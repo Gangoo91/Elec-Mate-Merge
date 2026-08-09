@@ -29,6 +29,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { rcdDiscriminationContent } from './content/rcd-discrimination';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -527,22 +528,16 @@ const RCDDiscriminationCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Current Ratio</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.currentRatio.toFixed(1)}:1
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.discriminates ? 'DISCRIMINATES' : 'NO DISCRIMINATION'} —{' '}
-                    {result.timeDifference}ms time difference
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Current ratio"
+                  value={`${result.currentRatio.toFixed(1)}:1`}
+                  tone={result.discriminates ? 'default' : 'negative'}
+                  caption={
+                    result.discriminates
+                      ? `Discriminates — ${result.timeDifference} ms between operating times.`
+                      : `No discrimination — only ${result.timeDifference} ms between operating times.`
+                  }
+                />
 
                 {/* Result cards */}
                 <ResultsGrid columns={3}>

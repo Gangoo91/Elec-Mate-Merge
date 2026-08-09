@@ -262,7 +262,7 @@ export function AttendeeSignatureCard({
       {!signed && onSign && (
         <Button
           onClick={onSign}
-          className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+          className="h-11 bg-elec-yellow text-black hover:brightness-110 touch-manipulation"
         >
           Sign
         </Button>

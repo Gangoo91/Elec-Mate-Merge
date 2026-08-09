@@ -672,7 +672,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
           </button>
           <button
             onClick={() => setShowShare(true)}
-            className="h-11 px-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+            className="h-11 px-4 rounded-xl border border-elec-yellow/35 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
           >
             <Share2 className="h-4 w-4" />
             Share

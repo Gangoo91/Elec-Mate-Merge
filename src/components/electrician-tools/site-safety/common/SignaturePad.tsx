@@ -174,7 +174,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
                 onClick={handleTodayClick}
                 size="sm"
                 variant="outline"
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 whitespace-nowrap"
+                className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60 whitespace-nowrap"
               >
                 Today
               </Button>

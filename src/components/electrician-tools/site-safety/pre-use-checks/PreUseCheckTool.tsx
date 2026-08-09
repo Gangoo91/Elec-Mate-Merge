@@ -15,8 +15,6 @@ import {
   LoadingState,
   Eyebrow,
   FormCard,
-  ListCard,
-  ListRow,
   SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
@@ -27,6 +25,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface PreUseCheckToolProps {
   onBack: () => void;
@@ -62,7 +61,7 @@ const RESULT_PILL: Record<Tone, string> = {
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
   orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  yellow: 'border border-elec-yellow/35 text-elec-yellow',
   purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
@@ -265,8 +264,8 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
               const exporting = isExporting && exportingId === check.id;
               const jobTitle = jobTitleFor(check.job_id);
               return (
-                <ListCard key={check.id}>
-                  <ListRow
+                <SafetyListCard key={check.id}>
+                  <SafetyListRow
                     accent={resultTone(check.overall_result)}
                     title={`${(check.equipment_type || '').replace(/_/g, ' ')} check`}
                     subtitle={[
@@ -310,7 +309,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                       Share
                     </SecondaryButton>
                   </div>
-                </ListCard>
+                </SafetyListCard>
               );
             })}
           </div>

@@ -56,18 +56,95 @@ export interface EVChargingFormData {
   prospectiveFaultCurrent: string;
   externalLoopImpedance: string;
 
-  // PME considerations
+  // PME considerations — Reg 722.411.4.1
   isPME: boolean;
+  /** One of the methods (b)-(e) of Reg 722.411.4.1. Indent (a) was deleted by
+   *  A2:2022. Nothing else is a permitted method. */
   pmeEarthingMeasures: string;
   earthElectrodeInstalled: boolean;
   earthElectrodeResistance: string;
+  /**
+   * 722.411.4.1 only bites on a charge point "located outdoors or that might
+   * reasonably be expected to be used to charge a vehicle located outdoors".
+   * Without this the certificate cannot record the condition that triggers the
+   * whole requirement.
+   */
+  vehicleChargedOutdoors: boolean | null;
+  /**
+   * 722.411.4.1: protective conductors and exposed-conductive-parts downstream
+   * of a device provided for (c), (d) or (e) shall have NO connection to the
+   * protective conductors of any circuit not on the same device, nor to ANY
+   * extraneous-conductive-part. Routinely got wrong on open-PEN installs and
+   * there was nowhere to record it.
+   */
+  openPENSegregationConfirmed: boolean;
 
-  // O-PEN device (IET01:2024 — mandatory for PME/TN-C-S)
+  // O-PEN device. NOT mandatory: it is method (c)/(d)/(e) of Reg 722.411.4.1,
+  // and an earth electrode under (b) is an equally valid alternative.
   openPENDeviceFitted: boolean;
+  /**
+   * Separate device, or built into the charge point?
+   *
+   * Reg 722.411.4.1 says of methods (c), (d) and (e): "Equivalent means of
+   * functionality could be included within the charging equipment." Most modern
+   * units — Zappi, Ohme, Easee — do exactly that, and the form only allowed a
+   * separate device with its own make, model and serial. There was no way to
+   * record the commonest real installation.
+   */
+  openPENDeviceLocation: 'separate' | 'integral' | '';
   openPENManufacturer: string;
   openPENModel: string;
   openPENSerial: string;
   openPENTestVerified: boolean;
+
+  /**
+   * Main protective bonding — Reg 411.3.1.2 / 544.1.1.
+   *
+   * Absent from this certificate entirely, so an EV EIC could be issued with
+   * nothing said about the bonding at all. Same shape as the EIC's own fields.
+   */
+  mainBondingVerified: boolean;
+  mainBondingNA: boolean;
+  mainBondingSize: string; // csa in mm²
+  mainBondingLocations: string; // comma-separated: water, gas, oil, structural-steel, other
+  earthingConductorCsa: string; // mm² — Reg 542.3 / Table 54.1
+
+  /**
+   * Reg 722.312.2.1 — "A circuit supplying charging equipment for electric
+   * vehicles shall not include a PEN conductor." A design decision with no
+   * field to record it until now.
+   */
+  noPenInFinalCircuit: boolean;
+
+  /**
+   * Regs 722.410.3.5 and 722.410.3.6 — obstacles, placing out of reach,
+   * non-conducting location and earth-free local equipotential bonding shall
+   * not be used. One confirmation covers all four; they are prohibitions, not
+   * choices.
+   */
+  prohibitedMeasuresNotUsed: boolean;
+
+  /**
+   * Reg 722.413.1.2 — where electrical separation is the protective measure it
+   * is limited to ONE vehicle from ONE unearthed source, through a fixed
+   * isolating transformer to BS EN 61558-2-4. Only meaningful when the
+   * separation route is selected.
+   */
+  separationSingleVehicle: boolean;
+  separationTransformerStandard: string;
+
+  /** ENA Connect Direct reference, for the DNO submission. */
+  connectDirectReference: string;
+
+  /**
+   * Next inspection — the certificate had none at all.
+   *
+   * Practice (Sean Mulcahy, 9 Aug 2026): the first certificate is issued with a
+   * 1-year next inspection, and an annual EICR after that. An EIC without a
+   * next-inspection date is incomplete, and this one had nowhere to put it.
+   */
+  nextInspectionInterval: string; // months
+  nextInspectionDate: string; // ISO date
 
   // Distribution board details
   dbLocation: string;
@@ -236,6 +313,21 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   pmeEarthingMeasures: '',
   earthElectrodeInstalled: false,
   earthElectrodeResistance: '',
+  vehicleChargedOutdoors: null,
+  openPENSegregationConfirmed: false,
+  openPENDeviceLocation: '',
+  mainBondingVerified: false,
+  mainBondingNA: false,
+  mainBondingSize: '',
+  mainBondingLocations: '',
+  earthingConductorCsa: '',
+  noPenInFinalCircuit: false,
+  prohibitedMeasuresNotUsed: false,
+  separationSingleVehicle: false,
+  separationTransformerStandard: '',
+  connectDirectReference: '',
+  nextInspectionInterval: '12',
+  nextInspectionDate: '',
 
   openPENDeviceFitted: false,
   openPENManufacturer: '',

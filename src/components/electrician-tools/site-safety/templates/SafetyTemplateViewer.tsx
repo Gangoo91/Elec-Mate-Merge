@@ -10,7 +10,9 @@ import {
   ChevronUp,
   BarChart3,
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { FIELD_CN } from '../common/fieldClasses';
 import { useAdoptTemplate, type SafetyTemplate } from '@/hooks/useSafetyTemplates';
 import { getTemplateStats } from '@/utils/safety-template-renderer';
 import type { DocumentSection } from '@/types/safety-template';
@@ -80,7 +82,26 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
     });
   };
 
+  /**
+   * Required fields that are still blank.
+   *
+   * `field.required` used to render a red asterisk and nothing else — adopt
+   * fired regardless. That is how documents reached the library with no
+   * company name on them, and on the legacy path every unfilled placeholder
+   * was substituted with a literal `___`, so the "inspector-ready document"
+   * arrived with blanks printed into it. The asterisk now means something.
+   */
+  const missingRequired = (sc?.fields ?? [])
+    .filter((f) => f.required && !(fieldValues[f.key] ?? '').trim())
+    .map((f) => f.key);
+
+  const [showErrors, setShowErrors] = useState(false);
+
   const handleAdopt = () => {
+    if (missingRequired.length > 0) {
+      setShowErrors(true);
+      return;
+    }
     if (sc || hasV2) {
       // Structured path (carries v2 through when present so the upgraded
       // content survives adoption — viewer + editor + PDF will all
@@ -167,7 +188,12 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
 
         {/* Stats bar */}
         {stats.sections > 0 && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+          <div
+            className={cn(
+              'flex items-center gap-3 rounded-xl border border-elec-yellow/35 p-3',
+              CARD_SURFACE
+            )}
+          >
             <BarChart3 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div className="flex items-center gap-3 text-[11px] text-white flex-wrap">
               <span>{stats.sections} sections</span>
@@ -189,7 +215,10 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
               return (
                 <div
                   key={i}
-                  className="rounded-xl border border-white/[0.08] bg-white/[0.03] overflow-hidden"
+                  className={cn(
+                    'overflow-hidden rounded-xl border border-elec-yellow/35',
+                    CARD_SURFACE
+                  )}
                 >
                   <button
                     onClick={() => toggleSection(i)}
@@ -218,7 +247,12 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           </div>
         ) : (
           /* Legacy HTML fallback */
-          <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 overflow-auto max-h-[400px]">
+          <div
+            className={cn(
+              'max-h-[400px] overflow-auto rounded-xl border border-elec-yellow/35 p-4',
+              CARD_SURFACE
+            )}
+          >
             <div
               className="prose prose-invert prose-sm max-w-none [&_h1]:text-lg [&_h1]:font-bold [&_h2]:text-base [&_h2]:font-semibold [&_h3]:text-sm [&_h3]:font-semibold [&_ul]:list-disc [&_ol]:list-decimal [&_li]:text-white [&_p]:text-white"
               dangerouslySetInnerHTML={{ __html: template.content }}
@@ -231,71 +265,117 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-3 p-4 rounded-xl border border-elec-yellow/20 bg-elec-yellow/5"
+            className={cn('space-y-4 rounded-xl border border-elec-yellow/35 p-4', CARD_SURFACE)}
           >
-            <h3 className="text-sm font-bold text-white">Adopt This Template</h3>
-            <p className="text-xs text-white">
-              Fill in your details and the template will be personalised for you.
-            </p>
+            <div>
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Adopt this template
+              </h3>
+              <p className="mt-1 text-[12.5px] text-white">
+                Your details are written into the document — you can edit any of it afterwards.
+              </p>
+            </div>
 
             {sc ? (
               /* Dynamic fields from structured content */
-              sc.fields.map((field) => (
-                <div key={field.key}>
-                  <label className="text-[11px] font-semibold text-white block mb-1">
-                    {field.label}
-                    {field.required && <span className="text-red-400 ml-0.5">*</span>}
-                  </label>
-                  <Input
-                    type={field.type === 'date' ? 'date' : 'text'}
-                    placeholder={field.placeholder ?? field.label}
-                    value={fieldValues[field.key] ?? ''}
-                    onChange={(e) =>
-                      setFieldValues((prev) => ({ ...prev, [field.key]: e.target.value }))
-                    }
-                    className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
-                  />
-                </div>
-              ))
+              sc.fields.map((field) => {
+                const invalid = showErrors && missingRequired.includes(field.key);
+                return (
+                  <div key={field.key}>
+                    <label
+                      htmlFor={`adopt-${field.key}`}
+                      className="mb-1 block text-[12px] font-medium text-white"
+                    >
+                      {field.label}
+                      {field.required && <span className="ml-0.5 text-elec-yellow">*</span>}
+                    </label>
+                    <input
+                      id={`adopt-${field.key}`}
+                      type={field.type === 'date' ? 'date' : 'text'}
+                      placeholder={field.placeholder ?? field.label}
+                      value={fieldValues[field.key] ?? ''}
+                      aria-invalid={invalid}
+                      aria-describedby={invalid ? `adopt-${field.key}-err` : undefined}
+                      onChange={(e) =>
+                        setFieldValues((prev) => ({ ...prev, [field.key]: e.target.value }))
+                      }
+                      className={cn(FIELD_CN, invalid && 'border-red-400')}
+                    />
+                    {invalid && (
+                      <p id={`adopt-${field.key}-err`} className="mt-1 text-[11.5px] text-red-400">
+                        {field.label} is required
+                      </p>
+                    )}
+                  </div>
+                );
+              })
             ) : (
               /* Legacy hardcoded fields */
               <>
-                <Input
-                  placeholder="Company name"
-                  value={fieldValues.company_name ?? ''}
-                  onChange={(e) =>
-                    setFieldValues((prev) => ({ ...prev, company_name: e.target.value }))
-                  }
-                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
-                />
-                <Input
-                  placeholder="Site address"
-                  value={fieldValues.site_address ?? ''}
-                  onChange={(e) =>
-                    setFieldValues((prev) => ({ ...prev, site_address: e.target.value }))
-                  }
-                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
-                />
+                <div>
+                  <label
+                    htmlFor="adopt-company"
+                    className="mb-1 block text-[12px] font-medium text-white"
+                  >
+                    Company name
+                  </label>
+                  <input
+                    id="adopt-company"
+                    placeholder="Company name"
+                    value={fieldValues.company_name ?? ''}
+                    onChange={(e) =>
+                      setFieldValues((prev) => ({ ...prev, company_name: e.target.value }))
+                    }
+                    className={FIELD_CN}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="adopt-site"
+                    className="mb-1 block text-[12px] font-medium text-white"
+                  >
+                    Site address
+                  </label>
+                  <input
+                    id="adopt-site"
+                    placeholder="Site address"
+                    value={fieldValues.site_address ?? ''}
+                    onChange={(e) =>
+                      setFieldValues((prev) => ({ ...prev, site_address: e.target.value }))
+                    }
+                    className={FIELD_CN}
+                  />
+                </div>
               </>
             )}
 
+            {/* Volt fill stays SOLID — a translucent yellow goes muddy on this
+                ground. Brighten on press rather than dim: a dark UI that dims
+                under the thumb reads as disabled. */}
             <button
+              type="button"
               onClick={handleAdopt}
               disabled={adoptMutation.isPending}
-              className="w-full h-11 rounded-xl bg-elec-yellow text-black font-semibold text-sm touch-manipulation active:scale-[0.97] active:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97] active:brightness-110 disabled:opacity-50"
             >
               {adoptMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Adopting...
+                  Adopting…
                 </>
               ) : (
                 <>
                   <Download className="h-4 w-4" />
-                  Adopt Template
+                  Adopt template
                 </>
               )}
             </button>
+            {showErrors && missingRequired.length > 0 && (
+              <p role="alert" className="text-center text-[12px] text-red-400">
+                Fill the {missingRequired.length} required field
+                {missingRequired.length > 1 ? 's' : ''} above to continue
+              </p>
+            )}
           </motion.div>
         )}
       </div>

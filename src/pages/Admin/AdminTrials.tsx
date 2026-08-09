@@ -207,8 +207,13 @@ interface TrialStats {
 
 const MAX_EXPIRED_DAYS = 365;
 const FOUNDER_CUTOFF_DATE = new Date('2026-01-26T00:00:00Z');
-const ENGAGEMENT_HOT = 15;
-const ENGAGEMENT_WARM = 5;
+/*
+ * Same bands as `getScoreColor`, so a "hot lead" here and a green ring on the
+ * Users page mean the same thing. They were 15 and 5 against an unbounded
+ * score — thresholds from a scale that no longer existed.
+ */
+const ENGAGEMENT_HOT = 55;
+const ENGAGEMENT_WARM = 25;
 
 function relativeTime(dateStr: string | undefined | null): string {
   if (!dateStr) return 'never';
@@ -421,12 +426,24 @@ export default function AdminTrials() {
       const maxExpiredDate = addDays(today, -MAX_EXPIRED_DAYS);
 
       return users
+        /*
+         * A trial is somebody with a trial. Nothing else.
+         *
+         * This used to fall back to `addDays(createdAt, 7)` whenever a profile
+         * had no `trial_end`, which invented a trial window for 1,323 of 1,482
+         * accounts and swept every old free signup onto the page as an
+         * "expired trial". The result: 1,369 trials reported against 159 real
+         * ones, 386 "conversions" that were simply every paying user, and a
+         * "28.2% CVR" that was paying ÷ all users rather than trial ÷ paid.
+         *
+         * No `trial_end`, no trial.
+         */
         .filter((user: BaseUser) => {
           const createdAt = parseISO(user.created_at);
           if (createdAt < FOUNDER_CUTOFF_DATE) return false;
           const trialEndsAtRaw = trialEndsAtMap.get(user.id);
-          const trialEnds = trialEndsAtRaw ? parseISO(trialEndsAtRaw) : addDays(createdAt, 7);
-          const trialEndsDate = startOfDay(trialEnds);
+          if (!trialEndsAtRaw) return false;
+          const trialEndsDate = startOfDay(parseISO(trialEndsAtRaw));
           return user.subscribed || trialEndsDate >= maxExpiredDate;
         })
         .map((user: BaseUser) => {
@@ -438,11 +455,19 @@ export default function AdminTrials() {
             (trialEndsDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
           );
 
+          /*
+           * Days remaining decides first, `subscribed` second.
+           *
+           * App Store and Play Store trials carry `subscribed = true` for the
+           * whole trial period, so testing `subscribed` first classified all
+           * 23 live store trials as already converted and the Active count
+           * read zero. Someone whose trial has not ended yet is on trial,
+           * whatever the billing flag says; conversion is only meaningful once
+           * the window has closed.
+           */
           let trialStatus: TrialUser['trial_status'] = 'active';
-          if (user.subscribed) {
-            trialStatus = 'subscribed';
-          } else if (daysRemaining < 0) {
-            trialStatus = 'expired';
+          if (daysRemaining < 0) {
+            trialStatus = user.subscribed ? 'subscribed' : 'expired';
           } else if (daysRemaining === 0) {
             trialStatus = 'ending_today';
           } else if (daysRemaining === 1) {
@@ -468,16 +493,30 @@ export default function AdminTrials() {
           const loginBonus = Math.min(10, (eventSummary?.login_count || 0) * 2);
           const featureBonus = (eventSummary?.feature_use_count || 0) * 3;
 
-          const engagementScore =
-            points +
-            streak * 5 +
-            studySessions * 3 +
-            quotesCount * 8 +
-            eicCount * 10 +
-            timeBonus +
-            pageViewBonus +
-            loginBonus +
-            featureBonus;
+          /*
+           * One engagement score, shared with the rest of admin.
+           *
+           * This page had its own formula, and it was unbounded: `points`,
+           * `streak * 5`, `studySessions * 3`, `quotesCount * 8`,
+           * `eicCount * 10` and `feature_use_count * 3` all ran without a cap,
+           * so a user with ten EICRs collected 100 from that term alone. Set
+           * against a HOT threshold of 15 — lower than the time bonus alone
+           * can reach — it classified anyone who spent half an hour on the app
+           * as a hot lead. Hence 21 hot, 2 warm, 0 cold.
+           *
+           * `calculateEngagementScore` is bounded 0–100 and calibrated against
+           * the real 30-day distribution, and `getConversionTone` further down
+           * this very file already used it. Two scores for one user, on one
+           * page, is worse than either.
+           */
+          const engagementScore = calculateEngagementScore({
+            login_count: eventSummary?.login_count || 0,
+            page_view_count: eventSummary?.page_view_count || 0,
+            total_seconds_tracked: eventSummary?.total_seconds_tracked || 0,
+            feature_use_count: eventSummary?.feature_use_count || 0,
+            active_days: eventSummary?.active_days || 0,
+            unique_pages_visited: eventSummary?.unique_pages_visited || 0,
+          });
 
           return {
             id: user.id,
@@ -562,10 +601,18 @@ export default function AdminTrials() {
       };
     }
 
-    const nonSubscribed = trialUsers.filter((u) => !u.subscribed);
-    const subscribed = trialUsers.filter((u) => u.subscribed);
+    /*
+     * Split on `trial_status`, not the billing flag.
+     *
+     * `!u.subscribed` put every live App/Play store trial in the converted
+     * bucket, because those carry `subscribed = true` for the whole trial.
+     * Status already encodes the distinction correctly, so both sides of the
+     * split and the lead-heat counts below now agree with the list.
+     */
+    const converted = trialUsers.filter((u) => u.trial_status === 'subscribed');
+    const stillTrialling = trialUsers.filter((u) => u.trial_status !== 'subscribed');
 
-    const activeTrials = nonSubscribed.filter((u) => u.trial_status !== 'expired');
+    const activeTrials = stillTrialling.filter((u) => u.trial_status !== 'expired');
     const hotLeads = activeTrials.filter((u) => (u.engagement_score || 0) >= ENGAGEMENT_HOT).length;
     const warmLeads = activeTrials.filter(
       (u) =>
@@ -576,14 +623,25 @@ export default function AdminTrials() {
     ).length;
 
     return {
-      total_trials: nonSubscribed.length,
-      ending_today: nonSubscribed.filter((u) => u.trial_status === 'ending_today').length,
-      ending_tomorrow: nonSubscribed.filter((u) => u.trial_status === 'ending_tomorrow').length,
-      expired: nonSubscribed.filter((u) => u.trial_status === 'expired').length,
-      active: nonSubscribed.filter((u) => u.trial_status === 'active').length,
-      converted: subscribed.length,
-      conversion_rate:
-        trialUsers.length > 0 ? ((subscribed.length / trialUsers.length) * 100).toFixed(1) : '0',
+      total_trials: stillTrialling.length,
+      ending_today: stillTrialling.filter((u) => u.trial_status === 'ending_today').length,
+      ending_tomorrow: stillTrialling.filter((u) => u.trial_status === 'ending_tomorrow').length,
+      expired: stillTrialling.filter((u) => u.trial_status === 'expired').length,
+      active: stillTrialling.filter((u) => u.trial_status === 'active').length,
+      converted: converted.length,
+      /*
+       * Of trials that have FINISHED, how many stayed.
+       *
+       * Dividing by every trial including the ones still running understates
+       * the rate — a trial that has three days left has not failed to convert
+       * yet. Denominator is decided trials only.
+       */
+      conversion_rate: (() => {
+        const decided = converted.length + stillTrialling.filter(
+          (u) => u.trial_status === 'expired'
+        ).length;
+        return decided > 0 ? ((converted.length / decided) * 100).toFixed(1) : '0';
+      })(),
       hot_leads: hotLeads,
       warm_leads: warmLeads,
       cold_leads: coldLeads,
@@ -691,11 +749,19 @@ export default function AdminTrials() {
         .eq('user_id', selectedUser.id)
         .maybeSingle();
 
+      /*
+       * The breakdown has to be the shared score's own components, or the
+       * "why" contradicts the number. This was a second copy of the old
+       * unbounded formula, so the detail panel and the list disagreed about
+       * the same person. These five weights are exactly what
+       * `calculateEngagementScore` sums, and they cap at 100 between them.
+       */
       const timeSpentMinutes = Math.floor((eventSummary?.total_seconds_tracked || 0) / 60);
-      const timeBonus = Math.min(30, Math.floor(timeSpentMinutes * 0.5));
-      const pageViewBonus = Math.min(20, eventSummary?.unique_pages_visited || 0);
-      const loginBonus = Math.min(10, (eventSummary?.login_count || 0) * 2);
-      const featureBonus = (eventSummary?.feature_use_count || 0) * 3;
+      const timeBonus = Math.round(Math.min(30, timeSpentMinutes / 9));
+      const pageViewBonus = Math.round(Math.min(15, (eventSummary?.unique_pages_visited || 0) * 0.5));
+      const loginBonus = Math.round(Math.min(20, (eventSummary?.login_count || 0) * 2));
+      const featureBonus = Math.round(Math.min(25, (eventSummary?.feature_use_count || 0) * 4));
+      const activeDaysBonus = Math.round(Math.min(10, (eventSummary?.active_days || 0) * 1.5));
 
       const scoreBreakdown = {
         points: userActivityRecord?.points || 0,
@@ -715,6 +781,7 @@ export default function AdminTrials() {
         timeBonus,
         featureUseCount: eventSummary?.feature_use_count || 0,
         featureBonus,
+        activeDaysBonus,
         totalSecondsTracked: eventSummary?.total_seconds_tracked || 0,
         activeDays: eventSummary?.active_days || 0,
         lastActivity: eventSummary?.last_activity,
@@ -863,16 +930,23 @@ export default function AdminTrials() {
         }
       });
 
-      scoreBreakdown.total =
-        scoreBreakdown.points +
-        scoreBreakdown.streakBonus +
-        scoreBreakdown.studyBonus +
-        scoreBreakdown.quotesBonus +
-        scoreBreakdown.eicsBonus +
+      /*
+       * The five components of the shared score, and only those.
+       *
+       * `points`, `streakBonus`, `studyBonus`, `quotesBonus` and `eicsBonus`
+       * are not part of `calculateEngagementScore` — adding them here made the
+       * detail panel's total exceed the score shown on the row for the same
+       * person, sometimes by hundreds. They stay in the object because the
+       * panel lists them as context; they no longer inflate the total.
+       */
+      scoreBreakdown.total = Math.min(
+        100,
         scoreBreakdown.timeBonus +
-        scoreBreakdown.pageViewBonus +
-        scoreBreakdown.loginBonus +
-        scoreBreakdown.featureBonus;
+          scoreBreakdown.featureBonus +
+          scoreBreakdown.loginBonus +
+          scoreBreakdown.pageViewBonus +
+          scoreBreakdown.activeDaysBonus
+      );
 
       const sortedActivities = activities.sort(
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
@@ -1014,7 +1088,13 @@ export default function AdminTrials() {
       (u) => (u.login_count || 0) > 0 || !!u.last_sign_in_at
     ).length;
     const featureUsed = trialUsers.filter((u) => (u.feature_use_count || 0) > 0).length;
-    const subscribed = trialUsers.filter((u) => u.subscribed).length;
+    /*
+     * Converted means the trial ended and they stayed, so it has to read
+     * `trial_status`, not the raw `subscribed` flag — a live store trial
+     * carries `subscribed = true` throughout and would otherwise be counted
+     * as a conversion before it has finished.
+     */
+    const subscribed = trialUsers.filter((u) => u.trial_status === 'subscribed').length;
     return { started, engaged, featureUsed, subscribed };
   }, [trialUsers]);
 
@@ -1225,36 +1305,34 @@ export default function AdminTrials() {
             />
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
               <div className="grid grid-cols-4 gap-3 sm:gap-4">
+                {/*
+                  Every stage as a share of Started, not of the stage before it.
+
+                  Step-to-step ratios only hold if each stage is a strict
+                  subset of the last, and these are not: subscribing does not
+                  require having fired a tracked feature event. With 386
+                  subscribed against 207 feature-used, the last step rendered
+                  `386 / 207` = 186% — a conversion funnel reporting more than
+                  everyone. It also contradicted the CVR on the card directly
+                  above, which correctly reads 28.2% (386 / 1369).
+
+                  Against the base every figure is comparable, bounded, and
+                  agrees with the headline.
+                */}
                 {[
-                  { label: 'Started', value: funnelStats.started, pct: 100, tone: 'blue' as Tone },
-                  {
-                    label: 'Engaged',
-                    value: funnelStats.engaged,
+                  { label: 'Started', value: funnelStats.started, tone: 'blue' as Tone },
+                  { label: 'Engaged', value: funnelStats.engaged, tone: 'amber' as Tone },
+                  { label: 'Used a feature', value: funnelStats.featureUsed, tone: 'orange' as Tone },
+                  { label: 'Subscribed', value: funnelStats.subscribed, tone: 'emerald' as Tone },
+                ]
+                  .map((step) => ({
+                    ...step,
                     pct:
                       funnelStats.started > 0
-                        ? Math.round((funnelStats.engaged / funnelStats.started) * 100)
+                        ? Math.round((step.value / funnelStats.started) * 100)
                         : 0,
-                    tone: 'amber' as Tone,
-                  },
-                  {
-                    label: 'Feature Used',
-                    value: funnelStats.featureUsed,
-                    pct:
-                      funnelStats.engaged > 0
-                        ? Math.round((funnelStats.featureUsed / funnelStats.engaged) * 100)
-                        : 0,
-                    tone: 'orange' as Tone,
-                  },
-                  {
-                    label: 'Subscribed',
-                    value: funnelStats.subscribed,
-                    pct:
-                      funnelStats.featureUsed > 0
-                        ? Math.round((funnelStats.subscribed / funnelStats.featureUsed) * 100)
-                        : 0,
-                    tone: 'emerald' as Tone,
-                  },
-                ].map((step) => (
+                  }))
+                  .map((step) => (
                   <div key={step.label} className="text-center">
                     <Eyebrow>{step.label}</Eyebrow>
                     <div className="mt-2 text-2xl sm:text-3xl font-semibold text-white tabular-nums leading-none">

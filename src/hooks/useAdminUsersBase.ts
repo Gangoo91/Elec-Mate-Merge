@@ -15,6 +15,19 @@ export interface AdminUser {
   free_access_reason?: string | null;
   created_at: string;
   last_sign_in?: string | null;
+  /*
+   * `get_admin_users` already returns all of these on every load — they were
+   * simply not declared, so the app fetched them and threw them away.
+   *
+   * `onboarding_completed` is the valuable one: 363 of 1,484 accounts (24.5%)
+   * signed up and never finished, and there was no way to list them.
+   */
+  onboarding_completed?: boolean;
+  email_confirmed?: boolean;
+  admin_role?: string | null;
+  username?: string | null;
+  subscription_start?: string | null;
+  elec_id_enabled?: boolean;
 }
 
 export const ADMIN_USERS_QUERY_KEY = ['admin-users-base'];

@@ -16,6 +16,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { circuitBreakerSelectorContent } from './content/circuit-breaker-selector';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -612,15 +613,11 @@ const CircuitBreakerSelectorCalculator = () => {
               <div className="space-y-4 animate-fade-in">
                 <ResultBadge status={result.status} label={result.statusLabel} />
 
-                {/* Hero device */}
-                <p
-                  className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                  }}
-                >
-                  {result.recommendedLabel}
-                </p>
+                <ResultHeadline
+                  label="Recommended device"
+                  value={result.recommendedLabel}
+                  caption={result.zsBasis}
+                />
 
                 <ResultsGrid columns={2}>
                   <ResultValue

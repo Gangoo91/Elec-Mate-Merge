@@ -218,7 +218,7 @@ export function ChecklistForm({
                     className={cn(
                       'h-11 px-3 rounded-xl text-[12.5px] font-medium flex items-center gap-2 touch-manipulation active:scale-[0.97] transition-all border',
                       active
-                        ? 'bg-elec-yellow/15 border-elec-yellow/50 text-elec-yellow'
+                        ? 'border border-elec-yellow/35 text-elec-yellow'
                         : 'bg-white/[0.06] border-white/[0.12] text-white'
                     )}
                   >

@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { maximumDemandContent } from './content/maximum-demand';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -443,22 +444,14 @@ const MaximumDemandCalculator = () => {
                     </span>
                   </div>
 
-                  {/* Hero */}
-                  <div className="rounded-xl p-4 bg-white/[0.04]">
-                    <p className="text-sm text-white mb-1">Maximum Demand</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.diversifiedLoad.toFixed(2)} kW
-                    </div>
-                    <p className="text-sm text-white mt-1">
-                      {result.diversifiedCurrent.toFixed(1)}A at {supplyVoltage}V{' '}
-                      {supplyType === 'three-phase' ? '3-phase' : '1-phase'}
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Maximum demand"
+                    value={`${result.diversifiedLoad.toFixed(2)} kW`}
+                    aside={`${result.diversifiedCurrent.toFixed(1)} A`}
+                    caption={`At ${supplyVoltage} V ${
+                      supplyType === 'three-phase' ? 'three-phase' : 'single-phase'
+                    }, after diversity.`}
+                  />
 
                   <ResultsGrid columns={2}>
                     <ResultValue

@@ -44,12 +44,10 @@ export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
       transition={{ duration: 0.3 }}
       className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01]"
     >
-      <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none bg-elec-yellow" />
-
       <div className="relative p-5 space-y-5">
         {/* Welcome heading */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl border border-elec-yellow/35 flex items-center justify-center">
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>

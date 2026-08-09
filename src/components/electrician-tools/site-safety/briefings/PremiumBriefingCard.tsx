@@ -71,7 +71,7 @@ const statusConfig: Record<
     label: 'In Progress',
   },
   completed: {
-    bg: 'bg-elec-yellow/10',
+    bg: 'border border-elec-yellow/35',
     text: 'text-elec-yellow',
     border: 'border-elec-yellow/25',
     label: 'Completed',
@@ -116,14 +116,14 @@ export function TemplateCard({
       <div className="p-4">
         {/* Header */}
         <div className="flex items-start gap-3 mb-3">
-          <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+          <div className="p-2.5 rounded-xl border border-elec-yellow/35 flex-shrink-0">
             <FileText className="h-5 w-5 text-elec-yellow" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-white truncate">{template.name}</h3>
               {template.isAIPowered && (
-                <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 text-[10px] px-1.5 py-0">
+                <Badge className="border border-elec-yellow/35 text-elec-yellow text-[10px] px-1.5 py-0">
                   <Sparkles className="h-2.5 w-2.5 mr-0.5" />
                   AI
                 </Badge>
@@ -182,7 +182,7 @@ export function TemplateCard({
                 e.stopPropagation();
                 onStart();
               }}
-              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              className="flex-1 h-11 bg-elec-yellow text-black hover:brightness-110"
             >
               <Play className="h-4 w-4 mr-1.5" />
               Start
@@ -232,7 +232,7 @@ export function HistoryCard({
           <div
             className={cn(
               'p-2.5 rounded-xl border flex-shrink-0',
-              isComplete ? 'bg-elec-yellow/10 border-elec-yellow/25' : 'bg-white/5 border-white/10'
+              isComplete ? 'border border-elec-yellow/35' : 'bg-white/5 border-white/10'
             )}
           >
             {isComplete ? (
@@ -323,7 +323,7 @@ export function HistoryCard({
                 e.stopPropagation();
                 onShare();
               }}
-              className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97] transition-all duration-150"
+              className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:brightness-110 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Share2 className="h-4 w-4 mr-1.5" />
               Share
@@ -412,7 +412,7 @@ export function PendingCard({ briefing, onContinue, index = 0 }: PendingCardProp
         {onContinue && (
           <Button
             onClick={onContinue}
-            className="w-full h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97] transition-all duration-150"
+            className="w-full h-11 bg-elec-yellow text-black font-semibold hover:brightness-110 touch-manipulation active:scale-[0.97] transition-all duration-150"
           >
             <Play className="h-4 w-4 mr-1.5" />
             Continue Briefing

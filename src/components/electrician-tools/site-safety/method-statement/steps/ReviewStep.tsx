@@ -11,11 +11,11 @@ import {
   FormCard,
   Field,
   Eyebrow,
-  ListCard,
   PrimaryButton,
   SecondaryButton,
 } from '@/components/college/primitives';
 import { safetyInputCn } from '../../common/SafetyDocField';
+import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface ReviewStepProps {
   data: MethodStatementData;
@@ -185,11 +185,11 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       {/* Method steps */}
       <div className="space-y-2">
         <Eyebrow>Method steps ({data.steps.length})</Eyebrow>
-        <ListCard>
+        <SafetyListCard>
           {data.steps.map((step) => (
             <div key={step.id} className="flex items-start gap-3 px-4 sm:px-5 py-4">
               <span className={accentBar(step.riskLevel)} />
-              <div className="h-7 w-7 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-semibold text-[12px] shrink-0">
+              <div className="h-7 w-7 rounded-full bg-elec-yellow text-black flex items-center justify-center font-semibold text-[12px] shrink-0">
                 {step.stepNumber}
               </div>
               <div className="flex-1 min-w-0 space-y-1.5">
@@ -212,7 +212,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
               </div>
             </div>
           ))}
-        </ListCard>
+        </SafetyListCard>
       </div>
 
       {/* Approval */}

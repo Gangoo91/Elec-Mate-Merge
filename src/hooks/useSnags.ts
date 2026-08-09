@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { resolveStorageUrls } from '@/utils/storageUrls';
 import { useToast } from '@/hooks/use-toast';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export interface SnagAnalysis {
   /** Mate's title suggestion at the time the photo was analysed. */
@@ -315,6 +316,7 @@ export const useSnags = () => {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
+      void trackUserEvent(user.id, 'feature_use', { eventName: 'snag_created' });
 
       // Optimistic update
       setSnags((prev) =>

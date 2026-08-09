@@ -28,8 +28,10 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { batteryStorageContent } from './content/battery-storage';
+import { DOMESTIC_IMPORT_RATE, OFF_PEAK_RATE } from '@/data/energyRates';
 
 const CAT = 'ev-storage' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -441,8 +443,8 @@ const BatteryStorageCalculator = () => {
     };
 
     // Tariff arbitrage — charge off-peak, use during peak
-    const offPeakRate = 0.07; // Octopus Go / Economy 7 typical
-    const peakRate = 0.3; // Standard daytime rate
+    const offPeakRate = OFF_PEAK_RATE;
+    const peakRate = DOMESTIC_IMPORT_RATE;
     const usableCycleKwh = actualUsableKwh * (batteryData.efficiency / 100);
     const dailyArbitrageSaving = usableCycleKwh * (peakRate - offPeakRate);
     const annualArbitrageSaving = dailyArbitrageSaving * 365;
@@ -692,30 +694,17 @@ const BatteryStorageCalculator = () => {
 
                 {/* Hero values */}
                 <div className="grid grid-cols-2 gap-4 py-3">
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Configuration</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.batteriesInSeries}S{result.batteriesInParallel}P
-                    </p>
-                    <p className="text-xs text-white">{result.numberOfBatteries} batteries</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Usable Capacity</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.usableCapacityKwh.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-white">kWh</p>
-                  </div>
+                  <ResultHeadline
+                    label="Configuration"
+                    value={`${result.batteriesInSeries}S${result.batteriesInParallel}P`}
+                    caption={`${result.numberOfBatteries} batteries`}
+                  />
+                  <ResultValue
+                    label="Usable Capacity"
+                    value={`${result.usableCapacityKwh.toFixed(1)} kWh`}
+                    category={CAT}
+                    size="sm"
+                  />
                 </div>
 
                 {/* Key metrics */}

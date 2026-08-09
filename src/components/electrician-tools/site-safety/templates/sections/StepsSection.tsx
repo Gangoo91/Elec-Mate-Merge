@@ -1,6 +1,6 @@
 import { Plus, Trash2, AlertTriangle } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import { FIELD_CN, TEXTAREA_CN } from '../../common/fieldClasses';
 import type { StepsSection as StepsSectionType, StepItem } from '@/types/safety-template';
 
 interface Props {
@@ -40,7 +40,7 @@ export function StepsSection({ section, mode, onChange }: Props) {
             key={i}
             className="flex gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]"
           >
-            <span className="text-[13px] font-bold text-elec-yellow bg-elec-yellow/10 rounded-lg w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span className="text-[13px] font-bold text-elec-yellow border border-elec-yellow/35 rounded-lg w-8 h-8 flex items-center justify-center flex-shrink-0">
               {step.step_number}
             </span>
             <div className="flex-1 min-w-0">
@@ -67,7 +67,7 @@ export function StepsSection({ section, mode, onChange }: Props) {
           className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-2"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-elec-yellow bg-elec-yellow/10 rounded w-6 h-6 flex items-center justify-center">
+            <span className="text-[11px] font-bold text-elec-yellow border border-elec-yellow/35 rounded w-6 h-6 flex items-center justify-center">
               {step.step_number}
             </span>
             <button
@@ -77,23 +77,23 @@ export function StepsSection({ section, mode, onChange }: Props) {
               <Trash2 className="h-3.5 w-3.5" />
             </button>
           </div>
-          <Input
+          <input
             value={step.title}
             onChange={(e) => updateStep(i, { title: e.target.value })}
             placeholder="Step title"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+            className={FIELD_CN}
           />
-          <Textarea
+          <textarea
             value={step.description}
             onChange={(e) => updateStep(i, { description: e.target.value })}
             placeholder="Step description"
-            className="touch-manipulation text-base min-h-[80px] border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+            className={TEXTAREA_CN}
           />
-          <Input
+          <input
             value={step.safety_notes ?? ''}
             onChange={(e) => updateStep(i, { safety_notes: e.target.value || undefined })}
             placeholder="Safety notes (optional)"
-            className="h-11 text-base touch-manipulation border-amber-500/20 bg-amber-500/5 text-white placeholder:text-white/25"
+            className={cn(FIELD_CN, 'border-b-amber-500/40')}
           />
         </div>
       ))}

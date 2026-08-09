@@ -120,7 +120,7 @@ export function WeeklySummaryCard({ stats, weekOverWeekChange = 0 }: WeeklySumma
                   {quickWins.map((win) => (
                     <div
                       key={win}
-                      className="flex items-start gap-2 px-3 py-2 rounded-lg bg-elec-yellow/5 border border-elec-yellow/10"
+                      className="flex items-start gap-2 px-3 py-2 rounded-lg border border-elec-yellow/35"
                     >
                       <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
                       <span className="text-xs text-white">{win}</span>

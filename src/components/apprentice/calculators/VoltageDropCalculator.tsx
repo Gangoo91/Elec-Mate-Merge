@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  RotateCcw,
-  Calculator,
-  CheckCircle,
-  XCircle,
-  Info,
-  AlertTriangle,
-  Cable,
-  ChevronDown,
-} from 'lucide-react';
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+  ReferenceDot,
+} from 'recharts';
+import { RotateCcw, Calculator, Info, AlertTriangle, Cable, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import {
@@ -19,8 +20,16 @@ import {
   CalculatorEditorial,
   ResultValue,
   ResultsGrid,
+  ResultHeadline,
+  ResultBadge,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  CalculatorChart,
+  chartTick,
+  chartTooltip,
+  CHART_GRID,
+  CHART_VOLT,
+  CHART_FAIL,
 } from '@/components/calculators/shared';
 import { voltageDropContent } from './content/voltage-drop';
 
@@ -258,6 +267,28 @@ const VoltageDropCalculator = () => {
     atVoltage: number;
     alternatives: Array<{ size: number; mvam: number; pct: number; compliant: boolean }>;
   } | null>(null);
+
+  /**
+   * Drop against run length, for the cable and load actually calculated.
+   *
+   * Every point comes from the same expression as the headline figure —
+   * mV/A/m x Ib x L / 1000, as a percentage of Uo, plus any upstream drop. The
+   * curve is the calculator's own arithmetic swept over length, which is why it
+   * can be read against the Table 4Ab limit line without qualification.
+   */
+  const dropCurve = useMemo(() => {
+    if (!result) return [];
+    const maxX = Math.max(result.atLength * 1.6, result.maxLength * 1.15, 5);
+    const step = maxX / 24;
+    const points: Array<{ length: number; pct: number }> = [];
+    for (let i = 0; i <= 24; i++) {
+      const L = step * i;
+      const pct =
+        result.upstreamPct + ((result.mvam * result.atCurrent * L) / 1000 / result.atVoltage) * 100;
+      points.push({ length: Math.round(L * 10) / 10, pct: Math.round(pct * 1000) / 1000 });
+    }
+    return points;
+  }, [result]);
 
   const dataForMethod = mvamData[family]?.[method] || {};
   const sizes = Object.keys(dataForMethod)
@@ -553,72 +584,113 @@ const VoltageDropCalculator = () => {
 
                 <div className="space-y-4 animate-fade-in">
                   {/* Status Chip */}
-                  <div
-                    className={cn(
-                      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
-                      result.compliant
-                        ? 'bg-green-500/10 border border-green-500/20'
-                        : 'bg-red-500/10 border border-red-500/20'
-                    )}
-                  >
-                    {result.compliant ? (
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                    ) : (
-                      <XCircle className="h-4 w-4 text-red-400" />
-                    )}
-                    <span
-                      className={cn(
-                        'text-sm font-semibold',
-                        result.compliant ? 'text-green-400' : 'text-red-400'
-                      )}
-                    >
-                      {result.compliant ? 'VOLTAGE DROP PASS' : 'VOLTAGE DROP FAIL'}
-                    </span>
-                  </div>
+                  {/* Verdict, then the answer, then the supporting figures.
 
-                  {/* Main Results */}
+                      This was six ResultValue boxes of equal weight — voltage drop,
+                      this circuit, total from origin, limit from origin, voltage at
+                      load, max length — so the one number the check turns on (total
+                      drop against the permitted limit) sat in the second box at the
+                      same size as "max length". You had to work out which figure you
+                      had come for. The pass/fail chip was also the only green in the
+                      app, with an icon the design system does not use.
+
+                      The compliance test is TOTAL drop from the origin against the
+                      installation limit, not this circuit alone — so that is the
+                      headline, with the limit alongside it. */}
+                  <ResultBadge
+                    status={result.compliant ? 'pass' : 'fail'}
+                    label={result.compliant ? 'Within the limit' : 'Over the limit'}
+                  />
+
+                  <ResultHeadline
+                    label="Total voltage drop from origin"
+                    value={`${result.totalPercentage.toFixed(2)}%`}
+                    aside={`limit ${result.installationLimit.toFixed(2)}%`}
+                    tone={result.compliant ? 'default' : 'negative'}
+                    caption={
+                      result.compliant
+                        ? `${result.voltageDrop.toFixed(2)} V dropped on this circuit, leaving ${result.voltageAtLoad.toFixed(1)} V at the load.`
+                        : `Over the ${result.installationLimit.toFixed(2)}% limit. Shorten the run, increase the cable size, or reduce the load.`
+                    }
+                  />
+
                   <ResultsGrid columns={2}>
                     <ResultValue
-                      label="Voltage Drop"
+                      label="Drop on this circuit"
                       value={result.voltageDrop.toFixed(2)}
                       unit="V"
                       category="cable"
+                      size="sm"
                     />
                     <ResultValue
-                      label="This Circuit"
+                      label="This circuit alone"
                       value={result.percentage.toFixed(2)}
                       unit="%"
                       category="cable"
-                    />
-                    <ResultValue
-                      label="Total From Origin"
-                      value={result.totalPercentage.toFixed(2)}
-                      unit="%"
-                      category="cable"
                       size="sm"
                     />
                     <ResultValue
-                      label="Limit From Origin"
-                      value={result.installationLimit.toFixed(2)}
-                      unit="%"
-                      category="cable"
-                      size="sm"
-                    />
-                    <ResultValue
-                      label="Voltage at Load"
+                      label="Voltage at load"
                       value={result.voltageAtLoad.toFixed(1)}
                       unit="V"
                       category="cable"
                       size="sm"
                     />
                     <ResultValue
-                      label={`Max Length @ ${result.atCurrent}A`}
+                      label={`Max length at ${result.atCurrent} A`}
                       value={result.maxLength.toFixed(1)}
                       unit="m"
                       category="cable"
                       size="sm"
                     />
                   </ResultsGrid>
+
+                  <CalculatorChart
+                    title="Drop against run length"
+                    caption={`${result.mvam} mV/A/m at ${result.atCurrent} A. The dashed line is the ${result.installationLimit.toFixed(2)}% limit; the dot is this run.`}
+                  >
+                    <LineChart
+                      data={dropCurve}
+                      margin={{ top: 6, right: 10, bottom: 4, left: -12 }}
+                    >
+                      <CartesianGrid stroke={CHART_GRID} vertical={false} />
+                      <XAxis
+                        dataKey="length"
+                        tick={chartTick}
+                        stroke={CHART_GRID}
+                        unit="m"
+                        tickLine={false}
+                      />
+                      <YAxis tick={chartTick} stroke={CHART_GRID} unit="%" tickLine={false} />
+                      <Tooltip
+                        {...chartTooltip}
+                        formatter={(v: number) => [`${v.toFixed(2)}%`, 'Total drop']}
+                        labelFormatter={(l) => `${l} m`}
+                      />
+                      <ReferenceLine
+                        y={result.installationLimit}
+                        stroke={CHART_FAIL}
+                        strokeDasharray="4 4"
+                        strokeWidth={1.5}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="pct"
+                        stroke={CHART_VOLT}
+                        strokeWidth={2}
+                        dot={false}
+                        isAnimationActive={false}
+                      />
+                      <ReferenceDot
+                        x={result.atLength}
+                        y={result.totalPercentage}
+                        r={4}
+                        fill={result.compliant ? CHART_VOLT : CHART_FAIL}
+                        stroke="#000"
+                        strokeWidth={1}
+                      />
+                    </LineChart>
+                  </CalculatorChart>
 
                   {/* Reg 433.1.1 — voltage drop is only one of the two sizing checks. This calculator
                   evaluates the App 4 §6.4 limit only; it does not know Iz or the device rating. */}

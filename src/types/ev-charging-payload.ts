@@ -62,9 +62,46 @@ export interface EVChargingPayloadType {
     is_pme: boolean;
     is_pme_display: string;
     earthing_measures: string;
+    /** The method named in full — Reg 722.411.4.1 (b)-(e), or a legacy value
+     *  marked as not permitted. The raw field is a slug. */
+    earthing_measures_display: string;
     earth_electrode_installed: boolean;
     earth_electrode_installed_display: string;
     earth_electrode_resistance: string;
+    /** null when unanswered — NOT false, which would read as "722.411.4.1 does
+     *  not apply". */
+    vehicle_charged_outdoors: boolean | null;
+    vehicle_charged_outdoors_display: string;
+    segregation_confirmed: boolean;
+    segregation_confirmed_display: string;
+  };
+
+  /** Section 722 design confirmations — 722.312.2.1, 722.410.3.5/.3.6, 722.413.1.2. */
+  section_722: {
+    no_pen_in_final_circuit: boolean;
+    no_pen_in_final_circuit_display: string;
+    prohibited_measures_not_used: boolean;
+    prohibited_measures_not_used_display: string;
+    separation_single_vehicle: boolean;
+    separation_transformer_standard: string;
+    separation_display: string;
+  };
+
+  /** Next inspection — absent from this certificate until now. */
+  next_inspection: {
+    interval_months: string;
+    date: string;
+    display: string;
+  };
+
+  /** Earthing & main protective bonding — Reg 411.3.1.2 / 544.1.1 / 542.3. */
+  earthing_bonding: {
+    earthing_conductor_csa: string;
+    main_bonding_csa: string;
+    main_bonding_locations: string;
+    main_bonding_verified: boolean;
+    main_bonding_na: boolean;
+    main_bonding_display: string;
   };
 
   circuit_details: {
@@ -123,6 +160,8 @@ export interface EVChargingPayloadType {
     g98_display: string;
     g99_application: boolean;
     g99_display: string;
+    /** ENA Connect Direct application reference. */
+    connect_direct_reference: string;
   };
 
   ozev_details: {

@@ -18,6 +18,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { energyCostContent } from './content/energy-cost';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -707,20 +708,11 @@ const EnergyCostCalculator = () => {
                   </div>
 
                   {/* Hero value */}
-                  <div className="text-center py-3">
-                    <p className="text-sm font-medium text-white mb-1">Annual Energy Cost</p>
-                    <p
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {formatCurrency(result.yearlyCost)}
-                    </p>
-                    <p className="text-sm text-white mt-2">
-                      {result.yearlyKWh.toFixed(0)} kWh/year
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Annual Energy Cost"
+                    value={`${formatCurrency(result.yearlyCost)}`}
+                    caption={`${result.yearlyKWh.toFixed(0)} kWh/year`}
+                  />
 
                   {/* Cost breakdown */}
                   <ResultsGrid columns={2}>

@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -256,6 +257,15 @@ export function useAIChatHistory(scope: string = 'assistant') {
             } as any)
             .select('id')
             .single();
+
+          if (!error) {
+            // A new session, not every message — the save runs on a debounce
+            // as the conversation grows, and one AI conversation is one use.
+            void trackUserEvent(user.id, 'feature_use', {
+              eventName: 'ai_chat_started',
+              eventData: { agent: scope },
+            });
+          }
 
           if (error) {
             console.warn('Failed to create chat session:', error);

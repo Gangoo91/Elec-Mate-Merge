@@ -324,7 +324,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
             >
               <ChevronRight className="h-5 w-5 text-white rotate-180" />
             </button>
-            <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+            <div className="p-2 rounded-lg border border-elec-yellow/35">
               <FolderOpen className="h-5 w-5 text-elec-yellow" />
             </div>
             <div className="flex-1 min-w-0">
@@ -338,7 +338,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                 setBatchMode(!batchMode);
                 setSelectedPhotos(new Set());
               }}
-              className={`p-2 rounded-lg touch-manipulation ${batchMode ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/5'}`}
+              className={`p-2 rounded-lg touch-manipulation ${batchMode ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/5'}`}
             >
               <CheckSquare className="h-5 w-5" />
             </button>
@@ -536,7 +536,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
             )}
             {filters.category && (
               <Badge
-                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 cursor-pointer text-xs h-7 px-2.5"
+                className="border border-elec-yellow/35 text-elec-yellow cursor-pointer text-xs h-7 px-2.5"
                 onClick={() => handleCategoryChange('all')}
               >
                 {getCategoryIcon(filters.category)} {getCategoryLabel(filters.category)}
@@ -545,7 +545,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
             )}
             {batchMode && (
               <Badge
-                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] h-6 px-2 cursor-pointer"
+                className="border border-elec-yellow/35 text-elec-yellow text-[10px] h-6 px-2 cursor-pointer"
                 onClick={() => {
                   setBatchMode(false);
                   setSelectedPhotos(new Set());
@@ -810,7 +810,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                   key={cat.value}
                   className={`flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all touch-manipulation ${
                     filters.category === cat.value
-                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
+                      ? 'border border-elec-yellow/35 ring-1 ring-elec-yellow'
                       : 'bg-[#1e1e1e] border border-white/10 hover:bg-[#252525] active:bg-[#252525]'
                   }`}
                   onClick={() => {
@@ -901,7 +901,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation transition-colors ${
                   sortMode === mode
-                    ? 'bg-elec-yellow/10 text-elec-yellow'
+                    ? 'border border-elec-yellow/35 text-elec-yellow'
                     : 'text-white active:bg-white/5'
                 }`}
               >
@@ -940,7 +940,9 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                 setShowOverflowMenu(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation ${
-                batchMode ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white active:bg-white/5'
+                batchMode
+                  ? 'border border-elec-yellow/35 text-elec-yellow'
+                  : 'text-white active:bg-white/5'
               }`}
             >
               <CheckSquare className="h-4 w-4" />
@@ -970,7 +972,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation ${
                 viewMode === 'list'
-                  ? 'bg-elec-yellow/10 text-elec-yellow'
+                  ? 'border border-elec-yellow/35 text-elec-yellow'
                   : 'text-white active:bg-white/5'
               }`}
             >

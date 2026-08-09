@@ -295,12 +295,7 @@ const DiversityFactorCalculator = () => {
                       <span className="text-sm font-medium text-white">
                         Overall Diversity Factor:
                       </span>
-                      <span
-                        className="text-2xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
+                      <span className="text-2xl font-bold tabular-nums text-elec-yellow">
                         {(result.overallDiversityFactor * 100).toFixed(0)}%
                       </span>
                     </div>

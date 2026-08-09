@@ -4,7 +4,7 @@
  * inspections, diary, observations, pre-use checks, fire watch).
  *
  * Editorial standard: SafetyMasthead + PageHero + StatStrip headline metrics +
- * a hairline ListCard breakdown by document type. One colour dimension only —
+ * a hairline SafetyListCard breakdown by document type. One colour dimension only —
  * a thin status accent bar (green when fully signed, orange when outstanding)
  * plus a small uppercase status pill. No decorative icons.
  */
@@ -19,12 +19,11 @@ import { SafetyModuleShell } from './common/SafetyModuleShell';
 import {
   PageHero,
   StatStrip,
-  ListCard,
-  ListRow,
   EmptyState,
   LoadingState,
   type Tone,
 } from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 interface SignatureTrackingDashboardProps {
   /** Returns to the Site Safety hub (rendered via SafetyMasthead). */
@@ -111,11 +110,11 @@ export function SignatureTrackingDashboard({ onBack, onTap }: SignatureTrackingD
           description="Once you raise permits, isolations, COSHH assessments and other records, their sign-off status appears here."
         />
       ) : (
-        <ListCard>
+        <SafetyListCard>
           {rows.map((item) => (
             <SignatureRow key={item.type} item={item} onTap={onTap} />
           ))}
-        </ListCard>
+        </SafetyListCard>
       )}
     </SafetyModuleShell>
   );
@@ -132,7 +131,7 @@ function SignatureRow({
   const accent: Tone = allSigned ? 'green' : 'orange';
 
   return (
-    <ListRow
+    <SafetyListRow
       onClick={onTap ? () => onTap(item.type) : undefined}
       accent={accent}
       title={item.label}

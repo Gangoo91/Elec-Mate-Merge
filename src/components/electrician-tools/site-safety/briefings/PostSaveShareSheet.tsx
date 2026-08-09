@@ -298,7 +298,7 @@ export function PostSaveShareSheet({
                 'w-full h-14 rounded-xl font-semibold text-base touch-manipulation',
                 copied
                   ? 'bg-emerald-500 text-white'
-                  : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                  : 'bg-elec-yellow text-black hover:brightness-110'
               )}
             >
               {loading ? (
@@ -335,7 +335,7 @@ export function PostSaveShareSheet({
                   'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
                   'touch-manipulation min-h-[80px]',
                   showQR
-                    ? 'bg-elec-yellow/10 border-elec-yellow/30'
+                    ? 'border border-elec-yellow/35'
                     : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]'
                 )}
               >

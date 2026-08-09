@@ -8,7 +8,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { SafetyMasthead } from './common/SafetyModuleShell';
-import { PageHero, Eyebrow, ListCard } from '@/components/college/primitives';
+import {
+  PageHero,
+  Eyebrow,
+} from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 const EMERGENCY_CONTACTS: {
   service: string;
@@ -155,7 +159,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
         {/* Contacts */}
         <div>
           <Eyebrow className="mb-2">Emergency contacts</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {EMERGENCY_CONTACTS.map((c) => (
               <a
                 key={c.number}
@@ -176,7 +180,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                 </span>
               </a>
             ))}
-          </ListCard>
+          </SafetyListCard>
         </div>
 
         {/* Procedures */}
@@ -239,7 +243,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
         {/* HSE resources */}
         <div>
           <Eyebrow className="mb-2">HSE resources</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {RESOURCES.map((link) => (
               <a
                 key={link.url}
@@ -254,7 +258,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                 </span>
               </a>
             ))}
-          </ListCard>
+          </SafetyListCard>
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 /**
  * Hazard Database — read-only reference library of site hazards, controls and
  * BS 7671 references. Rebuilt to the Site Safety editorial standard:
- * SafetyMasthead + PageHero + StatStrip + FilterBar + hairline ListCard rows.
+ * SafetyMasthead + PageHero + StatStrip + FilterBar + hairline SafetyListCard rows.
  *
  * ONE colour dimension = risk severity (green / amber / orange / red) shown as a
- * thin ListRow accent bar plus a small uppercase risk pill. No decorative icons.
+ * thin SafetyListRow accent bar plus a small uppercase risk pill. No decorative icons.
  */
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
@@ -16,16 +16,10 @@ import { enhancedRiskDatabase } from '@/data/enhanced-hazard-database';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
-import {
-  PageHero,
-  StatStrip,
-  FilterBar,
-  EmptyState,
-  ListCard,
-  ListRow,
-} from '@/components/college/primitives';
+import { PageHero, StatStrip, FilterBar, EmptyState } from '@/components/college/primitives';
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import { LoadMoreButton } from '../common/LoadMoreButton';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 const BOOKMARKS_KEY = 'hazard-bookmarks';
 
@@ -144,7 +138,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
           <button
             type="button"
             onClick={() => setBookmarksOpen(true)}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-[11px] font-medium text-elec-yellow touch-manipulation"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-elec-yellow/35 text-[11px] font-medium text-elec-yellow touch-manipulation"
           >
             Saved
             <span className="tabular-nums">{bookmarks.size}</span>
@@ -212,12 +206,12 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
         />
       ) : (
         <div className="space-y-3">
-          <ListCard>
+          <SafetyListCard>
             {displayedHazards.map((hazard) => {
               const controls = countControls(hazard.controlMeasures);
               const tone = riskTone(hazard.riskRating);
               return (
-                <ListRow
+                <SafetyListRow
                   key={hazard.id}
                   onClick={() => setSelectedHazard(hazard)}
                   accent={tone}
@@ -234,7 +228,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
           {hasMore && <LoadMoreButton onLoadMore={handleShowMore} remaining={remaining} />}
         </div>
       )}

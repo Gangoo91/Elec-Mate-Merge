@@ -1,7 +1,11 @@
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { RiskPill, riskTone } from './RiskBar';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
-import { SheetShell, ListCard, ListRow, EmptyState } from '@/components/college/primitives';
+import {
+  SheetShell,
+  EmptyState,
+} from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface BookmarksSheetProps {
   open: boolean;
@@ -38,9 +42,9 @@ export const BookmarksSheet = ({
               description="Open any hazard and tap Save to keep it here for quick access."
             />
           ) : (
-            <ListCard>
+            <SafetyListCard>
               {sorted.map((hazard) => (
-                <ListRow
+                <SafetyListRow
                   key={hazard.id}
                   onClick={() => {
                     onSelectHazard(hazard);
@@ -52,7 +56,7 @@ export const BookmarksSheet = ({
                   trailing={<RiskPill riskRating={hazard.riskRating} />}
                 />
               ))}
-            </ListCard>
+            </SafetyListCard>
           )}
         </SheetShell>
       </SheetContent>

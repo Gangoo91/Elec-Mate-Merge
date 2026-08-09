@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { instrumentationContent } from './content/instrumentation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -371,20 +372,11 @@ const InstrumentationCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Current Output</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {formatNum(result.current, 2)} mA
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {formatNum(result.percentage, 1)}% of scale
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Current Output"
+                  value={`${formatNum(result.current, 2)} mA`}
+                  caption={`${formatNum(result.percentage, 1)}% of scale`}
+                />
 
                 {/* Core results */}
                 <ResultsGrid columns={2}>

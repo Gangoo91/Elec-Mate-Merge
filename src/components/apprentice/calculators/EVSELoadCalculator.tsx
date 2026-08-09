@@ -30,6 +30,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { evseLoadContent } from './content/evse-load';
 import {
@@ -414,30 +415,16 @@ const EVSELoadCalculator = () => {
 
                 {/* Hero values */}
                 <div className="grid grid-cols-2 gap-4 py-3">
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Diversified Load</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.totalDiversifiedLoad.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-white">kW</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Design Current</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.designCurrent.toFixed(0)}
-                    </p>
-                    <p className="text-xs text-white">A</p>
-                  </div>
+                  <ResultHeadline
+                    label="Diversified Load"
+                    value={`${result.totalDiversifiedLoad.toFixed(1)} kW`}
+                  />
+                  <ResultValue
+                    label="Design Current"
+                    value={`${result.designCurrent.toFixed(0)} A`}
+                    category={CAT}
+                    size="sm"
+                  />
                 </div>
 
                 <ResultsGrid columns={2}>

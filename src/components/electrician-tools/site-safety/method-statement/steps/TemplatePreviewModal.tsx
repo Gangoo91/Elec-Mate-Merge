@@ -155,7 +155,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <Badge
                       key={index}
                       variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow/90 bg-elec-yellow/5"
+                      className="border-elec-yellow/30 text-elec-yellow/90 border border-elec-yellow/35"
                     >
                       {qual}
                     </Badge>
@@ -182,7 +182,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     className="border border-elec-yellow/10 rounded-lg p-4 bg-elec-card/30"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-sm font-medium flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow text-black flex items-center justify-center text-sm font-medium flex-shrink-0">
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0 space-y-3">
@@ -272,7 +272,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
           </div>
         </ScrollArea>
 
-        <Separator className="bg-elec-yellow/20" />
+        <Separator className="border border-elec-yellow/35" />
 
         <div className="p-6 pt-4 flex-shrink-0">
           <div className="flex items-center justify-between gap-4">

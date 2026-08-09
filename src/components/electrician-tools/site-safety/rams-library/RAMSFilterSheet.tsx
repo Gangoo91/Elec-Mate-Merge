@@ -74,7 +74,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={handleClear}
-                className="text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10 h-8 px-3 text-sm"
+                className="text-elec-yellow hover:text-elec-yellow/80 hover:border-elec-yellow/60 h-8 px-3 text-sm"
               >
                 Clear All
               </Button>
@@ -145,7 +145,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                       'w-full text-left py-3 px-4 rounded-lg text-sm transition-all',
                       'flex items-center justify-between',
                       locationFilter === 'all'
-                        ? 'bg-elec-yellow/10 text-elec-yellow'
+                        ? 'border border-elec-yellow/35 text-elec-yellow'
                         : 'text-white hover:bg-white/[0.05]'
                     )}
                   >
@@ -160,7 +160,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                         'w-full text-left py-3 px-4 rounded-lg text-sm transition-all',
                         'flex items-center justify-between',
                         locationFilter === loc
-                          ? 'bg-elec-yellow/10 text-elec-yellow'
+                          ? 'border border-elec-yellow/35 text-elec-yellow'
                           : 'text-white hover:bg-white/[0.05]'
                       )}
                     >
@@ -178,7 +178,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
         <div className="pt-4 pb-2 border-t border-white/[0.06]">
           <Button
             onClick={handleApply}
-            className="w-full h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 rounded-xl font-semibold text-base"
+            className="w-full h-14 bg-elec-yellow text-black hover:brightness-110 rounded-xl font-semibold text-base"
           >
             Apply Filters
           </Button>

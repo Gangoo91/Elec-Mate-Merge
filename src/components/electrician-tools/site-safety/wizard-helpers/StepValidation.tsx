@@ -175,7 +175,7 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
       </ul>
 
       {!isComplete && (
-        <Alert className="mt-3 bg-elec-yellow/5 border-elec-yellow/20">
+        <Alert className="mt-3 border border-elec-yellow/35">
           <Info className="h-4 w-4 text-elec-yellow" />
           <AlertDescription className="text-xs text-white">
             Fill in all required fields to continue to the next step

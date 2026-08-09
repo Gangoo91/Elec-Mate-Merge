@@ -30,6 +30,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { arcFlashContent } from './content/arc-flash';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -359,21 +360,11 @@ const ArcFlashCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Incident Energy</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.incidentEnergy.toFixed(2)} cal/cm²
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.incidentEnergyJoules.toFixed(1)} J/cm² | Min Rating:{' '}
-                    {result.minArcRatingRequired} cal/cm²
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Incident Energy"
+                  value={`${result.incidentEnergy.toFixed(2)} cal/cm²`}
+                  caption={`${result.incidentEnergyJoules.toFixed(1)} J/cm² | Min Rating:${' '} ${result.minArcRatingRequired} cal/cm²`}
+                />
 
                 {/* Warnings */}
                 {result.warnings.length > 0 && (
@@ -533,20 +524,11 @@ const ArcFlashCalculator = () => {
                       {(() => {
                         const whatIfResult = calculateWhatIf(whatIfDistance, whatIfTime);
                         return whatIfResult ? (
-                          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                            <p className="text-xs text-white mb-1">What-if Energy</p>
-                            <p
-                              className="text-xl font-bold bg-clip-text text-transparent"
-                              style={{
-                                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                              }}
-                            >
-                              {whatIfResult.incidentEnergy.toFixed(2)} cal/cm²
-                            </p>
-                            <p className="text-xs text-white">
-                              PPE Category {whatIfResult.ppeCategory}
-                            </p>
-                          </div>
+                          <ResultHeadline
+                            label="What-if Energy"
+                            value={`${whatIfResult.incidentEnergy.toFixed(2)} cal/cm²`}
+                            caption={`PPE Category ${whatIfResult.ppeCategory}`}
+                          />
                         ) : null;
                       })()}
                     </div>

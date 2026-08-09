@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { evChargingContent } from './content/ev-charging';
 import { calculateEVCharging, type EVCalculationInputs } from '@/lib/ev-calculations';
@@ -30,6 +31,7 @@ import {
   INSTALLATION_LOCATIONS,
 } from '@/lib/ev-constants';
 import { formatCurrency } from '@/lib/format';
+import { DOMESTIC_IMPORT_RATE } from '@/data/energyRates';
 
 const CAT = 'ev-storage' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -39,11 +41,13 @@ const EVChargingCalculator = () => {
   const [copied, setCopied] = useState(false);
 
   const [inputs, setInputs] = useState({
-    batteryCapacity: '',
+    // 64 kWh is the value the field's own placeholder suggests — a representative
+    // mid-size EV pack, so the calculator produces a result on load.
+    batteryCapacity: '64',
     chargerType: '7kw-ac' as keyof typeof CHARGER_TYPES,
     currentCharge: '20',
     targetCharge: '80',
-    electricityRate: '0.30',
+    electricityRate: String(DOMESTIC_IMPORT_RATE),
     diversityFactor: '1.0',
     supplyType: 'tn-c-s' as keyof typeof EARTHING_SYSTEMS,
     runLength: '20',
@@ -125,11 +129,13 @@ const EVChargingCalculator = () => {
 
   const handleReset = useCallback(() => {
     setInputs({
-      batteryCapacity: '',
+      // 64 kWh is the value the field's own placeholder suggests — a representative
+      // mid-size EV pack, so the calculator produces a result on load.
+      batteryCapacity: '64',
       chargerType: '7kw-ac',
       currentCharge: '20',
       targetCharge: '80',
-      electricityRate: '0.30',
+      electricityRate: String(DOMESTIC_IMPORT_RATE),
       diversityFactor: '1.0',
       supplyType: 'tn-c-s',
       runLength: '20',
@@ -312,30 +318,16 @@ const EVChargingCalculator = () => {
 
                 {/* Hero values */}
                 <div className="grid grid-cols-2 gap-4 py-3">
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Energy Required</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {results.energyRequired.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-white">kWh</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Charging Time</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {results.chargingTime.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-white">hours</p>
-                  </div>
+                  <ResultHeadline
+                    label="Energy Required"
+                    value={`${results.energyRequired.toFixed(1)} kWh`}
+                  />
+                  <ResultValue
+                    label="Charging Time"
+                    value={`${results.chargingTime.toFixed(1)} hours`}
+                    category={CAT}
+                    size="sm"
+                  />
                 </div>
 
                 <ResultsGrid columns={2}>

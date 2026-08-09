@@ -250,7 +250,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         <div className="flex gap-2">
           <Button
             onClick={editingTask ? handleSaveEdit : handleAddTask}
-            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            className="bg-elec-yellow text-elec-dark hover:brightness-110"
             disabled={!newTask.title.trim() || !newTask.category.trim()}
           >
             {editingTask ? 'Update Task' : 'Add Task'}
@@ -289,7 +289,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
             <Button
               onClick={() => setShowAddTask(true)}
               size="sm"
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              className="bg-elec-yellow text-elec-dark hover:brightness-110"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Task
@@ -317,7 +317,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                       <div className="flex items-center gap-2 mb-2 pt-3">
                         <Badge
                           variant="secondary"
-                          className="bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 text-xs font-medium px-2 py-1 rounded-full"
+                          className="border border-elec-yellow/35 text-elec-yellow hover:border-elec-yellow/60 text-xs font-medium px-2 py-1 rounded-full"
                         >
                           {task.category}
                         </Badge>
@@ -350,7 +350,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         onClick={() => handleEditTask(task)}
                         size="sm"
                         variant="outline"
-                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 hover:scale-105 transition-all duration-200"
+                        className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60 hover:border-elec-yellow/50 hover:scale-105 transition-all duration-200"
                       >
                         <Edit3 className="h-4 w-4" />
                       </Button>

@@ -17,8 +17,6 @@ import {
   FormCard,
   Field,
   Eyebrow,
-  ListCard,
-  ListRow,
   EmptyState,
   PrimaryButton,
   SecondaryButton,
@@ -27,6 +25,7 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 import { safetySelectTriggerCn } from '../../common/SafetyDocField';
+import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface TemplateSelectionStepProps {
   onTemplateSelect: (template: MethodTemplate) => void;
@@ -265,13 +264,13 @@ const TemplateSelectionStep = ({
       ) : (
         <div className="space-y-2">
           <Eyebrow>{filteredTemplates.length} templates</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {filteredTemplates.map((template) => {
               const isSelected = selectedTemplate?.id === template.id;
               const inComparison = comparisonTemplates.some((t) => t.id === template.id);
               const isFavorite = favoriteTemplates.has(template.id);
               return (
-                <ListRow
+                <SafetyListRow
                   key={template.id}
                   onClick={() => setSelectedTemplate(template)}
                   accent={isSelected ? 'yellow' : DIFFICULTY_TONE[template.difficultyLevel]}
@@ -324,7 +323,7 @@ const TemplateSelectionStep = ({
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
         </div>
       )}
 

@@ -17,6 +17,7 @@ import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { isPermanentPdfUrl } from '@/utils/pdfUrl';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -280,6 +281,14 @@ export const QuoteSendDropdown = ({
 
       // Update status to sent
       await supabase.from('quotes').update({ status: 'sent' }).eq('id', quote.id);
+
+      // Sending a quote is the revenue-bearing action in the whole builder.
+      if (quote.user_id) {
+        void trackUserEvent(quote.user_id, 'feature_use', {
+          eventName: 'quote_sent',
+          eventData: { quote_number: quote.quoteNumber ?? null, channel: 'email' },
+        });
+      }
 
       onSuccess?.();
     } catch (error: any) {

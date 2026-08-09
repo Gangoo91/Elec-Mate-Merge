@@ -103,7 +103,7 @@ export function COSHHAlertsCard({
                           e.stopPropagation();
                           onRenew(item);
                         }}
-                        className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-[10px] font-semibold touch-manipulation active:scale-[0.97]"
+                        className="flex items-center gap-1 px-2 py-1.5 rounded-lg border border-elec-yellow/35 text-elec-yellow text-[10px] font-semibold touch-manipulation active:scale-[0.97]"
                       >
                         <RefreshCw className="h-3 w-3" />
                         Renew

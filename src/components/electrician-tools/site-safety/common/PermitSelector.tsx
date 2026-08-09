@@ -49,7 +49,7 @@ export function PermitSelector({
             onClick={() => onSelect(permit.id, permit)}
             className={`w-full flex items-center gap-3 p-3 rounded-xl border touch-manipulation active:scale-[0.99] transition-all ${
               selectedPermitId === permit.id
-                ? 'bg-elec-yellow/10 border-elec-yellow/30'
+                ? 'border border-elec-yellow/35'
                 : 'bg-white/5 border-white/10'
             }`}
           >

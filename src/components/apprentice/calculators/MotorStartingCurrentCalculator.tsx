@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { motorStartingCurrentContent } from './content/motor-starting-current';
 import {
@@ -528,22 +529,11 @@ const MotorStartingCurrentCalculator = () => {
                 </div>
 
                 {/* Hero Value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Full Load Current</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.fullLoadCurrent.toFixed(1)} A
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    Starting: {result.startingCurrent.toFixed(0)}A (
-                    {result.startingMultiplier.toFixed(1)}
-                    ×) · Cable: {result.recommendedCableSize}
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Full Load Current"
+                  value={`${result.fullLoadCurrent.toFixed(1)} A`}
+                  caption={`Starting: ${result.startingCurrent.toFixed(0)}A ( ${result.startingMultiplier.toFixed(1)} ×) · Cable: ${result.recommendedCableSize}`}
+                />
 
                 {/* Result Values */}
                 <ResultsGrid columns={3}>

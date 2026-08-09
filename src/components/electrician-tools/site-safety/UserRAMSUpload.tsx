@@ -200,7 +200,7 @@ export const UserRAMSUpload = ({ open, onOpenChange, onUploadComplete }: UserRAM
                 'border-2 border-dashed rounded-2xl p-6 transition-all duration-200 cursor-pointer',
                 'flex flex-col items-center justify-center min-h-[180px]',
                 isDragging
-                  ? 'border-elec-yellow bg-elec-yellow/10'
+                  ? 'border-elec-yellow border border-elec-yellow/35'
                   : selectedFile
                     ? 'border-green-500/40 bg-green-500/5'
                     : 'border-white/20 bg-white/[0.02] hover:border-white/40 hover:bg-white/[0.04]'
@@ -237,7 +237,7 @@ export const UserRAMSUpload = ({ open, onOpenChange, onUploadComplete }: UserRAM
                 </div>
               ) : (
                 <>
-                  <div className="w-14 h-14 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center mb-3">
+                  <div className="w-14 h-14 rounded-xl border border-elec-yellow/35 flex items-center justify-center mb-3">
                     <Upload className="h-7 w-7 text-elec-yellow" />
                   </div>
                   <p className="font-medium text-white text-base mb-1">Drop your PDF here</p>
@@ -330,7 +330,7 @@ export const UserRAMSUpload = ({ open, onOpenChange, onUploadComplete }: UserRAM
               <Button
                 onClick={handleUpload}
                 disabled={!selectedFile || isUploading}
-                className="flex-1 h-12 text-base bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                className="flex-1 h-12 text-base bg-elec-yellow text-black hover:brightness-110 disabled:opacity-50"
               >
                 {isUploading ? (
                   <>

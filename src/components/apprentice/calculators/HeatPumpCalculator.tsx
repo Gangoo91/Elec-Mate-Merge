@@ -20,8 +20,10 @@ import {
   FormulaReference,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { heatPumpContent } from './content/heat-pump';
+import { DOMESTIC_IMPORT_RATE } from '@/data/energyRates';
 import {
   INSULATION_LEVELS,
   AIR_TIGHTNESS_LEVELS,
@@ -92,7 +94,7 @@ const HeatPumpCalculator = () => {
   const [heatPumpType, setHeatPumpType] = useState('air-source');
   const [emitterType, setEmitterType] = useState('radiators');
   const [dhwOption, setDhwOption] = useState('cylinder');
-  const [electricityRate, setElectricityRate] = useState('0.30');
+  const [electricityRate, setElectricityRate] = useState(String(DOMESTIC_IMPORT_RATE));
 
   const [archetype, setArchetype] = useState('custom');
 
@@ -205,7 +207,7 @@ const HeatPumpCalculator = () => {
     setHeatPumpType('air-source');
     setEmitterType('radiators');
     setDhwOption('cylinder');
-    setElectricityRate('0.30');
+    setElectricityRate(String(DOMESTIC_IMPORT_RATE));
     setResult(null);
   }, []);
 
@@ -383,32 +385,25 @@ const HeatPumpCalculator = () => {
 
                 {/* Hero values */}
                 <div className="grid grid-cols-2 gap-4 py-3">
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">Total Heat Load</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.totalHeatLoad.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-white">kW</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm text-white mb-1">COP</p>
-                    <p
-                      className="text-3xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.cop.toFixed(2)}
-                    </p>
-                    <p className="text-xs text-white">
-                      Seasonal: {result.performance.seasonalCOP.toFixed(2)}
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Total Heat Load"
+                    value={`${result.totalHeatLoad.toFixed(1)} kW`}
+                  />
+                  <ResultValue
+                    label="COP"
+                    value={`${result.cop.toFixed(2)}`}
+                    category={CAT}
+                    size="sm"
+                  />
+                  {/* Was the caption under the COP headline. COP and seasonal COP
+                      are different figures, so it keeps its own box rather than
+                      being lost when the headline was demoted. */}
+                  <ResultValue
+                    label="Seasonal COP"
+                    value={`${result.performance.seasonalCOP.toFixed(2)}`}
+                    category={CAT}
+                    size="sm"
+                  />
                 </div>
 
                 <ResultsGrid columns={2}>

@@ -1,5 +1,5 @@
 import { Plus, Trash2, Shield, ShieldCheck } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { PPEGridSection as PPEGridSectionType, PPEItem } from '@/types/safety-template';
 
@@ -65,17 +65,17 @@ export function PPEGridSection({ section, mode, onChange }: Props) {
             onCheckedChange={(checked) => updateItem(i, { required: !!checked })}
             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white h-5 w-5 touch-manipulation"
           />
-          <Input
+          <input
             value={item.name}
             onChange={(e) => updateItem(i, { name: e.target.value })}
             placeholder="PPE item"
-            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
+            className={cn(FIELD_CN, 'flex-1')}
           />
-          <Input
+          <input
             value={item.specification ?? ''}
             onChange={(e) => updateItem(i, { specification: e.target.value || undefined })}
             placeholder="Spec"
-            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 w-28"
+            className={cn(FIELD_CN, 'w-28')}
           />
           <button
             onClick={() => removeItem(i)}

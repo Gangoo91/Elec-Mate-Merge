@@ -168,7 +168,7 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
             'relative bg-white/[0.03] border p-4 transition-all duration-200 cursor-pointer',
             'active:scale-[0.98]',
             selected
-              ? 'border-elec-yellow/50 bg-elec-yellow/5'
+              ? 'border-elec-yellow/50 border border-elec-yellow/35'
               : 'border-white/[0.06] hover:border-white/[0.1]',
             isDragging ? 'transition-none' : 'transition-transform'
           )}
@@ -192,7 +192,7 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
 
             {/* Status indicator on icon */}
             <div className="relative shrink-0">
-              <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl border border-elec-yellow/35 flex items-center justify-center">
                 <FileText className="h-6 w-6 text-elec-yellow" />
               </div>
               <StatusDot status={doc.status} />
@@ -211,7 +211,7 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
                     Uploaded
                   </Badge>
                 ) : (
-                  <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] px-1.5 py-0 h-5 shrink-0">
+                  <Badge className="border border-elec-yellow/35 text-elec-yellow text-[10px] px-1.5 py-0 h-5 shrink-0">
                     <Sparkles className="h-2.5 w-2.5 mr-0.5" />
                     AI
                   </Badge>

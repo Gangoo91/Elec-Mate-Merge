@@ -30,7 +30,7 @@ const RISK_PILL: Record<Tone, string> = {
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
   purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
+  yellow: 'border border-elec-yellow/35 text-elec-yellow',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
   grey: 'bg-white/[0.06] text-white border-white/[0.12]',

@@ -67,7 +67,7 @@ export const EnhancedPhotoManager = ({
         <div>
           <Label
             htmlFor="photo-upload"
-            className="flex items-center justify-center gap-2 h-12 px-4 rounded-lg border-2 border-dashed border-elec-yellow/30 bg-elec-yellow/5 hover:bg-elec-yellow/10 text-elec-light cursor-pointer transition-all"
+            className="flex items-center justify-center gap-2 h-12 px-4 rounded-lg border-2 border-dashed border-elec-yellow/30 border border-elec-yellow/35 hover:border-elec-yellow/60 text-elec-light cursor-pointer transition-all"
           >
             <Camera className="h-4 w-4 text-elec-yellow" />
             <span className="text-sm font-medium">
@@ -89,7 +89,7 @@ export const EnhancedPhotoManager = ({
           <div>
             <Label
               htmlFor="camera-capture"
-              className="flex items-center justify-center gap-2 h-12 px-4 rounded-lg border-2 border-dashed border-elec-yellow/30 bg-elec-yellow/5 hover:bg-elec-yellow/10 text-elec-light cursor-pointer transition-all"
+              className="flex items-center justify-center gap-2 h-12 px-4 rounded-lg border-2 border-dashed border-elec-yellow/30 border border-elec-yellow/35 hover:border-elec-yellow/60 text-elec-light cursor-pointer transition-all"
             >
               <Camera className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium">Take Photo</span>
@@ -165,7 +165,7 @@ export const EnhancedPhotoManager = ({
                                   <Button
                                     size="sm"
                                     onClick={() => saveCaption(index)}
-                                    className="h-7 px-3 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                                    className="h-7 px-3 bg-elec-yellow text-elec-dark hover:brightness-110"
                                   >
                                     <Check className="h-3 w-3" />
                                   </Button>

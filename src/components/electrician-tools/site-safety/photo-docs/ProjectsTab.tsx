@@ -297,7 +297,7 @@ export default function ProjectsTab({
                 {statusTab === 'active' && (
                   <button
                     onClick={() => setCreateOpen(true)}
-                    className="mt-4 flex h-12 items-center gap-2 rounded-xl bg-elec-yellow px-5 font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
+                    className="mt-4 flex h-12 items-center gap-2 rounded-xl bg-elec-yellow px-5 font-semibold text-black transition-colors hover:brightness-110 touch-manipulation"
                   >
                     <Plus className="h-5 w-5" />
                     <span>New project</span>
@@ -421,8 +421,6 @@ export default function ProjectsTab({
                         {formatDistanceToNow(new Date(project.updated_at), { addSuffix: true })}
                       </div>
                     </div>
-
-
                   </div>
                 </motion.button>
               ))}

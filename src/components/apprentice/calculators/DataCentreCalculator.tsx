@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { dataCentreContent } from './content/data-centre';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -312,21 +313,11 @@ const DataCentreCalculator = () => {
                 </div>
 
                 {/* Hero values */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Power Usage Effectiveness</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.pue.toFixed(2)}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    DCiE: {result.dcie.toFixed(1)}% | Headroom: {result.capacityHeadroom.toFixed(0)}
-                    %
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Power Usage Effectiveness"
+                  value={`${result.pue.toFixed(2)}`}
+                  caption={`DCiE: ${result.dcie.toFixed(1)}% | Headroom: ${result.capacityHeadroom.toFixed(0)} %`}
+                />
 
                 {/* Key metrics */}
                 <ResultsGrid columns={2}>

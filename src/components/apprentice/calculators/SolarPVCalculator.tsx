@@ -1,4 +1,15 @@
 import { useState, useCallback } from 'react';
+import {
+  AreaChart,
+  Area,
+  LineChart,
+  Line,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from 'recharts';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -19,9 +30,17 @@ import {
   FormulaReference,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  CalculatorChart,
+  chartTick,
+  chartTooltip,
+  CHART_GRID,
+  CHART_VOLT,
+  CHART_FAIL,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { solarPvContent } from './content/solar-pv';
+import { DOMESTIC_IMPORT_RATE, SEG_TYPICAL_RATE } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -141,9 +160,9 @@ const SolarPVCalculator = () => {
   const [panelEfficiency, setPanelEfficiency] = useState('80');
   const [roofOrientation, setRoofOrientation] = useState('south');
   const [roofTilt, setRoofTilt] = useState('35');
-  const [electricityRate, setElectricityRate] = useState('0.25');
+  const [electricityRate, setElectricityRate] = useState(String(DOMESTIC_IMPORT_RATE));
   const [selfConsumptionRate, setSelfConsumptionRate] = useState('35');
-  const [exportRate, setExportRate] = useState('0.10');
+  const [exportRate, setExportRate] = useState(String(SEG_TYPICAL_RATE));
   // Domestic installs of solar PV in GB are zero-rated (0%) until 31 Mar 2027, then 5%.
   const [vatRate, setVatRate] = useState('0');
 
@@ -320,9 +339,9 @@ const SolarPVCalculator = () => {
     setPanelEfficiency('80');
     setRoofOrientation('south');
     setRoofTilt('35');
-    setElectricityRate('0.25');
+    setElectricityRate(String(DOMESTIC_IMPORT_RATE));
     setSelfConsumptionRate('35');
-    setExportRate('0.10');
+    setExportRate(String(SEG_TYPICAL_RATE));
     setResult(null);
   }, []);
 
@@ -475,21 +494,11 @@ const SolarPVCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Annual Generation</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.annualGeneration.toLocaleString()} kWh
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.dailyGeneration} kWh/day | {result.systemPR}% Performance Ratio
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Annual generation"
+                  value={`${result.annualGeneration.toLocaleString()} kWh`}
+                  caption={`${result.dailyGeneration} kWh/day · ${result.systemPR}% performance ratio`}
+                />
 
                 <ResultsGrid columns={3}>
                   <ResultValue
@@ -515,26 +524,16 @@ const SolarPVCalculator = () => {
                 </ResultsGrid>
 
                 {/* Cost Estimate */}
-                <CalculatorSection title="2025 Cost Estimate">
+                <CalculatorSection title="Cost Estimate">
                   <div className="grid grid-cols-2 gap-3 mb-3">
                     <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                      <p
-                        className="text-2xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
+                      <p className="text-2xl font-bold text-elec-yellow">
                         £{result.costEstimate.totalCost.toLocaleString()}
                       </p>
                       <p className="text-xs text-white">{result.costEstimate.category}</p>
                     </div>
                     <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                      <p
-                        className="text-2xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
+                      <p className="text-2xl font-bold text-elec-yellow">
                         £{result.costEstimate.costPerKw.toLocaleString()}
                       </p>
                       <p className="text-xs text-white">Per kW installed</p>
@@ -584,6 +583,64 @@ const SolarPVCalculator = () => {
 
                 {/* 25-Year Degradation */}
                 <CalculatorSection title="25-Year Output Forecast">
+                  {/* Plots the degradation array the calculator already builds — ~2%
+                      first-year loss then 0.5%/yr (NREL), sampled at years 1/5/10/15/20/25.
+                      The chart models nothing of its own; it draws the same six points the
+                      table below lists.
+
+                      Zero-based Y axis on purpose: truncating it would make a gentle ~11%
+                      decline look like a collapse, so the size of the fall goes in the
+                      caption rather than being implied by a misleading scale. */}
+                  <CalculatorChart
+                    title="Annual output over 25 years"
+                    caption={`Falls to ${Math.round(
+                      (result.degradation[result.degradation.length - 1].output /
+                        result.degradation[0].output) *
+                        100
+                    )}% of year-one output by year 25. Panel degradation only — it assumes the inverter is maintained and the array stays unshaded.`}
+                    height={200}
+                  >
+                    <AreaChart
+                      data={result.degradation}
+                      margin={{ top: 6, right: 10, bottom: 4, left: -8 }}
+                    >
+                      <defs>
+                        <linearGradient id="pvOutputFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={CHART_VOLT} stopOpacity={0.35} />
+                          <stop offset="100%" stopColor={CHART_VOLT} stopOpacity={0.02} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid stroke={CHART_GRID} vertical={false} />
+                      <XAxis
+                        dataKey="year"
+                        tick={chartTick}
+                        stroke={CHART_GRID}
+                        tickLine={false}
+                        tickFormatter={(y) => `Y${y}`}
+                      />
+                      <YAxis
+                        tick={chartTick}
+                        stroke={CHART_GRID}
+                        tickLine={false}
+                        width={54}
+                        tickFormatter={(v: number) => `${(v / 1000).toFixed(1)}k`}
+                      />
+                      <Tooltip
+                        {...chartTooltip}
+                        formatter={(v: number) => [`${v.toLocaleString()} kWh`, 'Annual output']}
+                        labelFormatter={(y) => `Year ${y}`}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="output"
+                        stroke={CHART_VOLT}
+                        strokeWidth={2}
+                        fill="url(#pvOutputFill)"
+                        isAnimationActive={false}
+                      />
+                    </AreaChart>
+                  </CalculatorChart>
+
                   <div className="space-y-2">
                     <div className="grid grid-cols-3 gap-2 text-xs font-medium text-white border-b border-white/10 pb-1.5">
                       <span>Year</span>

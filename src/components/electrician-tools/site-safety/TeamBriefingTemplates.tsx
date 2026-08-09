@@ -363,7 +363,7 @@ const TeamBriefingTemplates = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-16 gap-4">
-        <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+        <div className="p-4 rounded-2xl border border-elec-yellow/35">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
         </div>
         <div className="text-center">

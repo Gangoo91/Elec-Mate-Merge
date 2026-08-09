@@ -8,6 +8,21 @@ import { supabase } from '@/integrations/supabase/client';
 
 const SESSION_HEARTBEAT_MS = 30000; // Update session time every 30 seconds
 const PAGE_VIEW_DEBOUNCE_MS = 2000;
+
+/*
+ * How long without a keystroke, click, scroll or touch before we stop calling
+ * it "using the app".
+ *
+ * Time is counted as heartbeats × 30s, so anything that keeps the interval
+ * alive becomes recorded usage. Pausing on a hidden tab fixes the overnight
+ * case; this fixes the other one — a visible page nobody is looking at, which
+ * on a job site is the normal state of a phone left on a worktop.
+ *
+ * Two minutes is deliberately short. It undercounts a long read rather than
+ * overcounting an abandoned tab, and reading pages still fire scroll events.
+ */
+const IDLE_TIMEOUT_MS = 120000;
+const ACTIVITY_EVENTS = ['pointerdown', 'keydown', 'scroll', 'touchstart', 'wheel'] as const;
 const lastPageView: Record<string, number> = {};
 
 export function ActivityTracker() {
@@ -85,9 +100,31 @@ export function ActivityTracker() {
       }
     })();
 
-    // Heartbeat - update session duration every 30 seconds
-    heartbeatInterval.current = setInterval(async () => {
+    /*
+     * Heartbeat — one every 30 seconds, and ONLY while the tab is in front.
+     *
+     * `user_engagement_by_area` computes time as
+     * `count(session_heartbeat) * 30`, so every beat is thirty seconds of
+     * recorded "usage". This interval ran for as long as the component was
+     * mounted: `visibilitychange` logged a `tab_hidden` event but never
+     * cleared it. A tab left open overnight therefore fired ~960 beats and
+     * booked eight hours of use nobody performed.
+     *
+     * The damage was visible everywhere it mattered — one user showing 348
+     * hours in a 30-day window, 25 over 24 hours, a signup with "4h 39m on
+     * Dashboard" from a single page view — and it inflated the engagement
+     * score for exactly the people who left a tab open rather than the ones
+     * who used the thing.
+     */
+    const beat = async () => {
       if (!sessionStartTime.current || !user?.id) return;
+      if (document.hidden) return; // belt and braces if a beat is in flight
+      if (Date.now() - lastInteraction > IDLE_TIMEOUT_MS) {
+        // Nobody has touched anything since the last beat — stop counting
+        // until they do. `onInteraction` restarts the interval.
+        stopHeartbeat();
+        return;
+      }
 
       const durationSeconds = Math.floor((Date.now() - sessionStartTime.current) / 1000);
 
@@ -105,12 +142,59 @@ export function ActivityTracker() {
       } catch {
         // Silently fail
       }
-    }, SESSION_HEARTBEAT_MS);
+    };
+
+    const startHeartbeat = () => {
+      if (heartbeatInterval.current) return;
+      heartbeatInterval.current = setInterval(beat, SESSION_HEARTBEAT_MS);
+    };
+    const stopHeartbeat = () => {
+      if (!heartbeatInterval.current) return;
+      clearInterval(heartbeatInterval.current);
+      heartbeatInterval.current = null;
+    };
+
+    /*
+     * Idle handling.
+     *
+     * `lastInteraction` is bumped by any real input. A beat that finds the
+     * page untouched for longer than IDLE_TIMEOUT_MS stops the interval
+     * rather than recording another thirty seconds; the next interaction
+     * starts it again. Net effect: recorded time is time somebody was
+     * actually doing something.
+     */
+    let lastInteraction = Date.now();
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        stopHeartbeat();
+      } else {
+        // Coming back to the tab counts as interaction — otherwise the first
+        // beat after a long absence would immediately judge them idle.
+        lastInteraction = Date.now();
+        startHeartbeat();
+      }
+    };
+
+    const onInteraction = () => {
+      lastInteraction = Date.now();
+      if (!document.hidden) startHeartbeat();
+    };
+
+    document.addEventListener('visibilitychange', onVisibility);
+    for (const evt of ACTIVITY_EVENTS) {
+      // Passive: these are read-only observers and must never delay a scroll.
+      window.addEventListener(evt, onInteraction, { passive: true });
+    }
+    if (!document.hidden) startHeartbeat();
 
     // Cleanup on unmount or user change
     return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      for (const evt of ACTIVITY_EVENTS) window.removeEventListener(evt, onInteraction);
       if (heartbeatInterval.current) {
         clearInterval(heartbeatInterval.current);
+        heartbeatInterval.current = null;
       }
 
       // Log session end

@@ -238,7 +238,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   onClick={() => handleZoom('out')}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 h-8 w-8 p-0"
                   disabled={zoom <= 0.5}
                 >
                   <ZoomOut className="h-3 w-3" />
@@ -250,7 +250,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   onClick={() => handleZoom('in')}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 h-8 w-8 p-0"
                   disabled={zoom >= 3}
                 >
                   <ZoomIn className="h-3 w-3" />
@@ -259,7 +259,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   onClick={handlePrint}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 h-8 w-8 p-0"
                 >
                   <Printer className="h-3 w-3" />
                 </Button>
@@ -270,7 +270,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                 onClick={handleRefresh}
                 size="sm"
                 variant="outline"
-                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 h-8 w-8 p-0"
               >
                 <RefreshCw className="h-3 w-3" />
               </Button>
@@ -279,7 +279,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               onClick={onClose}
               size="sm"
               variant="outline"
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
+              className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 h-8 w-8 p-0"
             >
               <X className="h-3 w-3" />
             </Button>
@@ -327,7 +327,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   <Button
                     onClick={handleRefresh}
                     variant="outline"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60"
                     disabled={isLoading}
                   >
                     <RefreshCw className="h-4 w-4 mr-2" />
@@ -384,7 +384,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                     <div className="flex flex-col gap-2">
                       <Button
                         onClick={() => window.open(pdfUrl, '_blank')}
-                        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                        className="bg-elec-yellow text-elec-dark hover:brightness-110"
                       >
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Open PDF
@@ -392,7 +392,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                       <Button
                         onClick={handleDownload}
                         variant="outline"
-                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60"
                       >
                         <Download className="h-4 w-4 mr-2" />
                         Download PDF
@@ -408,7 +408,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   <Button
                     onClick={() => window.open(pdfUrl, '_blank')}
                     size="sm"
-                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
+                    className="bg-elec-yellow text-elec-dark hover:brightness-110 shadow-lg"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </Button>
@@ -427,7 +427,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               <>
                 <Button
                   onClick={handleDownload}
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 flex-1 sm:flex-none"
+                  className="bg-elec-yellow text-elec-dark hover:brightness-110 flex-1 sm:flex-none"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Download PDF
@@ -436,7 +436,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   <Button
                     onClick={handlePrint}
                     variant="outline"
-                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
+                    className="border-elec-yellow/30 text-white hover:border-elec-yellow/60"
                   >
                     <Printer className="h-4 w-4 mr-2" />
                     Print
@@ -447,7 +447,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
             <Button
               onClick={onClose}
               variant="outline"
-              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 flex-1 sm:flex-none"
+              className="border-elec-yellow/30 text-white hover:border-elec-yellow/60 flex-1 sm:flex-none"
             >
               Close
             </Button>

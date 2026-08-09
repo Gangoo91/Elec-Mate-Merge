@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import type { KeyValueSection as KeyValueSectionType, KeyValuePair } from '@/types/safety-template';
 
 interface Props {
@@ -44,17 +44,17 @@ export function KeyValueSection({ section, mode, onChange }: Props) {
     <div className="space-y-2">
       {section.pairs.map((kv, i) => (
         <div key={i} className="flex gap-2">
-          <Input
+          <input
             value={kv.label}
             onChange={(e) => updatePair(i, { label: e.target.value })}
             placeholder="Label"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 w-32 flex-shrink-0"
+            className={cn(FIELD_CN, 'w-32 flex-shrink-0')}
           />
-          <Input
+          <input
             value={kv.value}
             onChange={(e) => updatePair(i, { value: e.target.value })}
             placeholder="Value"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
+            className={cn(FIELD_CN, 'flex-1')}
           />
           <button
             onClick={() => removePair(i)}

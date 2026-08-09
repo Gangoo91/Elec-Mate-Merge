@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 import type {
   CalendarEvent,
   CreateCalendarEventInput,
@@ -294,9 +295,14 @@ export function useCreateCalendarEvent() {
       if (error) throw error;
       return data as CalendarEvent;
     },
-    onSuccess: () => {
+    onSuccess: (created) => {
       queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
       toast({ title: 'Event created' });
+      if (created?.user_id) {
+        void trackUserEvent(created.user_id, 'feature_use', {
+          eventName: 'calendar_event_created',
+        });
+      }
     },
     onError: (error: Error) => {
       console.error('Failed to create calendar event:', error);

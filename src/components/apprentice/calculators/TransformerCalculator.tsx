@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { transformerContent } from './content/transformer-calculator';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -475,22 +476,10 @@ const TransformerCalculator = () => {
                     </div>
 
                     {/* Hero: Secondary Current */}
-                    <div className="text-center py-4">
-                      <p className="text-sm font-medium text-white mb-1">Secondary Current</p>
-                      <p
-                        className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                        }}
-                      >
-                        {result.secondaryRatedCurrent.toFixed(1)}
-                      </p>
-                      <p className="text-lg font-medium text-white mt-1">Amperes</p>
-                      <p className="text-sm text-white mt-1">
-                        {result.transformerType} transformer — {result.voltageRatio.toFixed(2)}:1
-                        ratio
-                      </p>
-                    </div>
+                    <ResultHeadline
+                      label="Secondary Current"
+                      value={`${result.secondaryRatedCurrent.toFixed(1)} Amperes`}
+                    />
 
                     {/* Key Metrics */}
                     <ResultsGrid columns={2}>

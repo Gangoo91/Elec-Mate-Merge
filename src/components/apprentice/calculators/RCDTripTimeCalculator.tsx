@@ -17,6 +17,7 @@ import {
   FormulaReference,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { rcdTripTimeContent } from './content/rcd-trip-time';
@@ -249,18 +250,11 @@ const RCDTripTimeCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Maximum Trip Time</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.maxTripTime}ms
-                  </p>
-                  <p className="text-sm text-white mt-2">{result.testDescription}</p>
-                </div>
+                <ResultHeadline
+                  label="Maximum Trip Time"
+                  value={`${result.maxTripTime}ms`}
+                  caption={`${result.testDescription}`}
+                />
 
                 {/* Result cards (when actual time entered) */}
                 {result.actualTripTime !== undefined && (

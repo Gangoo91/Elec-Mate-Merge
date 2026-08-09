@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { batteryBackupContent } from './content/battery-backup';
 import {
@@ -441,25 +442,15 @@ const BatteryBackupCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero Value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">
-                    {mode === 'runtime' ? 'Estimated Runtime' : 'Required Capacity'}
-                  </p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {mode === 'runtime'
+                <ResultHeadline
+                  label={mode === 'runtime' ? 'Estimated runtime' : 'Required capacity'}
+                  value={
+                    mode === 'runtime'
                       ? formatRuntime(results.runtime)
-                      : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {selectedChemistry.name} · {getTotalLoadWatts()}W total load
-                  </p>
-                </div>
+                      : `${results.requiredAh?.toFixed(0) || 'N/A'} Ah`
+                  }
+                  caption={`${selectedChemistry.name} · ${getTotalLoadWatts()} W total load.`}
+                />
 
                 {/* Result Values */}
                 <ResultsGrid columns={2}>

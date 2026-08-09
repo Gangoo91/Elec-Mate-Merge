@@ -1,6 +1,9 @@
 import React from 'react';
 import { MethodTemplate } from '@/types/method-statement';
-import { Eyebrow, ListCard, ListRow } from '@/components/college/primitives';
+import {
+  Eyebrow,
+} from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface SmartRecommendationsProps {
   templates: MethodTemplate[];
@@ -91,9 +94,9 @@ const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
       {recommendations.map((rec) => (
         <div key={rec.type} className="space-y-2">
           <Eyebrow>{rec.title}</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {rec.templates.map((template) => (
-              <ListRow
+              <SafetyListRow
                 key={template.id}
                 onClick={() => onViewTemplate(template)}
                 title={template.name}
@@ -112,7 +115,7 @@ const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
                 }
               />
             ))}
-          </ListCard>
+          </SafetyListCard>
         </div>
       ))}
     </div>

@@ -18,9 +18,11 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { feedInTariffContent } from './content/feed-in-tariff';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { DOMESTIC_IMPORT_RATE } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -93,7 +95,7 @@ export function FeedInTariffCalculator() {
   const [peakSunHours, setPeakSunHours] = useState('3.5');
   const [selfConsumption, setSelfConsumption] = useState('50');
   const [installationCost, setInstallationCost] = useState('');
-  const [electricityPrice, setElectricityPrice] = useState('0.25');
+  const [electricityPrice, setElectricityPrice] = useState(String(DOMESTIC_IMPORT_RATE));
   const [windCapacityFactor, setWindCapacityFactor] = useState('0.25');
   const [hydroCapacityFactor, setHydroCapacityFactor] = useState('0.40');
   const [rpiRate, setRpiRate] = useState('3');
@@ -196,7 +198,7 @@ export function FeedInTariffCalculator() {
     setPeakSunHours('3.5');
     setSelfConsumption('50');
     setInstallationCost('');
-    setElectricityPrice('0.25');
+    setElectricityPrice(String(DOMESTIC_IMPORT_RATE));
     setWindCapacityFactor('0.25');
     setHydroCapacityFactor('0.40');
     setRpiRate('3');
@@ -365,21 +367,11 @@ export function FeedInTariffCalculator() {
                 </div>
 
                 {/* Hero annual return */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Total Annual Return</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    £{result.totalAnnualReturn.toFixed(0)}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.yearlyGeneration.toFixed(0)} kWh/yr · {result.simplePayback.toFixed(1)}{' '}
-                    year payback · {result.roi.toFixed(1)}% ROI
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Total Annual Return"
+                  value={`£${result.totalAnnualReturn.toFixed(0)}`}
+                  caption={`${result.yearlyGeneration.toFixed(0)} kWh/yr · ${result.simplePayback.toFixed(1)}${' '} year payback · ${result.roi.toFixed(1)}% ROI`}
+                />
 
                 {/* Results grid */}
                 <ResultsGrid columns={2}>

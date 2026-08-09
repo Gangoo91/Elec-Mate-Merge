@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { ringCircuitContent } from './content/ring-circuit';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -455,17 +456,10 @@ const RingCircuitCalculator = () => {
                 </div>
 
                 {/* Hero R1+R2 value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">R1 + R2 (at midpoint)</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.r1PlusR2.toFixed(3)} Ω
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="R1 + R2 (at midpoint)"
+                  value={`${result.r1PlusR2.toFixed(3)} Ω`}
+                />
 
                 {/* Individual resistances */}
                 <ResultsGrid columns={3}>

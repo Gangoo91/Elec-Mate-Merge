@@ -141,7 +141,7 @@ export const RiskMatrixGuide = ({
 
       {/* AI Suggestion Alert */}
       {showSuggestion && (
-        <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
+        <Alert className="border border-elec-yellow/35">
           <Info className="h-4 w-4 text-elec-yellow" />
           <AlertDescription className="text-sm text-elec-light">
             Based on the hazards you've selected, we recommend{' '}
@@ -192,7 +192,7 @@ export const RiskMatrixGuide = ({
                       <Badge
                         key={idx}
                         variant="outline"
-                        className="bg-elec-yellow/10 text-elec-light border-elec-yellow/30 text-xs"
+                        className="border border-elec-yellow/35 text-elec-light border-elec-yellow/30 text-xs"
                       >
                         {item}
                       </Badge>

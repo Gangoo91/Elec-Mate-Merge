@@ -20,6 +20,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { solarArrayContent } from './content/solar-array';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -581,20 +582,11 @@ const SolarArrayCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">System Capacity</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {(result.totalWattage / 1000).toFixed(1)} kWp
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.totalPanels} panels | {result.totalStrings} strings
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="System Capacity"
+                  value={`${(result.totalWattage / 1000).toFixed(1)} kWp`}
+                  caption={`${result.totalPanels} panels | ${result.totalStrings} strings`}
+                />
 
                 {/* Array Layout */}
                 <CalculatorSection title="Array Layout">

@@ -14,6 +14,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 // FIX (consolidation): cable overall diameters / cross-sectional areas were inlined here and
 // disagreed with the shared module on every row. Cable OD is manufacturer data, not BS 7671 data,
@@ -357,18 +358,11 @@ const ConduitFillCalculator = () => {
                   </div>
 
                   {/* Hero Value */}
-                  <div className="rounded-xl p-4 bg-white/[0.04]">
-                    <p className="text-sm text-white mb-1">Fill Percentage</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.fillPercentage}%
-                    </div>
-                    <p className="text-sm text-white mt-1">Space factor: {result.spaceFactor}%</p>
-                  </div>
+                  <ResultHeadline
+                    label="Fill Percentage"
+                    value={`${result.fillPercentage}%`}
+                    caption={`Space factor: ${result.spaceFactor}%`}
+                  />
 
                   {/* Result Details */}
                   <ResultsGrid columns={2}>

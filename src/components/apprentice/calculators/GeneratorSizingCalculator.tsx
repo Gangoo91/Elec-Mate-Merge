@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { generatorSizingContent } from './content/generator-sizing';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -498,22 +499,12 @@ const GeneratorSizingCalculator = () => {
                   </button>
                 </div>
 
-                {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Generator Rating</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.nearestStandardKVA} kVA
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {(result.nearestStandardKVA * 0.8).toFixed(0)} kW prime |{' '}
-                    {phases === '3' ? '3-phase' : 'Single phase'}
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Generator rating"
+                  value={`${result.nearestStandardKVA} kVA`}
+                  aside={`${(result.nearestStandardKVA * 0.8).toFixed(0)} kW prime`}
+                  caption={phases === '3' ? 'Three-phase.' : 'Single phase.'}
+                />
 
                 {/* Result cards */}
                 <ResultsGrid columns={2}>

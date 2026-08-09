@@ -371,7 +371,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
         <Button
           onClick={handleViewPDF}
           disabled={validating || generating}
-          className="flex-1 h-11 touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
+          className="flex-1 h-11 touch-manipulation bg-elec-yellow text-background hover:brightness-110"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -385,7 +385,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
           onClick={handleDownloadPDF}
           variant="outline"
           disabled={validating || generating}
-          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:border-elec-yellow/60"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -399,7 +399,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
           onClick={handlePrintPDF}
           variant="outline"
           disabled={validating || generating}
-          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:border-elec-yellow/60"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />

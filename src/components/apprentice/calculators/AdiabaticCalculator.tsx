@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback, useEffect } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
-import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
+import { Copy, Check, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -11,19 +11,18 @@ import {
   CalculatorActions,
   ResultValue,
   ResultsGrid,
+  ResultHeadline,
   ResultBadge,
   CalculatorFormula,
   CalculatorDivider,
   CalculatorEditorial,
   FormulaReference,
-  CALCULATOR_CONFIG,
   CalculatorPanes,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { adiabaticContent } from './content/adiabatic';
 
 const CAT = 'protection' as const;
-const config = CALCULATOR_CONFIG[CAT];
 
 const STANDARD_SIZES = [
   1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400,
@@ -448,51 +447,40 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
                   </button>
                 </div>
 
-                {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Standard Cable Size</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.roundedCsa} mm²
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    Minimum required: {result.minimumCsa.toFixed(2)} mm²
-                  </p>
-                </div>
+                {/* The answer is the size you actually buy, so that is the headline
+                    and the raw adiabatic figure rides alongside it.
 
-                {/* Result cards */}
+                    This was a centred 5xl figure painted with `bg-clip-text` over the
+                    category gradient — the only centred element on a left-aligned page
+                    — above a grid that repeated the minimum CSA, and then a green bar
+                    that repeated the safety margin a THIRD time. Two of the three said
+                    the same thing in different words. */}
+                <ResultHeadline
+                  label="Minimum CPC size"
+                  value={`${result.roundedCsa} mm²`}
+                  aside={`adiabatic result ${result.minimumCsa.toFixed(2)} mm²`}
+                  caption={
+                    result.roundedCsa !== result.minimumCsa
+                      ? `S = √(I²t) ÷ k gives ${result.minimumCsa.toFixed(2)} mm², so take the next standard size up — ${result.safetyMargin.toFixed(1)}% above the minimum.`
+                      : `S = √(I²t) ÷ k gives exactly ${result.minimumCsa.toFixed(2)} mm².`
+                  }
+                />
+
                 <ResultsGrid columns={2}>
                   <ResultValue
-                    label="Minimum CSA"
+                    label="Adiabatic minimum"
                     value={result.minimumCsa.toFixed(2)}
                     unit="mm²"
                     category={CAT}
                     size="sm"
                   />
                   <ResultValue
-                    label="Safety Margin"
+                    label="Margin over minimum"
                     value={`${result.safetyMargin.toFixed(1)}%`}
                     category={CAT}
                     size="sm"
                   />
                 </ResultsGrid>
-
-                {/* Safety margin indicator */}
-                {result.roundedCsa !== result.minimumCsa && (
-                  <div className="flex items-center justify-between p-3 rounded-lg border text-sm bg-green-500/5 border-green-500/20">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                      <span className="text-white font-medium">Safety Margin</span>
-                    </div>
-                    <span className="text-white shrink-0 ml-2">
-                      {result.roundedCsa}mm² is {result.safetyMargin.toFixed(1)}% above minimum
-                    </span>
-                  </div>
-                )}
 
                 {/* Compliance notes */}
                 {result.complianceNotes.length > 0 && (
@@ -517,8 +505,8 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
                       {result.complianceNotes.map((note, index) => (
                         <li key={index} className="flex items-start gap-2 text-white">
                           <span
-                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                            style={{ backgroundColor: config.gradientFrom }}
+                            aria-hidden
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
                           />
                           {note}
                         </li>

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 export interface TimeSession {
   id: string;
@@ -153,9 +154,16 @@ export const useTimeTracker = () => {
       if (error) throw error;
       return data as TimeSession;
     },
-    onSuccess: () => {
+    onSuccess: (session) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY_ACTIVE });
       queryClient.invalidateQueries({ queryKey: QUERY_KEY_SESSIONS });
+      // Logging billable time is a paid-tier action and emitted nothing.
+      if (session?.user_id) {
+        void trackUserEvent(session.user_id, 'feature_use', {
+          eventName: 'time_session_logged',
+          eventData: { duration_seconds: session.duration_seconds ?? 0 },
+        });
+      }
     },
   });
 

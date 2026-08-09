@@ -271,7 +271,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
                 onClick={() => setCurrentSection(index)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg transition-all ${
                   currentSection === index
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40'
+                    ? 'border border-elec-yellow/35'
                     : 'bg-card border border-transparent hover:border-elec-yellow/20'
                 }`}
               >

@@ -14,6 +14,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { threePhasePowerContent } from './content/three-phase-power';
 // AUDIT FIX (consolidation): this component previously inlined its own protective-device
@@ -555,20 +556,11 @@ const ThreePhasePowerCalculator = () => {
                   </div>
 
                   {/* Hero — Apparent Power */}
-                  <div className="text-center py-3">
-                    <p className="text-sm text-white mb-1">Apparent Power (S)</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.apparentPower.toFixed(2)} kVA
-                    </div>
-                    <p className="text-xs text-white mt-1">
-                      φ = {result.phaseAngle.toFixed(1)}° • √3 = 1.732
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Apparent Power (S)"
+                    value={`${result.apparentPower.toFixed(2)} kVA`}
+                    caption={`φ = ${result.phaseAngle.toFixed(1)}° • √3 = 1.732`}
+                  />
 
                   {/* Power Triangle */}
                   <ResultsGrid columns={2}>

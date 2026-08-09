@@ -15,6 +15,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { acPowerContent } from './content/ac-power';
 
@@ -393,17 +394,10 @@ const ACPowerCalculator = () => {
                   </div>
 
                   {/* Hero — Apparent Power */}
-                  <div className="text-center py-3">
-                    <p className="text-sm text-white mb-1">Apparent Power (S)</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {results.apparentPower?.toFixed(2)} VA
-                    </div>
-                  </div>
+                  <ResultHeadline
+                    label="Apparent Power (S)"
+                    value={`${results.apparentPower?.toFixed(2)} VA`}
+                  />
 
                   {/* Result Cards */}
                   <ResultsGrid columns={2}>

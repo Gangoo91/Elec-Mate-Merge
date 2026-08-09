@@ -18,6 +18,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { powerQualityContent } from './content/power-quality';
 import {
@@ -411,20 +412,11 @@ const PowerQualityCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">THDi Current</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {result.thdiCurrent.toFixed(2)}%
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    IEEE 519 limit: 5% | RMS: {result.rmsCurrentTotal.toFixed(2)}A
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="THDi Current"
+                  value={`${result.thdiCurrent.toFixed(2)}%`}
+                  caption={`IEEE 519 limit: 5% | RMS: ${result.rmsCurrentTotal.toFixed(2)}A`}
+                />
 
                 {/* Key Metrics */}
                 <ResultsGrid columns={2}>

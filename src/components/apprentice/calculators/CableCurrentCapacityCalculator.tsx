@@ -25,6 +25,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { cableCurrentCapacityContent } from './content/cable-current-capacity';
 import {
@@ -610,18 +611,11 @@ const CableCurrentCapacityCalculator = () => {
 
                 <div className="space-y-4 animate-fade-in">
                   {/* Hero: Final Capacity */}
-                  <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 text-center">
-                    <p className="text-sm text-white mb-1">Final Capacity (Iz)</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {result.finalCapacity.toFixed(1)}A
-                    </div>
-                    <p className="text-sm text-white mt-1">Base: {result.baseCapacity}A</p>
-                  </div>
+                  <ResultHeadline
+                    label="Final Capacity (Iz)"
+                    value={`${result.finalCapacity.toFixed(1)}A`}
+                    caption={`Base: ${result.baseCapacity}A`}
+                  />
 
                   {/* Correction Factors */}
                   <ResultsGrid columns={3}>

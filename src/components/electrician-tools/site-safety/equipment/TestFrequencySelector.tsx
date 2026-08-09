@@ -49,7 +49,7 @@ export function TestFrequencySelector({ value, onChange, error }: TestFrequencyS
               {isSelected && (
                 <motion.div
                   layoutId="activeFrequencyBg"
-                  className="absolute inset-0 bg-elec-yellow/20 border border-elec-yellow/30 rounded-md"
+                  className="absolute inset-0 border border-elec-yellow/35 rounded-md"
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}

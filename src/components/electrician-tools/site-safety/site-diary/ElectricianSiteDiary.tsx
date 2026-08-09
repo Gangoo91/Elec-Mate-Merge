@@ -20,8 +20,6 @@ import {
   Eyebrow,
   Field,
   FormCard,
-  ListCard,
-  ListRow,
   EmptyState,
   LoadingState,
   PrimaryButton,
@@ -40,6 +38,7 @@ import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { JobLinkField } from '../common/JobLinkField';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface ElectricianSiteDiaryProps {
   onBack: () => void;
@@ -504,11 +503,11 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             })}
                           </div>
                         )}
-                        <ListCard>
+                        <SafetyListCard>
                           {approvedRams
                             .filter((r) => !selectedRamsIds.includes(r.id))
                             .map((r) => (
-                              <ListRow
+                              <SafetyListRow
                                 key={r.id}
                                 onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
                                 title={r.project_name}
@@ -518,7 +517,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                                 }
                               />
                             ))}
-                        </ListCard>
+                        </SafetyListCard>
                       </Field>
                     )}
                     {activePermits.length > 0 && (
@@ -547,11 +546,11 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             })}
                           </div>
                         )}
-                        <ListCard>
+                        <SafetyListCard>
                           {activePermits
                             .filter((p) => !selectedPermitIds.includes(p.id))
                             .map((p) => (
-                              <ListRow
+                              <SafetyListRow
                                 key={p.id}
                                 onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
                                 title={p.title}
@@ -561,7 +560,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                                 }
                               />
                             ))}
-                        </ListCard>
+                        </SafetyListCard>
                       </Field>
                     )}
                   </FormCard>
@@ -671,8 +670,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             },
                           ]}
                         >
-                          <ListCard>
-                            <ListRow
+                          <SafetyListCard>
+                            <SafetyListRow
                               accent="blue"
                               onClick={() => {
                                 setShareRecordId(entry.id);
@@ -695,7 +694,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                                 </div>
                               }
                             />
-                          </ListCard>
+                          </SafetyListCard>
                         </SwipeableListItem>
                       );
                     })}

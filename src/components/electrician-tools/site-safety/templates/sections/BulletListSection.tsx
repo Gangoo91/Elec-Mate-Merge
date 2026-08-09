@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import type { BulletListSection as BulletListSectionType } from '@/types/safety-template';
 
 interface Props {
@@ -42,11 +42,11 @@ export function BulletListSection({ section, mode, onChange }: Props) {
       {section.items.map((item, i) => (
         <div key={i} className="flex gap-2">
           <span className="text-elec-yellow mt-3 flex-shrink-0">&#8226;</span>
-          <Input
+          <input
             value={item}
             onChange={(e) => updateItem(i, e.target.value)}
             placeholder="List item"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
+            className={cn(FIELD_CN, 'flex-1')}
           />
           <button
             onClick={() => removeItem(i)}

@@ -1,6 +1,6 @@
 /**
  * ObservationFeed — the observation list, grouped by day.
- * Editorial standard: hairline ListCard rows with a single colour dimension
+ * Editorial standard: hairline SafetyListCard rows with a single colour dimension
  * (positive = green, improvement = severity/status) carried by a thin accent
  * bar + a small uppercase pill. No icon tiles, no rainbow.
  */
@@ -8,7 +8,12 @@
 import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import type { SafetyObservation, ObservationStatus } from '@/hooks/useSafetyObservations';
-import { Eyebrow, ListCard, ListRow, EmptyState, type Tone } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface ObservationFeedProps {
   observations: SafetyObservation[];
@@ -92,7 +97,7 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
       {grouped.map(([date, items]) => (
         <div key={date}>
           <Eyebrow className="mb-2">{date}</Eyebrow>
-          <ListCard>
+          <SafetyListCard>
             {items.map((obs) => {
               const isPositive = obs.observation_type === 'positive';
               const tone = rowTone(obs);
@@ -106,7 +111,7 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
                 new Date(obs.due_date) < new Date() &&
                 (obs.status || 'open') !== 'closed';
               return (
-                <ListRow
+                <SafetyListRow
                   key={obs.id}
                   onClick={() => onViewDetails(obs)}
                   accent={tone}
@@ -149,7 +154,7 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
         </div>
       ))}
     </div>

@@ -1155,6 +1155,10 @@ export function SEOMockExam({
                   ? `${percent}% today — now make sure it holds on exam day.`
                   : `${percent}% today. The full app is built to get you to a pass.`}
               </h2>
+              <p className="mt-3 max-w-[54ch] text-[14.5px] leading-relaxed text-white">
+                This mock is one page of it. Inside there's a full Study Centre — proper course
+                content, not just more questions.
+              </p>
               <ol className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
                 {[
                   weakAreas.length > 0
@@ -1163,9 +1167,11 @@ export function SEOMockExam({
                         .map((c) => c.name)
                         .join(' and ')} — until they stop costing you marks`
                     : 'The full question bank, not just the rotation you see here',
-                  'An explanation on every wrong answer, grounded in BS 7671',
-                  'Progress tracked across attempts, so retakes here become scores there',
-                  'AM2 practical simulator and every certificate you need on site',
+                  'A complete Inspection & Testing course — initial verification, periodic inspection, certification and EICR coding, with practical walkthroughs and scenarios',
+                  'Elec-AI: ask a regs question in plain English, get an answer in seconds with every regulation cited and tappable to its full text. Send it a photo or just talk to it',
+                  '14 CPD courses — 18th Edition, EV, renewables, fire alarm, emergency lighting — plus site tickets like CSCS, IPAF and PASMA, most with their own 30-question mock',
+                  'An explanation on every wrong answer, grounded in BS 7671, and progress tracked across attempts',
+                  '19 certificate types and 70+ calculators for when you are back on the tools',
                 ].map((line, i) => (
                   <li key={i} className="flex items-start gap-3 py-3">
                     <RowNumber n={i + 1} />
@@ -1173,9 +1179,18 @@ export function SEOMockExam({
                   </li>
                 ))}
               </ol>
+              {/* The de-risk, stated plainly and BEFORE the button — the ask
+                  is the moment they weigh cost, and the honest answer is that
+                  there isn't one for a week. No second yellow: the button is
+                  the only one on this panel. */}
+              <p className="mt-6 rounded-xl border border-white/[0.12] bg-white/[0.03] px-4 py-3.5 text-[14.5px] leading-relaxed text-white">
+                <span className="font-semibold">£0 today, and £0 until day 8.</span> You get the
+                whole Study Centre for seven days. Walk away before day 8 and it has cost you
+                nothing — you have still had the week's learning.
+              </p>
               <Link
                 to={signupCta.href}
-                className="mt-6 flex h-14 w-full touch-manipulation items-center justify-center rounded-xl bg-elec-yellow px-7 text-[15.5px] font-bold tracking-[-0.01em] text-black transition-colors hover:brightness-95 sm:inline-flex sm:w-auto"
+                className="mt-4 flex h-14 w-full touch-manipulation items-center justify-center rounded-xl bg-elec-yellow px-7 text-[15.5px] font-bold tracking-[-0.01em] text-black transition-colors hover:brightness-95 sm:inline-flex sm:w-auto"
               >
                 {signupCta.label}
               </Link>

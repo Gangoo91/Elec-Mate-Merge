@@ -12,6 +12,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { loadContent } from './content/load';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -363,31 +364,17 @@ export const LoadCalculator = () => {
                   {/* Status Chip */}
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20">
                     <span className="text-xs font-semibold text-amber-300">Maximum Demand</span>
-                    <span
-                      className="text-sm font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
+                    <span className="text-sm font-bold text-elec-yellow">
                       {results.totalMaximumDemand.toFixed(2)} kW
                     </span>
                   </div>
 
                   {/* Hero Value */}
-                  <div className="rounded-xl p-4 bg-white/[0.04]">
-                    <p className="text-sm text-white mb-1">Maximum Demand</p>
-                    <div
-                      className="text-4xl font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
-                      {results.totalMaximumDemand.toFixed(2)} kW
-                    </div>
-                    <p className="text-sm text-white mt-1">
-                      {results.diversityApplied.toFixed(0)}% diversity applied
-                    </p>
-                  </div>
+                  <ResultHeadline
+                    label="Maximum Demand"
+                    value={`${results.totalMaximumDemand.toFixed(2)} kW`}
+                    caption={`${results.diversityApplied.toFixed(0)}% diversity applied`}
+                  />
 
                   <ResultsGrid columns={2}>
                     <ResultValue

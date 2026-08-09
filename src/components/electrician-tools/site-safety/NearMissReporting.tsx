@@ -29,8 +29,6 @@ import {
   Eyebrow,
   Field,
   FormCard,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   selectContentClass,
@@ -56,6 +54,7 @@ import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
 import { JobLinkField } from './common/JobLinkField';
 import { NearMissReport, Witness } from './types';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 interface FormData {
   category: string;
@@ -629,7 +628,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                   className={cn(
                     'p-3 rounded-xl border text-left text-[13px] font-medium touch-manipulation active:scale-[0.98] transition-all',
                     selectedTemplate === t.id
-                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                      ? 'border-elec-yellow border border-elec-yellow/35 text-elec-yellow'
                       : 'border-white/[0.08] bg-[hsl(0_0%_12%)] text-white'
                   )}
                 >
@@ -1112,8 +1111,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                 },
               ]}
             >
-              <ListCard>
-                <ListRow
+              <SafetyListCard>
+                <SafetyListRow
                   accent={sevTone(report.severity)}
                   onClick={() => setSelectedReport(report)}
                   title={report.description?.substring(0, 60) || 'Near miss'}
@@ -1127,7 +1126,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                     </div>
                   }
                 />
-              </ListCard>
+              </SafetyListCard>
             </SwipeableListItem>
           ))}
           {hasMoreReports && (

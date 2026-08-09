@@ -43,8 +43,6 @@ import {
   Field,
   FormCard,
   SheetShell,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
@@ -74,6 +72,7 @@ import { ReadinessGate } from './common/ReadinessGate';
 import { CloseOutSheet } from './common/CloseOutSheet';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 // ─── Types ───
 
@@ -909,9 +908,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             <TextAction onClick={() => setShowLoadTemplate(true)}>
               Load from a saved template
             </TextAction>
-            <ListCard>
+            <SafetyListCard>
               {PERMIT_TYPES.map((type, i) => (
-                <ListRow
+                <SafetyListRow
                   key={type.id}
                   onClick={() => selectPermitType(type.id)}
                   // Numbered 01/02 markers and → glyphs are the superseded deck
@@ -920,7 +919,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   subtitle={type.description}
                 />
               ))}
-            </ListCard>
+            </SafetyListCard>
           </div>
         );
 
@@ -1043,13 +1042,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
             <div className="space-y-2">
               <Eyebrow>Required precautions</Eyebrow>
-              <ListCard>
+              <SafetyListCard>
                 {precautions.map((p, i) => (
                   <div key={i} className="px-5 py-3 text-[12.5px] text-white leading-relaxed">
                     {p}
                   </div>
                 ))}
-              </ListCard>
+              </SafetyListCard>
             </div>
 
             <div className="space-y-2">
@@ -1595,7 +1594,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {/* Hazards */}
                   <div>
                     <Eyebrow className="mb-2">Hazards &amp; controls</Eyebrow>
-                    <ListCard>
+                    <SafetyListCard>
                       {viewingPermit.hazards.map((h) => (
                         <div key={h.id} className="px-5 py-3">
                           <p className="text-[13px] text-white font-medium">{h.description}</p>
@@ -1604,7 +1603,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           )}
                         </div>
                       ))}
-                    </ListCard>
+                    </SafetyListCard>
                   </div>
 
                   {/* PPE */}
@@ -1620,13 +1619,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {/* Precautions */}
                   <div>
                     <Eyebrow className="mb-2">Precautions</Eyebrow>
-                    <ListCard>
+                    <SafetyListCard>
                       {viewingPermit.precautions.map((p, i) => (
                         <div key={i} className="px-5 py-3 text-[12.5px] text-white leading-relaxed">
                           {p}
                         </div>
                       ))}
-                    </ListCard>
+                    </SafetyListCard>
                   </div>
 
                   {/* Signatures */}
@@ -1661,14 +1660,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {(viewingPermit.version > 1 || revisions.length > 0) && (
                     <div>
                       <Eyebrow className="mb-2">Version history</Eyebrow>
-                      <ListCard>
-                        <ListRow
+                      <SafetyListCard>
+                        <SafetyListRow
                           title={`Version ${viewingPermit.version} — current`}
                           subtitle={`Issued ${fmtDate(viewingPermit.created_at)}`}
                           trailing={<StatusPill status={viewingPermit.status} />}
                         />
                         {revisions.map((rev) => (
-                          <ListRow
+                          <SafetyListRow
                             key={rev.id}
                             title={`Version ${rev.version}`}
                             subtitle={rev.change_reason || 'Superseded'}
@@ -1679,7 +1678,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             }
                           />
                         ))}
-                      </ListCard>
+                      </SafetyListCard>
                     </div>
                   )}
 
@@ -1690,9 +1689,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {(relatedFireWatches.length > 0 || relatedIsolations.length > 0) && (
                     <div>
                       <Eyebrow className="mb-2">Related records</Eyebrow>
-                      <ListCard>
+                      <SafetyListCard>
                         {relatedFireWatches.map((fw) => (
-                          <ListRow
+                          <SafetyListRow
                             key={fw.id}
                             title="Fire Watch"
                             subtitle={`${fw.duration_minutes} min${fw.location ? ` · ${fw.location}` : ''} · ${new Date(fw.start_time).toLocaleDateString('en-GB')}`}
@@ -1704,7 +1703,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           />
                         ))}
                         {relatedIsolations.map((ir) => (
-                          <ListRow
+                          <SafetyListRow
                             key={ir.id}
                             title="Safe Isolation"
                             subtitle={`${ir.circuit_description}${ir.distribution_board ? ` · ${ir.distribution_board}` : ''} · ${new Date(ir.created_at).toLocaleDateString('en-GB')}`}
@@ -1715,7 +1714,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             }
                           />
                         ))}
-                      </ListCard>
+                      </SafetyListCard>
                     </div>
                   )}
 
@@ -1771,9 +1770,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 description="Create a RAMS first, then link it to this permit so they travel together."
               />
             ) : (
-              <ListCard>
+              <SafetyListCard>
                 {ramsDocs.map((r) => (
-                  <ListRow
+                  <SafetyListRow
                     key={r.id}
                     onClick={() => {
                       setLinkedRamsId(r.id);
@@ -1792,7 +1791,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     }
                   />
                 ))}
-              </ListCard>
+              </SafetyListCard>
             )}
           </SheetShell>
         </SheetContent>

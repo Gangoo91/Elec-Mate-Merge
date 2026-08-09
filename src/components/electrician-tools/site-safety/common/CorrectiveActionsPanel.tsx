@@ -116,7 +116,7 @@ export function CorrectiveActionsPanel({ sourceType, sourceId }: CorrectiveActio
           <Target className="h-4 w-4 text-elec-yellow" />
           <h3 className="text-sm font-semibold text-white">Corrective Actions</h3>
           {stats.total > 0 && (
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-elec-yellow/15 text-elec-yellow">
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-elec-yellow text-black">
               {stats.open + stats.inProgress} open
             </span>
           )}

@@ -40,10 +40,13 @@ import {
 } from '@/components/ui/alert-dialog';
 import { format, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 import {
   ROLE_COLORS,
+  SCORE_COLOR_MAP,
   calculateEngagementScore,
   formatTimeShort,
+  getScoreColor,
 } from '@/utils/adminUtils';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import UserManagementSheet from '@/components/admin/UserManagementSheet';
@@ -130,7 +133,8 @@ const quickFilters = [
   { value: 'active_today', label: 'Active today' },
   { value: 'trials', label: 'Trials' },
   { value: 'subscribed', label: 'Subscribed' },
-  { value: 'free', label: 'Free' },
+  { value: 'free', label: 'Free access' },
+  { value: 'not_onboarded', label: 'Not onboarded' },
   { value: 'never_logged_in', label: 'Never logged in' },
   { value: 'most_engaged', label: 'Most engaged' },
 ];
@@ -275,6 +279,15 @@ export default function AdminUsers() {
           case 'free':
             allUsers = allUsers.filter((u: UserProfile) => u.free_access_granted);
             break;
+          case 'not_onboarded':
+            /*
+             * 363 of 1,484 accounts (24.5%) never finished onboarding. The
+             * flag was already coming back from `get_admin_users` on every
+             * load — it just was not declared on the type, so nothing could
+             * read it and this segment was impossible to list.
+             */
+            allUsers = allUsers.filter((u: UserProfile) => !u.onboarding_completed);
+            break;
           case 'never_logged_in':
             // profiles.last_sign_in is a dead column (always NULL) — never gate on it.
             // No presence record (last_seen) is the real "never active" signal.
@@ -342,6 +355,7 @@ export default function AdminUsers() {
       online: users?.filter((u) => u.isOnline).length || 0,
       subscribed: users?.filter((u) => u.subscribed).length || 0,
       admins: users?.filter((u) => u.admin_role).length || 0,
+      notOnboarded: users?.filter((u) => !u.onboarding_completed).length || 0,
       elecIds: users?.filter((u) => u.elec_id_profile).length || 0,
       thisWeek:
         users?.filter((u) => {
@@ -859,10 +873,9 @@ export default function AdminUsers() {
         />
 
         <StatStrip
-          columns={4}
+          columns={5}
           stats={[
             { label: 'Total', value: stats.total },
-            { label: 'Online', value: stats.online, tone: 'green' },
             {
               label: 'Paying',
               value: realPaying ?? '…',
@@ -870,10 +883,19 @@ export default function AdminUsers() {
               sub: 'Stripe + App + Play',
             },
             { label: 'New this week', value: stats.thisWeek, tone: 'emerald' },
+            { label: 'Online', value: stats.online, tone: 'green' },
+            {
+              // A quarter of every account ever created. Worth a cell of its
+              // own, and the filter beneath it lists them.
+              label: 'Not onboarded',
+              value: stats.notOnboarded,
+              tone: 'orange',
+              sub: `${Math.round((stats.notOnboarded / Math.max(1, stats.total)) * 100)}% of all`,
+            },
           ]}
         />
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           <FilterBar
             tabs={quickFilters.map((f) => ({ value: f.value, label: f.label }))}
             activeTab={quickFilter}
@@ -904,18 +926,23 @@ export default function AdminUsers() {
             }
           />
 
-          <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full overflow-x-auto hide-scrollbar">
+          {/* Role filters as plain chips, scrolling horizontally on a phone.
+              They were a second full-width pill rail below the first — two
+              near-empty tracks costing ~90px before the list started. */}
+          <div className="scrollbar-hide -mx-4 flex items-center gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
+            <span className="shrink-0 text-[11px] font-medium text-white">Role</span>
             {roleFilters.map((filter) => {
               const isActive = roleFilter === filter.value;
               return (
                 <button
                   key={filter.value}
                   onClick={() => setRoleFilter(filter.value)}
-                  className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation ${
+                  className={cn(
+                    'h-9 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
                     isActive
-                      ? 'bg-white/[0.08] text-white'
-                      : 'text-white hover:text-white hover:bg-white/[0.04]'
-                  }`}
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]'
+                  )}
                 >
                   {filter.label}
                 </button>
@@ -994,7 +1021,7 @@ export default function AdminUsers() {
                 </div>
               }
             />
-            <ListBody className="divide-y-[1.5px] divide-black/60">
+            <ListBody className="divide-y-[1.5px] divide-black/60 xl:grid xl:grid-cols-2 xl:divide-y-0 xl:gap-px xl:bg-black/60">
               {paginatedUsers.map((user) => {
                 const roleKey = user.role?.toLowerCase() || 'visitor';
                 const accentTone = roleToneMap[roleKey] || 'cyan';
@@ -1088,23 +1115,103 @@ export default function AdminUsers() {
                           />
                         </span>
 
-                        {/* Content — one flex column, so no padding maths */}
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="min-w-0 flex-1 flex items-center gap-1.5">
+                        {/*
+                          One responsive grid, not a stack.
+
+                          Every field lived in a single narrow column — name,
+                          email, then a six-fragment meta chain at 10.5px
+                          ("electrician · today · online · 4h 19m · 1 logins").
+                          On a 2,600px monitor that used maybe a third of the
+                          row and made the smallest type on the page carry the
+                          most information.
+
+                          From lg the fields get their own columns, so you can
+                          read down any one of them; below that it collapses to
+                          the stacked form, which is right on a phone. Type
+                          sizes went up with the space: 10.5px → 12px.
+                        */}
+                        <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 lg:grid-cols-[minmax(0,1fr)_5.5rem_5rem_6.5rem_7rem_6.5rem] xl:grid-cols-[minmax(0,1fr)_5rem_6rem_6rem_6.5rem]">
+                          {/* Name + email */}
+                          <div className="min-w-0">
+                            <span className="flex items-center gap-1.5">
                               <span className="truncate text-[14.5px] font-semibold text-white">
                                 {user.full_name || 'No name'}
                               </span>
                               {user.admin_role && (
-                                <Shield className="h-3 w-3 text-elec-yellow shrink-0" />
+                                <Shield className="h-3 w-3 shrink-0 text-elec-yellow" />
+                              )}
+                              {!user.onboarding_completed && (
+                                <span
+                                  title="Never finished onboarding"
+                                  className="shrink-0 rounded-full bg-orange-500/15 px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.08em] text-orange-300"
+                                >
+                                  Setup
+                                </span>
                               )}
                             </span>
+                            <p className="truncate text-[12px] text-white">
+                              {user.email || (user.username ? `@${user.username}` : '—')}
+                            </p>
+                          </div>
 
-                            {/* Billing status — the one thing worth reading down
-                                the whole column. A word in its own colour beats a
-                                filled chip: same signal, none of the weight. */}
+                          {/* Role — its own column from lg, inline on mobile */}
+                          <span
+                            className={`hidden truncate text-[12px] font-medium lg:block ${toneText[accentTone]}`}
+                          >
+                            {user.role || 'visitor'}
+                          </span>
+
+                          {/* Joined */}
+                          <span className="hidden text-[12px] text-white tabular-nums lg:block xl:hidden">
+                            {joinedDays !== null
+                              ? joinedDays === 0
+                                ? 'Today'
+                                : `${joinedDays}d ago`
+                              : '—'}
+                          </span>
+
+                          {/* Last active */}
+                          <span className="hidden text-[12px] tabular-nums lg:block">
+                            {user.isOnline ? (
+                              <span className="flex items-center gap-1 text-green-400">
+                                <Dot tone="green" />
+                                Online
+                              </span>
+                            ) : (
+                              <span className="text-white">
+                                {user.last_seen ? relativeTime(user.last_seen) : 'Never'}
+                              </span>
+                            )}
+                          </span>
+
+                          {/* Engagement */}
+                          <span className="hidden items-center gap-2 lg:flex">
+                            {engagementScore !== undefined ? (
+                              <>
+                                <span
+                                  className="h-1 w-12 overflow-hidden rounded-full bg-white/[0.12]"
+                                  title={`Engagement ${engagementScore} of 100`}
+                                >
+                                  <span
+                                    className={`block h-full rounded-full ${SCORE_COLOR_MAP[getScoreColor(engagementScore)].bar}`}
+                                    style={{
+                                      width: `${Math.max(4, Math.min(100, engagementScore))}%`,
+                                    }}
+                                  />
+                                </span>
+                                <span className="text-[12px] font-semibold tabular-nums text-white">
+                                  {engagementScore}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-[12px] text-white">—</span>
+                            )}
+                          </span>
+
+                          {/* Billing + grant */}
+                          <span className="flex w-full items-center justify-between gap-1.5">
                             <span
-                              className={`shrink-0 text-[11px] font-semibold tracking-tight ${toneText[status.tone]}`}
+                              className={`text-[11.5px] font-semibold tracking-tight ${toneText[status.tone]}`}
                             >
                               {status.label}
                             </span>
@@ -1114,82 +1221,50 @@ export default function AdminUsers() {
                                 e.stopPropagation();
                                 openGrantSheet(user);
                               }}
-                              className="h-8 w-8 -my-1 -mr-1 flex items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation shrink-0"
+                              className="-mr-1 flex h-9 w-9 items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation"
                               aria-label={`Grant free access to ${user.full_name || 'user'}`}
                               title="Grant free access"
                             >
                               <Gift className="h-4 w-4" />
                             </button>
-                          </div>
+                          </span>
 
-                          <p className="truncate text-[12px] text-white">
-                            {user.email || (user.username ? `@${user.username}` : '—')}
-                          </p>
-
-                          <div className="mt-1 flex items-end justify-between gap-3">
-                            <div className="min-w-0 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[10.5px] leading-tight text-white">
-                              <span className={`font-medium ${toneText[accentTone]}`}>
-                                {user.role || 'visitor'}
-                              </span>
-                              <span aria-hidden className="text-white">·</span>
-                              <span>
-                                {joinedDays !== null
-                                  ? joinedDays === 0
-                                    ? 'today'
-                                    : `${joinedDays}d`
-                                  : '—'}
-                              </span>
-                              {user.isOnline ? (
-                                <>
-                                  <span aria-hidden className="text-white">·</span>
-                                  <span className="flex items-center gap-1 text-green-400">
-                                    <Dot tone="green" />
-                                    online
-                                  </span>
-                                </>
-                              ) : user.last_seen ? (
-                                <>
-                                  <span aria-hidden className="text-white">·</span>
-                                  <span>{relativeTime(user.last_seen)}</span>
-                                </>
-                              ) : null}
-                              {rawEngagement && (
-                                <>
-                                  <span aria-hidden className="text-white">·</span>
-                                  <span>
-                                    {formatTimeShort(rawEngagement.total_seconds_tracked)}
-                                  </span>
-                                  <span aria-hidden className="text-white">·</span>
-                                  <span>{rawEngagement.login_count} logins</span>
-                                </>
-                              )}
-                            </div>
-
-                            {/* Engagement meter — a bare number told you nothing;
-                                a filled track is comparable down the column. */}
+                          {/* Mobile-only meta line. Below lg the columns above
+                              are hidden, so this carries the same facts in the
+                              stacked form a phone needs. */}
+                          <div className="col-span-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11.5px] leading-tight text-white lg:hidden">
+                            <span className={`font-medium ${toneText[accentTone]}`}>
+                              {user.role || 'visitor'}
+                            </span>
+                            <span aria-hidden>·</span>
+                            <span>
+                              {joinedDays !== null
+                                ? joinedDays === 0
+                                  ? 'today'
+                                  : `${joinedDays}d`
+                                : '—'}
+                            </span>
+                            {user.isOnline ? (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span className="flex items-center gap-1 text-green-400">
+                                  <Dot tone="green" />
+                                  online
+                                </span>
+                              </>
+                            ) : user.last_seen ? (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span>{relativeTime(user.last_seen)}</span>
+                              </>
+                            ) : null}
                             {engagementScore !== undefined && (
-                              <div
-                                className="flex shrink-0 items-center gap-1.5"
-                                title={`Engagement score ${engagementScore} of 100`}
-                              >
-                                <span className="h-1 w-8 overflow-hidden rounded-full bg-white/[0.12]">
-                                  <span
-                                    className={`block h-full rounded-full ${
-                                      engagementScore >= 70
-                                        ? 'bg-emerald-400'
-                                        : engagementScore >= 40
-                                          ? 'bg-amber-400'
-                                          : 'bg-white/50'
-                                    }`}
-                                    style={{
-                                      width: `${Math.max(4, Math.min(100, engagementScore))}%`,
-                                    }}
-                                  />
+                              <>
+                                <span aria-hidden>·</span>
+                                <span className="font-semibold tabular-nums">
+                                  {engagementScore}/100
                                 </span>
-                                <span className="text-[10.5px] font-semibold tabular-nums text-white">
-                                  {engagementScore}
-                                </span>
-                              </div>
+                              </>
                             )}
                           </div>
                         </div>

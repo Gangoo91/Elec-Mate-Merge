@@ -16,6 +16,8 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { downloadScopePDF } from '@/utils/scope-pdf';
 import { GLOBAL_PROMPTS, ROOM_PROMPTS } from '@/data/siteVisit/smartPrompts';
 import type { SiteVisit, ScopeBaseline, PreStartChecklist } from '@/types/siteVisit';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface FinaliseStepItem {
   id: string;
@@ -47,6 +49,8 @@ export const SiteVisitScopePriceStep = ({
   onJumpToRoom,
   onFinalised,
 }: SiteVisitScopePriceStepProps) => {
+  const { user } = useAuth();
+  const userId = user?.id;
   const {
     saveSiteVisit,
     lockScopeBaseline,
@@ -217,6 +221,13 @@ export const SiteVisitScopePriceStep = ({
       // If everything is now green, finish the journey
       if (ok && stepsRef.current.every((s) => s.status === 'done')) {
         await updateStatus(visitRef.current.id, 'completed');
+        // Finishing a site visit is a real unit of work and emitted nothing.
+        if (userId) {
+          void trackUserEvent(userId, 'feature_use', {
+            eventName: 'site_visit_completed',
+            eventData: { visit_id: visitRef.current.id },
+          });
+        }
         onFinalised();
       }
     },

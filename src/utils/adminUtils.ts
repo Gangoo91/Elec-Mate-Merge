@@ -129,9 +129,11 @@ export const getScoreColor = (score: number): 'red' | 'amber' | 'green' =>
   score < 25 ? 'red' : score <= 55 ? 'amber' : 'green';
 
 export const SCORE_COLOR_MAP = {
-  red: { stroke: '#ef4444', text: 'text-red-400', bg: 'bg-red-500/15' },
-  amber: { stroke: '#f59e0b', text: 'text-amber-400', bg: 'bg-amber-500/15' },
-  green: { stroke: '#22c55e', text: 'text-green-400', bg: 'bg-green-500/15' },
+  // `bg` is a tint for chips; `bar` is the solid fill a progress meter needs —
+  // a 15% wash reads as empty track at 4px tall.
+  red: { stroke: '#ef4444', text: 'text-red-400', bg: 'bg-red-500/15', bar: 'bg-red-400' },
+  amber: { stroke: '#f59e0b', text: 'text-amber-400', bg: 'bg-amber-500/15', bar: 'bg-amber-400' },
+  green: { stroke: '#22c55e', text: 'text-green-400', bg: 'bg-green-500/15', bar: 'bg-emerald-400' },
 } as const;
 
 /** Compact time format: "12m", "2h", "1h 30m" */

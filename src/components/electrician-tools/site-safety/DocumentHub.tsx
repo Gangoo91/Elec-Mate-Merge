@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useAllSafetyDocuments,
   type DocumentType,
@@ -19,8 +20,6 @@ import {
   FilterBar,
   EmptyState,
   LoadingState,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   SheetShell,
@@ -31,6 +30,7 @@ import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 import { UserRAMSUpload } from './UserRAMSUpload';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 interface DocumentHubProps {
   onBack?: () => void;
@@ -73,12 +73,31 @@ const FAMILY_LABEL: Record<Family, string> = {
    ──────────────────────────────────────────────────────── */
 
 // Map every status to a tone + display label.
+/**
+ * Sixteen statuses, and they used to wear eight hues between them — amber,
+ * blue, green, indigo, purple, orange, red, neutral. Nobody learns eight
+ * status colours, and indigo/purple carry no meaning a reader could guess:
+ * there is nothing about "submitted" that is more indigo than blue.
+ *
+ * Collapsed to the vocabulary the rest of the hub already uses, so the colour
+ * answers one question — what does this need from me?
+ *
+ *   amber   → waiting on you (draft, in progress, submitted, scheduled)
+ *   green   → done, or safe (active, approved, reviewed, completed)
+ *   red     → dead or void (cancelled, expired)
+ *   blue    → on the record, no action (open, recorded)
+ *   neutral → finished with (closed)
+ *
+ * `isolated` and `re_energised` keep their existing tones deliberately. Those
+ * are safe-isolation states with real electrical meaning and re-colouring them
+ * is a domain decision, not a design one — left alone pending Andrew.
+ */
 const STATUS_TONE: Record<string, Tone | 'neutral'> = {
   draft: 'amber',
   open: 'blue',
   active: 'green',
-  in_progress: 'blue',
-  submitted: 'indigo',
+  in_progress: 'amber',
+  submitted: 'amber',
   approved: 'green',
   reviewed: 'green',
   completed: 'green',
@@ -86,9 +105,14 @@ const STATUS_TONE: Record<string, Tone | 'neutral'> = {
   cancelled: 'red',
   expired: 'red',
   recorded: 'blue',
-  scheduled: 'purple',
+  scheduled: 'amber',
   isolated: 'orange',
   re_energised: 'green',
+  // Inspections and pre-use checks report a verdict rather than a lifecycle
+  // stage. A failed check is the one thing on this page that needs acting on
+  // today, so it takes red.
+  pass: 'green',
+  fail: 'red',
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -107,6 +131,8 @@ const STATUS_LABEL: Record<string, string> = {
   scheduled: 'Scheduled',
   isolated: 'Isolated',
   re_energised: 'Re-energised',
+  pass: 'Pass',
+  fail: 'Fail',
 };
 
 const STATUS_PILL: Record<Tone | 'neutral', string> = {
@@ -116,10 +142,15 @@ const STATUS_PILL: Record<Tone | 'neutral', string> = {
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
   orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
-  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
-  yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
-  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
+  // purple / indigo / cyan are unreachable now that no status maps to them,
+  // but Tone still declares them, so the record has to stay total. They point
+  // at the nearest surviving tone rather than reintroducing a hue.
+  purple: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  indigo: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
+  cyan: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  // Volt is a LINE and TEXT colour here, never a fill — a translucent yellow
+  // wash goes muddy brown against near-black.
+  yellow: 'text-elec-yellow border-elec-yellow/35',
   neutral: 'bg-white/[0.05] text-white border-white/10',
   grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
@@ -452,15 +483,27 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
         />
       ) : (
         <div className="space-y-3">
-          <ListCard>
+          {/* SafetyListCard/SafetyListRow are shared with the employer and college hubs
+              (213 files), so their flat `hsl(0 0% 12%)` body is not changed at
+              source. The Volt material is applied here instead: the diagonal
+              ramp, the inset bevel and the gold edge, plus the press feel the
+              row never had — scale down and brighten, and no grey tap flash. */}
+          <SafetyListCard
+            className={cn(
+              'border-elec-yellow/35 bg-none divide-white/[0.08]',
+              CARD_SURFACE,
+              '[&>*]:bg-transparent'
+            )}
+          >
             {visible.map((doc) => {
               const family = FAMILY_OF[doc.type];
               const transitions = getAvailableTransitions(doc);
               const isRAMS = doc.type === 'RAMS';
               const isThisExporting = isExporting && exportingId === doc.sourceId;
               return (
-                <ListRow
+                <SafetyListRow
                   key={`${doc.type}-${doc.id}`}
+                  className="transition-[background-color,transform] duration-150 [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.05] active:scale-[0.99] active:bg-white/[0.08]"
                   accent={statusTone(doc.status)}
                   title={doc.title}
                   subtitle={
@@ -540,7 +583,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
           {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
         </div>
       )}

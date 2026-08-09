@@ -143,7 +143,16 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
     const current = formData.ratedCurrent;
     const cableType = formData.cableType;
     if (cableSize && cableLength && current) {
-      return calculateVoltageDrop(cableSize, cableLength, current, cableType);
+      // Pass the phase: it selects both the mV/A/m column and the nominal
+      // voltage the 5% is taken from. Without it a three-phase charge point was
+      // costed on single-phase figures and judged against 230 V.
+      return calculateVoltageDrop(
+        cableSize,
+        cableLength,
+        current,
+        cableType,
+        formData.supplyPhases as string
+      );
     }
     return null;
   }, [
@@ -151,6 +160,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
     formData.cableLength,
     formData.ratedCurrent,
     formData.cableType,
+    formData.supplyPhases,
     calculateVoltageDrop,
   ]);
 
@@ -465,7 +475,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               {...keypad.field('voltageDrop')}
             />
             <div className="flex items-center gap-2 mt-1">
-              <p className="text-[11px] text-white/85">Max 5% (11.5V)</p>
+              <p className="text-[11px] text-white/85">
+                Max 5% ({voltageDrop ? (voltageDrop.nominalV * 0.05).toFixed(1) : '11.5'}V)
+              </p>
               {voltageDrop && (
                 <span
                   className={cn(
@@ -473,7 +485,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     voltageDrop.satisfactory ? 'text-green-400' : 'text-red-400'
                   )}
                 >
-                  {voltageDrop.percentOf230V}%
+                  {voltageDrop.percentOfNominal}%
                 </span>
               )}
             </div>
@@ -503,7 +515,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
           <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-bold text-white">
-                {voltageDrop.voltageDropV}V ({voltageDrop.percentOf230V}%)
+                {voltageDrop.voltageDropV}V ({voltageDrop.percentOfNominal}%)
               </span>
               <span
                 className={cn(

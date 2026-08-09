@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { trackUserEvent } from '@/hooks/useActivityTracking';
 
 interface Question {
   id: number;
@@ -19,6 +21,7 @@ interface Exam {
 }
 
 export const useExam = (exam: Exam | null, questions: Question[]) => {
+  const { user } = useAuth();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
@@ -80,10 +83,30 @@ export const useExam = (exam: Exam | null, questions: Question[]) => {
     setIsExamStarted(true);
   };
 
-  // Finish the exam
+  /*
+   * Finish the exam.
+   *
+   * Sitting a mock exam is one of the strongest signals of real use on the
+   * platform, and it emitted nothing. Only nine features in the whole app fire
+   * `feature_use`, so an apprentice who sat twenty exams scored zero on the
+   * quarter of the engagement score that measures features — the metric was
+   * reporting instrumentation coverage, not behaviour.
+   */
   const finishExam = () => {
     setIsExamFinished(true);
     setShowResults(true);
+
+    if (user?.id) {
+      const answered = Object.keys(selectedAnswers).length;
+      const correct = questions.reduce(
+        (n, q, i) => n + (selectedAnswers[i] === q.correctAnswer ? 1 : 0),
+        0
+      );
+      void trackUserEvent(user.id, 'feature_use', {
+        eventName: 'mock_exam_completed',
+        eventData: { questions: questions.length, answered, correct },
+      });
+    }
   };
 
   return {

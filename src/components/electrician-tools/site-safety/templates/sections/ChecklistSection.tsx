@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import type {
   ChecklistSection as ChecklistSectionType,
@@ -53,11 +53,11 @@ export function ChecklistSection({ section, mode, onChange }: Props) {
           />
           {mode === 'edit' ? (
             <>
-              <Input
+              <input
                 value={item.label}
                 onChange={(e) => updateLabel(i, e.target.value)}
                 placeholder="Checklist item"
-                className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
+                className={cn(FIELD_CN, 'flex-1')}
               />
               <button
                 onClick={() => removeItem(i)}

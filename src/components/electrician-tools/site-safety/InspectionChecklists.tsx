@@ -20,8 +20,6 @@ import {
   Field,
   FormCard,
   SheetShell,
-  ListCard,
-  ListRow,
   PrimaryButton,
   SecondaryButton,
   toneAccent,
@@ -40,6 +38,7 @@ import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { SafetyListCard, SafetyListRow } from './common/SafetyList';
 
 // ─── Types ───
 
@@ -1537,7 +1536,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
         />
       ) : (
         <div className="space-y-3">
-          <ListCard>
+          <SafetyListCard>
             {visibleInspections.map((inspection) => {
               const tone = resultTone(inspection.overall_result);
               const pillTone: keyof typeof PILL_TONE =
@@ -1551,7 +1550,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   ? Math.round((inspection.pass_count / inspection.total_items) * 100)
                   : 0;
               return (
-                <ListRow
+                <SafetyListRow
                   key={inspection.id}
                   onClick={() => setViewingInspection(inspection)}
                   accent={tone}
@@ -1570,7 +1569,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                 />
               );
             })}
-          </ListCard>
+          </SafetyListCard>
           {hasMoreInspections && (
             <LoadMoreButton onLoadMore={loadMoreInspections} remaining={remainingInspections} />
           )}
@@ -1588,11 +1587,11 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             title="Choose a checklist template"
             description="Select the type of inspection to run."
           >
-            <ListCard>
+            <SafetyListCard>
               {TEMPLATES.map((template, i) => {
                 const itemCount = template.sections.reduce((acc, s) => acc + s.items.length, 0);
                 return (
-                  <ListRow
+                  <SafetyListRow
                     key={template.id}
                     onClick={() => startInspection(template)}
                     lead={
@@ -1610,7 +1609,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   />
                 );
               })}
-            </ListCard>
+            </SafetyListCard>
           </SheetShell>
         </SheetContent>
       </Sheet>
@@ -1719,7 +1718,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                         {viewMajor > 0 && <StatusPill tone="orange">{viewMajor} Major</StatusPill>}
                         {viewMinor > 0 && <StatusPill tone="amber">{viewMinor} Minor</StatusPill>}
                       </div>
-                      <ListCard>
+                      <SafetyListCard>
                         {failedItems.map((item) => {
                           const cls = item.classification;
                           const clsCfg = cls ? CLASSIFICATION_CONFIG[cls] : null;
@@ -1784,7 +1783,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                             </div>
                           );
                         })}
-                      </ListCard>
+                      </SafetyListCard>
                     </div>
                   )}
 
@@ -1814,7 +1813,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                             )}
                           </div>
                         </div>
-                        <ListCard>
+                        <SafetyListCard>
                           {section.items.map((item) => {
                             const result = item.result;
                             if (!result) return null;
@@ -1834,7 +1833,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                               </div>
                             );
                           })}
-                        </ListCard>
+                        </SafetyListCard>
                       </div>
                     );
                   })}

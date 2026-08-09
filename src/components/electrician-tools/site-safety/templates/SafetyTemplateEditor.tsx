@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { FIELD_CN } from '../common/fieldClasses';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -21,7 +22,6 @@ import {
   ChevronUp,
   Share2,
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useUpdateUserDocument, type UserSafetyDocument } from '@/hooks/useSafetyTemplates';
 import { sanitizeDocumentHtml } from '@/utils/inputSanitization';
@@ -283,7 +283,7 @@ export function SafetyTemplateEditor({
       disabled={disabled}
       className={cn(
         'h-9 w-9 rounded-lg flex items-center justify-center touch-manipulation transition-colors',
-        isActive ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/10',
+        isActive ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10',
         disabled && 'opacity-30 pointer-events-none'
       )}
     >
@@ -370,7 +370,7 @@ export function SafetyTemplateEditor({
                   type="button"
                   onClick={handleV2Save}
                   disabled={updateDocument.isPending}
-                  className="h-9 px-3 rounded-lg text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors disabled:opacity-50"
+                  className="h-9 px-3 rounded-lg text-[12.5px] font-semibold bg-elec-yellow text-black hover:brightness-110 transition-colors disabled:opacity-50"
                 >
                   {updateDocument.isPending ? (
                     <>
@@ -411,7 +411,7 @@ export function SafetyTemplateEditor({
                             {f.label}
                             {f.required && <span className="text-red-400 ml-1">*</span>}
                           </label>
-                          <Input
+                          <input
                             type={f.type === 'date' ? 'date' : 'text'}
                             placeholder={f.placeholder ?? f.label}
                             value={v2FieldValues[k] ?? ''}
@@ -457,7 +457,7 @@ export function SafetyTemplateEditor({
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/20">
+              <div className="p-1.5 rounded-lg border border-elec-yellow/35">
                 <Edit3 className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="min-w-0">
@@ -589,7 +589,7 @@ export function SafetyTemplateEditor({
                 onClick={() => setIsPreview(!isPreview)}
                 className={cn(
                   'h-9 px-3 rounded-lg text-xs font-semibold flex items-center gap-1.5 touch-manipulation transition-colors whitespace-nowrap',
-                  isPreview ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/10'
+                  isPreview ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10'
                 )}
               >
                 {isPreview ? (
@@ -618,7 +618,7 @@ export function SafetyTemplateEditor({
                 onClick={() => setIsPreview(!isPreview)}
                 className={cn(
                   'h-9 px-3 rounded-lg text-xs font-semibold flex items-center gap-1.5 touch-manipulation transition-colors whitespace-nowrap',
-                  isPreview ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/10'
+                  isPreview ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10'
                 )}
               >
                 {isPreview ? (
@@ -650,12 +650,12 @@ export function SafetyTemplateEditor({
                           {field.label}
                           {field.required && <span className="text-red-400 ml-0.5">*</span>}
                         </label>
-                        <Input
+                        <input
                           type={field.type === 'date' ? 'date' : 'text'}
                           value={fieldValues[field.key] ?? ''}
                           onChange={(e) => updateFieldValue(field.key, e.target.value)}
                           placeholder={field.placeholder ?? field.label}
-                          className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
+                          className={FIELD_CN}
                         />
                       </div>
                     ))}

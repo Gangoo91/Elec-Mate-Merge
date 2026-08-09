@@ -13,6 +13,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { timeMaterialsContent } from './content/time-materials';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -264,15 +265,7 @@ const TimeMaterialsCalculator = () => {
                     border: `1px solid ${config.gradientFrom}25`,
                   }}
                 >
-                  <p className="text-sm text-white mb-2">Grand Total (inc. VAT)</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent tracking-tight"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {fmt(result.grandTotal)}
-                  </p>
+                  <ResultHeadline label="Grand total (inc. VAT)" value={fmt(result.grandTotal)} />
                   <button
                     onClick={handleCopy}
                     className="mt-3 h-11 px-5 inline-flex items-center gap-2 rounded-xl bg-white/10 text-white text-sm font-medium hover:bg-white/15 transition-colors touch-manipulation"
@@ -344,12 +337,7 @@ const TimeMaterialsCalculator = () => {
                     style={{ background: `${config.gradientFrom}10` }}
                   >
                     <p className="text-base text-white font-bold">Total</p>
-                    <p
-                      className="text-base font-bold bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                      }}
-                    >
+                    <p className="text-base font-bold tabular-nums text-elec-yellow">
                       {fmt(result.grandTotal)}
                     </p>
                   </div>

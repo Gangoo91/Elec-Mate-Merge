@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, RefreshCw, Copy, Check, UserPlus, Download } from 'lucide-react';
+import { Loader2, RefreshCw, Copy, Check, Download } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   AlertDialog,
@@ -127,18 +127,16 @@ export default function AdminBulkCreate() {
   };
 
   const inputCn =
-    'w-full h-11 px-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.1] text-white text-sm focus:border-elec-yellow focus:ring-0 outline-none';
+    'w-full h-11 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3.5 text-sm text-white outline-none transition-colors placeholder:text-white/30 hover:bg-white/[0.08] focus:border-elec-yellow focus:ring-0';
 
   return (
     // AdminPanel's <Outlet> wrapper already provides bg + horizontal padding.
-    <div className="max-w-3xl mx-auto space-y-6 text-white pb-4">
+    <div className="mx-auto max-w-[1400px] space-y-6 pb-4 text-white">
       <header>
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
           Admin · Onboarding
         </p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight flex items-center gap-2">
-          <UserPlus className="h-6 w-6 text-elec-yellow" /> Bulk create accounts
-        </h1>
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight">Bulk create accounts</h1>
         <p className="mt-1.5 text-[13px] text-white">
           Paste or type email addresses to create accounts in one go — for a college cohort, a team,
           or anyone. Everyone gets the same temporary password and changes it at{' '}
@@ -146,6 +144,16 @@ export default function AdminBulkCreate() {
         </p>
       </header>
 
+      {/*
+        Two columns from lg.
+
+        The page was a 768px ribbon: a textarea narrower than a phone's on a
+        2,700px screen, with the password, the access toggle and the button
+        stacked 700px below the list they apply to. Paste on the left, the
+        settings that govern the batch on the right, so you can see both at
+        once and check the password before you commit.
+      */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start lg:gap-6">
       {/* Emails */}
       <section className="space-y-2">
         <label className="text-[13px] font-medium text-white">Email addresses</label>
@@ -155,9 +163,57 @@ export default function AdminBulkCreate() {
           placeholder={
             'jordan@example.com\nsam@example.com, alex@example.com\n…paste a whole list, any separators'
           }
-          className="w-full min-h-[160px] p-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.1] text-white text-sm focus:border-elec-yellow focus:ring-0 outline-none font-mono"
+          className="w-full min-h-[260px] rounded-xl border border-white/[0.14] bg-white/[0.06] p-3.5 font-mono text-sm text-white outline-none transition-colors placeholder:text-white/30 hover:bg-white/[0.08] focus:border-elec-yellow focus:ring-0 lg:min-h-[340px]"
         />
-        <div className="flex flex-wrap gap-3 text-[12px]">
+        {/*
+          The counts as a strip, not a line of small text.
+
+          "0 valid" in 12px grey was the only feedback on a page whose whole
+          job is parsing a pasted list, and below it sat 500px of nothing.
+          Three cells you can read at a glance, and the addresses themselves
+          listed underneath, so you can see what is actually about to be
+          created before you commit to it.
+        */}
+        <div className="grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-white/[0.14] bg-white/[0.10]">
+          {[
+            { label: 'Ready', value: parsed.valid.length, tone: 'text-emerald-400' },
+            { label: 'Duplicates', value: parsed.dupes, tone: 'text-white' },
+            { label: 'Not an email', value: parsed.invalid.length, tone: 'text-amber-400' },
+          ].map((c) => (
+            <div key={c.label} className="bg-[hsl(0_0%_11%)] px-4 py-3">
+              <span className={`block text-[22px] font-semibold leading-none tabular-nums ${c.tone}`}>
+                {c.value}
+              </span>
+              <span className="mt-1 block text-[11px] text-white">{c.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {parsed.valid.length > 0 && (
+          <div className="rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3.5">
+            <p className="text-[12px] font-semibold text-white">
+              These {parsed.valid.length === 1 ? 'account' : `${parsed.valid.length} accounts`} will
+              be created
+            </p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {parsed.valid.slice(0, 40).map((email) => (
+                <span
+                  key={email}
+                  className="rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-1 font-mono text-[11.5px] text-white"
+                >
+                  {email}
+                </span>
+              ))}
+              {parsed.valid.length > 40 && (
+                <span className="px-1 py-1 text-[11.5px] text-white">
+                  and {parsed.valid.length - 40} more
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="hidden flex-wrap gap-3 text-[12px]">
           <span className="text-emerald-400">{parsed.valid.length} valid</span>
           {parsed.dupes > 0 && (
             <span className="text-white">
@@ -177,6 +233,7 @@ export default function AdminBulkCreate() {
       </section>
 
       {/* Password */}
+            <div className="mt-6 space-y-5 lg:mt-0">
       <section className="space-y-2">
         <label className="text-[13px] font-medium text-white">Shared temporary password</label>
         <div className="flex gap-2">
@@ -188,7 +245,7 @@ export default function AdminBulkCreate() {
           <button
             type="button"
             onClick={() => setPassword(genPassword())}
-            className="h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.1] text-white shrink-0 flex items-center gap-1.5 text-[13px]"
+            className="flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
           >
             <RefreshCw className="h-4 w-4" /> New
           </button>
@@ -200,7 +257,7 @@ export default function AdminBulkCreate() {
 
       {/* Grant access */}
       <section className="space-y-3">
-        <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3.5">
           <div className="min-w-0">
             <p className="text-[13px] font-medium text-white">Grant free access</p>
             <p className="text-[11.5px] text-white mt-0.5">
@@ -213,8 +270,9 @@ export default function AdminBulkCreate() {
           <input
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="Reason (e.g. Cwmbran College — Level 2 cohort)"
+            placeholder="e.g. Cwmbran College — Level 2 cohort"
             className={inputCn}
+            aria-label="Reason for free access"
           />
         )}
       </section>
@@ -224,7 +282,7 @@ export default function AdminBulkCreate() {
         type="button"
         onClick={() => setConfirmOpen(true)}
         disabled={isCreating || parsed.valid.length === 0 || password.length < 8}
-        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 disabled:opacity-50"
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-[14px] font-semibold transition-colors touch-manipulation enabled:bg-elec-yellow enabled:text-black enabled:hover:bg-elec-yellow/90 disabled:cursor-not-allowed disabled:border disabled:border-white/[0.12] disabled:bg-white/[0.04] disabled:text-white"
       >
         {isCreating ? (
           <>
@@ -234,6 +292,8 @@ export default function AdminBulkCreate() {
           `Create ${parsed.valid.length} account${parsed.valid.length === 1 ? '' : 's'}`
         )}
       </button>
+      </div>
+      </div>
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.1] text-white">
@@ -273,7 +333,7 @@ export default function AdminBulkCreate() {
 
       {/* Results */}
       {result && (
-        <section className="space-y-3 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] p-4">
+        <section className="space-y-3 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
           <div className="flex items-center justify-between">
             <div className="flex gap-4 text-[13px]">
               <span className="text-emerald-400 font-semibold">

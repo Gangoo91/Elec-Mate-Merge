@@ -809,7 +809,7 @@ export const BriefingFormWizard = ({
                 <motion.span
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow"
+                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow text-black"
                 >
                   {totalAttendees} {totalAttendees === 1 ? 'person' : 'people'}
                 </motion.span>
@@ -835,7 +835,7 @@ export const BriefingFormWizard = ({
                   type="button"
                   onClick={addAttendee}
                   disabled={!newAttendeeName.trim()}
-                  className="h-11 touch-manipulation bg-elec-yellow px-5 font-semibold text-black hover:bg-elec-yellow/90"
+                  className="h-11 touch-manipulation bg-elec-yellow px-5 font-semibold text-black hover:brightness-110"
                 >
                   Add
                 </Button>
@@ -1028,7 +1028,7 @@ export const BriefingFormWizard = ({
                 <Button
                   type="button"
                   onClick={() => handleSave(false)}
-                  className="flex-1 h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                  className="flex-1 h-14 bg-elec-yellow text-black hover:brightness-110 font-semibold"
                 >
                   <Check className="h-4 w-4 mr-2" />
                   Complete
@@ -1063,7 +1063,7 @@ export const BriefingFormWizard = ({
                   disabled={!canProceed()}
                   className={cn(
                     'flex-1 h-14 font-semibold',
-                    'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+                    'bg-elec-yellow text-black hover:brightness-110',
                     'disabled:opacity-50 disabled:cursor-not-allowed'
                   )}
                 >

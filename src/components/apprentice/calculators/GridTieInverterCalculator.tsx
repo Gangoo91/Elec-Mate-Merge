@@ -19,9 +19,11 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { gridTieInverterContent } from './content/grid-tie-inverter';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { DOMESTIC_IMPORT_RATE, SEG_TYPICAL_RATE } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -108,8 +110,8 @@ export function GridTieInverterCalculator() {
   const [systemPhase, setSystemPhase] = useState('');
   const [psh, setPsh] = useState('3.5');
   const [selfConsumption, setSelfConsumption] = useState('30');
-  const [retailPrice, setRetailPrice] = useState('0.25');
-  const [segRate, setSegRate] = useState('0.05');
+  const [retailPrice, setRetailPrice] = useState(String(DOMESTIC_IMPORT_RATE));
+  const [segRate, setSegRate] = useState(String(SEG_TYPICAL_RATE));
   const [lossProfile, setLossProfile] = useState('18');
   const [systemCost, setSystemCost] = useState('');
 
@@ -212,8 +214,8 @@ export function GridTieInverterCalculator() {
     setSystemPhase('');
     setPsh('3.5');
     setSelfConsumption('30');
-    setRetailPrice('0.25');
-    setSegRate('0.05');
+    setRetailPrice(String(DOMESTIC_IMPORT_RATE));
+    setSegRate(String(SEG_TYPICAL_RATE));
     setLossProfile('18');
     setSystemCost('');
     setResult(null);
@@ -402,22 +404,16 @@ export function GridTieInverterCalculator() {
                   </button>
                 </div>
 
-                {/* Hero annual value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Annual Value</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    £{result.totalAnnualValue.toFixed(0)}
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {result.yearlyGeneration.toFixed(0)} kWh/yr
-                    {result.paybackYears > 0 && ` · ${result.paybackYears.toFixed(1)} year payback`}
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Annual value"
+                  value={`£${result.totalAnnualValue.toFixed(0)}`}
+                  aside={`${result.yearlyGeneration.toFixed(0)} kWh/yr`}
+                  caption={
+                    result.paybackYears > 0
+                      ? `${result.paybackYears.toFixed(1)} year payback.`
+                      : undefined
+                  }
+                />
 
                 {/* DC:AC and generation */}
                 <ResultsGrid columns={2}>

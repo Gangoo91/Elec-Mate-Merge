@@ -398,7 +398,7 @@ export default function PhotoViewer({
           <div className="flex items-center gap-1.5 pb-2">
             <button
               onClick={() => setShowAnnotation(true)}
-              className="flex-1 h-10 rounded-lg bg-elec-yellow/10 text-elec-yellow text-xs font-medium flex items-center justify-center gap-1.5 touch-manipulation active:bg-elec-yellow/20"
+              className="flex-1 h-10 rounded-lg border border-elec-yellow/35 text-elec-yellow text-xs font-medium flex items-center justify-center gap-1.5 touch-manipulation active:border-elec-yellow/60"
             >
               <Pen className="h-3.5 w-3.5" />
               Markup
@@ -503,7 +503,7 @@ export default function PhotoViewer({
                 disabled={!onEdit}
                 className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/10 transition-colors touch-manipulation disabled:opacity-40"
               >
-                <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full border border-elec-yellow/35 flex items-center justify-center">
                   <FolderPlus className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div className="text-left">

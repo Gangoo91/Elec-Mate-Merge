@@ -387,7 +387,7 @@ const RAMSGenerator: React.FC = () => {
               />
               <Button
                 onClick={handleAddActivity}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 px-6 w-full sm:w-auto"
+                className="bg-elec-yellow text-elec-dark hover:brightness-110 h-12 px-6 w-full sm:w-auto"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Activity
@@ -490,7 +490,7 @@ const RAMSGenerator: React.FC = () => {
               <Button
                 onClick={() => setShowAddRisk(true)}
                 size="sm"
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                className="bg-elec-yellow text-elec-dark hover:brightness-110"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Manual Risk
@@ -660,7 +660,7 @@ const RAMSGenerator: React.FC = () => {
                               onClick={() => handleEditRisk(risk)}
                               size="sm"
                               variant="outline"
-                              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                              className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60"
                             >
                               <Edit3 className="h-4 w-4 sm:mr-1" />
                               <span className="hidden sm:inline">Edit</span>
@@ -821,7 +821,7 @@ const RAMSGenerator: React.FC = () => {
             <Button
               onClick={() => setShowPreview(true)}
               variant="outline"
-              className="flex-1 h-12 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-base"
+              className="flex-1 h-12 border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60 text-base"
               disabled={!validation.isValid}
             >
               <Eye className="h-5 w-5 mr-2" />
@@ -830,7 +830,7 @@ const RAMSGenerator: React.FC = () => {
 
             <Button
               onClick={handleGeneratePDF}
-              className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-base font-medium"
+              className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:brightness-110 text-base font-medium"
               disabled={!validation.isValid || isGenerating}
             >
               {isGenerating ? (
@@ -912,7 +912,7 @@ const RAMSGenerator: React.FC = () => {
                       <SelectItem
                         key={value}
                         value={value.toString()}
-                        className="text-foreground hover:bg-elec-yellow/10"
+                        className="text-foreground hover:border-elec-yellow/60"
                       >
                         {value} -{' '}
                         {
@@ -941,7 +941,7 @@ const RAMSGenerator: React.FC = () => {
                       <SelectItem
                         key={value}
                         value={value.toString()}
-                        className="text-foreground hover:bg-elec-yellow/10"
+                        className="text-foreground hover:border-elec-yellow/60"
                       >
                         {value} -{' '}
                         {['Negligible', 'Minor', 'Moderate', 'Major', 'Catastrophic'][value - 1]}
@@ -969,7 +969,7 @@ const RAMSGenerator: React.FC = () => {
               <Button
                 variant="outline"
                 onClick={() => setShowAddRisk(false)}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-elec-yellow hover:border-elec-yellow/60"
               >
                 Cancel
               </Button>
@@ -990,7 +990,7 @@ const RAMSGenerator: React.FC = () => {
                   setShowAddRisk(false);
                 }}
                 disabled={!newRisk.hazard || !newRisk.risk || !newRisk.controls}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                className="bg-elec-yellow text-elec-dark hover:brightness-110"
               >
                 Add Risk
               </Button>

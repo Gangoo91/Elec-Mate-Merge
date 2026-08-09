@@ -18,7 +18,6 @@ import {
   Field,
   Eyebrow,
   EmptyState,
-  ListCard,
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
@@ -30,6 +29,7 @@ import {
   safetySelectTriggerCn,
   safetyTextareaCn,
 } from '../../common/SafetyDocField';
+import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface StepsManagementStepProps {
   steps: MethodStep[];
@@ -280,7 +280,7 @@ const StepsManagementStep = ({
         {showTemplates && (
           <div className="space-y-2 pt-1">
             <Eyebrow>Quick step templates</Eyebrow>
-            <ListCard>
+            <SafetyListCard>
               {stepTemplates.map((template) => (
                 <button
                   key={template.id}
@@ -300,7 +300,7 @@ const StepsManagementStep = ({
                   <RiskPill level={template.riskLevel} />
                 </button>
               ))}
-            </ListCard>
+            </SafetyListCard>
           </div>
         )}
       </FormCard>

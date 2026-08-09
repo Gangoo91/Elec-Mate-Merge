@@ -18,12 +18,12 @@ import { storageSetJSONSync } from '@/utils/storage';
 import {
   SheetShell,
   Eyebrow,
-  ListCard,
   PrimaryButton,
   SecondaryButton,
   toneAccent,
   type Tone,
 } from '@/components/college/primitives';
+import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 // ─── Status / type / severity colour (the single colour dimension) ───
 
@@ -191,7 +191,7 @@ export function ObservationDetailSheet({
                 {/* Details */}
                 <div>
                   <Eyebrow className="mb-2">Details</Eyebrow>
-                  <ListCard>
+                  <SafetyListCard>
                     {observation.person_observed && (
                       <div className="flex items-center justify-between gap-3 px-5 py-3">
                         <span className="text-[12px] text-white">Person observed</span>
@@ -220,14 +220,14 @@ export function ObservationDetailSheet({
                         <span className="text-[13px] text-white text-right">{linkedJobTitle}</span>
                       </div>
                     )}
-                  </ListCard>
+                  </SafetyListCard>
                 </div>
 
                 {/* Follow-up — improvement_needed only */}
                 {showFollowUp && (
                   <div>
                     <Eyebrow className="mb-2">Follow-up</Eyebrow>
-                    <ListCard>
+                    <SafetyListCard>
                       <div className="flex items-center justify-between gap-3 px-5 py-3">
                         <span className="text-[12px] text-white">Status</span>
                         <StatusPill status={currentStatus} />
@@ -269,7 +269,7 @@ export function ObservationDetailSheet({
                           </span>
                         </div>
                       )}
-                    </ListCard>
+                    </SafetyListCard>
 
                     {/* Status actions */}
                     {currentStatus !== 'closed' && (

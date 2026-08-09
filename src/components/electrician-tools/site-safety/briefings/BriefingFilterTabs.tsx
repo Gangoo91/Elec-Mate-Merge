@@ -92,7 +92,7 @@ export function BriefingFilterPills({
       inactive: 'bg-white/5 text-white border-white/10',
     },
     yellow: {
-      active: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+      active: 'bg-elec-yellow text-black border-elec-yellow/30',
       inactive: 'bg-white/5 text-white border-white/10',
     },
     green: {

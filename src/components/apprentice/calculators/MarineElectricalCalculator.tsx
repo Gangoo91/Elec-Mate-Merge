@@ -19,6 +19,7 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
   CalculatorPanes,
+  ResultHeadline,
 } from '@/components/calculators/shared';
 import { marineElectricalContent } from './content/marine-electrical';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -555,20 +556,11 @@ const MarineElectricalCalculator = () => {
                 </div>
 
                 {/* Hero value */}
-                <div className="text-center py-3">
-                  <p className="text-sm font-medium text-white mb-1">Battery Bank Required</p>
-                  <p
-                    className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }}
-                  >
-                    {results.recommendedBatteryCapacity} Ah
-                  </p>
-                  <p className="text-sm text-white mt-2">
-                    {results.numberOfBatteries} × 100Ah batteries at {results.batteryBankVoltage}V
-                  </p>
-                </div>
+                <ResultHeadline
+                  label="Battery Bank Required"
+                  value={`${results.recommendedBatteryCapacity} Ah`}
+                  caption={`${results.numberOfBatteries} × 100Ah batteries at ${results.batteryBankVoltage}V`}
+                />
 
                 {/* Key metrics */}
                 <ResultsGrid columns={2}>

@@ -192,7 +192,7 @@ export function EquipmentQRCode({
                   How it works
                 </p>
                 <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/20 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[10px] font-bold text-elec-yellow border border-elec-yellow/35 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
                     1
                   </span>
                   <p className="text-[11px] text-white">
@@ -200,7 +200,7 @@ export function EquipmentQRCode({
                   </p>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/20 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[10px] font-bold text-elec-yellow border border-elec-yellow/35 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
                     2
                   </span>
                   <p className="text-[11px] text-white">
@@ -208,7 +208,7 @@ export function EquipmentQRCode({
                   </p>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/20 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[10px] font-bold text-elec-yellow border border-elec-yellow/35 rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">
                     3
                   </span>
                   <p className="text-[11px] text-white">
