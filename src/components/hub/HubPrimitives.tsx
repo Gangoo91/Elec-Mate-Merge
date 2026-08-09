@@ -93,7 +93,11 @@ export const HubMasthead = ({
  * on this ground, and a neutral surface also stops this competing with the
  * solid volt card in the quick-start strip below it.
  */
-export const HubAlertLine = ({ text, action = 'View', onClick }: {
+export const HubAlertLine = ({
+  text,
+  action = 'View',
+  onClick,
+}: {
   text: string;
   action?: string;
   onClick: () => void;
@@ -319,13 +323,7 @@ export interface HubQuickAction {
  * The whole card is the button — no "Start →" link inside it, which would be a
  * smaller target for the same job.
  */
-export const HubQuickStart = ({
-  label,
-  items,
-}: {
-  label: string;
-  items: HubQuickAction[];
-}) => {
+export const HubQuickStart = ({ label, items }: { label: string; items: HubQuickAction[] }) => {
   const haptic = useHaptic();
   if (items.length === 0) return null;
 
@@ -437,7 +435,16 @@ export const HubToolGrid = ({
 }: {
   label: string;
   cards: HubTool[];
-  columns?: 'two' | 'three' | 'four';
+  /**
+   * `two` / `three` / `four` are a FLOOR on card width, not a column count —
+   * the grid is `auto-fit`, so a wide window fills with as many as will go.
+   *
+   * `pair` is different: exactly two columns at every width. Site Safety wants
+   * a true 2x2 block, and auto-fit cannot express that — at 1456px even the
+   * `two` setting lays out five across. Opt-in so the eight other hubs that
+   * use this grid keep filling the width as before.
+   */
+  columns?: 'two' | 'three' | 'four' | 'pair';
 }) => {
   const navigate = useNavigate();
   const haptic = useHaptic();
@@ -450,9 +457,11 @@ export const HubToolGrid = ({
   // fills. A fixed four-column grid left a three-card group with an empty
   // quarter, which reads as a mistake rather than a layout.
   const colClass =
-    columns === 'two'
-      ? 'sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]'
-      : 'sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]';
+    columns === 'pair'
+      ? 'sm:grid-cols-2'
+      : columns === 'two'
+        ? 'sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]'
+        : 'sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]';
 
   return (
     <motion.section
@@ -476,7 +485,9 @@ export const HubToolGrid = ({
         className={cn(
           'grid grid-cols-2 gap-2.5 sm:gap-3',
           colClass,
-          cards.length % 2 === 1 && '[&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1'
+          cards.length % 2 === 1 &&
+            columns !== 'pair' &&
+            '[&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1'
         )}
       >
         {cards.map((card) => (
@@ -491,7 +502,7 @@ export const HubToolGrid = ({
             className={cn(
               CARD_BASE,
               CARD_NEUTRAL,
-              'relative overflow-hidden min-h-[104px] p-3.5 sm:p-4',
+              'relative flex h-full flex-col overflow-hidden min-h-[132px] p-3.5 sm:p-4',
               // Every card wears the gold edge now (see CARD_NEUTRAL); one
               // with work outstanding wears a brighter one. Degree, not
               // presence — that is what keeps the signal readable once the
@@ -528,7 +539,15 @@ export const HubToolGrid = ({
                 card.eyebrow && 'mt-1.5'
               )}
             >
-              {card.title}
+              {/* Two lines, and long unbroken tokens break rather than run out
+                  of the card. A RAMS titled `consumer_unit_change - 33 Gable
+                  Rd` is one 20-character word as far as the browser is
+                  concerned, and it was overflowing the card edge on a phone.
+                  Four-line titles were also what made cards in the same
+                  section different heights. */}
+              <span className="line-clamp-2 min-w-0 break-words [overflow-wrap:anywhere]">
+                {card.title}
+              </span>
               <ChevronRight
                 className="h-3.5 w-3.5 shrink-0 text-white/55 transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow"
                 aria-hidden
@@ -554,7 +573,10 @@ export const HubToolGrid = ({
                 )}
               </>
             ) : (
-              <span className="mt-2 text-[12px] leading-snug text-white sm:text-[12.5px]">
+              // Two lines here too. "AI-powered risk assessments and method
+              // statements." ran to three on a phone while the card beside it
+              // ran to two, which is what made a 2x2 block look ragged.
+              <span className="mt-2 line-clamp-2 text-[12px] leading-snug text-white sm:text-[12.5px]">
                 {card.description}
               </span>
             )}

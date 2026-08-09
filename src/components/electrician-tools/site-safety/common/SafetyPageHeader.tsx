@@ -22,12 +22,20 @@
 
 import { type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { useHaptic } from '@/hooks/useHaptic';
+import { HubKpi } from '@/components/hub/HubPrimitives';
 
 interface SafetyPageHeaderProps {
   /** Accepted for drop-in parity with PageHero and deliberately NOT rendered —
    *  an uppercase kicker restating the page title is the thing being removed. */
   eyebrow?: string;
+  /**
+   * Also accepted and NOT rendered. On `PageHero` this drove a per-page
+   * gradient wash behind the title. That wash is the single loudest piece of
+   * the editorial style being removed, so honouring it would defeat the point
+   * — but the prop stays in the type so eighteen call sites did not each need
+   * an edit to drop it, which is a sweep with its own risk.
+   */
+  tone?: string;
   title: ReactNode;
   description?: string;
   actions?: ReactNode;
@@ -58,78 +66,74 @@ export interface SafetyStat {
   onClick?: () => void;
   /** Highlights the figure in volt — use for the one number that matters. */
   accent?: boolean;
+  /**
+   * Accepted and NOT rendered. `StatStrip` painted each stat its own tone, so
+   * a four-stat row arrived in four colours and none of them meant anything —
+   * the eye had no focal point. One volt `accent` replaces the whole scheme.
+   */
+  tone?: string;
 }
 
 interface SafetyStatStripProps {
   stats: SafetyStat[];
   className?: string;
+  /**
+   * Accepted and NOT rendered — the layout is two-up by design (see below).
+   * Kept so existing `columns={4}` call sites still typecheck.
+   */
+  columns?: number;
 }
 
 /**
- * Stats as figures, not as a panel.
+ * Stats as HUB CARDS, two-up.
  *
- * The value leads at a size you can read across a van cab, the label sits under
- * it in full white, and a rule separates the row from the list below. No boxes,
- * no numbering, no colour washes. `tabular-nums` keeps the figures from
- * jittering as counts change.
+ * This was a row of bare figures under a rule; before that it was the
+ * college-primitives `StatStrip`, a bordered 4-up panel with `01 · ACTIVE`
+ * numbering and per-tone gradient washes. Neither matched the cards the rest
+ * of the app is built from, so Site Safety looked like a different product to
+ * the page you arrived from.
+ *
+ * It now renders `HubKpi` — the real shared primitive, not a local lookalike.
+ * That matters more than it sounds: a safety-local copy of a card drifts from
+ * the original the first time either is touched, and this hub already carries
+ * the scars of that (see `SafetyList`, `EditableList`, `fieldClasses`). Using
+ * the primitive means the surface, the volt hairline, the press feel and the
+ * focus ring stay correct here by construction.
+ *
+ * Two columns at every width, not four. `HubKpiRow` goes to `lg:grid-cols-4`,
+ * which suits a dashboard of trends; a safety module has four counts that are
+ * read as pairs — live vs expiring, pass vs fail — and a 2x2 block keeps them
+ * next to the thing they compare against instead of strung across the window.
  */
 export function SafetyStatStrip({ stats, className }: SafetyStatStripProps) {
-  const haptic = useHaptic();
-
   return (
-    // A grid, not a flex wrap. Only some stats carry a `sub` line, and in a
-    // flex row that left the labels sitting at different heights and the whole
-    // group bunched into the left third of a wide screen. Equal columns keep
-    // the figures on one baseline and spread them across the width.
     <div
       className={cn(
-        // Capped rather than stretched. Spread across a 2200px window the four
-        // figures sat ~1400px apart and stopped reading as one group — you
-        // scanned them as four unrelated numbers.
-        'grid max-w-3xl grid-cols-2 gap-x-6 gap-y-5 border-b border-white/[0.1] pb-5 sm:grid-cols-4',
+        // Two-up on a phone, four across from `lg`. It was `max-w-3xl` and
+        // fixed at two columns, which capped the row at 768px inside a shell
+        // that runs to 2240px — so on a desktop the stats sat bunched in the
+        // left third with the whole right half of the screen empty, and the
+        // filter bar beneath them ran twice as wide. A 2x2 block is right on a
+        // handset; on a monitor four counts belong on one line.
+        'grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4',
         className
       )}
-      onPointerDown={(e) => {
-        if ((e.target as HTMLElement).closest('button')) haptic.light();
-      }}
     >
-      {stats.map((stat) => {
-        const body = (
-          <>
-            <span
-              className={cn(
-                'block text-[26px] font-bold leading-none tabular-nums tracking-tight',
-                stat.accent ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {stat.value}
-            </span>
-            <span className="mt-2 block text-[13px] text-white">{stat.label}</span>
-            {/* Always rendered so a stat WITH a sub-line and one without still
-                share a baseline across the row. */}
-            <span className="mt-0.5 block min-h-[15px] text-[11px] text-white">
-              {stat.sub ?? '\u00A0'}
-            </span>
-          </>
-        );
-
-        // Tappable stats are real buttons — they filter the list beneath. The
-        // underline marks them as actionable without adding a control.
-        return stat.onClick ? (
-          <button
-            key={stat.label}
-            type="button"
-            onClick={stat.onClick}
-            className="touch-manipulation text-left underline-offset-4 transition-opacity hover:underline active:opacity-70"
-          >
-            {body}
-          </button>
-        ) : (
-          <div key={stat.label} className="text-left">
-            {body}
-          </div>
-        );
-      })}
+      {stats.map((stat, i) => (
+        <HubKpi
+          key={stat.label}
+          label={stat.label}
+          // HubKpi takes a string — the figure is the card, and a number here
+          // would render the same but lose the caller's own formatting.
+          value={String(stat.value)}
+          verdict={stat.sub}
+          // One volt figure per block. `accent` on more than one is a rainbow
+          // and the row loses its focal point, so the first accented stat wins
+          // and any later one is rendered plain.
+          accent={stat.accent && stats.findIndex((x) => x.accent) === i}
+          onClick={stat.onClick}
+        />
+      ))}
     </div>
   );
 }

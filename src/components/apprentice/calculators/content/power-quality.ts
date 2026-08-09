@@ -45,16 +45,29 @@ export const powerQualityContent: CalculatorContent = {
   standards: [
     {
       standard: 'ENA EREC G5',
-      citation: 'ENA EREC G5 — harmonic voltage distortion limits',
+      citation: 'ENA EREC G5 Issue 5 (2020) Table 1 — THDV planning levels',
       clauseText:
-        'ENA Engineering Recommendation G5 sets the limits for harmonic distortion from non-linear equipment connecting to the public network. BS EN 50160 defines the supply voltage characteristics including harmonics.',
+        'G5/5 sets planning levels for total harmonic voltage distortion at the point of common coupling, by nominal system voltage: V ≤ 0.4 kV → 5%; 0.4 < V ≤ 25 kV → 4.5%; 25 < V ≤ 66 kV → 3.7%; 66 < V ≤ 230 kV → 3%; V > 230 kV → 3%. All expressed as a percentage of the voltage at the fundamental frequency. Note that 5% at LV is a PLANNING level for the network operator, not a product limit and not a pass/fail line for an individual installation — G5/5 §6.2 sets out situations where planning levels may be exceeded.',
+      tableRefs: ['G5 Issue 5 Table 1', 'G5 §5.2', 'G5 §6.2'],
+    },
+    {
+      standard: 'ENA EREC G5',
+      citation: 'EREC G5 Issue 5 — what changed from G5/4-1',
+      clauseText:
+        'Issue 5 came into implementation on 17 June 2020 and CHANGED the planning levels and compatibility levels carried in the previous issue. Assessments and limits quoted from G5/4 or G5/4-1 are not interchangeable with Issue 5 values. Tables 2 and 3 give the individual harmonic voltage planning levels for 0.4 kV and below, and above 0.4 kV up to 132 kV, respectively.',
+      tableRefs: ['G5 Issue 5 Table 2', 'G5 Issue 5 Table 3'],
+    },
+    {
+      standard: 'BS EN 50160',
+      citation: 'BS EN 50160 — supply voltage characteristics (SOURCE NOT HELD)',
+      clauseText:
+        'BS EN 50160 defines the characteristics of the supply voltage at the customer’s terminals, including harmonics, and is the companion to G5 for judging supply quality. That document is not held here, so no figure is quoted from it.',
     },
   ],
-
   _grounding: {
     status: 'needs-review',
     generatedAt: '2026-06-01',
     notes:
-      'THD/K-factor formulae match the engine; harmonic limits per ENA EREC G5 and supply characteristics per BS EN 50160 (not in BS 7671 facets).',
+      'ENA EREC G5 Issue 5 (2020) is now HELD (Desktop/hav/ENA-EREC-G5-Issue5-2020-Harmonics.pdf, downloaded from the official GB Distribution Code site dcode.org.uk on 2026-08-09, 104 pp). Table 1 THDV planning levels quoted verbatim. The file previously carried a single sentence asserting what G5 \u201csets\u201d with no figures at all. \u26a0\ufe0f Two cautions now stated in the content: these are PLANNING levels for the network operator rather than an installation pass/fail line, and Issue 5 CHANGED the levels from G5/4-1, so older assessments are not interchangeable. \u26a0\ufe0f BS EN 50160 is still NOT held and is now explicitly labelled as such rather than being described as if read. Status stays needs-review for that reason.',
   },
 };

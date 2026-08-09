@@ -10,6 +10,12 @@ export interface Customer {
   email?: string;
   phone?: string;
   address?: string;
+  // ELE-1515 — captured from Google Places when the address is chosen from the
+  // dropdown. All optional: a hand-typed address remains perfectly valid, so
+  // anything reading these must cope with them being absent.
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
   notes?: string;
   tags?: string[];
   status?: CustomerStatus;
@@ -21,6 +27,64 @@ export interface Customer {
   propertyCount?: number;
   lastActivityAt?: string;
 }
+
+/**
+ * Turn a `customers` row into a Customer.
+ *
+ * This file used to inline the same mapping in four places — loadCustomers,
+ * getCustomer, and the fetch and refetch inside useCustomer — and they had
+ * already drifted: only loadCustomers mapped `tags`, `status` and
+ * `companyName`, so a customer opened on the detail page arrived with no
+ * status and no company while the same customer in the list had both. Adding
+ * postcode and coordinates to four copies would have made that worse, so
+ * there is now one.
+ */
+type CustomerRow = Record<string, unknown>;
+
+const mapCustomerRow = (row: CustomerRow): Customer => {
+  const c = row as {
+    id: string;
+    name: string;
+    email?: string | null;
+    phone?: string | null;
+    address?: string | null;
+    postcode?: string | null;
+    latitude?: number | null;
+    longitude?: number | null;
+    notes?: string | null;
+    tags?: string[] | null;
+    status?: string | null;
+    company_name?: string | null;
+    created_at: string;
+    updated_at: string;
+    certificate_count?: number | null;
+    property_count?: number | null;
+    last_activity_at?: string | null;
+  };
+
+  return {
+    id: c.id,
+    name: c.name,
+    email: c.email || undefined,
+    phone: c.phone || undefined,
+    address: c.address || undefined,
+    postcode: c.postcode || undefined,
+    // `?? undefined` rather than `|| undefined` — a legitimate 0 coordinate
+    // would be falsy, and Number.isFinite in the navigate helper is what
+    // decides whether a pair is usable.
+    latitude: c.latitude ?? undefined,
+    longitude: c.longitude ?? undefined,
+    notes: c.notes || undefined,
+    tags: c.tags || [],
+    status: (c.status as CustomerStatus) || 'active',
+    companyName: c.company_name || undefined,
+    createdAt: c.created_at,
+    updatedAt: c.updated_at,
+    certificateCount: c.certificate_count || 0,
+    propertyCount: c.property_count || 0,
+    lastActivityAt: c.last_activity_at || undefined,
+  };
+};
 
 export type SortField =
   | 'name'
@@ -99,24 +163,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
 
         setTotalCount(count || 0);
         setCurrentPage(page);
-        setCustomers(
-          (data || []).map((c) => ({
-            id: c.id,
-            name: c.name,
-            email: c.email || undefined,
-            phone: c.phone || undefined,
-            address: c.address || undefined,
-            notes: c.notes || undefined,
-            tags: (c as { tags?: string[] }).tags || [],
-            status: ((c as { status?: string }).status as CustomerStatus) || 'active',
-            companyName: (c as { company_name?: string }).company_name || undefined,
-            createdAt: c.created_at,
-            updatedAt: c.updated_at,
-            certificateCount: c.certificate_count || 0,
-            propertyCount: c.property_count || 0,
-            lastActivityAt: c.last_activity_at || undefined,
-          }))
-        );
+        setCustomers((data || []).map(mapCustomerRow));
       } catch (error) {
         console.error('Failed to load customers:', error);
       } finally {
@@ -138,20 +185,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
 
       if (error) throw error;
 
-      return {
-        id: data.id,
-        name: data.name,
-        email: data.email || undefined,
-        phone: data.phone || undefined,
-        address: data.address || undefined,
-        notes: data.notes || undefined,
-        tags: (data as { tags?: string[] }).tags || [],
-        createdAt: data.created_at,
-        updatedAt: data.updated_at,
-        certificateCount: data.certificate_count || 0,
-        propertyCount: data.property_count || 0,
-        lastActivityAt: data.last_activity_at || undefined,
-      };
+      return mapCustomerRow(data);
     } catch (error) {
       console.error('Failed to get customer:', error);
       return null;
@@ -219,6 +253,12 @@ export const useCustomers = (options?: UseCustomersOptions) => {
           email: normalisedEmail,
           phone: customer.phone,
           address: customer.address,
+          // ELE-1515 — null rather than undefined so a cleared address also
+          // clears the geocode, instead of leaving coordinates pointing at the
+          // property the customer used to be at.
+          postcode: customer.postcode || null,
+          latitude: customer.latitude ?? null,
+          longitude: customer.longitude ?? null,
           notes: customer.notes,
           tags: customer.tags || [],
           status: customer.status || 'active',
@@ -264,8 +304,24 @@ export const useCustomers = (options?: UseCustomersOptions) => {
       // companyName is camelCase in the app but company_name in the DB —
       // strip it from the spread and remap
       const { companyName, ...rest } = updates;
+
+      // ELE-1515 — clearing a geocode has to send null, not undefined.
+      // supabase-js serialises the update as JSON and JSON.stringify drops
+      // undefined keys entirely, so `{ latitude: undefined }` is not "set this
+      // to nothing", it is "don't touch this column". Coordinates for the
+      // customer's old address would have survived a change of address and
+      // sent the electrician to the wrong property.
+      //
+      // Keyed off presence, not value: a caller that never mentions postcode
+      // still leaves it alone.
+      const geoNulls: Record<string, string | number | null> = {};
+      for (const key of ['postcode', 'latitude', 'longitude'] as const) {
+        if (key in updates) geoNulls[key] = updates[key] ?? null;
+      }
+
       const normalisedUpdates = {
         ...rest,
+        ...geoNulls,
         ...(updates.email !== undefined
           ? { email: updates.email?.trim().toLowerCase() || null }
           : {}),
@@ -509,19 +565,7 @@ export const useCustomer = (customerId: string) => {
 
         if (error) throw error;
 
-        setCustomer({
-          id: data.id,
-          name: data.name,
-          email: data.email || undefined,
-          phone: data.phone || undefined,
-          address: data.address || undefined,
-          notes: data.notes || undefined,
-          createdAt: data.created_at,
-          updatedAt: data.updated_at,
-          certificateCount: data.certificate_count || 0,
-          propertyCount: data.property_count || 0,
-          lastActivityAt: data.last_activity_at || undefined,
-        });
+        setCustomer(mapCustomerRow(data));
       } catch (error) {
         console.error('Failed to fetch customer:', error);
         setCustomer(null);
@@ -543,19 +587,7 @@ export const useCustomer = (customerId: string) => {
       .single();
 
     if (!error && data) {
-      setCustomer({
-        id: data.id,
-        name: data.name,
-        email: data.email || undefined,
-        phone: data.phone || undefined,
-        address: data.address || undefined,
-        notes: data.notes || undefined,
-        createdAt: data.created_at,
-        updatedAt: data.updated_at,
-        certificateCount: data.certificate_count || 0,
-        propertyCount: data.property_count || 0,
-        lastActivityAt: data.last_activity_at || undefined,
-      });
+      setCustomer(mapCustomerRow(data));
     }
   }, [customerId]);
 

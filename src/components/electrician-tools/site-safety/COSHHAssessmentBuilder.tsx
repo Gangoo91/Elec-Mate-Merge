@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Trash2, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useShowMore } from '@/hooks/useShowMore';
@@ -18,8 +19,6 @@ import {
 } from '@/components/ui/select';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -58,6 +57,7 @@ import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/use
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 // ─── Types ───
 
@@ -301,7 +301,13 @@ const COMMON_SUBSTANCES = [
     ghs: ['health-hazard'],
     routes: ['inhalation'],
     health:
-      'Causes mesothelioma, asbestosis, lung cancer (H350, H372). WEL: 0.1 fibres/cm³ (4-hr TWA) per CAR 2012. NO safe exposure level — any fibre release is hazardous. Latency period 15–60 years. Common in pre-2000 buildings: behind DBs, ceiling tiles, AIB, textured coatings, flash guards.',
+      // A control limit and a WEL are different legal instruments and this said
+      // "WEL". CAR 2012 reg 2 defines the control limit as 0.1 f/cm³ averaged
+      // over 4 hours; a WEL is an EH40 figure under COSHH (L5 reg 2). The
+      // distinction matters because a WEL reads as a level you may work up to,
+      // and the asbestos regime is the opposite — the control limit is a
+      // ceiling that must never be exceeded, not a target.
+      'Causes mesothelioma, asbestosis, lung cancer (H350, H372). Control limit: 0.1 fibres/cm³ averaged over 4 hours (CAR 2012 reg 2) — a limit that must never be exceeded, not a safe level. Any fibre release is hazardous. Latency period 15–60 years. Common in pre-2000 buildings: behind DBs, ceiling tiles, AIB, textured coatings, flash guards.',
     controls: [
       'DO NOT disturb — stop work immediately if ACMs encountered',
       'Only licensed contractors may remove asbestos',
@@ -327,7 +333,16 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'health-hazard', 'environmental'],
     routes: ['inhalation', 'ingestion', 'skin-contact'],
     health:
-      'Toxic if inhaled or ingested (H332, H302). Cumulative poison — damages nervous system, kidneys, reproductive system. WEL: 0.15 mg/m³ (8-hr TWA) per EH40/2005. Common in pre-1970 properties. Disturbed during chasing, drilling, or cable routing through old paintwork.',
+      // Was "WEL: 0.15 mg/m³ per EH40/2005". The figure is right, the
+      // instrument and the source were not. Lead is controlled by the Control
+      // of Lead at Work Regulations 2002, not COSHH, so it has an occupational
+      // exposure limit rather than a workplace exposure limit — EH40 does not
+      // set it. CLAW 2002 reg 2 (ACOP L132) defines the OEL as 0.15 mg/m³ for
+      // lead other than lead alkyls and 0.10 mg/m³ for lead alkyls, both as an
+      // 8-hour TWA. Naming the right regime matters because CLAW brings duties
+      // COSHH does not: air monitoring above half the OEL, blood-lead medical
+      // surveillance, and defined action and suspension levels.
+      'Toxic if inhaled or ingested (H332, H302). Cumulative poison — damages nervous system, kidneys, reproductive system. Occupational exposure limit 0.15 mg/m³ (8-hr TWA; 0.10 mg/m³ for lead alkyls) — Control of Lead at Work Regs 2002, not COSHH. Common in pre-1970 properties. Disturbed during chasing, drilling, or cable routing through old paintwork.',
     controls: [
       'Wet methods to suppress dust when drilling/chasing',
       'HEPA vacuum for debris — never dry sweep',
@@ -1215,7 +1230,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         'p-3 rounded-xl border text-left touch-manipulation transition-all active:scale-[0.98]',
                         isSelected
                           ? 'border-red-500/40 bg-red-500/10'
-                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+                          : cn(CARD_SURFACE, 'border-white/[0.08]')
                       )}
                     >
                       <span
@@ -1244,7 +1259,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       'h-11 px-3 rounded-xl border text-[13px] font-medium touch-manipulation transition-all active:scale-[0.98]',
                       route.selected
                         ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-                        : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                        : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
                     )}
                   >
                     {route.label}
@@ -1288,7 +1303,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     'rounded-xl border overflow-hidden',
                     h.considered
                       ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+                      : cn(CARD_SURFACE, 'border-white/[0.08]')
                   )}
                 >
                   <button
@@ -1406,7 +1421,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         'h-11 rounded-xl border text-[12px] font-medium text-center touch-manipulation transition-all active:scale-[0.98]',
                         selected
                           ? RISK_PILL_CLASS[riskTone(level)]
-                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                          : cn(CARD_SURFACE, 'border-white/[0.08] text-white')
                       )}
                     >
                       {RISK_LABEL[level]}
@@ -1566,7 +1581,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     key={i}
                     type="button"
                     onClick={() => loadSubstance(substance)}
-                    className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] active:bg-white/[0.06] touch-manipulation"
+                    className={cn(
+                      'w-full text-left p-3 rounded-xl border border-white/[0.08] touch-manipulation transition-[transform,filter] active:scale-[0.99] active:brightness-125',
+                      CARD_SURFACE
+                    )}
                   >
                     <h4 className="text-[13px] font-medium text-white">{substance.name}</h4>
                     <div className="flex flex-wrap gap-1 mt-1">
@@ -1611,7 +1629,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       onBack={onBack}
       moduleName="COSHH"
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="COSHH · Control of Substances Hazardous to Health 2002"
           title="Assess hazardous substances and control exposure"
           description="Capture the substance, its GHS hazards and exposure routes, then work the control hierarchy — eliminate, substitute, engineer, administer, PPE — and sign it off."
@@ -1621,7 +1639,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       }
       stats={
         total > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               { value: total, label: 'Total' },
               { value: overdueCount, label: 'Review overdue', accent: overdueCount > 0 },
@@ -1820,7 +1838,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                           return (
                             <div
                               key={level.key}
-                              className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]"
+                              className={cn(
+                                'p-3 rounded-xl border border-white/[0.08]',
+                                CARD_SURFACE
+                              )}
                             >
                               <p className="text-[12px] font-semibold text-elec-yellow mb-1.5">
                                 {level.label}
@@ -1907,7 +1928,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   </div>
                 )}
 
-                <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                <div className={cn('p-3 rounded-xl border border-white/[0.08]', CARD_SURFACE)}>
                   <div className="flex justify-between text-[11.5px] text-white">
                     <span>Assessed by: {viewingAssessment.assessed_by}</span>
                     <span
@@ -1966,7 +1987,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   <div className="space-y-3">
                     <Eyebrow>Signatures</Eyebrow>
                     {viewingAssessment.assessor_signature && (
-                      <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                      <div
+                        className={cn('p-3 rounded-xl border border-white/[0.08]', CARD_SURFACE)}
+                      >
                         <p className="text-[11.5px] text-white mb-2">Assessor</p>
                         <img
                           src={viewingAssessment.assessor_signature}
@@ -1976,7 +1999,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       </div>
                     )}
                     {viewingAssessment.reviewer_signature && (
-                      <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
+                      <div
+                        className={cn('p-3 rounded-xl border border-white/[0.08]', CARD_SURFACE)}
+                      >
                         <p className="text-[11.5px] text-white mb-2">
                           Reviewer: {viewingAssessment.reviewer_name || 'N/A'}
                         </p>

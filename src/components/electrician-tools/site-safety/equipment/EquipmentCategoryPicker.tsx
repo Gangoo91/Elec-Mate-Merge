@@ -1,3 +1,20 @@
+/**
+ * Equipment category picker.
+ *
+ * Selection is a SOLID volt fill, matching the chip pattern the design system
+ * specifies for a small set of single-choice options. It used to carry six
+ * per-category hues, which fought the module's stated rule that status is the
+ * only colour dimension — and one of them was broken outright: "Test Equipment"
+ * had `bgColor: 'border border-elec-yellow/35'`, a BORDER declaration sitting in
+ * the background slot (the residue of a global find-and-replace of a volt wash).
+ * Selecting it therefore produced no fill at all, and the border it did emit was
+ * then overridden by the separate `borderColor`, so that one tile alone had no
+ * selected state a user could see.
+ *
+ * `color` is retained on the option because other screens read it; the picker no
+ * longer uses it.
+ */
+
 import { motion } from 'framer-motion';
 import { Plug, Zap, ArrowUpDown, Wrench, Shield, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,60 +26,15 @@ interface CategoryOption {
   id: EquipmentCategory;
   label: string;
   icon: typeof Plug;
-  color: string;
-  bgColor: string;
-  borderColor: string;
 }
 
 export const equipmentCategories: CategoryOption[] = [
-  {
-    id: 'pat-tester',
-    label: 'PAT Tester',
-    icon: Plug,
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/10',
-    borderColor: 'border-blue-500/30',
-  },
-  {
-    id: 'test-equipment',
-    label: 'Test Equipment',
-    icon: Zap,
-    color: 'text-elec-yellow',
-    bgColor: 'border border-elec-yellow/35',
-    borderColor: 'border-elec-yellow/30',
-  },
-  {
-    id: 'ladders',
-    label: 'Ladders',
-    icon: ArrowUpDown,
-    color: 'text-orange-400',
-    bgColor: 'bg-orange-500/10',
-    borderColor: 'border-orange-500/30',
-  },
-  {
-    id: 'power-tools',
-    label: 'Power Tools',
-    icon: Wrench,
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/10',
-    borderColor: 'border-purple-500/30',
-  },
-  {
-    id: 'ppe',
-    label: 'PPE',
-    icon: Shield,
-    color: 'text-emerald-400',
-    bgColor: 'bg-emerald-500/10',
-    borderColor: 'border-emerald-500/30',
-  },
-  {
-    id: 'other',
-    label: 'Other',
-    icon: Settings,
-    color: 'text-white',
-    bgColor: 'bg-gray-500/10',
-    borderColor: 'border-gray-500/30',
-  },
+  { id: 'pat-tester', label: 'PAT tester', icon: Plug },
+  { id: 'test-equipment', label: 'Test equipment', icon: Zap },
+  { id: 'ladders', label: 'Ladders', icon: ArrowUpDown },
+  { id: 'power-tools', label: 'Power tools', icon: Wrench },
+  { id: 'ppe', label: 'PPE', icon: Shield },
+  { id: 'other', label: 'Other', icon: Settings },
 ];
 
 interface EquipmentCategoryPickerProps {
@@ -74,7 +46,7 @@ interface EquipmentCategoryPickerProps {
 export function EquipmentCategoryPicker({ value, onChange, error }: EquipmentCategoryPickerProps) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-white">Category</label>
+      <label className="mb-1 block text-[12px] font-medium text-white">Category</label>
 
       <div className="grid grid-cols-3 gap-1.5">
         {equipmentCategories.map((category, index) => {
@@ -89,38 +61,22 @@ export function EquipmentCategoryPicker({ value, onChange, error }: EquipmentCat
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.03, type: 'spring', stiffness: 200 }}
               onClick={() => onChange(category.id)}
+              aria-pressed={isSelected}
               className={cn(
-                'relative flex flex-col items-center gap-1.5 p-3 rounded-lg',
-                'border transition-all duration-200',
-                'touch-manipulation min-h-[76px]',
-                'active:scale-95',
+                'relative flex min-h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl p-3',
+                'border transition-colors duration-150 touch-manipulation',
+                // Press feel across the hub is scale plus brightness, never a dim.
+                'active:scale-[0.96] active:brightness-110 [-webkit-tap-highlight-color:transparent]',
                 isSelected
-                  ? cn(category.bgColor, category.borderColor)
-                  : 'bg-white/5 border-white/[0.08]'
+                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  : 'border-white/[0.1] bg-white/[0.05] text-white'
               )}
             >
-              {/* Selection indicator */}
-              {isSelected && (
-                <motion.div
-                  layoutId="selectedCategoryIndicator"
-                  className={cn(
-                    'absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full',
-                    category.color.replace('text-', 'bg-')
-                  )}
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-
-              {/* Icon */}
-              <div className={cn('p-2 rounded-lg', isSelected ? category.bgColor : 'bg-white/5')}>
-                <Icon className={cn('h-5 w-5', isSelected ? category.color : 'text-white')} />
-              </div>
-
-              {/* Label */}
+              <Icon className={cn('h-5 w-5', isSelected ? 'text-black' : 'text-white')} />
               <span
                 className={cn(
-                  'text-[10px] font-medium text-center',
-                  isSelected ? 'text-white' : 'text-white'
+                  'text-center text-[10.5px] leading-tight',
+                  isSelected ? 'font-semibold text-black' : 'font-medium text-white'
                 )}
               >
                 {category.label}

@@ -7,7 +7,6 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
-  StatStrip,
   FormCard,
   Field,
   Eyebrow,
@@ -16,6 +15,7 @@ import {
 } from '@/components/college/primitives';
 import { safetyInputCn } from '../../common/SafetyDocField';
 import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
+import { SafetyStatStrip } from '../../common/SafetyPageHeader';
 
 interface ReviewStepProps {
   data: MethodStatementData;
@@ -131,7 +131,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   return (
     <div className="space-y-5">
       {/* Summary */}
-      <StatStrip
+      <SafetyStatStrip
         stats={[
           { value: totalSteps, label: 'Steps' },
           { value: highRiskSteps, label: 'High risk', tone: highRiskSteps > 0 ? 'red' : undefined },

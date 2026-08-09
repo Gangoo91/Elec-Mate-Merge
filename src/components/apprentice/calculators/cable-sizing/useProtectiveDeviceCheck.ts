@@ -1,13 +1,7 @@
 import { useMemo } from 'react';
 
 export type DeviceType =
-  | 'mcb-b'
-  | 'mcb-c'
-  | 'mcb-d'
-  | 'rcbo'
-  | 'fuse-gg'
-  | 'fuse-rewireable'
-  | 'mccb';
+  'mcb-b' | 'mcb-c' | 'mcb-d' | 'rcbo' | 'fuse-gg' | 'fuse-rewireable' | 'mccb';
 
 export interface DeviceTypeOption {
   value: DeviceType;

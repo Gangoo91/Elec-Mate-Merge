@@ -1324,6 +1324,34 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Additional distribution boards (beyond the main board)
     additional_boards: formatAdditionalBoards(),
 
+    /*
+     * The basis every Zs verdict on this schedule was judged against.
+     *
+     * `zsBasis` threads through both tables, both row components, the board
+     * issue counts and the Validate sheet — every surface that decides
+     * pass/fail — but it never reached the payload, so the issued PDF did not
+     * say which basis was applied.
+     *
+     * That is not cosmetic. Reg 411.4.4 gives compliance as
+     * Zs(m) < 0.8 × (Up / (I × Cmin)), and the toggle changes verdicts: a 32A
+     * Type B circuit with a tabulated 1.37Ω limit passes at 1.10Ω on the 100%
+     * basis and fails on the 80%. Two certificates with identical readings
+     * could carry opposite verdicts with nothing on the document to explain
+     * why, and a re-inspection could not reproduce the judgement.
+     *
+     * Absent on older certificates → 100, which is what they were judged on.
+     */
+    zs_basis: (() => {
+      const basis = Number(get('zsBasis')) === 80 ? 80 : 100;
+      return {
+        percent: basis,
+        display:
+          basis === 80
+            ? 'Zs limits corrected to 80% — Reg 411.4.4, measured values at ambient temperature'
+            : 'Zs limits as tabulated (100%)',
+      };
+    })(),
+
     schedule_of_tests: (() => {
       const circuits = formatCircuits();
       console.log('[formatEICRJson] schedule_of_tests output:', circuits.length, 'circuits');
@@ -1524,6 +1552,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     phases: normalisePhases(get('phases')),
     supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
     supplyVoltage: get('supplyVoltageCustom') || get('supplyVoltage'),
+    zs_basis_percent: Number(get('zsBasis')) === 80 ? 80 : 100,
     // Marker-preserving, in lockstep with the nested supply_characteristics
     // copies — whichever copy the template reads, a LIM must print as LIM.
     supply_frequency: isMarker(formData.supplyFrequency)
@@ -1877,7 +1906,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       position: qsReview.qs_position,
     };
     // Flat copies the template reads at root level
-     
+
     const flat = payload as any;
     flat.report_authorised_by_name = qsReview.reviewer_name;
     flat.report_authorised_by_date = qsDate;

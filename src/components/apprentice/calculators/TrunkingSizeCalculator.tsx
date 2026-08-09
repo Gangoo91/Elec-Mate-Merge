@@ -228,6 +228,7 @@ const TrunkingSizeCalculator = () => {
       description="Work out the minimum trunking size for your cables using the 45% space factor"
     >
       <CalculatorPanes
+        copyTitle="Trunking / Conduit Size"
         form={
           <>
             <CalculatorSelect

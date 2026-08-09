@@ -45,17 +45,31 @@ export const motorStartingCurrentContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'BS 7671 Section 552 — Rotating machines',
+      citation:
+        'Regulation 552.1.1 — equipment must suit the STARTING current, not just the running current',
       clauseText:
-        'Motor circuits must account for starting conditions: the protective device and conductors shall be suitable for the starting current and duty, and starting should not cause excessive voltage disturbance.',
-      tableRefs: ['Section 552'],
+        'All equipment, including cable, of every circuit carrying the starting, accelerating and load currents of a motor shall be suitable for a current at least equal to the full-load current rating of the motor when rated in accordance with the appropriate British or Harmonized Standard. Where the motor is intended for intermittent duty and for frequent starting and stopping, account shall be taken of any cumulative effects of the starting or braking currents upon the temperature rise of the equipment of the circuit.',
+      tableRefs: ['Reg 552.1.1'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 552.1.2 — overload protection above 0.37 kW',
+      clauseText:
+        'Every electric motor having a rating exceeding 0.37 kW shall be provided with control equipment incorporating means of protection against overload of the motor. This requirement does not apply to a motor incorporated in an item of current-using equipment complying as a whole with an appropriate British or Harmonized Standard.',
+      tableRefs: ['Reg 552.1.2'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 552.1.3 — no automatic restart',
+      clauseText:
+        'Except where failure to start after a brief interruption would be likely to cause greater danger, every motor shall be provided with means to prevent automatic restarting after a stoppage due to a drop in voltage or failure of supply, where unexpected restarting could cause danger. See also Regulation 463.3 (Motor control).',
+      tableRefs: ['Reg 552.1.3', 'Reg 463.3'],
     },
   ],
-
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'FLC and 6–8× inrush are standard; engine uses √3 correctly. Section 552 (rotating machines) is the relevant BS 7671 context; confirm sub-clauses against A4:2026 facets.',
+      '552.1.1, 552.1.2 and 552.1.3 quoted verbatim from the printed BS 7671:2018+A4:2026 text (Desktop/BS7671_ocr.pdf). The file previously cited \u201cSection 552\u201d generically with paraphrased content; 552.1.1 is the clause that actually makes the starting current a design duty, and the 0.37 kW overload threshold in 552.1.2 is a hard number worth surfacing. \u26a0\ufe0f The 6\u20138\u00d7 DOL inrush multiplier used by the engine is a MANUFACTURER/typical figure \u2014 BS 7671 sets no multiplier; always use the motor nameplate or the manufacturer\u2019s data where available. \u221a3 handling in the engine verified.',
   },
 };

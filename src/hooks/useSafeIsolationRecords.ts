@@ -3,11 +3,70 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useRef } from 'react';
 
+/**
+ * Prove-dead readings.
+ *
+ * HSG85 para 53: "If it is a three-phase system or equipment with more than one
+ * supply, prove that all supply conductors are dead." This only ever held
+ * `ln`/`le`/`ne` — three readings, single-phase only — so a three-phase
+ * isolation could not be recorded at all. People still did them; the record
+ * just showed a single-phase test of a three-phase board.
+ *
+ * `phases` discriminates. Records written before this existed have no `phases`
+ * and are read as single-phase, which is what they were. All of this lives
+ * inside the `steps` JSON column, so no migration is involved.
+ */
 export interface VoltageReadings {
   ln: number | null;
   le: number | null;
   ne: number | null;
+  phases?: 1 | 3;
+  l1l2?: number | null;
+  l1l3?: number | null;
+  l2l3?: number | null;
+  l1n?: number | null;
+  l2n?: number | null;
+  l3n?: number | null;
+  l1e?: number | null;
+  l2e?: number | null;
+  l3e?: number | null;
   testedAt?: string;
+}
+
+/** Conductor pairs that must read dead, in the order they are tested. */
+export const SINGLE_PHASE_PAIRS = [
+  { key: 'ln', label: 'L-N' },
+  { key: 'le', label: 'L-E' },
+  { key: 'ne', label: 'N-E' },
+] as const;
+
+export const THREE_PHASE_PAIRS = [
+  { key: 'l1l2', label: 'L1-L2' },
+  { key: 'l1l3', label: 'L1-L3' },
+  { key: 'l2l3', label: 'L2-L3' },
+  { key: 'l1n', label: 'L1-N' },
+  { key: 'l2n', label: 'L2-N' },
+  { key: 'l3n', label: 'L3-N' },
+  { key: 'l1e', label: 'L1-E' },
+  { key: 'l2e', label: 'L2-E' },
+  { key: 'l3e', label: 'L3-E' },
+  { key: 'ne', label: 'N-E' },
+] as const;
+
+export function readingPairsFor(phases: 1 | 3) {
+  return phases === 3 ? THREE_PHASE_PAIRS : SINGLE_PHASE_PAIRS;
+}
+
+/** Any reading at or above this is live — do not work on it. */
+export const DEAD_THRESHOLD_V = 50;
+
+/** True only when every conductor pair for this record's phase count reads dead. */
+export function readingsConfirmDead(r: VoltageReadings | undefined): boolean {
+  if (!r) return false;
+  return readingPairsFor(r.phases ?? 1).every((p) => {
+    const v = r[p.key as keyof VoltageReadings] as number | null | undefined;
+    return typeof v === 'number' && v < DEAD_THRESHOLD_V;
+  });
 }
 
 export interface IsolationStep {
@@ -67,13 +126,22 @@ const GS38_STEPS: Omit<IsolationStep, 'completed' | 'completedAt'>[] = [
   },
   {
     stepNumber: 2,
-    title: 'Identify Isolation Point',
-    description: 'Identify the means of disconnection — switch, fuse carrier, MCB, or isolator.',
+    // HSG85 defines isolated as separated from ALL sources of electrical
+    // energy. This step used to name one means of disconnection, which is the
+    // assumption that kills people: the circuit is dead at the board and still
+    // live from a UPS, a generator changeover, a PV array or a battery. Second
+    // supplies are named here explicitly rather than left to be remembered.
+    title: 'Identify All Points of Isolation',
+    description:
+      'Identify every means of disconnection — switch, fuse carrier, MCB or isolator — and every other source that could make this circuit live: back-feeds, UPS, generators, PV, battery storage.',
   },
   {
     stepNumber: 3,
     title: 'Prove Voltage Indicator',
-    description: 'Verify your voltage indicator works using a proving unit or known live source.',
+    // HSG85 para 54 names the two instruments that must not be used to prove
+    // dead. Volt sticks are the common one on site, and the failure is silent.
+    description:
+      'Verify your voltage indicator works on a proving unit or known live source. Use a two-pole voltage detector to GS38 — not a multimeter, and never a non-contact volt stick (HSG85).',
   },
   {
     stepNumber: 4,
@@ -83,13 +151,16 @@ const GS38_STEPS: Omit<IsolationStep, 'completed' | 'completedAt'>[] = [
   {
     stepNumber: 5,
     title: 'Secure Isolation',
-    description: 'Apply lock-off device and warning notice. Record lock-off number.',
+    // HSG85 para 52: retain the keys. A padlock whose key is left in the
+    // cupboard secures nothing.
+    description:
+      'Apply the lock-off device and caution notice at every point of isolation, and keep the only key on you. Record the lock-off number.',
   },
   {
     stepNumber: 6,
     title: 'Prove Dead',
     description:
-      'Test between all conductors and between each conductor and earth at the point of work.',
+      'At the point of work, test between every pair of conductors and between each conductor and earth. On a three-phase system prove every supply conductor dead (HSG85).',
   },
   {
     stepNumber: 7,

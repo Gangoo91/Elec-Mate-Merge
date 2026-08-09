@@ -428,6 +428,7 @@ const ConduitBendingCalculator = () => {
       description="Calculate bend marks, shrink, and spacing for conduit bending"
     >
       <CalculatorPanes
+        copyTitle="Conduit Bending"
         form={
           <>
             <div className="space-y-4 sm:space-y-5">

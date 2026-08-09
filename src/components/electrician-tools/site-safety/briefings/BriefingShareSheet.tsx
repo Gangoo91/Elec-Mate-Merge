@@ -3,18 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
-import {
-  Share2,
-  Link2,
-  Mail,
-  MessageCircle,
-  Copy,
-  Check,
-  Loader2,
-  X,
-  ExternalLink,
-  QrCode,
-} from 'lucide-react';
+import { Link2, MessageCircle, Check, Loader2, X, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { SafetyDocField } from '../common/SafetyDocField';
@@ -80,10 +69,11 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
       const url = `${baseUrl}/briefing-sign/${token}`;
       setSigningUrl(url);
       return url;
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast({
         title: 'Error',
-        description: err.message || 'Failed to generate signing link',
+        description:
+          err instanceof Error && err.message ? err.message : 'Failed to generate signing link',
         variant: 'destructive',
       });
       return null;
@@ -149,8 +139,16 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
 
       if (error) throw error;
 
-      // Track email sent — fetch existing list and append
-      const token = signingUrl?.split('/').pop();
+      /*
+       * Track who the link went to. The token used to be read off the
+       * `signingUrl` STATE — which `generateLink()` had just set two lines
+       * earlier in this same handler, so the closure still saw `null` and the
+       * whole tracking block was skipped. Every first send, on every briefing,
+       * recorded nothing; only a second send to a second address (by which time
+       * a re-render had landed) ever wrote `email_sent_to`, and it wrote it
+       * without the first recipient. Read the token off the local `url`.
+       */
+      const token = url.split('/').pop();
       if (token) {
         const { data: tokenRow } = await supabase
           .from('briefing_signing_tokens')
@@ -172,7 +170,7 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
 
       toast({ title: 'Email sent', description: `Signing link sent to ${emailTo}` });
       setEmailTo('');
-    } catch (err: any) {
+    } catch {
       // Fallback: open mailto
       const subject = encodeURIComponent(`Team Briefing: ${briefingName} - Please Sign`);
       const body = encodeURIComponent(
@@ -218,97 +216,87 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[#111827] rounded-t-2xl overflow-hidden safe-area-pb"
+        className="absolute bottom-0 left-0 right-0 max-h-[85vh] bg-[hsl(0_0%_8%)] rounded-t-2xl overflow-hidden safe-area-pb"
       >
         {/* Handle */}
         <div className="flex justify-center pt-3 pb-1">
           <div className="w-10 h-1 rounded-full bg-white/20" />
         </div>
 
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-              <Share2 className="h-4 w-4 text-yellow-400" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-white">Share for Signing</h3>
-              <p className="text-xs text-white">Workers sign remotely — no login needed</p>
-            </div>
+        {/* Header — type, not an icon tile. The volt square with a share glyph
+            in it said nothing the heading did not, and spent the accent before
+            the primary action got to use it. */}
+        <div className="flex items-start justify-between gap-3 border-b border-white/10 px-5 py-3">
+          <div className="min-w-0">
+            <h3 className="text-[15px] font-semibold text-white">Send for signing</h3>
+            <p className="mt-0.5 text-[12px] text-white">
+              Workers sign on their own phone — no login needed
+            </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-white hover:text-white hover:bg-white/10 touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            aria-label="Close"
+            className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-white touch-manipulation hover:bg-white/10"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="p-5 space-y-5 overflow-y-auto max-h-[65vh]">
-          {/* Quick Share Buttons */}
-          <div className="grid grid-cols-3 gap-3">
-            {/* Copy Link */}
-            <button
-              type="button"
-              onClick={handleCopyLink}
-              disabled={loading}
-              className={cn(
-                'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                'touch-manipulation min-h-[80px]',
-                copied
-                  ? 'bg-emerald-500/15 border-emerald-500/30'
-                  : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]'
-              )}
-            >
-              {loading ? (
-                <Loader2 className="h-5 w-5 text-white animate-spin" />
-              ) : copied ? (
-                <Check className="h-5 w-5 text-emerald-400" />
-              ) : (
-                <Link2 className="h-5 w-5 text-blue-400" />
-              )}
-              <span className="text-xs font-medium text-white">
-                {copied ? 'Copied!' : 'Copy Link'}
-              </span>
-            </button>
+        <div className="max-h-[65vh] space-y-5 overflow-y-auto p-5">
+          {/* One primary action. Three equal 80px tiles in three different
+              accent colours (blue link, green WhatsApp, purple "More…") is
+              three primaries, which is none — and copying the link is what
+              almost everyone does. */}
+          <button
+            type="button"
+            onClick={handleCopyLink}
+            disabled={loading}
+            className={cn(
+              'flex h-14 w-full items-center justify-center gap-2 rounded-xl',
+              'text-base font-semibold touch-manipulation',
+              'transition-[filter,transform] duration-150 active:scale-[0.98] active:brightness-110',
+              'disabled:opacity-60',
+              copied ? 'bg-emerald-500 text-white' : 'bg-elec-yellow text-black'
+            )}
+          >
+            {loading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : copied ? (
+              <Check className="h-5 w-5" />
+            ) : (
+              <Link2 className="h-5 w-5" />
+            )}
+            {copied ? 'Link copied' : 'Copy signing link'}
+          </button>
 
-            {/* WhatsApp */}
+          <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={handleWhatsApp}
               disabled={loading}
               className={cn(
-                'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                'touch-manipulation min-h-[80px]'
+                'flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06]',
+                'text-[14px] font-medium text-white touch-manipulation',
+                'transition-[background-color,transform] duration-150 active:scale-[0.97] active:bg-white/[0.12]'
               )}
             >
-              {loading ? (
-                <Loader2 className="h-5 w-5 text-white animate-spin" />
-              ) : (
-                <MessageCircle className="h-5 w-5 text-green-400" />
-              )}
-              <span className="text-xs font-medium text-white">WhatsApp</span>
+              <MessageCircle className="h-4 w-4" />
+              WhatsApp
             </button>
 
-            {/* Native Share / More */}
             <button
               type="button"
               onClick={handleNativeShare}
               disabled={loading}
               className={cn(
-                'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                'touch-manipulation min-h-[80px]'
+                'flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06]',
+                'text-[14px] font-medium text-white touch-manipulation',
+                'transition-[background-color,transform] duration-150 active:scale-[0.97] active:bg-white/[0.12]'
               )}
             >
-              {loading ? (
-                <Loader2 className="h-5 w-5 text-white animate-spin" />
-              ) : (
-                <ExternalLink className="h-5 w-5 text-purple-400" />
-              )}
-              <span className="text-xs font-medium text-white">More...</span>
+              <ExternalLink className="h-4 w-4" />
+              More
             </button>
           </div>
 
@@ -322,12 +310,7 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 className="overflow-hidden"
               >
                 <div className="space-y-2.5">
-                  <div className="flex items-center gap-2">
-                    <QrCode className="h-3.5 w-3.5 text-white" />
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                      QR Code
-                    </span>
-                  </div>
+                  <h4 className="text-[12px] font-medium text-white">QR code</h4>
                   <div className="flex flex-col items-center p-4 rounded-xl bg-white/[0.04] border border-white/10">
                     <div className="p-4 bg-white rounded-xl">
                       <QRCodeSVG
@@ -350,27 +333,24 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
           </AnimatePresence>
 
           {/* Email Send */}
-          <div className="space-y-2.5">
-            <div className="flex items-center gap-2">
-              <Mail className="h-3.5 w-3.5 text-white" />
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Send via Email
-              </span>
-            </div>
-            <div className="flex gap-2">
-              <SafetyDocField
-                label="Email address"
-                type="email"
-                placeholder="name@company.co.uk"
-                value={emailTo}
-                onChange={(e) => setEmailTo(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleEmailSend()}
-              />
+          <div className="space-y-2.5 border-t border-white/[0.1] pt-4">
+            <h4 className="text-[12px] font-medium text-white">Send by email</h4>
+            <div className="flex items-end gap-2">
+              <div className="min-w-0 flex-1">
+                <SafetyDocField
+                  label="Email address"
+                  type="email"
+                  placeholder="name@company.co.uk"
+                  value={emailTo}
+                  onChange={(e) => setEmailTo(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleEmailSend()}
+                />
+              </div>
               <Button
                 type="button"
                 onClick={handleEmailSend}
                 disabled={!emailTo.trim() || sendingEmail || loading}
-                className="h-[50px] px-5 bg-yellow-500 text-black hover:bg-yellow-400 font-semibold shrink-0"
+                className="h-11 shrink-0 touch-manipulation border border-white/[0.14] bg-white/[0.06] px-5 font-medium text-white transition-[background-color,transform] hover:bg-white/[0.12] active:scale-[0.97] disabled:opacity-50"
               >
                 {sendingEmail ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send'}
               </Button>
@@ -385,14 +365,15 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 animate={{ opacity: 1, height: 'auto' }}
                 className="overflow-hidden"
               >
-                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                  <p className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    Signing Link
-                  </p>
-                  <p className="text-xs text-yellow-400/80 break-all font-mono leading-relaxed">
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                  <p className="mb-1.5 text-[12px] font-medium text-white">Signing link</p>
+                  {/* Full-opacity volt. `text-yellow-400/80` on this ground is a
+                      muddy olive, and a URL is the one thing here that has to be
+                      readable enough to check by eye. */}
+                  <p className="break-all font-mono text-xs leading-relaxed text-elec-yellow">
                     {signingUrl}
                   </p>
-                  <p className="text-xs text-white mt-2">
+                  <p className="mt-2 text-xs text-white">
                     Expires in 7 days. Anyone with this link can sign.
                   </p>
                 </div>

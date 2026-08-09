@@ -74,6 +74,8 @@ import { dataCentreContent } from './data-centre';
 import { generatorSizingContent } from './generator-sizing';
 import { marineElectricalContent } from './marine-electrical';
 import { swimmingPoolContent } from './swimming-pool';
+import { bondingConductorSizeContent } from './bonding-conductor-size';
+import { insulationResistanceContent } from './insulation-resistance';
 
 export const CALCULATOR_CONTENT: Record<string, CalculatorContent> = {
   [voltageDropContent.slug]: voltageDropContent,
@@ -139,6 +141,8 @@ export const CALCULATOR_CONTENT: Record<string, CalculatorContent> = {
   [generatorSizingContent.slug]: generatorSizingContent,
   [marineElectricalContent.slug]: marineElectricalContent,
   [swimmingPoolContent.slug]: swimmingPoolContent,
+  [bondingConductorSizeContent.slug]: bondingConductorSizeContent,
+  [insulationResistanceContent.slug]: insulationResistanceContent,
 };
 
 /** Returns grounded content for a slug, or undefined if none exists yet. */

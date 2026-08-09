@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useShowMore } from '@/hooks/useShowMore';
+import { useToast } from '@/hooks/use-toast';
 import {
   useAccidentRecords,
   useCreateAccidentRecord,
@@ -11,7 +12,6 @@ import {
   useArchiveOldRecords,
   useMarkRIDDORReported,
   getRIDDORDeadlineStatus,
-  calculateRIDDORDeadline,
 } from '@/hooks/useAccidentRecords';
 
 import { Switch } from '@/components/ui/switch';
@@ -26,8 +26,6 @@ import {
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -64,6 +62,8 @@ import { RIDDORCountdown } from './common/RIDDORCountdown';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 // ─── Date helpers ───
 
@@ -98,6 +98,26 @@ function isValidISODate(val: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return false;
   const d = new Date(val);
   return !isNaN(d.getTime());
+}
+
+/**
+ * Optional date → ISO string or NULL. Never an empty string.
+ *
+ * ⚠️ This is why nothing could be saved. `return_date` and `reported_date` are
+ * `date` columns, and the save used `sanitiseDateToISO(...) || ''`. PostgREST
+ * inserts through `json_populate_record`, which parses `""` as a date and
+ * raises `22007 invalid input syntax for type date: ""` — so every save that
+ * left "Expected return" blank (i.e. every save that didn't open the optional
+ * Treatment & aftermath section) came back as a 400 with a raw Postgres string
+ * in the error toast. Proven against the live schema:
+ *   select (json_populate_record(null::accident_records,'{"return_date":""}'::json)).return_date;
+ *   → ERROR: 22007 invalid input syntax for type date: ""
+ * A nullable date column wants NULL, and `|| ''` is the one value it cannot take.
+ */
+function toISODateOrNull(raw: string | undefined | null): string | null {
+  const v = sanitiseDateToISO((raw || '').trim());
+  if (!v) return null;
+  return isValidISODate(v) ? v : null;
 }
 
 // ─── Types ───
@@ -248,18 +268,42 @@ function sevTone(severity: Severity): Tone {
       : 'green';
 }
 
-const SEV_CLASS: Record<Tone, string> = {
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-green-500/10 text-green-400 border-green-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
-  yellow: 'border border-elec-yellow/35 text-elec-yellow',
-  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
-  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
-  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
+/**
+ * Status pills: NEUTRAL surface, COLOURED text.
+ *
+ * A tinted wash per state (`bg-red-500/10`, `bg-amber-500/10`, …) meant a list
+ * row could carry three differently-tinted lozenges stacked on top of each
+ * other, and the eye read the coloured rectangles before it read any of the
+ * words. One surface for every pill puts the difference back in the only place
+ * that carries meaning — the text colour — and lets the row's left accent bar
+ * be the thing that shows severity at a glance.
+ */
+const PILL_CLASS: Record<Tone, string> = {
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  orange: 'bg-white/[0.05] text-orange-400 border-white/10',
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  blue: 'bg-white/[0.05] text-blue-400 border-white/10',
+  emerald: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  purple: 'bg-white/[0.05] text-purple-400 border-white/10',
+  yellow: 'bg-white/[0.05] text-elec-yellow border-white/10',
+  cyan: 'bg-white/[0.05] text-cyan-400 border-white/10',
+  indigo: 'bg-white/[0.05] text-indigo-400 border-white/10',
+  grey: 'bg-white/[0.05] text-white border-white/10',
+};
+
+const PILL_BASE =
+  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap';
+
+/**
+ * Selected-state fill for the severity chooser. Tinted fills are still right
+ * here — the colour IS the selection, not a decoration on a label.
+ */
+const SEV_FILL: Record<Severity, string> = {
+  minor: 'border-green-500/40 bg-green-500/15 text-green-400',
+  moderate: 'border-amber-500/40 bg-amber-500/15 text-amber-400',
+  major: 'border-red-500/40 bg-red-500/15 text-red-400',
+  fatal: 'border-red-500/40 bg-red-500/15 text-red-400',
 };
 
 const SEV_LABEL: Record<Severity, string> = {
@@ -271,12 +315,7 @@ const SEV_LABEL: Record<Severity, string> = {
 
 function SevPill({ severity }: { severity: Severity }) {
   return (
-    <span
-      className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        SEV_CLASS[sevTone(severity)]
-      )}
-    >
+    <span className={cn(PILL_BASE, PILL_CLASS[sevTone(severity)])}>
       {SEV_LABEL[severity].toUpperCase()}
     </span>
   );
@@ -293,86 +332,206 @@ function riddorTone(status: ReturnType<typeof getRIDDORDeadlineStatus>['status']
         : 'orange';
 }
 
+/**
+ * The specified-injury list, RIDDOR 2013.
+ *
+ * Every line below is taken from the HSE guidance held in `safety_facets`
+ * ("Injuries to be reported by the quickest practicable means"), not from
+ * memory. Three of the previous entries had lost the qualifier that decides
+ * whether an injury is actually reportable:
+ *   - the crush entry dropped "to the head or torso" and "brain";
+ *   - the hypothermia entry dropped BOTH "arising from working in an enclosed
+ *     space" AND "for more than 24 hours", which made every cold-weather
+ *     call-out look reportable;
+ *   - the fracture and sight entries dropped "diagnosed by a registered
+ *     medical practitioner", which is the whole test — an electrician's
+ *     opinion that a wrist is broken is not a diagnosis.
+ * On a compliance screen an over-broad list is not the safe error: it trains
+ * people to ignore the list.
+ */
 const RIDDOR_SPECIFIED_INJURIES = [
-  'Fracture (other than fingers/thumbs/toes)',
-  'Amputation of arm, hand, finger, thumb, leg, foot or toe',
-  'Permanent loss of sight or reduction of sight',
-  'Crush injury leading to internal organ damage',
-  'Serious burn covering >10% of body or affecting eyes/respiratory system/vital organs',
-  'Scalping requiring hospital treatment',
-  'Loss of consciousness from head injury or asphyxia',
-  'Hypothermia/heat-induced illness requiring resuscitation or hospital admission',
+  'Any bone fracture diagnosed by a registered medical practitioner, other than to a finger, thumb or toe',
+  'Amputation of an arm, hand, finger, thumb, leg, foot or toe',
+  'Any injury diagnosed by a registered medical practitioner as likely to cause permanent blinding or reduction of sight in one or both eyes',
+  'Any crush injury to the head or torso causing damage to the brain or to internal organs in the chest or abdomen',
+  'Any burn (including scalding) covering more than 10% of the body’s total surface area, or causing significant damage to the eyes, respiratory system or other vital organs',
+  'Any degree of scalping requiring hospital treatment',
+  'Loss of consciousness caused by head injury or asphyxia',
+  'Any other injury arising from working in an enclosed space that leads to hypothermia or heat-induced illness, or requires resuscitation or admittance to hospital for more than 24 hours',
 ];
 
+/**
+ * Dangerous occurrences — the entries from the RIDDOR 2013 Schedule 2 list
+ * most likely to arise on electrical work. Wording follows the HSE guidance in
+ * `safety_facets`.
+ *
+ * The short-circuit entry previously read "Electrical short circuit or overload
+ * with fire or explosion", which describes a bad afternoon rather than a
+ * reportable event: the stoppage/risk-of-death test is what makes it one, and
+ * without it every scorched CU looked notifiable. The scaffold and structural
+ * entries were missing the "over five metres" and "over five tonnes" thresholds
+ * that define them.
+ */
 const RIDDOR_DANGEROUS_OCCURRENCES = [
-  'Collapse, overturning or failure of load-bearing equipment',
-  'Plant/equipment contact with overhead power line',
-  'Electrical short circuit or overload with fire or explosion',
-  'Accidental release of biological agent',
-  'Collapse or partial collapse of scaffold over 5m',
-  'Unintended collapse of any building under construction',
+  'Electrical short circuit or overload causing fire or explosion that stops the plant involved for more than 24 hours, or has the potential to cause death',
+  'Plant or equipment coming into unintentional contact with an overhead electric line',
+  'Collapse, overturning or failure of any load-bearing part of lifting equipment',
+  'Explosion, collapse or bursting of any closed vessel or its associated pipework',
+  'Collapse or partial collapse of a scaffold over five metres high, or one erected near water where there is a risk of drowning after a fall',
+  'Unintended collapse of a building or structure under construction, alteration or demolition where more than five tonnes of material falls, or of a wall or floor in a place of work',
+  'Accidental release of a biological agent likely to cause severe human illness',
+  'Explosion or fire that suspends normal work for more than 24 hours',
 ];
 
 const F2508_CHECKLIST = [
-  'Name, address & telephone of the person reporting',
-  'Date, time & location of the incident',
-  'Name, address & occupation of the injured person',
-  'Nature of injury or condition',
+  'Name, address and telephone number of the person reporting',
+  'Date, time and location of the incident',
+  'Name, address and occupation of the injured person',
+  'Nature of the injury or condition',
   'Brief description of the circumstances',
-  "Name & address of the injured person's employer",
-  'Details of the dangerous occurrence (if applicable)',
+  'Name and address of the injured person’s employer',
+  'Details of the dangerous occurrence, if applicable',
 ];
 
 // ─── RIDDOR Check ───
+
+/** The four keys `RIDDORCountdown` knows how to price a deadline for. */
+type RiddorCategory = 'death' | 'specified_injury' | 'over_7_day' | 'dangerous_occurrence';
+
+/**
+ * Canonical RIDDOR category key, derived from the record's own fields.
+ *
+ * ⚠️ This is NOT the `riddor_category` column. That column stores the prose
+ * reasons (`reasons.join('; ')`), and the detail sheet was handing that prose
+ * straight to `<RIDDORCountdown category={…}>`, which looks the value up in a
+ * table keyed on 'death' | 'specified_injury' | 'over_7_day' |
+ * 'dangerous_occurrence'. The lookup missed on every record ever saved, so the
+ * countdown fell through to its no-category branch and sat on an amber,
+ * pulsing "RIDDOR: PENDING — Determine RIDDOR category to see reporting
+ * deadline" for ever. Deriving the key from severity/days-off instead of the
+ * stored string fixes existing rows too, with no migration.
+ *
+ * Nothing in this form establishes a dangerous occurrence (they are events, not
+ * injuries), so that key is never returned — a category is not guessed just to
+ * fill the slot.
+ */
+function riddorCategoryOf(record: Partial<AccidentRecord>): RiddorCategory | undefined {
+  if (record.severity === 'fatal') return 'death';
+  if (record.severity === 'major') return 'specified_injury';
+  if (record.time_off_work && (record.days_off ?? 0) > 7) return 'over_7_day';
+  return undefined;
+}
+
+/**
+ * The date the report must be with the enforcing authority BY.
+ *
+ * Deliberately computed here rather than delegated, because the shared
+ * `calculateRIDDORDeadline` puts an electric shock with a hospital visit on a
+ * 10-day clock as a "dangerous occurrence". Electric shock is not in the
+ * Schedule 2 list — the electrical entry there is a short circuit or overload
+ * causing fire or explosion — and the 10 days is the deadline for the written
+ * F2508 that FOLLOWS an immediate notification, not a reporting window of its
+ * own. An invented clock is worse than no clock: it reads as authority.
+ *
+ * Verified against HSE guidance in `safety_facets`: deaths, specified injuries
+ * and dangerous occurrences are notified "by the quickest practicable means"
+ * without delay; over-seven-day incapacitation is reported "as soon as
+ * practicable and, in any event, within 15 days of the accident".
+ */
+function riddorDeadlineFor(
+  record: Partial<AccidentRecord>,
+  category: RiddorCategory | undefined
+): string | null {
+  if (!record.incident_date || !category) return null;
+  const incident = new Date(record.incident_date);
+  if (isNaN(incident.getTime())) return null;
+
+  // Without delay — the deadline is the day of the accident itself.
+  if (category === 'death' || category === 'specified_injury') {
+    return incident.toISOString().split('T')[0];
+  }
+
+  if (category === 'over_7_day') {
+    const deadline = new Date(incident);
+    deadline.setDate(deadline.getDate() + 15);
+    return deadline.toISOString().split('T')[0];
+  }
+
+  return null;
+}
 
 function checkRIDDOR(record: Partial<AccidentRecord>): {
   reportable: boolean;
   reasons: string[];
   deadline: string | null;
+  category: RiddorCategory | undefined;
 } {
   const reasons: string[] = [];
 
-  // Fatal — immediate phone report
+  // Fatal — notify without delay, written report follows
   if (record.severity === 'fatal') {
-    reasons.push('Fatal injury — must be reported immediately by phone (0345 300 9923)');
+    reasons.push(
+      'Fatal injury — notify the enforcing authority without delay by the quickest practicable means (0345 300 9923), then send the written report (F2508) within 10 days.'
+    );
   }
 
-  // Major/specified injuries — immediate
+  // Specified injury (RIDDOR 2013 Schedule 1) — notify without delay
   if (record.severity === 'major') {
-    reasons.push('Major/specified injury — report immediately');
+    reasons.push(
+      'Specified injury — notify without delay by the quickest practicable means, then send the written report (F2508) within 10 days. Check it against the specified-injury list before reporting.'
+    );
   }
 
-  // Electric shock — only RIDDOR-reportable if causing hospital visit,
-  // loss of consciousness, or requiring resuscitation (not ALL electric shocks)
+  // Over SEVEN CONSECUTIVE days — report within 15 days.
+  //
+  // ⚠️ This was `days_off >= 7`, which flagged a seven-day absence. The
+  // regulation is "incapacitated … for MORE THAN seven consecutive days
+  // (excluding the day of the accident but including any days which would not
+  // have been working days)" — seven days is not more than seven days, so the
+  // book was reporting incidents the HSE never asked for and starting a
+  // 15-day clock on them.
+  if (record.time_off_work && (record.days_off ?? 0) > 7) {
+    reasons.push(
+      `Incapacitated for more than seven consecutive days (${record.days_off} recorded) — send the report as soon as practicable and, in any event, within 15 days of the accident.`
+    );
+  }
+
+  // Electric shock treated at hospital.
+  //
+  // Kept as a prompt to check, not as a verdict: an electric shock is
+  // reportable through the specified-injury, over-seven-day or fatality routes,
+  // not as a dangerous occurrence in its own right. The previous copy asserted
+  // "reportable as dangerous occurrence (10 days)", which is not a category
+  // RIDDOR 2013 has.
   if (record.injury_type === 'electric-shock' && record.hospital_visit) {
     reasons.push(
-      'Electric shock requiring hospital treatment — reportable as dangerous occurrence (10 days)'
+      'Electric shock treated at hospital — check the specified-injury list (loss of consciousness caused by asphyxia, or a burn damaging the eyes, respiratory system or other vital organs would each make it reportable without delay).'
     );
   }
 
-  // Over 7 days incapacitation — report within 15 days
-  if (record.time_off_work && record.days_off && record.days_off >= 7) {
-    reasons.push(
-      `Over 7 consecutive days incapacitation (${record.days_off} days) — report within 15 days`
-    );
-  }
-
-  // Hospital visit from workplace accident (only flag if not already covered above)
+  // Hospital attendance from a workplace accident (only if not covered above)
   if (
     record.hospital_visit &&
     record.severity !== 'major' &&
     record.severity !== 'fatal' &&
     record.injury_type !== 'electric-shock'
   ) {
-    reasons.push('Hospital attendance — review if this constitutes a "specified injury"');
+    reasons.push(
+      'Hospital attendance — check the specified-injury list. If the injured person was NOT at work (a member of the public or a client) and was taken to hospital for treatment, that alone is reportable without delay.'
+    );
   }
 
-  const deadline = calculateRIDDORDeadline(record as AccidentRecord);
+  const category = riddorCategoryOf(record);
 
   return {
     reportable: reasons.length > 0,
     reasons,
-    deadline,
+    // Only a record that is actually reportable gets a clock, and only the two
+    // routes above carry a fixed deadline. A "check this" flag gets none —
+    // `getRIDDORDeadlineStatus` then shows "Review Required" rather than a
+    // countdown to a date nothing in the regulations supports.
+    deadline: reasons.length > 0 ? riddorDeadlineFor(record, category) : null,
+    category,
   };
 }
 
@@ -417,6 +576,21 @@ const emptyForm = (): Partial<AccidentRecord> => ({
 
 const softTextareaClass = cn(safetyTextareaCn, 'min-h-[100px]');
 
+/**
+ * Card material for every `FormCard` on this screen.
+ *
+ * `FormCard` still ships the flat `bg-[hsl(0_0%_12%)]` body. `bg-transparent`
+ * is what removes it: it lands in the same tailwind-merge group as the flat
+ * fill, so the last one wins and the fill is dropped rather than left sitting
+ * UNDER the recipe's translucent white ramp — which would light the card from
+ * a 12% base instead of near-black and quietly make it a different material
+ * from every other card in the hub.
+ */
+const cardCn = cn('bg-transparent border-elec-yellow/35', CARD_SURFACE);
+
+/** The RIDDOR cards keep a red edge — it is the one place the colour is load-bearing. */
+const alertCardCn = cn('bg-transparent border-red-500/40', CARD_SURFACE);
+
 function CollapsibleSection({
   title,
   open,
@@ -429,9 +603,11 @@ function CollapsibleSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className={cn('rounded-2xl border overflow-hidden', cardCn)}>
       <Collapsible open={open} onOpenChange={onOpenChange}>
-        <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
+        {/* Press feel brightens, never dims — a dark surface that darkens under
+            the thumb reads as "disabled", not "pressed". */}
+        <CollapsibleTrigger className="flex min-h-11 items-center justify-between w-full px-5 py-4 touch-manipulation transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]">
           <Eyebrow>{title}</Eyebrow>
           <span
             className={cn(
@@ -449,12 +625,20 @@ function CollapsibleSection({
   );
 }
 
+/**
+ * Label and value were both plain 11–13px white, so a stack of them read as one
+ * undifferentiated block of text with no way in. Everything stays full-opacity
+ * white; the hierarchy comes from the label being a tracked micro-caption and
+ * the value carrying the weight.
+ */
 function DetailField({ label, value }: { label: string; value?: React.ReactNode }) {
   if (value === undefined || value === null || value === '') return null;
   return (
-    <div className="flex flex-col gap-0.5">
-      <span className="text-[11px] text-white">{label}</span>
-      <span className="text-[13px] text-white">{value}</span>
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+        {label}
+      </span>
+      <span className="text-[13.5px] font-medium leading-relaxed text-white">{value}</span>
     </div>
   );
 }
@@ -465,6 +649,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading } = useAccidentRecords();
   const createRecord = useCreateAccidentRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const { toast } = useToast();
   const [showShare, setShowShare] = useState(false);
 
   // RIDDOR deadline warning toasts
@@ -472,48 +657,70 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   // Auto-archive records older than 3 years (server-side)
   useArchiveOldRecords();
 
-  const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
-    id: r.id,
-    injured_name: r.injured_name,
-    injured_role: r.injured_role || '',
-    injured_employer: r.injured_employer || '',
-    injured_address: r.injured_address || '',
-    incident_date: r.incident_date,
-    incident_time: r.incident_time || '',
-    location: r.location,
-    location_detail: r.location_detail || '',
-    injury_type: r.injury_type as InjuryType,
-    body_part: r.body_part as BodyPart,
-    severity: r.severity as Severity,
-    injury_description: r.injury_description || '',
-    incident_description: r.incident_description,
-    activity_at_time: r.activity_at_time || '',
-    cause: r.cause || '',
-    witnesses: r.witnesses || '',
-    first_aid_given: r.first_aid_given,
-    first_aid_details: r.first_aid_details || '',
-    first_aider_name: r.first_aider_name || '',
-    hospital_visit: r.hospital_visit,
-    hospital_name: r.hospital_name || '',
-    time_off_work: r.time_off_work,
-    days_off: r.days_off,
-    return_date: r.return_date || '',
-    reported_to: r.reported_to || '',
-    reported_date: r.reported_date || '',
-    is_riddor_reportable: r.is_riddor_reportable,
-    riddor_category: r.riddor_category || '',
-    riddor_reference: r.riddor_reference || '',
-    riddor_reported: r.riddor_reported,
-    riddor_deadline: r.riddor_deadline || null,
-    riddor_reported_date: r.riddor_reported_date || null,
-    recorded_by: r.recorded_by,
-    additional_notes: r.additional_notes || '',
-    corrective_actions: r.corrective_actions || '',
-    job_id: r.job_id ?? null,
-    incident_number: r.incident_number || undefined,
-    is_archived: r.is_archived ?? false,
-    created_at: r.created_at,
-  }));
+  const records: AccidentRecord[] = (dbRecords || []).map((row) => {
+    // The query is `select('*')`, so the investigation columns come back — but
+    // the hook's `AccidentRecord` interface doesn't declare them, so they are
+    // invisible to TypeScript. Narrowing here (rather than in the hook, which
+    // other screens share) keeps the change inside this module. See the report:
+    // `useAccidentRecords.ts` should own these three fields.
+    const r = row as typeof row & {
+      five_whys?: unknown[] | null;
+      root_cause?: string | null;
+      root_cause_category?: string | null;
+    };
+    return {
+      id: r.id,
+      injured_name: r.injured_name,
+      injured_role: r.injured_role || '',
+      injured_employer: r.injured_employer || '',
+      injured_address: r.injured_address || '',
+      incident_date: r.incident_date,
+      incident_time: r.incident_time || '',
+      location: r.location,
+      location_detail: r.location_detail || '',
+      injury_type: r.injury_type as InjuryType,
+      body_part: r.body_part as BodyPart,
+      severity: r.severity as Severity,
+      injury_description: r.injury_description || '',
+      incident_description: r.incident_description,
+      activity_at_time: r.activity_at_time || '',
+      cause: r.cause || '',
+      witnesses: r.witnesses || '',
+      first_aid_given: r.first_aid_given,
+      first_aid_details: r.first_aid_details || '',
+      first_aider_name: r.first_aider_name || '',
+      hospital_visit: r.hospital_visit,
+      hospital_name: r.hospital_name || '',
+      time_off_work: r.time_off_work,
+      days_off: r.days_off,
+      return_date: r.return_date || '',
+      reported_to: r.reported_to || '',
+      reported_date: r.reported_date || '',
+      is_riddor_reportable: r.is_riddor_reportable,
+      riddor_category: r.riddor_category || '',
+      riddor_reference: r.riddor_reference || '',
+      riddor_reported: r.riddor_reported,
+      riddor_deadline: r.riddor_deadline || null,
+      riddor_reported_date: r.riddor_reported_date || null,
+      recorded_by: r.recorded_by,
+      additional_notes: r.additional_notes || '',
+      corrective_actions: r.corrective_actions || '',
+      job_id: r.job_id ?? null,
+      // These four were declared on the interface, read by the detail sheet,
+      // and never copied out of the row — so `FiveWhysAnalysis` (which seeds
+      // its state purely from props, it does no fetching of its own) opened
+      // blank every time, and a saved 5-Whys investigation looked like it had
+      // never been written. Same for the scene photos: uploaded on the way in,
+      // then invisible for the life of the record.
+      photos: Array.isArray(r.photos) ? (r.photos as string[]) : [],
+      five_whys: Array.isArray(r.five_whys) ? r.five_whys : [],
+      root_cause: r.root_cause ?? null,
+      root_cause_category: r.root_cause_category ?? null,
+      incident_number: r.incident_number || undefined,
+      is_archived: r.is_archived ?? false,
+      created_at: r.created_at,
+    };
+  });
 
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Partial<AccidentRecord>>(emptyForm);
@@ -601,10 +808,15 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   const handleMarkReported = async () => {
     if (!viewingRecord || !riddorRef.trim()) return;
+    // `riddor_reported_date` is a `date` column and the input can be cleared to
+    // ''. Same 22007 trap as the insert path — fall back to today rather than
+    // sending an empty string the column cannot parse.
+    const reportedOn =
+      toISODateOrNull(riddorReportedDate) ?? new Date().toISOString().split('T')[0];
     await markReported.mutateAsync({
       id: viewingRecord.id,
       riddor_reference: riddorRef.trim(),
-      riddor_reported_date: riddorReportedDate,
+      riddor_reported_date: reportedOn,
     });
     setShowMarkReported(false);
     setRiddorRef('');
@@ -643,14 +855,20 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     // Sanitise date fields before saving — converts UK DD/MM/YYYY to ISO YYYY-MM-DD
     // and catches invalid formats before they hit the Postgres date column
     const incidentDate = sanitiseDateToISO(form.incident_date || '');
-    const returnDate = sanitiseDateToISO(form.return_date || '');
-    const reportedDate = sanitiseDateToISO(form.reported_date || '');
+    // Optional dates go as NULL, never ''. See `toISODateOrNull` — `|| ''` on a
+    // nullable `date` column is what made every save fail with a raw 22007.
+    const returnDate = toISODateOrNull(form.return_date);
+    const reportedDate = toISODateOrNull(form.reported_date);
 
-    if (!isValidISODate(incidentDate)) {
-      // Surface a clear error rather than letting Postgres reject with a cryptic message
-      alert(
-        'The date of incident is not valid. Please use the date picker or enter the date as DD/MM/YYYY.'
-      );
+    if (!isValidISODate(incidentDate) || !incidentDate) {
+      // Surface a clear error rather than letting Postgres reject with a cryptic
+      // message. A toast, not `alert()` — a native-feeling app never hands the
+      // user a browser chrome dialog they cannot dismiss with a thumb.
+      toast({
+        title: 'Check the date of incident',
+        description: 'Use the date picker, or type the date as DD/MM/YYYY.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -679,9 +897,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         hospital_name: form.hospital_name || '',
         time_off_work: form.time_off_work || false,
         days_off: form.days_off || 0,
-        return_date: returnDate || '',
+        return_date: returnDate,
         reported_to: form.reported_to || '',
-        reported_date: reportedDate || '',
+        reported_date: reportedDate,
         is_riddor_reportable: riddorCheck.reportable,
         riddor_category: riddorCheck.reasons.join('; '),
         riddor_reference: form.riddor_reference || '',
@@ -706,6 +924,16 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   // 3-year archival: records flagged by DB trigger (never deleted — legal requirement)
   const isArchived = (r: AccidentRecord) => r.is_archived ?? false;
   const archivedCount = records.filter(isArchived).length;
+
+  /**
+   * The set every count on this screen is taken from.
+   *
+   * The tab counts used to be computed over ALL records while the list itself
+   * dropped archived ones, so "RIDDOR pending 3" could sit above an empty tab
+   * — the three pending records being 3-year-old archived ones. Counting the
+   * same rows the list will show keeps the numbers answerable.
+   */
+  const countBase = showArchived ? records : records.filter((r) => !isArchived(r));
 
   const filteredRecords = records.filter((r) => {
     // Archive filter
@@ -745,11 +973,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     loadMore: loadMoreRecords,
   } = useShowMore(sortedRecords);
 
-  const total = records.filter((r) => !isArchived(r)).length;
-  const riddorPending = records.filter(
+  const total = countBase.length;
+  const riddorPending = countBase.filter(
     (r) => r.is_riddor_reportable && getRIDDORDeadlineStatus(r as never).status !== 'reported'
   ).length;
-  const fatalMajor = records.filter((r) => r.severity === 'fatal' || r.severity === 'major').length;
+  const fatalMajor = countBase.filter(
+    (r) => r.severity === 'fatal' || r.severity === 'major'
+  ).length;
 
   const filterTabs = useMemo(
     () => [
@@ -762,6 +992,15 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   const injuryLabelOf = (t: InjuryType) => INJURY_TYPES.find((x) => x.id === t)?.label || t;
   const bodyPartLabelOf = (b: BodyPart) => BODY_PARTS.find((x) => x.id === b)?.label || b;
+
+  // The detail sheet was printing raw ISO dates ("2026-08-09") at the user. UK
+  // English throughout, and a record that may end up in front of an inspector
+  // should not read like a database dump.
+  const fmtUK = (iso: string | null | undefined) => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return isNaN(d.getTime()) ? iso : d.toLocaleDateString('en-GB');
+  };
 
   // ─── Form ───
   if (showForm) {
@@ -784,7 +1023,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </AnimatePresence>
 
           {/* Injured person */}
-          <FormCard eyebrow="Injured person">
+          <FormCard eyebrow="Injured person" className={cardCn}>
             <Field label="Full name" required>
               <input
                 value={form.injured_name}
@@ -822,7 +1061,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </FormCard>
 
           {/* When & where */}
-          <FormCard eyebrow="When & where">
+          <FormCard eyebrow="When & where" className={cardCn}>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Date of incident" required>
                 <input
@@ -869,7 +1108,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </FormCard>
 
           {/* What happened */}
-          <FormCard eyebrow="What happened">
+          <FormCard eyebrow="What happened" className={cardCn}>
             <Field label="Activity at time of incident">
               <input
                 value={form.activity_at_time}
@@ -905,7 +1144,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </FormCard>
 
           {/* Injury */}
-          <FormCard eyebrow="Injury">
+          <FormCard eyebrow="Injury" className={cardCn}>
             <Field label="Type of injury" required>
               <Select
                 value={form.injury_type}
@@ -950,16 +1189,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <button
                       key={s.id}
                       type="button"
+                      aria-pressed={selected}
                       onClick={() => updateForm({ severity: s.id })}
                       className={cn(
-                        'p-3 rounded-xl border text-left transition-all active:scale-[0.98] touch-manipulation',
-                        selected
-                          ? SEV_CLASS[sevTone(s.id)]
-                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                        'flex min-h-[68px] flex-col justify-center rounded-xl border p-3 text-left touch-manipulation',
+                        'transition-[background-color,border-color,filter,transform] duration-150',
+                        'active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
+                        selected ? SEV_FILL[s.id] : 'border-white/[0.10] bg-white/[0.04] text-white'
                       )}
                     >
-                      <span className="text-[13px] font-medium block">{s.label}</span>
-                      <span className="text-[11px] text-white">{s.description}</span>
+                      <span className="block text-[13px] font-semibold">{s.label}</span>
+                      <span className="mt-0.5 block text-[11px] text-white">{s.description}</span>
                     </button>
                   );
                 })}
@@ -1041,12 +1281,22 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             </div>
             {form.time_off_work && (
               <div className="grid grid-cols-2 gap-3">
-                <Field label="Days off">
+                <Field
+                  label="Days off"
+                  // The counting rule decides whether this is reportable at all,
+                  // and it is not obvious: the day of the accident is excluded
+                  // and non-working days are included. Verified against the HSE
+                  // guidance held in `safety_facets`.
+                  hint="Count from the day after the accident, and include days the person would not have worked anyway."
+                >
                   <input
                     type="number"
                     inputMode="numeric"
+                    min={0}
                     value={form.days_off}
-                    onChange={(e) => updateForm({ days_off: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      updateForm({ days_off: Math.max(0, parseInt(e.target.value) || 0) })
+                    }
                     className={safetyInputCn}
                   />
                 </Field>
@@ -1062,27 +1312,37 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             )}
           </CollapsibleSection>
 
-          {/* RIDDOR alert (live) */}
+          {/* RIDDOR alert (live).
+              A verdict card, so the red tint stays — but the body copy is
+              white, not `text-red-200`, and the inner panel is neutral. Red
+              text on a red wash inside a red wash was three tints deep and the
+              words came second to the colour. */}
           {riddorCheck.reportable && (
-            <div className="p-4 rounded-2xl border border-red-500/30 bg-red-500/10 space-y-2">
+            <div className="p-4 rounded-2xl border border-red-500/40 bg-red-500/10 space-y-3">
               <Eyebrow className="text-red-400">RIDDOR reportable</Eyebrow>
-              <p className="text-[12px] text-red-200">
-                This incident may need to be reported to the HSE under RIDDOR:
+              <p className="text-[12.5px] font-medium text-white">
+                This incident looks reportable to the HSE under RIDDOR 2013.
               </p>
-              <ul className="space-y-1">
+              <ul className="space-y-1.5">
                 {riddorCheck.reasons.map((reason, i) => (
-                  <li key={i} className="text-[12px] text-red-200 flex items-start gap-1.5">
-                    <span className="text-red-400 mt-0.5">•</span>
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-[12px] leading-relaxed text-white"
+                  >
+                    <span className="mt-[3px] text-red-400" aria-hidden>
+                      •
+                    </span>
                     {reason}
                   </li>
                 ))}
               </ul>
-              <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 space-y-0.5">
-                <p className="text-[12px] text-red-200">
-                  <strong>Report online:</strong> www.hse.gov.uk/riddor
+              <div className="rounded-xl border border-white/10 bg-black/30 p-3 space-y-1">
+                <p className="text-[12px] text-white">
+                  <strong className="font-semibold">Report online:</strong> hse.gov.uk/riddor
                 </p>
-                <p className="text-[12px] text-red-200">
-                  <strong>Fatal/major:</strong> Call 0345 300 9923 immediately
+                <p className="text-[12px] text-white">
+                  <strong className="font-semibold">Deaths and specified injuries:</strong> notify
+                  without delay on 0345 300 9923
                 </p>
               </div>
             </div>
@@ -1121,7 +1381,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </CollapsibleSection>
 
           {/* Recorder & signature */}
-          <FormCard eyebrow="Recorder & sign-off">
+          <FormCard eyebrow="Recorder & sign-off" className={cardCn}>
             <Field label="Recorded by" required>
               <input
                 value={form.recorded_by}
@@ -1167,16 +1427,19 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       moduleName="Accident Book"
       trailing={
         riddorPending > 0 ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-red-500/10 text-red-400 border-red-500/25 whitespace-nowrap">
-            {riddorPending} RIDDOR
-          </span>
+          <span className={cn(PILL_BASE, PILL_CLASS.red)}>{riddorPending} RIDDOR</span>
         ) : undefined
       }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Accident Book · RIDDOR 2013"
           title="Record accidents, meet your RIDDOR deadlines"
-          description="Log workplace injuries, auto-classify RIDDOR-reportable incidents, and track the 15-day reporting clock. Records retained for the statutory 3 years."
+          // Both timescales are verified against the HSE guidance in
+          // `safety_facets`: deaths, specified injuries and dangerous
+          // occurrences are notified without delay; over-seven-day
+          // incapacitation is reported within 15 days of the accident. Records
+          // of reportable incidents are kept for at least three years.
+          description="Log workplace injuries, flag what looks reportable under RIDDOR 2013, and keep the 15-day clock in view. Records are retained for the statutory three years."
           tone="red"
           actions={
             <>
@@ -1197,7 +1460,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       }
       stats={
         total > 0 || archivedCount > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               { value: total, label: 'Total' },
               {
@@ -1225,11 +1488,15 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               archivedCount > 0 ? (
                 <button
                   onClick={() => setShowArchived((v) => !v)}
+                  aria-pressed={showArchived}
                   className={cn(
-                    'h-10 px-4 rounded-full text-[12.5px] font-medium whitespace-nowrap border touch-manipulation transition-colors',
+                    // h-10 was under the 44px target; this is a real control.
+                    'h-11 px-4 rounded-full text-[12.5px] font-medium whitespace-nowrap border touch-manipulation',
+                    'transition-[background-color,border-color,filter,transform] duration-150',
+                    'active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
                     showArchived
                       ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
-                      : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white'
+                      : 'bg-white/[0.05] border-white/10 text-white'
                   )}
                 >
                   {showArchived ? 'Hide' : 'Show'} archived ({archivedCount})
@@ -1273,14 +1540,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     isArchived(record) ? ' · Archived' : ''
                   }`}
                   trailing={
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="flex flex-col items-end gap-1.5">
                       <SevPill severity={record.severity} />
                       {riddorStatus && (
                         <span
-                          className={cn(
-                            'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.1em] border whitespace-nowrap',
-                            SEV_CLASS[riddorTone(riddorStatus.status)]
-                          )}
+                          className={cn(PILL_BASE, PILL_CLASS[riddorTone(riddorStatus.status)])}
                         >
                           {riddorStatus.label}
                         </span>
@@ -1312,8 +1576,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 viewingRecord.incident_number ? ` · ${viewingRecord.incident_number}` : ''
               }`}
               title={viewingRecord.injured_name}
-              description={`${viewingRecord.incident_date}${
-                viewingRecord.incident_time ? ` ${viewingRecord.incident_time}` : ''
+              description={`${fmtUK(viewingRecord.incident_date)}${
+                viewingRecord.incident_time ? ` at ${viewingRecord.incident_time}` : ''
               } · ${viewingRecord.location}`}
               footer={
                 <div className="flex flex-col gap-2 w-full">
@@ -1331,16 +1595,21 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       Share
                     </SecondaryButton>
                   </div>
+                  {/* Demoted from a bespoke red button to the quiet secondary
+                      group. The urgency belongs to the countdown and the RIDDOR
+                      status card at the top of the sheet; a third red control in
+                      the footer competed with them and left the sheet with two
+                      "most important" things. */}
                   {viewingRecord.is_riddor_reportable && (
-                    <button
-                      onClick={() => exportPDF('riddor-report', viewingRecord.id)}
+                    <SecondaryButton
+                      fullWidth
                       disabled={isExporting && exportingId === viewingRecord.id}
-                      className="w-full h-11 rounded-full border border-red-500/30 bg-red-500/10 text-red-300 text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40"
+                      onClick={() => exportPDF('riddor-report', viewingRecord.id)}
                     >
                       {isExporting && exportingId === viewingRecord.id
                         ? 'Exporting…'
                         : 'Export RIDDOR report'}
-                    </button>
+                    </SecondaryButton>
                   )}
                 </div>
               }
@@ -1348,18 +1617,21 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               <div className="flex items-center gap-2">
                 <SevPill severity={viewingRecord.severity} />
                 {viewingRecord.is_riddor_reportable && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-red-500/10 text-red-400 border-red-500/25">
-                    RIDDOR Reportable
-                  </span>
+                  <span className={cn(PILL_BASE, PILL_CLASS.red)}>RIDDOR reportable</span>
                 )}
               </div>
 
-              {/* RIDDOR Countdown — 15-day deadline tracker */}
+              {/* RIDDOR countdown.
+                  `category` must be one of the countdown's four canonical keys —
+                  passing `riddor_category` (prose) meant the lookup always missed
+                  and the widget never counted anything down. `isReported` now
+                  honours the boolean too, which is what `useMarkRIDDORReported`
+                  and `getRIDDORDeadlineStatus` both key on. */}
               {viewingRecord.is_riddor_reportable && (
                 <RIDDORCountdown
-                  category={viewingRecord.riddor_category}
+                  category={riddorCategoryOf(viewingRecord)}
                   incidentDate={viewingRecord.incident_date}
-                  isReported={!!viewingRecord.riddor_reported_date}
+                  isReported={viewingRecord.riddor_reported || !!viewingRecord.riddor_reported_date}
                   hseReference={viewingRecord.riddor_reference}
                 />
               )}
@@ -1368,25 +1640,30 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               {viewingRecord.is_riddor_reportable &&
                 (() => {
                   const deadlineStatus = getRIDDORDeadlineStatus(viewingRecord as never);
+                  const category = riddorCategoryOf(viewingRecord);
+                  // Only deaths and specified injuries carry the "notify by the
+                  // quickest practicable means" duty, so the phone number is
+                  // only offered where it is the right route.
+                  const notifyWithoutDelay =
+                    category === 'death' || category === 'specified_injury';
                   return (
-                    <FormCard eyebrow="RIDDOR status" className="border-red-500/20">
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={cn(
-                            'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border',
-                            SEV_CLASS[riddorTone(deadlineStatus.status)],
-                            (deadlineStatus.status === 'overdue' ||
-                              deadlineStatus.status === 'immediate') &&
-                              'animate-pulse'
-                          )}
-                        >
-                          {deadlineStatus.label}
-                        </span>
-                      </div>
-                      <p className="text-[12px] text-white">{viewingRecord.riddor_category}</p>
+                    <FormCard eyebrow="RIDDOR status" className={alertCardCn}>
+                      {/* No `animate-pulse`. A pulsing lozenge is movement with
+                          no information in it, and next to a countdown that is
+                          already animated it reads as decoration. */}
+                      <span
+                        className={cn(PILL_BASE, PILL_CLASS[riddorTone(deadlineStatus.status)])}
+                      >
+                        {deadlineStatus.label}
+                      </span>
+                      {viewingRecord.riddor_category && (
+                        <p className="text-[12px] leading-relaxed text-white">
+                          {viewingRecord.riddor_category}
+                        </p>
+                      )}
                       {viewingRecord.riddor_deadline && (
                         <DetailField
-                          label="Deadline"
+                          label="Report by"
                           value={new Date(viewingRecord.riddor_deadline).toLocaleDateString(
                             'en-GB'
                           )}
@@ -1399,7 +1676,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         <DetailField
                           label="Reported"
                           value={
-                            <span className="text-green-400">
+                            <span className="text-emerald-400">
                               {new Date(viewingRecord.riddor_reported_date).toLocaleDateString(
                                 'en-GB'
                               )}
@@ -1410,41 +1687,69 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
                       {deadlineStatus.status !== 'reported' && (
                         <>
-                          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                            <Eyebrow className="mb-1.5">Information needed for F2508</Eyebrow>
-                            {F2508_CHECKLIST.map((item, i) => (
-                              <div key={i} className="flex items-start gap-1.5 mb-1">
-                                <span className="text-green-400 mt-0.5 text-[11px]" aria-hidden>
-                                  ✓
-                                </span>
-                                <span className="text-[11px] text-white">{item}</span>
-                              </div>
-                            ))}
+                          {/* Was a list of green ticks. Nothing had been
+                              checked — the ticks were decoration on a list of
+                              things you still have to go and find, and a screen
+                              that shows a row of ✓ against unmet requirements is
+                              lying to the person holding the phone. Numbered,
+                              because it is the order the F2508 asks for it. */}
+                          <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                            <Eyebrow className="mb-2">You will be asked for</Eyebrow>
+                            <ol className="space-y-1.5">
+                              {F2508_CHECKLIST.map((item, i) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <span
+                                    className="mt-px w-4 shrink-0 text-[11px] tabular-nums text-elec-yellow"
+                                    aria-hidden
+                                  >
+                                    {i + 1}
+                                  </span>
+                                  <span className="text-[11.5px] leading-relaxed text-white">
+                                    {item}
+                                  </span>
+                                </li>
+                              ))}
+                            </ol>
                           </div>
 
-                          <div className="flex gap-2">
-                            <a
-                              href="https://notifications.hse.gov.uk/riddorforms/Injury"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 h-11 flex items-center justify-center rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              Report online
-                            </a>
-                            <a
-                              href="tel:03453009923"
-                              className="h-11 px-4 flex items-center justify-center rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              Call HSE
-                            </a>
-                          </div>
-
-                          <button
-                            onClick={() => setShowMarkReported(true)}
-                            className="w-full h-11 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                          {/* One primary action — filing the report is the
+                              whole reason this card exists — and a quiet pair
+                              underneath. Previously all three controls were the
+                              same red lozenge, so the screen had no answer to
+                              "what do I do now". */}
+                          <a
+                            href="https://notifications.hse.gov.uk/riddorforms/Injury"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              'flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation',
+                              'transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125',
+                              '[-webkit-tap-highlight-color:transparent]'
+                            )}
                           >
-                            Mark as reported
-                          </button>
+                            Report to the HSE online
+                          </a>
+                          <div className="flex gap-2">
+                            {notifyWithoutDelay && (
+                              <a
+                                href="tel:03453009923"
+                                className={cn(
+                                  'flex h-11 flex-1 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-[12.5px] font-medium text-white touch-manipulation',
+                                  'transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125',
+                                  '[-webkit-tap-highlight-color:transparent]'
+                                )}
+                              >
+                                Call 0345 300 9923
+                              </a>
+                            )}
+                            <SecondaryButton
+                              fullWidth={!notifyWithoutDelay}
+                              className={notifyWithoutDelay ? 'flex-1' : undefined}
+                              onClick={() => setShowMarkReported(true)}
+                            >
+                              Mark as reported
+                            </SecondaryButton>
+                          </div>
                         </>
                       )}
                     </FormCard>
@@ -1452,7 +1757,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 })()}
 
               {/* Injured person */}
-              <FormCard eyebrow="Injured person">
+              <FormCard eyebrow="Injured person" className={cardCn}>
                 <DetailField label="Name" value={viewingRecord.injured_name} />
                 <DetailField label="Role" value={viewingRecord.injured_role} />
                 <DetailField label="Employer" value={viewingRecord.injured_employer} />
@@ -1460,7 +1765,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </FormCard>
 
               {/* Incident */}
-              <FormCard eyebrow="Incident">
+              <FormCard eyebrow="Incident" className={cardCn}>
                 <DetailField
                   label="Location"
                   value={`${viewingRecord.location}${
@@ -1469,7 +1774,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
                 <DetailField
                   label="Date / time"
-                  value={`${viewingRecord.incident_date} ${viewingRecord.incident_time}`.trim()}
+                  value={`${fmtUK(viewingRecord.incident_date)} ${viewingRecord.incident_time}`.trim()}
                 />
                 <DetailField label="Activity" value={viewingRecord.activity_at_time} />
                 <DetailField label="What happened" value={viewingRecord.incident_description} />
@@ -1484,17 +1789,44 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </FormCard>
 
               {/* Injury */}
-              <FormCard eyebrow="Injury">
+              <FormCard eyebrow="Injury" className={cardCn}>
                 <DetailField label="Type" value={injuryLabelOf(viewingRecord.injury_type)} />
                 <DetailField label="Body part" value={bodyPartLabelOf(viewingRecord.body_part)} />
                 <DetailField label="Description" value={viewingRecord.injury_description} />
               </FormCard>
 
+              {/* Scene photos.
+                  The form has uploaded these since the module shipped and the
+                  detail sheet never rendered them — the evidence went into
+                  storage and out of reach of the person who took it. */}
+              {(viewingRecord.photos?.length ?? 0) > 0 && (
+                <FormCard eyebrow="Incident scene photos" className={cardCn}>
+                  <div className="grid grid-cols-3 gap-2">
+                    {viewingRecord.photos?.map((url, i) => (
+                      <a
+                        key={url}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block overflow-hidden rounded-xl border border-white/10 touch-manipulation transition-[filter,transform] duration-150 active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]"
+                      >
+                        <img
+                          src={url}
+                          alt={`Incident scene photo ${i + 1}`}
+                          loading="lazy"
+                          className="aspect-square w-full object-cover"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </FormCard>
+              )}
+
               {/* Treatment & aftermath */}
               {(viewingRecord.first_aid_given ||
                 viewingRecord.hospital_visit ||
                 viewingRecord.time_off_work) && (
-                <FormCard eyebrow="Treatment & aftermath">
+                <FormCard eyebrow="Treatment & aftermath" className={cardCn}>
                   {viewingRecord.first_aid_given && (
                     <>
                       <DetailField label="First aid" value="Given" />
@@ -1509,7 +1841,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <DetailField
                       label="Time off work"
                       value={`${viewingRecord.days_off} days${
-                        viewingRecord.return_date ? ` — return ${viewingRecord.return_date}` : ''
+                        viewingRecord.return_date
+                          ? ` — expected back ${fmtUK(viewingRecord.return_date)}`
+                          : ''
                       }`}
                     />
                   )}
@@ -1518,13 +1852,18 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               {/* Corrective actions (free text) */}
               {viewingRecord.corrective_actions && (
-                <FormCard eyebrow="Corrective actions">
+                <FormCard eyebrow="Corrective actions" className={cardCn}>
                   <p className="text-[13px] text-white">{viewingRecord.corrective_actions}</p>
                 </FormCard>
               )}
 
-              {/* Root cause analysis (5 Whys) */}
+              {/* Root cause analysis (5 Whys).
+                  Keyed on the record id: the panel seeds its state from these
+                  props on first render only, so it must not be reused across
+                  two records. The sheet unmounts on close today, which hides
+                  that — the key is what keeps it true if it ever doesn't. */}
               <FiveWhysAnalysis
+                key={viewingRecord.id}
                 table="accident_records"
                 recordId={viewingRecord.id}
                 existingWhys={(viewingRecord.five_whys as []) ?? []}
@@ -1535,21 +1874,23 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               {/* Corrective actions tracker */}
               <CorrectiveActionsPanel sourceType="accident" sourceId={viewingRecord.id} />
 
-              {/* Supervisor sign-off (remote) */}
+              {/* Supervisor sign-off (remote). A signed-off record is a binary
+                  safety verdict, so the emerald fill earns its keep here. */}
               <div>
                 <Eyebrow className="mb-2">Supervisor sign-off</Eyebrow>
                 {remoteSupervisor?.signed_signature ? (
-                  <div className="p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
-                    <p className="text-[11.5px] text-emerald-400 mb-2">
+                  <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/[0.08] p-3">
+                    <p className="mb-2 text-[11.5px] text-emerald-400">
                       Signed by {remoteSupervisor.signed_name || 'supervisor'}
                       {remoteSupervisor.signed_at
                         ? ` · ${new Date(remoteSupervisor.signed_at).toLocaleDateString('en-GB')}`
                         : ''}
                     </p>
+                    {/* was opacity-80 — a signature is evidence, not chrome */}
                     <img
                       src={remoteSupervisor.signed_signature}
                       alt="Supervisor signature"
-                      className="h-12 opacity-80"
+                      className="h-12 w-auto"
                     />
                   </div>
                 ) : (
@@ -1564,16 +1905,16 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               {/* Meta */}
-              <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                <div className="flex justify-between text-[11px] text-white">
-                  <span>Recorded by: {viewingRecord.recorded_by}</span>
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-[11px] text-white">
+                  <span>Recorded by {viewingRecord.recorded_by}</span>
                   {viewingRecord.reported_to && (
-                    <span>Reported to: {viewingRecord.reported_to}</span>
+                    <span>Reported to {viewingRecord.reported_to}</span>
                   )}
                 </div>
                 {isArchived(viewingRecord) && (
-                  <p className="text-[10px] text-amber-400 mt-2 text-center">
-                    Retained for statutory period (3 years). Do not delete.
+                  <p className="mt-2 text-center text-[10.5px] text-amber-400">
+                    Retained for the statutory period (three years). Do not delete.
                   </p>
                 )}
               </div>
@@ -1630,63 +1971,76 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             title="RIDDOR reporting guide"
             description="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013"
           >
-            <FormCard eyebrow="When must you report?">
-              <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
-                <Eyebrow className="text-red-400">Immediately (by phone)</Eyebrow>
-                <p className="text-[12px] text-white mt-1">
-                  Deaths and specified injuries — call 0345 300 9923
+            {/* Timescales.
+                The middle card used to read "Within 10 days — Dangerous
+                occurrences and occupational diseases", which put a dangerous
+                occurrence on a ten-day fuse. It is not: a dangerous occurrence
+                is notified WITHOUT DELAY, and the ten days is the deadline for
+                the written F2508 that follows that notification. Every line
+                below is from the HSE guidance held in `safety_facets`.
+                Occupational diseases are reported on F2508A and are not given a
+                timescale here — the source does not state one, and a made-up
+                number on a compliance screen is worse than a gap. */}
+            <FormCard eyebrow="Timescales" className={cardCn}>
+              <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3">
+                <Eyebrow className="text-red-400">Without delay</Eyebrow>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-white">
+                  Deaths, specified injuries, dangerous occurrences, and any accident that takes a
+                  person <strong className="font-semibold">not at work</strong> to hospital for
+                  treatment. Notify by the quickest practicable means — 0345 300 9923.
                 </p>
               </div>
-              <div className="p-3 rounded-xl border border-orange-500/20 bg-orange-500/5">
-                <Eyebrow className="text-orange-400">Within 15 days</Eyebrow>
-                <p className="text-[12px] text-white mt-1">Over-7-day incapacitation injuries</p>
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                <Eyebrow className="text-amber-400">Then within 10 days</Eyebrow>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-white">
+                  The written report (form F2508) that follows the notification above.
+                </p>
               </div>
-              <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5">
-                <Eyebrow className="text-amber-400">Within 10 days</Eyebrow>
-                <p className="text-[12px] text-white mt-1">
-                  Dangerous occurrences and occupational diseases
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                <Eyebrow className="text-amber-400">Within 15 days</Eyebrow>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-white">
+                  Where someone is incapacitated for{' '}
+                  <strong className="font-semibold">more than seven consecutive days</strong> —
+                  excluding the day of the accident, including days they would not have worked.
+                  Report as soon as practicable and, in any event, within 15 days of the accident.
                 </p>
               </div>
             </FormCard>
 
-            <FormCard eyebrow="Specified injuries">
+            <FormCard eyebrow="Specified injuries" className={cardCn}>
               {RIDDOR_SPECIFIED_INJURIES.map((injury, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="text-red-400 mt-0.5 text-[11px]" aria-hidden>
+                <div key={i} className="flex items-start gap-2.5">
+                  <span className="mt-[3px] text-[11px] text-red-400" aria-hidden>
                     •
                   </span>
-                  <span className="text-[12px] text-white">{injury}</span>
+                  <span className="text-[12px] leading-relaxed text-white">{injury}</span>
                 </div>
               ))}
             </FormCard>
 
-            <FormCard eyebrow="Dangerous occurrences (electrical)">
+            <FormCard eyebrow="Dangerous occurrences on electrical work" className={cardCn}>
               {RIDDOR_DANGEROUS_OCCURRENCES.map((occurrence, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="text-amber-400 mt-0.5 text-[11px]" aria-hidden>
+                <div key={i} className="flex items-start gap-2.5">
+                  <span className="mt-[3px] text-[11px] text-amber-400" aria-hidden>
                     •
                   </span>
-                  <span className="text-[12px] text-white">{occurrence}</span>
+                  <span className="text-[12px] leading-relaxed text-white">{occurrence}</span>
                 </div>
               ))}
             </FormCard>
 
-            <div className="p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 space-y-1">
-              <Eyebrow className="text-blue-400">How to report</Eyebrow>
-              <p className="text-[12px] text-white">
-                <strong>Online:</strong> www.hse.gov.uk/riddor
-              </p>
-              <p className="text-[12px] text-white">
-                <strong>Phone (fatal/specified):</strong> 0345 300 9923
-              </p>
-              <p className="text-[12px] text-white">
-                <strong>Record keeping:</strong> Keep records for minimum 3 years
-              </p>
-              <p className="text-[12px] text-white">
-                <strong>Who reports:</strong> The responsible person (employer, self-employed
-                person, or person in control of premises)
-              </p>
-            </div>
+            <FormCard eyebrow="How to report" className={cardCn}>
+              <DetailField label="Online" value="hse.gov.uk/riddor" />
+              <DetailField label="Phone (deaths and specified injuries)" value="0345 300 9923" />
+              <DetailField
+                label="Who reports"
+                value="The responsible person — the employer, the self-employed person, or whoever is in control of the premises where the work was carried out."
+              />
+              <DetailField
+                label="Record keeping"
+                value="Records of reportable incidents must be kept for at least three years."
+              />
+            </FormCard>
           </SheetShell>
         </SheetContent>
       </Sheet>

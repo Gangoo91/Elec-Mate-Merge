@@ -22,7 +22,7 @@ import {
 } from '@/components/calculators/shared';
 import { feedInTariffContent } from './content/feed-in-tariff';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { DOMESTIC_IMPORT_RATE } from '@/data/energyRates';
+import { DOMESTIC_IMPORT_RATE, SEG_TYPICAL_RATE } from '@/data/energyRates';
 
 const CAT = 'renewable' as const;
 const config = CALCULATOR_CONFIG[CAT];
@@ -82,7 +82,9 @@ const FIT_RATES: Record<string, Record<string, number>> = {
   '2014_2015': { solar_pv: 0.128, wind: 0.239, hydro: 0.199, export: 0.047 },
   '2016_2017': { solar_pv: 0.043, wind: 0.088, hydro: 0.199, export: 0.047 },
   '2018_2019': { solar_pv: 0.037, wind: 0.088, hydro: 0.199, export: 0.047 },
-  after_2019: { solar_pv: 0.0, wind: 0.0, hydro: 0.0, export: 0.055 },
+  // No generation tariff after the scheme closed — export only, at the shared
+  // SEG default rather than a second hard-coded rate.
+  after_2019: { solar_pv: 0.0, wind: 0.0, hydro: 0.0, export: SEG_TYPICAL_RATE },
 };
 
 export function FeedInTariffCalculator() {
@@ -90,8 +92,11 @@ export function FeedInTariffCalculator() {
   const [copied, setCopied] = useState(false);
 
   const [systemSize, setSystemSize] = useState('');
-  const [installationDate, setInstallationDate] = useState('');
-  const [technologyType, setTechnologyType] = useState('');
+  // FIT closed to new applicants on 31 March 2019, so anyone using this today for
+  // a new install is on SEG only. Defaulting to the legacy bands would imply a
+  // scheme they cannot join.
+  const [installationDate, setInstallationDate] = useState('after_2019');
+  const [technologyType, setTechnologyType] = useState('solar_pv');
   const [peakSunHours, setPeakSunHours] = useState('3.5');
   const [selfConsumption, setSelfConsumption] = useState('50');
   const [installationCost, setInstallationCost] = useState('');

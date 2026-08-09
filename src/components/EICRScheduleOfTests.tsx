@@ -215,8 +215,7 @@ const MobileBoardMeasurements: React.FC<{
     meta: keypadMeta,
     sequence: keypadSequence,
     getValue: (field) => String((field === zdbField ? board.zdb : board.ipf) ?? ''),
-    setValue: (field, value) =>
-      onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
+    setValue: (field, value) => onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
     getStatus: (field) => {
       const s = field === zdbField ? zdbStatus : ipfStatus;
       if (s === 'valid') return { tone: 'pass', label: 'Within typical range' };
@@ -363,10 +362,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
    * and fall back to 100, which is the basis they were judged on.
    */
   const zsBasis: ZsBasis = formData.zsBasis === 80 ? 80 : 100;
-  const setZsBasis = useCallback(
-    (basis: ZsBasis) => onUpdate('zsBasis', basis),
-    [onUpdate]
-  );
+  const setZsBasis = useCallback((basis: ZsBasis) => onUpdate('zsBasis', basis), [onUpdate]);
 
   /** Whether the grid marks non-compliant cells and rows. Never hides findings. */
   const [showChecks, setShowChecks] = useState(true);
@@ -1026,9 +1022,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               const irLERaw = circuit.insulationLiveEarth || '0';
               const irLNRaw = circuit.insulationLiveNeutral || '0';
               const irResRaw = circuit.insulationResistance || '0';
-              const irLE = irLERaw.includes('>') ? 999 : parseFloat(irLERaw.replace('<', '').trim()) || 0;
-              const irLN = irLNRaw.includes('>') ? 999 : parseFloat(irLNRaw.replace('<', '').trim()) || 0;
-              const ir = irLE || irLN || (irResRaw.includes('>') ? 999 : parseFloat(irResRaw.replace('<', '').trim()) || 0);
+              const irLE = irLERaw.includes('>')
+                ? 999
+                : parseFloat(irLERaw.replace('<', '').trim()) || 0;
+              const irLN = irLNRaw.includes('>')
+                ? 999
+                : parseFloat(irLNRaw.replace('<', '').trim()) || 0;
+              const ir =
+                irLE ||
+                irLN ||
+                (irResRaw.includes('>') ? 999 : parseFloat(irResRaw.replace('<', '').trim()) || 0);
               if (ir > 0 && ir < 1.0) {
                 issues.push(
                   `C${num}: IR ${ir}MΩ too low (<1.0MΩ). Check for moisture or damaged insulation.`
@@ -1248,8 +1251,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // Completion stats — ELE-1501. Spare ways and device rows are excluded from
   // the denominator: a spare has nothing to measure, so counting it as
   // outstanding work made 100% unreachable on 31% of certificates.
-  const { completedCount, progressPercent, pendingCount, circuitCount, excludedCount } = useMemo(
-    () => {
+  const { completedCount, progressPercent, pendingCount, circuitCount, excludedCount } =
+    useMemo(() => {
       const progress = getScheduleProgress(testResults);
       return {
         completedCount: progress.tested,
@@ -1258,9 +1261,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         circuitCount: progress.circuits,
         excludedCount: progress.excluded,
       };
-    },
-    [testResults]
-  );
+    }, [testResults]);
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const lastSavedHashRef = useRef('');
   const computeResultsHash = (results: TestResult[]) =>
@@ -1469,6 +1470,74 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     toast.success(`${newBoard.name} added`);
   };
 
+  /**
+   * Copy a board and everything on it.
+   *
+   * The case this exists for: a block of flats, or a landing with eight
+   * identical sub-boards on one certificate. Duplicating the certificate
+   * already covers "same board, different property"; this covers "same
+   * certificate, repeated board", which is the other half and was hand-typing.
+   *
+   * ## Circuit numbers are deliberately KEPT, not renumbered
+   *
+   * `duplicateTestResult` above takes the next free way, because a copy landing
+   * on the *same* board would otherwise collide — that was ELE-1475. Copying a
+   * whole board is the opposite case: numbering is board-scoped, so ways 1..n
+   * on Sub-DB2 are correct and are what the model form expects. Renumbering
+   * them would produce a board starting at way 13 for no reason.
+   *
+   * Safe because the duplicate detector keys on `boardId::number`
+   * (`findDuplicateCircuitNumbers`), so identical numbers on different boards
+   * are not a clash and will not raise a false repair prompt.
+   */
+  const handleDuplicateBoard = (boardId: string) => {
+    const source = distributionBoards.find((b) => b.id === boardId);
+    if (!source) return;
+
+    const newBoardId = generateBoardId();
+    const clonedBoard: DistributionBoard = {
+      ...structuredClone(source),
+      id: newBoardId,
+      name: getNextSubBoardName(distributionBoards),
+      order: distributionBoards.length,
+    };
+
+    /*
+     * The board reference is the electrician's own label ("DB2", "Kitchen").
+     * Carrying it across unchanged would put two boards with the same reference
+     * on one certificate, which is exactly the confusion this feature is meant
+     * to remove. Cleared, so it is filled in deliberately.
+     */
+    clonedBoard.reference = '';
+
+    const sourceCircuits = getCircuitsForBoard(testResults, boardId);
+    const clonedCircuits = sourceCircuits.map((c) => ({
+      ...structuredClone(c),
+      id: crypto.randomUUID(),
+      boardId: newBoardId,
+    }));
+
+    const updatedBoards = [...distributionBoards, clonedBoard];
+    const updatedResults = [...testResults, ...clonedCircuits];
+
+    setDistributionBoards(updatedBoards);
+    setTestResults(updatedResults);
+    setExpandedBoards((prev) => new Set([...prev, newBoardId]));
+
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, updatedResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+    queueMicrotask(() => onUpdate('scheduleOfTests', updatedResults));
+
+    toast.success(`${clonedBoard.name} added`, {
+      description:
+        clonedCircuits.length === 1
+          ? 'Copied from ' + source.name + ' with its 1 circuit — give it a reference.'
+          : `Copied from ${source.name} with its ${clonedCircuits.length} circuits — give it a reference.`,
+    });
+  };
+
   const handleRemoveBoard = (boardId: string) => {
     const boardToRemove = distributionBoards.find((b) => b.id === boardId);
     if (!boardToRemove || isMainBoardFn(boardToRemove)) {
@@ -1477,8 +1546,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     }
 
     const boardCircuits = getCircuitsForBoard(testResults, boardId);
-    const mainBoardId =
-      getMainBoard(distributionBoards)?.id ?? MAIN_BOARD_ID;
+    const mainBoardId = getMainBoard(distributionBoards)?.id ?? MAIN_BOARD_ID;
 
     // Move circuits to the CURRENT main board, not the legacy literal
     const updatedResults = testResults.map((c) =>
@@ -1561,8 +1629,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         return isNaN(n) ? null : n;
       };
       const zeRef = parseZ(formData?.externalZe);
-      const prevZdb =
-        parseZ(distributionBoards.find((b) => b.id === boardId)?.zdb) ?? zeRef;
+      const prevZdb = parseZ(distributionBoards.find((b) => b.id === boardId)?.zdb) ?? zeRef;
       const newZdb = parseZ(updates.zdb) ?? zeRef;
       let changed = false;
       resultsForSave = testResults.map((circuit) => {
@@ -1835,10 +1902,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // before the duplicate-circuit fix, and those certs are already saved. Show
   // the electrician the clash and let them repair it in one tap rather than
   // silently rewriting historic data underneath them.
-  const duplicateCircuitCount = useMemo(
-    () => countDuplicateCircuits(testResults),
-    [testResults]
-  );
+  const duplicateCircuitCount = useMemo(() => countDuplicateCircuits(testResults), [testResults]);
 
   const handleRenumberDuplicates = useCallback(() => {
     setTestResults((prev) => {
@@ -1925,139 +1989,144 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     toast.success('All test results cleared');
   };
 
-  const updateTestResult = useCallback((id: string, field: keyof TestResult, value: string) => {
-    setTestResults((prev) => {
-      const updatedResults = prev.map((result) => {
-        if (result.id === id) {
-          const updatedResult = { ...result, [field]: value };
+  const updateTestResult = useCallback(
+    (id: string, field: keyof TestResult, value: string) => {
+      setTestResults((prev) => {
+        const updatedResults = prev.map((result) => {
+          if (result.id === id) {
+            const updatedResult = { ...result, [field]: value };
 
-          // Clear autoFilled flag when user manually edits
-          if (result.autoFilled && field !== 'autoFilled') {
-            updatedResult.autoFilled = false;
-          }
-
-          // ELE-1475 — keep the number and its label in step, BOTH ways.
-          // The schedule's circuit-number column writes circuitDesignation,
-          // but the PDF prints circuitNumber. With the sync running one way
-          // only, the printed value could never be corrected from the table —
-          // which is how five circuits went out numbered "5".
-          // ELE-1484 — a dash (or "n/a", or the "0" people improvised) in the
-          // way column marks the row as a device, not a circuit: an incoming
-          // RCD, an SPD, a main switch. It then prints a dash and is skipped
-          // by numbering, so it can never clash with a real way again.
-          if (
-            (field === 'circuitNumber' || field === 'circuitDesignation') &&
-            // Clearing the box on a row that is already a device row restores
-            // the dash rather than leaving it blank on screen while the PDF
-            // still prints "—". To make it a circuit again, type a number.
-            (meansNotACircuit(value) || (result.isDeviceRow === true && !String(value ?? '').trim()))
-          ) {
-            updatedResult.isDeviceRow = true;
-            updatedResult.circuitNumber = DEVICE_ROW_NUMBER;
-            updatedResult.circuitDesignation = DEVICE_ROW_NUMBER;
-            updatedResult.wayNumber = null;
-          } else if (field === 'circuitNumber' && value) {
-            updatedResult.isDeviceRow = false;
-            if (isAutoDesignation(result.circuitDesignation)) {
-              updatedResult.circuitDesignation = `C${value}`;
+            // Clear autoFilled flag when user manually edits
+            if (result.autoFilled && field !== 'autoFilled') {
+              updatedResult.autoFilled = false;
             }
-            const base = parseCircuitNumberBase(value);
-            updatedResult.wayNumber = base ?? updatedResult.wayNumber ?? null;
-          } else if (field === 'circuitDesignation') {
-            const derived = deriveCircuitNumber(value);
-            // No digits in the label (e.g. "Cooker") — leave the number alone
-            // rather than replacing it with something worse.
-            if (derived) {
+
+            // ELE-1475 — keep the number and its label in step, BOTH ways.
+            // The schedule's circuit-number column writes circuitDesignation,
+            // but the PDF prints circuitNumber. With the sync running one way
+            // only, the printed value could never be corrected from the table —
+            // which is how five circuits went out numbered "5".
+            // ELE-1484 — a dash (or "n/a", or the "0" people improvised) in the
+            // way column marks the row as a device, not a circuit: an incoming
+            // RCD, an SPD, a main switch. It then prints a dash and is skipped
+            // by numbering, so it can never clash with a real way again.
+            if (
+              (field === 'circuitNumber' || field === 'circuitDesignation') &&
+              // Clearing the box on a row that is already a device row restores
+              // the dash rather than leaving it blank on screen while the PDF
+              // still prints "—". To make it a circuit again, type a number.
+              (meansNotACircuit(value) ||
+                (result.isDeviceRow === true && !String(value ?? '').trim()))
+            ) {
+              updatedResult.isDeviceRow = true;
+              updatedResult.circuitNumber = DEVICE_ROW_NUMBER;
+              updatedResult.circuitDesignation = DEVICE_ROW_NUMBER;
+              updatedResult.wayNumber = null;
+            } else if (field === 'circuitNumber' && value) {
               updatedResult.isDeviceRow = false;
-              updatedResult.circuitNumber = derived;
-              updatedResult.wayNumber = parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
+              if (isAutoDesignation(result.circuitDesignation)) {
+                updatedResult.circuitDesignation = `C${value}`;
+              }
+              const base = parseCircuitNumberBase(value);
+              updatedResult.wayNumber = base ?? updatedResult.wayNumber ?? null;
+            } else if (field === 'circuitDesignation') {
+              const derived = deriveCircuitNumber(value);
+              // No digits in the label (e.g. "Cooker") — leave the number alone
+              // rather than replacing it with something worse.
+              if (derived) {
+                updatedResult.isDeviceRow = false;
+                updatedResult.circuitNumber = derived;
+                updatedResult.wayNumber =
+                  parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
+              }
             }
-          }
 
-          // Maintain legacy field synchronisation for backward compatibility
-          if (field === 'liveSize') {
-            updatedResult.cableSize = value;
-          } else if (field === 'protectiveDeviceRating') {
-            updatedResult.protectiveDevice = value;
-          } else if (field === 'cableSize') {
-            updatedResult.liveSize = value;
-          } else if (field === 'protectiveDevice') {
-            updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
-          }
-
-          // ELE-854 — Cascade bsStandard + maxZs when device details change
-          // via non-cell paths (voice, import, SimpleCircuitTable). The
-          // ProtectiveDeviceCells dropdown handlers already do this; this
-          // covers every other update path so Max Zs never stays blank just
-          // because bsStandard wasn't set by the same action.
-          if (
-            field === 'protectiveDeviceType' ||
-            field === 'protectiveDeviceCurve' ||
-            field === 'protectiveDeviceRating'
-          ) {
-            const deviceType = updatedResult.protectiveDeviceType;
-            const curve = updatedResult.protectiveDeviceCurve || '';
-            const rating = updatedResult.protectiveDeviceRating || '';
-            // Derive BS standard if blank so the maxZs lookup has what it needs
-            if (!updatedResult.bsStandard && deviceType) {
-              updatedResult.bsStandard = getDefaultBsStandard(deviceType) || '';
+            // Maintain legacy field synchronisation for backward compatibility
+            if (field === 'liveSize') {
+              updatedResult.cableSize = value;
+            } else if (field === 'protectiveDeviceRating') {
+              updatedResult.protectiveDevice = value;
+            } else if (field === 'cableSize') {
+              updatedResult.liveSize = value;
+            } else if (field === 'protectiveDevice') {
+              updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
             }
-            if (updatedResult.bsStandard && rating) {
-              const newMaxZs = calculateMaxZsForCircuit(
-                updatedResult.bsStandard,
-                curve,
-                rating,
-                {
-                  rcdRating: updatedResult.rcdRating || null,
-                  rcdType: updatedResult.rcdType || null,
-                  protectiveDeviceType: deviceType,
-                },
-                `${updatedResult.circuitDescription || ''} ${updatedResult.circuitType || updatedResult.type || ''}`
-              );
-              if (newMaxZs) updatedResult.maxZs = newMaxZs;
+
+            // ELE-854 — Cascade bsStandard + maxZs when device details change
+            // via non-cell paths (voice, import, SimpleCircuitTable). The
+            // ProtectiveDeviceCells dropdown handlers already do this; this
+            // covers every other update path so Max Zs never stays blank just
+            // because bsStandard wasn't set by the same action.
+            if (
+              field === 'protectiveDeviceType' ||
+              field === 'protectiveDeviceCurve' ||
+              field === 'protectiveDeviceRating'
+            ) {
+              const deviceType = updatedResult.protectiveDeviceType;
+              const curve = updatedResult.protectiveDeviceCurve || '';
+              const rating = updatedResult.protectiveDeviceRating || '';
+              // Derive BS standard if blank so the maxZs lookup has what it needs
+              if (!updatedResult.bsStandard && deviceType) {
+                updatedResult.bsStandard = getDefaultBsStandard(deviceType) || '';
+              }
+              if (updatedResult.bsStandard && rating) {
+                const newMaxZs = calculateMaxZsForCircuit(
+                  updatedResult.bsStandard,
+                  curve,
+                  rating,
+                  {
+                    rcdRating: updatedResult.rcdRating || null,
+                    rcdType: updatedResult.rcdType || null,
+                    protectiveDeviceType: deviceType,
+                  },
+                  `${updatedResult.circuitDescription || ''} ${updatedResult.circuitType || updatedResult.type || ''}`
+                );
+                if (newMaxZs) updatedResult.maxZs = newMaxZs;
+              }
             }
-          }
 
-          // ELE-1108 — derive ring R1+R2 (end-to-end) and Zs from the measured
-          // values (shared helper: only empty or previously-auto-derived values
-          // are written, so manual readings are never overwritten). The Z
-          // reference is the circuit's board Zdb where entered, else the
-          // installation Ze from the supply section.
-          {
-            const board = (formData?.distributionBoards as { id?: string; zdb?: string }[] | undefined)?.find(
-              (b) => b.id === updatedResult.boardId
-            );
-            const zSource = String(board?.zdb ?? '').trim() || String(formData?.externalZe ?? '');
-            const zRef = parseFloat(zSource.replace(/[^0-9.]/g, ''));
-            applyScheduleAutoCalc(result, updatedResult, field, isNaN(zRef) ? null : zRef);
-          }
-
-          // ELE-1238 — (R1+R2) and standalone R2 are mutually exclusive test
-          // methods, so entering a real R1+R2 reading marks R2 N/A automatically
-          // (users forgot to and got an alarming red X — ELE-1237). N/A-family
-          // entries (N/A, LIM, …) in R1+R2 don't trigger it — a limitation on
-          // R1+R2 is exactly when a standalone R2 would be measured. Clearing
-          // R1+R2 reverts an 'N/A' R2 to empty (note: an identical manually
-          // typed 'N/A' is indistinguishable and also reverts). Standalone R2
-          // is stored in ringContinuityLive (legacy field name — see the
-          // column 20 comment in ContinuityCells).
-          if (field === 'r1r2') {
-            const r1r2Entry = value.trim();
-            const r2Entry = String(updatedResult.ringContinuityLive || '').trim();
-            if (r1r2Entry && !isNotApplicableValue(r1r2Entry)) {
-              if (!r2Entry) updatedResult.ringContinuityLive = 'N/A';
-            } else if (!r1r2Entry && r2Entry.toLowerCase() === 'n/a') {
-              updatedResult.ringContinuityLive = '';
+            // ELE-1108 — derive ring R1+R2 (end-to-end) and Zs from the measured
+            // values (shared helper: only empty or previously-auto-derived values
+            // are written, so manual readings are never overwritten). The Z
+            // reference is the circuit's board Zdb where entered, else the
+            // installation Ze from the supply section.
+            {
+              const board = (
+                formData?.distributionBoards as { id?: string; zdb?: string }[] | undefined
+              )?.find((b) => b.id === updatedResult.boardId);
+              const zSource = String(board?.zdb ?? '').trim() || String(formData?.externalZe ?? '');
+              const zRef = parseFloat(zSource.replace(/[^0-9.]/g, ''));
+              applyScheduleAutoCalc(result, updatedResult, field, isNaN(zRef) ? null : zRef);
             }
-          }
 
-          return updatedResult;
-        }
-        return result;
+            // ELE-1238 — (R1+R2) and standalone R2 are mutually exclusive test
+            // methods, so entering a real R1+R2 reading marks R2 N/A automatically
+            // (users forgot to and got an alarming red X — ELE-1237). N/A-family
+            // entries (N/A, LIM, …) in R1+R2 don't trigger it — a limitation on
+            // R1+R2 is exactly when a standalone R2 would be measured. Clearing
+            // R1+R2 reverts an 'N/A' R2 to empty (note: an identical manually
+            // typed 'N/A' is indistinguishable and also reverts). Standalone R2
+            // is stored in ringContinuityLive (legacy field name — see the
+            // column 20 comment in ContinuityCells).
+            if (field === 'r1r2') {
+              const r1r2Entry = value.trim();
+              const r2Entry = String(updatedResult.ringContinuityLive || '').trim();
+              if (r1r2Entry && !isNotApplicableValue(r1r2Entry)) {
+                if (!r2Entry) updatedResult.ringContinuityLive = 'N/A';
+              } else if (!r1r2Entry && r2Entry.toLowerCase() === 'n/a') {
+                updatedResult.ringContinuityLive = '';
+              }
+            }
+
+            return updatedResult;
+          }
+          return result;
+        });
+        return updatedResults;
       });
-      return updatedResults;
-    });
-  }, [formData?.externalZe, formData?.distributionBoards]);
+    },
+    [formData?.externalZe, formData?.distributionBoards]
+  );
 
   // Bulk infill handler
 
@@ -2152,7 +2221,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     const ids = new Set(selection.selectedIds);
     setTestResults((prev) => {
       const updated = prev.map((r) =>
-        ids.has(r.id) ? { ...r, ...getSpareCircuitFields(), circuitDescription: r.circuitDescription } : r
+        ids.has(r.id)
+          ? { ...r, ...getSpareCircuitFields(), circuitDescription: r.circuitDescription }
+          : r
       );
       queueMicrotask(() => onUpdate('scheduleOfTests', updated));
       return updated;
@@ -2202,19 +2273,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       const updated = prev.filter((r) => !ids.has(r.id));
       queueMicrotask(() => {
         onUpdate('scheduleOfTests', updated);
-        toast.success(`${removed.length} ${removed.length === 1 ? 'circuit' : 'circuits'} deleted`, {
-          action: {
-            label: 'Undo',
-            onClick: () =>
-              setTestResults((current) => {
-                const restored = [...current, ...removed].sort(
-                  (a, b) => prev.findIndex((p) => p.id === a.id) - prev.findIndex((p) => p.id === b.id)
-                );
-                queueMicrotask(() => onUpdate('scheduleOfTests', restored));
-                return restored;
-              }),
-          },
-        });
+        toast.success(
+          `${removed.length} ${removed.length === 1 ? 'circuit' : 'circuits'} deleted`,
+          {
+            action: {
+              label: 'Undo',
+              onClick: () =>
+                setTestResults((current) => {
+                  const restored = [...current, ...removed].sort(
+                    (a, b) =>
+                      prev.findIndex((p) => p.id === a.id) - prev.findIndex((p) => p.id === b.id)
+                  );
+                  queueMicrotask(() => onUpdate('scheduleOfTests', restored));
+                  return restored;
+                }),
+            },
+          }
+        );
       });
       return updated;
     });
@@ -2264,7 +2339,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   // Test Results Scanner Handlers
-
 
   // Normalise AI circuit values to match UI Select options
   const normaliseAICircuit = (circuit: any) => {
@@ -2401,7 +2475,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       const rawPhase =
         circuit.phaseAssignment ?? circuit.phase_assignment ?? circuit.phaseDesignation;
       if (Array.isArray(rawPhase)) {
-        phaseAssignment = rawPhase.length > 1 ? 'L1,L2,L3' : rawPhase[0] ?? null;
+        phaseAssignment = rawPhase.length > 1 ? 'L1,L2,L3' : (rawPhase[0] ?? null);
       } else if (typeof rawPhase === 'string') {
         phaseAssignment = rawPhase.includes(',')
           ? 'L1,L2,L3'
@@ -2454,7 +2528,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     // This is the convention for 3P installations on the EICR schedule.
     const expandedCircuits = selectedCircuits.flatMap((c) => {
       const isThreePhase =
-        c.phase === '3P' || c.phaseType === '3P' ||
+        c.phase === '3P' ||
+        c.phaseType === '3P' ||
         (typeof c.phaseAssignment === 'string' && c.phaseAssignment.includes(','));
       if (!isThreePhase) return [c];
       return (['L1', 'L2', 'L3'] as const).map((phase) => ({
@@ -2582,8 +2657,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       let circuitNumber: string;
       if (phaseLetter === 'L1' || phaseLetter === undefined) {
         const wayNum = nextFreeWay;
-        circuitNumber =
-          phaseLetter === 'L1' ? `${wayNum}.1` : String(wayNum);
+        circuitNumber = phaseLetter === 'L1' ? `${wayNum}.1` : String(wayNum);
         if (phaseLetter === 'L1') {
           lastPhaseGroupBase = wayNum;
           phaseGroupCounter = 1;
@@ -2617,13 +2691,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       const phaseLetterForRow = circuit._phaseLetter as 'L1' | 'L2' | 'L3' | undefined;
       const phaseAssignmentForRow: 'L1' | 'L2' | 'L3' | null =
-        phaseLetterForRow ?? (
-          circuit.phaseAssignment === 'L1' ||
-          circuit.phaseAssignment === 'L2' ||
-          circuit.phaseAssignment === 'L3'
-            ? circuit.phaseAssignment
-            : null
-        );
+        phaseLetterForRow ??
+        (circuit.phaseAssignment === 'L1' ||
+        circuit.phaseAssignment === 'L2' ||
+        circuit.phaseAssignment === 'L3'
+          ? circuit.phaseAssignment
+          : null);
       const wayBase = circuitNumber.split('.')[0];
       const designation = phaseLetterForRow
         ? `Way ${wayBase} ${phaseLetterForRow}`
@@ -2634,7 +2707,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         id: crypto.randomUUID(),
         circuitNumber,
         circuitDesignation: designation,
-        phaseType: phaseLetterForRow ? '3P' : (circuit.phaseType as '1P' | '3P' | '' | undefined) ?? '1P',
+        phaseType: phaseLetterForRow
+          ? '3P'
+          : ((circuit.phaseType as '1P' | '3P' | '' | undefined) ?? '1P'),
         phaseAssignment: phaseAssignmentForRow,
         wayNumber: parseInt(wayBase, 10) || null,
         circuitDescription: circuitDesc,
@@ -2721,28 +2796,28 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <div className="flex items-start gap-2.5">
             <span aria-hidden className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-amber-400" />
             <div className="min-w-0 flex-1">
-          <p className="text-[15px] font-semibold text-white">
-            {duplicateCircuitCount === 1
-              ? '1 circuit shares its number with another'
-              : `${duplicateCircuitCount} circuits share their number with another`}
-          </p>
-          <p className="mt-1 text-[13px] leading-relaxed text-white">
-            Circuit numbers must be unique on each board — this prints on the certificate.
-          </p>
-          {/* ELE-1484 — the moment they hit this is the moment they need to
+              <p className="text-[15px] font-semibold text-white">
+                {duplicateCircuitCount === 1
+                  ? '1 circuit shares its number with another'
+                  : `${duplicateCircuitCount} circuits share their number with another`}
+              </p>
+              <p className="mt-1 text-[13px] leading-relaxed text-white">
+                Circuit numbers must be unique on each board — this prints on the certificate.
+              </p>
+              {/* ELE-1484 — the moment they hit this is the moment they need to
               know a device row exists, so say it here rather than in a help
               page nobody opens. */}
-          <p className="mt-1 text-[13px] leading-relaxed text-white">
-            If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—) in
-            its way box — it then holds no number.
-          </p>
-          <button
-            type="button"
-            onClick={handleRenumberDuplicates}
-            className="mt-3 h-11 w-full touch-manipulation rounded-xl bg-elec-yellow px-4 text-[15px] font-semibold text-black transition-colors active:bg-elec-yellow/85 sm:w-auto"
-          >
-            Renumber circuits
-          </button>
+              <p className="mt-1 text-[13px] leading-relaxed text-white">
+                If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—)
+                in its way box — it then holds no number.
+              </p>
+              <button
+                type="button"
+                onClick={handleRenumberDuplicates}
+                className="mt-3 h-11 w-full touch-manipulation rounded-xl bg-elec-yellow px-4 text-[15px] font-semibold text-black transition-colors active:bg-elec-yellow/85 sm:w-auto"
+              >
+                Renumber circuits
+              </button>
             </div>
           </div>
         </div>
@@ -3032,20 +3107,28 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             {/* SPD Details — bottom sheet pickers */}
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
-                                <label className="text-[12px] font-medium text-white mb-1 block">SPD make</label>
+                                <label className="text-[12px] font-medium text-white mb-1 block">
+                                  SPD make
+                                </label>
                                 <MobileSelectPicker
                                   value={(board as any).spdMake || ''}
-                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdMake' as any, v)}
+                                  onValueChange={(v) =>
+                                    handleUpdateBoard(board.id, 'spdMake' as any, v)
+                                  }
                                   options={SPD_MAKES}
                                   placeholder="Select make"
                                   title="SPD make"
                                 />
                               </div>
                               <div>
-                                <label className="text-[12px] font-medium text-white mb-1 block">SPD model</label>
+                                <label className="text-[12px] font-medium text-white mb-1 block">
+                                  SPD model
+                                </label>
                                 <MobileSelectPicker
                                   value={(board as any).spdModel || ''}
-                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdModel' as any, v)}
+                                  onValueChange={(v) =>
+                                    handleUpdateBoard(board.id, 'spdModel' as any, v)
+                                  }
                                   options={getSpdModelsForMake((board as any).spdMake || '')}
                                   placeholder="Select model"
                                   title="SPD model"
@@ -3054,20 +3137,28 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             </div>
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
-                                <label className="text-[12px] font-medium text-white mb-1 block">SPD location</label>
+                                <label className="text-[12px] font-medium text-white mb-1 block">
+                                  SPD location
+                                </label>
                                 <MobileSelectPicker
                                   value={(board as any).spdLocation || ''}
-                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdLocation' as any, v)}
+                                  onValueChange={(v) =>
+                                    handleUpdateBoard(board.id, 'spdLocation' as any, v)
+                                  }
                                   options={SPD_LOCATIONS}
                                   placeholder="Select location"
                                   title="SPD location"
                                 />
                               </div>
                               <div>
-                                <label className="text-[12px] font-medium text-white mb-1 block">Rated kA</label>
+                                <label className="text-[12px] font-medium text-white mb-1 block">
+                                  Rated kA
+                                </label>
                                 <MobileSelectPicker
                                   value={(board as any).spdRatedCurrentKa || ''}
-                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, v)}
+                                  onValueChange={(v) =>
+                                    handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, v)
+                                  }
                                   options={SPD_RATED_KA}
                                   placeholder="Select kA"
                                   title="Rated kA"
@@ -3150,7 +3241,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         </div>
                       ) : (
                         <MobileHorizontalScrollTable
-                            earthingArrangement={formData.earthingArrangement as string | undefined}
+                          earthingArrangement={formData.earthingArrangement as string | undefined}
                           testResults={boardCircuits}
                           onUpdate={updateTestResult}
                           onRemove={removeTestResult}
@@ -3309,6 +3400,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   onToggleExpanded={() => toggleBoardExpanded(board.id)}
                   onUpdateBoard={handleUpdateBoard}
                   onRemoveBoard={handleRemoveBoard}
+                  onDuplicateBoard={handleDuplicateBoard}
                   onAddCircuit={() => addTestResult(board.id)}
                   circuitCount={boardTestable}
                   completedCount={boardCompleted}
@@ -3327,9 +3419,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     <ScheduleSelectionBar
                       count={selection.count}
                       spareCount={
-                        testResults.filter(
-                          (c) => selection.isSelected(c.id) && isSpareCircuit(c)
-                        ).length
+                        testResults.filter((c) => selection.isSelected(c.id) && isSpareCircuit(c))
+                          .length
                       }
                       onClear={selection.clear}
                       onSetField={handleSelectionSetField}
@@ -3468,8 +3559,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       {/* AI Board Scanner — proper Sheet overlay (matches EIC) */}
       {showBoardCapture && (
         <BoardScannerOverlay
-          onClose={() => { setShowBoardCapture(false); setActiveBoardId(null); }}
-          onAnalysisComplete={(data) => { handleAIAnalysisComplete(data); setShowBoardCapture(false); }}
+          onClose={() => {
+            setShowBoardCapture(false);
+            setActiveBoardId(null);
+          }}
+          onAnalysisComplete={(data) => {
+            handleAIAnalysisComplete(data);
+            setShowBoardCapture(false);
+          }}
           title="Scan distribution board"
         />
       )}
@@ -3520,13 +3617,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             setValidateFocusId(null);
           }
         }}
-        testResults={testResults.filter(
-          (c) => (c.boardId || MAIN_BOARD_ID) === validateBoardId
-        )}
+        testResults={testResults.filter((c) => (c.boardId || MAIN_BOARD_ID) === validateBoardId)}
         earthingArrangement={formData.earthingArrangement as string | undefined}
-        boardName={
-          distributionBoards.find((b) => b.id === validateBoardId)?.name || undefined
-        }
+        boardName={distributionBoards.find((b) => b.id === validateBoardId)?.name || undefined}
         focusCircuitId={validateFocusId}
         zsBasis={zsBasis}
         onCreateObservation={handleCreateObservation}
@@ -3560,15 +3653,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <AlertDialogHeader>
             <AlertDialogTitle>Remove all test results?</AlertDialogTitle>
             <AlertDialogDescription>
-              Every circuit on every board will be removed from the schedule of tests. This
-              cannot be undone.
+              Every circuit on every board will be removed from the schedule of tests. This cannot
+              be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={removeAllTestResults}>
-              Yes, remove all
-            </AlertDialogAction>
+            <AlertDialogAction onClick={removeAllTestResults}>Yes, remove all</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

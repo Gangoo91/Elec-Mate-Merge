@@ -48,16 +48,23 @@ export const ringCircuitContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'Regulation 643.2 — Continuity of ring final circuit conductors',
+      citation: 'Regulation 643.2.1(b) — live conductors, in the case of ring final circuits',
       clauseText:
-        'A test shall verify the continuity of each conductor of every ring final circuit, confirming a complete ring with no break, interconnection or unintended spur. The IET GN3 three-step method gives the procedure.',
+        'Reg 643.2 is titled simply “Continuity of conductors”, and it has one sub-clause. Reg 643.2.1: the continuity of conductors and connections to exposed-conductive-parts and extraneous-conductive-parts, if any, shall be verified by a measurement of resistance of (a) protective conductors, including protective bonding conductors; and (b) IN THE CASE OF RING FINAL CIRCUITS, LIVE CONDUCTORS. That single item (b) is the whole of the ring-continuity requirement in BS 7671 — there is no regulation numbered 643.2.2, and no separate “continuity of ring final circuit conductors” regulation.',
+      tableRefs: ['Reg 643.2.1'],
+    },
+    {
+      standard: 'IET Guidance Note 3',
+      citation: 'GN3 — the three-step method is GUIDANCE, not the regulation',
+      clauseText:
+        'BS 7671 requires the measurement but does not prescribe how to take it. The familiar three-step procedure — end-to-end readings of line, neutral and cpc (r1, rn, r2), then cross-connecting line to neutral and measuring at each socket, then line to cpc and measuring at each socket to obtain (r1+r2)/4 — comes from IET Guidance Note 3. It is the accepted method for demonstrating a complete ring with no break, interconnection or unintended spur, but it is guidance, and this tool presents it as such.',
+      tableRefs: ['GN3'],
     },
   ],
-
   _grounding: {
     status: 'verified',
     generatedAt: '2026-08-06',
     notes:
-      'Three-step ring test and (r1+r2)/4 relationship are standard (Part 6 / GN3). Common mistakes and step-1 procedure corroborated by the practical-work intelligence corpus (Elec-Mate). 2026-08-06: verified against A4:2026 facets — GN3 Ch 2 Reg 2.18 gives the quarter-sum expectation, Reg 2.20 and Table 2.9 give the ~6 % variation on 2.5/1.5 mm² where the cpc is a reduced csa; "roughly equal at every socket" corrected accordingly. Confirm 643.2 wording against A4:2026 facets.',
+      'CITATION CORRECTED against the printed BS 7671:2018+A4:2026 (Desktop/BS7671_ocr.pdf). The file cited \u201cRegulation 643.2 \u2014 Continuity of ring final circuit conductors\u201d. Reg 643.2 is titled \u201cContinuity of conductors\u201d and carries no such heading; \u26a0\ufe0f there is NO Reg 643.2.2 \u2014 643.2 has exactly one sub-clause, 643.2.1, and the ring requirement is item (b) of it: \u201cin the case of ring final circuits, live conductors\u201d. The old clauseText also stated the no-break/no-interconnection/no-spur wording as though it were regulation text; it is not in BS 7671, so it has been moved into the GN3 entry and labelled guidance. The r1/rn/r2 arithmetic and the (r1+r2)/4 relationship match the engine.',
   },
 };

@@ -19,6 +19,12 @@ interface PlacesAutocompleteProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  /**
+   * Forwarded to the underlying input so a <Label htmlFor> actually resolves.
+   * Without it the label is decorative: tapping it doesn't focus the field and
+   * a screen reader announces the input unnamed.
+   */
+  id?: string;
 }
 
 export function PlacesAutocomplete({
@@ -28,6 +34,7 @@ export function PlacesAutocomplete({
   placeholder = 'Enter address',
   className,
   disabled = false,
+  id,
 }: PlacesAutocompleteProps) {
   const { isLoaded, apiKey } = useGoogleMaps();
   const [predictions, setPredictions] = useState<google.maps.places.AutocompletePrediction[]>([]);
@@ -220,6 +227,7 @@ export function PlacesAutocomplete({
   if (!apiKey || !isLoaded) {
     return (
       <Input
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -234,6 +242,7 @@ export function PlacesAutocomplete({
       <div className="relative">
         <Input
           ref={inputRef}
+          id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => predictions.length > 0 && setIsOpen(true)}

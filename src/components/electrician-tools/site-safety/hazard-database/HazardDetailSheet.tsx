@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { RiskPill, riskTone } from './RiskBar';
+import { categoryLabel, normaliseCategory } from './CategoryPill';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { useToast } from '@/hooks/use-toast';
+import { useRAMS } from '../rams/RAMSContext';
 import { copyToClipboard as copyText } from '@/utils/clipboard';
 
 import {
@@ -47,25 +50,40 @@ function CollapsibleSection({
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+      {/* h-auto but min 56px so the header clears the 44px touch target even
+          with a one-line title, and the whole row is the hit area — a chevron
+          alone is a 13px target on a phone. */}
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
-        className="w-full flex items-center gap-3 px-5 py-4 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+        aria-expanded={isOpen}
+        className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.05] active:bg-white/[0.08]"
       >
-        <span className="text-[14px] font-medium text-white flex-1">{title}</span>
+        <span className="flex-1 text-[14px] font-medium text-white">{title}</span>
         {typeof count === 'number' && (
-          <span className="text-[11px] text-white tabular-nums">{count}</span>
+          <span className="text-[11px] tabular-nums text-white">{count}</span>
         )}
-        <span
+        {/* Was the character "⌄", which renders at a different weight and
+            baseline on iOS than it does on Chrome. A rotated chevron is the
+            same shape everywhere. */}
+        <svg
           aria-hidden
+          viewBox="0 0 16 16"
           className={cn(
-            'text-white text-[13px] transition-transform duration-200',
+            'h-3.5 w-3.5 shrink-0 text-white transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         >
-          ⌄
-        </span>
+          <path
+            d="M3 6l5 5 5-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
       {isOpen && <div className="px-5 pb-4 pt-1">{children}</div>}
     </div>
@@ -80,12 +98,42 @@ export const HazardDetailSheet = ({
   onToggleBookmark,
 }: HazardDetailSheetProps) => {
   const { toast } = useToast();
+  const { addRiskFromHazard } = useRAMS();
   const [copied, setCopied] = useState(false);
 
   if (!hazard) return null;
 
   const tone = riskTone(hazard.riskRating);
-  const categoryLabel = hazard.category.charAt(0).toUpperCase() + hazard.category.slice(1);
+  // Was `charAt(0).toUpperCase() + slice(1)` on the raw value, which printed
+  // the stored id verbatim — "Testing-inspection", "Specialised-equipment",
+  // "Design-calculations". Normalise then use the shared label map so the
+  // sheet header reads the same as the chip the user tapped to get here.
+  const headerCategory = categoryLabel(normaliseCategory(hazard.category));
+
+  /**
+   * Add this hazard to the RAMS being built, flattening the control hierarchy
+   * into the single controls field that a RAMS risk row carries. Order is
+   * preserved most-to-least effective (ERIC-PD), so the resulting document
+   * still reads as a hierarchy rather than a bag of measures.
+   */
+  const handleAddToRAMS = () => {
+    const controls = controlHierarchy
+      .flatMap(({ key }) => hazard.controlMeasures[key] ?? [])
+      .join('\n• ');
+
+    addRiskFromHazard({
+      name: hazard.hazard,
+      description: hazard.consequence,
+      likelihood: hazard.likelihood,
+      severity: hazard.severity,
+      commonControls: controls ? [controls] : [],
+    });
+
+    toast({
+      title: 'Added to RAMS',
+      description: `"${hazard.hazard}" added with its controls. Open the RAMS generator to finish.`,
+    });
+  };
 
   const handleCopy = async () => {
     const text = `
@@ -130,7 +178,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
         className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
       >
         <SheetShell
-          eyebrow={categoryLabel}
+          eyebrow={headerCategory}
           title={hazard.hazard}
           description={
             <span className="inline-flex items-center gap-2">
@@ -146,15 +194,13 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               <SecondaryButton onClick={onToggleBookmark}>
                 {isBookmarked ? 'Saved ✓' : 'Save'}
               </SecondaryButton>
-              <PrimaryButton
-                fullWidth
-                onClick={() =>
-                  toast({
-                    title: 'Added to RAMS',
-                    description: 'Hazard added to your current RAMS document',
-                  })
-                }
-              >
+              {/* This button used to fire the toast and nothing else — it told
+                  the user "Hazard added to your current RAMS document" while
+                  adding nothing anywhere. It now calls the RAMS context that
+                  was already in scope (the whole hub renders inside
+                  RAMSProvider), passing the hazard's real likelihood and
+                  severity plus its full control hierarchy. */}
+              <PrimaryButton fullWidth onClick={handleAddToRAMS}>
                 Add to RAMS
               </PrimaryButton>
             </>
@@ -179,12 +225,16 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     className={cn(
                       'rounded-xl border px-4 py-3',
                       hasControls
-                        ? 'bg-[hsl(0_0%_12%)] border-white/[0.08]'
-                        : 'bg-[hsl(0_0%_10%)] border-white/[0.05] opacity-50'
+                        ? cn('border-elec-yellow/35', CARD_SURFACE)
+                        : // A tier with nothing in it is still meaningful — it
+                          // says elimination wasn't achievable here. Dimmed to
+                          // 60% rather than 50%: at 50% the label fell below a
+                          // readable contrast on a phone in daylight.
+                          'border-white/[0.08] bg-white/[0.02] opacity-60'
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-5 text-[11px] font-medium tabular-nums text-elec-yellow/80 shrink-0">
+                      <span className="w-5 shrink-0 text-[11px] font-medium tabular-nums text-elec-yellow">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <span className="text-[13px] font-medium text-white flex-1">

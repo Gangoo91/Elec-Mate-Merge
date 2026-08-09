@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { SheetShell, Field, Eyebrow, PrimaryButton } from '@/components/college/primitives';
 import { safetyInputCn } from '../common/SafetyDocField';
@@ -119,7 +120,7 @@ export function ReEnergisationSheet({
             animate={{ opacity: 1, y: 0 }}
             className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1"
           >
-            <Eyebrow className="text-amber-300/90">Safety warning</Eyebrow>
+            <Eyebrow className="text-amber-400">Safety warning</Eyebrow>
             <p className="text-xs text-white leading-relaxed">
               Verify all personnel are clear of the circuit before re-energising. Ensure all work
               has been completed and tested.
@@ -140,7 +141,7 @@ export function ReEnergisationSheet({
                   'w-full flex items-center gap-3 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.99] transition-all',
                   checklist[item.id]
                     ? 'bg-emerald-500/[0.06] border-emerald-500/25'
-                    : 'bg-[hsl(0_0%_10%)] border-white/[0.08]'
+                    : cn(CARD_SURFACE, 'border-white/[0.08]')
                 )}
               >
                 <span

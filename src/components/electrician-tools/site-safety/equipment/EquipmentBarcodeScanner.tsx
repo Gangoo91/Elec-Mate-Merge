@@ -29,7 +29,7 @@ export function EquipmentBarcodeScanner({
   open,
   onClose,
   onScan,
-  title = 'Scan Equipment',
+  title = 'Scan equipment',
   description = 'Point the camera at a barcode or QR code',
 }: EquipmentBarcodeScannerProps) {
   const [isStarting, setIsStarting] = useState(false);
@@ -250,7 +250,7 @@ export function EquipmentBarcodeScanner({
               {/* Animated scan line — hidden on success */}
               {!scanSuccess && (
                 <motion.div
-                  className="absolute left-[10px] right-[10px] h-[2px] border border-elec-yellow/35"
+                  className="absolute left-[10px] right-[10px] h-[2px] bg-elec-yellow"
                   animate={{ top: ['10%', '90%', '10%'] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 />
@@ -281,7 +281,7 @@ export function EquipmentBarcodeScanner({
             ) : isStarting ? (
               <div className="flex items-center gap-2 justify-center">
                 <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                <p className="text-sm text-white">Starting camera...</p>
+                <p className="text-sm text-white">Starting camera…</p>
               </div>
             ) : error ? (
               <div className="space-y-3">
@@ -303,7 +303,7 @@ export function EquipmentBarcodeScanner({
                   <ScanBarcode className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm text-white">{description}</p>
                 </div>
-                <p className="text-xs text-white">Supports barcodes, QR codes, and data matrix</p>
+                <p className="text-xs text-white">Supports barcodes, QR codes and data matrix</p>
               </div>
             )}
           </div>

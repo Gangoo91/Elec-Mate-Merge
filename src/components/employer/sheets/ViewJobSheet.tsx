@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { openExternalUrl } from '@/utils/open-external-url';
+import { navigateToAddress } from '@/utils/navigate-to-address';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
@@ -261,10 +261,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     }
   };
 
+  // ELE-1520 — onto the shared helper. The URL this built was correct but did
+  // not match EXTERNAL_APP_PATTERNS, so it opened a map inside the in-app
+  // browser instead of the Maps app. Fixed in open-external-url.ts.
   const handleNavigate = () => {
     if (!job) return;
-    const query = encodeURIComponent(job.location);
-    openExternalUrl(`https://www.google.com/maps/search/?api=1&query=${query}`);
+    navigateToAddress({ address: job.location });
   };
 
   const handleCall = () => {

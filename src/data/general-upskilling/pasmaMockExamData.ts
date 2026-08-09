@@ -23,102 +23,6 @@ export const pasmaCategories = [
   'Inspection',
   'Hazards',
   'Safety',
-  {
-    id: 201,
-    question: 'A mobile tower is to be used outdoors. What is the correct approach to wind?',
-    options: [
-      'Work should cease and the tower be considered for dismantling as wind rises',
-      'Towers may be used in any wind up to the machine\'s stated maximum height',
-      'Sheeting the tower reduces wind loading and permits work to continue',
-      'Wind only matters where the tower exceeds 6 metres platform height',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'Rising wind increases both the overturning moment and the risk to the operative. Work should stop and the tower be lowered or dismantled as conditions deteriorate. Sheeting makes matters worse, not better — it turns the tower into a sail and substantially increases wind loading.',
-    difficulty: 'advanced',
-    topic: 'Wind',
-    category: 'Hazards',
-  },
-  {
-    id: 202,
-    question: 'Why must a tower never be moved with a person on the platform?',
-    options: [
-      'Because the castors are not rated for the additional load',
-      'Because the raised centre of gravity and sudden forces can overturn it',
-      'Because it invalidates the 7-day inspection record',
-      'Because the outriggers cannot be deployed while moving',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'A person on the platform raises the centre of gravity and any jolt — a kerb, a drain cover, a change in level — can be enough to overturn the tower. The forces involved cannot be controlled from the ground, which is why the platform must be clear before the tower is moved.',
-    difficulty: 'advanced',
-    topic: 'Moving Towers',
-    category: 'Safety',
-  },
-  {
-    id: 203,
-    question: 'What does the 3T (Through the Trap) method achieve?',
-    options: [
-      'It allows a tower to be built without guardrails at any level',
-      'It removes the need for a competent person to inspect the tower',
-      'It keeps the operative protected while fitting guardrails for the next level',
-      'It permits a single person to erect a tower of any height',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Working through the trapdoor, the operative stays within the protection of the level below while positioning the guardrails for the level above, so they are never on an unguarded platform. It is a method of maintaining protection during assembly, not a way of dispensing with it.',
-    difficulty: 'advanced',
-    topic: '3T Method',
-    category: 'Assembly',
-  },
-  {
-    id: 204,
-    question: 'A tower is found with a bent horizontal brace. What is the correct action?',
-    options: [
-      'Straighten it on site and refit it if it appears true',
-      'Use it provided the tower height is reduced by one lift',
-      'Refit it in a lower bay where loads are lower',
-      'Quarantine the component and replace it with an undamaged one',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'A bent component has been overloaded and straightening it on site can leave hidden stress fractures that are not visible. It should be taken out of use and replaced. Relegating it to a lower bay does not help — lower components carry the greatest load.',
-    difficulty: 'advanced',
-    topic: 'Damaged Components',
-    category: 'Inspection',
-  },
-  {
-    id: 205,
-    question: 'Who may inspect a mobile access tower and record the result?',
-    options: [
-      'A competent person with knowledge appropriate to the tower type',
-      'Any operative who has assembled a tower previously',
-      'Only the manufacturer\'s technical representative',
-      'The site\'s appointed first aider, as part of daily checks',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'Inspection must be by a competent person — someone with the practical and theoretical knowledge to identify defects and assess their significance for that type of tower. Having built one before is not the same as being competent to judge whether one is safe.',
-    difficulty: 'advanced',
-    topic: 'Competence',
-    category: 'Inspection',
-  },
-  {
-    id: 206,
-    question: 'What is the primary reason stabilisers or outriggers are fitted to a tower?',
-    options: [
-      'To allow the tower to be moved more easily on uneven ground',
-      'To increase the effective base dimensions and resist overturning',
-      'To provide additional anchor points for fall arrest lanyards',
-      'To spread the load so castors can be locked more securely',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Stability is governed by the relationship between height and base dimensions. Stabilisers widen the effective base so the tower resists the overturning moment at its working height. They are a stability measure, not a handling aid or an anchor point.',
-    difficulty: 'advanced',
-    topic: 'Stability',
-    category: 'Assembly',
-  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -172,12 +76,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 2,
     question:
       'Under the HSWA 1974, which section covers the duty of employees to take reasonable care of themselves and others?',
-    options: [
-      'Section 2',
-      'Section 3',
-      'Section 7',
-      'Section 8',
-    ],
+    options: ['Section 2', 'Section 3', 'Section 7', 'Section 8'],
     correctAnswer: 2,
     explanation:
       'Section 7 requires employees to take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work.',
@@ -206,12 +105,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 4,
     question: 'How long is a PASMA Towers for Users training card valid before it must be renewed?',
-    options: [
-      '5 years',
-      '3 years',
-      '1 year',
-      '10 years',
-    ],
+    options: ['5 years', '3 years', '1 year', '10 years'],
     correctAnswer: 0,
     explanation:
       'The PASMA card is valid for 5 years. Operatives should renew their training before it expires to remain competent.',
@@ -224,12 +118,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question:
       'The Work at Height Regulations 2005 apply to work at height where there is a risk of a fall likely to cause what?',
-    options: [
-      'Discomfort',
-      'Personal injury',
-      'Damage to equipment',
-      'Environmental harm',
-    ],
+    options: ['Discomfort', 'Personal injury', 'Damage to equipment', 'Environmental harm'],
     correctAnswer: 1,
     explanation:
       'The Work at Height Regulations 2005 apply to all work at height where there is a risk of a fall liable to cause personal injury.',
@@ -260,12 +149,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question:
       'What is the primary British/European standard that covers mobile access towers made of prefabricated elements?',
-    options: [
-      'BS 5975',
-      'BS EN 12811',
-      'BS EN 131',
-      'BS EN 1004-1:2020',
-    ],
+    options: ['BS 5975', 'BS EN 12811', 'BS EN 131', 'BS EN 1004-1:2020'],
     correctAnswer: 3,
     explanation:
       'BS EN 1004-1:2020 is the standard for mobile access and working towers made of prefabricated elements. It covers design, materials, dimensions and load classes.',
@@ -363,12 +247,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 13,
     question: 'When did EN 1004:2020 officially replace the previous EN 1004:2004 standard?',
-    options: [
-      'January 2020',
-      'November 2021',
-      'March 2021',
-      'January 2022',
-    ],
+    options: ['January 2020', 'November 2021', 'March 2021', 'January 2022'],
     correctAnswer: 1,
     explanation:
       'EN 1004:2020 was published in 2020 but officially replaced EN 1004:2004 in November 2021 after the coexistence period ended.',
@@ -380,12 +259,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 14,
     question: 'From what date did PASMA introduce digital training cards?',
-    options: [
-      '1 January 2024',
-      '1 June 2025',
-      '31 March 2025',
-      '1 January 2026',
-    ],
+    options: ['1 January 2024', '1 June 2025', '31 March 2025', '1 January 2026'],
     correctAnswer: 2,
     explanation:
       'PASMA introduced digital training cards from 31 March 2025, allowing operatives to carry proof of competence on their mobile devices.',
@@ -417,12 +291,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 16,
     question: 'Under the CDM Regulations 2015, how many named duty holders are there?',
-    options: [
-      '5',
-      '4',
-      '3',
-      '6',
-    ],
+    options: ['5', '4', '3', '6'],
     correctAnswer: 0,
     explanation:
       'CDM 2015 identifies 5 duty holders: client, principal designer, principal contractor, designer and contractor. Each has specific duties relating to health and safety on construction projects.',
@@ -453,12 +322,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question:
       'For how long must inspection records for a mobile access tower be retained under the Work at Height Regulations 2005?',
-    options: [
-      '1 month',
-      '6 months',
-      '3 months',
-      '12 months',
-    ],
+    options: ['1 month', '6 months', '3 months', '12 months'],
     correctAnswer: 2,
     explanation:
       'Regulation 12(8) requires that inspection reports are kept until the next inspection under the same provision, but in any case for a minimum of 3 months after the date of the inspection.',
@@ -470,12 +334,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 19,
     question: 'Which of the following is NOT one of the five CDM 2015 duty holders?',
-    options: [
-      'Client',
-      'Principal designer',
-      'Contractor',
-      'Site supervisor',
-    ],
+    options: ['Client', 'Principal designer', 'Contractor', 'Site supervisor'],
     correctAnswer: 3,
     explanation:
       'The five CDM 2015 duty holders are client, principal designer, principal contractor, designer and contractor. Site supervisor is not a named duty holder under CDM.',
@@ -490,8 +349,8 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       "Under the WAHR 2005, who is classed as a 'duty holder' with responsibilities for work at height?",
     options: [
       "Any person who controls the work of others, including employers, the self-employed and those who control others' work",
-      "The main contractor named in the construction phase plan, who alone holds the duty for all work at height on that site",
-      "Employers only — the self-employed and those who merely control the work of others fall outside the regulations",
+      'The main contractor named in the construction phase plan, who alone holds the duty for all work at height on that site',
+      'Employers only — the self-employed and those who merely control the work of others fall outside the regulations',
       "The site's appointed health and safety officer, who holds the duty on behalf of everyone working at height",
     ],
     correctAnswer: 0,
@@ -633,12 +492,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 28,
     question:
       'Under EN 1004-1:2020, what is the maximum uniformly distributed load (UDL) for a Load Class 2 tower platform?',
-    options: [
-      '150 kg/m²',
-      '75 kg/m²',
-      '200 kg/m²',
-      '300 kg/m²',
-    ],
+    options: ['150 kg/m²', '75 kg/m²', '200 kg/m²', '300 kg/m²'],
     correctAnswer: 0,
     explanation:
       'Load Class 2 under EN 1004-1:2020 permits a maximum uniformly distributed load of 150 kg/m² on the working platform.',
@@ -651,12 +505,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 29,
     question:
       'What is the maximum UDL for a Load Class 3 mobile access tower under EN 1004-1:2020?',
-    options: [
-      '100 kg/m²',
-      '200 kg/m²',
-      '150 kg/m²',
-      '250 kg/m²',
-    ],
+    options: ['100 kg/m²', '200 kg/m²', '150 kg/m²', '250 kg/m²'],
     correctAnswer: 1,
     explanation:
       'Load Class 3 permits a maximum uniformly distributed load of 200 kg/m² on the working platform, making it suitable for heavier duty work such as bricklaying.',
@@ -669,12 +518,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question:
       'Under CDM 2015, which duty holder must ensure that a construction phase plan is drawn up before the construction phase begins?',
-    options: [
-      'The client',
-      'The designer',
-      'The principal contractor',
-      'The principal designer',
-    ],
+    options: ['The client', 'The designer', 'The principal contractor', 'The principal designer'],
     correctAnswer: 2,
     explanation:
       'Regulation 12(1) of CDM 2015 requires the principal contractor to draw up the construction phase plan before the construction phase begins, or where there is only one contractor, that contractor must prepare it.',
@@ -687,12 +531,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question:
       'Regulation 10 of the WAHR 2005 requires the inspection of work equipment used for work at height. Which schedule contains the detailed inspection requirements?',
-    options: [
-      'Schedule 3',
-      'Schedule 4',
-      'Schedule 7',
-      'Schedule 5',
-    ],
+    options: ['Schedule 3', 'Schedule 4', 'Schedule 7', 'Schedule 5'],
     correctAnswer: 3,
     explanation:
       'Schedule 5 of the Work at Height Regulations 2005 sets out the requirements for the inspection of work equipment, including mobile access towers, specifying when inspections must occur and what records must be kept.',
@@ -705,12 +544,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 32,
     question:
       'If a mobile access tower is involved in an accident causing a major injury, under which legislation must the incident be reported?',
-    options: [
-      'RIDDOR 2013',
-      'WAHR 2005 only',
-      'CDM 2015 only',
-      'HSWA 1974 Section 9',
-    ],
+    options: ['RIDDOR 2013', 'WAHR 2005 only', 'CDM 2015 only', 'HSWA 1974 Section 9'],
     correctAnswer: 0,
     explanation:
       'The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR) require that certain workplace injuries, diseases and dangerous occurrences are reported to the enforcing authority.',
@@ -723,12 +557,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question:
       'Under EN 1004-1:2020, which load class has a UDL of 75 kg/m² and is intended for inspection and light-duty work only?',
-    options: [
-      'Load Class 2',
-      'Load Class 1',
-      'Load Class 3',
-      'Load Class 0',
-    ],
+    options: ['Load Class 2', 'Load Class 1', 'Load Class 3', 'Load Class 0'],
     correctAnswer: 1,
     explanation:
       'Load Class 1 permits 75 kg/m² and is suitable for inspection and very light work. It is the lowest rated class and not commonly specified for general construction tasks.',
@@ -764,12 +593,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 35,
     question: 'What is the standard width of a single-width mobile access tower?',
-    options: [
-      '0.65m',
-      '1.35m',
-      '1.00m',
-      '0.74m',
-    ],
+    options: ['0.65m', '1.35m', '1.00m', '0.74m'],
     correctAnswer: 3,
     explanation:
       'A standard single-width (narrow) mobile access tower has a platform width of 0.74m. This makes it suitable for restricted access areas.',
@@ -781,12 +605,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 36,
     question: 'What is the standard width of a double-width mobile access tower?',
-    options: [
-      '1.35m',
-      '1.00m',
-      '0.74m',
-      '1.80m',
-    ],
+    options: ['1.35m', '1.00m', '0.74m', '1.80m'],
     correctAnswer: 0,
     explanation:
       'A standard double-width mobile access tower has a platform width of 1.35m, providing a larger working area than a single-width tower.',
@@ -799,12 +618,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question:
       'What is the maximum recommended height for a freestanding mobile access tower used outdoors?',
-    options: [
-      '4m',
-      '8m',
-      '12m',
-      '16m',
-    ],
+    options: ['4m', '8m', '12m', '16m'],
     correctAnswer: 1,
     explanation:
       'The maximum recommended height for a freestanding mobile access tower used outdoors is 8m. Beyond this height, additional stabilisation measures are required.',
@@ -817,12 +631,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question:
       'What is the maximum recommended height for a freestanding mobile access tower used indoors?',
-    options: [
-      '8m',
-      '10m',
-      '12m',
-      '15m',
-    ],
+    options: ['8m', '10m', '12m', '15m'],
     correctAnswer: 2,
     explanation:
       'The maximum recommended height for a freestanding mobile access tower used indoors is 12m, as the sheltered environment reduces wind loading.',
@@ -835,12 +644,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question:
       'Which component of a mobile access tower allows it to be moved from one location to another?',
-    options: [
-      'Adjustable legs',
-      'Outriggers',
-      'Spigot pins',
-      'Castors',
-    ],
+    options: ['Adjustable legs', 'Outriggers', 'Spigot pins', 'Castors'],
     correctAnswer: 3,
     explanation:
       'Castors are the wheeled components fitted to the base of a mobile access tower that allow it to be rolled to different positions on site.',
@@ -869,12 +673,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 41,
     question: 'What are the main structural vertical members of a mobile access tower called?',
-    options: [
-      'Transoms',
-      'Standards (uprights)',
-      'Ledgers',
-      'Braces',
-    ],
+    options: ['Transoms', 'Standards (uprights)', 'Ledgers', 'Braces'],
     correctAnswer: 1,
     explanation:
       'The vertical members are called standards or uprights. They form the main load-bearing vertical structure of the tower.',
@@ -887,12 +686,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question:
       'Horizontal members that run along the length of a mobile access tower are known as what?',
-    options: [
-      'Transoms',
-      'Standards',
-      'Ledgers (horizontals)',
-      'Braces',
-    ],
+    options: ['Transoms', 'Standards', 'Ledgers (horizontals)', 'Braces'],
     correctAnswer: 2,
     explanation:
       'Ledgers (also called horizontals) are the horizontal members that run along the length of the tower, connecting the standards on the same side.',
@@ -905,12 +699,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question:
       'Horizontal members that run across the width of a mobile access tower are known as what?',
-    options: [
-      'Sole boards',
-      'Ledgers',
-      'Diagonal braces',
-      'Transoms',
-    ],
+    options: ['Sole boards', 'Ledgers', 'Diagonal braces', 'Transoms'],
     correctAnswer: 3,
     explanation:
       'Transoms are the horizontal members that run across the width of the tower, connecting the standards on opposite sides. Platforms rest on transoms.',
@@ -960,12 +749,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question:
       'What is the maximum height-to-base ratio for a freestanding mobile access tower used indoors?',
-    options: [
-      '3:1',
-      '4:1',
-      '3.5:1',
-      '2:1',
-    ],
+    options: ['3:1', '4:1', '3.5:1', '2:1'],
     correctAnswer: 2,
     explanation:
       'For indoor use, the maximum height-to-base ratio is 3.5:1. This means for every 1 metre of base width, the tower can be up to 3.5 metres high.',
@@ -978,12 +762,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 47,
     question:
       'What is the maximum height-to-base ratio for a freestanding mobile access tower used outdoors?',
-    options: [
-      '2:1',
-      '4:1',
-      '3.5:1',
-      '3:1',
-    ],
+    options: ['2:1', '4:1', '3.5:1', '3:1'],
     correctAnswer: 3,
     explanation:
       'For outdoor use, the maximum height-to-base ratio is 3:1. The reduced ratio compared to indoor use accounts for the effects of wind loading.',
@@ -1030,12 +809,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question:
       'Which type of mobile access tower is specifically designed to provide access over an obstruction such as machinery?',
-    options: [
-      'A stairway tower',
-      'A linking tower',
-      'A cantilever tower',
-      'A podium step',
-    ],
+    options: ['A stairway tower', 'A linking tower', 'A cantilever tower', 'A podium step'],
     correctAnswer: 2,
     explanation:
       'A cantilever tower has a section that extends beyond the base, allowing the working platform to reach over an obstruction. It requires additional counterweighting or stabilisation.',
@@ -1137,12 +911,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 56,
     question:
       'Under EN 1004-1:2020, what concentrated point load must a platform withstand in addition to the UDL for its load class?',
-    options: [
-      '1.5 kN',
-      '1.0 kN',
-      '0.5 kN',
-      '2.0 kN',
-    ],
+    options: ['1.5 kN', '1.0 kN', '0.5 kN', '2.0 kN'],
     correctAnswer: 0,
     explanation:
       'EN 1004-1:2020 requires platforms to withstand a concentrated (point) load of 1.5 kN in addition to the uniformly distributed load for their respective load class.',
@@ -1208,12 +977,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 60,
     question:
       'Under EN 1004-1:2020, how many load classes are defined for mobile access tower platforms?',
-    options: [
-      '3',
-      '2',
-      '4',
-      '5',
-    ],
+    options: ['3', '2', '4', '5'],
     correctAnswer: 0,
     explanation:
       'EN 1004-1:2020 defines three load classes: Class 1 (75 kg/m²) for inspection and light work, Class 2 (150 kg/m²) for general construction, and Class 3 (200 kg/m²) for heavy-duty work.',
@@ -1270,7 +1034,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     options: [
       "The site's general construction phase plan only",
       "The previous tower's inspection record from another job",
-      "A generic scaffolding handbook covering all access systems",
+      'A generic scaffolding handbook covering all access systems',
       "The manufacturer's instruction manual for the specific tower model",
     ],
     correctAnswer: 3,
@@ -1497,12 +1261,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 76,
     question:
       'What is the required minimum height of a guardrail above the working platform on a mobile access tower?',
-    options: [
-      '950mm',
-      '900mm',
-      '750mm',
-      '1100mm',
-    ],
+    options: ['950mm', '900mm', '750mm', '1100mm'],
     correctAnswer: 0,
     explanation:
       'The guardrail must be at a minimum height of 950mm above the working platform surface to provide adequate fall protection for operatives.',
@@ -1531,12 +1290,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 78,
     question: 'What is the minimum height of a toeboard on a mobile access tower working platform?',
-    options: [
-      '50mm',
-      '100mm',
-      '150mm',
-      '200mm',
-    ],
+    options: ['50mm', '100mm', '150mm', '200mm'],
     correctAnswer: 2,
     explanation:
       'Toeboards must be a minimum of 150mm high. They prevent tools, materials and debris from sliding off the platform edge and falling onto persons below.',
@@ -1603,10 +1357,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'During tower assembly, what is the maximum number of people that should be on the tower at any one time unless the manufacturer specifies otherwise?',
     options: [
-      "Exactly one operative, whatever the size or configuration of the tower being built",
-      "Exactly four operatives, on every tower regardless of its load class or configuration",
+      'Exactly one operative, whatever the size or configuration of the tower being built',
+      'Exactly four operatives, on every tower regardless of its load class or configuration',
       "As stated in the manufacturer's instructions for that specific tower and configuration",
-      "As many as are needed, provided each of them holds a current PASMA training card",
+      'As many as are needed, provided each of them holds a current PASMA training card',
     ],
     correctAnswer: 2,
     explanation:
@@ -1823,7 +1577,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'After a mobile access tower has been dismantled, what should be done with the components?',
     options: [
-      'Left in the open on site ready for the next day\'s work',
+      "Left in the open on site ready for the next day's work",
       'Repainted before being returned to the storage compound',
       'Inspected for damage, cleaned if necessary and stored safely',
       'Stacked loosely in the back of the van without securing',
@@ -1839,12 +1593,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 95,
     question: 'What is the maximum recommended tower height for moving a mobile access tower?',
-    options: [
-      '2m',
-      'There is no limit',
-      '8m',
-      '4m',
-    ],
+    options: ['2m', 'There is no limit', '8m', '4m'],
     correctAnswer: 3,
     explanation:
       'General guidance recommends that mobile access towers should not be moved when the platform height exceeds 4m. Above this height, the tower should be partially dismantled before moving.',
@@ -2289,12 +2038,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 120,
     question:
       'How often must a formal inspection of a mobile access tower be carried out, as a minimum, under the WAHR 2005?',
-    options: [
-      'Every 7 days',
-      'Every 14 days',
-      'Every day',
-      'Every 30 days',
-    ],
+    options: ['Every 7 days', 'Every 14 days', 'Every day', 'Every 30 days'],
     correctAnswer: 0,
     explanation:
       'Schedule 5 of the WAHR 2005 requires that mobile access towers are formally inspected at intervals not exceeding 7 days while they remain erected on site.',
@@ -2376,10 +2120,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question: 'What is TowerSure?',
     options: [
-      "A type of mobile access tower designed for use on stairways",
+      'A type of mobile access tower designed for use on stairways',
       "PASMA's recommended inspection recording system for mobile access towers",
-      "A British Standard covering the manufacture of tower castors",
-      "An insurance scheme covering damage to hired access towers",
+      'A British Standard covering the manufacture of tower castors',
+      'An insurance scheme covering damage to hired access towers',
     ],
     correctAnswer: 1,
     explanation:
@@ -2450,7 +2194,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'Only once a week, on the same day as the formal inspection',
       'Before every use, at the start of each working period',
       'When the tower is first delivered to the site',
-      'Monthly, by the tower\'s hire company',
+      "Monthly, by the tower's hire company",
     ],
     correctAnswer: 1,
     explanation:
@@ -2776,12 +2520,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question:
       'What is the single greatest cause of fatal accidents involving mobile access towers?',
-    options: [
-      'Electrocution',
-      'Manual handling injuries',
-      'Falling objects',
-      'Falls from height',
-    ],
+    options: ['Electrocution', 'Manual handling injuries', 'Falling objects', 'Falls from height'],
     correctAnswer: 3,
     explanation:
       'Falls from height are the single greatest cause of fatal and serious injuries involving mobile access towers. This is why guardrails, correct assembly and proper training are critical.',
@@ -2968,12 +2707,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 158,
     question: 'At what Beaufort scale force should all work on a mobile access tower cease?',
-    options: [
-      'Force 6',
-      'Force 8',
-      'Force 4',
-      'Force 3',
-    ],
+    options: ['Force 6', 'Force 8', 'Force 4', 'Force 3'],
     correctAnswer: 2,
     explanation:
       'Work on mobile access towers should cease when the wind reaches Beaufort Force 4 (approximately 13-17 mph / moderate breeze). The tower itself is typically rated to withstand Force 6 when unoccupied.',
@@ -2985,12 +2719,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
   {
     id: 159,
     question: 'What is the approximate wind speed associated with Beaufort Force 4?',
-    options: [
-      '5-10 mph',
-      '40-45 mph',
-      '25-30 mph',
-      '13-17 mph',
-    ],
+    options: ['5-10 mph', '40-45 mph', '25-30 mph', '13-17 mph'],
     correctAnswer: 3,
     explanation:
       'Beaufort Force 4 (moderate breeze) corresponds to wind speeds of approximately 13-17 mph (20-28 km/h). At this level, small branches move and loose paper is blown about.',
@@ -3005,9 +2734,9 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
       'An operative on a tower platform reaches out to the side to carry out work. What hazard does this create?',
     options: [
       "Side-loading that shifts the tower's centre of gravity and may cause it to overturn",
-      "It releases the castor brakes and allows the tower to roll away",
-      "It causes the adjustable legs to retract on the opposite side",
-      "It overloads the platform beyond its rated load class",
+      'It releases the castor brakes and allows the tower to roll away',
+      'It causes the adjustable legs to retract on the opposite side',
+      'It overloads the platform beyond its rated load class',
     ],
     correctAnswer: 0,
     explanation:
@@ -3201,12 +2930,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question:
       'An operative discovers that the tower is positioned 8 metres from an 11kV overhead power line. According to HSE guidance, what is the minimum safe clearance distance?',
-    options: [
-      '3 metres',
-      '15 metres',
-      '9 metres',
-      '6 metres',
-    ],
+    options: ['3 metres', '15 metres', '9 metres', '6 metres'],
     correctAnswer: 3,
     explanation:
       'HSE guidance (GS6) recommends a minimum clearance of 6 metres from 11kV overhead lines. At 8 metres, there may be insufficient safety margin when accounting for tower sway and operative reach. The situation must be reviewed by a competent person.',
@@ -3382,7 +3106,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: 'Why should unauthorised persons be prevented from accessing a mobile access tower?',
     options: [
-      "Because unauthorised persons may scratch the paintwork and damage components the hire company will charge for",
+      'Because unauthorised persons may scratch the paintwork and damage components the hire company will charge for',
       'Because untrained persons may use the tower unsafely, risk falling, or interfere with the structure causing it to become unsafe',
       'Because they may move the tower to a position closer to overhead power lines without realising the danger',
       'Because their presence on the tower could invalidate the hire agreement covering the equipment',
@@ -3737,5 +3461,101 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     difficulty: 'advanced',
     topic: 'Safe working',
     category: 'Safety',
+  },
+  {
+    id: 201,
+    question: 'A mobile tower is to be used outdoors. What is the correct approach to wind?',
+    options: [
+      'Work should cease and the tower be considered for dismantling as wind rises',
+      "Towers may be used in any wind up to the machine's stated maximum height",
+      'Sheeting the tower reduces wind loading and permits work to continue',
+      'Wind only matters where the tower exceeds 6 metres platform height',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Rising wind increases both the overturning moment and the risk to the operative. Work should stop and the tower be lowered or dismantled as conditions deteriorate. Sheeting makes matters worse, not better — it turns the tower into a sail and substantially increases wind loading.',
+    difficulty: 'advanced',
+    topic: 'Wind',
+    category: 'Hazards',
+  },
+  {
+    id: 202,
+    question: 'Why must a tower never be moved with a person on the platform?',
+    options: [
+      'Because the castors are not rated for the additional load',
+      'Because the raised centre of gravity and sudden forces can overturn it',
+      'Because it invalidates the 7-day inspection record',
+      'Because the outriggers cannot be deployed while moving',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A person on the platform raises the centre of gravity and any jolt — a kerb, a drain cover, a change in level — can be enough to overturn the tower. The forces involved cannot be controlled from the ground, which is why the platform must be clear before the tower is moved.',
+    difficulty: 'advanced',
+    topic: 'Moving Towers',
+    category: 'Safety',
+  },
+  {
+    id: 203,
+    question: 'What does the 3T (Through the Trap) method achieve?',
+    options: [
+      'It allows a tower to be built without guardrails at any level',
+      'It removes the need for a competent person to inspect the tower',
+      'It keeps the operative protected while fitting guardrails for the next level',
+      'It permits a single person to erect a tower of any height',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Working through the trapdoor, the operative stays within the protection of the level below while positioning the guardrails for the level above, so they are never on an unguarded platform. It is a method of maintaining protection during assembly, not a way of dispensing with it.',
+    difficulty: 'advanced',
+    topic: '3T Method',
+    category: 'Assembly',
+  },
+  {
+    id: 204,
+    question: 'A tower is found with a bent horizontal brace. What is the correct action?',
+    options: [
+      'Straighten it on site and refit it if it appears true',
+      'Use it provided the tower height is reduced by one lift',
+      'Refit it in a lower bay where loads are lower',
+      'Quarantine the component and replace it with an undamaged one',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A bent component has been overloaded and straightening it on site can leave hidden stress fractures that are not visible. It should be taken out of use and replaced. Relegating it to a lower bay does not help — lower components carry the greatest load.',
+    difficulty: 'advanced',
+    topic: 'Damaged Components',
+    category: 'Inspection',
+  },
+  {
+    id: 205,
+    question: 'Who may inspect a mobile access tower and record the result?',
+    options: [
+      'A competent person with knowledge appropriate to the tower type',
+      'Any operative who has assembled a tower previously',
+      "Only the manufacturer's technical representative",
+      "The site's appointed first aider, as part of daily checks",
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Inspection must be by a competent person — someone with the practical and theoretical knowledge to identify defects and assess their significance for that type of tower. Having built one before is not the same as being competent to judge whether one is safe.',
+    difficulty: 'advanced',
+    topic: 'Competence',
+    category: 'Inspection',
+  },
+  {
+    id: 206,
+    question: 'What is the primary reason stabilisers or outriggers are fitted to a tower?',
+    options: [
+      'To allow the tower to be moved more easily on uneven ground',
+      'To increase the effective base dimensions and resist overturning',
+      'To provide additional anchor points for fall arrest lanyards',
+      'To spread the load so castors can be locked more securely',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Stability is governed by the relationship between height and base dimensions. Stabilisers widen the effective base so the tower resists the overturning moment at its working height. They are a stability measure, not a handling aid or an anchor point.',
+    difficulty: 'advanced',
+    topic: 'Stability',
+    category: 'Assembly',
   },
 ];

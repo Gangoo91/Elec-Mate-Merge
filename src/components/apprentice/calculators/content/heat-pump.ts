@@ -51,16 +51,17 @@ export const heatPumpContent: CalculatorContent = {
   standards: [
     {
       standard: 'MCS',
-      citation: 'MCS MIS 3005-D — Heat Pump Design Standard',
+      citation: 'MCS MIS 3005-D:2025 Issue 2.0 (05/12/2025) — The Heat Pump Design Standard',
       clauseText:
-        'Heat pump systems must be designed from a calculated heat loss to a recognised method, with the heat pump and emitters sized to the design heat loss and flow temperature. Oversizing beyond the permitted margin is not allowed.',
+        '§1: specifies the requirements for MCS contractors undertaking the DESIGN of microgeneration heat pump systems supplying permanent buildings with space heating and/or domestic hot water — “building” meaning an individual self-contained unit (detached, semi, terrace, an individual flat in a block, or an individual commercial unit). Microgeneration heat pumps are those with a thermal output NOT EXCEEDING 45 kWth per MCS 007; multiple heat pumps may serve one installation with a TOTAL DESIGN HEAT LOAD NOT EXCEEDING 70 kWth (determined in accordance with BS EN 12831-1:2017), provided no single heat pump exceeds 45 kWth. Expressly excluded: cooling-only systems, direct expansion (DX) ground-loop systems, and heat pumps extracting heat from loft spaces. Reversible systems are included but shall be designed and optimised for heating. §5: a heat pump shall be selected that will provide AT LEAST 100% OF THE HEAT LOAD, taking into account the flow temperature at the heat pump and WITHOUT input from any supplementary electric heater.',
+      tableRefs: ['MIS 3005-D §1', 'MIS 3005-D §5', 'BS EN 12831-1:2017', 'MCS 007'],
     },
     {
       standard: 'MCS',
-      citation: 'MCS MIS 3005-I:2025 — Heat Pump Installation Standard',
+      citation: 'MCS MIS 3005-I:2025 Issue 1.0 — Heat Pump Installation Standard',
       clauseText:
-        'Installation, commissioning and handover must follow MIS 3005-I:2025, including system commissioning and the commissioning checklist (Appendix A).',
-      tableRefs: ['Appendix A — Commissioning Checklist'],
+        'Specifies the requirements for MCS Contractors undertaking the installation, set to work and commissioning of microgeneration heat pump systems supplying permanent buildings with space heating and/or domestic hot water (§1). It covers ground, air and water sources, compression and thermally activated heat pumps, heating-only and heating-plus-cooling systems, and both monobloc and split units. Microgeneration heat pumps are defined as those with a thermal output not exceeding 45 kWth. Expressly EXCLUDED are cooling-only systems, direct expansion (DX) ground-loop systems, and heat pumps extracting heat from loft spaces; reversible systems are included but shall be designed and optimised for heating. Appendix A gives an example commissioning checklist.',
+      tableRefs: ['MIS 3005-I §1', 'MIS 3005-I Appendix A'],
     },
     {
       standard: 'BS 7671',
@@ -71,9 +72,9 @@ export const heatPumpContent: CalculatorContent = {
   ],
 
   _grounding: {
-    status: 'needs-review',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'MIS 3005-I:2025 title/structure confirmed against source PDF. MIS 3005-D design requirements and BUS eligibility (£7,500 ASHP/GSHP; air-to-air not eligible) authored from established rules — confirm design figures against MIS 3005-D. Heat-loss formula corrected (was ~24× high).',
+      'MIS 3005-D:2025 Issue 2.0 is now HELD (Desktop/hav/MCS-MIS3005-D-2025-Issue2.0-HeatPumpDesign.pdf, downloaded from mcscertified.com 2026-08-09) and \u00a71/\u00a75 are quoted verbatim \u2014 this was the single blocker keeping the file on needs-review. The previous MIS 3005-D entry was written from established requirements without the document and understated it. Three things the real text adds: heat load is determined in accordance with BS EN 12831-1:2017 (a named method, not \u201ca recognised method\u201d); the 45 kWth ceiling is PER HEAT PUMP with a separate 70 kWth total for multi-unit installations \u2014 the file previously gave only 45 kWth; and the 100%-of-heat-load rule is explicitly WITHOUT input from a supplementary electric heater, which is the part that bites on a marginal design. MIS 3005-I:2025 Issue 1.0 verified separately and confirmed still current (MCS site checked 2026-08-09 \u2014 3005-I has not been reissued). BUS grant eligibility is government policy, not MCS, and remains unverified here.',
   },
 };

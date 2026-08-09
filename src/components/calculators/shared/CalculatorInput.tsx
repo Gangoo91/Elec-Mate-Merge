@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { InputHTMLAttributes, forwardRef, useId } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -42,7 +42,14 @@ const FIELD =
 
 export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps>(
   ({ label, unit, hint, error, onChange, className, id, ...props }, ref) => {
-    const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
+    // Deriving the id from the label alone collided whenever a calculator repeated a
+    // label — maximum-demand has two "Power" fields, selectivity has upstream/downstream
+    // "Device Type", rcd-discrimination two "RCD Type", unit-converter two "Unit". Two
+    // elements then shared one id, so `<label for>` bound to the FIRST field only and the
+    // second was left with no accessible name at all. useId() keeps the readable slug for
+    // debugging and appends a value React guarantees is unique per instance.
+    const reactId = useId();
+    const inputId = id || `${label.toLowerCase().replace(/\s+/g, '-')}${reactId}`;
 
     return (
       // These inputs sit in 2-up grids, and on a phone one label routinely
@@ -127,7 +134,10 @@ export const CalculatorSelect = ({
   disabled,
   className,
 }: CalculatorSelectProps) => {
-  const selectId = label.toLowerCase().replace(/\s+/g, '-');
+  // See CalculatorInput above: a label-derived id collides whenever a calculator
+  // repeats a label (selectivity's upstream/downstream "Device Type", etc.).
+  const reactId = useId();
+  const selectId = `${label.toLowerCase().replace(/\s+/g, '-')}${reactId}`;
 
   return (
     // Same two-line label reservation as CalculatorInput, so a select sitting
@@ -186,7 +196,10 @@ export const CalculatorNumberInput = ({
   className,
   ...props
 }: CalculatorNumberInputProps) => {
-  const inputId = label.toLowerCase().replace(/\s+/g, '-');
+  // See CalculatorInput above: a label-derived id collides whenever a calculator
+  // repeats a label.
+  const reactId = useId();
+  const inputId = `${label.toLowerCase().replace(/\s+/g, '-')}${reactId}`;
   // Local string state prevents parseFloat stripping trailing dot (ELE-14)
   const [draft, setDraft] = React.useState(value === '' || value === 0 ? '' : String(value));
 

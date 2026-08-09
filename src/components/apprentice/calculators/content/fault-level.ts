@@ -1,7 +1,12 @@
 import type { CalculatorContent } from './types';
 
 /**
- * Fault level — BS 7671 Reg 434.5.2 (breaking capacity).
+ * Fault level — BS 7671 Reg 434.5.1 (breaking capacity).
+ *
+ * This file previously cited 434.5.2 for breaking capacity. Verified against the
+ * printed A4:2026 text: 434.5.1 carries the breaking-capacity duty and the
+ * back-up-protection exception; 434.5.2 is the conductor's thermal withstand
+ * (the let-through / adiabatic check), a different question entirely.
  */
 export const faultLevelContent: CalculatorContent = {
   slug: 'fault-level',
@@ -46,17 +51,22 @@ export const faultLevelContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'Regulation 434.5.2 — Breaking capacity',
+      citation: 'Regulation 434.5.1 — Breaking capacity of a fault current protective device',
       clauseText:
-        'The breaking capacity of each protective device shall be not less than the prospective fault current at the point where it is installed, so it can interrupt the fault current without damage.',
-      sourceFacetIds: ['ae0f3b79-c8a8-4183-85c0-d35e30baf822'],
+        'A device shall be capable of breaking — and for a circuit-breaker, making — the fault current up to and including the maximum prospective fault current at the point where it is installed (Reg 432.3). Regulation 434.5.1 permits a device with a LOWER rated breaking capacity than the prospective short-circuit current at its point of installation, but only under specific conditions: back-up protection by an upstream device, selected per the downstream manufacturer’s instructions derived from product-standard tests (for example BS EN 60947-2, BS EN 60898-1). Where the manufacturer gives no such information, combined short-circuit protection shall not be used and each device must have the required capability in its own right.',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 434.5.2 — thermal withstand of the conductor',
+      clauseText:
+        'A separate question from breaking capacity: 434.5.2 governs whether the CONDUCTOR survives the fault, via the let-through energy the device permits against the conductor’s k²S². A device can interrupt the fault safely and still leave a cable that has been damaged, which is why the adiabatic check is a second step and not an alternative.',
     },
   ],
 
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Reg 434.5.2 verified in facets; transformer fault-level formula (FLC ÷ Z%) matches the engine.',
+      'CITATION CORRECTED against the printed A4:2026 text (Desktop/BS7671_ocr.pdf). Breaking capacity is Reg 434.5.1 (with the back-up-protection exception and the manufacturer-instruction condition), and the duty to break the full prospective fault current is Reg 432.3. Reg 434.5.2 is the conductor’s thermal withstand — the two were transposed here. Fault-level arithmetic (FLC ÷ Z%) matches the engine.',
   },
 };

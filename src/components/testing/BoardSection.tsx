@@ -9,13 +9,14 @@ import { Label } from '@/components/ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, AlertCircle, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { DistributionBoard, MAIN_BOARD_ID, isMainBoard as isMainBoardFn } from '@/types/distributionBoard';
+import {
+  DistributionBoard,
+  MAIN_BOARD_ID,
+  isMainBoard as isMainBoardFn,
+} from '@/types/distributionBoard';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SPD_MAKES, SPD_LOCATIONS } from '@/constants/spdData';
-import {
-  FieldLimitationBadge,
-  isFieldMarker,
-} from '@/components/field-limitations';
+import { FieldLimitationBadge, isFieldMarker } from '@/components/field-limitations';
 import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 /* Paper-form field recipe — underline inputs on a transparent background,
@@ -68,6 +69,8 @@ interface BoardSectionProps {
     value?: any
   ) => void;
   onRemoveBoard: (boardId: string) => void;
+  /** Copy this board and every circuit on it. Optional — surfaces only when wired. */
+  onDuplicateBoard?: (boardId: string) => void;
   onAddCircuit: () => void;
   circuitCount: number;
   completedCount: number;
@@ -247,6 +250,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   onToggleExpanded,
   onUpdateBoard,
   onRemoveBoard,
+  onDuplicateBoard,
   onAddCircuit,
   circuitCount,
   completedCount,
@@ -292,11 +296,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   const spdStatusText = board.spdNA
     ? 'Not installed'
     : (() => {
-        const types = [
-          board.spdT1 && 'T1',
-          board.spdT2 && 'T2',
-          board.spdT3 && 'T3',
-        ].filter(Boolean);
+        const types = [board.spdT1 && 'T1', board.spdT2 && 'T2', board.spdT3 && 'T3'].filter(
+          Boolean
+        );
         if (types.length === 0) return 'Configure';
         return types.join(' · ') + (board.spdOperationalStatus ? ' · Op' : '');
       })();
@@ -340,8 +342,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
     meta: keypadMeta,
     sequence: keypadSequence,
     getValue: (field) => String((field === zdbField ? board.zdb : board.ipf) ?? ''),
-    setValue: (field, value) =>
-      onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
+    setValue: (field, value) => onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
     getStatus: (field) => {
       const s = field === zdbField ? zdbStatus : ipfStatus;
       if (s === 'valid') return { tone: 'pass', label: 'Within typical range' };
@@ -409,10 +410,12 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               <div className="flex flex-col items-start min-w-0 flex-1 gap-1">
                 {/* Desktop: Main/Sub label above the reference.
                     Mobile: compact inline label beside it. */}
-                <span className={cn(
-                  'hidden lg:block text-[12px] font-medium',
-                  isMainBoard ? 'text-elec-yellow' : 'text-white'
-                )}>
+                <span
+                  className={cn(
+                    'hidden lg:block text-[12px] font-medium',
+                    isMainBoard ? 'text-elec-yellow' : 'text-white'
+                  )}
+                >
                   {isMainBoard ? 'Main board' : 'Sub-board'}
                 </span>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -506,6 +509,29 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 </div>
               )}
 
+              {/* Copy board — offered on the main CU too, which is the common
+                  case: the first board is filled in and the rest of the landing
+                  is identical. Placed before Remove so the destructive action
+                  stays furthest from the copy. */}
+              {onDuplicateBoard && !isMobile && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    onDuplicateBoard(board.id);
+                  }}
+                  title="Copy this board and its circuits"
+                  aria-label={`Copy ${board.name} and its circuits`}
+                  className={cn(
+                    'flex h-11 px-3 rounded-xl items-center justify-center shrink-0 touch-manipulation',
+                    'text-[13px] font-semibold text-white hover:bg-white/[0.08] transition-colors'
+                  )}
+                >
+                  Copy
+                </button>
+              )}
+
               {/* Remove-board action — sub-boards only, desktop branch only
                   (prop-gated, not hidden lg: — see reorder note). Sits before
                   the chevron so the collapse affordance keeps the far edge. */}
@@ -555,9 +581,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Reference */}
               <div className="space-y-2">
-                <Label className="text-[12px] font-medium text-white">
-                  Reference
-                </Label>
+                <Label className="text-[12px] font-medium text-white">Reference</Label>
                 <DebouncedInput
                   value={board.reference}
                   onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
@@ -568,9 +592,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
               {/* Location */}
               <div className="space-y-2">
-                <Label className="text-[12px] font-medium text-white">
-                  Location
-                </Label>
+                <Label className="text-[12px] font-medium text-white">Location</Label>
                 <DebouncedInput
                   value={board.location || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'location', value)}
@@ -682,7 +704,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   label="Polarity"
                   checked={board.confirmedCorrectPolarity}
                   onToggle={() =>
-                    onUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity)
+                    onUpdateBoard(
+                      board.id,
+                      'confirmedCorrectPolarity',
+                      !board.confirmedCorrectPolarity
+                    )
                   }
                 />
                 <ConfirmChip
@@ -696,7 +722,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   label="Ring final"
                   checked={!!board.ringFinalCircuitConfirmed}
                   onToggle={() =>
-                    onUpdateBoard(board.id, 'ringFinalCircuitConfirmed', !board.ringFinalCircuitConfirmed)
+                    onUpdateBoard(
+                      board.id,
+                      'ringFinalCircuitConfirmed',
+                      !board.ringFinalCircuitConfirmed
+                    )
                   }
                 />
               </div>
@@ -708,7 +738,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 label="Polarity"
                 checked={board.confirmedCorrectPolarity}
                 onToggle={() =>
-                  onUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity)
+                  onUpdateBoard(
+                    board.id,
+                    'confirmedCorrectPolarity',
+                    !board.confirmedCorrectPolarity
+                  )
                 }
               />
               <ConfirmChip
@@ -722,7 +756,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 label="Ring final"
                 checked={!!board.ringFinalCircuitConfirmed}
                 onToggle={() =>
-                  onUpdateBoard(board.id, 'ringFinalCircuitConfirmed', !board.ringFinalCircuitConfirmed)
+                  onUpdateBoard(
+                    board.id,
+                    'ringFinalCircuitConfirmed',
+                    !board.ringFinalCircuitConfirmed
+                  )
                 }
               />
             </div>
@@ -820,9 +858,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       formatter so existing saved certs keep their values. */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
-                      <Label className="text-[12px] font-medium text-white">
-                        Location
-                      </Label>
+                      <Label className="text-[12px] font-medium text-white">Location</Label>
                       <MobileSelectPicker
                         value={board.spdLocation || ''}
                         onValueChange={(v) => onUpdateBoard(board.id, 'spdLocation', v)}
@@ -833,9 +869,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-[12px] font-medium text-white">
-                        Make
-                      </Label>
+                      <Label className="text-[12px] font-medium text-white">Make</Label>
                       {/* ELE-871 — Allow free text when make isn't in dropdown.
                           If user picks "__custom__" or current value isn't in the list,
                           render a text input instead. */}
@@ -896,7 +930,6 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               />
             )}
 
-
             {/* Mobile tools bar — text-only buttons on the neutral recipe */}
             {isMobile && showTools && tools && (
               <div className="py-3 border-t border-white/10">
@@ -923,11 +956,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         : 'border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white'
                     )}
                   >
-                    {tools.voiceActive
-                      ? 'Stop'
-                      : tools.voiceConnecting
-                        ? 'Connecting'
-                        : 'Voice'}
+                    {tools.voiceActive ? 'Stop' : tools.voiceConnecting ? 'Connecting' : 'Voice'}
                   </Button>
                   {tools.onValidate && (
                     <Button
@@ -1027,6 +1056,19 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
             {/* Mobile-only footer remove-board action — desktop removal moved to
                 the collapsible header. */}
+            {onDuplicateBoard && isMobile && (
+              <div className="flex items-center justify-end pt-3 border-t border-white/5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-11 px-3 text-white hover:bg-white/[0.08] text-[13px] font-semibold touch-manipulation"
+                  onClick={() => onDuplicateBoard(board.id)}
+                >
+                  Copy board
+                </Button>
+              </div>
+            )}
+
             {!isMainBoard && isMobile && (
               <div className="flex items-center justify-end pt-3 border-t border-white/5">
                 <Button

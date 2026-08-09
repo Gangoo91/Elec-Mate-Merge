@@ -11,7 +11,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Navigation } from 'lucide-react';
+import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { cn } from '@/lib/utils';
 
 interface CustomerPropertiesTabProps {
@@ -126,6 +127,24 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
                     : 'No certificates yet'}
                 </span>
                 <div className="flex items-center gap-1">
+                  {/* ELE-1520 — a property record is somewhere the electrician
+                      has to physically get to, so directions belong here. */}
+                  {canNavigateTo(property) && (
+                    <button
+                      onClick={() =>
+                        navigateToAddress({
+                          address: property.address,
+                          latitude: property.latitude,
+                          longitude: property.longitude,
+                        })
+                      }
+                      aria-label={`Navigate to ${property.address}`}
+                      className="flex h-9 items-center gap-1 px-2 text-[12px] font-medium text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
+                    >
+                      <Navigation className="h-3.5 w-3.5" />
+                      Navigate
+                    </button>
+                  )}
                   {!property.isPrimary && (
                     <button
                       onClick={() => handleSetPrimary(property.id)}

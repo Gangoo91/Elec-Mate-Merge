@@ -51,12 +51,37 @@ export const selectivityContent: CalculatorContent = {
       clauseText:
         'Where selectivity (discrimination) is necessary for safety or to maintain supply, the operating characteristics of devices in series shall be coordinated so that the device nearest the fault operates while upstream devices do not.',
     },
+    /*
+      Verified against the printed regulations (Desktop/BS7671_ocr.pdf), Reg 536.4.
+      The file previously carried one line — "selectivity principles (Reg 536.4)" —
+      which understates what the regulation actually requires: it is not enough for
+      the curves to look separated, the design has to be VERIFIED by one of four
+      named routes.
+    */
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 536.4.1.2.1 — verifying selectivity',
+      clauseText:
+        'Where selectivity is required, the design shall be verified either by (a) desk study taking into account the relevant product standards and the manufacturer\u2019s literature, (b) appropriate software tools where the manufacturer provides information for that specific use, (c) tests in accordance with the applicable product standard, or (d) manufacturer\u2019s declaration. A ratio or time/current comparison is an aid to the desk study in (a) — it is not, by itself, verification.',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 536.4.1.4 — selectivity between RCDs',
+      clauseText:
+        'Selectivity in the case of residual currents is given where (i) the upstream RCD is of selective type — type S or a time-delayed type with an appropriate time delay setting — and (ii) the ratio of the rated residual operating current of the upstream RCD to that of the downstream RCD is at least 3:1. Where either device has an adjustable rated residual operating current or time delay, the manufacturer\u2019s instructions govern.',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 536.4.1 — what is defined where',
+      clauseText:
+        'Selectivity between overcurrent protective devices is defined in Reg 536.4.1.2 for overload conditions and Reg 536.4.1.3 for short-circuit conditions; between RCDs in Reg 536.4.1.4; and between an OCPD and an RCD in Reg 536.4.1.5. Throughout Reg 536.4 the OCPD may be replaced by an SCPD.',
+    },
   ],
 
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Selectivity principles (Reg 536.4) and the ratio/I²t approach match the engine. Confirm 536.4 wording against A4:2026 facets.',
+      'Reg 536.4.1, 536.4.1.2.1 and 536.4.1.4 verified word-for-word against the printed A4:2026 text (Desktop/BS7671_ocr.pdf). The 3:1 residual-current ratio and the type S / time-delayed upstream condition match the RCD discrimination engine (currentRatio >= 3 plus a time difference). Note the regulation requires verification by desk study, software, test or manufacturer declaration — this tool supports the desk study, it does not discharge the duty.',
   },
 };

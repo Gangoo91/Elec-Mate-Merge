@@ -30,8 +30,16 @@ interface AchievementStats {
   diaryCount: number;
   totalXP: number;
   level: number;
+  /** Percentage score per quiz category, from `quiz_results.category_breakdown`. */
   quizCategoryScores: Record<string, number>;
+  /** Percentage of cards mastered per flashcard set. */
   flashcardSetMastery: Record<string, number>;
+  /** Completed EPA mock sessions. */
+  epaMocksCompleted: number;
+  /** Whether any completed EPA mock was graded a distinction. */
+  epaDistinction: boolean;
+  /** Distinct course sections completed, across every track. */
+  sectionsCompleted: number;
 }
 
 export interface NextUpAchievement {
@@ -130,6 +138,75 @@ export function useAchievementChecker() {
         0
       );
 
+      /*
+       * These four used to be `{}` / absent with a TODO, which made five
+       * achievements unwinnable rather than difficult: set-master (+50),
+       * all-sets (+200), all-categories (+100), epa-mock (+30) and
+       * epa-distinction (+100). Between them 480 XP was on display and
+       * unreachable — and the numbers proved it, with nine learners past 500
+       * reviewed cards and not one holding "master any one set".
+       *
+       * The data was there the whole time.
+       */
+      const [flashcardRes, breakdownRes, epaRes, sectionsRes] = await Promise.all([
+        supabase
+          .from('user_flashcard_progress')
+          .select('flashcard_set_id, mastery_level')
+          .eq('user_id', user.id),
+        supabase.from('quiz_results').select('category_breakdown').eq('user_id', user.id),
+        supabase
+          .from('epa_mock_sessions')
+          .select('status, predicted_grade')
+          .eq('user_id', user.id),
+        supabase
+          .from('course_progress')
+          .select('section_key')
+          .eq('user_id', user.id)
+          .eq('completed', true),
+      ]);
+
+      // A card counts as mastered at the top of the 0–5 scale; a set's mastery
+      // is the share of its cards that have got there.
+      const setTotals: Record<string, { total: number; mastered: number }> = {};
+      for (const row of flashcardRes.data ?? []) {
+        const setId = row.flashcard_set_id;
+        if (!setId) continue;
+        setTotals[setId] ??= { total: 0, mastered: 0 };
+        setTotals[setId].total += 1;
+        if ((row.mastery_level ?? 0) >= 5) setTotals[setId].mastered += 1;
+      }
+      const flashcardSetMastery: Record<string, number> = {};
+      for (const [setId, t] of Object.entries(setTotals)) {
+        flashcardSetMastery[setId] = t.total > 0 ? (t.mastered / t.total) * 100 : 0;
+      }
+
+      // category_breakdown is {"Polarity Testing": {total, correct}} per quiz —
+      // summed across attempts so one bad early attempt doesn't stick.
+      const catTotals: Record<string, { total: number; correct: number }> = {};
+      for (const row of breakdownRes.data ?? []) {
+        // Json column — narrowed to the shape the writers actually store.
+        const bd = row.category_breakdown as unknown as Record<
+          string,
+          { total?: number; correct?: number }
+        > | null;
+        if (!bd || typeof bd !== 'object') continue;
+        for (const [cat, v] of Object.entries(bd)) {
+          catTotals[cat] ??= { total: 0, correct: 0 };
+          catTotals[cat].total += v?.total ?? 0;
+          catTotals[cat].correct += v?.correct ?? 0;
+        }
+      }
+      const quizCategoryScores: Record<string, number> = {};
+      for (const [cat, t] of Object.entries(catTotals)) {
+        if (t.total > 0) quizCategoryScores[cat] = (t.correct / t.total) * 100;
+      }
+
+      const completedEpa = (epaRes.data ?? []).filter((r) => r.status === 'completed');
+
+      const sectionsCompleted = new Set(
+        (sectionsRes.data ?? []).map((r) => r.section_key).filter(Boolean)
+      ).size;
+
       return {
         totalCardsReviewed: streakData?.total_cards_reviewed ?? 0,
         totalQuizzes: quizData.length,
@@ -144,8 +221,13 @@ export function useAchievementChecker() {
         diaryCount: activityCounts['site_diary_entry'] ?? 0,
         totalXP: xpData?.total_xp ?? 0,
         level: xpData?.level ?? 1,
-        quizCategoryScores: {}, // TODO: populate from quiz_results category_breakdown
-        flashcardSetMastery: {}, // TODO: populate from user_flashcard_progress
+        quizCategoryScores,
+        flashcardSetMastery,
+        epaMocksCompleted: completedEpa.length,
+        epaDistinction: completedEpa.some((r) =>
+          String(r.predicted_grade ?? '').toLowerCase().includes('distinction')
+        ),
+        sectionsCompleted,
       };
     } catch {
       return null;
@@ -216,10 +298,13 @@ export function useAchievementChecker() {
         return stats.currentStreak >= (p.days as number);
 
       case 'epa_mock_completed':
-        return false; // TODO: wire up when EPA mock tracking is available
+        return stats.epaMocksCompleted >= ((p.count as number) ?? 1);
 
       case 'epa_distinction':
-        return false; // TODO: wire up when EPA mock tracking is available
+        return stats.epaDistinction;
+
+      case 'sections_completed':
+        return stats.sectionsCompleted >= (p.count as number);
 
       default:
         return false;
@@ -259,6 +344,10 @@ export function useAchievementChecker() {
         return { current: stats.level, target: p.level as number };
       case 'total_xp':
         return { current: stats.totalXP, target: p.xp as number };
+      case 'sections_completed':
+        return { current: stats.sectionsCompleted, target: p.count as number };
+      case 'epa_mock_completed':
+        return { current: stats.epaMocksCompleted, target: (p.count as number) ?? 1 };
       default:
         return null;
     }

@@ -296,7 +296,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Record all test results',
     ],
     regulations: [
-      'BS 7671 Regulation 643.10 - Additional protection',
+      'BS 7671 Regulation 643.8 - Additional protection',
       'IET Guidance Note 3 Section 10.13',
     ],
     nextSteps: 'Complete functional testing of all systems and prepare certification',
@@ -326,7 +326,7 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
       'Test any special installations or equipment',
     ],
     regulations: [
-      'BS 7671 Regulation 643.9 - Functional testing',
+      'BS 7671 Regulation 643.10 - Functional testing',
       'Relevant product standards for specific equipment',
     ],
     nextSteps: 'Complete all documentation and issue electrical installation certificate',

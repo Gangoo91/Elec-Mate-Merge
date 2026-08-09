@@ -486,6 +486,7 @@ const CircuitBreakerSelectorCalculator = () => {
       description="Find the right protective device for your circuit — BS 7671 compliant"
     >
       <CalculatorPanes
+        copyTitle="Circuit Breaker Selector"
         form={
           <>
             <CalculatorSelect

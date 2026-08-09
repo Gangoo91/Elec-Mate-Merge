@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { WeeklySummary, HudsonLevel, ScoreCategory } from '@/hooks/useWeeklySafetySummary';
 
 interface SafetyScoreSheetProps {
@@ -11,6 +12,9 @@ interface SafetyScoreSheetProps {
 }
 
 const HUDSON_LABEL: Record<HudsonLevel, string> = {
+  // Not a band — the absence of one. Shown while coverage is below the
+  // minimum, so a new account is never handed "Critical" on day one.
+  insufficient_data: 'Building your picture',
   critical: 'Critical',
   reactive: 'Reactive',
   calculative: 'Calculative',
@@ -19,6 +23,7 @@ const HUDSON_LABEL: Record<HudsonLevel, string> = {
 };
 
 const HUDSON_SUB: Record<HudsonLevel, string> = {
+  insufficient_data: 'Not enough logged yet to score fairly',
   critical: 'Immediate intervention',
   reactive: 'Compliance only — gaps showing',
   calculative: 'Systems in place — room to grow',
@@ -55,7 +60,15 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
   summary,
   isLoading,
 }) => {
-  const score = summary?.safetyScore ?? null;
+  /*
+   * Same gate as the card. Without it the sheet went on handing out
+   * "40 · CRITICAL · Immediate intervention" to an account that simply has not
+   * logged anything yet — the exact verdict the coverage work exists to stop,
+   * one tap behind a card that had already stopped saying it.
+   */
+  const enoughEvidence = summary?.hasEnoughEvidence ?? true;
+  const coverage = summary?.coverage;
+  const score = summary && enoughEvidence ? summary.safetyScore : null;
   const hudsonLevel = summary?.hudsonLevel;
   const hudsonLabel = hudsonLevel ? HUDSON_LABEL[hudsonLevel] : '';
   const hudsonSub = hudsonLevel ? HUDSON_SUB[hudsonLevel] : '';
@@ -96,12 +109,16 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
         className="h-[85vh] sm:h-[85vh] rounded-t-2xl bg-[hsl(0_0%_8%)] border-white/[0.08] p-0 overflow-hidden flex flex-col"
       >
         <SheetHeader className="px-6 pt-6 pb-2 text-left">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-            Safety score
-          </div>
-          <SheetTitle className="text-[24px] sm:text-[28px] font-semibold tracking-tight leading-tight text-white">
-            How you're tracking.
+          {/* No uppercase letterspaced kicker restating the title beneath it —
+              that is the deck style the design system removes on sight. */}
+          <SheetTitle className="text-[22px] sm:text-[26px] font-bold tracking-tight leading-tight text-white">
+            {enoughEvidence ? 'Your safety score' : 'Building your picture'}
           </SheetTitle>
+          <p className="mt-1 text-[13px] leading-relaxed text-white">
+            {enoughEvidence
+              ? `Scored across five dimensions over the last ${summary?.windowDays ?? 90} days.`
+              : `Scored on ${coverage?.scored ?? 0} of ${coverage?.total ?? 10} signals — not enough yet to score fairly.`}
+          </p>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto px-6 pb-8 space-y-8">
@@ -109,9 +126,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
           {hardCap && (
             <section className="bg-[hsl(0_0%_10%)] border border-red-500/40 rounded-2xl p-5">
               <div className="flex items-baseline gap-3">
-                <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-red-400 shrink-0">
-                  Cap active
-                </span>
+                <span className="shrink-0 text-[13px] font-semibold text-red-400">Cap active</span>
                 <div className="flex-1 min-w-0">
                   <div className="text-[14.5px] font-semibold text-white">
                     Score capped at {hardCap.cap}/100
@@ -134,31 +149,57 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
           )}
 
           {/* Score hero */}
-          <section className="flex items-baseline gap-4 pt-2">
+          {/* 80px of figure with a column of letterspaced captions beside it
+              left a hole down the right of the screen and stranded the verdict
+              in the middle of it. Figure, band and trend now read as one line
+              of information, with the sentence directly beneath. */}
+          <section className="flex items-end gap-4">
             <span
               className={cn(
-                'text-[64px] sm:text-[80px] font-semibold tabular-nums tracking-tight leading-none',
-                scoreColor
+                'text-[56px] sm:text-[64px] font-semibold tabular-nums tracking-tight leading-none',
+                enoughEvidence ? scoreColor : 'text-white'
               )}
             >
-              {score ?? '—'}
+              {enoughEvidence ? (score ?? '—') : `${coverage?.scored ?? 0}`}
             </span>
-            <div className="flex flex-col gap-1.5">
-              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-white">
-                Out of 100
-              </span>
-              <span
-                className={cn('text-[11px] font-semibold uppercase tracking-[0.18em]', scoreColor)}
+            <div className="min-w-0 flex-1 pb-1">
+              <p className="text-[13px] font-medium text-white">
+                {enoughEvidence ? 'out of 100' : `of ${coverage?.total ?? 10} signals logged`}
+              </p>
+              <p
+                className={cn(
+                  'text-[13px] font-semibold',
+                  enoughEvidence ? scoreColor : 'text-white'
+                )}
               >
                 {hudsonLabel}
-              </span>
-              <span className={cn('text-[11px] font-semibold tabular-nums', trendTone)}>
-                {trendLabel}
-              </span>
+                {enoughEvidence && trendLabel ? (
+                  <span className={cn('ml-2 font-medium tabular-nums', trendTone)}>
+                    {trendLabel}
+                  </span>
+                ) : null}
+              </p>
             </div>
           </section>
 
           <p className="text-[13.5px] text-white leading-relaxed">{hudsonSub}</p>
+
+          {/* When the score is withheld, say what would unlock it. */}
+          {!enoughEvidence && coverage && coverage.missing.length > 0 && (
+            <section>
+              <h3 className="mb-2 text-[13px] font-semibold text-white">Still to log</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {coverage.missing.map((m) => (
+                  <span
+                    key={m}
+                    className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[12px] text-white"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
 
           {isLoading && <p className="text-[12px] text-white">Loading the breakdown…</p>}
 
@@ -166,10 +207,17 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
             <>
               {/* 5-dimension strip */}
               <section className="space-y-3">
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  Breakdown by dimension
-                </div>
-                <div className="-mx-6 sm:mx-0 grid grid-cols-2 sm:grid-cols-5 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
+                <div className="text-[13px] font-semibold text-white">Breakdown by dimension</div>
+                {/*
+                 * Rows, not a five-cell table.
+                 *
+                 * The grid was `grid-cols-2` on a phone with five items, so the
+                 * last cell sat beside a black hole; and the cells were divided
+                 * by 1px of pure black, which on this ground reads as a crack
+                 * rather than a border. A dimension is a value against its own
+                 * maximum — that is a bar, and bars stack.
+                 */}
+                <div className="space-y-2.5">
                   {(
                     [
                       'compliance',
@@ -190,23 +238,50 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                           : ratio >= 0.4
                             ? 'text-amber-400'
                             : 'text-red-400';
+                    const bar =
+                      ratio >= 0.85
+                        ? 'bg-emerald-400'
+                        : ratio >= 0.6
+                          ? 'bg-elec-yellow'
+                          : ratio >= 0.4
+                            ? 'bg-amber-400'
+                            : 'bg-red-400';
                     return (
-                      <div key={key} className="bg-[hsl(0_0%_10%)] px-3 py-4 sm:px-4 sm:py-5">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                          {CATEGORY_LABEL[key]}
+                      <div
+                        key={key}
+                        className={cn(
+                          'rounded-2xl border border-elec-yellow/35 p-3.5',
+                          CARD_SURFACE
+                        )}
+                      >
+                        <div className="flex items-baseline justify-between gap-3">
+                          <span className="text-[13.5px] font-semibold text-white">
+                            {CATEGORY_LABEL[key]}
+                          </span>
+                          <span
+                            className={cn(
+                              'shrink-0 text-[15px] font-semibold tabular-nums tracking-tight',
+                              tone
+                            )}
+                          >
+                            {value}
+                            <span className="text-[12px] text-white">/{max}</span>
+                          </span>
                         </div>
-                        <div
-                          className={cn(
-                            'mt-2 text-[22px] sm:text-[26px] font-semibold tabular-nums tracking-tight leading-none',
-                            tone
-                          )}
-                        >
-                          {value}
-                          <span className="text-white text-[14px]">/{max}</span>
-                        </div>
-                        <div className="mt-1 text-[10.5px] text-white leading-snug">
+                        {/* Scaled to its OWN maximum — the dimensions are weighted
+                            30/25/20/15/10, so a shared scale would rank them wrongly. */}
+                        <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                          <span
+                            className={cn(
+                              'block h-full rounded-full transition-[width] duration-700 ease-out',
+                              bar
+                            )}
+                            style={{ width: `${Math.max(ratio * 100, value > 0 ? 4 : 0)}%` }}
+                          />
+                        </span>
+                        <p className="mt-2 text-[12px] leading-snug text-white">
                           {CATEGORY_DESC[key]}
-                        </div>
+                        </p>
                       </div>
                     );
                   })}
@@ -216,7 +291,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
               {/* Deductions */}
               {summary.deductions.length > 0 && (
                 <section className="space-y-3">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400">
+                  <div className="text-[13px] font-semibold text-red-400">
                     Where you're losing points
                   </div>
                   <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -240,7 +315,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
               {/* Gains */}
               {summary.gains.length > 0 && (
                 <section className="space-y-3">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-400">
+                  <div className="text-[13px] font-semibold text-emerald-400">
                     Where you're earning points
                   </div>
                   <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -261,13 +336,13 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
               {/* Recommendations */}
               {summary.recommendations.length > 0 && (
                 <section className="space-y-3">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                  <div className="text-[13px] font-semibold text-elec-yellow">
                     Top moves to improve
                   </div>
                   <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
                     {summary.recommendations.slice(0, 8).map((r, idx) => (
                       <li key={idx} className="py-3 flex items-baseline gap-3">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white w-8 shrink-0">
+                        <span className="w-8 shrink-0 text-[12px] font-semibold tabular-nums text-white">
                           {String(idx + 1).padStart(2, '0')}
                         </span>
                         <span className="text-[13.5px] text-white flex-1 leading-relaxed">

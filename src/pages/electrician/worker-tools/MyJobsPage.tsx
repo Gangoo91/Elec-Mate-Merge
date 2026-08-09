@@ -26,6 +26,7 @@ import {
   Navigation,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
   Pill,
@@ -459,9 +460,10 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
   const accent = statusAccent(job.status);
   const relative = scheduleLabel(job.scheduled_date);
   const full = fullDateLabel(job.scheduled_date);
-  const mapsUrl = job.address
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.address)}`
-    : null;
+  // ELE-1520 — was a raw `<a href>` to Google Maps, which on native is left to
+  // the WebView and never reaches the Maps app. Routed through the shared
+  // helper so a worker on site actually gets directions.
+  const canNavigate = canNavigateTo({ address: job.address });
 
   return (
     <ListCard>
@@ -488,16 +490,15 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
           {job.address ? (
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span>{job.address}</span>
-              {mapsUrl && (
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
+              {canNavigate && (
+                <button
+                  type="button"
+                  onClick={() => navigateToAddress({ address: job.address })}
+                  className="inline-flex min-h-11 items-center gap-1 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
                 >
                   <Navigation className="h-3.5 w-3.5" />
                   Directions
-                </a>
+                </button>
               )}
             </span>
           ) : (

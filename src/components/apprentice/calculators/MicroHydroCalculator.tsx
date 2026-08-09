@@ -136,7 +136,9 @@ const MicroHydroCalculator = () => {
 
   const [flow, setFlow] = useState('');
   const [head, setHead] = useState('');
-  const [turbineType, setTurbineType] = useState('');
+  // Let the calculator pick from head and flow rather than asking the user to
+  // know Pelton from crossflow before they have a result.
+  const [turbineType, setTurbineType] = useState('auto');
   const [availabilityFactor, setAvailabilityFactor] = useState('85');
   const [electricityRate, setElectricityRate] = useState(String(DOMESTIC_IMPORT_RATE));
   const [penstockLength, setPenstockLength] = useState('100');

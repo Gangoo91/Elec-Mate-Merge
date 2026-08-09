@@ -1,12 +1,12 @@
 /**
  * AnimatedCounter
  *
- * Smooth number animation with spring physics for natural feel.
+ * Counts to a value over a fixed duration, easing out.
  * Supports locale formatting, currency prefixes, and tabular-nums.
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface AnimatedCounterProps {
   value: number;
@@ -30,24 +30,58 @@ export function AnimatedCounter({
   const [displayValue, setDisplayValue] = useState(0);
   const previousValue = useRef(0);
 
-  // Spring animation for smooth counting
-  const springValue = useSpring(0, {
-    stiffness: 100,
-    damping: 30,
-    duration: duration * 1000,
-  });
+  /*
+    A fixed-duration tween, not a spring.
 
+    This ran `useSpring(0, { stiffness: 100, damping: 30, duration })`, which
+    had two faults. `duration` was inert — framer-motion ignores it whenever
+    stiffness and damping are supplied — and, worse, the spring's default
+    `restDelta` of 0.01 is an ABSOLUTE threshold. Settling on £3,376.77 meant
+    converging to three parts per million through an overdamped decay, so the
+    admin MRR figure spent about twenty-five seconds climbing and read £120,
+    then £379, then £2,446 to anyone who glanced at it. On a page whose whole
+    job is to state the money, the headline was wrong far longer than it was
+    right.
+
+    Scaling restDelta to the value does not fix it either: useSpring captures
+    its config on first render, when `value` is still 0 because the query has
+    not resolved, so the threshold stays pinned at its initial tiny value.
+
+    An eased tween has no rest threshold to get wrong. It lands on exactly
+    `value` after exactly `duration`, whatever the magnitude — and it animates
+    from wherever the previous value was, so a refresh nudges the figure rather
+    than replaying it from zero.
+  */
   useEffect(() => {
-    springValue.set(value);
-  }, [value, springValue]);
+    const from = previousValue.current;
+    const to = value;
+    previousValue.current = value;
 
-  useEffect(() => {
-    const unsubscribe = springValue.on('change', (latest) => {
-      setDisplayValue(latest);
-    });
+    if (from === to) {
+      setDisplayValue(to);
+      return;
+    }
 
-    return () => unsubscribe();
-  }, [springValue]);
+    const ms = Math.max(0, duration * 1000);
+    if (ms === 0) {
+      setDisplayValue(to);
+      return;
+    }
+
+    let frame = 0;
+    const start = performance.now();
+    // easeOutCubic: quick to become readable, gentle at the finish.
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      setDisplayValue(from + (to - from) * ease(t));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(frame);
+  }, [value, duration]);
 
   // Format the number
   const formatNumber = (num: number): string => {

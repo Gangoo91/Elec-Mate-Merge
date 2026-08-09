@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/select';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   Eyebrow,
@@ -35,6 +33,7 @@ import { RiskSelect } from './common/RiskSelect';
 import { ReadinessGate } from './common/ReadinessGate';
 import { hazardCategories } from '@/data/hazards';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 // ─── Types ───
 
@@ -272,7 +271,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
       onBack={onBack ?? (() => {})}
       moduleName="Risk Assessment"
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Risk Assessment"
           title="Build a 5×5 risk assessment"
           description="Identify hazards, score likelihood and severity, and record the controls that bring each risk down — CDM 2015 and BS 7671 aligned."
@@ -291,7 +290,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
       }
       stats={
         riskFactors.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               {
                 value: stats.total,

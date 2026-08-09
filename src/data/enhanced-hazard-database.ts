@@ -17,7 +17,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
         'Use alternative methods (dead working)',
       ],
       engineering: [
-        'Isolation and lock-off procedures (BS7671 Regulation 514.11)',
+        'Isolation and lock-off procedures (BS 7671 Chapter 46 / Section 537)',
         'Proving unit dead with approved voltage detector (GS38)',
         'Safe working distances from live parts (minimum 600mm)',
       ],
@@ -28,7 +28,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ppe: ['Use of appropriate PPE including insulated gloves to BS EN 60903'],
     },
     bs7671References: [
-      '514.11 - Isolation and switching',
+      '537 - Isolation and switching devices',
       'Part 4 - Protection for safety',
       '411 - Protective measure: automatic disconnection',
     ],
@@ -651,7 +651,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '411.3.3 - RCD protection',
-      '443.4 - Surge protective devices',
+      '443.4 - Overvoltage control',
       'Part 6 - Inspection and testing',
     ],
     category: 'electrical',
@@ -1220,7 +1220,10 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       ppe: ['Breathing apparatus', 'Explosion-proof tools', 'Gas detection equipment'],
     },
-    bs7671References: ['Part 7 - Special installations', '422 - Protection against fire'],
+    bs7671References: [
+      'Part 7 - Special installations',
+      '422 - Precautions where particular risks of fire exist',
+    ],
     category: 'emerging-technology',
     workType: ['installation', 'commissioning', 'maintenance'],
     environment: ['industrial', 'research'],
@@ -1452,7 +1455,10 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       ppe: ['Anti-static clothing', 'Explosion-proof tools', 'Gas detection equipment'],
     },
-    bs7671References: ['Part 4 - Protection for safety', '422 - Protection against fire'],
+    bs7671References: [
+      'Part 4 - Protection for safety',
+      '422 - Precautions where particular risks of fire exist',
+    ],
     category: 'hazardous-area',
     workType: ['installation', 'maintenance'],
     environment: ['industrial', 'petrochemical', 'explosive-atmosphere'],
@@ -1569,7 +1575,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       ppe: ['Insulated gloves BS EN 60903', 'Arc flash face shield', 'Flame-resistant clothing'],
     },
-    bs7671References: ['Part 6 - Inspection and testing', '514.11 - Isolation'],
+    bs7671References: ['Part 6 - Inspection and testing', '537 - Isolation and switching devices'],
     category: 'testing',
     workType: ['testing', 'fault-finding', 'commissioning'],
     environment: ['all-environments'],
@@ -1637,7 +1643,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       ppe: ['Insulated gloves', 'Arc-rated clothing', 'Safety glasses'],
     },
-    bs7671References: ['Part 6 - Inspection and testing', '514.11 - Isolation'],
+    bs7671References: ['Part 6 - Inspection and testing', '537 - Isolation and switching devices'],
     category: 'maintenance',
     workType: ['fault-finding', 'maintenance'],
     environment: ['all-environments'],
@@ -1661,7 +1667,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       ppe: ['Full PPE kit in emergency van', 'Headlamps', 'High-vis clothing'],
     },
-    bs7671References: ['Part 6 - Inspection and testing', '514.11 - Isolation'],
+    bs7671References: ['Part 6 - Inspection and testing', '537 - Isolation and switching devices'],
     category: 'emergency',
     workType: ['emergency-repair', 'fault-finding'],
     environment: ['all-environments'],
@@ -1853,7 +1859,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       'ESQCR 2002 (as amended)',
       'Part 5 - Selection and erection',
-      '542 - Earth electrodes',
+      '542 - Earthing arrangements',
     ],
     category: 'regulatory-compliance',
     workType: ['installation', 'connection'],
@@ -1947,7 +1953,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       '704 - Construction and demolition site installations',
       '411.3.3 - RCD requirements',
-      '522.8 - External influences',
+      '522.8 - Other mechanical stresses (AJ)',
     ],
     category: 'special-installation',
     workType: ['temporary-installation'],
@@ -2011,8 +2017,8 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '710 - Medical locations',
-      '560.6 - Safety services for medical locations',
-      '710.413 - Additional protection in Group 1 and Group 2',
+      '560.6 - Electrical sources for safety services',
+      '710.415.1 - Additional protection: RCDs',
     ],
     category: 'special-installation',
     workType: ['installation', 'maintenance', 'testing'],
@@ -2044,8 +2050,8 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '712 - Solar photovoltaic (PV) power supply systems',
-      '534.4 - Overvoltage protection',
-      '712.411.3.2.1.2 - DC isolation',
+      '534.4 - Selection and erection of SPDs',
+      '712.53 - Protection, isolation, switching, control and monitoring',
     ],
     category: 'special-installation',
     workType: ['installation', 'maintenance'],
@@ -2176,7 +2182,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       'Part 6 - Section 612',
-      '411.4 - Automatic disconnection of supply',
+      '411.4 - TN system',
       '411.5.3 - Maximum Zs values',
       'Tables 41.2 to 41.5 - Maximum earth fault loop impedance',
     ],
@@ -2194,19 +2200,24 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     riskRating: 16,
     controlMeasures: {
       administrative: [
-        'Test at rated residual operating current (IΔn): 30mA, 100mA, 300mA',
-        'Test at 50% IΔn (should not trip), 100% IΔn (≤300ms), 150% IΔn (≤150ms), 5× IΔn (≤40ms)',
-        'Test in both half-cycles (0° and 180°)',
-        'Verify mechanical function test button',
-        'Quarterly testing for socket-outlet RCDs',
+        // BS 7671:2018+A4:2026 Regulation 643.8 requires a SINGLE alternating
+        // current test at rated residual operating current (IΔn). The former
+        // multi-point sequence (½×, 1×, 5× IΔn, both half-cycles) came from
+        // Table 3A, which A4 deleted — it is no longer how an RCD is verified.
+        'Test with an alternating current at rated residual operating current (IΔn)',
+        'General non-delay type must disconnect within 300 ms',
+        'Use test equipment to BS EN 61557-6 (Regulation 643.1)',
+        'Operate the integral test button to confirm mechanical function',
       ],
       engineering: ['RCD tester calibrated annually', 'Test at furthest socket on circuit'],
     },
     bs7671References: [
-      'Part 6 - Section 612',
-      '643.7 - Testing of RCDs',
+      'Part 6 - Inspection and testing',
+      // Was 643.7, which is automatic disconnection generally. RCD verification
+      // for ADDITIONAL protection — which is what this hazard is about — is 643.8.
+      '643.8 - Additional protection',
       '411.3.3 - Additional protection',
-      '415.1 - Requirements for fault protection',
+      '415.1 - Additional protection: RCDs',
     ],
     category: 'testing-inspection',
     workType: ['testing', 'commissioning', 'periodic-inspection'],
@@ -2233,7 +2244,10 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       'Part 6 - Section 612',
       '643.6 - Polarity testing',
-      '510.3.2 - Single-pole switching in phase conductor',
+      // 510.3.2 does not exist — 510.3 has no sub-clauses, it runs straight
+      // into 511. The requirement is 132.14.1. "Phase conductor" is also the
+      // superseded term; BS 7671 says line conductor.
+      '132.14.1 - Single-pole devices in the line conductor only',
     ],
     category: 'testing-inspection',
     workType: ['testing', 'commissioning'],
@@ -2258,10 +2272,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       ],
       engineering: ['Simulate fault conditions where safe to do so', 'Functional load testing'],
     },
-    bs7671References: [
-      'Part 6 - Section 643.10',
-      '643.10 - Verification of measures of protection by automatic disconnection',
-    ],
+    bs7671References: ['Part 6 - Section 643.10', '643.10 - Functional testing'],
     category: 'testing-inspection',
     workType: ['commissioning', 'testing'],
     environment: ['industrial', 'commercial'],
@@ -2382,7 +2393,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       'Appendix H - Current demand and diversity',
-      '311 - Assessment of general characteristics',
+      '311 - Maximum demand and diversity',
     ],
     category: 'design-calculations',
     workType: ['design', 'installation'],
@@ -2438,7 +2449,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '536 - Coordination of protective devices',
-      '533.2 - Selectivity between protective devices',
+      '533.2 - Selection of devices for overload protection of wiring systems',
     ],
     category: 'design-calculations',
     workType: ['design', 'commissioning'],
@@ -2552,7 +2563,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       'Part 5 - Chapter 54 Earthing arrangements',
-      '411.4 - TN systems',
+      '411.4 - TN system',
       '411.5 - TT systems',
       '544 - Protective conductors',
     ],
@@ -2606,7 +2617,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '536 - Coordination of protective devices',
-      '533.2.1.5 - Discrimination (selectivity)',
+      '536.4 - Requirements for selectivity',
     ],
     category: 'design-calculations',
     workType: ['design', 'commissioning'],
@@ -2637,7 +2648,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       'Appendix 4 - Harmonic currents',
       '523.6.3 - Neutral conductors',
-      '433.2 - Overload protection',
+      '433.2 - Position of devices for protection against overload',
     ],
     category: 'design-calculations',
     workType: ['design', 'testing'],
@@ -3495,10 +3506,18 @@ export const riskAssessmentHelpers = {
 
 // BS7671 18th Edition regulation lookup
 export const bs7671RegulationLookup = {
-  '514.11': {
-    title: 'Isolation and switching',
+  '537': {
+    title: 'Isolation and switching devices',
     description:
-      'Every installation shall be provided with a main switch disconnecting all live conductors',
+      'Requirements for the selection and erection of devices for isolation, switching off for ' +
+      'mechanical maintenance, emergency switching and functional switching. See also Chapter 46.',
+    section: 'Part 5 - Selection and erection of electrical equipment',
+  },
+  '514.11': {
+    title: 'Warning notice: isolation',
+    description:
+      'Where an installation has equipment that cannot be isolated by a single device, a durable ' +
+      'warning notice shall be permanently fixed in a visible position identifying the isolators.',
     section: 'Part 5 - Selection and erection of electrical equipment',
   },
   '411.3.3': {

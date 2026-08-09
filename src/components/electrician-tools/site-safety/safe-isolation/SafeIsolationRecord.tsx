@@ -10,13 +10,12 @@ import {
   useUpdateIsolationRecord,
   useIsolationExpiryCheck,
   getIsolationDuration,
+  readingsConfirmDead,
 } from '@/hooks/useSafeIsolationRecords';
 import type { SafeIsolationRecord as SafeIsolationRecordType } from '@/hooks/useSafeIsolationRecords';
 
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -40,6 +39,7 @@ import { LoadMoreButton } from '../common/LoadMoreButton';
 import { IsolationStepCard, type StepCompletionData } from './IsolationStepCard';
 import { IsolationSummary } from './IsolationSummary';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
 
 type IsoStatus = SafeIsolationRecordType['status'];
 
@@ -60,9 +60,12 @@ function statusTone(status: IsoStatus): Tone | undefined {
 }
 
 const STATUS_PILL: Record<'amber' | 'red' | 'blue' | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  // Neutral surface, coloured text — same as Permit to Work. Blue was not in
+  // the palette at all; re-energised now reads as plain white, which is what
+  // "finished, nothing live" should look like.
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  blue: 'bg-white/[0.05] text-white border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
@@ -326,12 +329,18 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
   const allCompleted = record.steps.every((s) => s.completed);
 
   const handleCompleteStep = async (stepNumber: number, data?: StepCompletionData) => {
+    // Prove dead is the only step that can fail. When it does, the readings are
+    // still written — they are the record that the isolation did not hold — but
+    // the step stays open, so `allDone` below can never flip a live circuit to
+    // status 'isolated'.
+    const failed = data?.proveDeadFailed === true;
+
     const updatedSteps = record.steps.map((s) =>
       s.stepNumber === stepNumber
         ? {
             ...s,
-            completed: true,
-            completedAt: new Date().toISOString(),
+            completed: !failed,
+            completedAt: failed ? undefined : new Date().toISOString(),
             ...(data?.voltageReadings ? { voltageReadings: data.voltageReadings } : {}),
             ...(data?.lockOffNumber ? { lockOffNumber: data.lockOffNumber } : {}),
             ...(data?.provingUnitSerial ? { provingUnitSerial: data.provingUnitSerial } : {}),
@@ -340,7 +349,13 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
           }
         : s
     );
-    const allDone = updatedSteps.every((s) => s.completed);
+    // Two independent conditions, deliberately. Every step complete is the
+    // procedural test; the readings actually reading dead is the physical one.
+    // A record reaches 'isolated' only if both hold — this is the transition
+    // that tells someone it is safe to put their hands in.
+    const proveDead = updatedSteps.find((s) => s.stepNumber === 6);
+    const allDone =
+      updatedSteps.every((s) => s.completed) && readingsConfirmDead(proveDead?.voltageReadings);
     const topLevelUpdates: Record<string, unknown> = {};
     if (data?.lockOffNumber) topLevelUpdates.lock_off_number = data.lockOffNumber;
     if (data?.provingUnitSerial) topLevelUpdates.proving_unit_used = true;
@@ -466,7 +481,7 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
       moduleName="Safe Isolation"
       trailing={liveCount > 0 ? <StatusPill status="isolated" /> : undefined}
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Safe Isolation · GS38"
           title="Prove dead, lock off, record it"
           description="Step-by-step GS38 isolation with voltage readings, lock-off, dual sign-off and re-energisation — a defensible record every time."
@@ -476,7 +491,7 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
       }
       stats={
         all.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               {
                 value: liveCount,

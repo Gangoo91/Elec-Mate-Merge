@@ -24,7 +24,13 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorDivider,
+  CalculatorPanes,
+  CalculatorEditorial,
+  ResultHeadline,
 } from '@/components/calculators/shared';
+import { bondingConductorSizeContent } from './content/bonding-conductor-size';
+
+const CAT = 'cable';
 
 /**
  * TABLE 54.8 — minimum copper-equivalent CSA of the main protective bonding
@@ -164,129 +170,153 @@ const BondingConductorSizeCalculator = () => {
 
   return (
     <CalculatorCard
-      category="cable"
+      category={CAT}
       title="Bonding Conductor Size Calculator"
       description="Main and supplementary protective bonding to BS 7671 Reg 544 and Table 54.8"
     >
-      <CalculatorSelect
-        label="What are you sizing?"
-        value={mode}
-        onChange={(v) => setMode(v as Mode)}
-        options={[
-          { value: 'main', label: 'Main protective bonding (gas, water, oil, structural steel)' },
-          { value: 'supplementary', label: 'Supplementary bonding (bathroom, pool, agricultural)' },
-        ]}
-      />
-
-      {mode === 'main' ? (
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Earthing arrangement"
-            value={earthing}
-            onChange={setEarthing}
-            options={[
-              { value: 'pme', label: 'TN-C-S (PME) — sized from the PEN' },
-              { value: 'other', label: 'TN-S or TT — sized from the earthing conductor' },
-            ]}
-          />
-          <CalculatorSelect
-            label={earthing === 'pme' ? 'Supply PEN conductor (mm²)' : 'Earthing conductor (mm²)'}
-            value={refCsa}
-            onChange={setRefCsa}
-            options={CSA_OPTIONS.map((c) => ({ value: String(c), label: `${c} mm²` }))}
-          />
-        </CalculatorInputGrid>
-      ) : (
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="What is being connected?"
-            value={kind}
-            onChange={setKind}
-            options={[
-              { value: 'exp-extr', label: 'Exposed-conductive-part to extraneous (Reg 544.2.2)' },
-              { value: 'exp-exp', label: 'Two exposed-conductive-parts (Reg 544.2.1)' },
-              { value: 'extr-extr', label: 'Two extraneous-conductive-parts (Reg 544.2.3)' },
-            ]}
-          />
-          <CalculatorSelect
-            label="Mechanically protected?"
-            value={mech}
-            onChange={setMech}
-            options={[
-              { value: 'yes', label: 'Yes — sheathed or in containment' },
-              { value: 'no', label: 'No — minimum rises to 4 mm²' },
-            ]}
-          />
-          {kind !== 'extr-extr' && (
+      <CalculatorPanes
+        copyTitle="Bonding Conductor Size"
+        placeholder="Choose what you are sizing — the minimum will appear here."
+        form={
+          <>
             <CalculatorSelect
-              label="Circuit protective conductor (mm²)"
-              value={cpcCsa}
-              onChange={setCpcCsa}
-              options={CSA_OPTIONS.filter((c) => c <= 35).map((c) => ({
-                value: String(c),
-                label: `${c} mm²`,
-              }))}
+              label="What are you sizing?"
+              value={mode}
+              onChange={(v) => setMode(v as Mode)}
+              options={[
+                {
+                  value: 'main',
+                  label: 'Main protective bonding (gas, water, oil, structural steel)',
+                },
+                {
+                  value: 'supplementary',
+                  label: 'Supplementary bonding (bathroom, pool, agricultural)',
+                },
+              ]}
             />
-          )}
-        </CalculatorInputGrid>
-      )}
 
-      {verdict && (
-        <>
-          <CalculatorDivider category="cable" />
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              Minimum size
-            </p>
-            <p className="mt-1 text-3xl font-bold text-white">
-              {verdict.required} mm²
-              <span className="ml-2 text-sm font-medium text-white">copper</span>
-            </p>
-            <p className="mt-1 text-[13px] text-white">{verdict.rule}</p>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white">{verdict.workings}</p>
-            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
-              {verdict.reg}
-            </p>
-            {verdict.notes.map((n) => (
-              <p key={n} className="mt-2 text-[12px] leading-relaxed text-white">
-                {n}
-              </p>
-            ))}
-          </div>
+            {mode === 'main' ? (
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="Earthing arrangement"
+                  value={earthing}
+                  onChange={setEarthing}
+                  options={[
+                    { value: 'pme', label: 'TN-C-S (PME) — sized from the PEN' },
+                    { value: 'other', label: 'TN-S or TT — sized from the earthing conductor' },
+                  ]}
+                />
+                <CalculatorSelect
+                  label={
+                    earthing === 'pme' ? 'Supply PEN conductor (mm²)' : 'Earthing conductor (mm²)'
+                  }
+                  value={refCsa}
+                  onChange={setRefCsa}
+                  options={CSA_OPTIONS.map((c) => ({ value: String(c), label: `${c} mm²` }))}
+                />
+              </CalculatorInputGrid>
+            ) : (
+              <CalculatorInputGrid columns={2}>
+                <CalculatorSelect
+                  label="What is being connected?"
+                  value={kind}
+                  onChange={setKind}
+                  options={[
+                    {
+                      value: 'exp-extr',
+                      label: 'Exposed-conductive-part to extraneous (Reg 544.2.2)',
+                    },
+                    { value: 'exp-exp', label: 'Two exposed-conductive-parts (Reg 544.2.1)' },
+                    { value: 'extr-extr', label: 'Two extraneous-conductive-parts (Reg 544.2.3)' },
+                  ]}
+                />
+                <CalculatorSelect
+                  label="Mechanically protected?"
+                  value={mech}
+                  onChange={setMech}
+                  options={[
+                    { value: 'yes', label: 'Yes — sheathed or in containment' },
+                    { value: 'no', label: 'No — minimum rises to 4 mm²' },
+                  ]}
+                />
+                {kind !== 'extr-extr' && (
+                  <CalculatorSelect
+                    label="Circuit protective conductor (mm²)"
+                    value={cpcCsa}
+                    onChange={setCpcCsa}
+                    options={CSA_OPTIONS.filter((c) => c <= 35).map((c) => ({
+                      value: String(c),
+                      label: `${c} mm²`,
+                    }))}
+                  />
+                )}
+              </CalculatorInputGrid>
+            )}
 
-          <CalculatorDivider category="cable" />
-          <CalculatorInput
-            label="What is actually installed? (mm²)"
-            unit="mm²"
-            type="text"
-            inputMode="decimal"
-            value={installed}
-            onChange={setInstalled}
-            placeholder="e.g. 10"
-            hint="Measure or read the existing conductor to check it against the minimum"
-          />
-          {check && (
-            <div
-              className={`rounded-xl border p-3 ${
-                check.ok
-                  ? 'border-green-500/30 bg-green-500/10'
-                  : 'border-orange-500/30 bg-orange-500/10'
-              }`}
-            >
-              <p className="text-sm font-semibold text-white">
-                {check.ok
-                  ? `${check.got} mm² meets the ${verdict.required} mm² minimum.`
-                  : `${check.got} mm² is BELOW the ${verdict.required} mm² minimum.`}
+            {/* An input, so it belongs in the form pane — but it only means
+                anything once there is a minimum to check it against. */}
+            {verdict && (
+              <>
+                <CalculatorDivider category={CAT} />
+                <CalculatorInput
+                  label="What is actually installed? (mm²)"
+                  unit="mm²"
+                  type="text"
+                  inputMode="decimal"
+                  value={installed}
+                  onChange={setInstalled}
+                  placeholder="e.g. 10"
+                  hint="Measure or read the existing conductor to check it against the minimum"
+                />
+              </>
+            )}
+          </>
+        }
+        result={
+          verdict && (
+            <div className="space-y-4 animate-fade-in">
+              <ResultHeadline
+                label="Minimum size"
+                value={`${verdict.required} mm²`}
+                aside="copper"
+                caption={verdict.rule}
+              />
+
+              <p className="text-[12.5px] leading-relaxed text-white">{verdict.workings}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                {verdict.reg}
               </p>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-white">
-                {check.ok
-                  ? 'Record the size and its connection on the certificate. Check the clamp is to BS 951 and the "Safety Electrical Connection — Do Not Remove" label is fitted.'
-                  : 'An undersized main bond is commonly recorded as a C2 (potentially dangerous) on an EICR, but the code depends on the specific installation and is the inspector’s judgement — this tool does not assign one.'}
-              </p>
+              {verdict.notes.map((n) => (
+                <p key={n} className="text-[12px] leading-relaxed text-white">
+                  {n}
+                </p>
+              ))}
+
+              {check && (
+                <div
+                  className={`rounded-xl border p-3 ${
+                    check.ok
+                      ? 'border-green-500/30 bg-green-500/10'
+                      : 'border-orange-500/30 bg-orange-500/10'
+                  }`}
+                >
+                  <p className="text-sm font-semibold text-white">
+                    {check.ok
+                      ? `${check.got} mm² meets the ${verdict.required} mm² minimum.`
+                      : `${check.got} mm² is BELOW the ${verdict.required} mm² minimum.`}
+                  </p>
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-white">
+                    {check.ok
+                      ? 'Record the size and its connection on the certificate. Check the clamp is to BS 951 and the "Safety Electrical Connection — Do Not Remove" label is fitted.'
+                      : 'An undersized main bond is commonly recorded as a C2 (potentially dangerous) on an EICR, but the code depends on the specific installation and is the inspector’s judgement — this tool does not assign one.'}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </>
-      )}
+          )
+        }
+        footer={<CalculatorEditorial content={bondingConductorSizeContent} category={CAT} />}
+      />
     </CalculatorCard>
   );
 };

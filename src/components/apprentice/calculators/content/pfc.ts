@@ -11,7 +11,8 @@ import type { CalculatorContent } from './types';
  *     to Appendix 4 Sections 2.3.3.1 and 6). It is the adiabatic requirement,
  *     not the breaking-capacity requirement.
  *   - The printed index of BS 7671:2018+A4:2026 lists "Breaking capacity —
- *     432.3, 434.5.1, 536.4.2". Reg 536.6 states "Regulation 434.5.1 permits a
+ *     432.3, 434.5.1, 536.4.2". Reg 536.4.2.1 (Combined short-circuit
+ *     protection of OCPDs) states "Regulation 434.5.1 permits a
  *     device with a lower rated breaking capacity than the prospective
  *     short-circuit current at its point of installation to be used in
  *     specific conditions."
@@ -93,10 +94,10 @@ export const pfcContent: CalculatorContent = {
     },
     {
       standard: 'BS 7671',
-      citation: 'Regulation 434.5.1 (via Regulation 536.6)',
+      citation: 'Regulation 434.5.1 (via Regulation 536.4.2.1)',
       clauseText:
         'Regulation 434.5.1 permits a device with a lower rated breaking capacity than the prospective short-circuit current at its point of installation to be used in specific conditions. Where combined short-circuit protection is used, reference shall be made to the instructions of the manufacturer of the downstream device; where no such information is available, combined short-circuit protection shall not be used and each device shall have the required short-circuit capability at its point of installation.',
-      tableRefs: ['Regulation 536.4.2.1', 'Regulation 536.6', 'Regulation 826.1.2.3'],
+      tableRefs: ['Regulation 536.4.2.1', 'Regulation 826.1.2.3'],
     },
     {
       standard: 'BS 7671',

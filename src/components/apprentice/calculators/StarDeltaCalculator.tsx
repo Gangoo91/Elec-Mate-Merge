@@ -223,6 +223,7 @@ const StarDeltaCalculator = () => {
       description="Convert between star (Y) and delta (Δ) impedance configurations"
     >
       <CalculatorPanes
+        copyTitle="Star-Delta Conversion"
         form={
           <>
             {/* Conversion Mode */}

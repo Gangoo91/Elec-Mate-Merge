@@ -299,6 +299,7 @@ const ThreePhasePowerCalculator = () => {
       description="Calculate power values for three-phase electrical systems including apparent, active, and reactive power"
     >
       <CalculatorPanes
+        copyTitle="Three Phase Power"
         form={
           <>
             <CalculatorSelect

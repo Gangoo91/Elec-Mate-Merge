@@ -440,12 +440,21 @@ export function SafetyTemplateEditor({
             </div>
           </div>
         </SheetContent>
-        <SafetyDocumentShare
-          open={showShare}
-          onOpenChange={setShowShare}
-          documentId={doc.id}
-          documentName={doc.name}
-        />
+        {/* Was passing onOpenChange/documentId/documentName — none of which
+            SafetyDocumentShare accepts. It takes pdfType/recordId/
+            documentTitle/onClose, so this instance rendered with pdfType and
+            recordId undefined and could not produce a PDF. Matched to the
+            contract, and to the second usage further down this file which was
+            already correct. */}
+        {showShare && (
+          <SafetyDocumentShare
+            open={showShare}
+            onClose={() => setShowShare(false)}
+            pdfType="safety-document"
+            recordId={doc.id}
+            documentTitle={doc.name}
+          />
+        )}
       </Sheet>
     );
   }

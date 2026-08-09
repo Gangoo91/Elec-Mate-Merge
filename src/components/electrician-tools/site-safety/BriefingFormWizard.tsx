@@ -9,14 +9,11 @@ import { supabase } from '@/integrations/supabase/client';
 import {
   ArrowLeft,
   ArrowRight,
-  Sparkles,
   Save,
   FileText,
-  Users,
   Loader2,
   X,
   Check,
-  Plus,
   Trash2,
   Eye,
   ImageIcon,
@@ -28,6 +25,7 @@ import {
   BriefingTypePicker,
   BriefingType,
   briefingTypes,
+  briefingTypeForTemplate,
   HazardPillSelector,
   RiskLevelSlider,
   RiskLevel,
@@ -91,14 +89,31 @@ interface NearMissData {
   photos?: string[];
 }
 
+/**
+ * Whatever the caller hands us to prefill from: an existing `team_briefings`
+ * row, a duplicate of one, or a template seed with no `id`. It is deliberately
+ * loose — the three sources do not share a shape — but `unknown` values rather
+ * than `any` ones, so every read has to say what it expects it to be.
+ */
+type BriefingPrefill = Record<string, unknown> & { id?: string };
+
+/** Read one prefill field as a string, or undefined if it is not one. */
+const prefillString = (data: BriefingPrefill | null | undefined, key: string) => {
+  const value = data?.[key];
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
+};
+
 interface BriefingFormWizardProps {
-  initialData?: any;
+  initialData?: BriefingPrefill | null;
   nearMissData?: NearMissData | null;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Attendees'];
+
+/** Enforced in `handlePhotoUpload`, not just displayed. */
+const MAX_PHOTOS = 5;
 
 /**
  * Tab labels plus the fields each step needs before it can honestly call itself
@@ -141,22 +156,49 @@ export const BriefingFormWizard = ({
   const [showPostSaveShare, setShowPostSaveShare] = useState(false);
   const [savedBriefingId, setSavedBriefingId] = useState<string | null>(initialData?.id || null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  /**
+   * `team_briefings` has no `site_address` column, so the site address the form
+   * collects had nowhere to go: it was read back out of `initialData.site_address`
+   * on every edit and never written by any save. The user typed an address, the
+   * briefing saved with a tick, and the address was gone. It now rides in
+   * `dynamic_fields`, the table's jsonb escape hatch, and round-trips on edit.
+   */
+  const initialDynamicFields =
+    (initialData?.dynamic_fields as Record<string, unknown> | undefined) ?? {};
 
   // Default values
   const defaultValues: Partial<BriefingFormData> = {
-    briefingType: nearMissData ? 'near-miss-review' : initialData?.briefing_type || '',
-    siteName: nearMissData?.location || initialData?.location || '',
-    siteAddress: initialData?.site_address || '',
+    briefingType: nearMissData
+      ? 'near-miss-review'
+      : (prefillString(initialData, 'briefing_type') ?? ''),
+    siteName: nearMissData?.location || (prefillString(initialData, 'location') ?? ''),
+    siteAddress:
+      (typeof initialDynamicFields.site_address === 'string'
+        ? initialDynamicFields.site_address
+        : undefined) ??
+      prefillString(initialData, 'site_address') ??
+      '',
     briefingTitle: nearMissData
       ? `Near Miss Review: ${nearMissData.categoryLabel}`
-      : initialData?.briefing_name || '',
-    briefingContent: nearMissData?.description || initialData?.briefing_description || '',
-    briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
-    briefingTime: initialData?.briefing_time || '09:00',
-    hazards: nearMissData ? [nearMissData.category] : initialData?.identified_hazards || [],
-    riskLevel: (nearMissData?.severity as RiskLevel) || initialData?.risk_level || 'medium',
-    photos: nearMissData?.photos?.map((url) => ({ url, caption: '' })) || initialData?.photos || [],
-    attendees: initialData?.attendees || [],
+      : (prefillString(initialData, 'briefing_name') ?? ''),
+    briefingContent:
+      nearMissData?.description || (prefillString(initialData, 'briefing_description') ?? ''),
+    briefingDate:
+      prefillString(initialData, 'briefing_date') ?? new Date().toISOString().split('T')[0],
+    briefingTime: prefillString(initialData, 'briefing_time') ?? '09:00',
+    hazards: nearMissData
+      ? [nearMissData.category]
+      : ((initialData?.identified_hazards as string[] | undefined) ?? []),
+    riskLevel:
+      (nearMissData?.severity as RiskLevel) ||
+      ((prefillString(initialData, 'risk_level') as RiskLevel | undefined) ?? 'medium'),
+    photos:
+      nearMissData?.photos?.map((url) => ({ url, caption: '' })) ??
+      (initialData?.photos as { url: string; caption?: string }[] | undefined) ??
+      [],
+    attendees: (initialData?.attendees as BriefingFormData['attendees'] | undefined) ?? [],
   };
 
   const methods = useForm<BriefingFormData>({
@@ -183,7 +225,10 @@ export const BriefingFormWizard = ({
   );
 
   const totalSteps = STEP_TITLES.length;
-  const progress = ((step + 1) / totalSteps) * 100;
+
+  /** Pull a readable message off an unknown thrown value without reaching for `any`. */
+  const errorMessage = (err: unknown, fallback: string) =>
+    err instanceof Error && err.message ? err.message : fallback;
 
   // AI Content Generation
   const handleGenerateAI = async () => {
@@ -207,9 +252,14 @@ export const BriefingFormWizard = ({
       if (error) throw error;
 
       // Update form with AI content
+      const content = (data as { content?: Record<string, unknown> } | null)?.content;
+      const overview = content?.briefingOverview as { content?: string }[] | undefined;
       const briefingContent =
-        data.content.briefingOverview?.map((p: any) => p.content).join('\n\n') ||
-        data.content.briefingDescription ||
+        overview
+          ?.map((p) => p.content ?? '')
+          .filter(Boolean)
+          .join('\n\n') ||
+        (typeof content?.briefingDescription === 'string' ? content.briefingDescription : '') ||
         formData.briefingContent;
 
       setValue('briefingContent', briefingContent);
@@ -218,11 +268,11 @@ export const BriefingFormWizard = ({
         title: 'AI Content Generated',
         description: 'Review and edit the AI-generated content.',
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('AI generation error:', error);
       toast({
         title: 'Generation Failed',
-        description: error.message || 'Failed to generate content.',
+        description: errorMessage(error, 'Failed to generate content.'),
         variant: 'destructive',
       });
     } finally {
@@ -230,22 +280,47 @@ export const BriefingFormWizard = ({
     }
   };
 
-  // Template selection handler
+  /**
+   * Applying a template from inside the form.
+   *
+   * Two things were wrong and both produced a briefing that looked filled in
+   * and was not:
+   *
+   * 1. `briefingType` was set to the raw `briefing_templates.template_type`
+   *    ("site-work", "lfe", "hse-update", "safety-alert"). None of those is one
+   *    of the six types the picker offers, so the required radio list came back
+   *    showing nothing selected — and the value was saved anyway, giving
+   *    `team_briefings.briefing_type` a string no screen can label.
+   * 2. `briefingContent` was set to the template's one-line description
+   *    ("5-minute safety briefing template"), which is both shorter than the
+   *    50-character minimum the form enforces and not what a template is for.
+   *    The section titles in `template_schema` are the actual skeleton, and
+   *    the templates tab on the list screen has always used them.
+   *
+   * The title is only taken when the field is still empty: someone who has
+   * already named their briefing and then opens a template wants the structure,
+   * not a rename.
+   */
   const handleTemplateSelect = (template: {
     id: string;
     name: string;
     description: string;
     template_type: string;
+    template_schema?: { sections?: { id: string; title: string }[] } | null;
   }) => {
-    setValue('briefingTitle', template.name);
-    setValue('briefingContent', template.description);
-    if (template.template_type) {
-      setValue('briefingType', template.template_type);
-    }
+    const sections = template.template_schema?.sections ?? [];
+    const skeleton = sections.length ? sections.map((s) => `${s.title}\n`).join('\n') : '';
+
+    if (!formData.briefingTitle?.trim()) setValue('briefingTitle', template.name);
+    if (skeleton) setValue('briefingContent', skeleton);
+    setValue('briefingType', briefingTypeForTemplate(template.template_type));
+
     setShowTemplateSelector(false);
     toast({
-      title: 'Template loaded',
-      description: `"${template.name}" has been applied. Review and edit as needed.`,
+      title: 'Template applied',
+      description: sections.length
+        ? `${sections.length} section${sections.length === 1 ? '' : 's'} to fill in.`
+        : `"${template.name}" applied. Review and edit as needed.`,
     });
   };
 
@@ -254,6 +329,27 @@ export const BriefingFormWizard = ({
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
+    /*
+     * The "5 slots remaining" cap was cosmetic: it only hid the drop zone once
+     * five photos existed. The input is `multiple`, so one trip through the
+     * photo picker could add twenty in a single go — all of them uploaded to
+     * storage, all of them written to the row, and the counter cheerfully
+     * reading "20 of 5". Enforce it where the files actually arrive.
+     */
+    const alreadyHave = (formData.photos || []).length;
+    const room = MAX_PHOTOS - alreadyHave;
+    if (room <= 0) {
+      event.target.value = '';
+      toast({
+        title: 'Photo limit reached',
+        description: `A briefing can carry ${MAX_PHOTOS} photos.`,
+      });
+      return;
+    }
+    const selected = Array.from(files);
+    const accepted = selected.slice(0, room);
+    const dropped = selected.length - accepted.length;
+
     setUploadingPhotos(true);
     try {
       const {
@@ -261,9 +357,9 @@ export const BriefingFormWizard = ({
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const uploadedPhotos: any[] = [];
+      const uploadedPhotos: { url: string; caption: string }[] = [];
 
-      for (const file of Array.from(files)) {
+      for (const file of accepted) {
         const fileExt = file.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
@@ -284,16 +380,21 @@ export const BriefingFormWizard = ({
       setValue('photos', [...(formData.photos || []), ...uploadedPhotos]);
 
       toast({
-        title: 'Photos Uploaded',
-        description: `${uploadedPhotos.length} photo(s) added.`,
+        title: 'Photos added',
+        description: dropped
+          ? `${uploadedPhotos.length} added — ${dropped} skipped, the limit is ${MAX_PHOTOS}.`
+          : `${uploadedPhotos.length} photo${uploadedPhotos.length === 1 ? '' : 's'} added.`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Upload Failed',
-        description: error.message || 'Failed to upload photos.',
+        description: errorMessage(error, 'Failed to upload photos.'),
         variant: 'destructive',
       });
     } finally {
+      // Clearing the input matters: without it, picking the same file twice in
+      // a row fires no change event and the second attempt silently does nothing.
+      event.target.value = '';
       setUploadingPhotos(false);
     }
   };
@@ -336,8 +437,46 @@ export const BriefingFormWizard = ({
     setValue('attendees', updated);
   };
 
+  /**
+   * Close the wizard, refreshing the list first if anything reached the
+   * database. `onClose` alone leaves the caller's `briefings` array stale, so a
+   * draft you just saved would not appear until the screen was remounted.
+   */
+  const closeWizard = () => (savedBriefingId ? onSuccess() : onClose());
+
+  /**
+   * The zod resolver was decorative: nothing ever called it. `canProceed()` is a
+   * separate, looser hand-rolled check on the Continue button, and Complete
+   * called `handleSave` straight through — so a one-character site name (schema
+   * minimum: two) sailed past. Run the real schema before committing, and land
+   * the user on the step that failed rather than on a toast with no destination.
+   */
+  const validateBeforeComplete = async () => {
+    const valid = await methods.trigger();
+    if (valid) return true;
+
+    const failed = methods.formState.errors;
+    const firstBadStep = STEP_CONFIGS.findIndex((cfg) =>
+      cfg.requiredFields.some((f) => f in failed)
+    );
+    if (firstBadStep >= 0 && firstBadStep !== step) {
+      setStep(firstBadStep);
+      window.scrollTo({ top: 0 });
+    }
+    toast({
+      title: 'Not ready yet',
+      description: 'Some required details are missing — they are highlighted on this step.',
+      variant: 'destructive',
+    });
+    return false;
+  };
+
   // Save briefing
   const handleSave = async (asDraft = false) => {
+    if (saving) return;
+    if (!asDraft && !(await validateBeforeComplete())) return;
+
+    setSaving(true);
     try {
       const {
         data: { user },
@@ -367,16 +506,33 @@ export const BriefingFormWizard = ({
         briefing_description: formData.briefingContent,
         photos: formData.photos,
         created_by_name: profile?.full_name || user.email,
-        status: asDraft ? 'draft' : 'scheduled',
+        /*
+         * Save Draft used to write `status: 'draft'`. The live table has
+         * `CHECK (status = ANY (ARRAY['scheduled','in_progress','completed',
+         * 'cancelled']))`, so every draft save was rejected outright — the
+         * button had never once worked, and there is not a single row with
+         * status 'draft' in the table to show for it. A draft is a scheduled
+         * briefing that is not finished; that is what `completed` records.
+         *
+         * Complete now writes 'completed' rather than leaving the status at
+         * 'scheduled', which is what the in-briefing mode already does and what
+         * the list screen needs in order to tell finished work from outstanding
+         * work.
+         */
+        status: asDraft ? 'scheduled' : 'completed',
+        dynamic_fields: {
+          ...initialDynamicFields,
+          site_address: formData.siteAddress?.trim() || null,
+        },
       };
 
       let error;
-      if (initialData?.id || savedBriefingId) {
-        const updateId = initialData?.id || savedBriefingId;
+      let briefingId = initialData?.id || savedBriefingId;
+      if (briefingId) {
         const { error: updateError } = await supabase
           .from('team_briefings')
           .update(briefingData)
-          .eq('id', updateId);
+          .eq('id', briefingId);
         error = updateError;
       } else {
         const { data: insertedData, error: insertError } = await supabase
@@ -386,6 +542,7 @@ export const BriefingFormWizard = ({
           .single();
         error = insertError;
         if (insertedData?.id) {
+          briefingId = insertedData.id;
           setSavedBriefingId(insertedData.id);
         }
       }
@@ -393,26 +550,34 @@ export const BriefingFormWizard = ({
       if (error) throw error;
 
       toast({
-        title: initialData?.id ? 'Briefing Updated' : asDraft ? 'Draft Saved' : 'Briefing Created',
-        description: 'Successfully saved.',
+        title: initialData?.id ? 'Briefing updated' : asDraft ? 'Draft saved' : 'Briefing created',
+        description: asDraft ? 'Come back and finish it any time.' : 'Successfully saved.',
       });
 
-      onSuccess();
-
+      /*
+       * `onSuccess()` used to fire here, unconditionally, before any of the
+       * branches below. The parent's `onSuccess` closes the wizard, so this
+       * component unmounted in the same React batch as `setShowPostSaveShare(true)`
+       * — the post-save share sheet could never appear, and the "keep wizard
+       * open for drafts" comment described behaviour that had not happened
+       * since the callback was added. Each branch now decides for itself, and
+       * the sheet reports success when it closes.
+       */
       if (asDraft) {
-        // Keep wizard open for drafts
-      } else if ((formData.attendees || []).length > 0) {
-        // Show post-save share sheet when there are attendees to sign
+        // Stay put. `closeWizard` refreshes the list on the way out.
+      } else if (briefingId && (formData.attendees || []).length > 0) {
         setShowPostSaveShare(true);
       } else {
-        onClose();
+        onSuccess();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Save Failed',
-        description: error.message || 'Failed to save briefing.',
+        description: errorMessage(error, 'Failed to save briefing.'),
         variant: 'destructive',
       });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -480,10 +645,15 @@ export const BriefingFormWizard = ({
                       exit={{ opacity: 0, height: 0 }}
                       className="overflow-hidden"
                     >
-                      <TemplateSelector
-                        onSelectTemplate={handleTemplateSelect}
-                        selectedType={formData.briefingType || undefined}
-                      />
+                      {/* No `selectedType` filter. It fed the picker's
+                          vocabulary ("electrical", "hot-works") into
+                          `.eq('template_type', …)` against a column that only
+                          ever holds "site-work" / "lfe" / "hse-update" /
+                          "safety-alert" / "toolbox-talk" — so choosing any type
+                          but Toolbox talk emptied the list and the panel said
+                          "No templates available for this type". There are five
+                          templates; show all five. */}
+                      <TemplateSelector onSelectTemplate={handleTemplateSelect} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -535,24 +705,24 @@ export const BriefingFormWizard = ({
       case 1:
         return (
           <div className="space-y-5">
-            {/* AI Assist Button */}
+            {/* Drafting help is an assist, not the job — so it is a quiet
+                outline rather than the purple-to-blue gradient it wore, which
+                was both the loudest thing on the step and the only place in the
+                app using that pair of colours. */}
             <Button
               type="button"
+              variant="outline"
               onClick={handleGenerateAI}
               disabled={aiGenerating || !formData.briefingType}
               className={cn(
-                'w-full h-12',
-                'bg-gradient-to-r from-purple-500 to-blue-500',
-                'hover:from-purple-600 hover:to-blue-600',
-                'text-white font-medium'
+                'h-11 w-full touch-manipulation border-white/[0.14] bg-white/[0.06]',
+                'text-[14px] font-medium text-white',
+                'transition-[background-color,transform] active:scale-[0.98] active:bg-white/[0.12]',
+                'disabled:opacity-50'
               )}
             >
-              {aiGenerating ? (
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              ) : (
-                <Sparkles className="h-5 w-5 mr-2" />
-              )}
-              {aiGenerating ? 'Generating...' : 'AI Assist'}
+              {aiGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+              {aiGenerating ? 'Drafting…' : 'Draft the content for me'}
             </Button>
 
             <SafetyDocField
@@ -564,23 +734,35 @@ export const BriefingFormWizard = ({
             />
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-white">Briefing Content</label>
+              <label
+                htmlFor="briefing-content"
+                className="block text-[12px] font-medium text-white"
+              >
+                Briefing content
+                <span className="text-elec-yellow"> *</span>
+              </label>
+              {/* No focus ring — the design system carries focus on the border
+                  and the caret, and a 2px yellow halo round a box this large
+                  swamps the step. */}
               <textarea
+                id="briefing-content"
                 value={formData.briefingContent}
                 onChange={(e) => setValue('briefingContent', e.target.value)}
-                placeholder="Enter the briefing content. Include key points, safety information, and any specific instructions..."
+                placeholder="What is being briefed, what the risks are, and what everyone must do about them."
                 rows={8}
                 className={cn(
-                  'w-full px-4 py-3 rounded-xl',
-                  'bg-white/5 border border-white/10',
-                  'text-white placeholder:text-white/25',
-                  'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50',
-                  'transition-all resize-none touch-manipulation'
+                  'w-full rounded-xl px-3 py-3',
+                  'border border-white/[0.15] bg-transparent',
+                  'text-[15px] text-white placeholder:text-white/25 caret-elec-yellow',
+                  'transition-colors hover:border-white/[0.3] focus:border-elec-yellow',
+                  'focus:outline-none focus:ring-0 resize-none touch-manipulation'
                 )}
               />
-              <div className="flex justify-between text-xs text-white">
-                <span>{errors.briefingContent?.message}</span>
-                <span>{formData.briefingContent?.length || 0} / 50 min</span>
+              <div className="flex justify-between gap-3 text-[12px]">
+                <span className="text-red-400">{errors.briefingContent?.message}</span>
+                <span className="shrink-0 tabular-nums text-white">
+                  {formData.briefingContent?.length || 0} / 50 minimum
+                </span>
               </div>
             </div>
           </div>
@@ -606,8 +788,7 @@ export const BriefingFormWizard = ({
       // Step 4: Photos
       case 3: {
         const photoCount = formData.photos?.length || 0;
-        const maxPhotos = 5;
-        const remaining = maxPhotos - photoCount;
+        const remaining = MAX_PHOTOS - photoCount;
 
         return (
           <div className="space-y-5">
@@ -616,7 +797,7 @@ export const BriefingFormWizard = ({
             <div className="flex items-baseline justify-between gap-3">
               <label className="text-[12px] font-medium text-white">Site photos (optional)</label>
               <span className="shrink-0 text-[12px] font-medium tabular-nums text-white">
-                {photoCount} of {maxPhotos}
+                {photoCount} of {MAX_PHOTOS}
               </span>
             </div>
             <p className="-mt-3 text-[12px] leading-snug text-white">
@@ -799,23 +980,19 @@ export const BriefingFormWizard = ({
 
         return (
           <div className="space-y-5">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                <label className="text-sm font-semibold text-white">Sign-Off Register</label>
-              </div>
-              {totalAttendees > 0 && (
-                <motion.span
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow text-black"
-                >
-                  {totalAttendees} {totalAttendees === 1 ? 'person' : 'people'}
-                </motion.span>
-              )}
+            {/* Heading is type. The yellow figure icon beside it restated the
+                word "register" in a picture, and the volt pill spent the
+                accent on a headcount — the loudest thing on a step whose real
+                action is the Add button. */}
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                Sign-off register
+              </h2>
+              <span className="shrink-0 text-[12px] font-medium tabular-nums text-white">
+                {totalAttendees} {totalAttendees === 1 ? 'person' : 'people'}
+              </span>
             </div>
-            <p className="text-xs text-white -mt-2">
+            <p className="-mt-2 text-[12px] leading-snug text-white">
               Add everyone who needs to sign this briefing. Signatures are collected after sharing.
             </p>
 
@@ -983,9 +1160,16 @@ export const BriefingFormWizard = ({
             gone: this is the header an EV charging certificate uses, and a
             briefing should not feel like a lesser document than a certificate. */}
         <SafetyDocShell
-          onBack={step === 0 ? onClose : prevStep}
+          onBack={step === 0 ? closeWizard : prevStep}
           title="Team Briefing"
-          subtitle={formData.siteName ? `${formData.siteName} · HSG250` : 'Toolbox talk · HSG250'}
+          /* Was "· HSG250" on both branches. HSG250 is HSE guidance on
+             permit-to-work systems for the petroleum and chemical industries —
+             the reference behind the Permit to Work module, and the worked
+             example in this shell's own docstring. It says nothing about
+             toolbox talks, so it has gone rather than been swapped for another
+             standard I cannot source. */
+          subtitle={formData.siteName || 'Toolbox talk'}
+          isSaving={saving}
           progressPercent={docProgress.progressPercent}
           steps={docProgress.steps}
           currentStep={String(step)}
@@ -1011,68 +1195,80 @@ export const BriefingFormWizard = ({
           </AnimatePresence>
         </div>
 
-        {/* Footer Actions */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur border-t border-white/10 safe-area-pb">
-          <div className="flex gap-3">
-            {step === totalSteps - 1 ? (
-              <>
+        {/* Footer Actions — one primary action, everything else quieter.
+            The last step used to put "Save Draft", "Complete" and an icon-only
+            blue Share button side by side at equal width and equal weight, so
+            the one irreversible action on the screen looked like a third of a
+            toolbar. Complete is now full width; the two ways of leaving without
+            completing sit under it as text. */}
+        <div className="safe-area-pb fixed bottom-0 left-0 right-0 border-t border-white/10 bg-elec-dark/95 p-4 backdrop-blur">
+          {step === totalSteps - 1 ? (
+            <div className="space-y-2">
+              <Button
+                type="button"
+                onClick={() => handleSave(false)}
+                disabled={saving}
+                className="h-14 w-full touch-manipulation bg-elec-yellow text-base font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:opacity-50"
+              >
+                {saving ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Check className="mr-2 h-4 w-4" />
+                )}
+                Complete briefing
+              </Button>
+              <div className="flex gap-2">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="ghost"
                   onClick={() => handleSave(true)}
-                  className="flex-1 h-14 border-white/20 text-white"
+                  disabled={saving}
+                  className="h-11 flex-1 touch-manipulation text-[14px] font-medium text-white hover:bg-white/[0.08] hover:text-white"
                 >
-                  <Save className="h-4 w-4 mr-2" />
-                  Save Draft
+                  <Save className="mr-2 h-4 w-4" />
+                  Save draft
                 </Button>
-                <Button
-                  type="button"
-                  onClick={() => handleSave(false)}
-                  className="flex-1 h-14 bg-elec-yellow text-black hover:brightness-110 font-semibold"
-                >
-                  <Check className="h-4 w-4 mr-2" />
-                  Complete
-                </Button>
-                {/* Share for remote signing — only available if briefing has been saved */}
                 {savedBriefingId && (
                   <Button
                     type="button"
+                    variant="ghost"
                     onClick={() => setShowShareSheet(true)}
-                    className="h-14 px-4 bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30"
+                    className="h-11 flex-1 touch-manipulation text-[14px] font-medium text-white hover:bg-white/[0.08] hover:text-white"
                   >
-                    <Share2 className="h-4 w-4" />
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Send for signing
                   </Button>
                 )}
-              </>
-            ) : (
-              <>
-                {step > 0 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={prevStep}
-                    className="h-14 px-6 border-white/20 text-white"
-                  >
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back
-                  </Button>
-                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              {step > 0 && (
                 <Button
                   type="button"
-                  onClick={nextStep}
-                  disabled={!canProceed()}
-                  className={cn(
-                    'flex-1 h-14 font-semibold',
-                    'bg-elec-yellow text-black hover:brightness-110',
-                    'disabled:opacity-50 disabled:cursor-not-allowed'
-                  )}
+                  variant="outline"
+                  onClick={prevStep}
+                  className="h-14 touch-manipulation border-white/20 px-6 text-white"
                 >
-                  Continue
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back
                 </Button>
-              </>
-            )}
-          </div>
+              )}
+              <Button
+                type="button"
+                onClick={nextStep}
+                disabled={!canProceed()}
+                className={cn(
+                  'h-14 flex-1 touch-manipulation font-semibold',
+                  'bg-elec-yellow text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110',
+                  'disabled:cursor-not-allowed disabled:opacity-50'
+                )}
+              >
+                Continue
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Share Sheet for remote signing */}
@@ -1093,9 +1289,13 @@ export const BriefingFormWizard = ({
               briefingId={savedBriefingId}
               briefingName={formData.briefingTitle}
               attendeeCount={(formData.attendees || []).length}
+              /* `onSuccess`, not `onClose` — the parent needs to refetch, and
+                 this is the first point at which the save is genuinely done
+                 with. Calling it earlier is what stopped this sheet ever
+                 rendering. */
               onClose={() => {
                 setShowPostSaveShare(false);
-                onClose();
+                onSuccess();
               }}
             />
           )}

@@ -2,22 +2,29 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useSafetyEquipment, SafetyEquipment } from '@/hooks/useSafetyEquipment';
+import {
+  useSafetyEquipment,
+  deriveEquipmentStatus,
+  deriveWarrantyState,
+  equipmentDueDate,
+  nextInspectionFrom,
+  todayISODate,
+  type SafetyEquipment,
+  type EquipmentDerivedStatus,
+} from '@/hooks/useSafetyEquipment';
 import {
   EquipmentFormWizard,
   EquipmentBarcodeScanner,
   EquipmentDetailView,
   type EquipmentFilterId,
+  type EquipmentFormValues,
 } from './equipment';
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
   PrimaryButton,
   SecondaryButton,
-  type Tone,
 } from '@/components/college/primitives';
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { SwipeableListItem } from './common/SwipeableListItem';
@@ -28,48 +35,19 @@ import { useShowMore } from '@/hooks/useShowMore';
 import { equipmentCategories } from './equipment/EquipmentCategoryPicker';
 import { cn } from '@/lib/utils';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import {
+  EQUIPMENT_STATUS_LABEL,
+  EQUIPMENT_STATUS_RANK,
+  EQUIPMENT_STATUS_TONE,
+  PILL_BASE,
+  STATUS_PILL_CLASS,
+} from './equipment/equipmentStatus';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
-// One colour dimension = status.
-function statusTone(status: SafetyEquipment['status']): Tone {
-  return status === 'good'
-    ? 'green'
-    : status === 'needs_attention'
-      ? 'amber'
-      : status === 'overdue'
-        ? 'red'
-        : 'blue';
-}
-
-const STATUS_PILL: Record<Tone, string> = {
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  yellow: 'border border-elec-yellow/35 text-elec-yellow',
-  purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
-  cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
-  indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
-  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
-};
-
-const STATUS_LABEL: Record<SafetyEquipment['status'], string> = {
-  good: 'Good',
-  needs_attention: 'Attention',
-  overdue: 'Overdue',
-  out_of_service: 'Out of service',
-};
-
-function StatusPill({ status }: { status: SafetyEquipment['status'] }) {
+function StatusPill({ status }: { status: EquipmentDerivedStatus }) {
   return (
-    <span
-      className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        STATUS_PILL[statusTone(status)]
-      )}
-    >
-      {STATUS_LABEL[status]}
+    <span className={cn(PILL_BASE, STATUS_PILL_CLASS[EQUIPMENT_STATUS_TONE[status]])}>
+      {EQUIPMENT_STATUS_LABEL[status]}
     </span>
   );
 }
@@ -109,38 +87,50 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
 
   const handleBack = onBack ?? (() => navigate('/electrician-tools/site-safety'));
 
+  /**
+   * Every row's derived status, computed once against one `today`.
+   *
+   * Deriving inside the sort comparator or per-filter would let two rows be
+   * judged against different `today` values if the clock ticked past midnight
+   * mid-render. Once, up front, and everything below shares it.
+   */
+  const statusById = useMemo(() => {
+    const today = todayISODate();
+    return new Map(equipment.map((e) => [e.id, deriveEquipmentStatus(e, today)]));
+  }, [equipment]);
+
+  const statusOf = useCallback(
+    (e: SafetyEquipment): EquipmentDerivedStatus => statusById.get(e.id) ?? 'unscheduled',
+    [statusById]
+  );
+
   // Filter equipment based on active tab and search query
   const filteredEquipment = useMemo(() => {
     let result = equipment;
 
+    // Every tab now reads the SAME derived status. It used to be split: "Good"
+    // and "Attention" read the `status` column while "Overdue" read the dates,
+    // so a tool three months out of test matched both the Good tab (its column
+    // says `good`, as every row's does) and the Overdue tab at the same time.
     switch (activeFilter) {
       case 'good':
-        result = result.filter((e) => e.status === 'good');
+        result = result.filter((e) => statusOf(e) === 'good');
         break;
       case 'attention':
-        result = result.filter((e) => e.status === 'needs_attention');
+        result = result.filter((e) => {
+          const s = statusOf(e);
+          return s === 'due_soon' || s === 'unscheduled';
+        });
         break;
       case 'overdue':
+        result = result.filter((e) => statusOf(e) === 'overdue');
+        break;
+      case 'warranty':
         result = result.filter((e) => {
-          if (e.next_inspection) {
-            return new Date(e.next_inspection) < new Date();
-          }
-          if (e.calibration_due) {
-            return new Date(e.calibration_due) < new Date();
-          }
-          return e.status === 'overdue';
+          const w = deriveWarrantyState(e);
+          return w === 'expired' || w === 'expiring';
         });
         break;
-      case 'warranty': {
-        const now = new Date();
-        const thirtyDays = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-        result = result.filter((e) => {
-          if (!e.warranty_expiry) return false;
-          const expiry = new Date(e.warranty_expiry);
-          return expiry < thirtyDays; // expired or expiring within 30 days
-        });
-        break;
-      }
     }
 
     if (searchQuery.trim()) {
@@ -153,15 +143,19 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
       );
     }
 
-    // Surface urgent (overdue, then attention) to the top.
-    const rank: Record<SafetyEquipment['status'], number> = {
-      overdue: 0,
-      needs_attention: 1,
-      out_of_service: 2,
-      good: 3,
-    };
-    return [...result].sort((a, b) => rank[a.status] - rank[b.status]);
-  }, [equipment, activeFilter, searchQuery]);
+    // Surface urgent (overdue, then due soon / unscheduled) to the top, then
+    // soonest-due first within a band so the list is actionable top-down.
+    return [...result].sort((a, b) => {
+      const byRank = EQUIPMENT_STATUS_RANK[statusOf(a)] - EQUIPMENT_STATUS_RANK[statusOf(b)];
+      if (byRank !== 0) return byRank;
+      const dueA = equipmentDueDate(a);
+      const dueB = equipmentDueDate(b);
+      if (dueA && dueB) return dueA.localeCompare(dueB);
+      if (dueA) return -1;
+      if (dueB) return 1;
+      return a.name.localeCompare(b.name);
+    });
+  }, [equipment, activeFilter, searchQuery, statusOf]);
 
   const {
     visible: visibleEquipment,
@@ -174,7 +168,9 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
   const filterTabs = useMemo(
     () => [
       { value: 'all', label: 'All', count: stats.total },
-      { value: 'good', label: 'Good', count: stats.good },
+      // "In date" / "Attention" rather than "Good" / "Attention": the counts are
+      // now about test dates, not a self-assessed condition.
+      { value: 'good', label: 'In date', count: stats.good },
       { value: 'attention', label: 'Attention', count: stats.needsAttention },
       { value: 'overdue', label: 'Overdue', count: stats.overdue },
       { value: 'warranty', label: 'Warranty', count: stats.warrantyAlert },
@@ -182,27 +178,28 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
     [stats]
   );
 
-  const handleAddEquipment = async (data: Record<string, unknown>) => {
-    // Calculate next_inspection based on last_inspection and interval
-    let next_inspection: string | null = null;
-    if (data.last_inspection && data.inspection_interval_days) {
-      const lastDate = new Date(data.last_inspection);
-      lastDate.setDate(lastDate.getDate() + data.inspection_interval_days);
-      next_inspection = lastDate.toISOString().split('T')[0];
-    }
-
+  /**
+   * The wizard's payload, mapped onto table columns.
+   *
+   * Both handlers used to take `(data: Record<string, unknown>)`. That is
+   * assignable to the wizard's `onSubmit` prop, so nothing complained at the
+   * call site — but it made every field below `unknown`, which is where 24 of
+   * this file's 25 type errors came from and, more importantly, meant the insert
+   * payload was never once checked against `safety_equipment`.
+   */
+  const handleAddEquipment = async (data: EquipmentFormValues) => {
     await addEquipment.mutateAsync({
       name: data.name,
       category: data.category,
       serial_number: data.serial_number || null,
       location: data.location,
       last_inspection: data.last_inspection || null,
-      next_inspection,
-      inspection_interval_days: data.inspection_interval_days || 180,
+      next_inspection: nextInspectionFrom(data.last_inspection, data.inspection_interval_days),
+      inspection_interval_days: data.inspection_interval_days,
       condition_notes: data.condition_notes || null,
       status: 'good',
       requires_calibration: false,
-      photos: (data.photos as string[]) || [],
+      photos: data.photos ?? [],
       warranty_expiry: data.warranty_expiry || null,
       warranty_provider: data.warranty_provider || null,
       warranty_claim_contact: data.warranty_claim_contact || null,
@@ -212,16 +209,8 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
     setScanSerialForNew(null);
   };
 
-  const handleUpdateEquipment = async (data: Record<string, unknown>) => {
+  const handleUpdateEquipment = async (data: EquipmentFormValues) => {
     if (!editingEquipment) return;
-
-    // Calculate next_inspection based on last_inspection and interval
-    let next_inspection: string | null = null;
-    if (data.last_inspection && data.inspection_interval_days) {
-      const lastDate = new Date(data.last_inspection);
-      lastDate.setDate(lastDate.getDate() + data.inspection_interval_days);
-      next_inspection = lastDate.toISOString().split('T')[0];
-    }
 
     await updateEquipment.mutateAsync({
       id: editingEquipment.id,
@@ -231,10 +220,10 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         serial_number: data.serial_number || null,
         location: data.location,
         last_inspection: data.last_inspection || null,
-        next_inspection,
-        inspection_interval_days: data.inspection_interval_days || 180,
+        next_inspection: nextInspectionFrom(data.last_inspection, data.inspection_interval_days),
+        inspection_interval_days: data.inspection_interval_days,
         condition_notes: data.condition_notes || null,
-        photos: (data.photos as string[]) || [],
+        photos: data.photos ?? [],
         warranty_expiry: data.warranty_expiry || null,
         warranty_provider: data.warranty_provider || null,
         warranty_claim_contact: data.warranty_claim_contact || null,
@@ -375,7 +364,7 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         </SecondaryButton>
       }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Equipment · PUWER 1998 / LOLER 1998"
           title="Track every tool, test and warranty"
           description="Keep PPE and test equipment in date — inspection and calibration due dates, warranty expiry, QR labels and pre-use check history in one register."
@@ -385,12 +374,12 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
       }
       stats={
         stats.total > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               { value: stats.total, label: 'Total', onClick: () => setActiveFilter('all') },
               {
                 value: stats.good,
-                label: 'Good',
+                label: 'In date',
                 tone: 'green',
                 onClick: () => setActiveFilter('good'),
               },
@@ -398,6 +387,8 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
                 value: stats.needsAttention,
                 label: 'Attention',
                 tone: 'amber',
+                // No `sub` copy here: StatStrip renders `sub` as `text-white/70`,
+                // which the design system bans. The tab count carries it instead.
                 onClick: () => setActiveFilter('attention'),
               },
               {
@@ -442,39 +433,44 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         />
       ) : (
         <div className="space-y-2.5">
-          {visibleEquipment.map((item) => (
-            <SwipeableListItem
-              key={item.id}
-              rightActions={[
-                {
-                  icon: Trash2,
-                  label: 'Delete',
-                  color: 'bg-red-500',
-                  textColor: 'text-white',
-                  onAction: () => setDeleteTarget(item.id),
-                },
-              ]}
-            >
-              <SafetyListCard>
-                <SafetyListRow
-                  accent={statusTone(item.status)}
-                  onClick={() => setSelectedId(item.id)}
-                  title={item.name}
-                  subtitle={`${categoryLabel(item.category)}${item.location ? ` · ${item.location}` : ''}`}
-                  trailing={
-                    <div className="flex flex-col items-end gap-1">
-                      <StatusPill status={item.status} />
-                      <span className="text-[11px] text-white tabular-nums">
-                        {item.next_inspection
-                          ? `Due ${fmtCardDate(item.next_inspection)}`
-                          : 'No date'}
-                      </span>
-                    </div>
-                  }
-                />
-              </SafetyListCard>
-            </SwipeableListItem>
-          ))}
+          {visibleEquipment.map((item) => {
+            const status = statusOf(item);
+            // The date shown is whichever falls FIRST — inspection or
+            // calibration. Showing `next_inspection` alone contradicted the pill
+            // whenever a calibration date was the earlier of the two.
+            const due = equipmentDueDate(item);
+            return (
+              <SwipeableListItem
+                key={item.id}
+                rightActions={[
+                  {
+                    icon: Trash2,
+                    label: 'Delete',
+                    color: 'bg-red-500',
+                    textColor: 'text-white',
+                    onAction: () => setDeleteTarget(item.id),
+                  },
+                ]}
+              >
+                <SafetyListCard>
+                  <SafetyListRow
+                    accent={EQUIPMENT_STATUS_TONE[status]}
+                    onClick={() => setSelectedId(item.id)}
+                    title={item.name}
+                    subtitle={`${categoryLabel(item.category)}${item.location ? ` · ${item.location}` : ''}`}
+                    trailing={
+                      <div className="flex flex-col items-end gap-1">
+                        <StatusPill status={status} />
+                        <span className="text-[11px] text-white tabular-nums">
+                          {due ? `Due ${fmtCardDate(due)}` : 'No test date'}
+                        </span>
+                      </div>
+                    }
+                  />
+                </SafetyListCard>
+              </SwipeableListItem>
+            );
+          })}
           {hasMoreEquipment && (
             <LoadMoreButton onLoadMore={loadMoreEquipment} remaining={remainingEquipment} />
           )}
@@ -502,7 +498,7 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         open={showScanner}
         onClose={() => setShowScanner(false)}
         onScan={handleScanResult}
-        title="Scan Equipment"
+        title="Scan equipment"
         description="Point at a barcode or QR code on your equipment"
       />
     </SafetyModuleShell>

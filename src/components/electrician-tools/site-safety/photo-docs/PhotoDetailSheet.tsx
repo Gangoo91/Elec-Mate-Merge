@@ -13,6 +13,8 @@ import { format } from 'date-fns';
 import { MapPin, Trash2, Share2, Pin, Calendar, AlertTriangle, X } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { copyToClipboard } from '@/utils/clipboard';
+import { safetyInputCn, safetyTextareaCn } from '../common/SafetyDocField';
+import { cn } from '@/lib/utils';
 
 interface Annotation {
   x: number;
@@ -406,7 +408,7 @@ export default function PhotoDetailSheet({
                       onChange={(e) => setPinText(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleConfirmPin()}
                       placeholder="Describe this point..."
-                      className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                      className={cn(safetyInputCn, 'mt-1.5')}
                     />
                     <div className="flex gap-2 mt-2">
                       <button
@@ -503,7 +505,7 @@ export default function PhotoDetailSheet({
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Add notes about this photo..."
                   rows={3}
-                  className="mt-1.5 min-h-[96px] w-full resize-none rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 py-2.5 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                  className={cn(safetyTextareaCn, 'mt-1.5 min-h-[96px] py-2.5')}
                 />
               </div>
 

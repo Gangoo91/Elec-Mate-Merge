@@ -6,6 +6,8 @@ import { Loader2, FolderPlus, Zap } from 'lucide-react';
 import { usePhotoProjects, CreateProjectInput, PhotoProject } from '@/hooks/usePhotoProjects';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
+import { safetyInputCn, safetyTextareaCn } from '../common/SafetyDocField';
+import { cn } from '@/lib/utils';
 
 interface CreateProjectSheetProps {
   open: boolean;
@@ -153,7 +155,7 @@ export default function CreateProjectSheet({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Kitchen Rewire"
-                className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                className={cn(safetyInputCn, 'mt-1.5')}
                 autoFocus
               />
             </div>
@@ -180,7 +182,7 @@ export default function CreateProjectSheet({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief description of the work"
-                className="mt-1.5 min-h-[96px] py-2.5 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation resize-none"
+                className={cn(safetyTextareaCn, 'mt-1.5 min-h-[96px] py-2.5')}
               />
             </div>
 
@@ -194,7 +196,7 @@ export default function CreateProjectSheet({
                   value={jobReference}
                   onChange={(e) => setJobReference(e.target.value)}
                   placeholder={generateJobReference()}
-                  className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                  className={cn(safetyInputCn, 'mt-1.5')}
                 />
               </div>
               <div>
@@ -205,7 +207,7 @@ export default function CreateProjectSheet({
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="42 High St"
-                  className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                  className={cn(safetyInputCn, 'mt-1.5')}
                 />
               </div>
             </div>

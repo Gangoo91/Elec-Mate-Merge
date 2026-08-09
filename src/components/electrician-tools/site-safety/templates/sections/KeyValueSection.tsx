@@ -1,4 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
+import { FIELD_CN } from '../../common/fieldClasses';
 import { cn } from '@/lib/utils';
 import type { KeyValueSection as KeyValueSectionType, KeyValuePair } from '@/types/safety-template';
 

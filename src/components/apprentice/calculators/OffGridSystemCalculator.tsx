@@ -48,7 +48,9 @@ export function OffGridSystemCalculator() {
   const [peakPowerKw, setPeakPowerKw] = useState('');
   const [peakSunHours, setPeakSunHours] = useState('3.5');
   const [autonomyDays, setAutonomyDays] = useState('3');
-  const [systemVoltage, setSystemVoltage] = useState('');
+  // 48 V is the standard for modern domestic off-grid — lower current, smaller
+  // cable, and what current inverter/battery ranges are built around.
+  const [systemVoltage, setSystemVoltage] = useState('48');
   const [panelWattage, setPanelWattage] = useState('400');
   const [batteryCapacity, setBatteryCapacity] = useState('100');
   const [batteryVoltage, setBatteryVoltage] = useState('12');

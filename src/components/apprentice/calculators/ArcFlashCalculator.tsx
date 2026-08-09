@@ -1,5 +1,15 @@
 import { copyToClipboard } from '@/utils/clipboard';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+  ReferenceDot,
+} from 'recharts';
 import { Copy, Check, ChevronDown, AlertTriangle, Shield } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import { useToast } from '@/hooks/use-toast';
@@ -31,6 +41,12 @@ import {
   CALCULATOR_CONFIG,
   CalculatorPanes,
   ResultHeadline,
+  CalculatorChart,
+  chartTick,
+  chartTooltip,
+  CHART_GRID,
+  CHART_VOLT,
+  CHART_FAIL,
 } from '@/components/calculators/shared';
 import { arcFlashContent } from './content/arc-flash';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -149,6 +165,51 @@ const ArcFlashCalculator = () => {
       conductorGap: useAutoGap ? undefined : parseFloat(conductorGap),
     });
   };
+
+  /**
+   * Incident energy against working distance, swept through the same IEEE 1584
+   * engine that produced the headline figure — `calculateArcFlash` is a pure
+   * function, so every point is the calculator's own model at a different
+   * distance, not a curve fitted to the answer.
+   *
+   * This is the one arc-flash fact worth showing rather than stating: energy
+   * falls off sharply with distance, so stepping back is the cheapest control
+   * available. The dashed line is 1.2 cal/cm², the onset of a second-degree
+   * burn and the value that defines the arc flash boundary.
+   */
+  const energyCurve = useMemo(() => {
+    if (!result) return [];
+    const start = 200;
+    const end = Math.max(result.arcFlashBoundary * 1.25, parseFloat(workingDistance) * 2, 1200);
+    const step = (end - start) / 20;
+    const points: Array<{ distance: number; energy: number }> = [];
+    for (let i = 0; i <= 20; i++) {
+      const d = start + step * i;
+      const r = calculateArcFlash({
+        voltage: parseFloat(voltage),
+        boltedFaultCurrent: parseFloat(faultCurrent),
+        clearingTime: parseFloat(clearingTime),
+        workingDistance: d,
+        equipmentType,
+        electrodeConfig,
+        enclosureType,
+        conductorGap: useAutoGap ? undefined : parseFloat(conductorGap),
+      });
+      points.push({ distance: Math.round(d), energy: Math.round(r.incidentEnergy * 100) / 100 });
+    }
+    return points;
+  }, [
+    result,
+    voltage,
+    faultCurrent,
+    clearingTime,
+    workingDistance,
+    equipmentType,
+    electrodeConfig,
+    enclosureType,
+    useAutoGap,
+    conductorGap,
+  ]);
 
   const handleReset = useCallback(() => {
     setVoltage('415');
@@ -363,8 +424,52 @@ const ArcFlashCalculator = () => {
                 <ResultHeadline
                   label="Incident Energy"
                   value={`${result.incidentEnergy.toFixed(2)} cal/cm²`}
-                  caption={`${result.incidentEnergyJoules.toFixed(1)} J/cm² | Min Rating:${' '} ${result.minArcRatingRequired} cal/cm²`}
+                  caption={`${result.incidentEnergyJoules.toFixed(1)} J/cm² · minimum arc rating ${result.minArcRatingRequired} cal/cm²`}
                 />
+
+                <CalculatorChart
+                  title="Energy against working distance"
+                  caption={`Dashed line is 1.2 cal/cm² — the second-degree burn threshold that defines the arc flash boundary, here ${Math.round(result.arcFlashBoundary)} mm. The dot is your stated working distance.`}
+                >
+                  <LineChart data={energyCurve} margin={{ top: 6, right: 10, bottom: 4, left: -8 }}>
+                    <CartesianGrid stroke={CHART_GRID} vertical={false} />
+                    <XAxis
+                      dataKey="distance"
+                      tick={chartTick}
+                      stroke={CHART_GRID}
+                      unit="mm"
+                      tickLine={false}
+                    />
+                    <YAxis tick={chartTick} stroke={CHART_GRID} tickLine={false} width={44} />
+                    <Tooltip
+                      {...chartTooltip}
+                      formatter={(v: number) => [`${v.toFixed(2)} cal/cm²`, 'Incident energy']}
+                      labelFormatter={(d) => `${d} mm`}
+                    />
+                    <ReferenceLine
+                      y={1.2}
+                      stroke={CHART_FAIL}
+                      strokeDasharray="4 4"
+                      strokeWidth={1.5}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="energy"
+                      stroke={CHART_VOLT}
+                      strokeWidth={2}
+                      dot={false}
+                      isAnimationActive={false}
+                    />
+                    <ReferenceDot
+                      x={parseFloat(workingDistance)}
+                      y={result.incidentEnergy}
+                      r={4}
+                      fill={result.incidentEnergy > 1.2 ? CHART_FAIL : CHART_VOLT}
+                      stroke="#000"
+                      strokeWidth={1}
+                    />
+                  </LineChart>
+                </CalculatorChart>
 
                 {/* Warnings */}
                 {result.warnings.length > 0 && (

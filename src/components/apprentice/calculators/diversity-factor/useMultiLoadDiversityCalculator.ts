@@ -49,8 +49,7 @@ const LOAD_TYPES: Record<string, string> = {
   'electric-shower':
     'Electric Shower — 100% largest + 100% 2nd + 25% remainder (Table A2 instantaneous water heaters)',
   'commercial-catering': 'Commercial Catering — 80%, designer allowance (outside Table A2)',
-  'immersion-heater':
-    'Immersion Heater — 100%, no diversity (Table A2 thermostatic water heating)',
+  'immersion-heater': 'Immersion Heater — 100%, no diversity (Table A2 thermostatic water heating)',
   'instantaneous-water': 'Instantaneous Water Heater — 100%, no diversity',
 
   // Space heating — Table A2 space heating row
@@ -188,8 +187,7 @@ export function useMultiLoadDiversityCalculator() {
 
         if (!isNaN(entered) && !isNaN(units) && !isNaN(voltage)) {
           const total = entered * units;
-          const powerKW =
-            load.inputMode === 'kw' ? total : (total * ph * voltage * pf) / 1000;
+          const powerKW = load.inputMode === 'kw' ? total : (total * ph * voltage * pf) / 1000;
           setLoads(
             loads.map((l) =>
               l.id === id ? { ...l, [field]: value, power: powerKW.toFixed(2) } : l

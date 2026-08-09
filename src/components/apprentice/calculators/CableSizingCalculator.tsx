@@ -191,6 +191,7 @@ const CableSizingCalculator = () => {
       description="Professional cable sizing with BS 7671 compliance validation"
     >
       <CalculatorPanes
+        copyTitle="Cable Sizing"
         form={
           <>
             <div className="space-y-6">

@@ -91,6 +91,7 @@ import JobMilestones from '@/components/project-management/JobMilestones';
 import { ProjectSuggestedLinks } from '@/components/project-management/ProjectSuggestedLinks';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { navigateToAddress } from '@/utils/navigate-to-address';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 
 const containerVariants = {
@@ -1351,18 +1352,19 @@ const ProjectDetailPage = () => {
                     {project.customer_name && project.location && (
                       <span className="text-white/25">·</span>
                     )}
+                    {/* ELE-1520 — a raw anchor to Maps never reaches the native
+                        Maps app; openExternalUrl is what deep-links it. */}
                     {project.location && (
-                      <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(project.location)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        type="button"
+                        onClick={() => navigateToAddress({ address: project.location })}
                         className="inline-flex items-center gap-1.5 text-white/70 active:text-elec-yellow touch-manipulation min-w-0"
                       >
                         <MapPin className="h-3 w-3 text-elec-yellow/70" />
                         <span className="truncate underline decoration-white/20 underline-offset-2">
                           {project.location}
                         </span>
-                      </a>
+                      </button>
                     )}
                   </p>
                 )}

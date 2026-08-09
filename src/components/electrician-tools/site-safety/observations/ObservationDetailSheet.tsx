@@ -1,14 +1,35 @@
 /**
  * ObservationDetailSheet — editorial detail view for a single safety observation.
- * Monochrome with one colour dimension (type / severity / status) carried by a
- * thin accent line and small uppercase pills. SheetShell layout, sticky footer.
+ * Monochrome with one colour dimension (type / severity) carried by a thin
+ * accent line and small uppercase pills. SheetShell layout, sticky footer.
+ *
+ * ⚠️ WHY THERE IS NO OPEN / IN-PROGRESS / CLOSED WORKFLOW HERE
+ *
+ * This sheet used to render a "Follow-up" panel — Status, Assigned to, Due,
+ * Completed — plus "Start action" / "Close" / "Reopen" buttons wired to
+ * `useUpdateObservation`. None of it could ever work, for two independent
+ * reasons, both verified against the live database:
+ *
+ *   1. `public.safety_observations` has no `status`, `follow_up_required`,
+ *      `assigned_to`, `due_date` or `completed_date` column. The panel was
+ *      reading `undefined` on every row and defaulting to "Open", and the
+ *      update would have failed with 42703 (undefined_column).
+ *   2. The table carries SELECT and INSERT policies only — there is no UPDATE
+ *      policy — so even a valid column list matches zero rows under RLS, and
+ *      the hook's `.single()` then errors. Every press produced the red
+ *      "Could not update observation" toast.
+ *
+ * Closing the loop is already handled properly by CorrectiveActionsPanel
+ * below: `safety_corrective_actions` has the columns AND the full CRUD policy
+ * set, and it is the mechanism the rest of Site Safety uses. Rather than show
+ * a second, broken tracker beside a working one, the record is presented as
+ * what it is — a dated observation — and the action lives in one place.
  */
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import type { SafetyObservation, ObservationStatus } from '@/hooks/useSafetyObservations';
-import { useUpdateObservation } from '@/hooks/useSafetyObservations';
+import type { SafetyObservation } from '@/hooks/useSafetyObservations';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { AuditTimeline } from '../common/AuditTimeline';
@@ -23,37 +44,44 @@ import {
   toneAccent,
   type Tone,
 } from '@/components/college/primitives';
-import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
+import { SafetyListCard } from '../common/SafetyList';
 
-// ─── Status / type / severity colour (the single colour dimension) ───
+// ─── Type / severity colour (the single colour dimension) ───
 
-const STATUS_LABEL: Record<ObservationStatus, string> = {
-  open: 'Open',
-  in_progress: 'In Progress',
-  closed: 'Closed',
-};
-
-const PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+/** Neutral surface, coloured text — see ObservationFeed for the reasoning. */
+const PILL: Record<'amber' | 'green' | 'red' | 'neutral', string> = {
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
-function StatusPill({ status }: { status: ObservationStatus }) {
-  const key = status === 'open' ? 'amber' : status === 'in_progress' ? 'blue' : 'green';
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        PILL[key]
-      )}
-    >
-      {STATUS_LABEL[status]}
-    </span>
-  );
-}
+const PILL_BASE =
+  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap';
+
+/**
+ * Observation category → near-miss category.
+ *
+ * The escalation handed the observation's category straight over, but the two
+ * modules do not share a vocabulary: observations use display labels ("PPE
+ * Usage", "Working at Height") and Near Miss Reporting uses snake_case values
+ * ('ppe_failure', 'fall_hazard') in a Radix Select. A value that is not one of
+ * the Select's items renders as the placeholder, so the category silently
+ * arrived blank on every escalation and the reporter had to re-pick it.
+ * Anything without a clear counterpart lands on 'other' rather than nothing.
+ */
+const NEAR_MISS_CATEGORY: Record<string, string> = {
+  'PPE Usage': 'ppe_failure',
+  Housekeeping: 'worksite_hazard',
+  'Safe Working Practice': 'worksite_hazard',
+  'Tool Handling': 'tool_equipment',
+  Communication: 'other',
+  'Risk Awareness': 'other',
+  'Manual Handling': 'manual_handling',
+  'Working at Height': 'fall_hazard',
+  'Electrical Safety': 'electrical_hazard',
+  Other: 'other',
+};
 
 function severityTone(sev: SafetyObservation['severity']): Tone | undefined {
   if (sev === 'high') return 'red';
@@ -75,20 +103,10 @@ export function ObservationDetailSheet({
 }: ObservationDetailSheetProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
-  const updateObservation = useUpdateObservation();
   const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = observation?.job_id
     ? (jobs.find((j) => j.id === observation.job_id)?.title ?? 'Linked project')
     : null;
-
-  const handleStatusChange = (newStatus: ObservationStatus) => {
-    if (!observation) return;
-    updateObservation.mutate({
-      id: observation.id,
-      status: newStatus,
-      ...(newStatus === 'closed' ? { completed_date: new Date().toISOString().split('T')[0] } : {}),
-    });
-  };
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
@@ -99,17 +117,9 @@ export function ObservationDetailSheet({
         {observation &&
           (() => {
             const isPositive = observation.observation_type === 'positive';
-            const currentStatus: ObservationStatus = observation.status || 'open';
             const showFollowUp = !isPositive;
             const sevTone = severityTone(observation.severity);
-            const accentTone: Tone = isPositive
-              ? 'green'
-              : (sevTone ??
-                (currentStatus === 'closed'
-                  ? 'green'
-                  : currentStatus === 'in_progress'
-                    ? 'blue'
-                    : 'amber'));
+            const accentTone: Tone = isPositive ? 'green' : (sevTone ?? 'amber');
 
             const formattedDate = new Date(observation.created_at).toLocaleDateString('en-GB', {
               weekday: 'long',
@@ -121,10 +131,6 @@ export function ObservationDetailSheet({
               hour: '2-digit',
               minute: '2-digit',
             });
-            const overdue =
-              !!observation.due_date &&
-              new Date(observation.due_date) < new Date() &&
-              currentStatus !== 'closed';
 
             return (
               <SheetShell
@@ -136,11 +142,13 @@ export function ObservationDetailSheet({
                 }
                 description={
                   <span className="inline-flex items-center gap-2 flex-wrap">
-                    {showFollowUp && <StatusPill status={currentStatus} />}
+                    <span className={cn(PILL_BASE, PILL[isPositive ? 'green' : 'amber'])}>
+                      {isPositive ? 'Positive' : 'Improvement'}
+                    </span>
                     {observation.severity && (
                       <span
                         className={cn(
-                          'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+                          PILL_BASE,
                           PILL[
                             (severityTone(observation.severity) as 'amber' | 'green' | 'red') ??
                               'neutral'
@@ -150,20 +158,13 @@ export function ObservationDetailSheet({
                         {observation.severity} severity
                       </span>
                     )}
-                    {overdue && (
-                      <span
-                        className={cn(
-                          'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-                          PILL.red
-                        )}
-                      >
-                        Overdue
-                      </span>
-                    )}
                   </span>
                 }
                 footer={
                   <>
+                    {/* Quieter action first, primary on the right where the
+                        thumb rests — the same order as the log sheet. */}
+                    <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
                     <PrimaryButton
                       fullWidth
                       disabled={isExporting && exportingId === observation.id}
@@ -171,7 +172,6 @@ export function ObservationDetailSheet({
                     >
                       {isExporting && exportingId === observation.id ? 'Exporting…' : 'Export PDF'}
                     </PrimaryButton>
-                    <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
                   </>
                 }
               >
@@ -223,89 +223,8 @@ export function ObservationDetailSheet({
                   </SafetyListCard>
                 </div>
 
-                {/* Follow-up — improvement_needed only */}
-                {showFollowUp && (
-                  <div>
-                    <Eyebrow className="mb-2">Follow-up</Eyebrow>
-                    <SafetyListCard>
-                      <div className="flex items-center justify-between gap-3 px-5 py-3">
-                        <span className="text-[12px] text-white">Status</span>
-                        <StatusPill status={currentStatus} />
-                      </div>
-                      {observation.follow_up_required && (
-                        <div className="flex items-center justify-between gap-3 px-5 py-3">
-                          <span className="text-[12px] text-white">Action</span>
-                          <span className="text-[13px] text-amber-400 text-right">
-                            Follow-up required
-                          </span>
-                        </div>
-                      )}
-                      {observation.assigned_to && (
-                        <div className="flex items-center justify-between gap-3 px-5 py-3">
-                          <span className="text-[12px] text-white">Assigned to</span>
-                          <span className="text-[13px] text-white text-right">
-                            {observation.assigned_to}
-                          </span>
-                        </div>
-                      )}
-                      {observation.due_date && (
-                        <div className="flex items-center justify-between gap-3 px-5 py-3">
-                          <span className="text-[12px] text-white">Due</span>
-                          <span
-                            className={cn(
-                              'text-[13px] text-right',
-                              overdue ? 'text-red-400' : 'text-white'
-                            )}
-                          >
-                            {new Date(observation.due_date).toLocaleDateString('en-GB')}
-                          </span>
-                        </div>
-                      )}
-                      {observation.completed_date && (
-                        <div className="flex items-center justify-between gap-3 px-5 py-3">
-                          <span className="text-[12px] text-white">Completed</span>
-                          <span className="text-[13px] text-emerald-400 text-right">
-                            {new Date(observation.completed_date).toLocaleDateString('en-GB')}
-                          </span>
-                        </div>
-                      )}
-                    </SafetyListCard>
-
-                    {/* Status actions */}
-                    {currentStatus !== 'closed' && (
-                      <div className="flex gap-2 pt-3">
-                        {currentStatus === 'open' && (
-                          <PrimaryButton
-                            fullWidth
-                            disabled={updateObservation.isPending}
-                            onClick={() => handleStatusChange('in_progress')}
-                          >
-                            {updateObservation.isPending ? 'Saving…' : 'Start action'}
-                          </PrimaryButton>
-                        )}
-                        {currentStatus === 'in_progress' && (
-                          <>
-                            <PrimaryButton
-                              fullWidth
-                              disabled={updateObservation.isPending}
-                              onClick={() => handleStatusChange('closed')}
-                            >
-                              {updateObservation.isPending ? 'Saving…' : 'Close'}
-                            </PrimaryButton>
-                            <SecondaryButton
-                              disabled={updateObservation.isPending}
-                              onClick={() => handleStatusChange('open')}
-                            >
-                              Reopen
-                            </SecondaryButton>
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Corrective actions */}
+                {/* Corrective actions — the real, persisted follow-up tracker
+                    (see the file header for why there is no second one). */}
                 <CorrectiveActionsPanel sourceType="observation" sourceId={observation.id} />
 
                 {/* Photos */}
@@ -335,7 +254,7 @@ export function ObservationDetailSheet({
                     fullWidth
                     onClick={() => {
                       const escalationData = {
-                        category: observation.category,
+                        category: NEAR_MISS_CATEGORY[observation.category] ?? 'other',
                         description: observation.description,
                         location: observation.location || '',
                         severity:

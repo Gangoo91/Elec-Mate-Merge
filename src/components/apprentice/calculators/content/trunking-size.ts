@@ -6,15 +6,19 @@ import type { CalculatorContent } from './types';
  * CORRECTION: previously headed "IET On-Site Guide / BS 7671 Reg 522.8.1". BS 7671:2018+A4:2026
  * contains no trunking fill or space factor anywhere; Reg 522.8.1 is about avoiding damage to
  * the sheath, insulation and terminations (and bans detrimental lubricants), and the "undue
- * mechanical strain" requirement is Reg 522.8.5. The 45% figure is IET On-Site Guide / industry
- * guidance only.
+ * mechanical strain" requirement is Reg 522.8.5.
+ *
+ * The 45% space factor IS now verified — read from IET On-Site Guide Appendix E (the note under
+ * Table E6, and the paragraph covering sizes/types outside Tables E5/E6, which sanctions exactly
+ * the percentage-area method this calculator uses). It is On-Site Guide guidance, not a BS 7671
+ * requirement — BS 7671 contains no trunking fill or space factor anywhere.
  */
 export const trunkingSizeContent: CalculatorContent = {
   slug: 'trunking-size',
   governingStandards: ['IET On-Site Guide', 'BS 7671'],
 
   whyItMatters: [
-    'Cable trunking is sized so the cables occupy no more than about 45% of its internal cross-section — enough room to lay cables in without damage. This 45% space factor is IET On-Site Guide guidance, not a BS 7671 requirement.',
+    'Cable trunking is sized so the cables occupy no more than about 45% of its internal cross-section — enough room to lay cables in without damage. This 45% space factor is IET On-Site Guide Appendix E guidance, not a BS 7671 requirement — BS 7671 sets no trunking fill figure at all.',
     'The IET On-Site Guide uses a cable-factor / trunking-factor method: sum the cable factors and choose a trunking whose factor is at least that total.',
     'Overfilled trunking runs hot (apply grouping derating) and is hard to add to later.',
     'Right-sizing leaves capacity for future circuits and keeps the install tidy and compliant.',
@@ -29,7 +33,7 @@ export const trunkingSizeContent: CalculatorContent = {
 
   commonMistakes: [
     'Treating a 45% fill pass as a compliance pass — fill is physical, not thermal',
-    'Forgetting grouping derating (Reg 523.4, Table 4C1) for cables bunched in trunking — it applies even where the trunking has an internal barrier or partition (Table 4A2 note b)',
+    'Forgetting grouping derating (Reg 523.5, Table 4C1) for cables bunched in trunking — it applies even where the trunking has an internal barrier or partition (Table 4A2 note b)',
     'Leaving no spare capacity for additions',
     'Mixing cable factors and physical areas inconsistently',
   ],
@@ -77,24 +81,24 @@ export const trunkingSizeContent: CalculatorContent = {
     },
     {
       standard: 'BS 7671',
-      citation: 'Regulation 523.4',
+      citation: 'Regulation 523.5 — Groups containing more than one circuit',
       clauseText:
-        'The group rating factors of Tables 4C1 to 4C6 of Appendix 4 apply to groups of non-sheathed or sheathed cables having the same maximum operating temperature. Table 4A2 note (b) confirms that where there is more than one circuit in the trunking the Table 4C1 group rating factor applies, irrespective of the presence of an internal barrier or partition.',
+        'The group rating factors, see Tables 4C1 to 4C6 of Appendix 4, are applicable to groups of non-sheathed or sheathed cables having the same maximum operating temperature. For groups containing cables having DIFFERENT maximum operating temperatures, the current-carrying capacity of all the cables in the group shall be based on the LOWEST maximum operating temperature of any cable in the group, together with the appropriate group rating factor. If, due to known operating conditions, a cable is expected to carry a current not greater than 30% of its grouped current-carrying capacity, it may be ignored for the purpose of obtaining the rating factor. Table 4A2 note (b) confirms that where there is more than one circuit in the trunking the Table 4C1 group rating factor applies, irrespective of the presence of an internal barrier or partition.',
       tableRefs: ['Table 4C1', 'Table 4A2 note (b)'],
     },
     {
       standard: 'IET On-Site Guide',
-      citation: '45% space factor',
+      citation: 'On-Site Guide Appendix E — the 45% space factor, quoted',
       clauseText:
-        'The 45% space factor and the cable-factor / trunking-factor method are IET On-Site Guide guidance. They are not requirements of BS 7671, which sets no trunking fill percentage.',
-      tableRefs: ['On-Site Guide (trunking factors)'],
+        'Two methods sit side by side. For the cables and trunking listed in Tables E5 and E6, add the cable factors and compare with the trunking factors; the note printed under Table E6 records that “space factor is 45% with trunking thickness taken into account”. For anything NOT listed: “For sizes and types of cable or trunking other than those given in Tables E5 and E6, the number of cables installed should be such that the resulting space factor does not exceed 45% of the net internal cross-sectional area.” Space factor is defined as “the ratio (expressed as a percentage) of the sum of the overall cross-sectional areas of cables (including insulation and any sheath) to the internal cross-sectional area of the trunking”. The effective overall cross-sectional area of a NON-CIRCULAR cable is taken as that of a circle of diameter equal to the major axis of the cable. Care should be taken to use trunking bends that do not impose bending radii less than Table D5 requires. This is On-Site Guide guidance; BS 7671 itself sets no trunking fill percentage.',
+      tableRefs: ['OSG Appendix E', 'OSG Tables E5, E6', 'OSG Table D5'],
     },
   ],
 
   _grounding: {
-    status: 'needs-review',
+    status: 'verified',
     generatedAt: '2026-08-06',
     notes:
-      'Reg 522.8.1, 522.8.5, 523.4 and Table 4A2 note (b) verified against BS 7671:2018+A4:2026. The 45% space factor is NOT in BS 7671 — full-text search finds no trunking space factor — and could not be verified in the On-Site Guide corpus either, so it is presented as OSG/industry guidance. Trunking internal areas and SWA overall diameters in src/lib/calculators/bs7671-data/trunkingData.ts are manufacturer data, not verifiable from BS 7671; the SWA list holds one diameter per conductor size with no core-count dimension.',
+      'CITATION CORRECTED: the grouping clause quoted here was numbered 523.4, but Reg 523.4 is AMBIENT TEMPERATURE (“the temperature of the surrounding medium…”). Groups containing more than one circuit is Reg 523.5 — confirmed word-for-word against the printed BS 7671:2018+A4:2026 (Desktop/BS7671_ocr.pdf), which also yielded two rules the file was missing: mixed-temperature groups are rated on the LOWEST maximum operating temperature in the group, and a cable expected to carry ≤30% of its grouped capacity may be ignored when obtaining the rating factor. Reg 522.8.1, 522.8.5 and Table 4A2 note (b) verified against BS 7671:2018+A4:2026. The 45% space factor is NOT in BS 7671 — full-text search finds no trunking space factor — and could not be verified in the On-Site Guide corpus either, so it is presented as OSG/industry guidance. Trunking internal areas and SWA overall diameters in src/lib/calculators/bs7671-data/trunkingData.ts are manufacturer data, not verifiable from BS 7671; the SWA list holds one diameter per conductor size with no core-count dimension. \u2705 THE 45% FIGURE IS NOW VERIFIED, not merely \u201cindustry guidance\u201d. Read directly from the IET On-Site Guide Appendix E (\u007e/Desktop/untitled folder/OnSiteGuide_ocr.pdf, A4:2026-aligned edition): the note under Table E6 states the 45% space factor, and the following paragraph explicitly sanctions the percentage-area method this calculator implements for sizes and types not listed in Tables E5/E6 \u2014 which is exactly what the engine does. The OSG\u2019s own definition of space factor (sum of cable overall CSAs including insulation and sheath, over the internal CSA of the trunking) matches the engine\u2019s calculation, and the non-circular-cable rule (use a circle of diameter equal to the major axis) is now stated. Table D5 governs bending radii.',
   },
 };

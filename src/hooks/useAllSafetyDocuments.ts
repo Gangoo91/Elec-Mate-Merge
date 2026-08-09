@@ -12,6 +12,12 @@ export type DocumentType =
   | 'Isolation'
   | 'Fire Watch'
   | 'Equipment'
+  // Pre-use checks were folded into 'Equipment' when the nine missing types
+  // were wired up, because the union had nowhere else to put them. They then
+  // displayed as "Equipment" in the hub and came back under an Equipment
+  // filter, which is not what a pre-use check is — and 'Equipment' had no
+  // other producer, so the label described nothing that existed.
+  | 'Pre-Use Check'
   | 'RAMS'
   | 'Briefing';
 
@@ -337,7 +343,7 @@ export function useAllSafetyDocuments() {
       for (const r of preUseRes.data ?? []) {
         docs.push({
           id: r.id,
-          type: 'Equipment',
+          type: 'Pre-Use Check',
           title: r.equipment_description || 'Pre-use check',
           status: r.overall_result || 'recorded',
           createdAt: r.created_at,

@@ -46,17 +46,30 @@ export const generatorSizingContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'BS 7671 Section 551 — Low voltage generating sets',
+      citation: 'Regulation 551.1 — Scope: which of the three arrangements you are building',
       clauseText:
-        'Generating sets must be selected and installed per Section 551, accounting for the load characteristics (including starting), the means of connection/changeover, and protection and earthing appropriate to the system.',
-      tableRefs: ['Section 551'],
+        'This section applies to low voltage and extra-low voltage installations which incorporate generating sets intended to supply, either continuously or occasionally, all or part of the installation. Requirements are included for: (a) supply to an installation which is NOT connected to a system for distribution of electricity to the public; (b) supply to an installation as an ALTERNATIVE to that system; and (c) supply to an installation IN PARALLEL with it. Which of the three you are doing decides which additional requirements bite.',
+      tableRefs: ['Reg 551.1'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 551.6 / 551.7 — standby vs parallel operation',
+      clauseText:
+        'Reg 551.6 carries the additional requirements where the generating set provides a supply as a SWITCHED ALTERNATIVE to the distribution network (standby systems) — the changeover case. Reg 551.7 carries the additional requirements where the set MAY OPERATE IN PARALLEL with other sources including the public distribution network; A4:2026 added further requirements here for installations where the set or sets may operate in parallel. Sizing a set without deciding which of these applies leaves the protection and earthing undesigned.',
+      tableRefs: ['Reg 551.6', 'Reg 551.7'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 551.8 — DELETED by A4:2026',
+      clauseText:
+        'Reg 551.8 has been deleted by BS 7671:2018+A4:2026, which directs the reader to the new Chapter 57 (Stationary Secondary Batteries). If you are working from an older copy, or from guidance that still cites 551.8, that reference is dead.',
+      tableRefs: ['Chapter 57'],
     },
   ],
-
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Running + starting sizing and derating match the engine; Section 551 governs the installation. Confirm sub-clauses against A4:2026 facets.',
+      'Section 551 sub-clause roles verified against the printed BS 7671:2018+A4:2026 contents and body (Desktop/BS7671_ocr.pdf): 551.1 scope (a)/(b)/(c), 551.6 standby/switched alternative, 551.7 parallel operation. \u26a0\ufe0f Reg 551.8 is DELETED by A4:2026 with a pointer to the new Chapter 57 \u2014 worth stating explicitly because plenty of circulating guidance still cites it. Running-plus-starting sizing and the derating arithmetic match the engine; the kVA/kW power-factor handling is a manufacturer matter, not a BS 7671 one.',
   },
 };

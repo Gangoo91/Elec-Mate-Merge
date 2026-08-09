@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, Share2, Printer, QrCode } from 'lucide-react';
+import { X, Download, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -98,7 +98,7 @@ export function EquipmentQRCode({
     if (navigator.share && navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({
-          title: `QR Label — ${equipmentName}`,
+          title: `QR label — ${equipmentName}`,
           text: `QR code label for ${equipmentName}${serialNumber ? ` (S/N: ${serialNumber})` : ''}. Print and stick on equipment.`,
           files: [file],
         });
@@ -120,21 +120,22 @@ export function EquipmentQRCode({
       <button
         onClick={() => setShowFullScreen(true)}
         className={cn(
-          'flex items-center gap-2.5 p-2.5 rounded-lg min-h-[44px] w-full',
-          'bg-white/5 border border-white/[0.08]',
-          'touch-manipulation active:scale-[0.98] transition-all'
+          'flex min-h-[44px] w-full items-center gap-2.5 rounded-xl p-2.5',
+          'border border-white/[0.1] bg-white/[0.05]',
+          // Brighten on press, never dim — a dark UI that dims reads as disabled.
+          'touch-manipulation transition-[transform,filter] duration-150',
+          'active:scale-[0.98] active:brightness-110 [-webkit-tap-highlight-color:transparent]'
         )}
-        title="View QR Label"
+        title="View QR label"
       >
-        <div className="bg-white rounded-md p-1 flex-shrink-0">
+        <div className="flex-shrink-0 rounded-md bg-white p-1">
           <QRCodeSVG value={qrValue} size={size} bgColor="#FFFFFF" fgColor="#000000" level="M" />
         </div>
-        <div className="text-left flex-1 min-w-0">
-          <p className="text-xs font-medium text-white flex items-center gap-1">
-            <Printer className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            Print QR Label
-          </p>
-          <p className="text-[10px] text-white mt-0.5">
+        <div className="min-w-0 flex-1 text-left">
+          {/* The printer glyph restated the words next to it. Meaning lives in
+              the type; the QR image is already the picture. */}
+          <p className="text-[12.5px] font-medium text-white">Print QR label</p>
+          <p className="mt-0.5 text-[11px] text-white">
             Save or share to print a sticker for this equipment
           </p>
         </div>
@@ -150,7 +151,7 @@ export function EquipmentQRCode({
             className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center"
             role="dialog"
             aria-modal="true"
-            aria-label="Equipment QR Label"
+            aria-label="Equipment QR label"
           >
             {/* Close button */}
             <div className="absolute top-0 left-0 right-0 p-3 safe-area-top">
@@ -165,10 +166,9 @@ export function EquipmentQRCode({
 
             {/* QR Code */}
             <div className="text-center space-y-4 px-6">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <QrCode className="h-5 w-5 text-elec-yellow" />
-                <h2 className="text-lg font-semibold text-white">QR Label</h2>
-              </div>
+              {/* No glyph beside the heading — the 220px QR code directly below
+                  it is the picture. */}
+              <h2 className="mb-2 text-lg font-semibold text-white">QR label</h2>
 
               <div ref={qrRef} className="bg-white rounded-2xl p-6 mx-auto inline-block">
                 <QRCodeSVG
@@ -217,29 +217,33 @@ export function EquipmentQRCode({
                 </div>
               </div>
 
-              {/* Action buttons */}
-              <div className="flex gap-2 justify-center">
+              {/* One primary (solid volt) and one quieter neutral, rather than
+                  two buttons of equal weight. Sharing is what actually gets the
+                  label onto a printer from a phone; saving a PNG is the fallback. */}
+              <div className="flex justify-center gap-2">
                 <button
                   onClick={handleShare}
                   className={cn(
-                    'flex items-center gap-2 px-5 h-11',
-                    'bg-elec-yellow text-black font-medium rounded-xl',
-                    'touch-manipulation active:scale-[0.98] transition-all'
+                    'flex h-11 items-center gap-2 rounded-full px-5',
+                    'bg-elec-yellow font-semibold text-black',
+                    'touch-manipulation transition-[transform,filter] duration-150',
+                    'active:scale-[0.98] active:brightness-110'
                   )}
                 >
                   <Share2 className="h-4 w-4" />
-                  Share / Print
+                  Share or print
                 </button>
                 <button
                   onClick={handleSave}
                   className={cn(
-                    'flex items-center gap-2 px-5 h-11',
-                    'bg-white/10 text-white font-medium rounded-xl border border-white/[0.08]',
-                    'touch-manipulation active:scale-[0.98] transition-all'
+                    'flex h-11 items-center gap-2 rounded-full px-5',
+                    'border border-white/[0.1] bg-white/[0.06] font-medium text-white',
+                    'touch-manipulation transition-[transform,filter] duration-150',
+                    'active:scale-[0.98] active:brightness-110'
                   )}
                 >
                   <Download className="h-4 w-4" />
-                  Save Image
+                  Save image
                 </button>
               </div>
             </div>

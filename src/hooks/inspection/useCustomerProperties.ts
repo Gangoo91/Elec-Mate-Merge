@@ -7,6 +7,11 @@ export interface CustomerProperty {
   id: string;
   customerId: string;
   address: string;
+  // ELE-1515 — from Google Places when the address was chosen from the
+  // dropdown. Absent on hand-typed addresses and on every pre-existing row.
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
   propertyType: 'residential' | 'commercial' | 'industrial';
   notes?: string;
   isPrimary: boolean;
@@ -17,6 +22,9 @@ export interface CustomerProperty {
 
 interface PropertyInput {
   address: string;
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
   propertyType?: 'residential' | 'commercial' | 'industrial';
   notes?: string;
   isPrimary?: boolean;
@@ -54,6 +62,10 @@ export const useCustomerProperties = (customerId: string) => {
         id: p.id,
         customerId: p.customer_id,
         address: p.address,
+        postcode: p.postcode || undefined,
+        // `??` not `||` — 0 is a real coordinate, even if not a useful one.
+        latitude: p.latitude ?? undefined,
+        longitude: p.longitude ?? undefined,
         propertyType: p.property_type || 'residential',
         notes: p.notes,
         isPrimary: p.is_primary || false,
@@ -87,6 +99,9 @@ export const useCustomerProperties = (customerId: string) => {
           customer_id: customerId,
           user_id: user.id,
           address: property.address,
+          postcode: property.postcode || null,
+          latitude: property.latitude ?? null,
+          longitude: property.longitude ?? null,
           property_type: property.propertyType || 'residential',
           notes: property.notes,
           is_primary: property.isPrimary || false,
@@ -132,10 +147,23 @@ export const useCustomerProperties = (customerId: string) => {
           .neq('id', propertyId);
       }
 
+      // ELE-1515 — geocode columns are keyed off presence and coerced to null.
+      //
+      // Every other field here relies on JSON.stringify dropping undefined, so
+      // a partial update (setPrimaryProperty sends only isPrimary) leaves the
+      // rest alone. That same behaviour makes it impossible to *clear* a
+      // column, which is exactly what a re-typed address needs to do to its
+      // coordinates. Presence-keyed so the partial-update behaviour survives.
+      const geoNulls: Record<string, string | number | null> = {};
+      for (const key of ['postcode', 'latitude', 'longitude'] as const) {
+        if (key in updates) geoNulls[key] = updates[key] ?? null;
+      }
+
       const { error } = await supabase
         .from('customer_properties')
         .update({
           address: updates.address,
+          ...geoNulls,
           property_type: updates.propertyType,
           notes: updates.notes,
           is_primary: updates.isPrimary,

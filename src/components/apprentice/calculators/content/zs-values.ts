@@ -2,8 +2,18 @@ import type { CalculatorContent } from './types';
 
 /**
  * Maximum Zs values — grounded against BS 7671:2018+A4:2026.
- * Reg 411.3.1.2 + Table 41.1 (disconnection times) verified against facets.
- * Maximum Zs figures are tabulated in Tables 41.2–41.4.
+ *
+ * 🔴 WAS WRONG: this file cited "Regulation 411.3.1.2" as the source of the
+ * maximum disconnection times. Reg 411.3.1.2 is *Protective equipotential
+ * bonding* — it says nothing about disconnection times. The clause that applies
+ * Table 41.1 to final circuits is Reg 411.3.2.2, verified word-for-word against
+ * the printed standard (Desktop/BS7671_ocr.pdf).
+ *
+ * The RAG corpus files the Table 41.1 text under "Reg 411.3.1.2" — a breadcrumb
+ * mis-attribution. earth-fault-loop.ts caught this and was fixed; this sibling
+ * file was left carrying the same error, which is why it is corrected here too.
+ *
+ * Maximum Zs figures are tabulated in Tables 41.2–41.5 (41.5 = RCD / 230 V TT).
  */
 export const zsValuesContent: CalculatorContent = {
   slug: 'zs-values',
@@ -18,7 +28,7 @@ export const zsValuesContent: CalculatorContent = {
   whenToCheck: [
     'After installation, comparing measured Zs against the maximum for the protective device',
     'At design stage, to confirm the chosen device will disconnect in time',
-    'When the maximum disconnection time is 0.4 s (final circuits ≤ 63 A with socket-outlets, or ≤ 32 A fixed equipment) per Reg 411.3.1.2',
+    'When the maximum disconnection time is 0.4 s (final circuits ≤ 63 A with socket-outlets, or ≤ 32 A fixed equipment) per Reg 411.3.2.2',
     'Remember to correct tabulated maxima for conductor temperature (the 0.8 / Cmin rule of thumb)',
   ],
 
@@ -49,14 +59,17 @@ export const zsValuesContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'Regulation 411.3.1.2',
+      citation: 'Regulation 411.3.2.2 — when the Table 41.1 times apply',
       clauseText:
-        'The maximum disconnection times in Table 41.1 shall apply to final circuits rated up to 63 A with one or more socket-outlets, and to final circuits rated up to 32 A supplying only fixed connected current-using equipment.',
-      tableRefs: ['Table 41.1', 'Table 41.2', 'Table 41.3', 'Table 41.4'],
-      sourceFacetIds: [
-        '9f714882-23a7-4f4a-8b27-08d21783177c',
-        'c60b151a-198d-4d1e-ba04-b5750c64a253',
-      ],
+        'Maximum disconnection times stated in Table 41.1 shall be applied to final circuits with a rated current not exceeding: (a) 63 A with one or more socket-outlets; and (b) 32 A supplying only fixed connected current-using equipment. Reg 411.3.1.2, under which the RAG corpus files this text, is Protective equipotential bonding and is a different requirement entirely.',
+      tableRefs: ['Reg 411.3.2.2', 'Table 41.1'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Tables 41.2 to 41.5 — and which one your circuit is judged against',
+      clauseText:
+        'Table 41.2 gives maximum Zs for fuses at 0.4 s and Table 41.4 for fuses at 5 s (Reg 411.4.203). Table 41.3 covers circuit-breakers and serves BOTH 0.4 s and 5 s (Reg 411.4.202). Table 41.5 is separate again: it carries the 230 V TT values for circuits where an RCD provides fault protection (Reg 411.5.3). A device-only lookup that stops at 41.4 will silently mis-judge a TT circuit.',
+      tableRefs: ['Table 41.2', 'Table 41.3', 'Table 41.4', 'Table 41.5'],
     },
   ],
 
@@ -64,6 +77,6 @@ export const zsValuesContent: CalculatorContent = {
     status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Reg 411.3.1.2 + Table 41.1 verified against A4:2026 facets. Max Zs figures from Tables 41.2–41.4 (numeric tables not individually faceted); match the calculator engine (src/data/zsLimits.ts).',
+      'CITATION CORRECTED. Reg 411.3.2.2 quoted word-for-word from the printed BS 7671:2018+A4:2026 (Desktop/BS7671_ocr.pdf). \u26a0\ufe0f This file previously cited Reg 411.3.1.2 for the maximum disconnection times and recorded it as \u201cverified against facets\u201d \u2014 but 411.3.1.2 is Protective equipotential bonding. The RAG mis-files the Table 41.1 text under that number; earth-fault-loop.ts had already identified and fixed the same error, and this sibling file was missed at the time. The stale sourceFacetIds were removed with it. Table 41.5 (RCD / 230 V TT) added \u2014 the citation previously stopped at 41.4. Max Zs figures match src/data/zsLimits.ts, the canonical source.',
   },
 };

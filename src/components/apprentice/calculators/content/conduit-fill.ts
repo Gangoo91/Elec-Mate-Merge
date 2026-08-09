@@ -55,10 +55,17 @@ export const conduitFillContent: CalculatorContent = {
   standards: [
     {
       standard: 'IET On-Site Guide',
-      citation: 'On-Site Guide 2.4 and 7.25 — conduit capacities',
+      citation: 'Which method this calculator uses — and how it differs from Appendix E',
       clauseText:
-        'The On-Site Guide contains conduit and trunking capacities and cable bending radii (OSG 2.4). Conduit capacities are assessed with the cable-factor / conduit-factor method (OSG 7.25, Table 4.6 / Appendix H) — conduits are sized so that fill factors are not exceeded. BS 7671 itself states no numeric conduit fill percentage.',
-      tableRefs: ['OSG 2.4', 'OSG 7.25', 'OSG Table 4.6 / Appendix H'],
+        'Be aware these are two different methods that will not always agree. The On-Site Guide Appendix E method is a FACTOR LOOKUP: cable factors summed against a tabulated conduit factor, with separate tables for runs over 3 m or with bends. This calculator instead works geometrically — it computes the summed cross-sectional area of the cables against the internal area of the conduit and compares that with a percentage fill target (40% by default). The percentage-area approach is long-standing practice and is the same approach the On-Site Guide itself sanctions for TRUNKING outside Tables E5/E6, but for conduit the Guide gives factors rather than a percentage. Where a run exceeds 3 m or contains bends, prefer the Appendix E Tables E3/E4 lookup — the geometric figure does not account for the extra difficulty of the pull.',
+      tableRefs: ['OSG Appendix E'],
+    },
+    {
+      standard: 'IET On-Site Guide',
+      citation: 'On-Site Guide APPENDIX E — the cable-factor / conduit-factor method',
+      clauseText:
+        'Conduit capacity lives in Appendix E of the On-Site Guide, not Appendix H (Appendix H is standard final circuit arrangements). For single-core thermoplastic (PVC) cables in straight runs NOT EXCEEDING 3 m: take each cable’s factor from Table E1, add them, and compare the total with the conduit factors in Table E2 — “the minimum conduit size is that having a factor equal to or greater than the sum of the cable factors”. Table E1 (solid): 1 mm² = 22, 1.5 = 27, 2.5 = 39; (stranded): 1.5 = 31, 2.5 = 43, 4 = 58, 6 = 88, 10 = 146, 16 = 202, 25 = 385. Table E2 conduit factors: 16 mm = 290, 20 = 460, 25 = 800, 32 = 1400, 38 = 1900, 50 = 3500, 63 = 5600. For runs EXCEEDING 3 m, or runs of any length incorporating bends or sets, Tables E3 and E4 apply instead and the factors vary with length and number of bends. BS 7671 itself states no numeric conduit fill percentage.',
+      tableRefs: ['OSG Appendix E', 'OSG Tables E1, E2', 'OSG Tables E3, E4'],
     },
     {
       standard: 'BS 7671',
@@ -80,6 +87,6 @@ export const conduitFillContent: CalculatorContent = {
     status: 'needs-review',
     generatedAt: '2026-08-06',
     notes:
-      'Verified against BS 7671:2018+A4:2026 facets and the printed standard. Confirmed: BS 7671 contains no space/cable/conduit factor text and no numeric fill percentage; conduit capacity sits in the On-Site Guide (2.4, 7.25, Table 4.6 / Appendix H); Reg 522.8.3 is a performance requirement with no numeric bend radius; Reg 522.8.1 prohibits detrimental lubricants; Reg 523.5 + App 4 §2.3.1 + Table 4C1 govern grouping. NOT verifiable from any source held: the numeric On-Site Guide cable/conduit factor values, conduit bore diameters, and cable overall diameters (manufacturer data — cable dimensions now come from the shared bs7671-data/trunkingData module).',
+      'Rewritten 2026-08-09 against the IET On-Site Guide itself (\u007e/Desktop/untitled folder/OnSiteGuide_ocr.pdf, the edition aligned to BS 7671:2018+A4:2026). \ud83d\udd34 CITATION CORRECTED: the file pointed at \u201cOSG 2.4, 7.25, Table 4.6 / Appendix H\u201d. Conduit capacity is in APPENDIX E; Appendix H is the standard final circuit arrangements. Tables E1 and E2 were read by RENDERING the Appendix E pages as images \u2014 the OCR text layer garbles them \u2014 and all their values are now transcribed into the content. BS 7671 side re-confirmed: it contains no space/cable/conduit factor and no numeric fill percentage; Reg 522.8.3 is a performance requirement with no numeric bend radius; Reg 522.8.1 prohibits detrimental lubricants; Reg 523.5 + App 4 \u00a72.3.1 + Table 4C1 govern grouping. \u26a0\ufe0f STATUS STAYS needs-review, and NOT for a sourcing reason \u2014 the sources are now held. The open item is a METHOD MISMATCH: the On-Site Guide sizes conduit by a cable-factor / conduit-factor lookup whose factors vary with run length and number of bends (Tables E3/E4), while this calculator computes a percentage area fill with a 40% default and no length or bend term. The two methods can disagree, and on a long or bendy run the geometric figure is the optimistic one. That is a product decision about what the tool should implement, not something more reading will resolve. Also still manufacturer data rather than standard: conduit bore diameters/areas and cable overall diameters (the latter now come from the shared bs7671-data/trunkingData module).',
   },
 };

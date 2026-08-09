@@ -198,6 +198,7 @@ const BasicACCircuitCalculator = () => {
       description="Calculate impedance, current, and power in AC circuits with reactive components"
     >
       <CalculatorPanes
+        copyTitle="Basic AC Circuit"
         form={
           <>
             <CalculatorInputGrid columns={2}>

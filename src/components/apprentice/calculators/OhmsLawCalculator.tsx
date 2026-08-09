@@ -279,6 +279,7 @@ const OhmsLawCalculator = () => {
       description="Enter any two values to calculate the remaining electrical parameters"
     >
       <CalculatorPanes
+        copyTitle="Ohm's Law"
         form={
           <>
             {/* Solve For Selector */}

@@ -2401,6 +2401,19 @@
           <span class="inline-value">{{schedule_tested_by_date}}</span>
         </div>
       </div>
+      <!-- The basis the Zs verdicts on this schedule were judged against.
+           Reg 411.4.4 permits correcting the tabulated limit to 80% for
+           measured values at ambient temperature, and it changes pass/fail —
+           so the document has to say which was applied. -->
+      {% if zs_basis.percent == 80 %}
+      <div style="font-size: 8px; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 3px; padding: 5px 8px; margin-top: 6px;">
+        <strong>Zs assessment basis:</strong> {{ zs_basis.display }}
+      </div>
+      {% else %}
+      <div style="font-size: 7.5px; color: #64748b; margin-top: 6px;">
+        <strong>Zs assessment basis:</strong> {{ zs_basis.display }}
+      </div>
+      {% endif %}
       <!-- A4:2026 footnotes for Schedule of Test Results -->
       <div style="font-size: 7.5px; color: #64748b; margin-top: 6px; line-height: 1.3;">
         Notes: Not all SPDs have visible functionality indication. Not all AFDDs have a manual test button. Where Ring Final Circuit testing is not applicable, an alternative test at rated residual operating current (I&#916;n) should be performed.

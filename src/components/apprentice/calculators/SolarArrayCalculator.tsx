@@ -101,7 +101,8 @@ const SolarArrayCalculator = () => {
   const [advancedMode, setAdvancedMode] = useState(false);
 
   // Basic inputs
-  const [panelWattage, setPanelWattage] = useState('');
+  // 400 W is the option the list itself labels 'Popular'.
+  const [panelWattage, setPanelWattage] = useState('400');
   const [panelLength, setPanelLength] = useState('');
   const [panelWidth, setPanelWidth] = useState('');
   const [availableLength, setAvailableLength] = useState('');

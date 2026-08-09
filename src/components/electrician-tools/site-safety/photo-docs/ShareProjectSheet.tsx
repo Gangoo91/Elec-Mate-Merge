@@ -664,10 +664,14 @@ export default function ShareProjectSheet({
                                 <span
                                   className={`inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
                                     link.status === 'signed'
-                                      ? 'bg-green-500/10 text-green-400'
+                                      ? // Neutral surface, coloured label — the pill
+                                        // convention now shared across the hub.
+                                        'bg-white/[0.05] text-emerald-400'
                                       : link.status === 'active'
-                                        ? 'bg-blue-500/10 text-blue-400'
-                                        : 'bg-white/5 text-white'
+                                        ? // Blue is not in the palette; an active
+                                          // link is simply on the record.
+                                          'bg-white/[0.05] text-white'
+                                        : 'bg-white/[0.05] text-white'
                                   }`}
                                 >
                                   {link.status === 'signed'
@@ -699,9 +703,10 @@ export default function ShareProjectSheet({
                               </button>
                               <button
                                 onClick={() => revokeShare(link.id)}
-                                className="p-2 rounded-lg active:bg-red-500/10 touch-manipulation"
+                                aria-label="Revoke share link"
+                                className="flex h-11 w-11 items-center justify-center rounded-lg transition-[filter] active:brightness-125 touch-manipulation [-webkit-tap-highlight-color:transparent]"
                               >
-                                <Ban className="h-4 w-4 text-red-400/50" />
+                                <Ban className="h-4 w-4 text-red-400" />
                               </button>
                             </div>
                           </div>

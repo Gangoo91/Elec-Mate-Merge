@@ -126,7 +126,7 @@ export const polarityPurposeQuizQuestions: QuizQuestion[] = [
       'Regulation 643.3 - Insulation resistance',
       'Regulation 643.2 - Continuity of conductors',
       'Regulation 643.6 - Polarity',
-      'Regulation 643.7 - Earth fault loop impedance',
+      'Regulation 643.7.3 - Earth fault loop impedance and prospective fault current',
     ],
     correctAnswer: 2,
     explanation:

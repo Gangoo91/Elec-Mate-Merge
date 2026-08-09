@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { LocationAutoFill } from '../common/LocationAutoFill';
 import { SignatureField } from '../common/SignatureField';
 import {
@@ -19,7 +20,7 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 
-import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from '../common/SafetyDocField';
+import { safetyInputCn } from '../common/SafetyDocField';
 import { SafetyMasthead } from '../common/SafetyModuleShell';
 import { ReadinessGate } from '../common/ReadinessGate';
 import { JobLinkField } from '../common/JobLinkField';
@@ -38,15 +39,32 @@ interface ChecklistFormProps {
   items: CheckItem[];
   onSubmit: () => void;
   onCancel: () => void;
+  /** Carried over by "Re-check" so the same kit isn't re-typed. */
+  initialEquipmentId?: string | null;
+  initialEquipmentDescription?: string;
+  initialSiteAddress?: string;
+  initialJobId?: string | null;
+  initialJobTitle?: string | null;
 }
 
 type CheckResult = 'pass' | 'fail' | 'na';
 
+/**
+ * Selected state keeps its tint: a pass/fail verdict is exactly the binary
+ * safety signal the tinted fill is reserved for. Unselected is neutral.
+ */
 const RESULT_BTN: Record<CheckResult, { on: string; label: string }> = {
   pass: { on: 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400', label: 'Pass' },
   fail: { on: 'bg-red-500/15 border-red-500/40 text-red-400', label: 'Fail' },
   na: { on: 'bg-white/15 border-white/30 text-white', label: 'N/A' },
 };
+
+/**
+ * FormCard's body is a flat `hsl(0 0% 12%)` fill; `bg-transparent` clears it so
+ * the card recipe's ramp sits on near-black rather than being diluted by a
+ * mid-grey base. See `common/SafetyList.tsx` for the same reasoning.
+ */
+const CARD_CN = cn('bg-transparent border-elec-yellow/35', CARD_SURFACE);
 
 const STATUS_TONE: Record<'overdue' | 'due_soon' | 'unknown' | 'ok', Tone> = {
   overdue: 'red',
@@ -73,17 +91,29 @@ export function ChecklistForm({
   items: initialItems,
   onSubmit,
   onCancel,
+  initialEquipmentId = null,
+  initialEquipmentDescription = '',
+  initialSiteAddress = '',
+  initialJobId = null,
+  initialJobTitle = null,
 }: ChecklistFormProps) {
   const [items, setItems] = useState<CheckItem[]>(initialItems);
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
-  const [equipmentDescription, setEquipmentDescription] = useState('');
-  const [siteAddress, setSiteAddress] = useState('');
+  /**
+   * Which items the inspector has actually ruled on.
+   *
+   * `CheckItem.result` starts at 'na', so an untouched item and an item
+   * deliberately marked "not applicable" were indistinguishable — see
+   * `computeOverallResult` below for what that cost.
+   */
+  const [answered, setAnswered] = useState<Set<string>>(new Set());
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(initialEquipmentId);
+  const [equipmentDescription, setEquipmentDescription] = useState(initialEquipmentDescription);
+  const [siteAddress, setSiteAddress] = useState(initialSiteAddress);
   const [inspectorSigName, setInspectorSigName] = useState('');
-  const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
-  const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
-  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
+  const [linkedJobId, setLinkedJobId] = useState<string | null>(initialJobId);
+  const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(initialJobTitle);
   const createCheck = useCreatePreUseCheck();
 
   // Equipment register integration
@@ -109,19 +139,39 @@ export function ChecklistForm({
 
   const updateItemResult = (id: string, result: CheckResult) => {
     setItems((prev) => prev.map((item) => (item.id === id ? { ...item, result } : item)));
+    setAnswered((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
   };
 
   const handleAllPass = () => {
     setItems((prev) => prev.map((item) => ({ ...item, result: 'pass' as const })));
+    setAnswered(new Set(items.map((i) => i.id)));
   };
+
+  /**
+   * The verdict written to `pre_use_checks.overall_result`.
+   *
+   * The previous version was `fail if any fail; pass if every item is pass or
+   * na; else na`. Because every item STARTS as 'na', the second test was true
+   * the moment nothing had failed — so a ladder check with one item ticked and
+   * fourteen never looked at was stored as a full PASS, and the third branch
+   * was unreachable. A pre-use inspection record that claims a pass it never
+   * made is worse than no record.
+   *
+   * Now: fail on any fail; pass only when every item has been ruled on and at
+   * least one is an actual pass; otherwise 'na' — partially assessed. All three
+   * values already exist (the column's CHECK allows pass/fail/na and the list
+   * renders 'na' as "N/A"), so nothing downstream sees a new string.
+   */
+  const answeredCount = answered.size;
+  const allAnswered = items.length > 0 && answeredCount === items.length;
 
   const computeOverallResult = (): CheckResult => {
     if (items.some((i) => i.result === 'fail')) return 'fail';
-    if (items.every((i) => i.result === 'pass' || i.result === 'na')) return 'pass';
+    if (allAnswered && items.some((i) => i.result === 'pass')) return 'pass';
     return 'na';
   };
 
-  const hasAtLeastOneResult = items.some((i) => i.result === 'pass' || i.result === 'fail');
+  const hasAtLeastOneResult = answeredCount > 0;
 
   const handleSubmit = async () => {
     await createCheck.mutateAsync({
@@ -166,14 +216,29 @@ export function ChecklistForm({
 
   const reg = REGULATION_REFS[equipmentType];
 
+  /**
+   * The gate and the button now agree. Submit used to need only one assessed
+   * item while this list also asked for a name and a signature — so the record
+   * could be filed with neither, and an unattributable, unsigned inspection is
+   * not evidence of anything.
+   */
   const readiness = [
-    { ok: hasAtLeastOneResult, label: 'At least one item passed or failed' },
+    {
+      ok: hasAtLeastOneResult,
+      label: allAnswered
+        ? `All ${items.length} items assessed`
+        : `Items assessed (${answeredCount} of ${items.length})`,
+    },
     { ok: !!inspectorSigName.trim(), label: 'Inspector name' },
     { ok: !!inspectorSigData, label: 'Inspector signature' },
   ];
+  const canSubmit = readiness.every((r) => r.ok);
 
   return (
-    <div className="bg-elec-dark min-h-screen pb-28">
+    // Site Safety's page step is hsl(0 0% 7%), not pure black — the shell every
+    // other module in the hub uses. `bg-elec-dark` (#000) left this screen a
+    // shade darker than the list it opens from.
+    <div className="min-h-screen bg-[hsl(0_0%_7%)] pb-28">
       <SafetyMasthead
         onBack={onCancel}
         backLabel="Checks"
@@ -181,17 +246,20 @@ export function ChecklistForm({
       />
 
       <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
-        {/* Regulation reference */}
+        {/* Regulation reference — the same card material as everything else,
+            with the reference carried by volt TEXT. A blue-tinted panel made
+            the standing reference look like an alert. */}
         {reg && (
-          <div className="rounded-2xl border border-blue-500/20 bg-blue-500/[0.06] p-4">
-            <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-blue-400">
+          <div className={cn('rounded-2xl border p-4', CARD_CN)}>
+            <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-elec-yellow">
               {reg.shortName}
             </p>
-            <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">{reg.description}</p>
+            <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">{reg.description}</p>
           </div>
         )}
 
-        {/* Statutory inspection warning for linked equipment */}
+        {/* Statutory inspection warning for linked equipment — a tint is right
+            here: this one IS an alert. */}
         {linkedStatus && linkedStatus.status !== 'ok' && (
           <div
             className={cn('rounded-2xl border p-4', STATUS_CLASS[STATUS_TONE[linkedStatus.status]])}
@@ -200,14 +268,9 @@ export function ChecklistForm({
           </div>
         )}
 
-        {/* All-pass shortcut */}
-        <SecondaryButton fullWidth onClick={handleAllPass}>
-          Mark all as pass
-        </SecondaryButton>
-
         {/* Equipment register picker */}
         {matchingEquipment.length > 0 && (
-          <FormCard eyebrow="Link equipment register">
+          <FormCard eyebrow="Link equipment register" className={CARD_CN}>
             <div className="flex flex-wrap gap-2">
               {matchingEquipment.map((eq: SafetyEquipment) => {
                 const active = selectedEquipmentId === eq.id;
@@ -215,16 +278,27 @@ export function ChecklistForm({
                   <button
                     key={eq.id}
                     onClick={() => (active ? clearEquipmentSelection() : selectEquipment(eq))}
+                    aria-pressed={active}
                     className={cn(
-                      'h-11 px-3 rounded-xl text-[12.5px] font-medium flex items-center gap-2 touch-manipulation active:scale-[0.97] transition-all border',
+                      'flex h-11 touch-manipulation items-center gap-2 rounded-xl border px-3 text-[12.5px] font-medium transition-all',
+                      'active:scale-[0.97] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
+                      // Selected = SOLID volt. A volt hairline reads as
+                      // "available", not "chosen" — the two states were a
+                      // border apart and you could not tell at a glance which
+                      // piece of kit the check was against.
                       active
-                        ? 'border border-elec-yellow/35 text-elec-yellow'
-                        : 'bg-white/[0.06] border-white/[0.12] text-white'
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] text-white'
                     )}
                   >
-                    <span className="truncate max-w-[180px]">{eq.name}</span>
+                    <span className="max-w-[180px] truncate">{eq.name}</span>
                     {eq.serial_number && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-white">
+                      <span
+                        className={cn(
+                          'rounded-full px-1.5 py-0.5 text-[10px]',
+                          active ? 'bg-black/15 text-black' : 'bg-white/10 text-white'
+                        )}
+                      >
                         {eq.serial_number}
                       </span>
                     )}
@@ -239,7 +313,7 @@ export function ChecklistForm({
         )}
 
         {/* Identity */}
-        <FormCard eyebrow="Equipment & location">
+        <FormCard eyebrow="Equipment & location" className={CARD_CN}>
           <Field
             label={`Equipment description${matchingEquipment.length > 0 ? ' (auto-filled or manual)' : ' (optional)'}`}
           >
@@ -269,60 +343,92 @@ export function ChecklistForm({
           />
         </FormCard>
 
-        {/* Checklist items — grouped by section */}
+        {/* Checklist items — grouped by section.
+            The bulk "Mark all as pass" used to be a full-width button at the
+            very top of the page, above the equipment it applies to: the most
+            prominent control on a statutory inspection screen was the one that
+            skips the inspection. It sits with the list it acts on now, and it
+            is the quieter of the two things in this row. */}
         <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <Eyebrow>Checklist</Eyebrow>
+              <p className="mt-1 text-[12.5px] text-white tabular-nums">
+                {answeredCount} of {items.length} items assessed
+              </p>
+            </div>
+            <SecondaryButton size="sm" className="h-11" onClick={handleAllPass}>
+              Mark all pass
+            </SecondaryButton>
+          </div>
+
+          {!allAnswered && answeredCount > 0 && (
+            <p className="text-[12px] text-amber-400">
+              Items left unassessed — this check will be recorded as N/A, not a pass.
+            </p>
+          )}
+
           {sections.map((sec) => {
             const passN = sec.items.filter((i) => i.result === 'pass').length;
             const failN = sec.items.filter((i) => i.result === 'fail').length;
+            const doneN = sec.items.filter((i) => answered.has(i.id)).length;
             const total = sec.items.length;
             return (
-              <div
-                key={sec.name}
-                className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden"
-              >
-                <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.06]">
+              <div key={sec.name} className={cn('overflow-hidden rounded-2xl border', CARD_CN)}>
+                <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
                   <Eyebrow>{sec.name}</Eyebrow>
+                  {/* Neutral surface, coloured text — the pill convention. */}
                   <div className="flex items-center gap-2">
                     {passN > 0 && (
-                      <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded-full">
+                      <span className="rounded-full bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium text-emerald-400">
                         {passN}P
                       </span>
                     )}
                     {failN > 0 && (
-                      <span className="text-[10px] font-medium text-red-400 bg-red-500/15 px-2 py-0.5 rounded-full">
+                      <span className="rounded-full bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium text-red-400">
                         {failN}F
                       </span>
                     )}
-                    <span className="text-[10.5px] text-white tabular-nums">
-                      {passN + failN}/{total}
+                    {/* Counted from `answered`, not from `result`: an untouched
+                        item also reads 'na', so the old counter showed 0/15 for
+                        a section the inspector had marked N/A throughout. */}
+                    <span className="text-[10.5px] tabular-nums text-white">
+                      {doneN}/{total}
                     </span>
                   </div>
                 </div>
-                <div className="divide-y divide-white/[0.04]">
-                  {sec.items.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 px-5 py-3">
-                      <span className="flex-1 text-[13px] text-white leading-snug">
-                        {item.label}
-                      </span>
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        {(['pass', 'fail', 'na'] as const).map((r) => (
-                          <button
-                            key={r}
-                            onClick={() => updateItemResult(item.id, r)}
-                            className={cn(
-                              'h-10 px-2.5 min-w-[40px] flex items-center justify-center rounded-lg border text-[11px] font-medium touch-manipulation active:scale-90 transition-all',
-                              item.result === r
-                                ? RESULT_BTN[r].on
-                                : 'bg-white/[0.06] border-white/[0.12] text-white'
-                            )}
-                            aria-label={RESULT_BTN[r].label}
-                          >
-                            {RESULT_BTN[r].label}
-                          </button>
-                        ))}
+                <div className="divide-y divide-white/[0.06]">
+                  {sec.items.map((item) => {
+                    const isAnswered = answered.has(item.id);
+                    return (
+                      <div key={item.id} className="flex items-center gap-3 px-5 py-3">
+                        <span className="flex-1 text-[13px] leading-snug text-white">
+                          {item.label}
+                        </span>
+                        <div className="flex flex-shrink-0 items-center gap-1">
+                          {(['pass', 'fail', 'na'] as const).map((r) => (
+                            <button
+                              key={r}
+                              onClick={() => updateItemResult(item.id, r)}
+                              aria-pressed={isAnswered && item.result === r}
+                              className={cn(
+                                'flex h-11 min-w-[44px] touch-manipulation items-center justify-center rounded-lg border px-2.5 text-[11px] font-medium transition-all',
+                                // Press BRIGHTENS. `active:scale-90` alone read
+                                // as the button shrinking away from the thumb.
+                                'active:scale-[0.97] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
+                                isAnswered && item.result === r
+                                  ? RESULT_BTN[r].on
+                                  : 'border-white/[0.12] bg-white/[0.06] text-white'
+                              )}
+                              aria-label={RESULT_BTN[r].label}
+                            >
+                              {RESULT_BTN[r].label}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -330,30 +436,36 @@ export function ChecklistForm({
         </div>
 
         {/* Evidence + inspector */}
-        <FormCard eyebrow="Evidence & inspector">
+        <FormCard eyebrow="Evidence & inspector" className={CARD_CN}>
           <SafetyPhotoCapture
             photos={photoUrls}
             onPhotosChange={setPhotoUrls}
             label="Evidence photos"
           />
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Inspector name">
-              <input
-                value={inspectorSigName}
-                onChange={(e) => setInspectorSigName(e.target.value)}
-                placeholder="Your name"
-                className={safetyInputCn}
-              />
-            </Field>
-            <Field label="Date">
-              <input
-                type="date"
-                value={inspectorSigDate}
-                onChange={(e) => setInspectorSigDate(e.target.value)}
-                className={cn(safetyInputCn, '[color-scheme:dark]')}
-              />
-            </Field>
-          </div>
+          <Field label="Inspector name" required>
+            <input
+              value={inspectorSigName}
+              onChange={(e) => setInspectorSigName(e.target.value)}
+              placeholder="Your name"
+              className={safetyInputCn}
+            />
+          </Field>
+          {/*
+           * The date was an editable <input type="date"> that was never sent.
+           * `useCreatePreUseCheck` has no `check_date` field, so the column took
+           * its CURRENT_DATE default and anything the inspector picked was
+           * discarded in silence — a back-dated check quietly filed as today.
+           * Shown as what it actually is until the mutation can carry a date.
+           */}
+          <Field label="Date of check">
+            <p className="h-11 text-base font-medium leading-[2.75rem] text-white tabular-nums">
+              {new Date().toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </p>
+          </Field>
           <SignatureField
             label="Inspector signature"
             value={inspectorSigData}
@@ -366,14 +478,14 @@ export function ChecklistForm({
 
       {/* Sticky submit */}
       <div
-        className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.08] bg-[hsl(0_0%_7%)]/95 px-4 py-3 backdrop-blur-sm"
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-3xl">
           <PrimaryButton
             fullWidth
             size="lg"
-            disabled={!hasAtLeastOneResult || createCheck.isPending}
+            disabled={!canSubmit || createCheck.isPending}
             onClick={handleSubmit}
           >
             {createCheck.isPending ? 'Saving…' : 'Submit check'}

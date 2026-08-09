@@ -235,6 +235,7 @@ const ConduitFillCalculator = () => {
       description="Space-factor check with grouping to BS 7671 Table 4C1"
     >
       <CalculatorPanes
+        copyTitle="Conduit Fill"
         form={
           <>
             <CalculatorInputGrid columns={2}>

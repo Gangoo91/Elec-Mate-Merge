@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/sheet';
 import { Navigation, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { navigateToAddress } from '@/utils/navigate-to-address';
 import { eyebrowCn, ghostButtonCn } from './calendarStyles';
 import { effectiveEnd } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
@@ -59,16 +60,15 @@ const CalendarEventDetail = ({
    * The address used to be plain text, so getting to a job meant reading it off
    * the screen and typing it into another app while sat in the van.
    */
-  const openInMaps = () => {
-    if (!event.location) return;
-    const query = encodeURIComponent(event.location);
-    const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
-    window.open(
-      isApple ? `maps://?q=${query}` : `https://www.google.com/maps/search/?api=1&query=${query}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  };
+  /*
+   * ELE-1520 — this used to sniff the user agent and hand `maps://` to
+   * `window.open(..., '_blank')`. Two problems: Capacitor only routes
+   * `window.open` through the OS for the `_system` target, so `_blank` left it
+   * to the WebView, which cannot open a custom scheme at all; and the Google
+   * branch had the same in-app-browser problem as everywhere else. The shared
+   * helper handles both.
+   */
+  const openInMaps = () => navigateToAddress({ address: event.location });
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>

@@ -82,11 +82,45 @@ serve(async (req) => {
     }
 
     const now = new Date();
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-    const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+    /*
+     * The scoring window is 90 days, not 30.
+     *
+     * A sole trader who spent last month on one long domestic rewire produces
+     * no new RAMS, runs no briefings and logs no near misses — and on a 30-day
+     * window that is indistinguishable from someone who has abandoned safety
+     * altogether. Ninety days spans a realistic mix of jobs, which is what the
+     * score is trying to characterise.
+     *
+     * `recencyWeight` keeps the window from going stale: something logged this
+     * month counts fully, something from three months ago counts about half.
+     * So the score still moves when behaviour changes, without collapsing to
+     * zero the moment a long job starts.
+     */
+    const WINDOW_DAYS = 90;
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    const windowStart = new Date(now.getTime() - WINDOW_DAYS * DAY_MS);
+    const prevWindowStart = new Date(now.getTime() - 2 * WINDOW_DAYS * DAY_MS);
     const today = now.toISOString().slice(0, 10);
-    const thirtyDaysAgoISO = thirtyDaysAgo.toISOString();
-    const sixtyDaysAgoISO = sixtyDaysAgo.toISOString();
+    const windowStartISO = windowStart.toISOString();
+    const prevWindowStartISO = prevWindowStart.toISOString();
+
+    /** 1.0 for today, decaying to ~0.5 at the end of the window. */
+    const recencyWeight = (iso: string | null | undefined): number => {
+      if (!iso) return 0;
+      const ageDays = (now.getTime() - new Date(iso).getTime()) / DAY_MS;
+      if (ageDays < 0) return 1;
+      if (ageDays > WINDOW_DAYS) return 0;
+      return 1 - (ageDays / WINDOW_DAYS) * 0.5;
+    };
+    /** Sum of recency weights — a "how much, how recently" count. */
+    const weighted = (rows: { created_at?: string | null }[]): number =>
+      rows.reduce((acc, r) => acc + recencyWeight(r.created_at), 0);
+
+    // Aliases so the existing body keeps compiling while the window widens.
+    const thirtyDaysAgo = windowStart;
+    const sixtyDaysAgo = prevWindowStart;
+    const thirtyDaysAgoISO = windowStartISO;
+    const sixtyDaysAgoISO = prevWindowStartISO;
 
     // Pull current-30d and previous-30d (for trend). Plus all-time counts for
     // quality dims that don't reset weekly.
@@ -483,8 +517,56 @@ serve(async (req) => {
     const safetyScore = Math.max(0, Math.min(100, Math.round(total)));
 
     // Hudson Ladder mapping (BSC-style non-linear thresholds)
+    /*
+     * ─── Coverage: how much evidence is this score built on? ──────────
+     *
+     * The scoring model starts Compliance at 30 and Outcomes at 10 and deducts
+     * from them, while the other three dimensions start at 0 and are earned.
+     * So an account with NO DATA AT ALL scores exactly 40 — and 40 used to be
+     * "critical", the worst band there is.
+     *
+     * That means every new user was told their safety was critical before they
+     * had done anything, and a spotless sole trader with a quiet quarter got
+     * the same verdict as someone genuinely in trouble. The score could not
+     * tell "no evidence" from "evidence of a problem".
+     *
+     * That distinction matters more than the number. The research on composite
+     * safety indices is consistent that a score used punitively drives risk
+     * underground — people stop reporting, which destroys the self-reported
+     * data the score depends on. Near-miss reporting is 15 of our points, so
+     * this is not theoretical.
+     *
+     * Coverage counts how many independent signals we have anything for. Below
+     * the threshold the score is withheld rather than published as a verdict.
+     */
+    const coverageSignals = [
+      { key: 'rams', label: 'Risk assessments', present: ramsCount > 0 },
+      { key: 'permits', label: 'Permits to work', present: permits.length > 0 },
+      { key: 'coshh', label: 'COSHH assessments', present: coshhTotal > 0 },
+      { key: 'inspections', label: 'Inspections', present: inspTotal > 0 },
+      { key: 'equipment', label: 'Equipment register', present: eqTotal > 0 },
+      { key: 'briefings', label: 'Toolbox briefings', present: briefingCount > 0 },
+      { key: 'nearmiss', label: 'Near misses', present: nmTotal > 0 },
+      { key: 'observations', label: 'Safety observations', present: obsTotal > 0 },
+      { key: 'photos', label: 'Site photos', present: photoCount > 0 },
+    ];
+    const coverageScored = coverageSignals.filter((s) => s.present).length;
+    const coverageTotal = coverageSignals.length;
+
+    /*
+     * Four of ten. Below this the sample is too thin for a 0–100 verdict to
+     * mean anything — two signals can swing it 30 points. At or above it the
+     * score is published normally.
+     */
+    const COVERAGE_MIN = 4;
+    const hasEnoughEvidence = coverageScored >= COVERAGE_MIN;
+
     let hudsonLevel: string;
-    if (safetyScore < 45) hudsonLevel = 'critical';
+    if (!hasEnoughEvidence) {
+      // Not a verdict — an absence of one. The client renders this as
+      // "building your picture", never as a band.
+      hudsonLevel = 'insufficient_data';
+    } else if (safetyScore < 45) hudsonLevel = 'critical';
     else if (safetyScore < 61) hudsonLevel = 'reactive';
     else if (safetyScore < 76) hudsonLevel = 'calculative';
     else if (safetyScore < 89) hudsonLevel = 'proactive';
@@ -627,10 +709,44 @@ serve(async (req) => {
 
     const actionItems = recommendations.slice(0, 6).map((r) => r.label);
 
+    /*
+     * The single next action.
+     *
+     * Campbell Institute's central finding is that collecting leading
+     * indicators changes nothing on its own — it is the action taken on them
+     * that does. A score with no "so what" is decoration, so the payload
+     * always carries exactly one thing to do next, picked in priority order:
+     * a statutory duty first, then whatever is costing the most points, then
+     * the biggest gap in coverage.
+     */
+    const nextAction =
+      recommendations.length > 0
+        ? { label: recommendations[0].label, view: recommendations[0].category }
+        : !hasEnoughEvidence
+          ? (() => {
+              const missing = coverageSignals.find((sig) => !sig.present);
+              return missing
+                ? { label: `Add your first ${missing.label.toLowerCase()}`, view: missing.key }
+                : null;
+            })()
+          : null;
+
     const result = {
       // ── New shape ──
       safetyScore,
       hudsonLevel,
+      /** How many independent signals the score is built on, and which. */
+      coverage: {
+        scored: coverageScored,
+        total: coverageTotal,
+        minimum: COVERAGE_MIN,
+        missing: coverageSignals.filter((sig) => !sig.present).map((sig) => sig.label),
+      },
+      /** False → the client shows coverage and a first action, not a verdict. */
+      hasEnoughEvidence,
+      /** Days the activity dimensions are measured over. */
+      windowDays: WINDOW_DAYS,
+      nextAction,
       dimensions: {
         compliance,
         activity,

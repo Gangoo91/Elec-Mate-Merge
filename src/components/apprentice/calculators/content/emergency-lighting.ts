@@ -1,7 +1,12 @@
 import type { CalculatorContent } from './types';
 
 /**
- * Emergency lighting — BS 5266-1.
+ * Emergency lighting — BS 5266-1:2025.
+ *
+ * ⚠️ The illuminance figures here are REPORTED from a secondary summary, not read
+ * from the standard. BS 5266-1 is copyright BSI and must be licensed to ground
+ * clause-level claims. Do not promote this file to `verified` on the strength of
+ * the summary note.
  */
 export const emergencyLightingContent: CalculatorContent = {
   slug: 'emergency-lighting',
@@ -9,7 +14,7 @@ export const emergencyLightingContent: CalculatorContent = {
 
   whyItMatters: [
     'Emergency lighting keeps escape routes usable when the normal supply fails — BS 5266-1 sets the minimum illuminance, duration and coverage.',
-    'Escape routes need at least 1 lux along the centre line; open (anti-panic) areas and high-risk task areas have their own minimums.',
+    'Escape routes need at least 1 lux — BS 5266-1:2025 is reported to require this across the full route width, not just the centre line, so a design scraping 1 lux down the middle can still fail.',
     'Duration is typically 3 hours (or 1 hour where premises are evacuated and not reoccupied until recharged) — it sizes the battery.',
     'Luminaires must be sited at key points (exits, stairs, changes of direction, fire equipment) regardless of the spacing calculation.',
   ],
@@ -46,9 +51,9 @@ export const emergencyLightingContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 5266',
-      citation: 'BS 5266-1 — Emergency lighting (code of practice)',
+      citation: 'BS 5266-1:2025 — Emergency lighting, code of practice',
       clauseText:
-        'BS 5266-1 specifies the minimum illuminance for escape routes (≥1 lux centre line), open areas and high-risk task areas, the required duration (typically 3 h), luminaire siting at key points, and the testing regime.',
+        'BS 5266-1:2025 came into force on 31 October 2025 and supersedes BS 5266-1:2016, which is withdrawn. It aligns with BS EN 1838:2024 (performance) and BS EN 50172:2024 (system requirements), and widens scope from escape lighting to escape, local area and standby lighting. Reported design minima: escape routes 1 lux across the full route width; open (anti-panic) areas 0.5 lux at floor level; high-risk task areas 15 lux or 10% of normal lighting, whichever is greater; points of emphasis 5 lux vertical. Testing remains a monthly functional test plus an annual full-duration test, with photometric verification newly required initially and then every five years.',
     },
   ],
 
@@ -56,6 +61,6 @@ export const emergencyLightingContent: CalculatorContent = {
     status: 'needs-review',
     generatedAt: '2026-06-01',
     notes:
-      'BS 5266-1 illuminance/duration/siting authored from the code of practice (not in BS 7671 facets). Battery sizing now includes inverter losses (corrected in this pass). Confirm figures against BS 5266-1.',
+      'Edition brought up to date from Desktop/hav/NOTE-BS5266-1-2025-emergency-lighting-changes.md: BS 5266-1:2025 in force 31 Oct 2025, superseding the withdrawn 2016 edition, aligned to BS EN 1838:2024 and BS EN 50172:2024. \u26a0\ufe0f THAT NOTE IS A SECONDARY SUMMARY of public commentary, NOT the standard \u2014 it says so itself. The lux figures and the full-route-width point are therefore REPORTED, not verified, and must be confirmed against a licensed copy of BS 5266-1:2025 (BSI/BSOL) before anyone relies on them. Status stays needs-review for that reason. Battery sizing includes inverter losses and matches the engine.',
   },
 };

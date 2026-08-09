@@ -11,7 +11,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
-import { ShieldAlert, Loader2, CheckCheck, UserX } from 'lucide-react';
+import { ShieldAlert, Loader2, CheckCheck, UserX, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -19,7 +19,10 @@ import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
+  Eyebrow,
+  Avatar,
+  ListCardHeader,
+  ListBody,
   FilterBar,
   ListCard,
   ListRow,
@@ -28,6 +31,7 @@ import {
   LoadingBlocks,
   type Tone,
 } from '@/components/admin/editorial';
+import { usePeerSupportOverview, daysSince } from '@/hooks/usePeerSupportOverview';
 
 interface PeerReport {
   id: string;
@@ -61,11 +65,22 @@ const statusTone = (status: PeerReport['status']): Tone =>
 const reasonLabel = (reason: string) =>
   reason.replace(/[-_]/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 
+/* Status palette — reserved, never a categorical slot, and always paired with
+   an icon and a word rather than carrying meaning by colour alone. */
+const PEER_STATUS = { warning: '#FAB219' } as const;
+
+const getInitials = (name?: string | null) => {
+  const src = (name && name.trim()) || '?';
+  const parts = src.split(/[\s@._-]+/).filter(Boolean);
+  return (parts[0]?.[0] ?? '?').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
+};
+
 export default function AdminPeerSafety() {
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'pending' | 'resolved' | 'all'>('pending');
   const [selected, setSelected] = useState<PeerReport | null>(null);
   const [adminNotes, setAdminNotes] = useState('');
+  const { data: peer } = usePeerSupportOverview();
 
   const {
     data: reports,
@@ -153,18 +168,162 @@ export default function AdminPeerSafety() {
           tone="red"
         />
 
-        <StatStrip
-          columns={3}
-          stats={[
-            {
-              label: 'Pending',
-              value: pending.length,
-              sub: pending.length === 0 ? 'All clear' : 'Needs review',
-            },
-            { label: 'Resolved', value: resolved.length, sub: 'Reviewed or actioned' },
-            { label: 'Total', value: reports?.length ?? 0, sub: 'All time' },
-          ]}
-        />
+        {/*
+          The state of peer support, not only its complaints.
+
+          This was three cells reading Pending 0 / Resolved 0 / Total 0 and a
+          body saying "Nothing needs your attention right now" — which is the
+          page's normal state, because reports are rare. A moderation screen you
+          only ever see empty is one nobody opens, and the single action it
+          offers, deactivating a supporter, was unreachable because supporters
+          were never listed.
+
+          What actually needs watching is who is on the rota: `is_available` is
+          the flag a person in distress is matched against, and nothing anywhere
+          reconciled it against whether that supporter still turns up.
+        */}
+        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="min-w-0">
+              <Eyebrow>{pending.length > 0 ? 'Reports needing review' : 'Peer support'}</Eyebrow>
+              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
+                {pending.length > 0 ? pending.length : (peer?.available ?? 0)}
+              </div>
+              <div className="mt-2 text-[13px] text-white">
+                {pending.length > 0
+                  ? `${pending.length} report${pending.length === 1 ? '' : 's'} waiting on you.`
+                  : `${peer?.available ?? 0} supporter${(peer?.available ?? 0) === 1 ? '' : 's'} showing as available · ${peer?.liveConversations ?? 0} live conversation${(peer?.liveConversations ?? 0) === 1 ? '' : 's'} · no reports outstanding.`}
+              </div>
+
+              {(peer?.staleAvailable.length ?? 0) > 0 && (
+                <div className="mt-5 rounded-xl border border-amber-500/25 bg-white/[0.03] px-4 py-3">
+                  <div className="flex items-start gap-2.5">
+                    <AlertTriangle
+                      className="mt-0.5 h-4 w-4 shrink-0"
+                      style={{ color: PEER_STATUS.warning }}
+                      aria-hidden
+                    />
+                    <div className="min-w-0">
+                      <div className="text-[13px] font-semibold text-white">
+                        {peer!.staleAvailable.length} bookable but long gone
+                      </div>
+                      <div className="mt-0.5 text-[12px] text-white">
+                        {peer!.staleAvailable
+                          .map((s) => {
+                            const d = daysSince(s.last_active_at);
+                            return `${s.display_name || 'Unnamed'} (${d === null ? 'never seen' : `${d}d`})`;
+                          })
+                          .join(', ')}
+                        . Someone in distress can be matched to them right now.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+              {[
+                {
+                  label: 'Pending reports',
+                  value: pending.length,
+                  sub: pending.length === 0 ? 'all clear' : 'needs review',
+                  accent: pending.length > 0,
+                },
+                {
+                  label: 'Available now',
+                  value: peer?.available ?? 0,
+                  sub: `of ${peer?.active ?? 0} active supporters`,
+                },
+                {
+                  label: 'Live chats',
+                  value: peer?.liveConversations ?? 0,
+                  sub: 'open right now',
+                },
+                {
+                  label: 'Resolved',
+                  value: resolved.length,
+                  sub: `${reports?.length ?? 0} reports all time`,
+                },
+              ].map((c) => (
+                <div key={c.label} className="bg-[hsl(0_0%_9%)] px-4 py-5">
+                  <div
+                    className={cn(
+                      'text-[22px] font-semibold leading-none sm:text-[26px]',
+                      c.accent ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {c.value}
+                  </div>
+                  <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                    {c.label}
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">{c.sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* The rota. The page could deactivate a supporter but never showed
+            you one, so the action had nothing to act on. */}
+        {(peer?.supporters.length ?? 0) > 0 && (
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Supporters"
+              meta={
+                <span className="text-[11px] text-white/60">
+                  {peer!.active} active · {peer!.available} showing as available
+                </span>
+              }
+            />
+            <ListBody>
+              {peer!.supporters.map((s) => {
+                const d = daysSince(s.last_active_at);
+                const stale = s.is_active && s.is_available && (d === null || d > 30);
+                return (
+                  <ListRow
+                    key={s.supporter_id}
+                    accent={!s.is_active ? undefined : stale ? 'amber' : 'emerald'}
+                    lead={<Avatar initials={getInitials(s.display_name || s.email)} />}
+                    title={
+                      <span className="flex min-w-0 items-center gap-2">
+                        <span className="truncate">{s.display_name || 'Unnamed supporter'}</span>
+                        {s.reports_against > 0 && (
+                          <span className="shrink-0 rounded-full bg-red-500/15 px-1.5 py-px text-[10px] font-semibold text-red-400">
+                            {s.reports_against} reported
+                          </span>
+                        )}
+                      </span>
+                    }
+                    subtitle={
+                      <span className="truncate">
+                        {s.total_conversations} conversation
+                        {s.total_conversations === 1 ? '' : 's'}
+                        {s.live_conversations > 0 ? ` · ${s.live_conversations} live` : ''}
+                        {' · '}
+                        {d === null ? 'never seen' : d === 0 ? 'seen today' : `seen ${d}d ago`}
+                      </span>
+                    }
+                    trailing={
+                      !s.is_active ? (
+                        <Pill tone="purple">Deactivated</Pill>
+                      ) : stale ? (
+                        <Pill tone="amber">Bookable, inactive</Pill>
+                      ) : s.is_available ? (
+                        <Pill tone="emerald">Available</Pill>
+                      ) : (
+                        <Pill tone="blue">Off rota</Pill>
+                      )
+                    }
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
+        )}
 
         <FilterBar
           tabs={[

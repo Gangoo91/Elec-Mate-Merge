@@ -89,7 +89,9 @@ const HeatPumpCalculator = () => {
   const [insulationLevel, setInsulationLevel] = useState('average');
   const [airTightness, setAirTightness] = useState('average');
   const [region, setRegion] = useState('midlands');
-  const [designTemp, setDesignTemp] = useState('');
+  // -3 °C is the value the field's own placeholder suggests, and a common UK
+  // external design temperature.
+  const [designTemp, setDesignTemp] = useState('-3');
   const [indoorTemp, setIndoorTemp] = useState('21');
   const [heatPumpType, setHeatPumpType] = useState('air-source');
   const [emitterType, setEmitterType] = useState('radiators');

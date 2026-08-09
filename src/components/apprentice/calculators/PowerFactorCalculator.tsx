@@ -155,6 +155,7 @@ const PowerFactorCalculator = () => {
       description="Calculate power factor from power values or electrical parameters"
     >
       <CalculatorPanes
+        copyTitle="Power Factor"
         result={resultPane}
         placeholder="Enter your values and press Calculate — the power factor, efficiency rating and any correction figure appear here."
         footer={<CalculatorEditorial content={powerFactorContent} category="power" />}

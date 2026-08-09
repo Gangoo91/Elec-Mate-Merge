@@ -19,6 +19,8 @@ export interface SafetyDashboardStats {
   recentInspectionsFailed: number;
   accidentCount30Days: number;
   riddorPendingCount: number;
+  /** Fire watches whose HSG168 two-hour check has fallen due. */
+  fireWatchFollowUpsDue: number;
 }
 
 export interface RecentDocument {
@@ -54,12 +56,20 @@ function useComplianceStats() {
         nearMissLatestRes,
         photosRes,
         riddorPendingRes,
+        fireWatchFollowUpRes,
       ] = await Promise.all([
+        // "Permits live" on the hub. Status alone is not enough: nothing on
+        // the server expires a permit — that only happens in a client-side
+        // effect inside usePermitsToWork — so a permit that ran out yesterday
+        // still reads 'active' in the table until someone opens the app with
+        // that hook mounted. Bounding on end_time makes the headline figure
+        // mean "live right now" rather than "last known active".
         supabase
           .from('permits_to_work')
           .select('id', { count: 'exact', head: true })
           .eq('user_id', user.id)
-          .eq('status', 'active'),
+          .eq('status', 'active')
+          .gte('end_time', new Date().toISOString()),
         supabase
           .from('coshh_assessments')
           .select('id', { count: 'exact', head: true })
@@ -105,6 +115,17 @@ function useComplianceStats() {
           .eq('user_id', user.id)
           .eq('is_riddor_reportable', true)
           .eq('riddor_reported', false),
+        // A fire watch that has done its hour but not its two-hour check is
+        // unfinished work sitting on a site someone has already left. It only
+        // showed inside the Fire Watch module, which is the one place nobody
+        // is looking once they have packed up.
+        supabase
+          .from('fire_watch_records')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .eq('status', 'awaiting_follow_up')
+          .is('follow_up_completed_at', null)
+          .lte('follow_up_due_at', now.toISOString()),
       ]);
 
       const inspections = inspectionsRes.data ?? [];
@@ -130,6 +151,7 @@ function useComplianceStats() {
         daysSinceLastNearMiss,
         totalPhotosThisWeek: photosRes.count ?? 0,
         riddorPendingCount: riddorPendingRes.count ?? 0,
+        fireWatchFollowUpsDue: fireWatchFollowUpRes.count ?? 0,
       };
     },
     staleTime: 60_000,
@@ -277,6 +299,7 @@ export function useSafetyDashboardStats() {
     recentInspectionsFailed: complianceStats?.recentInspectionsFailed ?? 0,
     accidentCount30Days: complianceStats?.accidentCount30Days ?? 0,
     riddorPendingCount: complianceStats?.riddorPendingCount ?? 0,
+    fireWatchFollowUpsDue: complianceStats?.fireWatchFollowUpsDue ?? 0,
   };
 
   return {

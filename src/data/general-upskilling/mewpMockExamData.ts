@@ -23,166 +23,6 @@ export const mewpCategories = [
   'Safe Operation',
   'Emergency & Rescue',
   'Safety & Best Practice',
-  {
-    id: 201,
-    question: 'Under LOLER 1998, why does a MEWP fall within scope?',
-    options: [
-      'Because it is lifting equipment used for lifting persons',
-      'Because it is powered by hydraulics rather than mechanically driven',
-      'Because it exceeds 1000 kg gross vehicle weight',
-      'Because it is used on construction sites covered by CDM',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'LOLER lists a scissor lift or mobile elevating work platform among the equipment it covers. What brings it into scope is that it is lifting equipment, and specifically equipment for lifting persons — which attracts additional requirements over equipment that only lifts loads.',
-    difficulty: 'advanced',
-    topic: 'LOLER',
-    category: 'Legislation & Types',
-  },
-  {
-    id: 202,
-    question: 'Who may carry out a thorough examination of a MEWP under LOLER?',
-    options: [
-      'Any operator holding a current PAL card for that machine category',
-      'A competent person with the necessary independence and impartiality',
-      'The site manager, provided the findings are recorded in writing',
-      'Only an engineer employed by the original equipment manufacturer',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'LOLER requires a thorough examination by a competent person — someone with the appropriate practical and theoretical knowledge and experience, and sufficient independence and impartiality to make an objective assessment. A PAL card qualifies someone to operate, not to examine, and the examiner does not have to come from the manufacturer.',
-    difficulty: 'advanced',
-    topic: 'LOLER',
-    category: 'Inspections & Setup',
-  },
-  {
-    id: 203,
-    question: 'A MEWP\'s thorough examination report identifies a defect presenting an existing danger. What must happen?',
-    options: [
-      'The machine may continue in use until the end of the current shift',
-      'The machine may be used at reduced height until repaired',
-      'The machine must be taken out of service until the defect is remedied',
-      'The machine may be used provided a second operative supervises',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'A defect that is or could become a danger to persons means the equipment must not be used until it has been put right. Continuing to use it at reduced capacity, for a limited period or under supervision is not an option the regulations offer.',
-    difficulty: 'advanced',
-    topic: 'LOLER',
-    category: 'Inspections & Setup',
-  },
-  {
-    id: 204,
-    question: 'What is the correct order of the Work at Height Regulations hierarchy?',
-    options: [
-      'Prevent, avoid, minimise',
-      'Avoid, minimise, prevent',
-      'Minimise, prevent, avoid',
-      'Avoid, prevent, minimise',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'Avoid working at height where it is reasonably practicable to do the work another way. Where it cannot be avoided, prevent a fall — using an existing safe place of work or suitable equipment. Where the risk cannot be eliminated, minimise the distance and consequences of a fall. Reaching for fall arrest first inverts the hierarchy.',
-    difficulty: 'advanced',
-    topic: 'WAHR',
-    category: 'Legislation & Types',
-  },
-  {
-    id: 205,
-    question: 'Why is a work restraint system, rather than fall arrest, normally specified in a boom-type MEWP?',
-    options: [
-      'Because restraint prevents the wearer being thrown from the platform in the first place',
-      'Because fall arrest equipment is not rated for use in a platform',
-      'Because restraint systems require no inspection before use',
-      'Because fall arrest cannot be attached to a designated anchor point',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'The hazard in a boom-type platform is catapulting — the operator being thrown out by a sudden movement. A restraint system, adjusted so the wearer cannot reach a position from which they could be ejected, prevents that happening. Fall arrest only acts once a fall is underway, by which point the operator is already outside the platform.',
-    difficulty: 'advanced',
-    topic: 'Harness Use',
-    category: 'Safe Operation',
-  },
-  {
-    id: 206,
-    question: 'What is the principal reason a rescue plan must be in place before MEWP work begins?',
-    options: [
-      'Because the emergency services require notification of work at height',
-      'Because suspension in a harness can become life-threatening within minutes',
-      'Because LOLER requires a written plan for every lifting operation',
-      'Because insurers will not cover work at height without one',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'A person suspended motionless in a harness can deteriorate rapidly — this is why a rescue must be planned, resourced and rehearsed before work starts rather than improvised afterwards. Waiting for the emergency services is not a rescue plan.',
-    difficulty: 'advanced',
-    topic: 'Rescue Planning',
-    category: 'Emergency & Rescue',
-  },
-  {
-    id: 207,
-    question: 'Which of these best describes the purpose of secondary guarding on a boom-type MEWP?',
-    options: [
-      'To prevent the platform overloading beyond its safe working load',
-      'To stop the machine driving while the platform is elevated',
-      'To reduce the risk of the operator being crushed against an overhead structure',
-      'To provide a second anchor point for a fall arrest lanyard',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Secondary guarding devices address entrapment — the operator being pushed onto the controls and crushed against a structure overhead. They typically stop machine movement or alert others when the operator is forced against them. Overload is handled separately by the machine\'s load sensing.',
-    difficulty: 'advanced',
-    topic: 'Entrapment',
-    category: 'Safe Operation',
-  },
-  {
-    id: 208,
-    question: 'Before elevating, the ground conditions must be assessed. What matters most?',
-    options: [
-      'That the surface is dry and free from standing water',
-      'That the area has been swept clear of loose debris',
-      'That the surface is paved rather than compacted hardcore',
-      'That the ground can carry the imposed loads without failing',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'The question is whether the ground will carry the point loads the machine imposes, which means considering underground voids, buried services, backfilled trenches, basements and slopes — not just what the surface looks like. A paved surface over a void is more dangerous than sound compacted ground.',
-    difficulty: 'advanced',
-    topic: 'Ground Conditions',
-    category: 'Inspections & Setup',
-  },
-  {
-    id: 209,
-    question: 'PUWER 1998 Regulation 5 requires work equipment to be maintained. What does this mean for a MEWP?',
-    options: [
-      'It must be kept in efficient working order and in good repair',
-      'Maintenance is only required where the manufacturer specifies it',
-      'It must be serviced by the hire company every four weeks',
-      'Maintenance records are required only for machines over ten years old',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'PUWER Regulation 5 requires work equipment to be maintained in an efficient state, in efficient working order and in good repair. This sits alongside the LOLER thorough examination regime rather than replacing it — one is about ongoing upkeep, the other a periodic independent assessment.',
-    difficulty: 'advanced',
-    topic: 'PUWER',
-    category: 'Legislation & Types',
-  },
-  {
-    id: 210,
-    question: 'A MEWP is to be used near an overhead power line. What is the correct first step?',
-    options: [
-      'Position the machine so the operator can see the line at all times',
-      'Seek isolation or diversion of the line before work is planned around it',
-      'Fit an insulating barrier to the platform guardrails',
-      'Reduce the machine\'s maximum working height by half',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'The hierarchy applies here too: eliminate the hazard first by having the line isolated or diverted. Only where that is not reasonably practicable do you fall back on exclusion zones, barriers, goal posts and a banksman. Relying on the operator\'s judgement of distance is the weakest control and the one most often implicated in fatalities.',
-    difficulty: 'advanced',
-    topic: 'Overhead Lines',
-    category: 'Risk Assessment',
-  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -287,12 +127,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 5,
     question: 'Which IPAF category covers a mobile vertical platform such as a scissor lift?',
-    options: [
-      'Category 1A',
-      'Category 1B',
-      'Category 3A',
-      'Category 3B',
-    ],
+    options: ['Category 1A', 'Category 1B', 'Category 3A', 'Category 3B'],
     correctAnswer: 1,
     explanation:
       'IPAF Category 1B covers mobile vertical platforms, which includes scissor lifts that can be driven while elevated. Category 1A covers static vertical platforms, while Categories 3A and 3B cover static and mobile boom lifts respectively.',
@@ -339,12 +174,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 8,
     question: 'How long is an IPAF PAL card valid for?',
-    options: [
-      '5 years',
-      '3 years',
-      '1 year',
-      '10 years',
-    ],
+    options: ['5 years', '3 years', '1 year', '10 years'],
     correctAnswer: 0,
     explanation:
       'An IPAF Powered Access Licence (PAL) card is valid for 5 years from the date of issue. After this period, operators must complete a renewal course to maintain their certification. The PAL card is an internationally recognised proof of MEWP operator training.',
@@ -357,12 +187,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 9,
     question:
       'Which regulation requires that all work equipment is maintained in an efficient state, in efficient working order, and in good repair?',
-    options: [
-      'WAHR 2005',
-      'PUWER 1998',
-      'CDM 2015',
-      'LOLER 1998',
-    ],
+    options: ['WAHR 2005', 'PUWER 1998', 'CDM 2015', 'LOLER 1998'],
     correctAnswer: 1,
     explanation:
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) requires that all work equipment, including MEWPs, is maintained in an efficient state, in efficient working order, and in good repair. PUWER also covers suitability of equipment, information, instruction, and training.',
@@ -393,12 +218,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question:
       'A boom lift that provides both vertical and horizontal movement is classified as which IPAF group?',
-    options: [
-      'Group A',
-      'Group D',
-      'Group C',
-      'Group B',
-    ],
+    options: ['Group A', 'Group D', 'Group C', 'Group B'],
     correctAnswer: 3,
     explanation:
       'Boom lifts are classified as Group B machines because they provide both vertical and horizontal movement, allowing the platform to reach outward and upward. Group A machines, such as scissor lifts, provide vertical movement only.',
@@ -410,12 +230,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 12,
     question: 'Which European standard covers the design requirements for MEWPs?',
-    options: [
-      'BS EN 280',
-      'BS EN 131',
-      'BS EN 361',
-      'BS EN 795',
-    ],
+    options: ['BS EN 280', 'BS EN 131', 'BS EN 361', 'BS EN 795'],
     correctAnswer: 0,
     explanation:
       'BS EN 280 is the European design standard that sets out the safety requirements for the design, calculation, examination, and testing of MEWPs. It covers structural integrity, stability, controls, and safety devices. Other standards cover ladders (131), harnesses (361), and anchor devices (795).',
@@ -515,12 +330,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 18,
     question: 'Which IPAF category applies to a static boom lift?',
-    options: [
-      'Category 1A',
-      'Category 3B',
-      'Category 3A',
-      'Category 1B',
-    ],
+    options: ['Category 1A', 'Category 3B', 'Category 3A', 'Category 1B'],
     correctAnswer: 2,
     explanation:
       'IPAF Category 3A covers static boom lifts — machines that provide vertical and horizontal reach but are positioned in a fixed location during operation (such as trailer-mounted or spider lifts on outriggers). Category 3B covers mobile boom lifts that can be driven while the platform is elevated.',
@@ -532,12 +342,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 19,
     question: 'What is the IPAF category designation for a push-around vertical (PAV) platform?',
-    options: [
-      'Category 1A',
-      'Category 1B',
-      'Category 3A',
-      'Category PAV',
-    ],
+    options: ['Category 1A', 'Category 1B', 'Category 3A', 'Category PAV'],
     correctAnswer: 3,
     explanation:
       'Push-around vertical platforms have their own dedicated IPAF category designated as PAV. These are lightweight, manually propelled platforms that are pushed into position before being elevated. They are popular for indoor maintenance and installation work at lower heights.',
@@ -567,12 +372,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question:
       'Which regulation specifically addresses the management of health and safety during construction projects, including the planning of work at height?',
-    options: [
-      'PUWER 1998',
-      'CDM 2015',
-      'LOLER 1998',
-      'WAHR 2005',
-    ],
+    options: ['PUWER 1998', 'CDM 2015', 'LOLER 1998', 'WAHR 2005'],
     correctAnswer: 1,
     explanation:
       'The Construction (Design and Management) Regulations 2015 (CDM 2015) manage health and safety throughout construction projects. They require designers and contractors to plan for safe working, including work at height, from the design stage through to completion. CDM places duties on clients, designers, and contractors.',
@@ -781,7 +581,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     options: [
       'WAHR 2005 and the Electricity at Work Regulations 1989 only',
       'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
-      'LOLER 1998 and PUWER 1998 only, as the power line is the utility\'s concern',
+      "LOLER 1998 and PUWER 1998 only, as the power line is the utility's concern",
       'CDM 2015 alone, since it covers all other regulations on a construction site',
     ],
     correctAnswer: 1,
@@ -927,12 +727,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 41,
     question: "How many steps are there in the HSE's recommended risk assessment process?",
-    options: [
-      '3',
-      '5',
-      '4',
-      '6',
-    ],
+    options: ['3', '5', '4', '6'],
     correctAnswer: 1,
     explanation:
       'The HSE recommends a 5-step risk assessment process: (1) identify the hazards, (2) decide who might be harmed and how, (3) evaluate the risks and decide on precautions, (4) record your findings, and (5) review the assessment and update if necessary. This structured approach ensures all risks are systematically addressed.',
@@ -961,12 +756,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 43,
     question: 'At what wind speed must operations in a MEWP cease?',
-    options: [
-      '8 m/s (18 mph)',
-      '10 m/s (22 mph)',
-      '15 m/s (34 mph)',
-      '12.5 m/s (28 mph)',
-    ],
+    options: ['8 m/s (18 mph)', '10 m/s (22 mph)', '15 m/s (34 mph)', '12.5 m/s (28 mph)'],
     correctAnswer: 3,
     explanation:
       'MEWP operations must cease when wind speeds reach 12.5 m/s (28 mph). This is the maximum wind speed at which most MEWPs are designed to operate safely. Higher wind speeds can cause the platform to sway dangerously, affect stability, and make it difficult for the operator to control the machine or work safely.',
@@ -1047,12 +837,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 48,
     question: 'What is the maximum gradient at which a scissor lift should typically be driven?',
-    options: [
-      '5 degrees',
-      '3 degrees',
-      '10 degrees',
-      '15 degrees',
-    ],
+    options: ['5 degrees', '3 degrees', '10 degrees', '15 degrees'],
     correctAnswer: 0,
     explanation:
       "Scissor lifts should typically only be driven on gradients up to a maximum of 5 degrees. Operating on steeper slopes significantly increases the risk of the machine overturning, especially when the platform is elevated. Operators must always check the manufacturer's specific limits for the machine they are using.",
@@ -1081,12 +866,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 50,
     question: 'What instrument is used to measure wind speed on site?',
-    options: [
-      'A barometer',
-      'A hygrometer',
-      'An anemometer',
-      'A thermometer',
-    ],
+    options: ['A barometer', 'A hygrometer', 'An anemometer', 'A thermometer'],
     correctAnswer: 2,
     explanation:
       'An anemometer is the instrument used to measure wind speed. MEWP operators and site supervisors should monitor wind speed regularly using an anemometer, particularly when working at height. Operations must cease when wind speeds reach 12.5 m/s (28 mph) to prevent dangerous platform movement and potential overturn.',
@@ -1258,12 +1038,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 60,
     question:
       'A boom lift must be set up and levelled before use. What is the typical maximum gradient at which a boom lift should be levelled for operation?',
-    options: [
-      '5 degrees',
-      '2 degrees',
-      '10 degrees',
-      '15 degrees',
-    ],
+    options: ['5 degrees', '2 degrees', '10 degrees', '15 degrees'],
     correctAnswer: 0,
     explanation:
       "Boom lifts should be set up and levelled on ground with a maximum gradient of 5 degrees, unless the manufacturer's instructions state otherwise. Operating on steeper slopes can affect the machine's stability and the accuracy of its levelling system. If the ground exceeds the permitted gradient, the machine must not be used in that position.",
@@ -1277,7 +1052,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'What information should a method statement for MEWP operations include?',
     options: [
       'The make, model and serial number of the MEWP allocated to the task',
-      'The nominated operator\'s name, PAL card number and category entitlement',
+      "The nominated operator's name, PAL card number and category entitlement",
       'The step-by-step work procedure, risk controls, emergency plans and responsibilities',
       'The hire start and end dates agreed with the plant rental company',
     ],
@@ -1294,7 +1069,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question: 'When should a risk assessment for MEWP operations be reviewed and updated?',
     options: [
       'Once, when it is written before the work begins on site',
-      'At the employer\'s annual safety audit, alongside the other site documents',
+      "At the employer's annual safety audit, alongside the other site documents",
       'When site conditions change, after an incident, or when the work method changes',
       'Each time a different operator takes over the machine mid-project',
     ],
@@ -1707,12 +1482,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question:
       'Which British Standard covers the requirements for full body harnesses used in MEWP operations?',
-    options: [
-      'BS EN 354',
-      'BS EN 361',
-      'BS EN 131',
-      'BS EN 795',
-    ],
+    options: ['BS EN 354', 'BS EN 361', 'BS EN 131', 'BS EN 795'],
     correctAnswer: 1,
     explanation:
       'BS EN 361 is the standard for full body harnesses, specifying design, testing, and marking requirements. BS EN 354 covers lanyards, BS EN 795 covers anchor devices, and BS EN 131 relates to ladders. Operators should check that their harness carries the BS EN 361 marking and is within its inspection date.',
@@ -1903,12 +1673,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 96,
     question:
       'Which British Standard specifies the requirements for lanyards used in work at height?',
-    options: [
-      'BS EN 354',
-      'BS EN 361',
-      'BS EN 397',
-      'BS EN 166',
-    ],
+    options: ['BS EN 354', 'BS EN 361', 'BS EN 397', 'BS EN 166'],
     correctAnswer: 0,
     explanation:
       'BS EN 354 covers the requirements for lanyards, including construction, strength, and testing criteria. BS EN 361 covers full body harnesses, BS EN 397 covers industrial safety helmets, and BS EN 166 covers eye protection. Operators should verify that their lanyard bears the BS EN 354 marking.',
@@ -2249,7 +2014,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'Why should all MEWP movements be tested at low speed before elevating to work height?',
     options: [
       'To warm the hydraulic fluid up to its operating temperature before lifting',
-      'To use less fuel during the pre-start checks and extend the machine\'s run time',
+      "To use less fuel during the pre-start checks and extend the machine's run time",
       'To reduce wear on the tyres by avoiding sudden movements at the start of a shift',
       'To verify that all functions operate correctly and safely before the operator is at height',
     ],
@@ -2265,12 +2030,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 116,
     question:
       'What is the minimum exclusion zone distance that should be maintained around the base of an operating MEWP?',
-    options: [
-      '10 metres',
-      '5 metres',
-      '2 metres',
-      '15 metres',
-    ],
+    options: ['10 metres', '5 metres', '2 metres', '15 metres'],
     correctAnswer: 0,
     explanation:
       'There is no single fixed regulatory distance: IPAF/HSE guidance requires the exclusion zone to be set by the machine’s reach, the fall/drop zone and the task risk assessment. Of the options here, a generous standing zone of around 10 metres is the most appropriate working minimum to keep unauthorised persons clear of falling objects and the risk of being struck by the machine or its counterweights. The zone must be marked with barriers, cones or tape and adjusted to suit the actual machine and task.',
@@ -2355,7 +2115,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'To raise the platform faster when the main engine is running normally',
       'To provide a secondary means of lowering the platform if the primary controls fail',
       'To lock the platform at height so it cannot drift down on its own',
-      'To power the machine\'s lights and horn when the engine is switched off',
+      "To power the machine's lights and horn when the engine is switched off",
     ],
     correctAnswer: 1,
     explanation:
@@ -2407,12 +2167,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 124,
     question:
       'What is the safe exclusion distance from overhead power lines rated above 132kV when operating a MEWP?',
-    options: [
-      '15 metres',
-      '9 metres',
-      '3 metres',
-      '25 metres',
-    ],
+    options: ['15 metres', '9 metres', '3 metres', '25 metres'],
     correctAnswer: 0,
     explanation:
       'For overhead power lines rated above 132kV, a minimum exclusion distance of 15 metres must be maintained from any part of the MEWP, including the fully extended boom and platform. For lines rated 33kV to 132kV the distance is 9 metres, and for lines below 33kV it is 3 metres. These distances account for electrical arcing and conductor sway.',
@@ -2425,12 +2180,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 125,
     question:
       'What is the minimum safe exclusion distance from overhead power lines rated between 33kV and 132kV?',
-    options: [
-      '3 metres',
-      '9 metres',
-      '6 metres',
-      '15 metres',
-    ],
+    options: ['3 metres', '9 metres', '6 metres', '15 metres'],
     correctAnswer: 1,
     explanation:
       'For overhead power lines rated between 33kV and 132kV, a minimum exclusion distance of 9 metres must be maintained. This distance applies to all parts of the MEWP at maximum reach. Physical barriers such as goalpost barriers or bunting should be erected to define the exclusion zone, and a banksman should be appointed to monitor compliance.',
@@ -2564,12 +2314,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
   {
     id: 133,
     question: 'What is the safe exclusion distance from overhead power lines rated below 33kV?',
-    options: [
-      '1 metre',
-      '3 metres',
-      '9 metres',
-      '15 metres',
-    ],
+    options: ['1 metre', '3 metres', '9 metres', '15 metres'],
     correctAnswer: 1,
     explanation:
       'For overhead power lines rated below 33kV, a minimum exclusion distance of 3 metres must be maintained from any part of the MEWP at maximum extension. Even at lower voltages, electrical contact or arcing can be lethal. If work must be carried out closer than these distances, the power company must be consulted and the lines may need to be isolated or diverted.',
@@ -2712,7 +2457,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A site requires a MEWP to operate at night in a pedestrianised town centre with shops and restaurants. The work involves replacing street lights at 10 metres height. What comprehensive set of control measures should be in place?',
     options: [
-      'Rely on the machine\'s headlights and a few cones, as the streets are quiet',
+      "Rely on the machine's headlights and a few cones, as the streets are quiet",
       'Establish an exclusion zone sized by risk assessment, with lighting and banksman',
       'Post a sign asking the public to keep clear instead of barriers',
       'Use one banksman with a torch and no traffic management plan',
@@ -2845,7 +2590,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
       'The location, height of the platform, number of casualties, and nature of the emergency',
       'The make, model, and serial number of the MEWP involved',
       'The name of the hire company and the date the machine was delivered',
-      'The operator\'s PAL card number and the expiry date of their training',
+      "The operator's PAL card number and the expiry date of their training",
     ],
     correctAnswer: 0,
     explanation:
@@ -2930,8 +2675,8 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     options: [
       'Before work begins, so all personnel are familiar with the rescue procedure',
       'Following any incident on site where a rescue was actually required',
-      'During the operator\'s initial IPAF training, then refreshed on renewal',
-      'Annually, as part of the machine\'s thorough examination under LOLER',
+      "During the operator's initial IPAF training, then refreshed on renewal",
+      "Annually, as part of the machine's thorough examination under LOLER",
     ],
     correctAnswer: 0,
     explanation:
@@ -3093,10 +2838,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'What rescue equipment should be readily available at the base of a MEWP during operation?',
     options: [
-      "Spare hydraulic fluid, a funnel, and a set of replacement filters",
-      "A spare harness, a coil of rope, and a ladder long enough to reach the platform",
+      'Spare hydraulic fluid, a funnel, and a set of replacement filters',
+      'A spare harness, a coil of rope, and a ladder long enough to reach the platform',
       "A fire extinguisher, first aid kit, and the machine's operating manual with emergency procedures",
-      "A wheel brace, jack, and tyre pump in case the machine suffers a puncture",
+      'A wheel brace, jack, and tyre pump in case the machine suffers a puncture',
     ],
     correctAnswer: 2,
     explanation:
@@ -3518,12 +3263,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question:
       'According to the IPAF 2024 global safety report, approximately how many MEWP-related fatalities were recorded worldwide?',
-    options: [
-      'Approximately 25',
-      'Approximately 100',
-      'Approximately 50',
-      'Approximately 250',
-    ],
+    options: ['Approximately 25', 'Approximately 100', 'Approximately 50', 'Approximately 250'],
     correctAnswer: 1,
     explanation:
       'The IPAF 2024 global safety report recorded approximately 100 MEWP-related fatalities worldwide, representing a 26% decrease from the previous year. While this downward trend is encouraging, it demonstrates that MEWP operations remain high-risk and that continued vigilance, training, and adherence to safe working practices are essential.',
@@ -3678,10 +3418,10 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: 'Where should a near-miss involving a MEWP be recorded on site?',
     options: [
-      'Only in the operator\'s personal diary for their own records',
+      "Only in the operator's personal diary for their own records",
       'Nowhere, as near-misses do not need to be recorded if no one was hurt',
       'In the site accident book and reported to the supervisor or safety officer',
-      'In the machine\'s logbook held by the hire company',
+      "In the machine's logbook held by the hire company",
     ],
     correctAnswer: 2,
     explanation:
@@ -3771,7 +3511,7 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     question:
       'A site is implementing a new safety culture programme. During a toolbox talk, a worker reports that they have been pressured by their supervisor to skip pre-use inspections to save time. How should this be handled to support a positive safety culture?',
     options: [
-      'Tell the worker to follow the supervisor\'s instructions, as the supervisor is in charge',
+      "Tell the worker to follow the supervisor's instructions, as the supervisor is in charge",
       'Take no action unless the worker is prepared to put the complaint in writing first',
       'Discipline the worker for questioning a supervisor in front of the rest of the team',
       'Thank the worker, investigate confidentially, and act on what is found',
@@ -3801,5 +3541,170 @@ export const mewpQuestionBank: StandardMockQuestion[] = [
     difficulty: 'advanced',
     topic: 'Lessons learnt',
     category: 'Safety & Best Practice',
+  },
+  {
+    id: 201,
+    question: 'Under LOLER 1998, why does a MEWP fall within scope?',
+    options: [
+      'Because it is lifting equipment used for lifting persons',
+      'Because it is powered by hydraulics rather than mechanically driven',
+      'Because it exceeds 1000 kg gross vehicle weight',
+      'Because it is used on construction sites covered by CDM',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'LOLER lists a scissor lift or mobile elevating work platform among the equipment it covers. What brings it into scope is that it is lifting equipment, and specifically equipment for lifting persons — which attracts additional requirements over equipment that only lifts loads.',
+    difficulty: 'advanced',
+    topic: 'LOLER',
+    category: 'Legislation & Types',
+  },
+  {
+    id: 202,
+    question: 'Who may carry out a thorough examination of a MEWP under LOLER?',
+    options: [
+      'Any operator holding a current PAL card for that machine category',
+      'A competent person with the necessary independence and impartiality',
+      'The site manager, provided the findings are recorded in writing',
+      'Only an engineer employed by the original equipment manufacturer',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'LOLER requires a thorough examination by a competent person — someone with the appropriate practical and theoretical knowledge and experience, and sufficient independence and impartiality to make an objective assessment. A PAL card qualifies someone to operate, not to examine, and the examiner does not have to come from the manufacturer.',
+    difficulty: 'advanced',
+    topic: 'LOLER',
+    category: 'Inspections & Setup',
+  },
+  {
+    id: 203,
+    question:
+      "A MEWP's thorough examination report identifies a defect presenting an existing danger. What must happen?",
+    options: [
+      'The machine may continue in use until the end of the current shift',
+      'The machine may be used at reduced height until repaired',
+      'The machine must be taken out of service until the defect is remedied',
+      'The machine may be used provided a second operative supervises',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A defect that is or could become a danger to persons means the equipment must not be used until it has been put right. Continuing to use it at reduced capacity, for a limited period or under supervision is not an option the regulations offer.',
+    difficulty: 'advanced',
+    topic: 'LOLER',
+    category: 'Inspections & Setup',
+  },
+  {
+    id: 204,
+    question: 'What is the correct order of the Work at Height Regulations hierarchy?',
+    options: [
+      'Prevent, avoid, minimise',
+      'Avoid, minimise, prevent',
+      'Minimise, prevent, avoid',
+      'Avoid, prevent, minimise',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Avoid working at height where it is reasonably practicable to do the work another way. Where it cannot be avoided, prevent a fall — using an existing safe place of work or suitable equipment. Where the risk cannot be eliminated, minimise the distance and consequences of a fall. Reaching for fall arrest first inverts the hierarchy.',
+    difficulty: 'advanced',
+    topic: 'WAHR',
+    category: 'Legislation & Types',
+  },
+  {
+    id: 205,
+    question:
+      'Why is a work restraint system, rather than fall arrest, normally specified in a boom-type MEWP?',
+    options: [
+      'Because restraint prevents the wearer being thrown from the platform in the first place',
+      'Because fall arrest equipment is not rated for use in a platform',
+      'Because restraint systems require no inspection before use',
+      'Because fall arrest cannot be attached to a designated anchor point',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The hazard in a boom-type platform is catapulting — the operator being thrown out by a sudden movement. A restraint system, adjusted so the wearer cannot reach a position from which they could be ejected, prevents that happening. Fall arrest only acts once a fall is underway, by which point the operator is already outside the platform.',
+    difficulty: 'advanced',
+    topic: 'Harness Use',
+    category: 'Safe Operation',
+  },
+  {
+    id: 206,
+    question:
+      'What is the principal reason a rescue plan must be in place before MEWP work begins?',
+    options: [
+      'Because the emergency services require notification of work at height',
+      'Because suspension in a harness can become life-threatening within minutes',
+      'Because LOLER requires a written plan for every lifting operation',
+      'Because insurers will not cover work at height without one',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A person suspended motionless in a harness can deteriorate rapidly — this is why a rescue must be planned, resourced and rehearsed before work starts rather than improvised afterwards. Waiting for the emergency services is not a rescue plan.',
+    difficulty: 'advanced',
+    topic: 'Rescue Planning',
+    category: 'Emergency & Rescue',
+  },
+  {
+    id: 207,
+    question:
+      'Which of these best describes the purpose of secondary guarding on a boom-type MEWP?',
+    options: [
+      'To prevent the platform overloading beyond its safe working load',
+      'To stop the machine driving while the platform is elevated',
+      'To reduce the risk of the operator being crushed against an overhead structure',
+      'To provide a second anchor point for a fall arrest lanyard',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Secondary guarding devices address entrapment — the operator being pushed onto the controls and crushed against a structure overhead. They typically stop machine movement or alert others when the operator is forced against them. Overload is handled separately by the machine's load sensing.",
+    difficulty: 'advanced',
+    topic: 'Entrapment',
+    category: 'Safe Operation',
+  },
+  {
+    id: 208,
+    question: 'Before elevating, the ground conditions must be assessed. What matters most?',
+    options: [
+      'That the surface is dry and free from standing water',
+      'That the area has been swept clear of loose debris',
+      'That the surface is paved rather than compacted hardcore',
+      'That the ground can carry the imposed loads without failing',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The question is whether the ground will carry the point loads the machine imposes, which means considering underground voids, buried services, backfilled trenches, basements and slopes — not just what the surface looks like. A paved surface over a void is more dangerous than sound compacted ground.',
+    difficulty: 'advanced',
+    topic: 'Ground Conditions',
+    category: 'Inspections & Setup',
+  },
+  {
+    id: 209,
+    question:
+      'PUWER 1998 Regulation 5 requires work equipment to be maintained. What does this mean for a MEWP?',
+    options: [
+      'It must be kept in efficient working order and in good repair',
+      'Maintenance is only required where the manufacturer specifies it',
+      'It must be serviced by the hire company every four weeks',
+      'Maintenance records are required only for machines over ten years old',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'PUWER Regulation 5 requires work equipment to be maintained in an efficient state, in efficient working order and in good repair. This sits alongside the LOLER thorough examination regime rather than replacing it — one is about ongoing upkeep, the other a periodic independent assessment.',
+    difficulty: 'advanced',
+    topic: 'PUWER',
+    category: 'Legislation & Types',
+  },
+  {
+    id: 210,
+    question: 'A MEWP is to be used near an overhead power line. What is the correct first step?',
+    options: [
+      'Position the machine so the operator can see the line at all times',
+      'Seek isolation or diversion of the line before work is planned around it',
+      'Fit an insulating barrier to the platform guardrails',
+      "Reduce the machine's maximum working height by half",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The hierarchy applies here too: eliminate the hazard first by having the line isolated or diverted. Only where that is not reasonably practicable do you fall back on exclusion zones, barriers, goal posts and a banksman. Relying on the operator's judgement of distance is the weakest control and the one most often implicated in fatalities.",
+    difficulty: 'advanced',
+    topic: 'Overhead Lines',
+    category: 'Risk Assessment',
   },
 ];

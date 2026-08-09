@@ -1,8 +1,6 @@
 import React from 'react';
 import { MethodTemplate } from '@/types/method-statement';
-import {
-  Eyebrow,
-} from '@/components/college/primitives';
+import { Eyebrow } from '@/components/college/primitives';
 import { SafetyListCard, SafetyListRow } from '../../common/SafetyList';
 
 interface SmartRecommendationsProps {

@@ -69,6 +69,7 @@ export const ResultValue = ({
         'min-w-0 space-y-1 rounded-xl border border-white/[0.10] bg-white/[0.06] p-3.5 sm:p-4',
         className
       )}
+      data-result-copy="value"
     >
       {/* Wraps rather than truncates. At 10px with 0.18em tracking in a
           half-width cell, "Capacitor needed" rendered as "CAPACITOR…" — a label
@@ -130,7 +131,11 @@ export const ResultHeadline = ({
   tone = 'default',
   className,
 }: ResultHeadlineProps) => (
-  <div className={cn('border-b border-white/[0.10] pb-4', className)}>
+  // `data-result-copy` marks the parts that ARE the answer, so "Copy result"
+  // takes the headline and the supporting figures without the formula
+  // reference, the worked steps and the collapsible headings that also live in
+  // the result pane.
+  <div className={cn('border-b border-white/[0.10] pb-4', className)} data-result-copy="headline">
     <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{label}</p>
     <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
       <span
@@ -225,6 +230,7 @@ export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
         statusClasses,
         className
       )}
+      data-result-copy="badge"
     >
       {label}
     </span>

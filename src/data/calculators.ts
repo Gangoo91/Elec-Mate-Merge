@@ -59,11 +59,13 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'ac-power',
     label: 'AC Power Calculator',
     category: 'Fundamental',
+    keywords: 'apparent real reactive VA kVA kW kVAr power triangle',
   },
   {
     value: 'basic-ac-circuit',
     label: 'Basic AC Circuit',
     category: 'Fundamental',
+    keywords: 'impedance Z reactance XL XC inductive capacitive resonance RLC',
   },
   {
     value: 'power-factor',
@@ -90,6 +92,12 @@ export const CALCULATORS: CalculatorEntry[] = [
     keywords: 'volt drop mV/A/m 3% 5% cable run length',
   },
   {
+    value: 'bonding-conductor-size',
+    label: 'Bonding Conductor Size',
+    category: 'Design & Installation',
+    keywords: 'main protective bonding supplementary earthing conductor 544 Table 54.8 PME tails',
+  },
+  {
     value: 'cable-size',
     label: 'Cable Sizing',
     category: 'Design & Installation',
@@ -99,6 +107,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'load',
     label: 'Load Assessment',
     category: 'Design & Installation',
+    keywords: 'maximum demand connected load diversity Ib design current',
   },
   {
     value: 'cable-current-capacity',
@@ -122,6 +131,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'conduit-bending',
     label: 'Conduit Bending',
     category: 'Design & Installation',
+    keywords: 'offset saddle set bend radius shrink stub kick bender',
   },
   {
     value: 'trunking-size',
@@ -160,9 +170,16 @@ export const CALCULATORS: CalculatorEntry[] = [
     keywords: 'Zs table 41.2 41.3 41.4 lookup limit',
   },
   {
+    value: 'insulation-resistance',
+    label: 'Insulation Resistance',
+    category: 'Testing & Inspection',
+    keywords: 'IR insulation resistance megger 500V 250V 1 megohm Table 64 643.3',
+  },
+  {
     value: 'r1r2',
     label: 'R1+R2 Calculation',
     category: 'Testing & Inspection',
+    keywords: 'continuity R1 R2 line CPC loop resistance dead test',
   },
   {
     value: 'ring-circuit',
@@ -180,6 +197,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'phase-rotation',
     label: 'Phase Rotation',
     category: 'Testing & Inspection',
+    keywords: 'sequence L1 L2 L3 rotation meter motor direction reversed',
   },
   {
     value: 'adiabatic',
@@ -215,6 +233,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'circuit-breaker-selector',
     label: 'Circuit Breaker Selector',
     category: 'Protection & Safety',
+    keywords: 'MCB RCBO breaker curve type B C D rating select device',
   },
   {
     value: 'lumen',
@@ -238,16 +257,19 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'transformer-calculator',
     label: 'Transformer Calculator',
     category: 'Lighting & Power Systems',
+    keywords: 'turns ratio primary secondary kVA step up step down winding',
   },
   {
     value: 'battery-backup',
     label: 'Battery Backup',
     category: 'Lighting & Power Systems',
+    keywords: 'UPS runtime autonomy Ah amp hour standby inverter',
   },
   {
     value: 'emergency-lighting',
     label: 'Emergency Lighting Design',
     category: 'Lighting & Power Systems',
+    keywords: 'escape route BS 5266 3 hour lux luminaire spacing maintained',
   },
   {
     value: 'solar-pv',
@@ -259,6 +281,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'solar-array',
     label: 'Solar Array Calculator',
     category: 'Renewable Energy',
+    keywords: 'PV panels string layout MPPT Voc Vmpp roof array design',
   },
   {
     value: 'battery-storage',
@@ -270,26 +293,31 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'wind-power',
     label: 'Wind Power Calculator',
     category: 'Renewable Energy',
+    keywords: 'turbine AEP capacity factor hub height wind speed',
   },
   {
     value: 'grid-tie-inverter',
     label: 'Grid-Tie Inverter',
     category: 'Renewable Energy',
+    keywords: 'inverter DC AC ratio G98 G99 export string sizing',
   },
   {
     value: 'micro-hydro',
     label: 'Micro-Hydro Power',
     category: 'Renewable Energy',
+    keywords: 'hydro head flow turbine Pelton Francis crossflow water',
   },
   {
     value: 'off-grid-system',
     label: 'Off-Grid System Calculator',
     category: 'Renewable Energy',
+    keywords: 'standalone battery autonomy solar charge controller island',
   },
   {
     value: 'feed-in-tariff',
     label: 'Feed-In Tariff Calculator',
     category: 'Renewable Energy',
+    keywords: 'FIT SEG export generation tariff payback deemed',
   },
   {
     value: 'heat-pump',
@@ -307,6 +335,7 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'evse-load',
     label: 'EVSE Load Calculator',
     category: 'Renewable Energy',
+    keywords: 'EV charger diversity load 722 charge point maximum demand',
   },
   {
     value: 'arc-flash',
@@ -318,11 +347,13 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'power-quality',
     label: 'Power Quality Analysis',
     category: 'Advanced Safety & Analysis',
+    keywords: 'harmonics THD distortion flicker unbalance G5 crest',
   },
   {
     value: 'selectivity',
     label: 'Selectivity & Discrimination',
     category: 'Advanced Safety & Analysis',
+    keywords: 'discrimination coordination upstream downstream backup let-through',
   },
   {
     value: 'fault-level',
@@ -334,51 +365,61 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'touch-step-voltage',
     label: 'Touch & Step Voltage',
     category: 'Advanced Safety & Analysis',
+    keywords: 'touch step potential rise EPR substation earthing 50V',
   },
   {
     value: 'lightning-protection',
     label: 'Lightning Protection Risk Assessment',
     category: 'Advanced Safety & Analysis',
+    keywords: 'LPS risk assessment BS EN 62305 surge air termination',
   },
   {
     value: 'data-centre',
     label: 'Data Centre Calculator',
     category: 'Specialised Applications',
+    keywords: 'PUE UPS rack cooling redundancy N+1 kW per rack',
   },
   {
     value: 'generator-sizing',
     label: 'Generator Sizing',
     category: 'Specialised Applications',
+    keywords: 'genset kVA prime standby step load alternator sizing',
   },
   {
     value: 'marine-electrical',
     label: 'Marine Electrical',
     category: 'Specialist Locations',
+    keywords: 'boat shore power marina galvanic isolator 12V DC',
   },
   {
     value: 'swimming-pool',
     label: 'Swimming Pool Electrical',
     category: 'Specialist Locations',
+    keywords: 'pool zones 702 SELV bonding hot tub spa',
   },
   {
     value: 'resistor-colour-code',
     label: 'Resistor Colour Code',
     category: 'Tools & Components',
+    keywords: 'bands colour code ohm tolerance 4 band 5 band decode',
   },
   {
     value: 'wire-gauge',
     label: 'Wire Gauge (AWG/SWG)',
     category: 'Tools & Components',
+    keywords: 'AWG SWG gauge mm2 conversion American wire',
   },
   {
     value: 'instrumentation',
     label: 'Instrumentation',
     category: 'Tools & Components',
+    keywords: '4-20mA loop transmitter scale span PLC signal',
   },
   {
     value: 'ip-rating',
     label: 'IP Rating Decoder',
     category: 'Tools & Components',
+    keywords: 'IP code ingress protection IP65 IP2X dust water BS EN 60529',
   },
   {
     value: 'energy-cost',
@@ -390,11 +431,13 @@ export const CALCULATORS: CalculatorEntry[] = [
     value: 'unit-converter',
     label: 'Unit Converter',
     category: 'Utilities & Cost Analysis',
+    keywords: 'convert units mm kW HP ohm milli kilo conversion',
   },
   {
     value: 'time-materials',
     label: 'Time & Materials',
     category: 'Utilities & Cost Analysis',
+    keywords: 'quote price labour materials markup VAT invoice job cost',
   },
 ];
 
@@ -405,7 +448,11 @@ export const CALCULATOR_BY_SLUG = new Map(CALCULATORS.map((c) => [c.value, c]));
  * Label + keyword match, case- and punctuation-insensitive so "3 phase",
  * "3-phase" and "three phase" all land on the same tool.
  */
-const normalise = (s: string) => s.toLowerCase().replace(/[^a-z0-9%]+/g, ' ').trim();
+const normalise = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9%]+/g, ' ')
+    .trim();
 
 /**
  * How well an entry matches — lower is better.
@@ -423,7 +470,17 @@ function matchScore(c: CalculatorEntry, q: string): number {
   if (new RegExp(`\\b${q}`).test(label)) return 2;
   if (label.includes(q)) return 3;
   if (normalise(c.category).includes(q)) return 4;
-  return 5; // matched on keywords only
+
+  // Keyword hits, ranked by how complete the match is. "ups" must find Battery
+  // Backup (keyword "UPS") ahead of RCD Discrimination, whose keywords contain
+  // "upstream" — a word that legitimately STARTS with ups, so a word-boundary
+  // test alone does not separate them. Only a whole-word match does. Short
+  // queries are exactly where an electrician types an abbreviation, so the
+  // abbreviation has to win.
+  const keywords = normalise(c.keywords ?? '');
+  if (new RegExp(`\\b${q}\\b`).test(keywords)) return 5; // whole word: "UPS"
+  if (new RegExp(`\\b${q}`).test(keywords)) return 6; // word prefix: "upstream"
+  return 7; // substring somewhere
 }
 
 export function searchCalculators(query: string): CalculatorEntry[] {

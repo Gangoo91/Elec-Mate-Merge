@@ -107,7 +107,8 @@ export function GridTieInverterCalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [arraySize, setArraySize] = useState('');
   const [inverterPower, setInverterPower] = useState('');
-  const [systemPhase, setSystemPhase] = useState('');
+  // Most domestic grid-tie is single-phase; three-phase is the exception.
+  const [systemPhase, setSystemPhase] = useState('230');
   const [psh, setPsh] = useState('3.5');
   const [selfConsumption, setSelfConsumption] = useState('30');
   const [retailPrice, setRetailPrice] = useState(String(DOMESTIC_IMPORT_RATE));

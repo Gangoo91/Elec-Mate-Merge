@@ -23,7 +23,7 @@ export const batteryStorageContent: CalculatorContent = {
     'A storage inverter is a form of generation for connection purposes: up to 16 A/phase (≈3.68 kW) it connects under G98; above that, G99 applies before energising.',
     'Lithium chemistries (LiFePO₄) give deeper discharge and far more cycles than lead-acid — the right chemistry depends on cycle life and budget, not just capacity.',
     'Domestic GB installs of battery storage are currently 0%-rated for VAT (to 31 March 2027).',
-    'BS 7671:2018+A4:2026 added Chapter 57 for stationary secondary batteries — it applies irrespective of the nominal voltage and irrespective of capacity, and it treats the battery as a generating set rather than a load (Reg 551.7.2.1).',
+    'BS 7671:2018+A4:2026 added Chapter 57 for stationary secondary batteries used as a source of supply — and it treats the battery as a generating set rather than a load (Reg 551.7.2.1), which is what puts it on the supply side of the final-circuit devices, on its own dedicated circuit.',
   ],
 
   whenToCheck: [
@@ -69,7 +69,7 @@ export const batteryStorageContent: CalculatorContent = {
       standard: 'BS 7671',
       citation: 'BS 7671:2018+A4:2026 Chapter 57 — stationary secondary batteries',
       clauseText:
-        'Chapter 57 is the governing chapter for a stationary secondary battery installation (Regulation 551.8 was deleted and its requirements moved here). Reg 570.6.1.1.1 requires conformance to the relevant parts of the BS EN IEC 62485 series. Reg 570.6.2.2 requires a Type B RCD on the AC supply circuit unless the power conversion equipment provides at least simple separation between the AC and DC sides. Reg 570.6.3 requires the location or enclosure to be adequately ventilated. Reg 570.6.4 requires the DC prospective fault current to account for both the battery and the PCE that charges it. Reg 570.6.5 requires isolation conforming to Section 462. Regs 570.6.8.201 to 570.6.8.203 require the warning notices.',
+        'Chapter 57 is the governing chapter for a stationary secondary battery installation (Regulation 551.8 was deleted and its requirements moved here). Reg 570.6.1.1.1 requires conformance to the relevant parts of the BS EN IEC 62485 series. Reg 570.6.2.2: where an RCD is used for protection of the AC supply circuit it shall be of Type B to BS EN 62423 or BS EN 60947-2, unless (a) the PCE provides at least simple separation between the AC and DC sides, or (b) at least simple separation is provided between the PCE and the RCD by separate windings of a transformer, or (c) the PCE does not require a Type B RCD as stated by its manufacturer. Reg 570.6.3 requires the location or enclosure to be adequately ventilated taking account of the manufacturer’s instructions. Reg 570.6.4 requires determination of the battery prospective fault current to account for the contribution of both the battery AND the PCE which charges it. Reg 570.6.5 requires every power circuit connecting to the battery to have appropriate means of isolation conforming to Section 462 — the note adds that isolation is likely to be required at BOTH ends of the power circuit. Regs 570.6.8.201 to 570.6.8.203 require the warning notices.',
     },
     {
       standard: 'BS 7671',
@@ -83,12 +83,25 @@ export const batteryStorageContent: CalculatorContent = {
       clauseText:
         'Stationary secondary batteries in dwellings shall be installed in a suitable location taking account of the manufacturer’s instructions and PAS 63100. In other premises the location of storage batteries and the fire protection requirements shall be selected taking into account the fire strategy for the premises.',
     },
+    /*
+      Added from the source (Desktop/hav/MCS-MIS3012-2025-Battery.pdf, Issue 1.0).
+      The file already declared 'MCS' in governingStandards but cited no MCS clause
+      at all — claiming a standard governs the tool while saying nothing about what
+      it actually requires.
+    */
+    {
+      standard: 'MCS',
+      citation: 'MCS MIS 3012:2025 Issue 1.0 — Battery storage installation standard',
+      clauseText:
+        'Specifies the requirements for MCS contractors undertaking the supply, design, installation, set to work and commissioning of electrical energy storage systems (EESS) for permanent buildings, with a maximum power output of up to 50 kW (\u00a71). It must be read in conjunction with the IET Code of Practice for Electrical Energy Storage Systems — MIS 3012 sets the contractor requirements, the Code of Practice carries the design detail.',
+      tableRefs: ['MIS 3012 \u00a71'],
+    },
   ],
 
   _grounding: {
-    status: 'needs-review',
+    status: 'verified',
     generatedAt: '2026-08-06',
     notes:
-      'Chapter 57 clauses (570.6.1.1.1, 570.6.2.2, 570.6.3, 570.6.4, 570.6.5, 570.6.7.203, 570.6.8.201–203), Reg 551.7.2.1 and Reg 826.1.1.4 verified word-for-word against BS 7671:2018+A4:2026. G98/G99 thresholds match the engine. VAT 0% domestic GB per HMRC relief — NOT verified against BS 7671.',
+      'Chapter 57 clauses (570.6.1.1.1, 570.6.2.2, 570.6.3, 570.6.4, 570.6.5, 570.6.7.203, 570.6.8.201–203), Reg 551.7.2.1 and Reg 826.1.1.4 re-read line-by-line against the printed BS 7671:2018+A4:2026 (Desktop/BS7671_ocr.pdf). Every regulation number resolves to the clause claimed. TWO CORRECTIONS made on that read: (1) “applies irrespective of the nominal voltage and irrespective of capacity” was removed — the word “irrespective” appears nowhere in Chapter 57, and the scope in Reg 570.1 in fact carries six express EXCLUSIONS (batteries inside products covered by product standards, and those wholly within BS EN [IEC] 62040 pluggable UPS, BS EN 50171 central safety power supplies, BS 5839 fire alarm, BS EN 50132 alarm, BS EN [IEC] 60204 machinery and BS 5266 emergency lighting systems); (2) Reg 570.6.2.2 has THREE exceptions to the Type B RCD requirement, not the one previously stated. MIS 3012:2025 Issue 1.0 from Desktop/hav. PAS 63100 is cited only as Reg 570.6.7.203 cites it — its own content is not held and is not quoted. G98/G99 thresholds match the engine. VAT 0% domestic GB per HMRC relief — a tax matter, not BS 7671.',
   },
 };

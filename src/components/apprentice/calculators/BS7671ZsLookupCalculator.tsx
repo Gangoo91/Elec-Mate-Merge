@@ -233,6 +233,7 @@ const BS7671ZsLookupCalculator = () => {
         // This calculator has no CalculatorCard — its body lives inside a tab —
         // so the panes wrap the tab's content instead.
         <CalculatorPanes
+          copyTitle="BS 7671 Zs Lookup"
           form={
             <div className="space-y-4">
               {/* Search Configuration */}

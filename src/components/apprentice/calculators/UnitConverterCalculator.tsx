@@ -240,6 +240,7 @@ const UnitConverterCalculator = () => {
       description="Convert between electrical units: power, voltage, current, resistance, energy"
     >
       <CalculatorPanes
+        copyTitle="Unit Converter"
         form={
           <>
             {/* Category */}

@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Field, PrimaryButton, SecondaryButton, Eyebrow } from '@/components/college/primitives';
 import { safetyInputCn } from '../common/SafetyDocField';
-import type { IsolationStep, VoltageReadings } from '@/hooks/useSafeIsolationRecords';
+import {
+  DEAD_THRESHOLD_V,
+  readingPairsFor,
+  readingsConfirmDead,
+  type IsolationStep,
+  type VoltageReadings,
+} from '@/hooks/useSafeIsolationRecords';
 
 /** Data passed back when a step is completed */
 export interface StepCompletionData {
@@ -12,6 +19,12 @@ export interface StepCompletionData {
   provingUnitSerial?: string;
   instrumentModel?: string;
   instrumentSerial?: string;
+  /**
+   * Set when prove-dead was attempted and something read live. The readings are
+   * still saved — they are the evidence the isolation failed — but the step
+   * must not count as complete, or the record walks on to "isolated".
+   */
+  proveDeadFailed?: boolean;
 }
 
 interface IsolationStepCardProps {
@@ -21,9 +34,6 @@ interface IsolationStepCardProps {
   onComplete: (data?: StepCompletionData) => void;
   onPhotoCapture?: () => void;
 }
-
-/** Threshold: any reading >=50V is a fail (GS38) */
-const DEAD_THRESHOLD_V = 50;
 
 function isReadingDead(v: number | null): boolean {
   return v !== null && v < DEAD_THRESHOLD_V;
@@ -38,10 +48,11 @@ export function IsolationStepCard({
 }: IsolationStepCardProps) {
   const isCompleted = step.completed;
 
-  // Step 6 voltage state
-  const [voltLN, setVoltLN] = useState<string>('');
-  const [voltLE, setVoltLE] = useState<string>('');
-  const [voltNE, setVoltNE] = useState<string>('');
+  // Step 6 voltage state, keyed by conductor pair so the same code serves a
+  // single-phase circuit (3 readings) and a three-phase one (10).
+  const [phases, setPhases] = useState<1 | 3>(1);
+  const [volts, setVolts] = useState<Record<string, string>>({});
+  const setVolt = (key: string, value: string) => setVolts((prev) => ({ ...prev, [key]: value }));
 
   // Step 5 lock-off state
   const [lockOffNumber, setLockOffNumber] = useState<string>('');
@@ -56,33 +67,36 @@ export function IsolationStepCard({
   const isStep5 = stepNumber === 5;
   const isStep3or7 = stepNumber === 3 || stepNumber === 7;
 
-  const parsedLN = voltLN.trim() ? parseFloat(voltLN) : null;
-  const parsedLE = voltLE.trim() ? parseFloat(voltLE) : null;
-  const parsedNE = voltNE.trim() ? parseFloat(voltNE) : null;
+  const pairs = readingPairsFor(phases);
+  const parsed = (key: string): number | null => {
+    const raw = volts[key]?.trim();
+    return raw ? parseFloat(raw) : null;
+  };
 
-  const allReadingsEntered = parsedLN !== null && parsedLE !== null && parsedNE !== null;
-  const allDead =
-    allReadingsEntered &&
-    isReadingDead(parsedLN) &&
-    isReadingDead(parsedLE) &&
-    isReadingDead(parsedNE);
-  const anyLive =
-    allReadingsEntered &&
-    (!isReadingDead(parsedLN) || !isReadingDead(parsedLE) || !isReadingDead(parsedNE));
+  const allReadingsEntered = pairs.every((p) => parsed(p.key) !== null);
+  const allDead = allReadingsEntered && pairs.every((p) => isReadingDead(parsed(p.key)));
+  const anyLive = allReadingsEntered && !allDead;
 
-  // Can complete this step?
+  // Prove dead is the one step that can fail. Readings still get recorded when
+  // something is live — that is the evidence — but the step does not complete.
   const canComplete = isStep6 ? allReadingsEntered : true;
 
   const handleComplete = () => {
     const data: StepCompletionData = {};
 
     if (isStep6) {
-      data.voltageReadings = {
-        ln: parsedLN,
-        le: parsedLE,
-        ne: parsedNE,
+      const readings: VoltageReadings = {
+        ln: null,
+        le: null,
+        ne: null,
+        phases,
         testedAt: new Date().toISOString(),
       };
+      pairs.forEach((p) => {
+        (readings as unknown as Record<string, number | null>)[p.key] = parsed(p.key);
+      });
+      data.voltageReadings = readings;
+      data.proveDeadFailed = anyLive;
     }
     if (isStep5 && lockOffNumber.trim()) {
       data.lockOffNumber = lockOffNumber.trim();
@@ -105,26 +119,20 @@ export function IsolationStepCard({
       : 'bg-white/[0.08] text-white';
   const statusLabel = isCompleted ? 'Done' : isActive ? 'Active' : 'Pending';
   const statusPill = isCompleted
-    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
+    ? 'bg-white/[0.05] text-emerald-400 border-white/10'
     : isActive
-      ? 'bg-amber-500/10 text-amber-400 border-amber-500/25'
+      ? 'bg-white/[0.05] text-amber-400 border-white/10'
       : 'bg-white/[0.05] text-white border-white/10';
 
   // Dead/live verdict for the completed voltage readings display
-  const readingsDead =
-    !!step.voltageReadings &&
-    step.voltageReadings.ln !== null &&
-    step.voltageReadings.le !== null &&
-    step.voltageReadings.ne !== null &&
-    isReadingDead(step.voltageReadings.ln) &&
-    isReadingDead(step.voltageReadings.le) &&
-    isReadingDead(step.voltageReadings.ne);
+  const readingsDead = readingsConfirmDead(step.voltageReadings);
 
   return (
     <motion.div
       layout
       className={cn(
-        'relative rounded-2xl border bg-[hsl(0_0%_12%)] overflow-hidden transition-colors duration-200',
+        'relative rounded-2xl border overflow-hidden transition-colors duration-200',
+        CARD_SURFACE,
         isActive
           ? 'border-amber-500/25'
           : isCompleted
@@ -189,25 +197,29 @@ export function IsolationStepCard({
                   {readingsDead ? 'Dead' : 'Live'}
                 </span>
               </div>
+              {/* Driven off the record's own phase count. Hard-coded L-N/L-E/
+                  N-E would have shown three of a three-phase test's ten
+                  readings and silently dropped the rest. */}
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div>
-                  <p className="text-[10px] text-white">L-N</p>
-                  <p className="text-sm font-bold text-white tabular-nums">
-                    {step.voltageReadings.ln ?? '-'}V
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-white">L-E</p>
-                  <p className="text-sm font-bold text-white tabular-nums">
-                    {step.voltageReadings.le ?? '-'}V
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-white">N-E</p>
-                  <p className="text-sm font-bold text-white tabular-nums">
-                    {step.voltageReadings.ne ?? '-'}V
-                  </p>
-                </div>
+                {readingPairsFor(step.voltageReadings.phases ?? 1).map((p) => {
+                  const v = (step.voltageReadings as unknown as Record<string, number | null>)[
+                    p.key
+                  ];
+                  const live = typeof v === 'number' && v >= DEAD_THRESHOLD_V;
+                  return (
+                    <div key={p.key}>
+                      <p className="text-[10px] text-white">{p.label}</p>
+                      <p
+                        className={cn(
+                          'text-sm font-bold tabular-nums',
+                          live ? 'text-red-400' : 'text-white'
+                        )}
+                      >
+                        {v ?? '-'}V
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
               {step.voltageReadings.testedAt && (
                 <p className="text-[10px] text-white mt-1.5 text-right tabular-nums">
@@ -257,48 +269,59 @@ export function IsolationStepCard({
               className="mt-3"
             >
               <div className="p-3 rounded-xl bg-red-500/[0.06] border border-red-500/20 space-y-3">
-                <Eyebrow className="text-red-300/90">Record voltage readings · GS38</Eyebrow>
+                <Eyebrow className="text-red-400">Record voltage readings · GS38</Eyebrow>
                 <p className="text-xs text-white">
                   Test between all conductors at the point of work. All readings must be below{' '}
                   {DEAD_THRESHOLD_V}V to confirm dead.
                 </p>
+
+                {/* Supply type. A three-phase board tested on three readings is
+                    not a proved-dead three-phase board — HSG85 para 53 requires
+                    every supply conductor. Choosing here rather than on the
+                    record means it is picked standing at the board. */}
+                <div className="grid grid-cols-2 gap-2">
+                  {([1, 3] as const).map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => setPhases(p)}
+                      className={cn(
+                        'h-11 touch-manipulation rounded-full border text-[13px] transition-colors',
+                        phases === p
+                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                          : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                      )}
+                    >
+                      {p === 1 ? 'Single phase' : 'Three phase'}
+                    </button>
+                  ))}
+                </div>
+
                 <div className="grid grid-cols-3 gap-2">
-                  <Field label="L-N (V)">
-                    <input
-                      type="number"
-                      inputMode="decimal"
-                      min="0"
-                      step="0.1"
-                      placeholder="0"
-                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
-                      value={voltLN}
-                      onChange={(e) => setVoltLN(e.target.value)}
-                    />
-                  </Field>
-                  <Field label="L-E (V)">
-                    <input
-                      type="number"
-                      inputMode="decimal"
-                      min="0"
-                      step="0.1"
-                      placeholder="0"
-                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
-                      value={voltLE}
-                      onChange={(e) => setVoltLE(e.target.value)}
-                    />
-                  </Field>
-                  <Field label="N-E (V)">
-                    <input
-                      type="number"
-                      inputMode="decimal"
-                      min="0"
-                      step="0.1"
-                      placeholder="0"
-                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
-                      value={voltNE}
-                      onChange={(e) => setVoltNE(e.target.value)}
-                    />
-                  </Field>
+                  {pairs.map((p) => {
+                    const v = parsed(p.key);
+                    const live = v !== null && !isReadingDead(v);
+                    return (
+                      <Field key={p.key} label={`${p.label} (V)`}>
+                        <input
+                          type="number"
+                          inputMode="decimal"
+                          min="0"
+                          step="0.1"
+                          placeholder="0"
+                          className={cn(
+                            safetyInputCn,
+                            'text-center text-base font-bold',
+                            // The one field that is live should be findable at a
+                            // glance in a grid of ten.
+                            live && 'text-red-400'
+                          )}
+                          value={volts[p.key] ?? ''}
+                          onChange={(e) => setVolt(p.key, e.target.value)}
+                        />
+                      </Field>
+                    );
+                  })}
                 </div>
 
                 {/* Pass/Fail indicator */}
@@ -321,7 +344,7 @@ export function IsolationStepCard({
                     >
                       {allDead
                         ? 'Confirmed dead — safe to proceed'
-                        : 'Live detected — do NOT proceed'}
+                        : 'Live detected — isolation has failed'}
                     </span>
                   </motion.div>
                 )}
@@ -357,7 +380,7 @@ export function IsolationStepCard({
               className="mt-3"
             >
               <div className="p-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 space-y-2">
-                <Eyebrow className="text-amber-300/90">Test instrument details · GS38</Eyebrow>
+                <Eyebrow className="text-amber-400">Test instrument details · GS38</Eyebrow>
                 <Field label="Instrument make / model">
                   <input
                     placeholder="e.g. Fluke T6-1000, Martindale VI-15000"
@@ -405,7 +428,12 @@ export function IsolationStepCard({
                 {isStep6
                   ? allReadingsEntered
                     ? anyLive
-                      ? 'Record live readings'
+                      ? // Saves the readings and leaves the step open. It used
+                        // to say "Record live readings" and then mark prove-dead
+                        // done, which walked the record on to "isolated" — the
+                        // app certifying as isolated a circuit it had just
+                        // measured at mains voltage.
+                        'Record readings — isolation failed'
                       : 'Confirm dead'
                     : 'Enter readings to continue'
                   : 'Complete step'}

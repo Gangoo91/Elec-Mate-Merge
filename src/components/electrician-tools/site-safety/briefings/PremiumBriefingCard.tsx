@@ -1,35 +1,30 @@
+/**
+ * The two briefing rows on the Team Briefings list — one for work outstanding,
+ * one for work finished.
+ *
+ * Both were `bg-[#1e1e1e]` with an icon tile, and both ended in a row of
+ * equal-weight buttons in three different accent colours: blue "View", yellow
+ * "Share", purple "PDF" on the history card; blue/blue/yellow on the template
+ * card. Three colours across three buttons is three primary actions, which is
+ * none — the eye has nothing to land on. They now carry the app's card material
+ * (`CARD_SURFACE` + a volt hairline) and exactly one solid action each, with
+ * anything secondary as a quiet outline.
+ *
+ * Status is a word on a neutral surface rather than a tinted wash. A coloured
+ * fill behind a label is the app's signal for a *selected* control or a binary
+ * safety verdict; spending it on "Scheduled" leaves nothing louder for the
+ * things that actually need acting on.
+ *
+ * `TemplateCard` used to live here too. Nothing imported it — the templates tab
+ * renders its own ruled list from `briefing_templates` — so it was 100 lines of
+ * unreachable UI carrying the same three-colour button wall.
+ */
+
 import { motion } from 'framer-motion';
-import {
-  ChevronRight,
-  MapPin,
-  Calendar,
-  Users,
-  AlertTriangle,
-  FileText,
-  Copy,
-  Play,
-  Eye,
-  Share2,
-  Download,
-  Check,
-  Clock,
-  Sparkles,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 type BriefingStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'draft';
-
-interface BriefingTemplate {
-  id: string;
-  name: string;
-  description?: string;
-  hazardCount: number;
-  usageCount: number;
-  isAIPowered?: boolean;
-  icon?: string;
-}
 
 interface BriefingHistory {
   id: string;
@@ -43,312 +38,110 @@ interface BriefingHistory {
   icon?: string;
 }
 
-// Type icons mapping
-const typeIcons: Record<string, string> = {
-  'site-induction': 'construction',
-  electrical: 'zap',
-  'toolbox-talk': 'wrench',
-  'hot-works': 'flame',
-  'height-work': 'arrow-up',
-  custom: 'settings',
+/** Neutral surface, coloured text. The label carries the meaning, not the fill. */
+const statusConfig: Record<BriefingStatus, { text: string; label: string }> = {
+  scheduled: { text: 'text-white', label: 'Scheduled' },
+  in_progress: { text: 'text-amber-400', label: 'In progress' },
+  completed: { text: 'text-emerald-400', label: 'Completed' },
+  cancelled: { text: 'text-red-400', label: 'Cancelled' },
+  draft: { text: 'text-white', label: 'Draft' },
 };
 
-// Status colors
-const statusConfig: Record<
-  BriefingStatus,
-  { bg: string; text: string; border: string; label: string }
-> = {
-  scheduled: {
-    bg: 'bg-blue-500/10',
-    text: 'text-blue-400',
-    border: 'border-blue-400/20',
-    label: 'Scheduled',
-  },
-  in_progress: {
-    bg: 'bg-amber-500/10',
-    text: 'text-amber-400',
-    border: 'border-amber-400/20',
-    label: 'In Progress',
-  },
-  completed: {
-    bg: 'border border-elec-yellow/35',
-    text: 'text-elec-yellow',
-    border: 'border-elec-yellow/25',
-    label: 'Completed',
-  },
-  cancelled: {
-    bg: 'bg-red-500/10',
-    text: 'text-red-400',
-    border: 'border-red-400/20',
-    label: 'Cancelled',
-  },
-  draft: { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20', label: 'Draft' },
-};
+const cardCn = cn(
+  'relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-4',
+  CARD_SURFACE,
+  'transition-[background-image,border-color,transform] duration-150 ease-out',
+  'touch-manipulation select-none [-webkit-tap-highlight-color:transparent]'
+);
 
-// Template Card
-interface TemplateCardProps {
-  template: BriefingTemplate;
-  onEdit?: () => void;
-  onDuplicate?: () => void;
-  onStart?: () => void;
-  index?: number;
-}
+/** Press feel: scale down and BRIGHTEN. Dimming on a dark ground reads as disabled. */
+const primaryBtn = cn(
+  'flex h-11 flex-1 items-center justify-center rounded-xl bg-elec-yellow px-4',
+  'text-[14px] font-semibold text-black touch-manipulation',
+  'transition-[filter,transform] duration-150 active:scale-[0.97] active:brightness-110'
+);
 
-export function TemplateCard({
-  template,
-  onEdit,
-  onDuplicate,
-  onStart,
-  index = 0,
-}: TemplateCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
-      className={cn(
-        'relative overflow-hidden rounded-2xl',
-        'bg-[#1e1e1e] border border-white/10',
-        'hover:border-elec-yellow/30 transition-all duration-300',
-        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
-      )}
-    >
-      <div className="p-4">
-        {/* Header */}
-        <div className="flex items-start gap-3 mb-3">
-          <div className="p-2.5 rounded-xl border border-elec-yellow/35 flex-shrink-0">
-            <FileText className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-white truncate">{template.name}</h3>
-              {template.isAIPowered && (
-                <Badge className="border border-elec-yellow/35 text-elec-yellow text-[10px] px-1.5 py-0">
-                  <Sparkles className="h-2.5 w-2.5 mr-0.5" />
-                  AI
-                </Badge>
-              )}
-            </div>
-            {template.description && (
-              <p className="text-sm text-white line-clamp-1 mt-0.5">{template.description}</p>
-            )}
-          </div>
-          <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
-        </div>
+const quietBtn = cn(
+  'flex h-11 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] px-4',
+  'text-[14px] font-medium text-white touch-manipulation',
+  'transition-[background-color,transform] duration-150 active:scale-[0.97] active:bg-white/[0.12]'
+);
 
-        {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-white mb-4">
-          <div className="flex items-center gap-1.5">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
-            <span>{template.hazardCount} hazards</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5" />
-            <span>Used {template.usageCount} times</span>
-          </div>
-        </div>
+// ─── Completed / recent briefings ───────────────────────────────────────────
 
-        {/* Actions */}
-        <div className="flex gap-2">
-          {onEdit && (
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit();
-              }}
-              className="flex-1 h-11 text-yellow-400/80 hover:text-yellow-400 hover:bg-yellow-400/10 border border-yellow-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
-            >
-              <FileText className="h-4 w-4 mr-1.5" />
-              Edit
-            </Button>
-          )}
-          {onDuplicate && (
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDuplicate();
-              }}
-              className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
-            >
-              <Copy className="h-4 w-4 mr-1.5" />
-              Duplicate
-            </Button>
-          )}
-          {onStart && (
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                onStart();
-              }}
-              className="flex-1 h-11 bg-elec-yellow text-black hover:brightness-110"
-            >
-              <Play className="h-4 w-4 mr-1.5" />
-              Start
-            </Button>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// History Card
 interface HistoryCardProps {
   briefing: BriefingHistory;
   onView?: () => void;
   onShare?: () => void;
-  onDownload?: () => void;
   index?: number;
 }
 
-export function HistoryCard({
-  briefing,
-  onView,
-  onShare,
-  onDownload,
-  index = 0,
-}: HistoryCardProps) {
+export function HistoryCard({ briefing, onView, onShare, index = 0 }: HistoryCardProps) {
   const status = statusConfig[briefing.status] || statusConfig.draft;
-  const isComplete = briefing.status === 'completed';
+  const signed = briefing.signedCount ?? 0;
+  const fullySigned = briefing.attendeeCount > 0 && signed === briefing.attendeeCount;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
-      className={cn(
-        'relative overflow-hidden rounded-2xl',
-        'bg-[#1e1e1e] border',
-        isComplete ? 'border-elec-yellow/25' : 'border-white/10',
-        'hover:border-elec-yellow/30 transition-all duration-300',
-        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
-      )}
+      transition={{ delay: index * 0.04, duration: 0.22 }}
+      className={cardCn}
     >
-      <div className="p-4">
-        {/* Header */}
-        <div className="flex items-start gap-3 mb-3">
-          <div
-            className={cn(
-              'p-2.5 rounded-xl border flex-shrink-0',
-              isComplete ? 'border border-elec-yellow/35' : 'bg-white/5 border-white/10'
-            )}
-          >
-            {isComplete ? (
-              <Check className="h-5 w-5 text-elec-yellow" />
-            ) : (
-              <FileText className="h-5 w-5 text-white" />
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-white truncate">{briefing.name}</h3>
-              <Badge
-                className={cn(
-                  'border text-[10px] px-1.5 py-0',
-                  status.bg,
-                  status.text,
-                  status.border
-                )}
-              >
-                {status.label}
-              </Badge>
-            </div>
-            <div className="flex items-center gap-1.5 text-sm text-white mt-0.5">
-              <MapPin className="h-3 w-3" />
-              <span className="truncate">{briefing.location}</span>
-            </div>
-          </div>
-          <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-[15px] font-semibold text-white">{briefing.name}</h3>
+          <p className="mt-0.5 truncate text-[13px] text-white">{briefing.location}</p>
         </div>
+        <span
+          className={cn(
+            'shrink-0 rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1',
+            'text-[11px] font-medium',
+            status.text
+          )}
+        >
+          {status.label}
+        </span>
+      </div>
 
-        {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-white mb-4">
-          <div className="flex items-center gap-1.5">
-            <Calendar className="h-3.5 w-3.5" />
-            <span>{briefing.date}</span>
-            {briefing.time && <span className="text-white">at {briefing.time}</span>}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Users className="h-3.5 w-3.5" />
-            <span>
-              {briefing.signedCount !== undefined
-                ? `${briefing.signedCount}/${briefing.attendeeCount} signed`
-                : `${briefing.attendeeCount} attendees`}
-            </span>
-          </div>
+      {/* Facts as a single ruled line — date and register in one reading, no
+          icon repeating what the words already say. */}
+      <p className="mt-3 border-t border-white/[0.1] pt-3 text-[13px] tabular-nums text-white">
+        {briefing.date}
+        {briefing.time ? ` · ${briefing.time}` : ''} · {signed} of {briefing.attendeeCount} signed
+      </p>
+
+      {briefing.attendeeCount > 0 && (
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${(signed / briefing.attendeeCount) * 100}%` }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+            className={cn('h-full rounded-full', fullySigned ? 'bg-elec-yellow' : 'bg-amber-400')}
+          />
         </div>
+      )}
 
-        {/* Signature progress bar */}
-        {briefing.signedCount !== undefined && briefing.attendeeCount > 0 && (
-          <div className="mb-4">
-            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{
-                  width: `${((briefing.signedCount || 0) / briefing.attendeeCount) * 100}%`,
-                }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className={cn(
-                  'h-full rounded-full',
-                  briefing.signedCount === briefing.attendeeCount
-                    ? 'bg-elec-yellow'
-                    : 'bg-amber-400'
-                )}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Actions */}
-        <div className="flex gap-2">
+      {(onView || onShare) && (
+        <div className="mt-4 flex gap-2">
           {onView && (
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                onView();
-              }}
-              className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
-            >
-              <Eye className="h-4 w-4 mr-1.5" />
-              View
-            </Button>
+            <button type="button" onClick={onView} className={primaryBtn}>
+              Open
+            </button>
           )}
           {onShare && (
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                onShare();
-              }}
-              className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:brightness-110 touch-manipulation active:scale-[0.97] transition-all duration-150"
-            >
-              <Share2 className="h-4 w-4 mr-1.5" />
+            <button type="button" onClick={onShare} className={quietBtn}>
               Share
-            </Button>
-          )}
-          {onDownload && (
-            <Button
-              variant="ghost"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDownload();
-              }}
-              className="flex-1 h-11 text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10 border border-purple-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
-            >
-              <Download className="h-4 w-4 mr-1.5" />
-              PDF
-            </Button>
+            </button>
           )}
         </div>
-      </div>
+      )}
     </motion.div>
   );
 }
 
-// Pending Card (for briefings needing signatures)
+// ─── Briefings still waiting on signatures ──────────────────────────────────
+
 interface PendingCardProps {
   briefing: BriefingHistory;
   onContinue?: () => void;
@@ -356,69 +149,49 @@ interface PendingCardProps {
 }
 
 export function PendingCard({ briefing, onContinue, index = 0 }: PendingCardProps) {
-  const pendingCount = briefing.attendeeCount - (briefing.signedCount || 0);
+  const signed = briefing.signedCount ?? 0;
+  const pendingCount = Math.max(briefing.attendeeCount - signed, 0);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
-      className={cn(
-        'relative overflow-hidden rounded-2xl',
-        'bg-[#1e1e1e] border border-amber-500/20',
-        'hover:border-elec-yellow/30 transition-all duration-300',
-        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
-      )}
+      transition={{ delay: index * 0.04, duration: 0.22 }}
+      className={cardCn}
     >
-      <div className="p-4">
-        {/* Header */}
-        <div className="flex items-start gap-3 mb-3">
-          <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 flex-shrink-0">
-            <Clock className="h-5 w-5 text-amber-400" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-white truncate">{briefing.name}</h3>
-            <div className="flex items-center gap-1.5 text-sm text-white mt-0.5">
-              <MapPin className="h-3 w-3" />
-              <span className="truncate">{briefing.location}</span>
-            </div>
-          </div>
-          <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            {pendingCount} pending
-          </Badge>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-[15px] font-semibold text-white">{briefing.name}</h3>
+          <p className="mt-0.5 truncate text-[13px] text-white">{briefing.location}</p>
         </div>
-
-        {/* Progress */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between text-xs mb-1.5">
-            <span className="text-white">Signatures</span>
-            <span className="text-white">
-              {briefing.signedCount || 0} of {briefing.attendeeCount}
-            </span>
-          </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{
-                width: `${((briefing.signedCount || 0) / briefing.attendeeCount) * 100}%`,
-              }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="h-full bg-amber-400 rounded-full"
-            />
-          </div>
-        </div>
-
-        {/* CTA */}
-        {onContinue && (
-          <Button
-            onClick={onContinue}
-            className="w-full h-11 bg-elec-yellow text-black font-semibold hover:brightness-110 touch-manipulation active:scale-[0.97] transition-all duration-150"
-          >
-            <Play className="h-4 w-4 mr-1.5" />
-            Continue Briefing
-          </Button>
+        {pendingCount > 0 && (
+          <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium tabular-nums text-amber-400">
+            {pendingCount} to sign
+          </span>
         )}
       </div>
+
+      <p className="mt-3 border-t border-white/[0.1] pt-3 text-[13px] tabular-nums text-white">
+        {briefing.date}
+        {briefing.time ? ` · ${briefing.time}` : ''} · {signed} of {briefing.attendeeCount} signed
+      </p>
+
+      {briefing.attendeeCount > 0 && (
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${(signed / briefing.attendeeCount) * 100}%` }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+            className="h-full rounded-full bg-amber-400"
+          />
+        </div>
+      )}
+
+      {onContinue && (
+        <button type="button" onClick={onContinue} className={cn(primaryBtn, 'mt-4 w-full')}>
+          Continue briefing
+        </button>
+      )}
     </motion.div>
   );
 }

@@ -41,6 +41,11 @@ export type GoverningStandard =
   | 'BS 7671 Chapter 57'
   | 'BS EN IEC 62485 series'
   | 'PAS 63100'
+  // Building Regulations (England) Approved Documents. Not standards in the BSI
+  // sense, but they impose duties the calculators need to state — Part S sets the
+  // EV charge point requirement for new dwellings, including a 7 kW minimum.
+  | 'Approved Document S'
+  | 'Approved Document L'
   | 'none';
 
 /** A single regulation / clause reference shown in the Standards section. */

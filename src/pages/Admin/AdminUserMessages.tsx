@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -28,7 +29,7 @@ import {
 import {
   PageFrame,
   PageHero,
-  StatStrip,
+  Eyebrow,
   FilterBar,
   ListCard,
   ListCardHeader,
@@ -69,6 +70,22 @@ function roleToTone(role: string | null | undefined): Tone {
       return 'yellow';
   }
 }
+
+/** Waiting time in words: "4h", "3 days", "2 months". */
+function waitLabel(ms: number): string {
+  const mins = Math.floor(ms / 60000);
+  if (mins < 60) return `${Math.max(1, mins)}m`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h`;
+  const days = Math.floor(hours / 24);
+  if (days < 14) return `${days} day${days === 1 ? '' : 's'}`;
+  if (days < 60) return `${Math.floor(days / 7)} weeks`;
+  return `${Math.floor(days / 30)} months`;
+}
+
+/* Ordered least to most severe. Validated dark-surface steps — the same set
+   used across the admin pages, with amber and red carrying the age. */
+const MSG_SERIES = ['#199E70', '#3987E5', '#FAB219', '#E66767'] as const;
 
 export default function AdminUserMessages() {
   const { user } = useAuth();
@@ -130,19 +147,38 @@ export default function AdminUserMessages() {
     );
   };
 
-  const { data: searchResults } = useQuery({
-    queryKey: ['user-search', searchQuery],
-    queryFn: async () => {
-      if (searchQuery.length < 2) return [];
-      const { data } = await supabase
-        .from('profiles')
-        .select('id, full_name, email, role')
-        .or(`full_name.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`)
-        .limit(10);
-      return data || [];
-    },
-    enabled: searchQuery.length >= 2,
-  });
+  /*
+    Compose search never returned anybody.
+
+    It selected `id, full_name, email, role` from `profiles` and filtered on
+    `email.ilike` — but there is no email column on profiles; it lives on
+    auth.users. PostgREST answered 42703 every time, `data` came back null, and
+    the query swallowed it with `|| []`, so the picker showed "No users found"
+    for every search and you could not start a conversation with anyone.
+
+    `admin-get-users` is the one place that joins the two, and the admin app
+    already has it cached, so this filters that rather than issuing a query
+    that cannot succeed.
+  */
+  const { data: allAdminUsers } = useAdminUsersBase();
+  const searchResults = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (q.length < 2) return [];
+    return (allAdminUsers ?? [])
+      .filter(
+        (u) =>
+          u.full_name?.toLowerCase().includes(q) ||
+          u.email?.toLowerCase().includes(q) ||
+          u.username?.toLowerCase().includes(q)
+      )
+      .slice(0, 10)
+      .map((u) => ({
+        id: u.id,
+        full_name: u.full_name ?? undefined,
+        email: u.email,
+        role: u.role,
+      }));
+  }, [allAdminUsers, searchQuery]);
 
   const markAsReadMutation = useMutation({
     mutationFn: async (messageIds: string[]) => {
@@ -224,7 +260,16 @@ export default function AdminUserMessages() {
 
   const stats = useMemo(() => {
     if (!conversations) {
-      return { unread: 0, today: 0, thisWeek: 0, total: 0, awaiting: 0 };
+      return {
+        unread: 0,
+        unreadConversations: 0,
+        today: 0,
+        thisWeek: 0,
+        total: 0,
+        awaiting: 0,
+        oldestWaitMs: 0,
+        oldestWaitName: null as string | null,
+      };
     }
     const now = new Date();
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -249,7 +294,67 @@ export default function AdminUserMessages() {
       });
     });
 
-    return { unread, today, thisWeek, total, awaiting };
+    /*
+      How long the longest-waiting person has been waiting.
+
+      The page led with "Today 0 · This week 0" while fourteen people were
+      queued and the oldest had been waiting three months. Two of the four
+      headline cells were structurally zero — they count messages received in
+      the last 24 hours and 7 days, so on any quiet day they read nought and
+      the queue behind them was invisible. Age of the oldest unanswered thread
+      is the number that actually says how bad it is.
+    */
+    let oldestWaitMs = 0;
+    let oldestWaitName: string | null = null;
+    conversations.forEach((conv) => {
+      if (!conv.awaitingReply) return;
+      const last = conv.messages[conv.messages.length - 1];
+      if (!last) return;
+      const waited = Date.now() - new Date(last.created_at).getTime();
+      if (waited > oldestWaitMs) {
+        oldestWaitMs = waited;
+        oldestWaitName = conv.partner?.full_name ?? null;
+      }
+    });
+
+    // Conversations, not messages — see the tab counts below for why.
+    const unreadConversations = conversations.filter((c) => c.unreadCount > 0).length;
+
+    return {
+      unread,
+      unreadConversations,
+      today,
+      thisWeek,
+      total,
+      awaiting,
+      oldestWaitMs,
+      oldestWaitName,
+    };
+  }, [conversations]);
+
+  /*
+    How long someone has been waiting, in words, and banded by severity.
+
+    Everything on this page rendered the age of a thread as small grey text on
+    the right ("3mo"), identical for a message sent an hour ago and one sent in
+    May, on the one screen where the age IS the problem.
+  */
+  const waitBuckets = useMemo(() => {
+    const buckets = [
+      { key: 'day', label: 'under a day', max: 86400000, fill: MSG_SERIES[0], count: 0 },
+      { key: 'week', label: 'under a week', max: 7 * 86400000, fill: MSG_SERIES[1], count: 0 },
+      { key: 'month', label: 'over a week', max: 30 * 86400000, fill: MSG_SERIES[2], count: 0 },
+      { key: 'older', label: 'over a month', max: Infinity, fill: MSG_SERIES[3], count: 0 },
+    ];
+    (conversations ?? []).forEach((conv) => {
+      if (!conv.awaitingReply) return;
+      const last = conv.messages[conv.messages.length - 1];
+      if (!last) return;
+      const waited = Date.now() - new Date(last.created_at).getTime();
+      const b = buckets.find((x) => waited < x.max) ?? buckets[buckets.length - 1];
+      b.count += 1;
+    });
+    return buckets;
   }, [conversations]);
 
   const filteredConversations = useMemo(() => {
@@ -287,7 +392,14 @@ export default function AdminUserMessages() {
   const tabs = useMemo(
     () => [
       { value: 'all', label: 'All', count: conversations?.length ?? 0 },
-      { value: 'unread', label: 'Unread', count: stats.unread },
+      /*
+        Conversations, like every other tab.
+
+        This read `stats.unread`, a sum of unread MESSAGES, while the filter
+        beside it returns conversations — so the rail showed "All 14 · Unread 9
+        · Read 8", where 9 + 8 exceeds the 14 it was splitting.
+      */
+      { value: 'unread', label: 'Unread', count: stats.unreadConversations },
       {
         value: 'read',
         label: 'Read',
@@ -299,7 +411,9 @@ export default function AdminUserMessages() {
         count: conversations?.filter((c) => c.hasAdminReply).length ?? 0,
       },
     ],
-    [conversations, stats.unread, user?.id]
+    // Depends on the conversation count now, not the message count — that swap
+    // is what makes the rail's numbers add up to the All tab.
+    [conversations, stats.unreadConversations]
   );
 
   return (
@@ -321,32 +435,124 @@ export default function AdminUserMessages() {
           }
         />
 
-        <StatStrip
-          columns={4}
-          stats={[
-            {
-              label: 'Awaiting reply',
-              value: stats.awaiting,
-              tone: 'yellow',
-              sub: stats.awaiting === 0 ? 'All answered' : 'User spoke last',
-            },
-            {
-              label: 'Unread',
-              value: stats.unread,
-              sub: stats.unread === 0 ? 'All opened' : 'Not yet opened',
-            },
-            {
-              label: 'Today',
-              value: stats.today,
-              sub: 'Last 24 hours',
-            },
-            {
-              label: 'This Week',
-              value: stats.thisWeek,
-              sub: 'Last 7 days',
-            },
-          ]}
-        />
+        {/*
+          The queue, and how long the worst of it has been waiting.
+
+          The four cells read Awaiting 14 / Unread 9 / Today 0 / This week 0 —
+          two of them structurally zero, because they count messages arriving in
+          the last 24 hours and 7 days, so on any quiet day the most prominent
+          figures on the page are noughts while fourteen people sit unanswered
+          and the oldest has waited three months. Age of the longest wait is the
+          number that says how bad it is, so it leads.
+        */}
+        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="min-w-0">
+              <Eyebrow>Waiting on a reply</Eyebrow>
+              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
+                {stats.awaiting}
+              </div>
+              <div className="mt-2 text-[13px] text-white">
+                {stats.awaiting === 0
+                  ? 'Nobody is waiting. Everything has been answered.'
+                  : stats.oldestWaitName
+                    ? `Longest wait: ${stats.oldestWaitName}, ${waitLabel(stats.oldestWaitMs)}.`
+                    : `Longest wait ${waitLabel(stats.oldestWaitMs)}.`}
+              </div>
+
+              {stats.awaiting > 0 && (
+                <div className="mt-5">
+                  {/* How the queue is distributed by age — a fortnight-old
+                      thread and a three-month-old one were the same row. */}
+                  <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
+                    {waitBuckets
+                      .filter((b) => b.count > 0)
+                      .map((b, i, seg) => (
+                        <div
+                          key={b.key}
+                          title={`${b.label}: ${b.count}`}
+                          style={{
+                            width: `calc(${(b.count / Math.max(stats.awaiting, 1)) * 100}% - ${
+                              (2 * (seg.length - 1)) / seg.length
+                            }px)`,
+                            background: b.fill,
+                            borderTopLeftRadius: i === 0 ? 999 : 2,
+                            borderBottomLeftRadius: i === 0 ? 999 : 2,
+                            borderTopRightRadius: i === seg.length - 1 ? 999 : 2,
+                            borderBottomRightRadius: i === seg.length - 1 ? 999 : 2,
+                          }}
+                        />
+                      ))}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
+                    {waitBuckets
+                      .filter((b) => b.count > 0)
+                      .map((b) => (
+                        <span key={b.key} className="flex items-center gap-2">
+                          <span
+                            className="h-2 w-2 shrink-0 rounded-full"
+                            style={{ background: b.fill }}
+                          />
+                          <span className="font-medium tabular-nums text-white">{b.count}</span>{' '}
+                          {b.label}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+              {[
+                {
+                  label: 'Awaiting reply',
+                  value: stats.awaiting,
+                  sub: 'user spoke last',
+                  accent: true,
+                  tab: 'all',
+                },
+                {
+                  label: 'Unopened',
+                  value: stats.unreadConversations,
+                  sub: `${stats.unread} message${stats.unread === 1 ? '' : 's'}`,
+                  tab: 'unread',
+                },
+                {
+                  label: 'Longest wait',
+                  value: stats.awaiting > 0 ? waitLabel(stats.oldestWaitMs) : '—',
+                  sub: 'oldest unanswered',
+                  tab: 'all',
+                },
+                {
+                  label: 'Conversations',
+                  value: conversations?.length ?? 0,
+                  sub: `${stats.total} messages`,
+                  tab: 'all',
+                },
+              ].map((c) => (
+                <button
+                  key={c.label}
+                  onClick={() => setActiveTab(c.tab as typeof activeTab)}
+                  className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+                >
+                  <div
+                    className={cn(
+                      'text-[22px] font-semibold leading-none sm:text-[26px]',
+                      c.accent && stats.awaiting > 0 ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {c.value}
+                  </div>
+                  <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                    {c.label}
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">{c.sub}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <FilterBar
           tabs={tabs}
@@ -384,6 +590,23 @@ export default function AdminUserMessages() {
             <ListBody>
               {filteredConversations.map((conv) => {
                 const unread = conv.unreadCount > 0;
+                /*
+                  Waiting time, sized and coloured by how bad it is.
+
+                  It rendered as "3mo" in 11px grey on the right — identical
+                  weight to "1w" and to a thread answered this morning — on the
+                  one page where the age of the thing IS the problem.
+                */
+                const waitedMs = conv.awaitingReply
+                  ? Date.now() - new Date(conv.lastMessage.created_at).getTime()
+                  : 0;
+                const waitTone = !conv.awaitingReply
+                  ? 'text-white/50'
+                  : waitedMs > 30 * 86400000
+                    ? 'text-red-400'
+                    : waitedMs > 7 * 86400000
+                      ? 'text-amber-400'
+                      : 'text-white';
                 const role = conv.partner?.role;
                 const preview =
                   conv.lastMessage.message.length > 140
@@ -432,8 +655,20 @@ export default function AdminUserMessages() {
                               {conv.unreadCount}
                             </span>
                           )}
-                          <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white">
-                            {relativeTime(new Date(conv.lastMessage.created_at))}
+                          <span
+                            className={cn(
+                              'ml-auto shrink-0 text-[13px] font-semibold tabular-nums',
+                              waitTone
+                            )}
+                            title={
+                              conv.awaitingReply
+                                ? `Waiting ${waitLabel(waitedMs)} for a reply`
+                                : 'Last message'
+                            }
+                          >
+                            {conv.awaitingReply
+                              ? `${waitLabel(waitedMs)} waiting`
+                              : relativeTime(new Date(conv.lastMessage.created_at))}
                           </span>
                         </span>
                       }
@@ -543,9 +778,7 @@ export default function AdminUserMessages() {
                 isSending={sendReplyMutation.isPending}
                 placeholder="Write a reply…"
                 emptyState={
-                  <p className="text-[13.5px] text-white">
-                    No messages in this conversation yet.
-                  </p>
+                  <p className="text-[13.5px] text-white">No messages in this conversation yet.</p>
                 }
               />
             </div>

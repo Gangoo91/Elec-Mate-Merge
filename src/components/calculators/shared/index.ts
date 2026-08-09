@@ -46,3 +46,4 @@ export {
   CHART_VOLT,
   CHART_FAIL,
 } from './CalculatorChart';
+export { CopyResultButton } from './CopyResultButton';

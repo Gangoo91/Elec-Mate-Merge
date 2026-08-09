@@ -48,17 +48,30 @@ export const offGridSystemContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'BS 7671 — off-grid LV installation',
+      citation: 'Regulation 551.1(a) — off-grid IS in scope of Section 551',
       clauseText:
-        'An off-grid installation must comply with BS 7671 for protection, isolation, cabling and earthing, including Section 712 where a PV array is used. Grid connection codes (G98/G99) do not apply to a stand-alone system.',
+        'Section 551 applies to low voltage and extra-low voltage installations incorporating generating sets intended to supply, continuously or occasionally, all or part of the installation — and arrangement (a) is expressly “supply to an installation which is not connected to a system for distribution of electricity to the public”. A stand-alone system is not outside BS 7671; it is named in the scope.',
+      tableRefs: ['Reg 551.1'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Chapter 57 — Stationary Secondary Batteries (NEW in A4:2026)',
+      clauseText:
+        'A4:2026 introduced Chapter 57, which provides requirements for stationary secondary battery installations as a source of supply for electrical installations — the battery bank at the heart of an off-grid system. Reg 570.5.1 requires the battery type and capacity to be selected taking account of the nature of demand, battery voltage, charge and discharge time, the generation profiles of locally connected generators such as solar PV, power conversion equipment connection and coupling mode, the supplied equipment’s utilization voltage range, charge and discharge profiles, load profiles and cyclic operation capability, and suitability for fixed installation. The chapter does NOT apply to batteries inside products covered by product standards, nor to those wholly within pluggable UPS (BS EN [IEC] 62040), central safety power supplies (BS EN 50171), fire detection and alarm systems (BS 5839), alarm systems (BS EN 50132), machinery (BS EN [IEC] 60204) or emergency lighting (BS 5266).',
+      tableRefs: ['Reg 570.1', 'Reg 570.5.1'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Section 712 — the PV array, and why no G98/G99',
+      clauseText:
+        'Where a PV array is the generator, Section 712 applies to the DC side — isolation, protection and labelling, recognising the array cannot be switched off and stays live in daylight. Because a stand-alone system is not connected in parallel with the public distribution network, the ENA connection codes G98/G99 do not apply; that is a consequence of Reg 551.1(a), not an exemption from BS 7671.',
       tableRefs: ['Section 712'],
     },
   ],
-
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Sizing relationships match the engine. BS 7671 applicability authored from established practice; no DNO codes apply (stand-alone).',
+      'Rewritten against the printed BS 7671:2018+A4:2026 text (Desktop/BS7671_ocr.pdf). The file previously cited only \u201cBS 7671 \u2014 off-grid LV installation\u201d with no regulation number. Two real anchors now exist: Reg 551.1(a) names the not-connected-to-the-public-network case in scope, and \u26a0\ufe0f A4:2026 introduced CHAPTER 57 (Stationary Secondary Batteries), numbered 570.x, which is the governing text for the battery bank \u2014 including the 570.5.1 selection criteria and the six system types expressly excluded from its scope. Reg 551.8 was deleted and redirected to this chapter. Sizing relationships match the engine.',
   },
 };

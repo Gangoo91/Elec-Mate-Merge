@@ -48,15 +48,15 @@ export const cableSizeContent: CalculatorContent = {
       standard: 'BS 7671',
       citation: 'Regulation 433.1.1',
       clauseText:
-        'The operating characteristics of a device protecting a conductor against overload shall satisfy Ib ≤ In ≤ Iz, and I2 ≤ 1.45 × Iz, where Ib is the design current, In the device rating, Iz the conductor current-carrying capacity, and I2 the operating current of the device.',
+        'The operating characteristics of a device protecting a conductor against overload shall satisfy: (a) the rated current or current setting of the protective device (In) is not less than the design current (Ib) of the circuit; (b) In does not exceed the lowest of the current-carrying capacities (Iz) of any of the conductors of the circuit; and (c) the current causing effective operation of the protective device (I2) does not exceed 1.45 times the lowest Iz of any conductor. For adjustable protective devices, In is the current setting selected \u2014 not the device frame size.',
       tableRefs: ['Appendix 4'],
     },
   ],
 
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Reg 433.1 coordination (Ib ≤ In ≤ Iz, I2 ≤ 1.45 Iz) is foundational and matches the engine; tabulated ratings and derating from Appendix 4. Confirm exact 433.1.1 wording against A4:2026 facets.',
+      'Reg 433.1.1 quoted verbatim from the printed A4:2026 text (Desktop/BS7671_ocr.pdf), including limb (c) I2 \u2264 1.45 Iz and the adjustable-device rule that In is the SETTING selected, not the frame size \u2014 a common sizing error the previous one-line summary did not cover.',
   },
 };

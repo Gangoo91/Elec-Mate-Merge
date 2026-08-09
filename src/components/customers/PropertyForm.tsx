@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -8,7 +8,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { CustomerProperty } from '@/hooks/inspection/useCustomerProperties';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
+import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import { cn } from '@/lib/utils';
+
+// ELE-1515 — geocode from the Places dropdown, tagged with the address it was
+// captured for. See the matching note in CustomerForm.tsx: the field stays
+// editable, so the pair only counts while the address still matches.
+interface AddressGeo {
+  address: string;
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
+}
 
 const propertySchema = z.object({
   address: z
@@ -24,12 +36,17 @@ const propertySchema = z.object({
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
+type SubmitPayload = PropertyFormData & {
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
+};
 
 interface PropertyFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   property?: CustomerProperty | null;
-  onSave: (data: PropertyFormData) => void;
+  onSave: (data: SubmitPayload) => void;
 }
 
 const propertyTypes = [
@@ -39,8 +56,11 @@ const propertyTypes = [
 ];
 
 export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyFormProps) => {
+  const [geo, setGeo] = useState<AddressGeo | null>(null);
+
   const {
     register,
+    control,
     handleSubmit,
     reset,
     setValue,
@@ -64,20 +84,40 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
         propertyType: property?.propertyType || 'residential',
         notes: property?.notes || '',
       });
+      // Keep an existing geocode when reopening to edit, so changing the
+      // property type doesn't strip the coordinates.
+      setGeo(
+        property?.address && (property.postcode || property.latitude != null)
+          ? {
+              address: property.address,
+              postcode: property.postcode,
+              latitude: property.latitude,
+              longitude: property.longitude,
+            }
+          : null
+      );
     }
   }, [open, property, reset]);
 
   const onSubmit = async (data: PropertyFormData) => {
     const { sanitizeTextInput } = await import('@/utils/inputSanitization');
 
-    const sanitizedData: PropertyFormData = {
+    // Geocode only survives while the address still reads as the one it was
+    // captured for — otherwise it is dropped, and the hook writes null.
+    const addressUnchanged = geo !== null && data.address.trim() === geo.address.trim();
+
+    const sanitizedData: SubmitPayload = {
       address: sanitizeTextInput(data.address),
       propertyType: data.propertyType,
       notes: data.notes ? sanitizeTextInput(data.notes) : '',
+      postcode: addressUnchanged ? geo.postcode : undefined,
+      latitude: addressUnchanged ? geo.latitude : undefined,
+      longitude: addressUnchanged ? geo.longitude : undefined,
     };
 
     onSave(sanitizedData);
     reset();
+    setGeo(null);
   };
 
   return (
@@ -140,13 +180,29 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
             >
               Address
             </Label>
-            <Textarea
-              id="address"
-              {...register('address')}
-              className="bg-background border-border text-foreground text-base resize-none min-h-[100px] rounded-xl touch-manipulation focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
-              placeholder="Enter full property address"
-              rows={4}
-            />
+            <GoogleMapsProvider>
+              <Controller
+                name="address"
+                control={control}
+                render={({ field }) => (
+                  <PlacesAutocomplete
+                    id="address"
+                    value={field.value || ''}
+                    onChange={field.onChange}
+                    onPlaceSelect={(place) =>
+                      setGeo({
+                        address: place.address,
+                        postcode: place.postcode,
+                        latitude: place.lat,
+                        longitude: place.lng,
+                      })
+                    }
+                    placeholder="Start typing a postcode or address"
+                    className="h-12 bg-background border-border text-foreground text-base rounded-xl touch-manipulation focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
+                  />
+                )}
+              />
+            </GoogleMapsProvider>
             {errors.address && <p className="text-xs text-red-400">{errors.address.message}</p>}
           </div>
 

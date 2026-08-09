@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { CopyResultButton } from './CopyResultButton';
+import { MissingFieldsHint } from './MissingFieldsHint';
 
 interface CalculatorPanesProps {
   /** Inputs and the Calculate/Reset row. */
@@ -10,6 +12,12 @@ interface CalculatorPanesProps {
   footer?: ReactNode;
   /** Shown in the result pane before there is a result. One short line. */
   placeholder?: string;
+  /**
+   * Calculator name. Set it to get a "Copy result" action that copies the
+   * rendered result — omit it on calculators that already build their own copy
+   * text, so nothing ends up with two copy buttons.
+   */
+  copyTitle?: string;
   className?: string;
 }
 
@@ -36,6 +44,7 @@ export const CalculatorPanes = ({
   result,
   footer,
   placeholder = 'Your result will appear here.',
+  copyTitle,
   className,
 }: CalculatorPanesProps) => (
   <div className={cn('space-y-5', className)}>
@@ -46,7 +55,12 @@ export const CalculatorPanes = ({
         it. Stacked phone layout needs no grid, so there is nothing to resolve
         against; from `lg:` the two panes are explicit columns. */}
     <div className="space-y-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-6 lg:space-y-0">
-      <div className="min-w-0 space-y-4">{form}</div>
+      <div className="min-w-0 space-y-4" data-calc-form>
+        {form}
+        {/* Says why Calculate is greyed out. Lives here rather than in
+            CalculatorActions because four calculators render their own button. */}
+        <MissingFieldsHint />
+      </div>
 
       {/* `self-start` + `sticky` keeps the answer in view; without `min-w-0` a
           long unbroken figure would push the grid track wider than its half.
@@ -57,18 +71,31 @@ export const CalculatorPanes = ({
           mean hand-extracting 60 different expressions; when the condition is
           false React renders no child at all and `:empty` matches. Desktop
           only — on a phone an empty box below the button is just noise. */}
-      <div
-        className={cn(
-          'min-w-0 lg:sticky lg:top-4 lg:self-start',
-          'lg:empty:rounded-xl lg:empty:border lg:empty:border-dashed lg:empty:border-white/[0.14] lg:empty:p-6',
-          'lg:empty:before:content-[attr(data-result-placeholder)]',
-          'lg:empty:before:text-[13px] lg:empty:before:leading-relaxed lg:empty:before:text-white'
+      <div className="min-w-0 lg:sticky lg:top-4 lg:self-start">
+        <div
+          className={cn(
+            'peer min-w-0',
+            'lg:empty:rounded-xl lg:empty:border lg:empty:border-dashed lg:empty:border-white/[0.14] lg:empty:p-6',
+            'lg:empty:before:content-[attr(data-result-placeholder)]',
+            'lg:empty:before:text-[13px] lg:empty:before:leading-relaxed lg:empty:before:text-white'
+          )}
+          // Not `data-placeholder`: Radix already sets that on Select triggers, so the
+          // name collides with library markup and made the panes uncountable.
+          data-result-placeholder={placeholder}
+        >
+          {result}
+        </div>
+
+        {/* Copy sits OUTSIDE the result div on purpose. Putting it inside would
+            make that div permanently non-empty and kill the `:empty` placeholder
+            above. As a following sibling it can use `peer-empty:hidden`, so it
+            appears exactly when there is a result to copy — no per-calculator
+            condition to thread through. */}
+        {copyTitle && (
+          <div className="mt-1 flex justify-end peer-empty:hidden">
+            <CopyResultButton title={copyTitle} />
+          </div>
         )}
-        // Not `data-placeholder`: Radix already sets that on Select triggers, so the
-        // name collides with library markup and made the panes uncountable.
-        data-result-placeholder={placeholder}
-      >
-        {result}
       </div>
     </div>
 

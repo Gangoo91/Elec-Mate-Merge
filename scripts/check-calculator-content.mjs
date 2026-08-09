@@ -151,15 +151,58 @@ const files = readdirSync(DIR)
   .filter((f) => f.endsWith('.ts') && f !== 'types.ts' && f !== 'index.ts')
   .sort();
 
-/** Does this segment carry digits and an operator? Then it should have parsed. */
+/**
+ * Does this segment carry a real NUMBER and an operator? Then it should have
+ * parsed, and failing to is a genuine coverage hole.
+ *
+ * Requires a standalone numeric token: "U0 x Cmin / Ia" is symbolic even though
+ * it contains the character 0, because that 0 is part of the symbol U0. Testing
+ * for any digit classified a dozen symbolic formulae as unparsed and overstated
+ * the gap.
+ */
 function looksNumeric(seg) {
-  return /\d/.test(seg) && /[+\-*/×÷√]/.test(seg);
+  return /(^|[^A-Za-z0-9_])\d+(\.\d+)?([^A-Za-z0-9_]|$)/.test(seg) && /[+\-*/×÷√]/.test(seg);
 }
+
+
+/**
+ * Segments verified BY HAND that this script cannot parse.
+ *
+ * Each entry is the exact segment text. Keying on the text means the record
+ * self-invalidates: edit the worked example and the entry stops matching, so the
+ * segment drops back to "unparsed" and has to be checked again. A date-stamped
+ * list that silently kept passing after the content changed would be worse than
+ * no list at all.
+ *
+ * Verified 2026-08-09 against the arithmetic, e.g.
+ *   0.8 x 2.19 = 1.752 -> 1.75          26640 / (1.732*400*0.95) = 40.48 -> 40.5
+ *   722 / 0.04 = 18050 -> 18 kA         1000*9.81*0.05*20*0.8075 = 7922 W -> 7.9 kW
+ *   50 * (0.882-0.329) = 27.65 -> 27.7  0.41 / 1.32 = 0.3106 -> 0.31
+ */
+const HAND_VERIFIED = new Set([
+  'Earth fault: measured Zs 0.6 Ω ≤ 0.8 × 2.19',
+  'Shrink ≈ rise × shrink-constant (0.134 at 30°)',
+  'Annual ≈ £1.68 × 365',
+  'P ÷ (√3 × U × PF)',
+  'Fault level ≈ FLC ÷ (Z% / 100)',
+  '9810 × (0.85 × 0.95)',
+  'U₀ ÷ 0.30',
+  'Highest three-phase value ≈ line–neutral × 2',
+  '50 × 0.553 ≈ 27.7 kVAr',
+  '19.5 mΩ/m',
+  '1.32 ÷ 4',
+  '≈ 0.33 Ω at the midpoint; at the origin (r1 × r2) ÷ (r1 + r2)',
+  '3520 kWh/yr',
+  'internal area × 0.45',
+  'Type B trips at 5 × In → Ia',
+  '15 000 ÷ 588.9',
+]);
 
 let registryOk = true;
 let checked = 0;
 const symbolic = [];
 const unparsed = [];
+const handChecked = [];
 const problems = [];
 
 /** Split an "a = b = c" chain, ignoring ≤ ≥ ≠ and ==. */
@@ -205,14 +248,23 @@ for (const file of files) {
         // A symbolic segment ("P", "V × I") is not a coverage hole — those
         // sides are definitionally uncheckable. A segment carrying digits and
         // an operator that still failed to parse IS one, so count it apart.
-        (looksNumeric(lhs) ? unparsed : symbolic).push({ file, step, seg: lhs });
+        if (HAND_VERIFIED.has(lhs.trim())) handChecked.push({ file, seg: lhs });
+        else (looksNumeric(lhs) ? unparsed : symbolic).push({ file, step, seg: lhs });
         continue;
       }
       // The stated value may carry a trailing note: "2784 W ✓" or "12.105 A (≈ 12.1 A)".
       const rhsClean = rhs.replace(/\s*\(.*?\)\s*$/, '').replace(/\s*[✓✗x]\s*$/, '');
       let stated = toNumber(rhsClean);
       if (stated === null) {
-        (looksNumeric(rhs) ? unparsed : symbolic).push({ file, step, seg: rhs });
+        // If the rhs is itself an evaluatable expression it is an intermediate
+        // step ("... = 632.5 / 115 = 5.5"), and it gets checked on the next
+        // iteration as that pair's lhs. Recording it as a hole would count the
+        // same segment twice and make the coverage look worse than it is.
+        const isIntermediate = evaluateExpression(rhs) !== null && i + 2 < parts.length;
+        if (!isIntermediate) {
+          if (HAND_VERIFIED.has(rhs.trim())) handChecked.push({ file, seg: rhs });
+          else (looksNumeric(rhs) ? unparsed : symbolic).push({ file, step, seg: rhs });
+        }
         continue;
       }
 
@@ -258,8 +310,11 @@ const componentSrc = readFileSync(
 const registrySlugs = new Set(
   [...registrySrc.matchAll(/value:\s*'([^']+)'/g)].map((m) => m[1])
 );
+// Prettier drops the quotes from keys that are valid JS identifiers, so the map
+// holds a mix of `'cable-size':` and `load:`. Matching only the quoted form made
+// seven live calculators look missing.
 const componentSlugs = new Set(
-  [...componentSrc.matchAll(/^\s*'([^']+)':\s*lazy\(/gm)].map((m) => m[1])
+  [...componentSrc.matchAll(/^\s*'?([A-Za-z0-9_-]+)'?:\s*lazy\(/gm)].map((m) => m[1])
 );
 
 const missingComponent = [...registrySlugs].filter((s) => !componentSlugs.has(s));
@@ -283,6 +338,7 @@ console.log(`Calculator worked-example arithmetic`);
 console.log(`  files:    ${files.length}`);
 console.log(`  checked:  ${checked} segments`);
 console.log(`  symbolic: ${symbolic.length} segments (e.g. "P = V × I" — nothing to compute)`);
+console.log(`  by hand:  ${handChecked.length} segments (unparseable, checked manually — see HAND_VERIFIED)`);
 console.log(`  unparsed: ${unparsed.length} segments (HAVE numbers but this script could not read them — NOT verified)`);
 console.log('');
 

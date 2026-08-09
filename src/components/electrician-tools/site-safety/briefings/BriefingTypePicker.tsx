@@ -128,4 +128,28 @@ export function BriefingTypePicker({ value, onChange, error }: BriefingTypePicke
   );
 }
 
+/**
+ * `briefing_templates.template_type` and the six types above are two different
+ * vocabularies. The table stores `site-work` / `lfe` / `hse-update` /
+ * `safety-alert` / `toolbox-talk`; only the last has a counterpart here.
+ *
+ * Both places that start a briefing from a template need the same answer, and
+ * they were giving different ones: the templates tab mapped the unknowns to
+ * `custom`, while the wizard's in-form template picker wrote the raw table
+ * value straight into the form — so `briefingType` became `site-work`, the
+ * radio list showed nothing selected, and a value no screen can label got
+ * saved to `team_briefings.briefing_type`.
+ *
+ * Anything without a genuine counterpart becomes `custom`, which is what it is:
+ * a briefing whose content you write yourself. Inventing a mapping would file
+ * briefings under the wrong heading, which is worse than filing them honestly
+ * under none.
+ */
+const TEMPLATE_TYPE_TO_BRIEFING_TYPE: Record<string, BriefingType> = {
+  'toolbox-talk': 'toolbox-talk',
+};
+
+export const briefingTypeForTemplate = (templateType: string | null | undefined): BriefingType =>
+  (templateType && TEMPLATE_TYPE_TO_BRIEFING_TYPE[templateType]) || 'custom';
+
 export { briefingTypes };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCustomer, useCustomers, Customer } from '@/hooks/inspection/useCustomers';
@@ -30,9 +29,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Navigation, Users, Phone, Mail } from 'lucide-react';
+import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
+import BusinessPageLayout from '@/components/business-hub/BusinessPageLayout';
 import { cn } from '@/lib/utils';
 import { Dot } from '@/components/college/primitives';
+
+/*
+ * House style, borrowed from the Business Hub so this page stops being the odd
+ * one out. `card-surface-interactive` is the hub's card (hsl(0 0% 15%), 1px
+ * white/10, 16px radius); the 2px yellow hairline across the top is the hub's
+ * card accent. Every accent in the hub collapses to elec-yellow on purpose —
+ * see the note in BusinessCard — so nothing here introduces a second colour.
+ */
+const HUB_CARD = 'relative overflow-hidden card-surface-interactive';
+
+const HairlineAccent = () => (
+  <div aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-elec-yellow opacity-25" />
+);
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -48,14 +62,6 @@ const itemVariants = {
   },
 };
 
-const getInitials = (name: string) =>
-  name
-    .split(' ')
-    .map((p) => p[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
-
 const formatGBP = (value: number) =>
   value >= 10_000
     ? `£${Math.round(value / 1000)}k`
@@ -65,6 +71,7 @@ const formatGBP = (value: number) =>
 function EditablePill({
   value,
   href,
+  onActivate,
   placeholder,
   fieldKey,
   onSave,
@@ -73,6 +80,13 @@ function EditablePill({
 }: {
   value: string | undefined;
   href?: string;
+  /**
+   * ELE-1520 — takes the place of `href` where the destination has to go
+   * through `openExternalUrl` rather than the browser. A raw `<a href>` to
+   * Google Maps is left to the WebView on native and never reaches the Maps
+   * app; this routes the tap through the shared navigate helper instead.
+   */
+  onActivate?: () => void;
   placeholder: string;
   fieldKey: 'name' | 'email' | 'phone' | 'address';
   onSave: (field: string, value: string) => Promise<void>;
@@ -145,7 +159,17 @@ function EditablePill({
       <span className="w-[52px] shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
         {LABELS[fieldKey] ?? fieldKey}
       </span>
-      {value && href ? (
+      {value && onActivate ? (
+        /* focus-visible, not the UA default — an unstyled :focus put a blue
+           ring on a yellow-on-black page and read as an error state. */
+        <button
+          type="button"
+          onClick={onActivate}
+          className="min-w-0 flex-1 truncate rounded-md py-2.5 text-left text-[13px] text-white transition-colors hover:text-elec-yellow focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 touch-manipulation"
+        >
+          {display}
+        </button>
+      ) : value && href ? (
         <a
           href={href}
           className="min-w-0 flex-1 truncate py-2.5 text-[13px] text-white hover:text-elec-yellow"
@@ -172,6 +196,63 @@ const LABELS: Record<string, string> = {
   phone: 'Phone',
   address: 'Address',
 };
+
+/**
+ * One of the three things you actually do to a customer: ring them, email them,
+ * drive to them.
+ *
+ * Shown greyed rather than hidden when there's nothing to act on. A row that
+ * changes from two buttons to three depending on the record is harder to build
+ * muscle memory for than one where Navigate is always in the same place — and
+ * a greyed Navigate also tells you the address is missing, which a hidden
+ * button never would.
+ */
+function ContactAction({
+  icon: Icon,
+  label,
+  href,
+  onClick,
+}: {
+  icon: typeof Phone;
+  label: string;
+  href?: string;
+  onClick?: () => void;
+}) {
+  const enabled = Boolean(href || onClick);
+  const className = cn(
+    'flex min-h-11 flex-1 flex-col items-center justify-center gap-1 rounded-xl border px-2 py-2 transition-colors touch-manipulation',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
+    enabled
+      ? 'border-white/[0.1] bg-white/[0.05] hover:border-white/[0.2] hover:bg-white/[0.08] active:scale-[0.98]'
+      : 'cursor-not-allowed border-white/[0.06] bg-white/[0.02] opacity-40'
+  );
+  const inner = (
+    <>
+      <Icon className={cn('h-4 w-4', enabled ? 'text-elec-yellow' : 'text-white')} />
+      <span className="text-[12px] font-medium text-white">{label}</span>
+    </>
+  );
+
+  if (!enabled) {
+    return (
+      <span className={className} aria-disabled="true">
+        {inner}
+      </span>
+    );
+  }
+  if (href) {
+    return (
+      <a href={href} className={className} aria-label={label}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} className={className} aria-label={label}>
+      {inner}
+    </button>
+  );
+}
 
 // Computed "next action" suggestion from customer state.
 function computeNextAction(
@@ -296,10 +377,18 @@ export default function CustomerDetailPage() {
 
   const handleInlineSave = async (field: string, value: string) => {
     if (!customerId) return;
-    await updateCustomer(customerId, { [field]: value || undefined } as Partial<Customer> as Omit<
-      Customer,
-      'id' | 'createdAt' | 'updatedAt'
-    >);
+    // ELE-1515 — the address is editable inline, and this path has no Places
+    // dropdown behind it. Retyping it here has to drop the stored geocode, or
+    // "Navigate to site" would keep routing to the previous property while the
+    // screen shows the new address.
+    const geoReset =
+      field === 'address'
+        ? { postcode: undefined, latitude: undefined, longitude: undefined }
+        : {};
+    await updateCustomer(customerId, {
+      [field]: value || undefined,
+      ...geoReset,
+    } as Partial<Customer> as Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>);
     refetch();
   };
 
@@ -352,55 +441,73 @@ export default function CustomerDetailPage() {
     year: 'numeric',
   });
 
-  return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Page header */}
-      <div className="px-4 pt-3 pb-1 lg:px-8">
-        <div className="mx-auto flex h-11 items-center gap-2 lg:max-w-[1600px]">
-          <button
-            onClick={backToList}
-            className="h-11 pr-2 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
-          >
-            Back
-          </button>
-          <div className="ml-auto flex items-center gap-1">
-            <button
-              onClick={() => setShowEditDialog(true)}
-              className="h-11 px-2.5 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => setShowDeleteConfirm(true)}
-              className="h-11 px-2.5 text-[13px] font-semibold text-red-400/80 transition-colors hover:text-red-400 touch-manipulation"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
+  const canNavigate = canNavigateTo(customer);
+  const goToSite = () =>
+    navigateToAddress({
+      address: customer.address,
+      latitude: customer.latitude,
+      longitude: customer.longitude,
+    });
 
+  return (
+    <BusinessPageLayout
+      title={customer.name}
+      subtitle={[customer.companyName, `Customer since ${memberSince}`]
+        .filter(Boolean)
+        .join(' · ')}
+      icon={Users}
+      backUrl="/customers"
+      onBack={backToList}
+      actions={
+        <>
+          <button
+            onClick={() => setShowEditDialog(true)}
+            className="h-11 px-2.5 text-[13px] font-semibold text-white transition-colors touch-manipulation"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            className="h-11 px-2.5 text-[13px] font-semibold text-red-400/80 transition-colors hover:text-red-400 touch-manipulation"
+          >
+            Delete
+          </button>
+        </>
+      }
+    >
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8"
+        className="mx-auto space-y-4 sm:space-y-5 lg:max-w-[1600px]"
       >
-        {/* Hero */}
+        {/* Identity — the name now lives in the header, so this card carries
+            the things you act on rather than repeating it at 28px. */}
         <motion.div variants={itemVariants}>
-          <div className={cn('relative overflow-hidden rounded-2xl border border-white/[0.18] p-4 sm:p-5', CARD_SURFACE)}>
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.16] bg-white/[0.10] sm:h-14 sm:w-14">
-                <span className="text-[14px] font-semibold text-white sm:text-[15px]">
-                  {getInitials(customer.name)}
-                </span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <h2 className="text-[22px] font-bold leading-tight tracking-tight text-white sm:text-[28px]">
-                  {customer.name}
-                </h2>
-                <p className="mt-0.5 text-[12.5px] text-white">Customer since {memberSince}</p>
-              </div>
+          {/* Edge-to-edge on a phone, inset from sm: up — the house card rule. */}
+          <div className={cn(HUB_CARD, '-mx-4 rounded-none border-x-0 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5')}>
+            <HairlineAccent />
+
+            {/* Primary actions — the three things done on a customer record.
+                Full-width 44px targets, because this is used one-handed in a
+                van. All three always render; see ContactAction for why an
+                unavailable one is greyed rather than hidden. */}
+            <div className="flex items-stretch gap-2">
+              <ContactAction
+                icon={Phone}
+                label="Call"
+                href={customer.phone ? `tel:${customer.phone}` : undefined}
+              />
+              <ContactAction
+                icon={Mail}
+                label="Email"
+                href={customer.email ? `mailto:${customer.email}` : undefined}
+              />
+              <ContactAction
+                icon={Navigation}
+                label="Navigate"
+                onClick={canNavigate ? goToSite : undefined}
+              />
             </div>
 
             {/* Tags */}
@@ -438,9 +545,16 @@ export default function CustomerDetailPage() {
               />
               <EditablePill
                 value={customer.address}
-                href={
-                  customer.address
-                    ? `https://www.google.com/maps/search/${encodeURIComponent(customer.address)}`
+                // ELE-1520 — prefers the stored coordinates over the address
+                // text when Places captured them (ELE-1515).
+                onActivate={
+                  canNavigateTo(customer)
+                    ? () =>
+                        navigateToAddress({
+                          address: customer.address,
+                          latitude: customer.latitude,
+                          longitude: customer.longitude,
+                        })
                     : undefined
                 }
                 placeholder="Not set"
@@ -500,35 +614,43 @@ export default function CustomerDetailPage() {
           </motion.div>
         )}
 
-        {/* Duplicate / merge banner */}
+        {/*
+          Duplicate / merge.
+
+          This used to render one full-size yellow button per match. Yellow is
+          the primary-action colour, so three of them stacked above the record
+          made "Merge into Andrew Moore" look like the main thing the page was
+          for — on a screen you opened to look at a customer. Merging is also
+          destructive and irreversible; it should not be the loudest control
+          on the page, and certainly not a single tap away.
+
+          Now: one quiet amber line stating the fact, and secondary buttons.
+        */}
         {duplicateMatches.length > 0 && (
           <motion.div variants={itemVariants}>
-            <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/25 bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5">
+            <div className="-mx-4 rounded-none border-y border-amber-500/25 bg-amber-500/[0.06] p-4 sm:mx-0 sm:rounded-2xl sm:border sm:p-5">
               <div className="min-w-0">
                 <div className="text-[13px] font-semibold text-amber-300">
-                  Possible duplicate{duplicateMatches.length > 1 ? 's' : ''}
-                </div>
-                <div className="mt-1 text-[14px] font-semibold text-white">
                   {duplicateMatches.length === 1
-                    ? `Looks like the same person as "${duplicateMatches[0].name}"`
-                    : `${duplicateMatches.length} other customers share this contact`}
+                    ? 'Possible duplicate'
+                    : `${duplicateMatches.length} possible duplicates`}
                 </div>
-                <div className="mt-0.5 text-[12px] text-white">
+                <div className="mt-0.5 text-[12.5px] text-white">
                   Matched on{' '}
                   {Array.from(new Set(duplicateMatches.flatMap((m) => m.matchOn))).join(' & ')}.
-                  Merge to combine certificates, projects, invoices and history.
+                  Merging combines all history and cannot be undone.
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="mt-3 flex flex-wrap items-center gap-2">
                 {duplicateMatches.slice(0, 3).map((m) => (
                   <button
                     key={m.id}
                     onClick={() => setMergeTargetId(m.id)}
-                    className="flex h-9 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
+                    className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.14] bg-white/[0.05] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.28] hover:bg-white/[0.09] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 touch-manipulation"
                   >
                     Merge into {m.name}
                     {m.certificateCount > 0 && (
-                      <span className="text-black/60">· {m.certificateCount} certs</span>
+                      <span className="text-white/55">· {m.certificateCount} certs</span>
                     )}
                   </button>
                 ))}
@@ -549,158 +671,199 @@ export default function CustomerDetailPage() {
           numbers are the customer's actual record and appear nowhere else —
           only Properties is repeated, on its tab.
         */}
-        <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-4 gap-[1px] overflow-hidden rounded-2xl border border-white/[0.18] bg-white/[0.14]"
-        >
-          {[
-            { label: 'Certs', value: String(certCount), volt: false },
-            { label: 'Properties', value: String(customer.propertyCount || 0), volt: false },
-            { label: 'Quotes', value: String(stats.quoteCount), volt: false },
-            {
-              label: 'Lifetime',
-              value: stats.totalInvoiced > 0 ? formatGBP(stats.totalInvoiced) : '£0',
-              volt: stats.totalInvoiced > 0,
-            },
-          ].map((s) => (
-            <div
-              key={s.label}
-              className="bg-gradient-to-b from-white/[0.12] to-white/[0.06] px-2 py-3 text-center"
-            >
+        <motion.div variants={itemVariants}>
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { label: 'Certs', value: String(certCount), volt: false },
+              { label: 'Properties', value: String(customer.propertyCount || 0), volt: false },
+              { label: 'Quotes', value: String(stats.quoteCount), volt: false },
+              {
+                label: 'Lifetime',
+                value: stats.totalInvoiced > 0 ? formatGBP(stats.totalInvoiced) : '£0',
+                volt: stats.totalInvoiced > 0,
+              },
+            ].map((s) => (
               <div
-                className={cn(
-                  'truncate text-[17px] font-bold tabular-nums tracking-tight sm:text-[19px]',
-                  s.volt ? 'text-elec-yellow' : 'text-white'
-                )}
+                key={s.label}
+                className="rounded-xl border border-white/10 bg-white/[0.05] px-2 py-3 text-center"
               >
-                {s.value}
+                {/* font-black + yellow on the figure, matching the hub's
+                    StatCard. Lifetime stays the only one that can go yellow —
+                    money is the number worth finding at a glance. */}
+                <div
+                  className={cn(
+                    'truncate text-[17px] font-black tabular-nums tracking-tight sm:text-[19px]',
+                    s.volt ? 'text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {s.value}
+                </div>
+                {/* 9px, no letter-spacing: "PROPERTIES" clipped to "PROPER…" in
+                    a quarter of a 390px row at 10px + tracking. */}
+                <div className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-normal text-white sm:text-[10px] sm:tracking-[0.1em]">
+                  {s.label}
+                </div>
               </div>
-              {/* 9px, no letter-spacing: "PROPERTIES" clipped to "PROPER…" in
-                  a quarter of a 390px row at 10px + tracking. */}
-              <div className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-normal text-white sm:text-[10px] sm:tracking-[0.1em]">
-                {s.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </motion.div>
 
-        {/* Actions 2x2 */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h3 className="text-[15px] font-semibold tracking-tight text-white">Actions</h3>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-            {[
-              {
-                title: 'Start a certificate',
-                description:
-                  'EICR, EIC, Minor Works, Solar PV and more — pre-filled with this customer.',
-                meta: 'BS 7671',
-                onClick: () => setShowStartCertificate(true),
-              },
-              {
-                title: 'Quote a job',
-                description:
-                  'Build a quote with live material pricing. One tap to invoice when accepted.',
-                meta: 'Payment links built in',
-                onClick: () => navigate('/electrician/quotes'),
-              },
-              {
-                title: 'Quick note',
-                description: 'Log a reminder, a follow-up, or what was said on the last call.',
-                meta: 'Appears in timeline',
-                onClick: () => setShowQuickNote(true),
-              },
-              {
-                title: 'Site addresses',
-                description:
-                  'Save the addresses this customer owns — landlords, agents, multi-site clients.',
-                meta: `${customer.propertyCount || 0} saved`,
-                onClick: () => setActiveSection('properties'),
-              },
-            ].map((a) => (
-              <button
-                key={a.title}
-                onClick={a.onClick}
-                className="group flex h-full flex-col rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 text-left transition-all hover:border-white/[0.22] active:scale-[0.99] touch-manipulation sm:p-5"
-              >
-                <div className="text-[15px] font-semibold tracking-tight text-white">{a.title}</div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-white">{a.description}</p>
-                <div className="mt-auto flex items-center justify-between pt-3">
-                  <span className="text-[11.5px] text-white">{a.meta}</span>
-                  <span className="text-[12.5px] font-semibold text-elec-yellow">Open</span>
-                </div>
-              </button>
-            ))}
+        {/*
+          Actions — one card, not three sections.
+
+          This was a 2×2 grid of prose cards (~230px of phone screen for four
+          buttons), then a separate "Quick log" strip, then a separate "Ask
+          Mate" banner. Three slabs, all of them launchers. Every description
+          explained something the title already said: "Quick note — log a
+          reminder, a follow-up, or what was said on the last call."
+
+          Now: titles only, in a divided list. What each does is obvious from
+          its name, and the whole set fits in the space one of the old cards
+          took. Logging actions keep their toast, which is the confirmation
+          that anything happened.
+        */}
+        <motion.section variants={itemVariants}>
+          <div
+            className={cn(
+              HUB_CARD,
+              '-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x'
+            )}
+          >
+            <HairlineAccent />
+            <h3 className="px-4 pb-1 pt-4 text-[15px] font-semibold tracking-tight text-white sm:px-5">
+              Actions
+            </h3>
+            <div className="mt-1 divide-y divide-white/[0.06]">
+              {[
+                { title: 'Start a certificate', onClick: () => setShowStartCertificate(true) },
+                { title: 'Quote a job', onClick: () => navigate('/electrician/quotes') },
+                { title: 'Add a note', onClick: () => setShowQuickNote(true) },
+                {
+                  title: 'Site addresses',
+                  meta: `${customer.propertyCount || 0} saved`,
+                  onClick: () => setActiveSection('properties'),
+                },
+                {
+                  title: 'Log a call',
+                  onClick: () => {
+                    logCall();
+                    toast({
+                      title: 'Call logged',
+                      description: `Logged call with ${customer.name}.`,
+                    });
+                  },
+                  disabled: isLogging,
+                },
+                {
+                  title: 'Log a site visit',
+                  onClick: () => {
+                    logVisit();
+                    toast({
+                      title: 'Site visit logged',
+                      description: `Logged site visit for ${customer.name}.`,
+                    });
+                  },
+                  disabled: isLogging,
+                },
+                {
+                  title: 'Log an email',
+                  onClick: () => {
+                    logEmail();
+                    toast({
+                      title: 'Email logged',
+                      description: `Logged email to ${customer.name}.`,
+                    });
+                  },
+                  disabled: isLogging,
+                },
+                {
+                  title: 'Ask Mate to handle the admin',
+                  meta: 'Business Mate',
+                  onClick: () => navigate('/electrician/business'),
+                },
+              ].map((a) => (
+                <button
+                  key={a.title}
+                  onClick={a.onClick}
+                  disabled={a.disabled}
+                  className="flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-white/[0.04] disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/50 touch-manipulation sm:px-5"
+                >
+                  <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-white">
+                    {a.title}
+                  </span>
+                  {a.meta && (
+                    <span className="shrink-0 text-[11.5px] text-white">{a.meta}</span>
+                  )}
+                  <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">
+                    Open
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </motion.section>
 
-        {/* Quick log strip — instant activity logging */}
-        <motion.div variants={itemVariants}>
-          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3 sm:p-4">
-            <span className="mr-1 text-[13px] font-semibold text-white">Quick log</span>
-            <button
-              onClick={() => {
-                logCall();
-                toast({ title: 'Call logged', description: `Logged call with ${customer.name}.` });
-              }}
-              disabled={isLogging}
-              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
-            >
-              Log call
-            </button>
-            <button
-              onClick={() => {
-                logVisit();
-                toast({
-                  title: 'Site visit logged',
-                  description: `Logged site visit for ${customer.name}.`,
-                });
-              }}
-              disabled={isLogging}
-              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
-            >
-              Log site visit
-            </button>
-            <button
-              onClick={() => {
-                logEmail();
-                toast({ title: 'Email logged', description: `Logged email to ${customer.name}.` });
-              }}
-              disabled={isLogging}
-              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
-            >
-              Log email
-            </button>
-            <button
-              onClick={() => setShowQuickNote(true)}
-              className="ml-auto flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-semibold text-elec-yellow transition-colors hover:border-white/[0.25] touch-manipulation"
-            >
-              Add note
-            </button>
+
+        {/* Tabs */}
+        <motion.section variants={itemVariants} className="space-y-4">
+          {/* Five tabs no longer fit at flex-1 on a 360px phone — "Properties 3"
+              would truncate to nothing. The rail scrolls on mobile (a standard
+              native pattern) and goes back to equal widths from sm: up. */}
+          <div className="flex w-full gap-1 overflow-x-auto rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1 [scrollbar-width:none] sm:overflow-visible [&::-webkit-scrollbar]:hidden">
+            {(
+              [
+                { key: 'work' as const, label: 'Work' },
+                { key: 'financials' as const, label: 'Financials' },
+                {
+                  key: 'properties' as const,
+                  label: `Properties${customer.propertyCount ? ` ${customer.propertyCount}` : ''}`,
+                },
+                { key: 'site-notes' as const, label: 'Site notes' },
+                { key: 'timeline' as const, label: 'Timeline' },
+              ]
+            ).map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveSection(tab.key)}
+                className={cn(
+                  'h-9 shrink-0 whitespace-nowrap rounded-full px-3 text-[11.5px] font-medium transition-colors touch-manipulation sm:min-w-0 sm:flex-1 sm:shrink sm:truncate sm:px-4 sm:text-[13px]',
+                  activeSection === tab.key
+                    ? 'bg-elec-yellow font-semibold text-black'
+                    : 'text-white hover:bg-white/[0.04]'
+                )}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
-        </motion.div>
 
-        {/* Ask Business Mate */}
-        <motion.div variants={itemVariants}>
-          <button
-            onClick={() => navigate('/electrician/business')}
-            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-5 text-left transition-all hover:border-white/[0.22] touch-manipulation"
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            <div className="min-w-0 flex-1">
-              <div className="text-[13px] font-semibold text-elec-yellow">Business Mate</div>
-              <div className="mt-1 text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
-                Ask Mate to handle the admin
-              </div>
-              <div className="mt-1 text-[12.5px] text-white">
-                Draft a chase email, create a follow-up snag, schedule a re-test reminder — in plain
-                English.
-              </div>
-            </div>
-            <span className="inline-flex h-9 shrink-0 items-center rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black">
-              Open Mate
-            </span>
-          </button>
-        </motion.div>
+            {activeSection === 'work' && (
+              <CustomerOverviewTab
+                customer={customer}
+                onAddNote={() => setShowQuickNote(true)}
+                onStartCertificate={() => setShowStartCertificate(true)}
+                onRefresh={refetch}
+              />
+            )}
+            {activeSection === 'financials' && <CustomerFinancialsTab customer={customer} />}
+            {activeSection === 'properties' && (
+              <CustomerPropertiesTab customerId={customer.id} onRefresh={refetch} />
+            )}
+            {activeSection === 'site-notes' && <CustomerSiteNotesTab customerId={customer.id} />}
+            {activeSection === 'timeline' && <CustomerTimelineTab customerId={customer.id} />}
+          </motion.div>
+        </motion.section>
 
+        {/* Secondary detail — reminders, extra contacts and linked projects.
+            Below the tabs on purpose: these are reference, not the reason
+            the page was opened, and each used to own a full-width slab above
+            the content people actually came for. */}
         {/* Reminders */}
         <motion.section variants={itemVariants}>
           <CustomerReminders customerId={customer.id} />
@@ -781,61 +944,6 @@ export default function CustomerDetailPage() {
           </motion.section>
         )}
 
-        {/* Tabs */}
-        <motion.section variants={itemVariants} className="space-y-4">
-          {/* Five tabs no longer fit at flex-1 on a 360px phone — "Properties 3"
-              would truncate to nothing. The rail scrolls on mobile (a standard
-              native pattern) and goes back to equal widths from sm: up. */}
-          <div className="flex w-full gap-1 overflow-x-auto rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1 [scrollbar-width:none] sm:overflow-visible [&::-webkit-scrollbar]:hidden">
-            {(
-              [
-                { key: 'work' as const, label: 'Work' },
-                { key: 'financials' as const, label: 'Financials' },
-                {
-                  key: 'properties' as const,
-                  label: `Properties${customer.propertyCount ? ` ${customer.propertyCount}` : ''}`,
-                },
-                { key: 'site-notes' as const, label: 'Site notes' },
-                { key: 'timeline' as const, label: 'Timeline' },
-              ]
-            ).map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveSection(tab.key)}
-                className={cn(
-                  'h-9 shrink-0 whitespace-nowrap rounded-full px-3 text-[11.5px] font-medium transition-colors touch-manipulation sm:min-w-0 sm:flex-1 sm:shrink sm:truncate sm:px-4 sm:text-[13px]',
-                  activeSection === tab.key
-                    ? 'bg-elec-yellow font-semibold text-black'
-                    : 'text-white hover:bg-white/[0.04]'
-                )}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {activeSection === 'work' && (
-              <CustomerOverviewTab
-                customer={customer}
-                onAddNote={() => setShowQuickNote(true)}
-                onStartCertificate={() => setShowStartCertificate(true)}
-                onRefresh={refetch}
-              />
-            )}
-            {activeSection === 'financials' && <CustomerFinancialsTab customer={customer} />}
-            {activeSection === 'properties' && (
-              <CustomerPropertiesTab customerId={customer.id} onRefresh={refetch} />
-            )}
-            {activeSection === 'site-notes' && <CustomerSiteNotesTab customerId={customer.id} />}
-            {activeSection === 'timeline' && <CustomerTimelineTab customerId={customer.id} />}
-          </motion.div>
-        </motion.section>
       </motion.main>
 
       <CustomerForm
@@ -916,6 +1024,6 @@ export default function CustomerDetailPage() {
           customer={customer}
         />
       )}
-    </div>
+    </BusinessPageLayout>
   );
 }

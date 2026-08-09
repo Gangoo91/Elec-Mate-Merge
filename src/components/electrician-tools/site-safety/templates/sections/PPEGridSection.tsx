@@ -1,4 +1,5 @@
 import { Plus, Trash2, Shield, ShieldCheck } from 'lucide-react';
+import { FIELD_CN } from '../../common/fieldClasses';
 import { cn } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { PPEGridSection as PPEGridSectionType, PPEItem } from '@/types/safety-template';

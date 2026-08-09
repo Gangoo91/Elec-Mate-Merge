@@ -398,11 +398,7 @@ export const useCableSizing = () => {
     }
 
     // Installation Methods 100-103 are flat twin & earth columns of Table 4D5.
-    if (
-      isDomesticInsulation &&
-      cableType !== 'pvc-twin-earth' &&
-      cableType !== 'xlpe-twin-earth'
-    ) {
+    if (isDomesticInsulation && cableType !== 'pvc-twin-earth' && cableType !== 'xlpe-twin-earth') {
       setResult({
         recommendedCable: null,
         alternativeCables: [],

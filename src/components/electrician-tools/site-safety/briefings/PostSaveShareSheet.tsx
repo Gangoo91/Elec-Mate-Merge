@@ -3,20 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
-import {
-  Share2,
-  Link2,
-  Mail,
-  MessageCircle,
-  Copy,
-  Check,
-  Loader2,
-  X,
-  ExternalLink,
-  QrCode,
-  CheckCircle,
-  Users,
-} from 'lucide-react';
+import { Link2, MessageCircle, Check, Loader2, ExternalLink, QrCode } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { SafetyDocField } from '../common/SafetyDocField';
@@ -92,10 +79,11 @@ export function PostSaveShareSheet({
       const url = `${baseUrl}/briefing-sign/${token}`;
       setSigningUrl(url);
       return url;
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast({
         title: 'Error',
-        description: err.message || 'Failed to generate signing link',
+        description:
+          err instanceof Error && err.message ? err.message : 'Failed to generate signing link',
         variant: 'destructive',
       });
       return null;
@@ -179,7 +167,12 @@ export function PostSaveShareSheet({
 
       if (error) throw error;
 
-      const token = signingUrl?.split('/').pop();
+      /*
+       * Off the local `url`, not the `signingUrl` state. `generateLink()` sets
+       * that state inside this same handler, so the closure still held `null`
+       * and the `email_sent_to` audit was silently skipped on every first send.
+       */
+      const token = url.split('/').pop();
       if (token) {
         const { data: tokenRow } = await supabase
           .from('briefing_signing_tokens')
@@ -227,66 +220,46 @@ export function PostSaveShareSheet({
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 left-0 right-0 max-h-[90vh] bg-[#111827] rounded-t-2xl overflow-hidden safe-area-pb"
+        className="safe-area-pb absolute bottom-0 left-0 right-0 max-h-[85vh] overflow-hidden rounded-t-2xl bg-[hsl(0_0%_8%)]"
       >
         {/* Handle */}
         <div className="flex justify-center pt-3 pb-1">
           <div className="w-10 h-1 rounded-full bg-white/20" />
         </div>
 
-        <div className="overflow-y-auto max-h-[80vh]">
-          {/* Success Header */}
-          <div className="px-5 pt-4 pb-5 text-center border-b border-white/10">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', delay: 0.15 }}
-              className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4"
-            >
-              <CheckCircle className="h-8 w-8 text-emerald-400" />
-            </motion.div>
+        <div className="max-h-[78vh] overflow-y-auto">
+          {/* Confirmation reads in type. A 64px emerald disc with a tick in it
+              is the standard "AI made this" success graphic, and it pushed the
+              one thing the user came here to do below the fold on a small
+              phone. */}
+          <div className="border-b border-white/10 px-5 pb-5 pt-4">
             <motion.h2
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg font-bold text-white mb-1"
+              transition={{ duration: 0.2 }}
+              className="text-[20px] font-bold leading-tight tracking-tight text-white"
             >
-              Briefing Saved
+              Briefing saved
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-sm text-white"
-            >
-              {briefingName}
-            </motion.p>
+            <p className="mt-1 text-[14px] text-white">{briefingName}</p>
+            {attendeeCount > 0 && (
+              /* Neutral surface, coloured text — the app's status-pill rule.
+                 An amber wash behind an amber sentence is the treatment
+                 reserved for a selected control or a safety verdict. */
+              <p className="mt-3 inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[12px] font-medium text-amber-400">
+                {attendeeCount} {attendeeCount === 1 ? 'person still needs' : 'people still need'}{' '}
+                to sign
+              </p>
+            )}
           </div>
 
           {/* Share for Signing */}
           <div className="p-5 space-y-5">
-            {/* Attendee count prompt */}
-            {attendeeCount > 0 && (
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                <Users className="h-5 w-5 text-amber-400 shrink-0" />
-                <p className="text-sm text-amber-300">
-                  <span className="font-semibold">
-                    {attendeeCount} {attendeeCount === 1 ? 'person needs' : 'people need'}
-                  </span>{' '}
-                  to sign this briefing
-                </p>
-              </div>
-            )}
-
-            {/* Share heading */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                <Share2 className="h-4 w-4 text-yellow-400" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">Share for Signing</h3>
-                <p className="text-xs text-white">Workers sign remotely — no login needed</p>
-              </div>
+            <div>
+              <h3 className="text-[15px] font-semibold text-white">Send for signing</h3>
+              <p className="mt-0.5 text-[12px] text-white">
+                Workers sign on their own phone — no login needed
+              </p>
             </div>
 
             {/* Copy Link — primary action */}
@@ -295,52 +268,54 @@ export function PostSaveShareSheet({
               onClick={handleCopyLink}
               disabled={loading}
               className={cn(
-                'w-full h-14 rounded-xl font-semibold text-base touch-manipulation',
-                copied
-                  ? 'bg-emerald-500 text-white'
-                  : 'bg-elec-yellow text-black hover:brightness-110'
+                'h-14 w-full rounded-xl text-base font-semibold touch-manipulation',
+                'transition-[filter,transform] duration-150 active:scale-[0.98] active:brightness-110',
+                'disabled:opacity-60',
+                copied ? 'bg-emerald-500 text-white' : 'bg-elec-yellow text-black'
               )}
             >
               {loading ? (
-                <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               ) : copied ? (
-                <Check className="h-5 w-5 mr-2" />
+                <Check className="mr-2 h-5 w-5" />
               ) : (
-                <Link2 className="h-5 w-5 mr-2" />
+                <Link2 className="mr-2 h-5 w-5" />
               )}
-              {copied ? 'Link Copied!' : 'Copy Signing Link'}
+              {copied ? 'Link copied' : 'Copy signing link'}
             </Button>
 
-            {/* Secondary share buttons */}
-            <div className="grid grid-cols-3 gap-3">
+            {/* Secondary share — one row, one weight, no three-colour icon set. */}
+            <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={handleWhatsApp}
                 disabled={loading}
                 className={cn(
-                  'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                  'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                  'touch-manipulation min-h-[80px]'
+                  'flex h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.06]',
+                  'text-[13px] font-medium text-white touch-manipulation',
+                  'transition-[background-color,transform] duration-150 active:scale-[0.97] active:bg-white/[0.12]'
                 )}
               >
-                <MessageCircle className="h-5 w-5 text-green-400" />
-                <span className="text-xs font-medium text-white">WhatsApp</span>
+                <MessageCircle className="h-4 w-4" />
+                WhatsApp
               </button>
 
               <button
                 type="button"
+                aria-pressed={showQR}
                 onClick={() => setShowQR(!showQR)}
                 disabled={loading}
                 className={cn(
-                  'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                  'touch-manipulation min-h-[80px]',
+                  'flex h-11 items-center justify-center gap-1.5 rounded-xl border',
+                  'text-[13px] font-medium touch-manipulation',
+                  'transition-[background-color,transform] duration-150 active:scale-[0.97]',
                   showQR
-                    ? 'border border-elec-yellow/35'
-                    : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]'
+                    ? 'border-elec-yellow bg-elec-yellow text-black'
+                    : 'border-white/[0.14] bg-white/[0.06] text-white active:bg-white/[0.12]'
                 )}
               >
-                <QrCode className="h-5 w-5 text-yellow-400" />
-                <span className="text-xs font-medium text-white">QR Code</span>
+                <QrCode className="h-4 w-4" />
+                QR code
               </button>
 
               <button
@@ -348,13 +323,13 @@ export function PostSaveShareSheet({
                 onClick={handleNativeShare}
                 disabled={loading}
                 className={cn(
-                  'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                  'bg-white/[0.04] border-white/10 hover:bg-white/[0.08] active:scale-[0.97]',
-                  'touch-manipulation min-h-[80px]'
+                  'flex h-11 items-center justify-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.06]',
+                  'text-[13px] font-medium text-white touch-manipulation',
+                  'transition-[background-color,transform] duration-150 active:scale-[0.97] active:bg-white/[0.12]'
                 )}
               >
-                <ExternalLink className="h-5 w-5 text-purple-400" />
-                <span className="text-xs font-medium text-white">More...</span>
+                <ExternalLink className="h-4 w-4" />
+                More
               </button>
             </div>
 
@@ -387,27 +362,24 @@ export function PostSaveShareSheet({
             </AnimatePresence>
 
             {/* Email Send */}
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-white" />
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Send via Email
-                </span>
-              </div>
-              <div className="flex gap-2">
-                <SafetyDocField
-                  label="Email address"
-                  type="email"
-                  placeholder="name@company.co.uk"
-                  value={emailTo}
-                  onChange={(e) => setEmailTo(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleEmailSend()}
-                />
+            <div className="space-y-2.5 border-t border-white/[0.1] pt-4">
+              <h4 className="text-[12px] font-medium text-white">Send by email</h4>
+              <div className="flex items-end gap-2">
+                <div className="min-w-0 flex-1">
+                  <SafetyDocField
+                    label="Email address"
+                    type="email"
+                    placeholder="name@company.co.uk"
+                    value={emailTo}
+                    onChange={(e) => setEmailTo(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleEmailSend()}
+                  />
+                </div>
                 <Button
                   type="button"
                   onClick={handleEmailSend}
                   disabled={!emailTo.trim() || sendingEmail || loading}
-                  className="h-[50px] px-5 bg-yellow-500 text-black hover:bg-yellow-400 font-semibold shrink-0 touch-manipulation"
+                  className="h-11 shrink-0 touch-manipulation border border-white/[0.14] bg-white/[0.06] px-5 font-medium text-white transition-[background-color,transform] hover:bg-white/[0.12] active:scale-[0.97] disabled:opacity-50"
                 >
                   {sendingEmail ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send'}
                 </Button>
@@ -419,7 +391,7 @@ export function PostSaveShareSheet({
               type="button"
               variant="ghost"
               onClick={onClose}
-              className="w-full h-12 text-white hover:text-white touch-manipulation"
+              className="h-11 w-full touch-manipulation text-[14px] font-medium text-white hover:bg-white/[0.08] hover:text-white"
             >
               Skip — I'll share later
             </Button>

@@ -68,10 +68,7 @@ export function SafetyListRow({
   const Inner = (
     <>
       {accent && (
-        <span
-          aria-hidden
-          className={cn('h-10 w-[3px] shrink-0 rounded-full', toneDot[accent])}
-        />
+        <span aria-hidden className={cn('h-10 w-[3px] shrink-0 rounded-full', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="min-w-0 flex-1">

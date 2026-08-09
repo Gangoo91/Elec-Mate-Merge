@@ -20,6 +20,8 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { usePhotoAI } from '@/hooks/usePhotoAI';
 import { useOfflinePhotoQueue } from '@/hooks/useOfflinePhotoQueue';
 import { toast } from '@/hooks/use-toast';
+import { safetyInputCn } from '../common/SafetyDocField';
+import { cn } from '@/lib/utils';
 
 interface CameraTabProps {
   onPhotoUploaded?: () => void;
@@ -680,7 +682,7 @@ export default function CameraTab({
                   placeholder="Site..."
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={safetyInputCn}
                 />
                 <button
                   onClick={handleGetLocation}
@@ -699,11 +701,7 @@ export default function CameraTab({
                 value={projectReference}
                 onChange={(e) => setProjectReference(e.target.value)}
                 disabled={isProjectLocked}
-                className={`mt-2 h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation ${
-                  isProjectLocked
-                    ? 'opacity-70 cursor-not-allowed border border-elec-yellow/35'
-                    : ''
-                }`}
+                className={cn(safetyInputCn, 'mt-2')}
               />
             </div>
           </div>
@@ -738,7 +736,7 @@ export default function CameraTab({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
-                className="h-12 flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className={cn(safetyInputCn, 'flex-1')}
               />
               <button
                 onClick={handleAddTag}

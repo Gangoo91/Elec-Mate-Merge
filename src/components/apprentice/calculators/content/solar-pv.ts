@@ -2,8 +2,10 @@ import type { CalculatorContent } from './types';
 
 /**
  * Solar PV — renewable editorial.
- * Connection thresholds (G98/G99) match the calculator engine. BS 7671 Section 712
- * and MCS MIS 3002 cited from established requirements; flagged for source confirmation.
+ *
+ * Verified against primary sources, not recalled: ENA EREC G99 Issue 2 2025 for the
+ * G98/G99 threshold, MCS MIS 3002:2025 Issue 2.0 for the installation standard, and
+ * the printed BS 7671 for Section 712.
  */
 export const solarPvContent: CalculatorContent = {
   slug: 'solar-pv',
@@ -67,18 +69,30 @@ export const solarPvContent: CalculatorContent = {
         'PV installations must meet the additional requirements of Section 712, including DC-side isolation, protection and labelling, recognising that the DC side cannot be switched off and remains live in daylight.',
       tableRefs: ['Section 712'],
     },
+    /*
+      Rewritten against the source (Desktop/hav/MCS-MIS3002-2025-Solar-PV.pdf,
+      Issue 1.0, dated 01/01/2025).
+
+      What was here before said MIS 3002 covers "system design, shading
+      assessment and commissioning". The word "shading" does not appear anywhere
+      in MIS 3002:2025 — that was an invented specific. And the standard does not
+      set the design rules itself: §3.2.1 requires design and installation to the
+      2nd Edition of the IET Code of Practice for Grid Connected Solar
+      Photovoltaic Systems, with MIS 3002's own additions and exceptions on top.
+    */
     {
       standard: 'MCS',
-      citation: 'MCS MIS 3002 — Solar PV installation standard',
+      citation: 'MCS MIS 3002:2025 Issue 2.0 — Solar PV installation standard',
       clauseText:
-        'MCS-certified installation to MIS 3002 is required for SEG eligibility and consumer protection, covering system design, shading assessment and commissioning.',
+        'Specifies the requirements for MCS Contractors undertaking the supply, design, installation, set to work and commissioning of solar PV systems on permanent buildings, connected in parallel with the distribution network, up to a maximum DC output of 50 kWp (§1). Design and installation follow the 2nd Edition of the IET Code of Practice for Grid Connected Solar Photovoltaic Systems, with the additional requirements and exceptions in §3.3–3.9 (§3.2.1). Where a conflict arises, the latest version of BS 7671 takes precedence, with particular attention drawn to Part 7 Section 712 (§3.2.2).',
+      tableRefs: ['MIS 3002 §1', 'MIS 3002 §3.2'],
     },
   ],
 
   _grounding: {
-    status: 'needs-review',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'G98/G99 16 A/3.68 kW thresholds match the calculator engine and are well established. BS 7671 Section 712 and MCS MIS 3002 authored from standard requirements — confirm against source documents. VAT 0% domestic GB per HMRC relief to 31 Mar 2027.',
+      'G98/G99 thresholds verified against ENA EREC G99 Issue 2 2025 §6.1.2 (\u2264 16 A per phase is G98 / micro-generator; above that G99) — Desktop/hav/G99-Issue2-2025.pdf. MIS 3002 rewritten against MIS 3002:2025 Issue 2.0 (Desktop/hav): 50 kWp DC scope, design to the IET Code of Practice 2nd Ed, BS 7671 takes precedence. The previous \u201cshading assessment\u201d claim was removed \u2014 that word does not appear in MIS 3002:2025. BS 7671 Section 712 verified separately. \u26a0\ufe0f MIS 3002 SUPERSEDED CHECK (2026-08-09): the held copy was Issue 1.0 (01/01/2025); the current issue is 2.0, dated 18/03/2026, now also held as MCS-MIS3002-2025-Solar-PV-Issue2.0-CURRENT.pdf. Its own amendment record gives the change as \u201cExtension to clause 5.5.5 and other small corrective amendments\u201d. The two clauses quoted here \u2014 the \u00a71 50 kWp DC scope and \u00a73.2.1/3.2.2 deferral to the IET Code of Practice 2nd Edition with BS 7671 taking precedence \u2014 were compared line-by-line across both issues and are UNCHANGED, so the substance stands; only the issue number was stale. Note MCS also runs a parallel \u2018Current Installer Scheme\u2019 MIS 3002 at Issue 6.0 (also 18/03/2026), held alongside it.',
   },
 };

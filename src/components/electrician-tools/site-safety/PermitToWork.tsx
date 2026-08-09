@@ -73,6 +73,8 @@ import { CloseOutSheet } from './common/CloseOutSheet';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { EditableList } from './common/EditableList';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 // ─── Types ───
 
@@ -149,12 +151,20 @@ const PERMIT_TYPES: {
       'Fire-retardant overalls',
       'Steel toe-cap boots',
     ],
+    // Taken from HSG168 'Fire safety in construction' para 122, which is the
+    // HSE's own list of hot-work precautions. What was here before cited
+    // BS 9999 for a "10m radius" and the RRO 2005 for an extinguisher "within
+    // 2m" — neither document says either of those things, and the invented
+    // precision was hiding three real requirements: two extinguishers rather
+    // than one, the follow-up check two hours after the work ends, and
+    // clearing the OTHER SIDE of a wall or partition, which is how hot work
+    // most often sets fire to a building.
     defaultPrecautions: [
-      'Remove combustible materials within 10m radius — BS 9999',
-      'Fire extinguisher (CO₂ or dry powder) within 2m — RRO 2005',
-      'Fire watch for minimum 60 minutes after completion — HSG168',
-      'Check area above, below and behind work area for fire spread risk',
-      'Smoke/heat detectors isolated with permit from fire alarm panel — BS 5839-1',
+      'Remove loose combustibles from in and around the work area, from any breach in walls, floors or ceilings, from beneath the work, and from the other side of any wall or partition worked on — HSG168',
+      'Protect combustible material that cannot be removed, and any openings, with non-combustible board — HSG168',
+      'At least two suitable fire extinguishers within reach of the work and of the fire watch position — HSG168',
+      'Continuous fire watch of the area for at least 1 hour after the work ends, then a further check 2 hours after — HSG168',
+      'If alarm or detection has to be isolated, use a procedure that reinstates it at every break and at the end of each day — HSG168, BS 5839-1',
     ],
   },
   {
@@ -169,6 +179,12 @@ const PERMIT_TYPES: {
       'Communication equipment',
     ],
     defaultPrecautions: [
+      // Reg 4(1) is the top of the confined-space hierarchy and was missing
+      // entirely — the list went straight to "monitor the atmosphere" without
+      // ever asking whether anyone needs to go in at all. Entry is prohibited
+      // where the work can reasonably be done from outside, so it belongs
+      // first, before any of the controls that assume entry is happening.
+      'Confirm entry is unavoidable — do not enter if the work can reasonably be done from outside — Confined Spaces Regs 1997 Reg 4(1)',
       'Continuous atmospheric monitoring (O₂, LEL, CO, H₂S) — Confined Spaces Regs 1997',
       'Written rescue plan in place before entry — ACOP L101',
       'Trained standby person at entry point with communication equipment',
@@ -194,7 +210,16 @@ const PERMIT_TYPES: {
     ],
     defaultPrecautions: [
       'Prove dead at point of work using 3-point test — GS38',
-      'Lock-off with personal padlock and unique key — BS 7671 Reg 537.2',
+      // 537.2 is a section heading ("Devices for isolation"), not a
+      // requirement. The requirement that the isolator cannot be closed again
+      // is 462.3; 537.2.4 is where padlocking appears as the means of meeting
+      // it. Citing the heading gives an inspector nothing to turn to.
+      'Lock-off with personal padlock and unique key — BS 7671 Regs 462.3 and 537.2.4',
+      // 'Residual stored energy' was listed as a hazard for this permit type
+      // with no control against it. 462.4 requires means of discharge, and a
+      // labelled discharge time where relevant — drives, PFC capacitors and
+      // UPS all hold a charge well after the isolator is open.
+      'Discharge stored energy (drives, capacitors, PFC, UPS) and observe any labelled discharge time before opening enclosures — BS 7671 Reg 462.4',
       'Danger tags applied at all points of isolation — EAWR 1989 Reg 12',
       'Voltage indicator proved on known live source before AND after test — GS38',
       'All sources of supply identified including back-feeds, UPS, generators',
@@ -237,9 +262,21 @@ const PERMIT_TYPES: {
     defaultPPE: ['Hard hat', 'Hi-vis vest', 'Steel toe-cap boots', 'Gloves'],
     defaultPrecautions: [
       'CAT & Genny scan completed and results recorded — HSG47',
-      'Up-to-date service drawings obtained from all utility providers — PAS 128',
-      'Trench support/battering in place for excavations >1.2m — CDM 2015',
-      'Barriers, edge protection, and warning signs around excavation — CDM 2015 Reg 22',
+      // Was cited to PAS 128, which is a specification for utility detection
+      // survey quality — it is not the source of a duty to obtain plans.
+      // HSG47 is, and it is already the source for the rest of this list.
+      'Up-to-date service drawings obtained from all utility providers — HSG47',
+      // Was "for excavations >1.2m — CDM 2015". CDM 2015 Reg 22(1) has no
+      // depth trigger: it requires all practicable steps, including supports
+      // or battering where necessary, so that no excavation collapses and no
+      // one is buried or trapped. Printing a 1.2m threshold on a permit tells
+      // an operative a 1.1m trench needs nothing, which is both wrong and the
+      // depth at which people are killed.
+      'Support or battering provided wherever collapse could endanger anyone — no minimum depth applies — CDM 2015 Reg 22(1)',
+      'Barriers, edge protection, and warning signs around excavation — CDM 2015 Reg 22(2)',
+      // Reg 22(4) — work must not be carried out in a supported or battered
+      // excavation until a competent person has inspected it.
+      'Inspected by a competent person before anyone works in it, and after any event likely to have affected its stability — CDM 2015 Reg 22(4)',
       'Hand-dig within 500mm of identified services — HSG47',
     ],
   },
@@ -317,7 +354,17 @@ function closeOutItems(type: PermitType): string[] {
     'All tools and personnel removed from the area',
   ];
   const extra: Record<PermitType, string[]> = {
-    'hot-work': ['Fire watch completed (min. 60 min) and area checked for smouldering'],
+    // HSG168 para 122: an hour of continuous fire watch, then a further check
+    // two hours after the work ends, and a visual inspection of the area to
+    // close the permit. The second check was missing — it is the one that
+    // catches a fire smouldering inside a void or behind a partition. The
+    // alarm reinstatement is separate on purpose: leaving detection isolated
+    // overnight is a common and serious hot-work failure.
+    'hot-work': [
+      'Fire watch completed — 1 hour continuous, plus the further check 2 hours after work ended',
+      'Work area visually inspected and no sign of smouldering, including voids and the far side of any wall worked on',
+      'Any isolated fire alarm or detection reinstated and confirmed working',
+    ],
     'electrical-isolation': [
       'Locks-off and danger tags removed; system safely re-energised or handed over',
     ],
@@ -402,12 +449,25 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [showWizard, setShowWizard] = useState(false);
   const [viewingPermit, setViewingPermit] = useState<Permit | null>(null);
   const [wizardStep, setWizardStep] = useState(0);
+  // Which way the last step change went, so the incoming step slides in from
+  // the side it came from. Without it the steps swapped instantly and the
+  // wizard lost any sense of moving through a sequence — the design system
+  // calls for a direction-aware slide and the keyframes already existed.
+  const [stepDir, setStepDir] = useState<'fwd' | 'back'>('fwd');
+  const goToStep = (next: number) => {
+    setStepDir(next >= wizardStep ? 'fwd' : 'back');
+    setWizardStep(next);
+  };
   const [wizardMode, setWizardMode] = useState<'create' | 'amend'>('create');
   const [amendingId, setAmendingId] = useState<string | null>(null);
   const [amendReason, setAmendReason] = useState('');
   const [filterStatus, setFilterStatus] = useState<PermitStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showExtendSheet, setShowExtendSheet] = useState(false);
+  // Re-activating a permit that has already lapsed is a different act from
+  // extending a live one, and needs an explicit confirmation — see the extend
+  // sheet at the bottom of this file.
+  const [reactivateConfirmed, setReactivateConfirmed] = useState(false);
   const [showApprovalSheet, setShowApprovalSheet] = useState(false);
   const [extensionHours, setExtensionHours] = useState(2);
   const [showShare, setShowShare] = useState(false);
@@ -489,7 +549,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (data.hazards) setHazards(data.hazards as PermitHazard[]);
     if (data.precautions) setPrecautions(data.precautions as string[]);
     if (data.ppeRequired) setPpeRequired(data.ppeRequired as string[]);
-    if (data.type) setWizardStep(1);
+    if (data.type) setStepDir('fwd');
+    setWizardStep(1);
   };
 
   // ─── Draft persistence (create only) ───
@@ -591,6 +652,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setPrecautions([...config.defaultPrecautions]);
     setPpeRequired([...config.defaultPPE]);
     setAutoFireWatch(type === 'hot-work');
+    setStepDir('fwd');
     setWizardStep(1);
   };
 
@@ -617,6 +679,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setLinkedRamsTitle(permit.linked_rams_title);
     setLinkedJobId(permit.job_id);
     setLinkedJobTitle(jobTitleFor(permit.job_id));
+    setStepDir('fwd');
     setWizardStep(1);
     setViewingPermit(null);
     setShowWizard(true);
@@ -650,6 +713,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setLinkedJobId(permit.job_id);
     setLinkedJobTitle(jobTitleFor(permit.job_id));
     setReceiverRemote(false); // amendments are re-signed in person
+    setStepDir('fwd');
     setWizardStep(1);
     setViewingPermit(null);
     setShowWizard(true);
@@ -807,6 +871,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       await extendPermitMutation.mutateAsync({ id, additionalHours: extensionHours });
       setShowExtendSheet(false);
       setExtensionHours(2);
+      setReactivateConfirmed(false);
     } catch {
       /* handled */
     }
@@ -850,8 +915,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   };
 
   // ─── Pre-issue readiness (Delta 1) ───
+  // Both halves matter now that hazards can be added. A blank row with
+  // controls filled in, or a named hazard with no control, are each a permit
+  // that reads as complete and isn't.
   const hazardsHaveControls =
-    hazards.length > 0 && hazards.every((h) => h.controls.trim().length > 0);
+    hazards.length > 0 &&
+    hazards.every((h) => h.description.trim().length > 0 && h.controls.trim().length > 0);
   const differentPeople =
     !!formData.issuer_name &&
     !!formData.receiver_name &&
@@ -993,7 +1062,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </button>
               )}
               {!linkedRamsId && ramsDocs.length > 0 && (
-                <p className="text-[11px] text-amber-400/90 mt-1.5">
+                <p className="text-[11px] text-amber-400 mt-1.5">
                   Recommended — a permit should sit on top of a risk assessment. You have{' '}
                   {ramsDocs.length} saved RAMS to link.
                 </p>
@@ -1013,51 +1082,105 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       case 2:
         return (
           <div className="space-y-5">
+            {/*
+             * Hazards, precautions and PPE are all editable now. Before, the
+             * type's defaults were the whole document and none of the three
+             * could be changed: no hazard could be added for what is actually
+             * on this site, and the precautions and PPE — the lines the
+             * receiver signs up to — were printed as plain text. A permit is
+             * the issuer's judgement about one job, not a template read back.
+             */}
             <div className="space-y-2.5">
               <Eyebrow>Hazards &amp; controls</Eyebrow>
               {hazards.map((hazard, index) => (
                 <div
                   key={hazard.id}
-                  className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] space-y-2"
+                  // Volt surface, matching the precaution and PPE cards below —
+                  // this was a flat hsl panel sitting directly above them.
+                  className={cn(
+                    'space-y-2 rounded-2xl border border-elec-yellow/35 p-3',
+                    CARD_SURFACE
+                  )}
                 >
-                  <p className="text-[13px] text-white font-medium">{hazard.description}</p>
-                  <input
+                  <div className="flex items-start gap-2">
+                    <input
+                      value={hazard.description}
+                      onChange={(e) => {
+                        const updated = [...hazards];
+                        updated[index] = { ...hazard, description: e.target.value };
+                        setHazards(updated);
+                      }}
+                      className={cn(safetyInputCn, 'flex-1 font-semibold')}
+                      placeholder="Hazard…"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setHazards(hazards.filter((_, i) => i !== index))}
+                      aria-label={`Remove hazard "${hazard.description || 'untitled'}"`}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.06] active:bg-white/[0.1]"
+                    >
+                      <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5">
+                        <path
+                          d="M4 4l8 8M12 4l-8 8"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  {/* Control measures for a confined-space entry or an
+                      isolation do not fit on one line — this was a single-line
+                      input, which silently truncated what people could say. */}
+                  <SmartTextarea
                     value={hazard.controls}
-                    onChange={(e) => {
+                    onChange={(val) => {
                       const updated = [...hazards];
-                      updated[index] = { ...hazard, controls: e.target.value };
+                      updated[index] = { ...hazard, controls: val };
                       setHazards(updated);
                     }}
-                    className={safetyInputCn}
+                    className={cn(safetyTextareaCn, 'min-h-[60px]')}
                     placeholder="Control measures (required)…"
                   />
                 </div>
               ))}
+              <TextAction
+                onClick={() =>
+                  setHazards([...hazards, { id: `h-${Date.now()}`, description: '', controls: '' }])
+                }
+              >
+                Add a hazard
+              </TextAction>
               {!hazardsHaveControls && (
-                <p className="text-[11px] text-amber-400/90">
-                  Add a control measure to every hazard before issuing.
+                <p className="text-[11px] text-amber-400">
+                  {hazards.length === 0
+                    ? 'Add at least one hazard before issuing.'
+                    : 'Add a control measure to every hazard before issuing.'}
                 </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Eyebrow>Required precautions</Eyebrow>
-              <SafetyListCard>
-                {precautions.map((p, i) => (
-                  <div key={i} className="px-5 py-3 text-[12.5px] text-white leading-relaxed">
-                    {p}
-                  </div>
-                ))}
-              </SafetyListCard>
+              <EditableList
+                items={precautions}
+                onChange={setPrecautions}
+                placeholder="Add a precaution for this job…"
+                addLabel="Add"
+                emptyLabel="No precautions listed — a permit needs at least one."
+              />
             </div>
 
             <div className="space-y-2">
               <Eyebrow>Required PPE</Eyebrow>
-              <div className="flex flex-wrap gap-1.5">
-                {ppeRequired.map((item, i) => (
-                  <Chip key={i}>{item}</Chip>
-                ))}
-              </div>
+              <EditableList
+                items={ppeRequired}
+                onChange={setPpeRequired}
+                placeholder="Add an item of PPE…"
+                addLabel="Add"
+                emptyLabel="No PPE listed for this permit."
+              />
             </div>
 
             <Field label="Emergency procedures" required>
@@ -1076,8 +1199,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   <Switch checked={autoFireWatch} onCheckedChange={setAutoFireWatch} />
                 </div>
                 <p className="text-[11.5px] text-white">
-                  Minimum 60 minutes after completion — HSG168. We'll flag this permit so you can
-                  log the fire watch when work finishes.
+                  1 hour continuous after the work ends, then a further check 2 hours after —
+                  HSG168. We'll flag this permit so you can log the fire watch when work finishes.
                 </p>
               </FormCard>
             )}
@@ -1312,7 +1435,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   key={permit.id}
                   type="button"
                   onClick={() => setViewingPermit(permit)}
-                  className="flex touch-manipulation flex-col gap-3 rounded-2xl border border-white/[0.10] bg-[hsl(0_0%_11%)] p-4 text-left transition-colors hover:border-white/[0.20] hover:bg-[hsl(0_0%_14%)] active:scale-[0.99]"
+                  // The permit list is the first thing this module shows, and
+                  // it was the last flat surface in it — a plain hsl(0 0% 11%)
+                  // panel with a white hairline, sitting under a stat strip
+                  // and filter bar already on the volt material. Same card,
+                  // same edge, same press feel as every other safety list.
+                  className={cn(
+                    'flex touch-manipulation flex-col gap-3 rounded-2xl border border-elec-yellow/35 p-4 text-left',
+                    'transition-[transform,filter] duration-150 active:scale-[0.99] active:brightness-125',
+                    '[-webkit-tap-highlight-color:transparent] hover:brightness-110',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
@@ -1385,9 +1518,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             footer={
               wizardStep > 0 ? (
                 <>
-                  <SecondaryButton onClick={() => setWizardStep((s) => s - 1)}>
-                    Back
-                  </SecondaryButton>
+                  <SecondaryButton onClick={() => goToStep(wizardStep - 1)}>Back</SecondaryButton>
                   {wizardStep === 3 && wizardMode === 'create' && (
                     <SecondaryButton onClick={() => setShowSaveTemplate(true)}>
                       Save template
@@ -1397,7 +1528,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     fullWidth
                     disabled={!canProceed() || isSaving}
                     onClick={() => {
-                      if (wizardStep < 3) setWizardStep((s) => s + 1);
+                      if (wizardStep < 3) goToStep(wizardStep + 1);
                       else if (wizardMode === 'amend') submitAmendment();
                       else issuePermit();
                     }}
@@ -1438,7 +1569,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 if ((e.target as HTMLElement).closest('button')) haptic.light();
               }}
             >
-              {renderWizardStep()}
+              {/* key forces a remount per step so the slide replays */}
+              <div
+                key={wizardStep}
+                className={stepDir === 'fwd' ? 'animate-mw-step-in' : 'animate-mw-step-back'}
+              >
+                {renderWizardStep()}
+              </div>
             </div>
           </SheetShell>
         </SheetContent>
@@ -1508,8 +1645,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {needsFireWatchPrompt && (
                     <div className="p-3 rounded-xl bg-orange-500/[0.08] border border-orange-500/20">
                       <p className="text-[12px] text-white">
-                        Fire watch required — minimum 60 minutes after completion (HSG168). Log it
-                        in the Fire Watch tool when work finishes.
+                        Fire watch required — 1 hour continuous after the work ends, then a further
+                        check 2 hours after (HSG168). Log it in the Fire Watch tool when work
+                        finishes.
                       </p>
                     </div>
                   )}
@@ -1575,7 +1713,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {viewingPermit.linked_rams_title && (
                     <div>
                       <Eyebrow className="mb-1.5">Controlling RAMS</Eyebrow>
-                      <div className="px-3 py-2.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-[13px] text-white">
+                      <div
+                        className={cn(
+                          'px-3 py-2.5 rounded-xl border border-elec-yellow/35 text-[13px] text-white',
+                          CARD_SURFACE
+                        )}
+                      >
                         {viewingPermit.linked_rams_title}
                       </div>
                     </div>
@@ -1585,7 +1728,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {viewingPermit.job_id && (
                     <div>
                       <Eyebrow className="mb-1.5">Project</Eyebrow>
-                      <div className="px-3 py-2.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-[13px] text-white">
+                      <div
+                        className={cn(
+                          'px-3 py-2.5 rounded-xl border border-elec-yellow/35 text-[13px] text-white',
+                          CARD_SURFACE
+                        )}
+                      >
                         {jobTitleFor(viewingPermit.job_id) || 'Linked to a project'}
                       </div>
                     </div>
@@ -1640,7 +1788,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       return (
                         <div
                           key={role}
-                          className="p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+                          className={cn(
+                            'p-3 rounded-xl border border-elec-yellow/35',
+                            CARD_SURFACE
+                          )}
                         >
                           <p className="mb-1 text-[12px] font-medium text-white">{role}</p>
                           <p className="text-[13px] text-white font-medium">{name}</p>
@@ -1798,55 +1949,122 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       </Sheet>
 
       {/* ─── Extend ─── */}
-      <Sheet open={showExtendSheet} onOpenChange={setShowExtendSheet}>
+      <Sheet
+        open={showExtendSheet}
+        onOpenChange={(o) => {
+          setShowExtendSheet(o);
+          if (!o) setReactivateConfirmed(false);
+        }}
+      >
         <SheetContent
           side="bottom"
           className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
-          <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
-            <div className="flex justify-center pt-1">
-              <div className="w-10 h-1 bg-white/20 rounded-full" />
-            </div>
-            <div>
-              <Eyebrow>Extend permit</Eyebrow>
-              <h3 className="mt-1 text-[18px] font-semibold text-white">Add more time</h3>
-              <p className="mt-1 text-[12.5px] text-white">
-                Conditions must remain safe before extending.
-              </p>
-            </div>
-            <div className="grid grid-cols-4 gap-2">
-              {[1, 2, 4, 8].map((hours) => (
-                <button
-                  key={hours}
-                  onClick={() => setExtensionHours(hours)}
-                  className={cn(
-                    'h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all',
-                    extensionHours === hours
-                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                      : 'border-white/[0.12] bg-white/[0.06] text-white'
-                  )}
-                >
-                  {hours}h
-                </button>
-              ))}
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-              <p className="text-[11.5px] text-white">
-                Confirm that site conditions remain safe and all controls are still in place before
-                extending.
-              </p>
-            </div>
-            <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
-              <PrimaryButton
-                fullWidth
-                disabled={extendPermitMutation.isPending}
-                onClick={() => viewingPermit && extendPermit(viewingPermit.id)}
-              >
-                {extendPermitMutation.isPending ? 'Extending…' : `Extend by ${extensionHours}h`}
-              </PrimaryButton>
-              <SecondaryButton onClick={() => setShowExtendSheet(false)}>Cancel</SecondaryButton>
-            </div>
-          </div>
+          {/*
+           * Two different acts share this sheet, and until now they shared the
+           * wording too: a live permit gaining more time, and a permit that has
+           * already lapsed being put back into force. The second is the one a
+           * permit system exists to control — once it expires, nothing
+           * guarantees the atmosphere test, the isolation, the fire cover or
+           * the weather still hold. It was a single tap, under a heading that
+           * said "Add more time", with a paragraph of advice that nothing
+           * checked. Re-activation now names itself and requires an explicit
+           * confirmation; extending a live permit stays one tap, because its
+           * controls have been in force continuously.
+           */}
+          {(() => {
+            const isReactivation = viewingPermit?.status === 'expired';
+            return (
+              <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
+                <div className="flex justify-center pt-1">
+                  <div className="w-10 h-1 bg-white/20 rounded-full" />
+                </div>
+                <div>
+                  <Eyebrow>{isReactivation ? 'Re-activate permit' : 'Extend permit'}</Eyebrow>
+                  <h3 className="mt-1 text-[18px] font-semibold text-white">
+                    {isReactivation ? 'Put this permit back in force' : 'Add more time'}
+                  </h3>
+                  <p className="mt-1 text-[12.5px] text-white">
+                    {isReactivation
+                      ? 'This permit has expired. Re-check the site before it is valid again.'
+                      : 'Conditions must remain safe before extending.'}
+                  </p>
+                </div>
+                <div className="grid grid-cols-4 gap-2">
+                  {[1, 2, 4, 8].map((hours) => (
+                    <button
+                      key={hours}
+                      onClick={() => setExtensionHours(hours)}
+                      className={cn(
+                        'h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all',
+                        extensionHours === hours
+                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                          : 'border-white/[0.12] bg-white/[0.06] text-white'
+                      )}
+                    >
+                      {hours}h
+                    </button>
+                  ))}
+                </div>
+                {isReactivation ? (
+                  <button
+                    type="button"
+                    onClick={() => setReactivateConfirmed((v) => !v)}
+                    aria-pressed={reactivateConfirmed}
+                    className={cn(
+                      'flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors touch-manipulation active:scale-[0.99]',
+                      reactivateConfirmed
+                        ? 'border-elec-yellow/50 bg-white/[0.06]'
+                        : 'border-white/10 bg-white/[0.04]'
+                    )}
+                  >
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-[12px] font-bold',
+                        reactivateConfirmed
+                          ? 'border-elec-yellow bg-elec-yellow text-black'
+                          : 'border-white/25 text-transparent'
+                      )}
+                    >
+                      ✓
+                    </span>
+                    <span className="text-[12px] leading-relaxed text-white">
+                      I have re-checked the work area and confirm the hazards, controls and PPE on
+                      this permit are still in place and still correct.
+                    </span>
+                  </button>
+                ) : (
+                  <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                    <p className="text-[11.5px] text-white">
+                      Confirm that site conditions remain safe and all controls are still in place
+                      before extending.
+                    </p>
+                  </div>
+                )}
+                <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
+                  <PrimaryButton
+                    fullWidth
+                    disabled={
+                      extendPermitMutation.isPending || (isReactivation && !reactivateConfirmed)
+                    }
+                    onClick={() => viewingPermit && extendPermit(viewingPermit.id)}
+                  >
+                    {extendPermitMutation.isPending
+                      ? isReactivation
+                        ? 'Re-activating…'
+                        : 'Extending…'
+                      : isReactivation
+                        ? `Re-activate for ${extensionHours}h`
+                        : `Extend by ${extensionHours}h`}
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => setShowExtendSheet(false)}>
+                    Cancel
+                  </SecondaryButton>
+                </div>
+              </div>
+            );
+          })()}
         </SheetContent>
       </Sheet>
 

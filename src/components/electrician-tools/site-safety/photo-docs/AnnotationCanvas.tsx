@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { SafetyPhoto } from '@/hooks/useSafetyPhotos';
 import { toast } from '@/hooks/use-toast';
+import { safetyInputCn } from '../common/SafetyDocField';
 
 interface AnnotationCanvasProps {
   photo: SafetyPhoto;
@@ -538,7 +539,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
                 onChange={(e) => setTextValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
                 placeholder="Enter text annotation..."
-                className="h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
+                className={safetyInputCn}
               />
               <div className="flex gap-2 mt-3">
                 <button

@@ -5,11 +5,7 @@ import { useEffect, useRef } from 'react';
 import type { Json } from '@/integrations/supabase/types';
 
 export type PermitType =
-  | 'hot-work'
-  | 'confined-space'
-  | 'electrical-isolation'
-  | 'working-at-height'
-  | 'excavation';
+  'hot-work' | 'confined-space' | 'electrical-isolation' | 'working-at-height' | 'excavation';
 export type PermitStatus = 'active' | 'expired' | 'cancelled' | 'closed';
 
 export interface PermitToWork {
@@ -127,6 +123,27 @@ export type AmendPermitFields = Partial<
   >
 > & { hazards?: Json };
 
+/**
+ * A permit whose end_time has passed is expired, whatever the row says.
+ *
+ * `status` is only moved to 'expired' by a client-side effect in this file,
+ * which runs when someone happens to have the app open with that hook mounted.
+ * Nothing on the server ever expires a permit. So a permit can sit in the
+ * table as 'active' long after it ran out — and a permit to work is a live-work
+ * control document, where "is this still valid?" is the whole question.
+ *
+ * Deriving it on read means every React consumer is right immediately, even
+ * before the writer has caught up. The stored value is still corrected by the
+ * effect below, so the database converges; this stops the UI being wrong in
+ * the meantime.
+ */
+function withDerivedStatus(row: PermitToWork): PermitToWork {
+  if (row.status === 'active' && row.end_time && new Date(row.end_time) < new Date()) {
+    return { ...row, status: 'expired' };
+  }
+  return row;
+}
+
 export function usePermits() {
   return useQuery({
     queryKey: ['permits-to-work'],
@@ -143,7 +160,7 @@ export function usePermits() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as PermitToWork[];
+      return (data as PermitToWork[]).map(withDerivedStatus);
     },
   });
 }
@@ -157,11 +174,17 @@ export function useActivePermits() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      // `.eq('status','active')` alone returns permits that ran out hours ago
+      // but have not been written back yet — this feeds the "Permits live"
+      // figure on the Site Safety hub, so it was possible for the hub to
+      // report a permit as live after it had expired. The end_time bound makes
+      // the query mean what its name says.
       const { data, error } = await supabase
         .from('permits_to_work')
         .select('*')
         .eq('user_id', user.id)
         .eq('status', 'active')
+        .gte('end_time', new Date().toISOString())
         .order('end_time', { ascending: true });
 
       if (error) throw error;
@@ -413,7 +436,9 @@ export function useAmendPermit() {
           status: 'active' as const,
           issuer_signature: fields.issuer_signature ?? null,
           receiver_signature: fields.receiver_signature ?? null,
-          approval_status: current.requires_approval ? ('pending' as const) : ('not_required' as const),
+          approval_status: current.requires_approval
+            ? ('pending' as const)
+            : ('not_required' as const),
           approved_by: null,
           approved_at: null,
           approval_comments: null,

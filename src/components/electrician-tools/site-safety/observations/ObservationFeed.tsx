@@ -1,18 +1,14 @@
 /**
  * ObservationFeed — the observation list, grouped by day.
  * Editorial standard: hairline SafetyListCard rows with a single colour dimension
- * (positive = green, improvement = severity/status) carried by a thin accent
- * bar + a small uppercase pill. No icon tiles, no rainbow.
+ * (positive = green, improvement = severity) carried by a thin accent bar + a
+ * small uppercase pill on a neutral surface. No icon tiles, no rainbow.
  */
 
 import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import type { SafetyObservation, ObservationStatus } from '@/hooks/useSafetyObservations';
-import {
-  Eyebrow,
-  EmptyState,
-  type Tone,
-} from '@/components/college/primitives';
+import type { SafetyObservation } from '@/hooks/useSafetyObservations';
+import { Eyebrow, EmptyState, type Tone } from '@/components/college/primitives';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface ObservationFeedProps {
@@ -20,36 +16,43 @@ interface ObservationFeedProps {
   onViewDetails: (obs: SafetyObservation) => void;
 }
 
-const STATUS_LABEL: Record<ObservationStatus, string> = {
-  open: 'Open',
-  in_progress: 'In Progress',
-  closed: 'Closed',
-};
-
-const PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+/**
+ * One surface, coloured text — the convention the Document Hub, Permit to Work,
+ * Safe Isolation and Fire Watch already use.
+ *
+ * A 10% tint over near-black muddies every hue towards the same brown-grey, so
+ * four "distinguishable" pills stopped being distinguishable at arm's length in
+ * daylight. The label carries the meaning; the surface stays out of the way.
+ */
+const PILL: Record<'amber' | 'green' | 'red' | 'neutral', string> = {
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
-// The single colour dimension: positive observations read green; improvements
-// inherit severity (high→red, medium→amber, low→green), falling back to status.
+/**
+ * The single colour dimension: positive observations read green; improvements
+ * inherit severity (high→red, medium→amber, low→green).
+ *
+ * This used to fall back to `obs.status`. `safety_observations` has no `status`
+ * column (verified against the live schema), so that branch read `undefined`,
+ * defaulted to 'open' and painted every unrated improvement amber by accident
+ * rather than by decision. Unrated now says so.
+ */
 function rowTone(obs: SafetyObservation): Tone {
   if (obs.observation_type === 'positive') return 'green';
   if (obs.severity === 'high') return 'red';
   if (obs.severity === 'medium') return 'amber';
   if (obs.severity === 'low') return 'green';
-  const status = obs.status || 'open';
-  return status === 'closed' ? 'green' : status === 'in_progress' ? 'blue' : 'amber';
+  return 'amber';
 }
 
 function Pill({
   tone,
   children,
 }: {
-  tone: 'amber' | 'green' | 'red' | 'blue' | 'neutral';
+  tone: 'amber' | 'green' | 'red' | 'neutral';
   children: React.ReactNode;
 }) {
   return (
@@ -105,11 +108,6 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
                 hour: '2-digit',
                 minute: '2-digit',
               });
-              const overdue =
-                !isPositive &&
-                !!obs.due_date &&
-                new Date(obs.due_date) < new Date() &&
-                (obs.status || 'open') !== 'closed';
               return (
                 <SafetyListRow
                   key={obs.id}
@@ -130,25 +128,12 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
                               ? 'green'
                               : tone === 'red'
                                 ? 'red'
-                                : tone === 'blue'
-                                  ? 'blue'
-                                  : 'amber'
+                                : 'amber'
                         }
                       >
-                        {isPositive
-                          ? 'Positive'
-                          : obs.severity
-                            ? obs.severity
-                            : STATUS_LABEL[obs.status || 'open']}
+                        {isPositive ? 'Positive' : (obs.severity ?? 'Improvement')}
                       </Pill>
-                      <span
-                        className={cn(
-                          'text-[11px] tabular-nums',
-                          overdue ? 'text-red-400' : 'text-white'
-                        )}
-                      >
-                        {overdue ? 'Overdue' : time}
-                      </span>
+                      <span className="text-[11px] tabular-nums text-white">{time}</span>
                     </div>
                   }
                 />

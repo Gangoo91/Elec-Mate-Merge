@@ -1,7 +1,12 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { type FireWatchRecord, type FireWatchChecklistItem } from '@/hooks/useFireWatchRecords';
+import {
+  isFollowUpDue,
+  type FireWatchRecord,
+  type FireWatchChecklistItem,
+} from '@/hooks/useFireWatchRecords';
+import { FollowUpCheckSheet } from './FollowUpCheckSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
@@ -27,20 +32,26 @@ interface FireWatchHistoryProps {
 const STATUS_LABEL: Record<FireWatchRecord['status'], string> = {
   completed: 'Completed',
   active: 'Active',
+  // Not "completed" — the hour of watch is done but the HSG168 two-hour check
+  // is still outstanding, and the record says so until it is signed off.
+  awaiting_follow_up: '2h check due',
   extended: 'Extended',
 };
 
 function statusTone(status: FireWatchRecord['status']): Tone | undefined {
   if (status === 'completed') return 'green';
   if (status === 'active') return 'amber';
+  if (status === 'awaiting_follow_up') return 'amber';
   if (status === 'extended') return 'blue';
   return undefined;
 }
 
 const STATUS_PILL: Record<'green' | 'amber' | 'blue' | 'neutral', string> = {
-  green: 'bg-green-500/10 text-green-400 border-green-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  // Neutral surface with coloured text, matching Permit to Work and Safe
+  // Isolation. Blue is not in the palette; extended reads plain white.
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  blue: 'bg-white/[0.05] text-white border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
@@ -93,6 +104,7 @@ function RecordRow({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showFollowUp, setShowFollowUp] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = record.job_id
@@ -104,6 +116,7 @@ function RecordRow({
     : [];
   const checkedCount = checklist.filter((c) => c.checked).length;
   const exporting = isExporting && exportingId === record.id;
+  const followUpDue = isFollowUpDue(record);
 
   const timeLabel = `${formatTimeGB(record.start_time)}${
     record.end_time ? ` – ${formatTimeGB(record.end_time)}` : ''
@@ -141,6 +154,46 @@ function RecordRow({
             className="overflow-hidden"
           >
             <div className="px-5 sm:px-6 pb-5 pt-1 space-y-3">
+              {/* The outstanding two-hour check is the one thing on this record
+                  that still needs doing, so it sits above the history rather
+                  than below it. */}
+              {record.status === 'awaiting_follow_up' && (
+                <div className="space-y-2 rounded-xl border border-amber-500/25 bg-amber-500/[0.06] p-3">
+                  <p className="text-[12.5px] leading-relaxed text-white">
+                    {followUpDue
+                      ? 'The two-hour check is due now. Re-inspect the area, including voids and the far side of any partition worked on.'
+                      : `The two-hour check falls due at ${
+                          record.follow_up_due_at ? formatTimeGB(record.follow_up_due_at) : '—'
+                        }.`}
+                  </p>
+                  <SecondaryButton fullWidth onClick={() => setShowFollowUp(true)}>
+                    {followUpDue ? 'Do the two-hour check' : 'Record it early'}
+                  </SecondaryButton>
+                </div>
+              )}
+
+              {record.follow_up_completed_at && (
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                  <p className="text-[12.5px] leading-relaxed text-white">
+                    Two-hour check{' '}
+                    <span
+                      className={
+                        record.follow_up_all_clear === false ? 'text-red-400' : 'text-emerald-400'
+                      }
+                    >
+                      {record.follow_up_all_clear === false ? 'found signs of fire' : 'all clear'}
+                    </span>{' '}
+                    — {formatTimeGB(record.follow_up_completed_at)}
+                    {record.follow_up_by ? `, ${record.follow_up_by}` : ''}
+                  </p>
+                  {record.follow_up_notes && (
+                    <p className="mt-1 text-[12px] leading-relaxed text-white">
+                      {record.follow_up_notes}
+                    </p>
+                  )}
+                </div>
+              )}
+
               <Eyebrow>Fire watch checklist</Eyebrow>
               {checklist.length === 0 ? (
                 <p className="text-[12.5px] text-white">No checklist data recorded.</p>
@@ -202,6 +255,14 @@ function RecordRow({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Mounted outside the collapse so collapsing the row cannot unmount a
+          half-filled sign-off. */}
+      <FollowUpCheckSheet
+        record={record}
+        open={showFollowUp}
+        onClose={() => setShowFollowUp(false)}
+      />
     </div>
   );
 }

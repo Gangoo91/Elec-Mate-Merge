@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, type Control } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
@@ -22,7 +22,26 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Customer, CustomerStatus } from '@/hooks/inspection/useCustomers';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
+import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import { cn } from '@/lib/utils';
+
+/**
+ * ELE-1515 — the geocode captured when an address is picked from the Places
+ * dropdown, tagged with the address it belongs to.
+ *
+ * The address it came from is kept because the field stays freely editable.
+ * Pick "1 High St, Leeds" from the dropdown, then type over it, and the
+ * coordinates would still be Leeds — so "Navigate to site" would drive
+ * somewhere the customer has never lived. On submit the geocode is only used
+ * if the address still matches the one it was captured for.
+ */
+interface AddressGeo {
+  address: string;
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
+}
 
 const customerSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -46,7 +65,13 @@ const customerSchema = z.object({
 });
 
 type CustomerFormData = z.infer<typeof customerSchema>;
-type SubmitPayload = CustomerFormData & { tags: string[]; status: CustomerStatus };
+type SubmitPayload = CustomerFormData & {
+  tags: string[];
+  status: CustomerStatus;
+  postcode?: string;
+  latitude?: number;
+  longitude?: number;
+};
 
 const STATUS_OPTIONS: { value: CustomerStatus; label: string; hint: string }[] = [
   { value: 'lead', label: 'Lead', hint: 'Quoted or enquiring — not won yet' },
@@ -173,11 +198,13 @@ const TagInput = ({
 const FormContent = ({
   customer,
   register,
+  control,
   errors,
   isSubmitting,
   handleSubmit,
   onSubmit,
   onOpenChange,
+  onPlaceSelect,
   tags,
   setTags,
   status,
@@ -185,11 +212,13 @@ const FormContent = ({
 }: {
   customer?: Customer | null;
   register: ReturnType<typeof useForm<CustomerFormData>>['register'];
+  control: Control<CustomerFormData>;
   errors: ReturnType<typeof useForm<CustomerFormData>>['formState']['errors'];
   isSubmitting: boolean;
   handleSubmit: ReturnType<typeof useForm<CustomerFormData>>['handleSubmit'];
   onSubmit: (data: CustomerFormData) => Promise<void>;
   onOpenChange: (open: boolean) => void;
+  onPlaceSelect: (geo: AddressGeo) => void;
   tags: string[];
   setTags: (next: string[]) => void;
   status: CustomerStatus;
@@ -276,18 +305,35 @@ const FormContent = ({
       {errors.phone && <p className="text-sm text-red-400">{errors.phone.message}</p>}
     </div>
 
-    {/* Address */}
+    {/* Address — ELE-1515. Start typing a postcode or street and pick from the
+        dropdown; typing the whole thing by hand still works. */}
     <div className="space-y-2">
       <Label htmlFor="address" className="text-sm font-medium text-foreground">
         Address
       </Label>
-      <Textarea
-        id="address"
-        {...register('address')}
-        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
-        placeholder="Enter full address"
-        rows={3}
-      />
+      <GoogleMapsProvider>
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <PlacesAutocomplete
+              id="address"
+              value={field.value || ''}
+              onChange={field.onChange}
+              onPlaceSelect={(place) =>
+                onPlaceSelect({
+                  address: place.address,
+                  postcode: place.postcode,
+                  latitude: place.lat,
+                  longitude: place.lng,
+                })
+              }
+              placeholder="Start typing a postcode or address"
+              className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+            />
+          )}
+        />
+      </GoogleMapsProvider>
       {errors.address && <p className="text-sm text-red-400">{errors.address.message}</p>}
     </div>
 
@@ -338,9 +384,11 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
   const isMobile = useMediaQuery('(max-width: 640px)');
   const [tags, setTags] = useState<string[]>([]);
   const [status, setStatus] = useState<CustomerStatus>('active');
+  const [geo, setGeo] = useState<AddressGeo | null>(null);
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -368,6 +416,19 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       });
       setTags(customer?.tags ? [...customer.tags] : []);
       setStatus(customer?.status || 'active');
+      // Carry the stored geocode forward so editing an unrelated field — a
+      // phone number, a tag — doesn't quietly strip the coordinates off a
+      // customer who already had them.
+      setGeo(
+        customer?.address && (customer.postcode || customer.latitude != null)
+          ? {
+              address: customer.address,
+              postcode: customer.postcode,
+              latitude: customer.latitude,
+              longitude: customer.longitude,
+            }
+          : null
+      );
     }
   }, [open, customer, reset]);
 
@@ -377,6 +438,13 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       '@/utils/inputSanitization'
     );
 
+    // Only keep the geocode if the address still reads as the one it was
+    // captured for — see the AddressGeo note above. Anything else and we send
+    // undefined, which clears the stale coordinates rather than preserving a
+    // pin at the wrong property.
+    const addressUnchanged =
+      geo !== null && (data.address || '').trim() === geo.address.trim();
+
     const sanitizedData: SubmitPayload = {
       name: sanitizeTextInput(data.name),
       companyName: data.companyName ? sanitizeTextInput(data.companyName) : '',
@@ -384,6 +452,9 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       phone: data.phone ? sanitizePhone(data.phone) : '',
       address: data.address ? sanitizeTextInput(data.address) : '',
       notes: data.notes ? sanitizeTextInput(data.notes) : '',
+      postcode: addressUnchanged ? geo.postcode : undefined,
+      latitude: addressUnchanged ? geo.latitude : undefined,
+      longitude: addressUnchanged ? geo.longitude : undefined,
       tags,
       status,
     };
@@ -391,6 +462,7 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
     await onSave(sanitizedData);
     reset();
     setTags([]);
+    setGeo(null);
   };
 
   const title = customer ? 'Edit customer' : 'Add new customer';
@@ -420,11 +492,13 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
             <FormContent
               customer={customer}
               register={register}
+              control={control}
               errors={errors}
               isSubmitting={isSubmitting}
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
               onOpenChange={onOpenChange}
+              onPlaceSelect={setGeo}
               tags={tags}
               setTags={setTags}
               status={status}
@@ -449,11 +523,13 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
           <FormContent
             customer={customer}
             register={register}
+            control={control}
             errors={errors}
             isSubmitting={isSubmitting}
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             onOpenChange={onOpenChange}
+            onPlaceSelect={setGeo}
             tags={tags}
             setTags={setTags}
             status={status}

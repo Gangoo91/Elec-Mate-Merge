@@ -36,6 +36,7 @@ import { Search, X } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useRecentCalculators } from '@/hooks/useRecentCalculators';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   CALCULATORS,
@@ -57,6 +58,7 @@ export function CalculatorPicker({ value, onChange }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const haptic = useHaptic();
+  const { recent, record } = useRecentCalculators();
 
   const current = CALCULATOR_BY_SLUG.get(value) ?? CALCULATORS[0];
   const results = useMemo(() => searchCalculators(query), [query]);
@@ -83,8 +85,8 @@ export function CalculatorPicker({ value, onChange }: Props) {
 
   // Keyboard order must follow what the eye sees.
   const flat = useMemo(
-    () => (searching ? results : grouped.flatMap((g) => g.items)),
-    [searching, results, grouped]
+    () => (searching ? results : [...recent, ...grouped.flatMap((g) => g.items)]),
+    [searching, results, grouped, recent]
   );
 
   // Focus the search on open — the whole point is that you type rather than
@@ -108,10 +110,11 @@ export function CalculatorPicker({ value, onChange }: Props) {
   const pick = useCallback(
     (slug: string) => {
       haptic.light();
+      record(slug);
       onChange(slug);
       setOpen(false);
     },
-    [haptic, onChange]
+    [haptic, onChange, record]
   );
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -236,33 +239,60 @@ export function CalculatorPicker({ value, onChange }: Props) {
                   ))}
                 </div>
               ) : (
-                grouped.map((group) => (
-                  <div key={group.category}>
-                    <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-2 pb-2 pt-3.5 backdrop-blur-sm">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
-                        {group.category}
-                      </p>
-                    </div>
-                    {/* Columns from md: up — 63 items one-per-row is a scroll,
-                        not a menu. */}
-                    <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 xl:grid-cols-3">
-                      {group.items.map((c) => {
-                        const idx = flat.indexOf(c);
-                        return (
+                <>
+                  {/* Only when browsing. During a search the ranking is the point,
+                      and a pinned row of recents would sit above better matches. */}
+                  {recent.length > 0 && (
+                    <div>
+                      <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-2 pb-2 pt-3.5 backdrop-blur-sm">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+                          Recent
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 xl:grid-cols-3">
+                        {recent.map((c, i) => (
                           <Row
-                            key={c.value}
+                            key={`recent-${c.value}`}
                             entry={c}
-                            idx={idx}
+                            idx={i}
                             active={c.value === value}
-                            focused={idx === cursor}
+                            focused={i === cursor}
+                            showCategory
                             onHover={setCursor}
                             onPick={pick}
                           />
-                        );
-                      })}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  )}
+                  {grouped.map((group) => (
+                    <div key={group.category}>
+                      <div className="sticky top-0 z-10 bg-[hsl(0_0%_9%_/_0.95)] px-2 pb-2 pt-3.5 backdrop-blur-sm">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+                          {group.category}
+                        </p>
+                      </div>
+                      {/* Columns from md: up — 63 items one-per-row is a scroll,
+                        not a menu. */}
+                      <div className="grid grid-cols-1 gap-x-3 md:grid-cols-2 xl:grid-cols-3">
+                        {group.items.map((c) => {
+                          const idx = flat.indexOf(c);
+                          return (
+                            <Row
+                              key={c.value}
+                              entry={c}
+                              idx={idx}
+                              active={c.value === value}
+                              focused={idx === cursor}
+                              onHover={setCursor}
+                              onPick={pick}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </>
               )}
             </div>
           </div>

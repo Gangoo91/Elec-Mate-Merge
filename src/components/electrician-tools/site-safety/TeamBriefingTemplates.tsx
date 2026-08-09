@@ -1,16 +1,28 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Loader2, FileText, Plus } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { BriefingFormWizard } from './BriefingFormWizard';
 import { BriefingDetailView } from './BriefingDetailView';
 import { TemplateLibrary } from './briefing-templates/TemplateLibrary';
-import { BriefingFilterTabs, HistoryCard, PendingCard } from './briefings';
+import {
+  BriefingFilterTabs,
+  BriefingShareSheet,
+  HistoryCard,
+  PendingCard,
+  briefingTypeForTemplate,
+} from './briefings';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-interface TeamBriefing {
+/**
+ * A type alias rather than an `interface` on purpose: TypeScript grants an
+ * implicit index signature to object *type aliases* but not to interfaces, and
+ * the wizard's prefill prop is an open bag of unknown values. As an interface,
+ * handing a briefing straight to the wizard for editing did not typecheck.
+ */
+type TeamBriefing = {
   id: string;
   template_id: string;
   briefing_name: string;
@@ -30,10 +42,31 @@ interface TeamBriefing {
   duration_minutes: number;
   notes: string;
   completed: boolean;
-  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'postponed';
+  /**
+   * These four are the whole of it. `team_briefings_status_check` on the live
+   * database is `CHECK (status = ANY (ARRAY['scheduled','in_progress',
+   * 'completed','cancelled']))`, so the `'postponed'` this type used to carry
+   * was a value the database would reject on write and can never return on
+   * read — it only ever succeeded in breaking assignment to every component
+   * that types its status honestly.
+   */
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
   qr_code?: string;
   created_at: string;
-}
+};
+
+/**
+ * "Delivered" is not `status === 'completed'` alone.
+ *
+ * The wizard has always written `completed: true` while leaving `status` at
+ * `'scheduled'`, and the live table shows the result: fifteen briefings sitting
+ * at scheduled/completed=true. Reading only `status` meant the Recent tab and
+ * the signed-off figure ignored every briefing this app has ever finished.
+ */
+const isDelivered = (b: TeamBriefing) => b.status === 'completed' || b.completed === true;
+
+/** Empty register counts as signed — there is nobody outstanding. */
+const isFullySigned = (b: TeamBriefing) => b.attendees.every((a) => a.signature);
 
 interface NearMissData {
   id: string;
@@ -75,20 +108,6 @@ interface BriefingTemplate {
   template_schema: { sections?: { id: string; title: string; required?: boolean }[] } | null;
 }
 
-/**
- * The table and the wizard's type picker were written against different
- * vocabularies: the table uses `site-work` / `lfe` / `hse-update` /
- * `safety-alert`, the picker offers `site-induction` / `electrical` /
- * `hot-works` / `height-work`. Only `toolbox-talk` exists in both.
- *
- * Rather than invent a mapping that quietly puts a briefing under the wrong
- * heading, anything without a genuine counterpart seeds as `custom` — which is
- * exactly what it is: a briefing whose content you write yourself.
- */
-const TEMPLATE_TYPE_TO_BRIEFING_TYPE: Record<string, string> = {
-  'toolbox-talk': 'toolbox-talk',
-};
-
 const TeamBriefingTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
@@ -103,6 +122,8 @@ const TeamBriefingTemplates = () => {
   const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>('active');
+  /** The briefing whose signing link is being shared from the list. */
+  const [sharingBriefing, setSharingBriefing] = useState<TeamBriefing | null>(null);
 
   const checkForNearMissData = useCallback(() => {
     const nearMissSessionId = searchParams.get('nearMissSessionId');
@@ -189,55 +210,17 @@ const TeamBriefingTemplates = () => {
     setViewingBriefing(briefing);
   };
 
-  const handleDuplicate = async (briefing: TeamBriefing & Record<string, unknown>) => {
-    const {
-      id,
-      created_at,
-      updated_at,
-      status,
-      started_at,
-      cancelled_at,
-      cancelled_reason,
-      ...duplicateData
-    } = briefing;
-    setEditingBriefing({
-      ...duplicateData,
-      title: `${duplicateData.title || duplicateData.briefing_name} (Copy)`,
-      briefing_date: null,
-      briefing_time: '09:00',
-    });
-    setNearMissData(null);
-    setShowAIWizard(true);
-  };
-
-  const handleStatusChange = async (briefingId: string, newStatus: string) => {
-    try {
-      const updates: Record<string, unknown> = { status: newStatus };
-      if (newStatus === 'in_progress') {
-        updates.started_at = new Date().toISOString();
-      } else if (newStatus === 'completed') {
-        updates.completed = true;
-      }
-
-      const { error } = await supabase.from('team_briefings').update(updates).eq('id', briefingId);
-
-      if (error) throw error;
-
-      toast({
-        title: 'Status Updated',
-        description: `Briefing marked as ${newStatus.replace('_', ' ')}`,
-      });
-
-      fetchBriefings();
-    } catch (error) {
-      console.error('Error updating status:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to update briefing status',
-        variant: 'destructive',
-      });
-    }
-  };
+  /*
+   * `handleDuplicate` and `handleStatusChange` lived here and were never
+   * rendered — nothing in this file passed either of them to a card, a menu or
+   * a button, so neither could ever run. They were also both wrong: the
+   * duplicate wrote its "(Copy)" suffix to a `title` key the wizard does not
+   * read (it reads `briefing_name`), so a duplicate would have opened under the
+   * original's name; and the status change offered values the database's
+   * `team_briefings_status_check` rejects. Deleting them rather than wiring
+   * them up: the detail view already owns status changes, and duplication is a
+   * feature nobody has asked for and nobody had access to.
+   */
 
   const handleCloseWizard = () => {
     setShowAIWizard(false);
@@ -298,58 +281,64 @@ const TeamBriefingTemplates = () => {
     setEditingBriefing(null);
     setNearMissData(null);
     setTemplateSeed({
-      briefing_type: TEMPLATE_TYPE_TO_BRIEFING_TYPE[template.template_type] ?? 'custom',
+      briefing_type: briefingTypeForTemplate(template.template_type),
       briefing_name: template.name,
       briefing_description: skeleton,
     });
     setShowAIWizard(true);
 
-    // Fire-and-forget usage count. `.rpc()`/`.from()` return thenables, not real
-    // Promises — attaching `.catch()` throws and the request never sends, so the
-    // error is handled inside the await instead.
-    void (async () => {
-      const { error } = await supabase
-        .from('briefing_templates')
-        .update({ usage_count: (template.usage_count ?? 0) + 1 })
-        .eq('id', template.id);
-      if (error) console.error('Could not record template usage:', error);
-    })();
+    /*
+     * There used to be a fire-and-forget `usage_count` increment here. It could
+     * never work and never reported that it hadn't.
+     *
+     * All five templates are the seeded public ones, and every one has
+     * `user_id IS NULL`. The UPDATE policy on `briefing_templates` is
+     * `auth.uid() = user_id`, so the row is invisible to the write, PostgREST
+     * matches nothing, and the call returns success with zero rows affected —
+     * no error to log. `usage_count` was always going to read 0 for ever, which
+     * is also why ordering the list by it does nothing today.
+     *
+     * Counting template usage needs a SECURITY DEFINER function server-side; a
+     * client UPDATE cannot do it without handing users write access to every
+     * public template. Rather than keep code that looks like it records usage,
+     * it is gone until that function exists.
+     */
   };
 
-  // Calculate stats
   const stats = useMemo(() => {
     const now = new Date();
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const live = briefings.filter((b) => b.status !== 'cancelled');
 
     const totalBriefings = briefings.length;
     const thisWeek = briefings.filter((b) => new Date(b.created_at) >= weekAgo).length;
-    const pendingSignatures = briefings.filter(
-      (b) => b.status !== 'completed' && b.attendees.some((a) => !a.signature)
-    ).length;
-    const completedBriefings = briefings.filter((b) => b.status === 'completed').length;
-    const signatureRate =
-      totalBriefings > 0 ? Math.round((completedBriefings / totalBriefings) * 100) : 0;
+    // A cancelled briefing is not awaiting anyone's signature. The old count
+    // asked only whether the status was not 'completed', so the three cancelled
+    // briefings on the live table were being reported as outstanding work.
+    const pendingSignatures = live.filter((b) => !isFullySigned(b)).length;
+    const signedOff = live.filter((b) => isDelivered(b) && isFullySigned(b)).length;
+    const signatureRate = live.length > 0 ? Math.round((signedOff / live.length) * 100) : 0;
 
     return { totalBriefings, thisWeek, pendingSignatures, signatureRate };
   }, [briefings]);
 
-  // Filter briefings by tab
-  const pendingBriefings = useMemo(() => {
-    return briefings.filter(
-      (b) =>
-        b.status !== 'completed' &&
-        b.status !== 'cancelled' &&
-        b.attendees.some((a) => !a.signature)
-    );
-  }, [briefings]);
+  /**
+   * Active = anything not cancelled that is either unfinished or still short of
+   * a signature. The old test additionally required `attendees.some(unsigned)`,
+   * which meant a briefing saved with an empty register — the most unfinished
+   * state there is — appeared in neither tab and became invisible.
+   */
+  const pendingBriefings = useMemo(
+    () =>
+      briefings.filter((b) => b.status !== 'cancelled' && (!isDelivered(b) || !isFullySigned(b))),
+    [briefings]
+  );
 
   const recentBriefings = useMemo(() => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     return briefings.filter(
-      (b) =>
-        (b.status === 'completed' || b.attendees.every((a) => a.signature)) &&
-        new Date(b.created_at) >= thirtyDaysAgo
+      (b) => isDelivered(b) && isFullySigned(b) && new Date(b.created_at) >= thirtyDaysAgo
     );
   }, [briefings]);
 
@@ -417,9 +406,15 @@ const TeamBriefingTemplates = () => {
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <h1 className="text-lg font-bold text-white tracking-tight">Team Briefings</h1>
-          <p className="text-[11px] text-white tabular-nums tracking-wide">
-            Toolbox talks · HSG250
-          </p>
+          {/* This read "Toolbox talks · HSG250". HSG250 is *Guidance on
+              permit-to-work systems: a guide for the petroleum, chemical and
+              allied industries* — it is the reference behind the Permit to Work
+              module and has nothing to say about toolbox talks. It appears to
+              have been copied off the permit shell, whose docstring uses
+              "PTW-2026-0012 · HSG250" as its worked example. A wrong standard
+              printed under the title of a safety record is worse than no
+              standard, so it is a plain description now. */}
+          <p className="text-[11px] text-white tracking-wide">Toolbox talks and site briefings</p>
         </div>
         <button
           onClick={handleCreateNew}
@@ -494,17 +489,25 @@ const TeamBriefingTemplates = () => {
                 />
               ))
             ) : (
+              /* One primary action, one quieter alternative — the two buttons
+                 used to be the same weight, so "start from scratch" and "start
+                 from a template" competed. */
               <div className="flex flex-col items-center justify-center py-16">
-                <h3 className="text-base font-semibold text-white mb-1">Nothing outstanding</h3>
-                <p className="text-sm text-white text-center max-w-xs mb-5">
-                  No pending briefings — start one from Templates.
+                <h3 className="mb-1 text-base font-semibold text-white">Nothing outstanding</h3>
+                <p className="mb-5 max-w-xs text-center text-sm text-white">
+                  Every briefing is signed off. Start the next one when you are on site.
                 </p>
                 <button
-                  onClick={() => setActiveTab('templates')}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 text-white text-sm font-semibold touch-manipulation min-h-[44px] active:scale-[0.97] transition-transform border border-white/10"
+                  onClick={handleCreateNew}
+                  className="h-11 w-full max-w-[16rem] touch-manipulation rounded-xl bg-elec-yellow px-5 text-sm font-semibold text-black transition-[filter,transform] active:scale-[0.97] active:brightness-110"
                 >
-                  <FileText className="h-4 w-4" />
-                  View Templates
+                  New briefing
+                </button>
+                <button
+                  onClick={() => setActiveTab('templates')}
+                  className="mt-2 h-11 touch-manipulation px-4 text-sm font-medium text-white underline underline-offset-4"
+                >
+                  Start from a template
                 </button>
               </div>
             )}
@@ -529,36 +532,32 @@ const TeamBriefingTemplates = () => {
                     signedCount: briefing.attendees.filter((a) => a.signature).length,
                   }}
                   onView={() => handleView(briefing)}
-                  onShare={() => {
-                    toast({
-                      title: 'Share',
-                      description: 'Share functionality coming soon',
-                    });
-                  }}
-                  onDownload={() => {
-                    toast({
-                      title: 'Download',
-                      description: 'PDF download coming soon',
-                    });
-                  }}
+                  /* Share opens the real signing-link sheet. It used to fire a
+                     "Share functionality coming soon" toast next to a "PDF
+                     download coming soon" toast, while BriefingShareSheet and
+                     BriefingPDFActions were both already built and wired into
+                     the detail view one tap away. The PDF button is gone rather
+                     than duplicated: generating a briefing PDF is a polling
+                     state machine that belongs on the record, not on a list
+                     row. */
+                  onShare={() => setSharingBriefing(briefing)}
                   index={index}
                 />
               ))
             ) : (
+              /* The empty state's decorative icon tile is gone — a generic
+                 document glyph in a box says nothing the heading does not. */
               <div className="flex flex-col items-center justify-center py-16">
-                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-base font-semibold text-white mb-1">No Recent Briefings</h3>
-                <p className="text-sm text-white text-center max-w-xs mb-5">
-                  Completed briefings from the last 30 days will appear here.
+                <h3 className="mb-1 text-base font-semibold text-white">No recent briefings</h3>
+                <p className="mb-5 max-w-xs text-center text-sm text-white">
+                  Briefings appear here once they are delivered and everyone on the register has
+                  signed.
                 </p>
                 <button
                   onClick={handleCreateNew}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation min-h-[44px] active:scale-[0.97] transition-transform"
+                  className="h-11 w-full max-w-[16rem] touch-manipulation rounded-xl bg-elec-yellow px-5 text-sm font-semibold text-black transition-[filter,transform] active:scale-[0.97] active:brightness-110"
                 >
-                  <Plus className="h-4 w-4" />
-                  Create Briefing
+                  New briefing
                 </button>
               </div>
             )}
@@ -624,6 +623,14 @@ const TeamBriefingTemplates = () => {
           </div>
         )}
       </div>
+
+      {sharingBriefing && (
+        <BriefingShareSheet
+          briefingId={sharingBriefing.id}
+          briefingName={sharingBriefing.briefing_name}
+          onClose={() => setSharingBriefing(null)}
+        />
+      )}
     </div>
   );
 };

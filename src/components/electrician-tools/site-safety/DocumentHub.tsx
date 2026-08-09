@@ -15,8 +15,6 @@ import { toast } from '@/hooks/use-toast';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -31,6 +29,7 @@ import { LoadMoreButton } from './common/LoadMoreButton';
 import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 import { UserRAMSUpload } from './UserRAMSUpload';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 interface DocumentHubProps {
   onBack?: () => void;
@@ -58,6 +57,7 @@ const FAMILY_OF: Record<DocumentType, Family> = {
   'Fire Watch': 'record',
   Permit: 'record',
   Equipment: 'record',
+  'Pre-Use Check': 'record',
   // Things you brief from / refer to
   Briefing: 'reference',
 };
@@ -135,19 +135,35 @@ const STATUS_LABEL: Record<string, string> = {
   fail: 'Fail',
 };
 
+/*
+ * One surface, coloured text.
+ *
+ * Permit to Work, Safe Isolation and Fire Watch were moved to a neutral pill
+ * with a coloured label; this file — the shared Document Hub, which lists the
+ * records those very modules produce — was still tinting the pill itself. The
+ * same permit therefore wore one pill in its own module and a different one in
+ * the hub, which is worse than either convention applied consistently.
+ *
+ * Tinted washes are also the weaker choice on this ground: at 10% over
+ * near-black the hues muddy and converge, so six statuses that are meant to be
+ * distinguishable end up as six similar brown-greys. The text carries the
+ * meaning; the surface stays out of the way.
+ */
 const STATUS_PILL: Record<Tone | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  emerald: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  // Blue is not in the palette. "Done, nothing outstanding" reads as plain
+  // white, the same call made in the three modules above.
+  blue: 'bg-white/[0.05] text-white border-white/10',
+  orange: 'bg-white/[0.05] text-orange-400 border-white/10',
   // purple / indigo / cyan are unreachable now that no status maps to them,
   // but Tone still declares them, so the record has to stay total. They point
   // at the nearest surviving tone rather than reintroducing a hue.
-  purple: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  indigo: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  cyan: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  purple: 'bg-white/[0.05] text-amber-400 border-white/10',
+  indigo: 'bg-white/[0.05] text-amber-400 border-white/10',
+  cyan: 'bg-white/[0.05] text-white border-white/10',
   // Volt is a LINE and TEXT colour here, never a fill — a translucent yellow
   // wash goes muddy brown against near-black.
   yellow: 'text-elec-yellow border-elec-yellow/35',
@@ -192,11 +208,16 @@ const URGENT_STATUSES = new Set([
    previous implementation (tables, transitions, mutation).
    ──────────────────────────────────────────────────────── */
 
-const TABLE_MAP: Partial<Record<DocumentType, string>> = {
+// `satisfies` rather than a `string`-valued annotation: typed as string, the
+// table name widened and `supabase.from(table)` collapsed to `never`, so the
+// whole status-update call was unchecked — TypeScript could not tell you that
+// `status` exists on the table or that `id` is a real column. Keeping the
+// literals lets the client resolve each table properly.
+const TABLE_MAP = {
   'Near Miss': 'near_miss_reports',
   RAMS: 'rams_documents',
   Briefing: 'team_briefings',
-};
+} as const satisfies Partial<Record<DocumentType, string>>;
 
 const STATUS_TRANSITIONS: Partial<
   Record<DocumentType, { from: string; to: string; label: string }[]>
@@ -386,7 +407,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
         ) : undefined
       }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Document Hub"
           title="Every safety document in one place"
           description="Records you log, documents you generate and references you brief from — grouped, searchable and ready to export or hand over."
@@ -400,7 +421,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
       }
       stats={
         documents.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             columns={4}
             stats={[
               {
@@ -533,7 +554,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                     <div className="flex flex-col items-end gap-1.5">
                       <div className="flex items-center gap-1.5">
                         {doc.hasSignature && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-emerald-500/10 text-emerald-400 border-emerald-500/25">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-emerald-400 border-white/10">
                             Signed
                           </span>
                         )}

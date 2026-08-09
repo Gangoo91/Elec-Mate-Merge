@@ -32,7 +32,14 @@ const campaignNavItems: NavItem[] = [
   { name: 'College Outreach', path: '/admin/outreach' },
   { name: 'Business Outreach', path: '/admin/business-outreach' },
   { name: 'Founders', path: '/admin/founders' },
-  { name: 'Early Access', path: '/admin/early-access' },
+  /*
+    Early Access removed — the route does not exist.
+
+    The campaign was retired on 2026-07-27 and its route deleted from
+    AppRouter along with its edge functions, but the nav entry stayed. On an
+    SPA a dead path does not 404, it silently renders the fallback, so the chip
+    looked live and did nothing.
+  */
 ];
 
 const moderationNavItems: NavItem[] = [
@@ -207,7 +214,15 @@ export default function AdminPanel() {
     <div className="bg-background min-h-screen -mt-3 sm:-mt-4 md:-mt-6">
       <OfflineBanner />
 
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-white/[0.06]">
+      {/*
+        The nav has to sit above the page, not among it.
+
+        The page body is wrapped in a framer-motion transform, which creates its
+        own stacking context — so at z-40 the header lost to it and the open
+        Campaigns menu rendered UNDERNEATH the page: the title "Signup" and the
+        word "CAMPAIGNS" showed straight through the chips.
+      */}
+      <header className="sticky top-0 z-[60] border-b border-white/[0.06] bg-background/95 backdrop-blur">
         <div className="px-4 sm:px-6 lg:px-8">
           {/* Title row */}
           <div className="flex items-center h-14 gap-3">
@@ -242,39 +257,39 @@ export default function AdminPanel() {
               The fade is the affordance; it is pointer-events-none so it can
               never swallow a tap on the tab beneath it. */}
           <div className="relative">
-          <nav
-            ref={dropdownRef}
-            className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar"
-          >
-            {primaryNavItems.map((item) => (
-              <NavPill key={item.path} item={item} />
-            ))}
+            <nav
+              ref={dropdownRef}
+              className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar"
+            >
+              {primaryNavItems.map((item) => (
+                <NavPill key={item.path} item={item} />
+              ))}
 
-            <div className="mx-1 h-5 w-px bg-white/[0.08] shrink-0" aria-hidden />
+              <div className="mx-1 h-5 w-px bg-white/[0.08] shrink-0" aria-hidden />
 
-            {GROUPS.map((g) => {
-              const isOpen = openGroup === g.key;
-              const isActive = activeGroupKey === g.key;
-              return (
-                <div key={g.key} className="relative shrink-0">
-                  <button
-                    onClick={() => setOpenGroup(isOpen ? null : g.key)}
-                    className={cn(
-                      'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
-                      isOpen || isActive
-                        ? 'bg-white/[0.08] text-white'
-                        : 'text-white hover:text-white hover:bg-white/[0.05]'
-                    )}
-                  >
-                    {g.label}
-                    <ChevronDown
-                      className={cn('h-3.5 w-3.5 transition-transform', isOpen && 'rotate-180')}
-                    />
-                  </button>
-                </div>
-              );
-            })}
-          </nav>
+              {GROUPS.map((g) => {
+                const isOpen = openGroup === g.key;
+                const isActive = activeGroupKey === g.key;
+                return (
+                  <div key={g.key} className="relative shrink-0">
+                    <button
+                      onClick={() => setOpenGroup(isOpen ? null : g.key)}
+                      className={cn(
+                        'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
+                        isOpen || isActive
+                          ? 'bg-white/[0.08] text-white'
+                          : 'text-white hover:text-white hover:bg-white/[0.05]'
+                      )}
+                    >
+                      {g.label}
+                      <ChevronDown
+                        className={cn('h-3.5 w-3.5 transition-transform', isOpen && 'rotate-180')}
+                      />
+                    </button>
+                  </div>
+                );
+              })}
+            </nav>
             <div
               aria-hidden
               className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent"
@@ -290,7 +305,13 @@ export default function AdminPanel() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute left-0 right-0 top-full bg-background/98 backdrop-blur border-b border-white/[0.08] shadow-2xl"
+                /*
+                  Solid, not translucent. `bg-background/98` plus a blur still
+                  let high-contrast text beneath bleed through a dropdown that
+                  overlaps the page heading — a menu you cannot read is worse
+                  than no menu.
+                */
+                className="absolute left-0 right-0 top-full z-[60] border-b border-white/[0.08] bg-[hsl(0_0%_7%)] shadow-2xl"
               >
                 <div className="px-4 sm:px-6 lg:px-8 py-3">
                   <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">

@@ -102,6 +102,7 @@ const DiversityFactorCalculator = () => {
       description="Calculate electrical demand after applying IET On-Site Guide diversity allowances"
     >
       <CalculatorPanes
+        copyTitle="Diversity Factor"
         form={
           <>
             {/* Input Mode Toggle */}

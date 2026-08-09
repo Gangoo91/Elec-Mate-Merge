@@ -57,7 +57,7 @@ export const lightningProtectionContent: CalculatorContent = {
       standard: 'BS 7671',
       citation: 'BS 7671:2018+A4:2026 Reg 443.4.1 — Protection against transient overvoltages',
       clauseText:
-        'Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; (b) failure of a safety service, as defined in Part 2; or (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required, on the basis that any loss or damage is tolerable and that they accept the risk of damage to equipment and any consequential loss.',
+        'Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in: (a) serious injury to, or loss of, human life; (b) DELETED by BS 7671:2018+A2:2022, Corrigendum (May 2023); (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required due to any loss or damage being tolerable and they accept the risk of damage to equipment and any consequential loss. Note that item (b) — “failure of a safety service, as defined in Part 2” — is NO LONGER a listed trigger; guidance still quoting three live conditions is out of date.',
     },
     {
       standard: 'BS 7671',
@@ -69,7 +69,7 @@ export const lightningProtectionContent: CalculatorContent = {
       standard: 'BS 7671',
       citation: 'BS 7671:2018+A4:2026 Reg 534.4.4.4.2 and Table 534.4 — impulse discharge current',
       clauseText:
-        'Where Type 1 SPDs are required at or near the origin and no risk analysis to BS EN 62305-2 has been carried out, the impulse discharge current Iimp shall be not less than the values in Table 534.4 (12.5 kA for the L-N and L-PE connections; the table refers to lightning protection levels III and IV). Where a risk analysis to BS EN 62305-2 has been carried out, Iimp shall be determined to the BS EN 62305 series.',
+        'Where Type 1 SPDs are required at or near the origin of the electrical installation, one of the following cases applies: (a) where NO risk analysis according to BS EN 62305-2 has been carried out, the impulse discharge current (Iimp) shall be not less than as given in Table 534.4; (b) where the risk analysis HAS been carried out, Iimp shall be determined according to the BS EN 62305 series. Table 534.4 is not a single figure — it is indexed by connection (L-N, L-PE, N-PE), by supply system (single- or three-phase) and by connection type. 12.5 kA is the L-N and L-PE value, but the N-PE connection carries substantially more, rising to 25 kA and 50 kA depending on the connection type and supply system. Read the cell that matches the installation; do not carry 12.5 kA across to N-PE. NOTE: the table refers to lightning protection levels (LPL) III and IV.',
     },
   ],
 
@@ -77,6 +77,6 @@ export const lightningProtectionContent: CalculatorContent = {
     status: 'needs-review',
     generatedAt: '2026-08-06',
     notes:
-      'BS 7671 SPD clauses (443.4.1, 534.4.1.3, 534.4.1.4, 534.4.4.4.2 / Table 534.4) verified against bs7671_facets A4:2026 and the printed standard. The BS EN 62305-2 risk model itself (Cd, PB, loss factors, tolerable risk RT, risk components) is NOT in the BS 7671 / GN3 / OSG corpus and remains unverified — the engine is an indicative screening tool, not a formal BS EN 62305-2 risk assessment.',
+      'BS 7671 SPD clauses re-read against the PRINTED standard (Desktop/BS7671_ocr.pdf), which corrected two errors that a previous facets-based pass had marked verified. (1) Reg 443.4.1: item (b), “failure of a safety service, as defined in Part 2”, was DELETED by BS 7671:2018+A2:2022, Corrigendum (May 2023). The file had been stating it as a live trigger for mandatory transient-overvoltage protection. Note that the amendment-summary narrative in the front of the book still lists all three items — the regulation body is the authority, and they disagree. (2) Table 534.4 was reduced here to “12.5 kA for the L-N and L-PE connections”; the table is actually indexed by connection, supply system and connection type, and the N-PE connection reaches 25 kA and 50 kA. Specifying 12.5 kA on an N-PE connection could under-rate the SPD fourfold. Regs 534.4.1.3, 534.4.1.4 and 534.4.4.4.2(a)/(b) verified word-for-word. The BS EN 62305-2 risk model itself (Cd, PB, loss factors, tolerable risk RT, risk components) is NOT in the BS 7671 / GN3 / OSG corpus and remains unverified — the engine is an indicative screening tool, not a formal BS EN 62305-2 risk assessment.',
   },
 };

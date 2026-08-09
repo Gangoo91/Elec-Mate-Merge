@@ -57,8 +57,7 @@ import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
-  FilterBar,
+  Eyebrow,
   ListCard,
   ListCardHeader,
   ListBody,
@@ -149,6 +148,11 @@ function relativeTime(dateStr: string | undefined | null): string {
   if (days < 30) return `${days}d ago`;
   return `${Math.floor(days / 30)}mo ago`;
 }
+
+/* Same validated dark-surface steps as the other admin pages:
+     node scripts/validate_palette.js "#3987E5,#E66767,#199E70" \
+       --mode dark --surface "#1C1C1C"  -> all checks pass */
+const USER_SERIES = ['#3987E5', '#199E70', '#E66767'] as const;
 
 export default function AdminUsers() {
   const { profile } = useAuth();
@@ -872,82 +876,201 @@ export default function AdminUsers() {
           }
         />
 
-        <StatStrip
-          columns={5}
-          stats={[
-            { label: 'Total', value: stats.total },
-            {
-              label: 'Paying',
-              value: realPaying ?? '…',
-              accent: true,
-              sub: 'Stripe + App + Play',
-            },
-            { label: 'New this week', value: stats.thisWeek, tone: 'emerald' },
-            { label: 'Online', value: stats.online, tone: 'green' },
-            {
-              // A quarter of every account ever created. Worth a cell of its
-              // own, and the filter beneath it lists them.
-              label: 'Not onboarded',
-              value: stats.notOnboarded,
-              tone: 'orange',
-              sub: `${Math.round((stats.notOnboarded / Math.max(1, stats.total)) * 100)}% of all`,
-            },
-          ]}
-        />
+        {/*
+          The base, what it is made of, and the figures you check it against.
 
-        <div className="space-y-3">
-          <FilterBar
-            tabs={quickFilters.map((f) => ({ value: f.value, label: f.label }))}
-            activeTab={quickFilter}
-            onTabChange={(value) => {
-              setQuickFilter(value);
-              if (value === 'all') {
-                searchParams.delete('filter');
-              } else {
-                searchParams.set('filter', value);
-              }
-              setSearchParams(searchParams);
-            }}
-            search={search}
-            onSearchChange={setSearch}
-            searchPlaceholder="Search by name or email…"
-            actions={
-              <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-                <SelectTrigger className="h-10 w-[140px] shrink-0 rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] focus:border-elec-yellow/60 text-[13px] text-white touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
-                  <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="joined">Joined</SelectItem>
-                  <SelectItem value="last_active">Last active</SelectItem>
-                  <SelectItem value="engagement">Engagement</SelectItem>
-                </SelectContent>
-              </Select>
-            }
-          />
+          This was a five-cell strip — Total / Paying / New this week / Online /
+          Not onboarded — every number the same size, so 1,487 registered
+          accounts and 12 people currently online carried identical weight. Same
+          shape as Revenue, Trials and the Dashboard now: the headline leads, a
+          proportional bar shows the split, and a 2x2 holds the rest.
+        */}
+        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="min-w-0">
+              <Eyebrow>Registered accounts</Eyebrow>
+              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
+                {stats.total.toLocaleString('en-GB')}
+              </div>
+              <div className="mt-2 text-[13px] text-white">
+                {realPaying ?? '…'} paying · {stats.notOnboarded} never finished setting up
+              </div>
 
-          {/* Role filters as plain chips, scrolling horizontally on a phone.
-              They were a second full-width pill rail below the first — two
-              near-empty tracks costing ~90px before the list started. */}
-          <div className="scrollbar-hide -mx-4 flex items-center gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
-            <span className="shrink-0 text-[11px] font-medium text-white">Role</span>
-            {roleFilters.map((filter) => {
-              const isActive = roleFilter === filter.value;
-              return (
+              {/*
+                Paying / set up but not paying / never set up. Three states that
+                add to the whole, which the five-cell strip could not show —
+                "Not onboarded 364" sat beside "Total 1487" with no indication
+                that one was a quarter of the other.
+              */}
+              <div className="mt-5">
+                <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
+                  {[
+                    { k: 'paying', v: realPaying ?? 0, fill: USER_SERIES[0], l: 'Paying' },
+                    {
+                      k: 'setup',
+                      v: Math.max(0, stats.total - (realPaying ?? 0) - stats.notOnboarded),
+                      fill: USER_SERIES[1],
+                      l: 'Set up, not paying',
+                    },
+                    { k: 'never', v: stats.notOnboarded, fill: USER_SERIES[2], l: 'Never set up' },
+                  ]
+                    .filter((x) => x.v > 0)
+                    .map((x, i, seg) => (
+                      <div
+                        key={x.k}
+                        title={`${x.l}: ${x.v}`}
+                        style={{
+                          width: `calc(${(x.v / Math.max(stats.total, 1)) * 100}% - ${
+                            (2 * (seg.length - 1)) / seg.length
+                          }px)`,
+                          background: x.fill,
+                          borderTopLeftRadius: i === 0 ? 999 : 2,
+                          borderBottomLeftRadius: i === 0 ? 999 : 2,
+                          borderTopRightRadius: i === seg.length - 1 ? 999 : 2,
+                          borderBottomRightRadius: i === seg.length - 1 ? 999 : 2,
+                        }}
+                      />
+                    ))}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
+                  {[
+                    { c: USER_SERIES[0], n: realPaying ?? 0, l: 'paying' },
+                    {
+                      c: USER_SERIES[1],
+                      n: Math.max(0, stats.total - (realPaying ?? 0) - stats.notOnboarded),
+                      l: 'set up, not paying',
+                    },
+                    { c: USER_SERIES[2], n: stats.notOnboarded, l: 'never set up' },
+                  ].map((x) => (
+                    <span key={x.l} className="flex items-center gap-2">
+                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: x.c }} />
+                      <span className="font-medium tabular-nums text-white">{x.n}</span> {x.l}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+              {[
+                {
+                  label: 'Paying',
+                  value: realPaying ?? '…',
+                  sub: 'Stripe + App + Play',
+                  accent: true,
+                  filter: 'subscribed',
+                },
+                {
+                  label: 'New this week',
+                  value: stats.thisWeek,
+                  sub: 'joined in 7 days',
+                  filter: 'all',
+                },
+                { label: 'Online', value: stats.online, sub: 'right now', filter: 'active_today' },
+                {
+                  label: 'Never set up',
+                  value: stats.notOnboarded,
+                  sub: `${Math.round((stats.notOnboarded / Math.max(1, stats.total)) * 100)}% of all accounts`,
+                  filter: 'not_onboarded',
+                },
+              ].map((c) => (
                 <button
-                  key={filter.value}
-                  onClick={() => setRoleFilter(filter.value)}
+                  key={c.label}
+                  onClick={() => {
+                    setQuickFilter(c.filter);
+                    if (c.filter === 'all') searchParams.delete('filter');
+                    else searchParams.set('filter', c.filter);
+                    setSearchParams(searchParams);
+                  }}
+                  className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+                >
+                  <div
+                    className={cn(
+                      'text-[22px] font-semibold leading-none sm:text-[26px]',
+                      c.accent ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {c.value}
+                  </div>
+                  <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                    {c.label}
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">{c.sub}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/*
+          One filter row.
+
+          Status chips sat on one full-width rail, role chips on a second
+          beneath it, and the sort control floated at the end of the first —
+          two near-empty tracks costing about 90px before the list even began.
+          Status stays as chips because it is what you switch between; role and
+          sort become compact selects on the same line, with search at the end.
+        */}
+        <div className="-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+              {quickFilters.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => {
+                    setQuickFilter(f.value);
+                    if (f.value === 'all') searchParams.delete('filter');
+                    else searchParams.set('filter', f.value);
+                    setSearchParams(searchParams);
+                  }}
                   className={cn(
-                    'h-9 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation',
-                    isActive
-                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                      : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]'
+                    'h-9 touch-manipulation rounded-full px-3 text-[12px] font-medium transition-colors',
+                    quickFilter === f.value
+                      ? 'bg-elec-yellow text-black'
+                      : 'text-white hover:bg-white/[0.08]'
                   )}
                 >
-                  {filter.label}
+                  {f.label}
                 </button>
-              );
-            })}
+              ))}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <select
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value)}
+                aria-label="Filter by role"
+                className="h-9 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[12px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+              >
+                {roleFilters.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.value === 'all' ? 'All roles' : f.label}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                aria-label="Sort by"
+                className="h-9 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[12px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+              >
+                <option value="joined">Joined</option>
+                <option value="name">Name</option>
+                <option value="last_active">Last active</option>
+                <option value="engagement">Engagement</option>
+              </select>
+
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name or email…"
+                aria-label="Search users"
+                className="h-9 w-[10rem] touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3.5 text-[12px] text-white caret-elec-yellow placeholder:text-white/40 focus:border-elec-yellow focus:outline-none sm:w-56"
+              />
+            </div>
           </div>
         </div>
 
@@ -1021,7 +1144,17 @@ export default function AdminUsers() {
                 </div>
               }
             />
-            <ListBody className="divide-y-[1.5px] divide-black/60 xl:grid xl:grid-cols-2 xl:divide-y-0 xl:gap-px xl:bg-black/60">
+            {/*
+              One column, not two.
+
+              Two-up looked like it used the width, but each row then had about
+              470px to hold a checkbox, five fixed-width signal columns totalling
+              488px, and the person's name — so the name column, the only
+              flexible one, collapsed to nothing and 1,487 people rendered
+              anonymously. One row per line gives the name the room it needs and
+              the signals still fit with space over.
+            */}
+            <ListBody className="divide-y-[1.5px] divide-black/60">
               {paginatedUsers.map((user) => {
                 const roleKey = user.role?.toLowerCase() || 'visitor';
                 const accentTone = roleToneMap[roleKey] || 'cyan';
@@ -1130,9 +1263,9 @@ export default function AdminUsers() {
                           the stacked form, which is right on a phone. Type
                           sizes went up with the space: 10.5px → 12px.
                         */}
-                        <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 lg:grid-cols-[minmax(0,1fr)_5.5rem_5rem_6.5rem_7rem_6.5rem] xl:grid-cols-[minmax(0,1fr)_5rem_6rem_6rem_6.5rem]">
-                          {/* Name + email */}
-                          <div className="min-w-0">
+                        <div className="flex min-w-0 flex-1 items-center gap-x-3 gap-y-1">
+                          {/* Name + email — first, and never optional. */}
+                          <div className="min-w-0 flex-1 basis-[14rem]">
                             <span className="flex items-center gap-1.5">
                               <span className="truncate text-[14.5px] font-semibold text-white">
                                 {user.full_name || 'No name'}
@@ -1156,13 +1289,13 @@ export default function AdminUsers() {
 
                           {/* Role — its own column from lg, inline on mobile */}
                           <span
-                            className={`hidden truncate text-[12px] font-medium lg:block ${toneText[accentTone]}`}
+                            className={`hidden w-24 shrink-0 truncate text-[12px] font-medium lg:block ${toneText[accentTone]}`}
                           >
                             {user.role || 'visitor'}
                           </span>
 
                           {/* Joined */}
-                          <span className="hidden text-[12px] text-white tabular-nums lg:block xl:hidden">
+                          <span className="hidden w-20 shrink-0 text-[12px] text-white tabular-nums lg:block">
                             {joinedDays !== null
                               ? joinedDays === 0
                                 ? 'Today'
@@ -1171,7 +1304,7 @@ export default function AdminUsers() {
                           </span>
 
                           {/* Last active */}
-                          <span className="hidden text-[12px] tabular-nums lg:block">
+                          <span className="hidden w-[5.5rem] shrink-0 text-[12px] tabular-nums lg:block">
                             {user.isOnline ? (
                               <span className="flex items-center gap-1 text-green-400">
                                 <Dot tone="green" />
@@ -1185,7 +1318,7 @@ export default function AdminUsers() {
                           </span>
 
                           {/* Engagement */}
-                          <span className="hidden items-center gap-2 lg:flex">
+                          <span className="hidden w-[4.5rem] shrink-0 items-center gap-2 lg:flex">
                             {engagementScore !== undefined ? (
                               <>
                                 <span
@@ -1209,7 +1342,7 @@ export default function AdminUsers() {
                           </span>
 
                           {/* Billing + grant */}
-                          <span className="flex w-full items-center justify-between gap-1.5">
+                          <span className="flex w-[6.5rem] shrink-0 items-center justify-between gap-1.5">
                             <span
                               className={`text-[11.5px] font-semibold tracking-tight ${toneText[status.tone]}`}
                             >
@@ -1232,7 +1365,7 @@ export default function AdminUsers() {
                           {/* Mobile-only meta line. Below lg the columns above
                               are hidden, so this carries the same facts in the
                               stacked form a phone needs. */}
-                          <div className="col-span-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11.5px] leading-tight text-white lg:hidden">
+                          <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11.5px] leading-tight text-white lg:hidden">
                             <span className={`font-medium ${toneText[accentTone]}`}>
                               {user.role || 'visitor'}
                             </span>
@@ -1302,8 +1435,7 @@ export default function AdminUsers() {
                   subscribed: selectedUser.subscribed,
                   subscription_tier: selectedUser.subscription_tier || undefined,
                   subscription_end: (selectedUser as Record<string, unknown>).subscription_end as
-                    | string
-                    | undefined,
+                    string | undefined,
                   stripe_customer_id: selectedUser.stripe_customer_id || undefined,
                   free_access_granted: selectedUser.free_access_granted,
                   free_access_expires_at: (selectedUser as Record<string, unknown>)

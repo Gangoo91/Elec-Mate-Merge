@@ -279,6 +279,7 @@ const MaximumDemandCalculator = () => {
       description="Calculate maximum demand with IET On-Site Guide diversity allowances"
     >
       <CalculatorPanes
+        copyTitle="Maximum Demand"
         form={
           <>
             {/* Configuration — stacked on mobile, row on desktop */}

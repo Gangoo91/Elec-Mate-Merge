@@ -5,7 +5,7 @@ import type { CalculatorContent } from './types';
  */
 export const evseLoadContent: CalculatorContent = {
   slug: 'evse-load',
-  governingStandards: ['BS 7671', 'ENA EREC G100'],
+  governingStandards: ['BS 7671', 'ENA EREC G100', 'Approved Document S'],
 
   whyItMatters: [
     'Reg 311.1 lets you take diversity into account when determining maximum demand, and Reg 722.311.201 adds load curtailment — automatic or manual load reduction or disconnection — as something that may also be counted. What BS 7671 does not give you is a diversity table for EV charge points, so the factor you pick is yours to justify.',
@@ -50,6 +50,14 @@ export const evseLoadContent: CalculatorContent = {
 
   standards: [
     {
+      standard: 'Approved Document S',
+      citation:
+        'Approved Document S (2021) §1.1 — how many charge points, which is what drives the load',
+      clauseText:
+        'Where associated parking spaces are provided for a NEW RESIDENTIAL BUILDING in England, the number of associated parking spaces with access to an electric vehicle charge point must be a minimum of either (a) the number of associated parking spaces, or (b) the number of dwellings the car park serves. NOTE: where no associated parking spaces are provided, there is no requirement to install a charge point. Each point must have a minimum nominal rated output of 7 kW (§6.2b) on a dedicated circuit — so the diversified load for a new development follows from the dwelling/space count, not from a guess. Where a space is exempted under §1.4–1.7, cable routes may still be required.',
+      tableRefs: ['Approved Document S §1.1', 'Approved Document S §6.2'],
+    },
+    {
       standard: 'BS 7671',
       citation: 'BS 7671 Section 722 — EV charging installations',
       clauseText:
@@ -76,12 +84,26 @@ export const evseLoadContent: CalculatorContent = {
       clauseText:
         'Where the agreed supply capacity would be exceeded, a compliant load- or export-limitation scheme (G100) may cap the demand to the agreed value rather than reinforcing the network.',
     },
+    /*
+      Verified against ENA EREC G100 Issue 2 Amendment 2 (2023), Form B —
+      Desktop/hav/G100-Issue2-Amd2-2023.pdf. The document's own title confirms the
+      scheme covers IMPORT as well as export limitation, which is what makes it the
+      right route for capping EV charging demand rather than reinforcing the supply.
+      The submission duty below is the part installers miss.
+    */
+    {
+      standard: 'ENA EREC G100',
+      citation: 'ENA EREC G100 Issue 2 Amd 2 (2023) — Customer Export or Import Limitation Schemes',
+      clauseText:
+        'A Customer Limitation Scheme (CLS) may limit import as well as export, so demand can be capped to an agreed value instead of reinforcing the supply. For a one-off installation the installer completes Form B to confirm the CLS has been tested against G100, and that form shall be submitted to the DNO BEFORE commissioning. The site limit is set at engineering access level so the system owner cannot override it (G100/2 §4.2), and the scheme must bring the site back to the agreed capacity within 5 seconds of an excursion.',
+      tableRefs: ['G100/2 Form B', 'G100/2 §4.2'],
+    },
   ],
 
   _grounding: {
     status: 'verified',
     generatedAt: '2026-08-06',
     notes:
-      'Reg 722.311.201 and Reg 433.1.1/433.1.201 quoted from the printed BS 7671:2018+A4:2026. Reg 722.531.3.101 / RDC-DD scope confirmed from Appendix 1 (BS IEC 62955:2018 "RDC-DD to be used for mode 3 charging of electric vehicles") and the index entry. The 1.25 multiplier was removed: the only 1.25 in BS 7671 is Reg 712.433.1 (PV, 1.25 × Isc). G100 scope still to be confirmed against the ENA source.',
+      'G100 verified against ENA EREC G100 Issue 2 Amd 2 (2023) Form B (Desktop/hav): the scheme covers export OR IMPORT limitation, Form B is submitted to the DNO before commissioning, the limit is set at engineering access level (\u00a74.2), and the CLS returns the site to agreed capacity within 5 s. Section 722 and BS 7671 clauses verified separately against the printed regulations. APPROVED DOCUMENT S (2021) \u00a71.1 added from Desktop/hav/ApprovedDocS-EV-charging-2021.pdf \u2014 the provision rule that actually drives the connected load on a new residential development: one charge point per associated parking space, or per dwelling served, whichever gives the smaller count, with no requirement at all where no associated parking is provided. Part S is England only.',
   },
 };

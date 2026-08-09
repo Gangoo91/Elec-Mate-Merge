@@ -1,17 +1,29 @@
 /**
- * StudyCentreIndex — editorial design matching ElectricianHub / SiteSafety /
- * BusinessHub / Inspection & Testing.
+ * StudyCentreIndex — built on the shared hub primitives, like every other hub.
  *
- * Sticky text-only masthead, date-eyebrow Hero with rotating thematic
- * two-tone tagline + verdict + CTA, `01 · THIS MONTH` HeadlineStats, then
- * hairline grids for `02 · CONTINUE` (when there's a last location),
- * `03 · YOUR LEARNING` and `04 · MOMENTUM`. Black 2px gaps, mobile-flat,
- * single yellow accent per row.
+ * This page was the last one still on the editorial dialect: a sticky masthead
+ * followed by a date eyebrow, a two-tone slogan rotating on hour and
+ * day-of-year, a verdict paragraph restating the numbers directly beneath it,
+ * and `01 · THIS MONTH` / `02 · CONTINUE` / `03 · YOUR LEARNING` numbering over
+ * a hairline grid of 240px cells.
+ *
+ * `HubPrimitives` was extracted precisely to end that split — its own note says
+ * the hero "cost roughly 300px before an electrician reached a single tool",
+ * and that the numbered eyebrows "implied an order the groups never had". The
+ * other hubs took that medicine; this one hadn't, which is why it looked like a
+ * different product.
+ *
+ * Nothing was dropped in the move:
+ *   hero verdict      → deleted (it only restated the KPI row below it)
+ *   01 · THIS MONTH   → HubKpiRow
+ *   02 · CONTINUE     → the primary card in HubQuickStart
+ *   03 · YOUR LEARNING→ HubToolGrid
+ *   WATCH & LEARN     → a card in that same grid
+ *   04 · MOMENTUM     → folded into the KPI verdict/context lines, which is
+ *                       what those slots are for (level, best run, avg score)
  */
 import { useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Flame, Trophy, Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuizResults } from '@/hooks/useQuizResults';
@@ -20,110 +32,41 @@ import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import useSEO from '@/hooks/useSEO';
-import { cn } from '@/lib/utils';
 
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubQuickStart,
+  HubToolGrid,
+  HubKpi,
+  HubKpiRow,
+  type HubQuickAction,
+  type HubTool,
+} from '@/components/hub/HubPrimitives';
 import { curatedVideos } from '@/data/apprentice/curatedVideos';
-
-// A few strong titles to preview in the video card thumbnail strip
-const VIDEO_PREVIEW_IDS = ['c9gm_NL7KyE', 'jcY4QN7awEc', '59HBoIXzX_c', 'J3kKNNizARc'];
-
-// ─────────────────────────────────────────────────────────────────────────
-// Editorial helpers
-// ─────────────────────────────────────────────────────────────────────────
-
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
-interface HeroHeadline {
-  yellow: string;
-  white: string;
-}
-
-const HEADLINES_STREAK: HeroHeadline[] = [
-  { yellow: 'Streak', white: 'alive.' },
-  { yellow: 'Keep', white: 'the chain going.' },
-  { yellow: 'One more', white: 'section, day done.' },
-  { yellow: 'Discipline', white: 'compounds.' },
-];
-
-const HEADLINES_HEALTHY: HeroHeadline[] = [
-  { yellow: 'Stack', white: 'the small wins.' },
-  { yellow: 'Knowledge', white: 'compounds.' },
-  { yellow: 'Five minutes,', white: 'every day.' },
-  { yellow: 'Read.', white: 'Quiz. Repeat.' },
-  { yellow: 'Sharpen', white: 'the saw.' },
-];
-
-const HEADLINES_EMPTY: HeroHeadline[] = [
-  { yellow: 'Pick a course.', white: 'Push play.' },
-  { yellow: 'Start', white: 'the streak.' },
-  { yellow: 'Open.', white: 'Study. Done.' },
-];
-
-const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
-  const now = new Date();
-  const hour = now.getHours();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return pool[(hour + dayOfYear) % pool.length];
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Sticky masthead — College pattern
-// ─────────────────────────────────────────────────────────────────────────
-
-const PageMasthead = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center h-12 gap-4 sm:gap-6">
-          <button
-            type="button"
-            onClick={() => navigate('/dashboard')}
-            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-          >
-            ← Back
-          </button>
-          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-              Learning
-            </span>
-            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-              Study Centre
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import {
+  TOTAL_COURSES,
+  countByTrack,
+  type CourseTrack,
+} from '@/data/study-centre/courseCatalogue';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Categories
 // ─────────────────────────────────────────────────────────────────────────
 
+/**
+ * `count` is deliberately absent — it used to be typed in here by hand and had
+ * drifted from the real course lists in both directions: 8 apprentice courses
+ * claimed against 6, 14 general against 15. That made the hub's headline "46
+ * courses" wrong and measured "1/46 complete" against a total that never
+ * existed. It now comes from the catalogue, which derives it.
+ */
 interface CategoryDef {
-  id: string;
+  id: CourseTrack;
   eyebrow: string;
   title: string;
   description: string;
-  count: number;
   routeKeys: string[];
   href: string;
 }
@@ -131,11 +74,10 @@ interface CategoryDef {
 const CATEGORIES: CategoryDef[] = [
   {
     id: 'apprentice',
-    eyebrow: 'APPRENTICE',
+    eyebrow: 'Apprentice',
     title: 'Apprentice training',
     description:
       'Level 2 & 3 qualifications, AM2 prep and the fundamentals every electrician needs.',
-    count: 8,
     routeKeys: ['apprentice'],
     href: '/study-centre/apprentice',
   },
@@ -144,7 +86,6 @@ const CATEGORIES: CategoryDef[] = [
     eyebrow: 'CPD',
     title: 'Professional upskilling',
     description: 'BS 7671, EV charging, solar PV, smart home and other specialist tracks.',
-    count: 14,
     routeKeys: [
       'upskilling',
       'bs7671',
@@ -166,10 +107,9 @@ const CATEGORIES: CategoryDef[] = [
   },
   {
     id: 'general',
-    eyebrow: 'SAFETY',
+    eyebrow: 'Safety',
     title: 'General upskilling',
     description: 'Cross-industry safety — IPAF, first aid, working at height and site essentials.',
-    count: 14,
     routeKeys: [
       'general-upskilling',
       'fire-safety',
@@ -191,11 +131,10 @@ const CATEGORIES: CategoryDef[] = [
   },
   {
     id: 'personal',
-    eyebrow: 'GROWTH',
+    eyebrow: 'Growth',
     title: 'Personal development',
     description:
       'Leadership, emotional intelligence, resilience and the soft skills that compound.',
-    count: 10,
     routeKeys: [
       'personal-development',
       'leadership-on-site',
@@ -272,419 +211,133 @@ export default function StudyCentreIndex() {
   }, [allProgress]);
 
   const totalCompleted = Object.values(completedByCategory).reduce((a, b) => a + b, 0);
-  const totalCourses = CATEGORIES.reduce((a, c) => a + c.count, 0);
+  const totalCourses = TOTAL_COURSES;
 
-  // ── Hero state ───────────────────────────────────────────────────────
-  const { headline, verdict } = useMemo(() => {
-    if (currentStreak >= 2) {
-      return {
-        headline: pickHeadline(HEADLINES_STREAK),
-        verdict: `Day ${currentStreak} of your run. One section keeps it alive.`,
-      };
+  // ── Start something ──────────────────────────────────────────────────
+  // Resuming is the single most-reached-for action on this page, so it takes
+  // the one solid volt card the group allows. When there's nothing to resume
+  // the strip still has somewhere to send people.
+  const quickStart: HubQuickAction[] = useMemo(() => {
+    const items: HubQuickAction[] = [];
+    if (lastLocation && !lastLocLoading) {
+      items.push({
+        title: lastLocation.title,
+        description: `Pick up where you left off · ${getLastStudiedDisplay()}`,
+        primary: true,
+        onClick: () => navigate(lastLocation.path),
+      });
     }
-    if (totalCompleted > 0 || totalQuizzes > 0) {
-      const completedPart =
-        totalCompleted > 0
-          ? `${totalCompleted} ${totalCompleted === 1 ? 'course' : 'courses'} complete`
-          : '';
-      const quizPart =
-        totalQuizzes > 0
-          ? `${totalQuizzes} ${totalQuizzes === 1 ? 'quiz' : 'quizzes'} taken${avgScore > 0 ? ` · avg ${avgScore}%` : ''}`
-          : '';
-      const bits = [completedPart, quizPart].filter(Boolean).join(' · ');
-      return {
-        headline: pickHeadline(HEADLINES_HEALTHY),
-        verdict: `${bits}. Keep stacking small wins.`,
-      };
-    }
-    return {
-      headline: pickHeadline(HEADLINES_EMPTY),
-      verdict: 'Pick a course and start. Five minutes a day builds expertise that compounds.',
-    };
-  }, [currentStreak, totalCompleted, totalQuizzes, avgScore]);
+    // Was pointed at /study-centre/apprentice, which is one of four tracks —
+    // so "browse" could only ever show you a sixth of the catalogue.
+    items.push({
+      title: 'Find a course',
+      description: `Search all ${totalCourses} across four tracks`,
+      onClick: () => navigate('/study-centre/browse'),
+    });
+    items.push({
+      title: 'Leaderboard',
+      description: 'See where you rank this month',
+      onClick: () => navigate('/study-centre/leaderboard'),
+    });
+    return items;
+  }, [lastLocation, lastLocLoading, getLastStudiedDisplay, navigate, totalCourses]);
 
-  // Calm monochrome stats — single yellow accent on Streak (the headline signal)
-  const stats = [
-    {
-      label: 'Streak',
-      value: currentStreak,
-      sub: currentStreak > 0 ? 'days running' : 'Start today',
-      accent: true,
-      onClick: () => navigate('/study-centre/leaderboard'),
-    },
-    {
-      label: 'Total XP',
-      value: totalXP.toLocaleString(),
-      sub: `Level ${level} · ${Math.round(xpProgress)}%`,
-      onClick: () => navigate('/study-centre/leaderboard'),
-    },
-    {
-      label: 'Quizzes',
-      value: totalQuizzes,
-      sub: totalQuizzes > 0 ? `Avg ${avgScore}%` : 'Take your first',
-      onClick: () => navigate('/study-centre/apprentice'),
-    },
-    {
-      label: 'Completed',
-      value: `${totalCompleted}/${totalCourses}`,
-      sub: 'courses',
-      onClick: () => navigate('/study-centre/apprentice'),
-    },
-  ];
+  // ── Your learning ────────────────────────────────────────────────────
+  // A card either reports or invites, never both — so a track you've started
+  // shows progress and one you haven't shows what's in it.
+  const learningCards: HubTool[] = useMemo(() => {
+    const cards: HubTool[] = CATEGORIES.map((c) => {
+      const completed = completedByCategory[c.id] ?? 0;
+      return {
+        id: c.id,
+        eyebrow: c.eyebrow,
+        title: c.title,
+        // Same unit trap as the KPI above: `completed` is sections, so it can't
+        // be shown over a course count. A bare figure is the honest one.
+        ...(completed > 0
+          ? { value: String(completed), valueLabel: 'sections done' }
+          : { description: c.description }),
+        to: c.href,
+      };
+    });
+
+    cards.push({
+      id: 'videos',
+      title: 'Video library',
+      value: String(curatedVideos.length),
+      valueLabel: 'training videos',
+      to: '/study-centre/videos',
+    });
+
+    return cards;
+  }, [completedByCategory]);
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
-      <PageMasthead />
+    <HubPage>
+      <HubMasthead section="Learning" title="Study Centre" backTo="/dashboard" />
 
-      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-        {/* Hero */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative pt-2 sm:pt-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>{dateEyebrow()}</Eyebrow>
-          </motion.div>
+      <HubBody>
+        <HubQuickStart label="Start something" items={quickStart} />
 
-          <motion.h1
-            variants={itemVariants}
-            className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
-          >
-            <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-            <span className="text-white">{headline.white}</span>
-          </motion.h1>
+        {/* Streak takes the row's single accent — it's the one figure that
+            decays if ignored, which is exactly what an accent should mean.
+            Level, best run and average score used to be a separate "MOMENTUM"
+            section; they belong on these rows as verdict and context. */}
+        <HubKpiRow>
+          <HubKpi
+            label="Streak"
+            value={String(currentStreak)}
+            accent
+            verdict={currentStreak > 0 ? `Day ${currentStreak} of your run` : 'Start today'}
+            context={
+              longestStreak > 0
+                ? `Best run ${longestStreak} day${longestStreak === 1 ? '' : 's'}`
+                : undefined
+            }
+            onClick={() => navigate('/study-centre/leaderboard')}
+          />
+          <HubKpi
+            label="Total XP"
+            value={totalXP.toLocaleString()}
+            verdict={`Level ${level}`}
+            context={`${Math.round(xpProgress)}% to level ${level + 1}`}
+            onClick={() => navigate('/study-centre/leaderboard')}
+          />
+          <HubKpi
+            label="Quizzes"
+            value={String(totalQuizzes)}
+            verdict={totalQuizzes > 0 ? `Average ${avgScore}%` : 'Take your first'}
+            context={
+              totalQuizzes > 0
+                ? `Across ${totalQuizzes} quiz${totalQuizzes === 1 ? '' : 'zes'}`
+                : undefined
+            }
+            onClick={() => navigate('/study-centre/apprentice')}
+          />
+          <HubKpi
+            /*
+             * Sections, not courses.
+             *
+             * This read `${totalCompleted}/${totalCourses}` under the label
+             * "Completed" with the context "courses" — but the numerator comes
+             * from `completedSectionsForCourse`, which counts SECTIONS. The two
+             * were never the same unit. Course-level completion isn't recorded
+             * at all: `course_progress` holds 3,490 completed rows and every
+             * one is a section.
+             *
+             * Eighteen learners have already passed 45 completed sections, so
+             * they were being shown fractions like "368/45 courses".
+             */
+            label="Sections done"
+            value={String(totalCompleted)}
+            verdict={totalCompleted > 0 ? 'Keep going' : 'Nothing finished yet'}
+            context={`across ${totalCourses} courses`}
+            onClick={() => navigate('/study-centre/apprentice')}
+          />
+        </HubKpiRow>
 
-          <motion.p
-            variants={itemVariants}
-            className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-          >
-            {verdict}
-          </motion.p>
-
-          <motion.div
-            variants={itemVariants}
-            className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2"
-          >
-            {currentStreak >= 2 && (
-              <span className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-[12px] font-semibold">
-                <Flame className="h-3.5 w-3.5" />
-                {currentStreak}-day streak
-              </span>
-            )}
-            <button
-              type="button"
-              onClick={() => navigate('/study-centre/leaderboard')}
-              className={cn(
-                'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
-                'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-                'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-              )}
-            >
-              <Trophy className="h-3.5 w-3.5" />
-              <span>Leaderboard</span>
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </motion.div>
-        </motion.section>
-
-        {/* 01 · THIS MONTH — calm monochrome stats */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>01 · THIS MONTH</Eyebrow>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-          >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-            {stats.map((stat) => {
-              const valueStr = String(stat.value);
-              const sizeClass =
-                valueStr.length <= 4
-                  ? 'text-4xl sm:text-5xl lg:text-[56px]'
-                  : valueStr.length <= 8
-                    ? 'text-3xl sm:text-4xl lg:text-5xl'
-                    : 'text-2xl sm:text-3xl lg:text-4xl';
-
-              return (
-                <button
-                  key={stat.label}
-                  type="button"
-                  onClick={stat.onClick}
-                  className={cn(
-                    'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-                    'hover:bg-[hsl(0_0%_15%)] transition-colors',
-                    stat.accent &&
-                      'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'text-[10px] font-medium uppercase tracking-[0.18em]',
-                      stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-                    )}
-                  >
-                    {stat.label}
-                  </div>
-                  <span
-                    className={cn(
-                      'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                      sizeClass,
-                      stat.accent ? 'text-elec-yellow' : 'text-white'
-                    )}
-                  >
-                    {stat.value}
-                  </span>
-                  {stat.sub && (
-                    <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
-                      {stat.sub}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </motion.div>
-        </motion.section>
-
-        {/* 02 · CONTINUE — single hairline cell when there's a last location */}
-        {lastLocation && !lastLocLoading && (
-          <motion.section
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-4"
-          >
-            <motion.div variants={itemVariants}>
-              <Eyebrow>02 · CONTINUE</Eyebrow>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
-            >
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-              <Link
-                to={lastLocation.path}
-                className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
-              >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-                  Continue where you left off
-                </span>
-                <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-                  {lastLocation.title}
-                </h3>
-                <p className="text-[13px] text-white/60">{getLastStudiedDisplay()}</p>
-                <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
-                  <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
-                    Pick up where you left off
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
-                    Resume
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          </motion.section>
-        )}
-
-        {/* 03 · YOUR LEARNING — monochrome category grid */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <Eyebrow>{lastLocation ? '03 · YOUR LEARNING' : '02 · YOUR LEARNING'}</Eyebrow>
-            <span className="text-[11px] text-white/50 tabular-nums">{totalCourses} courses</span>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="relative grid grid-cols-1 sm:grid-cols-2 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-          >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-            {CATEGORIES.map((c, i) => {
-              const completed = completedByCategory[c.id] ?? 0;
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => navigate(c.href)}
-                  className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[240px]"
-                >
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                      · {c.eyebrow}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-4 sm:mt-5 text-2xl sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
-                    {c.title}
-                  </h3>
-
-                  <p className="mt-2.5 text-[13px] leading-relaxed text-white/60 max-w-[40ch]">
-                    {c.description}
-                  </p>
-
-                  <div className="flex-grow" />
-
-                  <div className="mt-6 flex items-center justify-between gap-3 pt-4 border-t border-white/[0.05]">
-                    <span className="text-[11.5px] text-white/65 truncate tabular-nums">
-                      {completed > 0
-                        ? `${completed}/${c.count} courses · keep going`
-                        : `${c.count} courses · start today`}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow shrink-0">
-                      {completed > 0 ? 'Continue' : 'Open'}
-                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </motion.div>
-        </motion.section>
-
-        {/* WATCH & LEARN — surfaces the curated video library */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>WATCH &amp; LEARN</Eyebrow>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
-          >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-            <Link
-              to="/study-centre/videos"
-              className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
-                {/* Thumbnail strip */}
-                <div className="flex -space-x-3 shrink-0">
-                  {VIDEO_PREVIEW_IDS.map((vid, i) => (
-                    <div
-                      key={vid}
-                      className="relative w-[68px] sm:w-[84px] aspect-video rounded-lg overflow-hidden border-2 border-[hsl(0_0%_10%)] bg-black/40"
-                      style={{ zIndex: VIDEO_PREVIEW_IDS.length - i }}
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${vid}/mqdefault.jpg`}
-                        alt=""
-                        aria-hidden
-                        loading="lazy"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-                    Video library
-                  </span>
-                  <h3 className="mt-1.5 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-                    {curatedVideos.length} hand-picked training videos
-                  </h3>
-                  <p className="mt-2 text-[13px] leading-relaxed text-white/60 max-w-[52ch]">
-                    Electrical theory, three-phase, transformers, motors, testing and tools — short,
-                    watchable lessons to sharpen the fundamentals on a break.
-                  </p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow">
-                    <Play className="h-3.5 w-3.5 fill-elec-yellow" />
-                    Browse videos
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-        </motion.section>
-
-        {/* 04 · MOMENTUM — newspaper-style closer */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <motion.div variants={itemVariants}>
-            <Eyebrow>{lastLocation ? '04 · MOMENTUM' : '03 · MOMENTUM'}</Eyebrow>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-          >
-            <div className="bg-[hsl(0_0%_10%)] p-5 sm:p-6">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
-                Level
-              </div>
-              <div className="mt-2 text-3xl sm:text-4xl font-semibold tabular-nums text-white leading-none">
-                {level}
-              </div>
-              <div className="mt-3 text-[12px] text-white/55">
-                {Math.round(xpProgress)}% to level {level + 1}
-              </div>
-              <div className="mt-3 h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                <div
-                  className="h-full bg-elec-yellow/70"
-                  style={{ width: `${Math.min(xpProgress, 100)}%` }}
-                />
-              </div>
-            </div>
-
-            <div className="bg-[hsl(0_0%_10%)] p-5 sm:p-6">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
-                Best run
-              </div>
-              <div className="mt-2 text-3xl sm:text-4xl font-semibold tabular-nums text-white leading-none">
-                {longestStreak}
-              </div>
-              <div className="mt-3 text-[12px] text-white/55">
-                {currentStreak > 0
-                  ? `Today is day ${currentStreak} of your current run.`
-                  : 'No active streak — open one section to start.'}
-              </div>
-            </div>
-
-            <div className="bg-[hsl(0_0%_10%)] p-5 sm:p-6">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
-                Average score
-              </div>
-              <div className="mt-2 text-3xl sm:text-4xl font-semibold tabular-nums text-white leading-none">
-                {totalQuizzes > 0 ? `${avgScore}%` : '—'}
-              </div>
-              <div className="mt-3 text-[12px] text-white/55">
-                {totalQuizzes > 0
-                  ? `Across ${totalQuizzes} quiz${totalQuizzes === 1 ? '' : 'zes'}.`
-                  : 'Take your first quiz to start scoring.'}
-              </div>
-            </div>
-          </motion.div>
-        </motion.section>
-      </div>
-    </div>
+        <HubToolGrid label="Your learning" cards={learningCards} columns="four" />
+      </HubBody>
+    </HubPage>
   );
 }

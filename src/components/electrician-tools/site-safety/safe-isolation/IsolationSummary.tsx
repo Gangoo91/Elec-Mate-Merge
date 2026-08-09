@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   Eyebrow,
   Field,
@@ -57,9 +58,12 @@ function statusTone(status: IsoStatus): 'amber' | 'red' | 'emerald' | 'neutral' 
 }
 
 const STATUS_PILL: Record<'amber' | 'red' | 'emerald' | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
+  // Status is a neutral surface with coloured TEXT, matching Permit to Work
+  // and the rest of the hub. Coloured washes go muddy on the dark surface, and
+  // five different tinted pills on one screen stop reading as status at all.
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  emerald: 'bg-white/[0.05] text-emerald-400 border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
@@ -235,7 +239,10 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {/* Status banner */}
         <motion.div
           variants={itemVariants}
-          className="relative rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden p-4"
+          className={cn(
+            'relative rounded-2xl border border-elec-yellow/35 overflow-hidden p-4',
+            CARD_SURFACE
+          )}
         >
           <span
             aria-hidden
@@ -262,7 +269,8 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           <motion.div
             variants={itemVariants}
             className={cn(
-              'relative rounded-2xl border bg-[hsl(0_0%_12%)] overflow-hidden p-4',
+              'relative rounded-2xl border overflow-hidden p-4',
+              CARD_SURFACE,
               duration.isExpired
                 ? 'border-red-500/25 animate-pulse'
                 : duration.isExpiring
@@ -305,7 +313,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {record.status === 'isolated' && !signaturesPresent && (
           <motion.div variants={itemVariants} className="space-y-3">
             <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1">
-              <Eyebrow className="text-amber-300/90">Signatures required</Eyebrow>
+              <Eyebrow className="text-amber-400">Signatures required</Eyebrow>
               <p className="text-xs text-white leading-relaxed">
                 Both isolator and verifier signatures are required before re-energisation. Sign
                 below to proceed.
@@ -630,7 +638,12 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         )}
 
         {/* Audit trail */}
-        <AuditTimeline recordType="safe_isolation" recordId={record.id} />
+        {/* 'safe_isolation' is not a value anything writes — the audit trail
+            stores 'isolation', which is also the only member of
+            AuditRecordType. The timeline was querying for a record type that
+            has never existed, so it rendered empty on every isolation while
+            the entries sat in the table. */}
+        <AuditTimeline recordType="isolation" recordId={record.id} />
 
         {/* GS38 reference */}
         <motion.div variants={itemVariants}>

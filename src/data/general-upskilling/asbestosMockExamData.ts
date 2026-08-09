@@ -23,105 +23,6 @@ export const asbestosCategories = [
   'Identification & Surveys',
   'Safe Working & PPE',
   'Emergency Procedures',
-  {
-    id: 201,
-    question:
-      "Under CAR 2012, exposure is 'sporadic and of low intensity' where the airborne concentration does not exceed what?",
-    options: [
-      '0.6 fibres per cubic centimetre measured over ten minutes',
-      '0.1 fibres per cubic centimetre measured over four hours',
-      '1.0 fibres per cubic centimetre measured over one hour',
-      '0.3 fibres per cubic centimetre measured over thirty minutes',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'The ACOP sets this at 0.6 fibres per cubic centimetre measured over a ten-minute period. It matters because sporadic and low intensity exposure is one of the conditions that can take work outside the notification, medical surveillance and record-keeping requirements — get it wrong and the wrong regime is applied.',
-    difficulty: 'advanced',
-    topic: 'CAR 2012',
-    category: 'Legislation & Duty to Manage',
-  },
-  {
-    id: 202,
-    question: 'Which of these is normally licensable work with asbestos?',
-    options: [
-      'Drilling a single hole through weathered asbestos cement sheet',
-      'Removing asbestos insulating board in poor condition',
-      'Collecting a sample for laboratory identification',
-      'Painting over sound, undamaged asbestos cement cladding',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Asbestos insulating board is one of the higher-risk materials and work on it is generally licensable. Asbestos cement binds fibres in a matrix that prevents most from being released, so work on it is typically non-licensed. Sampling for identification is also non-licensed. The material and its condition drive the classification, not the size of the job.',
-    difficulty: 'advanced',
-    topic: 'Licensing',
-    category: 'Legislation & Duty to Manage',
-  },
-  {
-    id: 203,
-    question: 'The duty to manage asbestos applies to which premises?',
-    options: [
-      'Domestic dwellings only, where built before 2000',
-      'All premises constructed before 1985 without exception',
-      'Non-domestic premises, including the common parts of residential blocks',
-      'Only premises where an asbestos survey has already identified ACMs',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'The duty falls on whoever is responsible for maintenance and repair of non-domestic premises, and it extends to the common parts of domestic blocks such as stairwells, lift shafts and boiler rooms. It is not conditional on a survey having been done — the duty is precisely what triggers finding out.',
-    difficulty: 'advanced',
-    topic: 'Duty to Manage',
-    category: 'Legislation & Duty to Manage',
-  },
-  {
-    id: 204,
-    question:
-      'An electrician drilling into a ceiling void finds a board they suspect is AIB. What is the correct action?',
-    options: [
-      'Continue carefully using a dust mask and damp the area down',
-      'Complete the drilling then seal the hole with sealant',
-      'Take a sample themselves for identification before deciding',
-      'Stop work, leave the area, prevent access and report it',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'Stop immediately, withdraw, prevent others entering and report. Continuing with a dust mask is not a control — a disposable mask offers no meaningful protection against asbestos fibres, and damping down does not undo fibres already released. Sampling is work for a competent person following a defined procedure.',
-    difficulty: 'advanced',
-    topic: 'Unplanned Disturbance',
-    category: 'Emergency Procedures',
-  },
-  {
-    id: 205,
-    question:
-      'Why is asbestos cement generally treated as lower risk than asbestos insulating board?',
-    options: [
-      'Its fibres are bound in a matrix that prevents most from being released',
-      'It contains only chrysotile, which is not classed as hazardous',
-      'It was manufactured after the 1985 amphibole ban',
-      'It is always found externally where fibres disperse safely',
-    ],
-    correctAnswer: 0,
-    explanation:
-      'The controlling factor is fibre release. Asbestos cement binds fibres in a dense matrix so relatively few become airborne when it is worked, whereas AIB is a friable board that releases fibres readily. Chrysotile is still a hazardous material — the difference is the matrix, not the fibre type.',
-    difficulty: 'advanced',
-    topic: 'Material Types',
-    category: 'Asbestos Types & Properties',
-  },
-  {
-    id: 206,
-    question: 'Which survey type is required before refurbishment or demolition work?',
-    options: [
-      'A management survey, as it covers all accessible areas',
-      'A refurbishment and demolition survey, which is fully intrusive',
-      'A visual inspection recorded in the asbestos register',
-      'No survey, provided the register shows no ACMs recorded',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'A management survey locates ACMs that could be disturbed during normal occupancy and is not intrusive enough for construction work. A refurbishment and demolition survey is fully intrusive, reaching into the fabric where work will take place. Relying on a register compiled from a management survey is a common and dangerous shortcut.',
-    difficulty: 'advanced',
-    topic: 'Survey Types',
-    category: 'Identification & Surveys',
-  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -601,12 +502,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question:
       'Which of the following asbestos types has straight, rigid, needle-like fibres characteristic of the amphibole group?',
-    options: [
-      'Chrysotile',
-      'Chrysotile and amosite',
-      'Amosite',
-      'Neither of these',
-    ],
+    options: ['Chrysotile', 'Chrysotile and amosite', 'Amosite', 'Neither of these'],
     correctAnswer: 2,
     explanation:
       'Amosite belongs to the amphibole group and has straight, rigid, needle-like fibres. Chrysotile belongs to the serpentine group and has curly, flexible fibres. All amphibole asbestos types (amosite, crocidolite, tremolite, anthophyllite, actinolite) share the characteristic straight fibre structure.',
@@ -1246,7 +1142,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question: 'How often should an asbestos management plan be reviewed?',
     options: [
       'Only once, when the plan is first created and issued to the dutyholder',
-      'Every ten years, in line with the building\'s structural survey cycle',
+      "Every ten years, in line with the building's structural survey cycle",
       'Whenever the building is sold or let, and at no other time',
       'At regular intervals, and whenever there is reason to believe the plan is no longer valid',
     ],
@@ -1476,7 +1372,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Which approved code of practice (ACoP) supports CAR 2012 and provides practical guidance on compliance?',
     options: [
       'L143 — Managing and Working with Asbestos',
-      'L8 — Legionnaires\' Disease: Control of Legionella',
+      "L8 — Legionnaires' Disease: Control of Legionella",
       'L153 — Managing Health and Safety in Construction',
       'L138 — Dangerous Substances and Explosive Atmospheres',
     ],
@@ -3532,5 +3428,104 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     difficulty: 'basic',
     topic: 'Refresher training requirements',
     category: 'Emergency Procedures',
+  },
+  {
+    id: 201,
+    question:
+      "Under CAR 2012, exposure is 'sporadic and of low intensity' where the airborne concentration does not exceed what?",
+    options: [
+      '0.6 fibres per cubic centimetre measured over ten minutes',
+      '0.1 fibres per cubic centimetre measured over four hours',
+      '1.0 fibres per cubic centimetre measured over one hour',
+      '0.3 fibres per cubic centimetre measured over thirty minutes',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The ACOP sets this at 0.6 fibres per cubic centimetre measured over a ten-minute period. It matters because sporadic and low intensity exposure is one of the conditions that can take work outside the notification, medical surveillance and record-keeping requirements — get it wrong and the wrong regime is applied.',
+    difficulty: 'advanced',
+    topic: 'CAR 2012',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 202,
+    question: 'Which of these is normally licensable work with asbestos?',
+    options: [
+      'Drilling a single hole through weathered asbestos cement sheet',
+      'Removing asbestos insulating board in poor condition',
+      'Collecting a sample for laboratory identification',
+      'Painting over sound, undamaged asbestos cement cladding',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Asbestos insulating board is one of the higher-risk materials and work on it is generally licensable. Asbestos cement binds fibres in a matrix that prevents most from being released, so work on it is typically non-licensed. Sampling for identification is also non-licensed. The material and its condition drive the classification, not the size of the job.',
+    difficulty: 'advanced',
+    topic: 'Licensing',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 203,
+    question: 'The duty to manage asbestos applies to which premises?',
+    options: [
+      'Domestic dwellings only, where built before 2000',
+      'All premises constructed before 1985 without exception',
+      'Non-domestic premises, including the common parts of residential blocks',
+      'Only premises where an asbestos survey has already identified ACMs',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The duty falls on whoever is responsible for maintenance and repair of non-domestic premises, and it extends to the common parts of domestic blocks such as stairwells, lift shafts and boiler rooms. It is not conditional on a survey having been done — the duty is precisely what triggers finding out.',
+    difficulty: 'advanced',
+    topic: 'Duty to Manage',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 204,
+    question:
+      'An electrician drilling into a ceiling void finds a board they suspect is AIB. What is the correct action?',
+    options: [
+      'Continue carefully using a dust mask and damp the area down',
+      'Complete the drilling then seal the hole with sealant',
+      'Take a sample themselves for identification before deciding',
+      'Stop work, leave the area, prevent access and report it',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Stop immediately, withdraw, prevent others entering and report. Continuing with a dust mask is not a control — a disposable mask offers no meaningful protection against asbestos fibres, and damping down does not undo fibres already released. Sampling is work for a competent person following a defined procedure.',
+    difficulty: 'advanced',
+    topic: 'Unplanned Disturbance',
+    category: 'Emergency Procedures',
+  },
+  {
+    id: 205,
+    question:
+      'Why is asbestos cement generally treated as lower risk than asbestos insulating board?',
+    options: [
+      'Its fibres are bound in a matrix that prevents most from being released',
+      'It contains only chrysotile, which is not classed as hazardous',
+      'It was manufactured after the 1985 amphibole ban',
+      'It is always found externally where fibres disperse safely',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The controlling factor is fibre release. Asbestos cement binds fibres in a dense matrix so relatively few become airborne when it is worked, whereas AIB is a friable board that releases fibres readily. Chrysotile is still a hazardous material — the difference is the matrix, not the fibre type.',
+    difficulty: 'advanced',
+    topic: 'Material Types',
+    category: 'Asbestos Types & Properties',
+  },
+  {
+    id: 206,
+    question: 'Which survey type is required before refurbishment or demolition work?',
+    options: [
+      'A management survey, as it covers all accessible areas',
+      'A refurbishment and demolition survey, which is fully intrusive',
+      'A visual inspection recorded in the asbestos register',
+      'No survey, provided the register shows no ACMs recorded',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A management survey locates ACMs that could be disturbed during normal occupancy and is not intrusive enough for construction work. A refurbishment and demolition survey is fully intrusive, reaching into the fabric where work will take place. Relying on a register compiled from a management survey is a common and dangerous shortcut.',
+    difficulty: 'advanced',
+    topic: 'Survey Types',
+    category: 'Identification & Surveys',
   },
 ];

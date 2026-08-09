@@ -1,10 +1,7 @@
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { RiskPill, riskTone } from './RiskBar';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
-import {
-  SheetShell,
-  EmptyState,
-} from '@/components/college/primitives';
+import { SheetShell, EmptyState } from '@/components/college/primitives';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
 
 interface BookmarksSheetProps {

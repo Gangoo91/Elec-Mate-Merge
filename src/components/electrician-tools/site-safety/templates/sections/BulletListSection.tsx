@@ -1,4 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react';
+import { FIELD_CN } from '../../common/fieldClasses';
 import { cn } from '@/lib/utils';
 import type { BulletListSection as BulletListSectionType } from '@/types/safety-template';
 

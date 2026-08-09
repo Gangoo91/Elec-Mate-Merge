@@ -221,6 +221,7 @@ export const LoadCalculator = () => {
       description="Calculate maximum demand with diversity factors for electrical installations"
     >
       <CalculatorPanes
+        copyTitle="Load Assessment"
         form={
           <>
             {/* Add Appliance Section */}

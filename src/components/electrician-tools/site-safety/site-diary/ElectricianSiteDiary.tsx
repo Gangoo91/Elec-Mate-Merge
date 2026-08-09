@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useElectricianSiteDiary,
   useCreateDiaryEntry,
@@ -44,6 +45,39 @@ interface ElectricianSiteDiaryProps {
   onBack: () => void;
 }
 
+/**
+ * A selected RAMS / permit, tap-anywhere to unlink.
+ *
+ * The remove control was a bare "×" glyph inside the chip: a ~10px target on a
+ * screen used in gloves. The whole chip is the control now, at the 44px
+ * minimum, and the × stays as the affordance rather than as the hit area.
+ */
+function SelectedChip({ label, onRemove }: { label: string; onRemove: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onRemove}
+      aria-label={`Remove ${label}`}
+      className={cn(
+        'inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.05] px-3',
+        'text-[12.5px] text-white transition-all',
+        'touch-manipulation active:scale-[0.97] active:brightness-125 [-webkit-tap-highlight-color:transparent]'
+      )}
+    >
+      <span className="max-w-[180px] truncate">{label}</span>
+      <span aria-hidden className="text-[14px] leading-none text-white">
+        ×
+      </span>
+    </button>
+  );
+}
+
+/**
+ * FormCard's body is a flat `hsl(0 0% 12%)` fill; `bg-transparent` clears it so
+ * the card recipe's ramp sits on near-black. See `common/SafetyList.tsx`.
+ */
+const CARD_CN = cn('bg-transparent border-elec-yellow/35', CARD_SURFACE);
+
 const WEATHER_OPTIONS = [
   { value: 'sunny', label: 'Sunny' },
   { value: 'cloudy', label: 'Cloudy' },
@@ -72,8 +106,26 @@ function isSameDay(a: Date, b: Date): boolean {
   );
 }
 
+/**
+ * The calendar key for a day, in LOCAL time.
+ *
+ * This was `d.toISOString().split('T')[0]`, which is UTC. Every date in this
+ * screen carries the current time of day (`generateCalendarDays` copies it from
+ * `new Date()`), so between midnight and 01:00 during British Summer Time the
+ * UTC date is still yesterday: at 00:30 on 9 August, `toISOString()` returns
+ * 2026-08-08. Both the key an entry is filed under and the key each calendar
+ * cell matches shifted back a day together, so an entry logged just after
+ * midnight was written to the previous day's date and the "today" highlight sat
+ * on the wrong cell — while `isSameDay` right above used local getters and
+ * disagreed with both.
+ *
+ * `entry_date` is a Postgres `date`, so a local calendar date is what belongs
+ * in it.
+ */
 function formatDateKey(d: Date): string {
-  return d.toISOString().split('T')[0];
+  const month = `${d.getMonth() + 1}`.padStart(2, '0');
+  const day = `${d.getDate()}`.padStart(2, '0');
+  return `${d.getFullYear()}-${month}-${day}`;
 }
 
 export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
@@ -105,6 +157,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [selectedRamsIds, setSelectedRamsIds] = useState<string[]>([]);
   const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
   const [recorderSig, setRecorderSig] = useState('');
+  const [recorderName, setRecorderName] = useState('');
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
 
@@ -132,6 +185,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       issues,
       materialsUsed,
       notes,
+      recorderName,
       selectedRamsIds,
       selectedPermitIds,
     },
@@ -150,6 +204,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     if (recoveredDraft.issues) setIssues(recoveredDraft.issues);
     if (recoveredDraft.materialsUsed) setMaterialsUsed(recoveredDraft.materialsUsed);
     if (recoveredDraft.notes) setNotes(recoveredDraft.notes);
+    if (recoveredDraft.recorderName) setRecorderName(recoveredDraft.recorderName);
     if (recoveredDraft.selectedRamsIds?.length) setSelectedRamsIds(recoveredDraft.selectedRamsIds);
     if (recoveredDraft.selectedPermitIds?.length)
       setSelectedPermitIds(recoveredDraft.selectedPermitIds);
@@ -192,6 +247,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setSelectedRamsIds([]);
     setSelectedPermitIds([]);
     setRecorderSig('');
+    setRecorderName('');
     setLinkedJobId(null);
     setLinkedJobTitle(null);
     clearDraft();
@@ -218,11 +274,28 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   };
 
   const timeValid = !(startTime && endTime && endTime <= startTime);
-  const canSubmit = validation.isValid && timeValid;
+
+  /**
+   * `electrician_site_diary` carries UNIQUE (user_id, entry_date, site_name).
+   *
+   * Nothing checked it, so a second entry for the same site on the same day —
+   * which "Duplicate" produces by design, since it copies the site name — came
+   * back as a bare "Could not save diary entry" with no clue what was wrong.
+   * Caught here, where the fix (rename or change the day) can be described.
+   */
+  const siteNameValue = (validation.fields.siteName?.value ?? '').trim();
+  const duplicateEntry =
+    siteNameValue.length > 0 &&
+    entries.some(
+      (e: SiteDiaryEntry) => e.entry_date === selectedDateKey && e.site_name === siteNameValue
+    );
+
+  const canSubmit = validation.isValid && timeValid && !duplicateEntry;
 
   const handleSubmit = async () => {
     if (!validation.validateAll()) return;
     if (startTime && endTime && endTime <= startTime) return;
+    if (duplicateEntry) return;
     await createEntry.mutateAsync({
       entry_date: selectedDateKey,
       site_name: validation.fields.siteName.value.trim(),
@@ -240,7 +313,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       permit_ids: selectedPermitIds,
       notes: notes.trim() || null,
       recorder_signature: recorderSig || null,
-      recorder_name: null,
+      // Was hard-coded null while the column exists and the PDF prints it: the
+      // signature had no name against it on any entry ever recorded.
+      recorder_name: recorderName.trim() || null,
       job_id: linkedJobId,
     });
     haptic.success();
@@ -258,7 +333,10 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   };
 
   return (
-    <div className="bg-elec-dark min-h-screen pb-28">
+    // Site Safety's page step is hsl(0 0% 7%), not pure black — the ladder the
+    // shared module shell sets. `bg-elec-dark` (#000) made the diary a shade
+    // darker than every screen it sits beside.
+    <div className="min-h-screen bg-[hsl(0_0%_7%)] pb-28">
       <SafetyMasthead
         onBack={onBack}
         moduleName="Site Diary"
@@ -270,7 +348,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
         <div className="mx-auto max-w-3xl px-2 py-3 flex items-center gap-1">
           <button
             onClick={() => scrollCalendar('left')}
-            className="h-11 w-8 flex items-center justify-center text-white touch-manipulation"
+            className="flex h-11 w-11 touch-manipulation items-center justify-center text-white active:scale-[0.99] active:brightness-125"
             aria-label="Earlier"
           >
             ‹
@@ -293,13 +371,16 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   onClick={() => !isFuture && setSelectedDate(day)}
                   disabled={isFuture}
                   className={cn(
-                    'flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all',
+                    'flex h-16 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl text-center transition-all',
+                    // Press brightens rather than dims — a dark cell that dims
+                    // under the thumb reads as "disabled", not "pressed".
+                    'touch-manipulation active:scale-[0.97] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
                     isFuture
-                      ? 'bg-white/[0.02] text-white pointer-events-none'
+                      ? 'pointer-events-none bg-white/[0.02] text-white opacity-50'
                       : isSelected
-                        ? 'bg-elec-yellow text-black'
+                        ? 'bg-elec-yellow font-semibold text-black'
                         : isToday
-                          ? 'bg-white/[0.06] text-white border border-elec-yellow/40'
+                          ? 'border border-elec-yellow/40 bg-white/[0.06] text-white'
                           : 'bg-white/[0.04] text-white'
                   )}
                 >
@@ -321,7 +402,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
           </div>
           <button
             onClick={() => scrollCalendar('right')}
-            className="h-11 w-8 flex items-center justify-center text-white touch-manipulation"
+            className="flex h-11 w-11 touch-manipulation items-center justify-center text-white active:scale-[0.99] active:brightness-125"
             aria-label="Later"
           >
             ›
@@ -368,7 +449,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   )}
                 </AnimatePresence>
 
-                <FormCard eyebrow="Site">
+                <FormCard eyebrow="Site" className={CARD_CN}>
                   <Field label="Site name" required>
                     <input
                       value={validation.fields.siteName?.value ?? ''}
@@ -378,8 +459,14 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       placeholder="e.g. 14 King Street Refurb"
                     />
                     {validation.fields.siteName?.touched && validation.fields.siteName?.error && (
-                      <p className="text-[11px] text-red-400 mt-1">
+                      <p className="mt-1 text-[11px] text-red-400">
                         {validation.fields.siteName.error}
+                      </p>
+                    )}
+                    {duplicateEntry && (
+                      <p className="mt-1 text-[11px] text-amber-400">
+                        There is already an entry for this site on this day. Rename it or pick
+                        another day — one entry per site per day.
                       </p>
                     )}
                   </Field>
@@ -390,16 +477,18 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                     placeholder="Full address"
                   />
                   <Field label="Weather">
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex flex-wrap gap-2">
                       {WEATHER_OPTIONS.map((opt) => (
                         <button
                           key={opt.value}
                           onClick={() => setWeather(weather === opt.value ? '' : opt.value)}
+                          aria-pressed={weather === opt.value}
                           className={cn(
-                            'h-10 px-4 rounded-xl text-[13px] font-medium touch-manipulation active:scale-95 transition-all border',
+                            'h-11 rounded-xl border px-4 text-[13px] font-medium transition-all',
+                            'touch-manipulation active:scale-[0.97] active:brightness-125 [-webkit-tap-highlight-color:transparent]',
                             weather === opt.value
-                              ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                              ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                              : 'border-white/[0.12] bg-white/[0.06] text-white'
                           )}
                         >
                           {opt.label}
@@ -409,7 +498,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   </Field>
                 </FormCard>
 
-                <FormCard eyebrow="The day">
+                <FormCard eyebrow="The day" className={CARD_CN}>
                   <div className="grid grid-cols-2 gap-3">
                     <Field label="Start time">
                       <input
@@ -420,11 +509,19 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       />
                     </Field>
                     <Field label="End time">
+                      {/* `safetyInputCn` was missing here and present on every
+                          other field — this one input rendered as a raw browser
+                          time control, boxed and grey, in the middle of the
+                          underline form. */}
                       <input
                         type="time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
-                        className={cn('[color-scheme:dark]', !timeValid && 'border-red-500/60')}
+                        className={cn(
+                          safetyInputCn,
+                          '[color-scheme:dark]',
+                          !timeValid && 'border-red-400'
+                        )}
                       />
                     </Field>
                   </div>
@@ -476,97 +573,85 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                 </FormCard>
 
                 {(approvedRams.length > 0 || activePermits.length > 0) && (
-                  <FormCard eyebrow="Linked documents">
+                  <FormCard eyebrow="Linked documents" className={CARD_CN}>
                     {approvedRams.length > 0 && (
                       <Field label="RAMS (optional)">
                         {selectedRamsIds.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-2">
+                          <div className="mb-2 flex flex-wrap gap-1.5">
                             {selectedRamsIds.map((id) => {
                               const doc = approvedRams.find((r) => r.id === id);
+                              const name = doc?.project_name ?? 'RAMS';
                               return (
-                                <span
+                                <SelectedChip
                                   key={id}
-                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10"
-                                >
-                                  {doc?.project_name ?? 'RAMS'}
-                                  <button
-                                    onClick={() =>
-                                      setSelectedRamsIds((prev) => prev.filter((x) => x !== id))
-                                    }
-                                    className="text-white hover:text-white"
-                                    aria-label="Remove"
-                                  >
-                                    ×
-                                  </button>
-                                </span>
+                                  label={name}
+                                  onRemove={() =>
+                                    setSelectedRamsIds((prev) => prev.filter((x) => x !== id))
+                                  }
+                                />
                               );
                             })}
                           </div>
                         )}
-                        <SafetyListCard>
-                          {approvedRams
-                            .filter((r) => !selectedRamsIds.includes(r.id))
-                            .map((r) => (
-                              <SafetyListRow
-                                key={r.id}
-                                onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
-                                title={r.project_name}
-                                subtitle={r.location}
-                                trailing={
-                                  <span className="text-elec-yellow/70 text-[13px]">+</span>
-                                }
-                              />
-                            ))}
-                        </SafetyListCard>
+                        {/* Only render the picker while something is left to
+                            pick — an empty SafetyListCard is a bordered box
+                            with nothing in it. */}
+                        {approvedRams.some((r) => !selectedRamsIds.includes(r.id)) && (
+                          <SafetyListCard>
+                            {approvedRams
+                              .filter((r) => !selectedRamsIds.includes(r.id))
+                              .map((r) => (
+                                <SafetyListRow
+                                  key={r.id}
+                                  onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
+                                  title={r.project_name}
+                                  subtitle={r.location}
+                                  trailing={<span className="text-[13px] text-elec-yellow">+</span>}
+                                />
+                              ))}
+                          </SafetyListCard>
+                        )}
                       </Field>
                     )}
                     {activePermits.length > 0 && (
                       <Field label="Permits (optional)">
                         {selectedPermitIds.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mb-2">
+                          <div className="mb-2 flex flex-wrap gap-1.5">
                             {selectedPermitIds.map((id) => {
                               const permit = activePermits.find((p) => p.id === id);
                               return (
-                                <span
+                                <SelectedChip
                                   key={id}
-                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10"
-                                >
-                                  {permit?.title ?? 'Permit'}
-                                  <button
-                                    onClick={() =>
-                                      setSelectedPermitIds((prev) => prev.filter((x) => x !== id))
-                                    }
-                                    className="text-white hover:text-white"
-                                    aria-label="Remove"
-                                  >
-                                    ×
-                                  </button>
-                                </span>
+                                  label={permit?.title ?? 'Permit'}
+                                  onRemove={() =>
+                                    setSelectedPermitIds((prev) => prev.filter((x) => x !== id))
+                                  }
+                                />
                               );
                             })}
                           </div>
                         )}
-                        <SafetyListCard>
-                          {activePermits
-                            .filter((p) => !selectedPermitIds.includes(p.id))
-                            .map((p) => (
-                              <SafetyListRow
-                                key={p.id}
-                                onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
-                                title={p.title}
-                                subtitle={`${p.location} · ${new Date(p.end_time).toLocaleDateString('en-GB')}`}
-                                trailing={
-                                  <span className="text-elec-yellow/70 text-[13px]">+</span>
-                                }
-                              />
-                            ))}
-                        </SafetyListCard>
+                        {activePermits.some((p) => !selectedPermitIds.includes(p.id)) && (
+                          <SafetyListCard>
+                            {activePermits
+                              .filter((p) => !selectedPermitIds.includes(p.id))
+                              .map((p) => (
+                                <SafetyListRow
+                                  key={p.id}
+                                  onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
+                                  title={p.title}
+                                  subtitle={`${p.location} · ${new Date(p.end_time).toLocaleDateString('en-GB')}`}
+                                  trailing={<span className="text-[13px] text-elec-yellow">+</span>}
+                                />
+                              ))}
+                          </SafetyListCard>
+                        )}
                       </Field>
                     )}
                   </FormCard>
                 )}
 
-                <FormCard eyebrow="Project">
+                <FormCard eyebrow="Project" className={CARD_CN}>
                   <JobLinkField
                     jobId={linkedJobId}
                     jobTitle={linkedJobTitle}
@@ -577,13 +662,21 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   />
                 </FormCard>
 
-                <FormCard eyebrow="Evidence & sign-off">
+                <FormCard eyebrow="Evidence & sign-off" className={CARD_CN}>
                   <SafetyPhotoCapture
                     photos={diaryPhotos}
                     onPhotosChange={setDiaryPhotos}
                     maxPhotos={5}
                     label="Site photos"
                   />
+                  <Field label="Recorder name">
+                    <input
+                      value={recorderName}
+                      onChange={(e) => setRecorderName(e.target.value)}
+                      placeholder="Who is recording this entry"
+                      className={safetyInputCn}
+                    />
+                  </Field>
                   <SignatureField
                     label="Recorder signature"
                     value={recorderSig}
@@ -683,7 +776,12 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                               }
                               trailing={
                                 <div className="flex flex-col items-end gap-1">
-                                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-blue-500/10 text-blue-400 border-blue-500/25">
+                                  {/* Neutral surface, plain white text — the
+                                      Document Hub's convention for "done,
+                                      nothing outstanding". A blue wash on
+                                      near-black muddies and reads as a state
+                                      that needs attention. */}
+                                  <span className="inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white">
                                     Recorded
                                   </span>
                                   {meta.length > 0 && (
@@ -709,7 +807,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       {/* Sticky submit (form mode) */}
       {showForm && (
         <div
-          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 z-40"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.08] bg-[hsl(0_0%_7%)]/95 px-4 py-3 backdrop-blur-sm"
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >
           <div className="mx-auto max-w-3xl">

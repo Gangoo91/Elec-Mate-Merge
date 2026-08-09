@@ -32,8 +32,10 @@ import {
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
-  CalculatorDivider,
+  CalculatorPanes,
+  CalculatorEditorial,
 } from '@/components/calculators/shared';
+import { insulationResistanceContent } from './content/insulation-resistance';
 import {
   TABLE_64,
   AGE_LABEL,
@@ -49,6 +51,8 @@ const STATUS_STYLE: Record<IrVerdict['status'], string> = {
   acceptable: 'border-green-500/30 bg-green-500/10',
   excellent: 'border-green-500/30 bg-green-500/10',
 };
+
+const CAT = 'testing';
 
 const InsulationResistanceInterpreter = () => {
   const [reading, setReading] = useState('');
@@ -67,107 +71,122 @@ const InsulationResistanceInterpreter = () => {
 
   return (
     <CalculatorCard
-      category="testing"
+      category={CAT}
       title="Insulation Resistance Interpreter"
       description="What your reading means — BS 7671 Table 64 plus what it says about the installation"
     >
-      <CalculatorInputGrid columns={2}>
-        <CalculatorInput
-          label="Your reading"
-          unit={unit === 'G' ? 'GΩ' : 'MΩ'}
-          type="text"
-          inputMode="decimal"
-          value={reading}
-          onChange={setReading}
-          placeholder="e.g. 1.4"
-          hint="The value shown on the tester"
-        />
-        <CalculatorSelect
-          label="Unit"
-          value={unit}
-          onChange={(v) => setUnit(v as 'M' | 'G')}
-          options={[
-            { value: 'M', label: 'MΩ (megohms)' },
-            { value: 'G', label: 'GΩ — testers often show >1 GΩ' },
-          ]}
-        />
-        <CalculatorSelect
-          label="Circuit nominal voltage"
-          value={kind}
-          onChange={(v) => setKind(v as CircuitKind)}
-          options={Object.entries(TABLE_64).map(([k, v]) => ({
-            value: k,
-            label: `${v.label} — test at ${v.testVolts} V DC`,
-          }))}
-        />
-        <CalculatorSelect
-          label="Age of the installation"
-          value={age}
-          onChange={(v) => setAge(v as AgeBand)}
-          options={(Object.keys(AGE_LABEL) as AgeBand[]).map((k) => ({
-            value: k,
-            label: AGE_LABEL[k],
-          }))}
-        />
-      </CalculatorInputGrid>
+      <CalculatorPanes
+        copyTitle="Insulation Resistance"
+        placeholder="Enter your reading and the verdict will appear here."
+        form={
+          <>
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Your reading"
+                unit={unit === 'G' ? 'GΩ' : 'MΩ'}
+                type="text"
+                inputMode="decimal"
+                value={reading}
+                onChange={setReading}
+                placeholder="e.g. 1.4"
+                hint="The value shown on the tester"
+              />
+              <CalculatorSelect
+                label="Unit"
+                value={unit}
+                onChange={(v) => setUnit(v as 'M' | 'G')}
+                options={[
+                  { value: 'M', label: 'MΩ (megohms)' },
+                  { value: 'G', label: 'GΩ — testers often show >1 GΩ' },
+                ]}
+              />
+              <CalculatorSelect
+                label="Circuit nominal voltage"
+                value={kind}
+                onChange={(v) => setKind(v as CircuitKind)}
+                options={Object.entries(TABLE_64).map(([k, v]) => ({
+                  value: k,
+                  label: `${v.label} — test at ${v.testVolts} V DC`,
+                }))}
+              />
+              <CalculatorSelect
+                label="Age of the installation"
+                value={age}
+                onChange={(v) => setAge(v as AgeBand)}
+                options={(Object.keys(AGE_LABEL) as AgeBand[]).map((k) => ({
+                  value: k,
+                  label: AGE_LABEL[k],
+                }))}
+              />
+            </CalculatorInputGrid>
 
-      <CalculatorInput
-        label="Previous reading, if you have one (MΩ)"
-        unit="MΩ"
-        type="text"
-        inputMode="decimal"
-        value={previous}
-        onChange={setPrevious}
-        placeholder="e.g. 150"
-        hint="Optional — a sharp fall matters even when the current reading passes"
+            <CalculatorInput
+              label="Previous reading, if you have one (MΩ)"
+              unit="MΩ"
+              type="text"
+              inputMode="decimal"
+              value={previous}
+              onChange={setPrevious}
+              placeholder="e.g. 150"
+              hint="Optional — a sharp fall matters even when the current reading passes"
+            />
+          </>
+        }
+        result={
+          verdict && (
+            <div className="space-y-4 animate-fade-in">
+              <div className={`rounded-xl border p-4 ${STATUS_STYLE[verdict.status]}`}>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+                  {verdict.status === 'fail'
+                    ? 'Fail'
+                    : verdict.status === 'investigate'
+                      ? 'Investigate'
+                      : verdict.status === 'excellent'
+                        ? 'Excellent'
+                        : 'Acceptable'}
+                </p>
+                <p className="mt-1 text-lg font-bold leading-tight text-white">
+                  {verdict.headline}
+                </p>
+                <p className="mt-2 text-[13px] leading-relaxed text-white">{verdict.detail}</p>
+                {verdict.trend && (
+                  <p className="mt-3 border-t border-white/[0.12] pt-3 text-[13px] leading-relaxed text-white">
+                    <span className="font-semibold">Trend: </span>
+                    {verdict.trend}
+                  </p>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-white/[0.1] bg-white/[0.03] p-3">
+                <p className="text-[12.5px] leading-relaxed text-white">
+                  <span className="font-semibold">Test voltage: </span>
+                  {verdict.requiredTestVolts} V DC, minimum {verdict.minMohm} MΩ — BS 7671 Table 64
+                  (Reg 643.3.2). If the reading was taken at a different voltage it does not verify
+                  this circuit.
+                </p>
+                <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+                  Reg 643.3.2 also fixes the test condition: each distribution circuit tested
+                  separately, final circuits connected, current-using equipment disconnected.
+                </p>
+                <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+                  Where connected equipment would influence the result or be damaged, Reg 643.3.3
+                  requires the Table 64 test <em>before</em> connection, then a 250 V DC test after
+                  connection which must still reach 1 MΩ.
+                </p>
+                {verdict.guidanceOnly && (
+                  <p className="mt-2 text-[12.5px] leading-relaxed text-white">
+                    <span className="font-semibold">Note: </span>
+                    the pass/fail line above comes from Table 64. Everything said about what the
+                    reading means for the installation is guidance — GN3 and good practice — not a
+                    requirement of the Regulations.
+                  </p>
+                )}
+              </div>
+            </div>
+          )
+        }
+        footer={<CalculatorEditorial content={insulationResistanceContent} category={CAT} />}
       />
-
-      {verdict && (
-        <>
-          <CalculatorDivider category="testing" />
-          <div className={`rounded-xl border p-4 ${STATUS_STYLE[verdict.status]}`}>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-              {verdict.status === 'fail'
-                ? 'Fail'
-                : verdict.status === 'investigate'
-                  ? 'Investigate'
-                  : verdict.status === 'excellent'
-                    ? 'Excellent'
-                    : 'Acceptable'}
-            </p>
-            <p className="mt-1 text-lg font-bold leading-tight text-white">{verdict.headline}</p>
-            <p className="mt-2 text-[13px] leading-relaxed text-white">{verdict.detail}</p>
-            {verdict.trend && (
-              <p className="mt-3 border-t border-white/[0.12] pt-3 text-[13px] leading-relaxed text-white">
-                <span className="font-semibold">Trend: </span>
-                {verdict.trend}
-              </p>
-            )}
-          </div>
-
-          <div className="rounded-xl border border-white/[0.1] bg-white/[0.03] p-3">
-            <p className="text-[12.5px] leading-relaxed text-white">
-              <span className="font-semibold">Test voltage: </span>
-              {verdict.requiredTestVolts} V DC, minimum {verdict.minMohm} MΩ — BS 7671 Table 64 (Reg
-              643.3.2). If the reading was taken at a different voltage it does not verify this
-              circuit.
-            </p>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white">
-              Where connected equipment would influence the result or be damaged, Reg 643.3.3
-              requires the Table 64 test <em>before</em> connection, then a 250 V DC test after
-              connection which must still reach 1 MΩ.
-            </p>
-            {verdict.guidanceOnly && (
-              <p className="mt-2 text-[12.5px] leading-relaxed text-white">
-                <span className="font-semibold">Note: </span>
-                the pass/fail line above comes from Table 64. Everything said about what the reading
-                means for the installation is guidance — GN3 and good practice — not a requirement
-                of the Regulations.
-              </p>
-            )}
-          </div>
-        </>
-      )}
     </CalculatorCard>
   );
 };

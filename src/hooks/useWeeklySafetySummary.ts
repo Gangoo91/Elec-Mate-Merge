@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
 export type HudsonLevel =
+  | 'insufficient_data'
   | 'critical'
   | 'reactive'
   | 'calculative'
@@ -66,6 +67,26 @@ export interface WeeklySummary {
   trend: 'improving' | 'declining' | 'stable';
   trendDelta: number;
   previousScore: number;
+
+  /**
+   * How many independent signals the score is built on.
+   *
+   * Compliance starts at 30 and Outcomes at 10 and both deduct, so an account
+   * with no data at all scores 40 — which used to be published as "critical".
+   * Coverage is what separates "no evidence" from "evidence of a problem".
+   */
+  coverage: {
+    scored: number;
+    total: number;
+    minimum: number;
+    missing: string[];
+  };
+  /** False → show coverage and a first action, never a band. */
+  hasEnoughEvidence: boolean;
+  /** Days the activity dimensions are measured over (90). */
+  windowDays: number;
+  /** The single thing to do next, or null when nothing is outstanding. */
+  nextAction: { label: string; view: string | null } | null;
 
   // Legacy fields kept for back-compat
   period: { start: string; end: string };

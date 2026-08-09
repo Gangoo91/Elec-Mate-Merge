@@ -4,12 +4,18 @@
  * SafetyModuleShell (masthead + PageHero + StatStrip + FilterBar) over a
  * day-grouped observation list. Logging happens in a bottom-sheet form with
  * draft recovery and a pre-save readiness gate. One colour dimension only
- * (type / severity / status) — monochrome everywhere else.
+ * (type / severity) — monochrome everywhere else.
+ *
+ * `safety_observations` stores no lifecycle state (no `status` column, and no
+ * UPDATE policy on the table — verified against the live schema), so nothing
+ * here counts "open" or "closed" items. Follow-up is tracked as corrective
+ * actions on the detail sheet, which is a table that does persist.
  */
 
 import { useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Select,
@@ -48,8 +54,6 @@ import { ObservationFeed } from './ObservationFeed';
 import { ObservationDetailSheet } from './ObservationDetailSheet';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -61,13 +65,30 @@ import {
   TextAction,
   selectContentClass,
 } from '@/components/college/primitives';
-import { safetyInputCn, safetySelectTriggerCn } from '../common/SafetyDocField';
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from '../common/SafetyDocField';
+import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
 
 type TypeFilter = 'all' | 'positive' | 'improvement_needed';
 type ObservationType = 'positive' | 'improvement_needed';
 
-const STATUS_PILL =
-  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap bg-emerald-500/10 text-emerald-400 border-emerald-500/25';
+/** Neutral surface, coloured text — the Document Hub convention. */
+const COUNT_PILL =
+  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap bg-white/[0.05] text-amber-400 border-white/10';
+
+/**
+ * FormCard's own body is a flat `hsl(0 0% 12%)` fill. `bg-transparent` clears
+ * it so the card recipe's white-alpha ramp sits on near-black — the material
+ * every other card in the app is made of. Layered over a mid-grey base it is a
+ * different, flatter surface, which is what made these sheets look assembled
+ * from parts.
+ */
+const CARD_CN = cn('bg-transparent border-elec-yellow/35', CARD_SURFACE);
+
+/** Segmented control: one container, equal cells, 44px targets. */
+const SEGMENT_WRAP = 'grid gap-1 rounded-xl border border-white/[0.12] bg-white/[0.04] p-1';
+const SEGMENT_CELL =
+  'h-11 rounded-lg text-[13px] font-medium touch-manipulation transition-all ' +
+  'active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]';
 
 interface SafetyObservationCardProps {
   onBack?: () => void;
@@ -101,7 +122,10 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [showLoadTemplate, setShowLoadTemplate] = useState(false);
 
-  const getTemplateData = () => ({ observationType, category, severity });
+  // `handleLoadTemplate` restores a description, so the saver has to offer one:
+  // saving a template and loading it back silently dropped the wording, which
+  // is the part a recurring observation is actually worth templating for.
+  const getTemplateData = () => ({ observationType, category, severity, description });
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
     if (data.observationType) setObservationType(data.observationType as ObservationType);
@@ -151,9 +175,16 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     setLinkedJobTitle(null);
   };
 
-  const canSubmit = category.length > 0 && description.trim().length > 0;
-
-  // Pre-save readiness gate (BS 7671-aligned: capture what makes an observation usable).
+  /**
+   * The readiness list and the submit gate are now the SAME predicate.
+   *
+   * They were not: the gate demanded "Severity rated" for an improvement, but
+   * `canSubmit` only checked category and description — so the list could show
+   * an unmet requirement while the Log button stayed live, and an improvement
+   * could be filed with no severity. Severity is the only field that decides
+   * how the row is coloured and ranked, so an unrated improvement is the one
+   * record the list cannot triage.
+   */
   const readiness: { ok: boolean; label: string }[] = [
     { ok: category.length > 0, label: 'Category selected' },
     { ok: description.trim().length > 0, label: 'Observation described' },
@@ -161,6 +192,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       ? [{ ok: !!severity, label: 'Severity rated' }]
       : []),
   ];
+
+  const canSubmit = readiness.every((r) => r.ok);
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
@@ -197,9 +230,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     });
   }, [observations, typeFilter, searchQuery]);
 
-  // Open improvements first, then by recency.
-  const rank = (o: SafetyObservation) =>
-    o.observation_type === 'improvement_needed' && (o.status || 'open') !== 'closed' ? 0 : 1;
+  // Improvements first, then by recency. (This used to also test `o.status`,
+  // a column the table does not have — the test was always true.)
+  const rank = (o: SafetyObservation) => (o.observation_type === 'improvement_needed' ? 0 : 1);
   const sorted = useMemo(
     () =>
       [...filtered].sort((a, b) => {
@@ -216,9 +249,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const improvementCount = observations.filter(
     (o) => o.observation_type === 'improvement_needed'
   ).length;
-  const openCount = observations.filter(
-    (o) => o.observation_type === 'improvement_needed' && (o.status || 'open') !== 'closed'
-  ).length;
+  // There was a fourth "Open" stat here. With no `status` column it counted
+  // exactly the same rows as "Improvement" — two tiles, one number, and a
+  // tap-to-filter that set the same filter. Removed rather than faked.
 
   const openSheet = () => {
     resetForm();
@@ -237,9 +270,15 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     <SafetyModuleShell
       onBack={onBack ?? (() => {})}
       moduleName="Safety Observations"
-      trailing={openCount > 0 ? <span className={STATUS_PILL}>{openCount} open</span> : undefined}
+      trailing={
+        improvementCount > 0 ? (
+          <span className={COUNT_PILL}>
+            {improvementCount} improvement{improvementCount === 1 ? '' : 's'}
+          </span>
+        ) : undefined
+      }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Safety Observations"
           title="Log and track site observations"
           description="Capture positive behaviours and areas for improvement — rate severity, assign follow-up and close the loop. Regular observations build a strong safety culture."
@@ -249,7 +288,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       }
       stats={
         observations.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
+            columns={3}
             stats={[
               { value: observations.length, label: 'Total', onClick: () => setTypeFilter('all') },
               {
@@ -262,12 +302,6 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                 value: improvementCount,
                 label: 'Improvement',
                 tone: 'amber',
-                onClick: () => setTypeFilter('improvement_needed'),
-              },
-              {
-                value: openCount,
-                label: 'Open',
-                accent: true,
                 onClick: () => setTypeFilter('improvement_needed'),
               },
             ]}
@@ -334,12 +368,20 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               )}
             </AnimatePresence>
 
-            <TextAction onClick={() => setShowLoadTemplate(true)}>
+            {/* 44px hit area — a 12px bare text link is not a tappable control
+                on a phone, however it is styled. */}
+            <TextAction
+              className="inline-flex h-11 items-center"
+              onClick={() => setShowLoadTemplate(true)}
+            >
               Load from a saved template →
             </TextAction>
 
-            <FormCard eyebrow="Observation type">
-              <div className="grid grid-cols-2 gap-1 p-1 border-b border-white/[0.15] rounded-xl">
+            <FormCard eyebrow="Observation type" className={CARD_CN}>
+              {/* Was a `border-b` on a rounded box — a stray rule under a
+                  segmented control. It is one container now, and the cells are
+                  44px rather than 36px. */}
+              <div className={cn(SEGMENT_WRAP, 'grid-cols-2')}>
                 {[
                   { v: 'positive' as const, label: 'Positive' },
                   { v: 'improvement_needed' as const, label: 'Improvement' },
@@ -348,11 +390,12 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                     key={opt.v}
                     type="button"
                     onClick={() => setObservationType(opt.v)}
+                    aria-pressed={observationType === opt.v}
                     className={cn(
-                      'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
+                      SEGMENT_CELL,
                       observationType === opt.v
-                        ? 'bg-elec-yellow text-black'
-                        : 'text-white hover:text-white'
+                        ? 'bg-elec-yellow font-semibold text-black'
+                        : 'text-white'
                     )}
                   >
                     {opt.label}
@@ -361,18 +404,19 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               </div>
 
               {observationType === 'improvement_needed' && (
-                <Field label="Severity">
-                  <div className="grid grid-cols-3 gap-1 p-1 border-b border-white/[0.15] rounded-xl">
+                <Field label="Severity" required>
+                  <div className={cn(SEGMENT_WRAP, 'grid-cols-3')}>
                     {SEVERITY_OPTIONS.map((s) => (
                       <button
                         key={s.value}
                         type="button"
                         onClick={() => setSeverity(severity === s.value ? '' : s.value)}
+                        aria-pressed={severity === s.value}
                         className={cn(
-                          'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
+                          SEGMENT_CELL,
                           severity === s.value
-                            ? 'bg-elec-yellow text-black'
-                            : 'text-white hover:text-white'
+                            ? 'bg-elec-yellow font-semibold text-black'
+                            : 'text-white'
                         )}
                       >
                         {s.label}
@@ -383,7 +427,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               )}
             </FormCard>
 
-            <FormCard eyebrow="What did you observe?">
+            <FormCard eyebrow="What did you observe?" className={CARD_CN}>
               <Field label="Category" required>
                 <Select value={category} onValueChange={setCategory}>
                   <SelectTrigger className={safetySelectTriggerCn}>
@@ -404,7 +448,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   value={description}
                   onChange={setDescription}
                   placeholder="Describe what you observed…"
-                  className="touch-manipulation text-[13px] min-h-[100px] border-white/[0.15] focus:border-elec-yellow/60 rounded-xl"
+                  className={cn(safetyTextareaCn, 'min-h-[100px]')}
                 />
               </Field>
 
@@ -434,7 +478,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               />
             </FormCard>
 
-            <FormCard eyebrow="Evidence">
+            <FormCard eyebrow="Evidence" className={CARD_CN}>
               <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="" />
               <SignatureField
                 label="Observer signature"

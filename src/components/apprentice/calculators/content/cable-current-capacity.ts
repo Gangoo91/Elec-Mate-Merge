@@ -46,17 +46,23 @@ export const cableCurrentCapacityContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'Regulation 523 — Current-carrying capacity',
+      citation: 'Regulation 523.1 — the actual duty is a TEMPERATURE limit',
       clauseText:
-        'The current to be carried by a conductor shall not exceed its current-carrying capacity Iz, determined from the Appendix 4 tabulated value corrected by the applicable rating factors for the installation conditions.',
+        'The current, including any harmonic current, to be carried by any conductor for sustained periods during normal operation shall be such that the appropriate temperature limit specified in Table 52.2 is not exceeded. The value of current shall be selected in accordance with Regulation 523.2, or determined in accordance with Regulation 523.3. Table 52.2 gives 70 °C at the conductor for thermoplastic, 90 °C at the conductor for thermosetting, 70 °C at the sheath for mineral (thermoplastic covered or bare exposed to touch) and 105 °C at the sheath for mineral not exposed to touch and not in contact with combustible material.',
+      tableRefs: ['Reg 523.1', 'Table 52.2'],
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'Appendix 4 — tabulated capacity and the rating factors',
+      clauseText:
+        'The tabulated current-carrying capacity is the value that holds the conductor at its Table 52.2 temperature limit under the reference conditions of the table. Real installations rarely match those conditions, so the tabulated value is corrected by the applicable rating factors — ambient temperature, grouping, thermal insulation and, where fitted, the factor for a semi-enclosed (BS 3036) fuse — before it may be compared with the design current.',
       tableRefs: ['Appendix 4'],
     },
   ],
-
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Reg 523 and Appendix 4 derating match the engine and bs7671-data tables. Confirm 523 sub-clause wording against A4:2026 facets.',
+      'Reg 523.1 quoted verbatim from the printed BS 7671:2018+A4:2026 text (Desktop/BS7671_ocr.pdf), together with the Table 52.2 temperature limits it points to. The file previously cited \u201cRegulation 523\u201d for \u201ccurrent-carrying capacity\u201d, which understates it \u2014 Section 523 is titled CURRENT-CARRYING CAPACITIES OF CABLES and 523.1 frames the requirement as a conductor/sheath TEMPERATURE limit, with the current merely the means of respecting it. That framing is what makes the derating factors non-optional. Derating arithmetic matches the engine and the bs7671-data tables.',
   },
 };

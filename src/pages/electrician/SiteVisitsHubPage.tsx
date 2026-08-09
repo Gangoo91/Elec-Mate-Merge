@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Plus, Search, X, Loader2 } from 'lucide-react';
+import { ArrowLeft, Plus, Search, X, Loader2, Navigation } from 'lucide-react';
 import { useSiteVisitStorage, type EnrichedSiteVisit } from '@/hooks/useSiteVisitStorage';
 import { Pill, Dot, Arrow } from '@/components/college/primitives';
 import {
@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
+import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -719,9 +720,29 @@ const SiteVisitsHubPage = () => {
                         <span className="truncate text-[12px] font-medium text-white">
                           {nextAction(visit)}
                         </span>
-                        <span className="ml-1 shrink-0 transition-transform group-hover:translate-x-0.5">
-                          <Arrow />
-                        </span>
+                        <div className="flex shrink-0 items-center gap-1">
+                          {/* ELE-1520 — the card itself opens the visit and a
+                              long press selects it, so this has to stop both
+                              or you would open the visit on the way to Maps. */}
+                          {canNavigateTo({ address: visit.propertyAddress }) && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigateToAddress({ address: visit.propertyAddress });
+                              }}
+                              onTouchStart={(e) => e.stopPropagation()}
+                              aria-label={`Navigate to ${visit.propertyAddress}`}
+                              className="flex h-9 items-center gap-1 rounded-full px-2 text-[12px] font-medium text-elec-yellow transition-colors hover:bg-white/[0.06] touch-manipulation"
+                            >
+                              <Navigation className="h-3.5 w-3.5" />
+                              Navigate
+                            </button>
+                          )}
+                          <span className="ml-1 shrink-0 transition-transform group-hover:translate-x-0.5">
+                            <Arrow />
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </motion.div>

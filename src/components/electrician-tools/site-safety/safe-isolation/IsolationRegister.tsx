@@ -346,7 +346,7 @@ export function IsolationRegister() {
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
           <Input
             placeholder="Search circuits or sites..."
-            className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+            className="pl-8 pr-8 h-11 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -389,7 +389,7 @@ export function IsolationRegister() {
               setSearchQuery('');
               setStatusFilter('all');
             }}
-            className="mt-3 h-9 px-4 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white touch-manipulation"
+            className="mt-3 h-11 px-4 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white touch-manipulation"
           >
             Clear filters
           </button>

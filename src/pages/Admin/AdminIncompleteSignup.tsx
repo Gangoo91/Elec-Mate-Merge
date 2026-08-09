@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -21,8 +22,6 @@ import { cn } from '@/lib/utils';
 import {
   PageFrame,
   PageHero,
-  StatStrip,
-  FilterBar,
   ListCard,
   ListCardHeader,
   ListBody,
@@ -32,33 +31,79 @@ import {
   IconButton,
   EmptyState,
   LoadingBlocks,
-  Divider,
-  SectionHeader,
   Eyebrow,
   type Tone,
 } from '@/components/admin/editorial';
 
 type CampaignId = 'v9' | 'v10';
 type RoleFilter = 'all' | 'electrician' | 'apprentice';
+type StatusFilter = 'all' | 'pending' | 'emailed';
+type SortKey = 'action' | 'newest' | 'oldest';
 
-interface IncompleteUser {
+/*
+  Validated dark-surface series. The old page carried its whole visual language
+  in `tone="amber"` — hero, card headers, every pill and the campaign cards were
+  the same amber wash, so a person emailed six months ago and a person who
+  abandoned an hour ago were rendered identically. These four are drawn from the
+  validated admin series; elec-yellow stays reserved for "needs action" so it
+  never reads as just another category.
+*/
+const SERIES = {
+  blue: '#3987E5',
+  red: '#E66767',
+  green: '#199E70',
+  purple: '#9085E9',
+} as const;
+
+/*
+  How stale an abandoned checkout is.
+
+  This is the single most decisive fact on the page and it was nowhere on it:
+  the list showed "7 months ago" as 11px grey text on the right, the same weight
+  as "2 hours ago". Against live data the 526 outstanding checkouts split
+  18 / 68 / 411 / 29 across these four bands — i.e. 78% of the list is between
+  one and six months old, which is the thing that decides whether the campaign
+  is worth sending at all, and it was invisible.
+*/
+const AGE_BANDS = [
+  { key: 'w1', label: 'under a week', max: 7 * 86400000, fill: SERIES.green },
+  { key: 'm1', label: 'under a month', max: 30 * 86400000, fill: SERIES.blue },
+  { key: 'm6', label: 'one to six months', max: 180 * 86400000, fill: SERIES.purple },
+  { key: 'old', label: 'over six months', max: Infinity, fill: SERIES.red },
+] as const;
+
+function bandFor(ageMs: number) {
+  return AGE_BANDS.find((b) => ageMs < b.max) ?? AGE_BANDS[AGE_BANDS.length - 1];
+}
+
+/** Age in words, short enough to sit inline on a phone: "6d", "3 weeks", "7 months". */
+function ageLabel(ms: number): string {
+  const days = Math.floor(ms / 86400000);
+  if (days < 1) return 'today';
+  if (days < 14) return `${days}d`;
+  if (days < 60) return `${Math.floor(days / 7)} weeks`;
+  return `${Math.floor(days / 30)} months`;
+}
+
+/**
+ * A member of the abandoned-checkout cohort, joined to its campaign state.
+ *
+ * `email` is required and always populated because it comes from
+ * `useAdminUsersBase()` (auth.users), never from `profiles` — see the cohort
+ * comment below for why reading it off profiles cannot work.
+ */
+interface RosterUser {
   id: string;
   full_name: string | null;
-  username: string;
+  username: string | null;
   email: string;
   role: string | null;
   created_at: string;
-}
-
-interface SentUser {
-  id: string;
-  full_name: string | null;
-  username: string;
-  role: string | null;
-  created_at: string;
-  incomplete_signup_v3_sent_at?: string;
-  incomplete_signup_v10_sent_at?: string;
-  subscribed: boolean;
+  ageMs: number;
+  /** 'pending' = never sent this campaign's email. 'emailed' = sent, no subscription since. */
+  status: 'pending' | 'emailed';
+  /** Only known for the 200 most recent sends the backend returns — may be null on older rows. */
+  sentAt: string | null;
 }
 
 interface Stats {
@@ -66,6 +111,15 @@ interface Stats {
   sent: number;
   totalAbandoned: number;
   conversions: number;
+  /*
+    Deliberately never rendered.
+
+    `get_v3_stats` returns a bare number as a string ('6.4') while
+    `get_v10_stats` returns it already formatted ('6.4%'), and the page printed
+    whichever it got straight into the "Conversion" cell — so switching campaign
+    silently switched the units and V9 read "6.4" where V10 read "6.4%". It is
+    also computed against the wrong denominator; see `recoveryRate` below.
+  */
   conversionRate: string;
 }
 
@@ -74,6 +128,7 @@ const CAMPAIGNS: Record<
   {
     id: CampaignId;
     label: string;
+    short: string;
     subject: string;
     tagline: string;
     tone: Tone;
@@ -91,8 +146,9 @@ const CAMPAIGNS: Record<
   v9: {
     id: 'v9',
     label: 'V9 — Quick Question',
+    short: 'V9',
     subject: 'Quick question',
-    tagline: 'Personal, curious, asks why they didn\u2019t finish.',
+    tagline: 'Personal, curious, asks why they didn’t finish.',
     tone: 'amber',
     actions: {
       stats: 'get_v3_stats',
@@ -107,6 +163,7 @@ const CAMPAIGNS: Record<
   v10: {
     id: 'v10',
     label: 'V10 — Launch Price',
+    short: 'V10',
     subject: 'Your launch price, just for you.',
     tagline: 'Sales pitch — one-time rate locked in, deadline Sunday 26 April.',
     tone: 'emerald',
@@ -130,12 +187,18 @@ function getInitials(name: string | null | undefined, fallback: string = '?'): s
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+const selectCn =
+  'h-9 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 ' +
+  'text-[12px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none';
+
 export default function AdminIncompleteSignup() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
   const [campaign, setCampaign] = useState<CampaignId>('v10');
   const [roleFilter, setRoleFilter] = useState<RoleFilter>('all');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [sortBy, setSortBy] = useState<SortKey>('action');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -144,18 +207,12 @@ export default function AdminIncompleteSignup() {
   const [showTestEmail, setShowTestEmail] = useState(false);
   const [manualEmail, setManualEmail] = useState('');
   const [confirmSend, setConfirmSend] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<IncompleteUser | null>(null);
+  const [selectedUser, setSelectedUser] = useState<RosterUser | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
   const [batchSending, setBatchSending] = useState(false);
 
   const C = CAMPAIGNS[campaign];
-
-  const refreshAll = () => {
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-stats'] });
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-eligible'] });
-    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-sent'] });
-  };
 
   const invoke = async <T,>(action: string, body: Record<string, unknown> = {}) => {
     const { data, error } = await supabase.functions.invoke('send-incomplete-signup', {
@@ -166,6 +223,45 @@ export default function AdminIncompleteSignup() {
     return data as T;
   };
 
+  /*
+    The whole abandoned-checkout population, derived on the client.
+
+    The four headline cells used to read "Abandoned 0 · Last 24h 0 · Emailed 427
+    · Recovered 27", and the first two were wrong for two separate reasons.
+
+    1. `get_v10_stats` builds its total with
+         .select('id', { count: 'exact', head: true })
+       and then reads `data.count`. With `head: true` PostgREST returns no body
+       at all: `data` is null, the row count arrives on the sibling `count`
+       property, and `(v10Total)?.count ?? 0` therefore evaluated to 0 on every
+       single call. "Abandoned" was not low, it was structurally nailed to nought
+       — the real figure against live data is 526. The same expression feeds
+       `totalEligible`, which came back as 0 − 427 = −427.
+    2. "Last 24h" was never a 24-hour figure. It rendered `totalAbandoned`, the
+       very same variable as the cell beside it, under a different label.
+
+    The edge function is not ours to change from this page, so the cohort is
+    rebuilt here from `useAdminUsersBase()` using the identical predicate the
+    backend uses (electrician/apprentice, has a Stripe customer, not subscribed,
+    no free access). That hook is also the only source of email addresses that
+    works: `profiles` has no email column — it lives on auth.users — so any
+    query selecting `profiles.email` answers 42703 and yields null.
+  */
+  const { data: allUsers, isLoading: baseLoading, refetch: refetchBase } = useAdminUsersBase();
+
+  const cohort = useMemo(
+    () =>
+      (allUsers ?? []).filter(
+        (u) =>
+          (u.role === 'electrician' || u.role === 'apprentice') &&
+          !!u.stripe_customer_id &&
+          !u.subscribed &&
+          !u.free_access_granted &&
+          !!u.email
+      ),
+    [allUsers]
+  );
+
   const { data: stats } = useQuery<Stats>({
     queryKey: ['admin-incomplete-stats', campaign],
     queryFn: () => invoke<Stats>(C.actions.stats),
@@ -175,54 +271,175 @@ export default function AdminIncompleteSignup() {
 
   const {
     data: eligibleUsers,
-    isLoading: usersLoading,
+    isLoading: eligibleLoading,
     isFetching,
     refetch,
-  } = useQuery<IncompleteUser[]>({
+  } = useQuery<{ id: string }[]>({
     queryKey: ['admin-incomplete-eligible', campaign],
     queryFn: async () => {
-      const data = await invoke<{ users: IncompleteUser[] }>(C.actions.eligible);
+      const data = await invoke<{ users: { id: string }[] }>(C.actions.eligible);
       return data?.users || [];
     },
     staleTime: 30 * 1000,
   });
 
-  const { data: sentUsers, isLoading: sentLoading } = useQuery<SentUser[]>({
+  const { data: sentUsers } = useQuery<
+    {
+      id: string;
+      incomplete_signup_v3_sent_at?: string;
+      incomplete_signup_v10_sent_at?: string;
+    }[]
+  >({
     queryKey: ['admin-incomplete-sent', campaign],
     queryFn: async () => {
-      const data = await invoke<{ users: SentUser[] }>(C.actions.sent);
+      const data = await invoke<{ users: { id: string }[] }>(C.actions.sent);
       return data?.users || [];
     },
     staleTime: 30 * 1000,
   });
 
-  const filteredEligible = useMemo(() => {
-    if (!eligibleUsers) return [];
-    let list = eligibleUsers;
+  const refreshAll = () => {
+    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-stats'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-eligible'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-incomplete-sent'] });
+    refetchBase();
+  };
+
+  /*
+    Send timestamps, for the rows that have one.
+
+    `get_v10_sent` / `get_v3_sent` are capped at `.limit(200)` while 427 people
+    have actually been sent V10, so this map covers only the most recent 200
+    sends. That cap is also why "Recovered" is a hero figure and not a list
+    filter: 27 people subscribed after the email but only 10 of them fall inside
+    the newest 200 rows, so a list built from this endpoint would have shown 10
+    and quietly called it all of them. The exact 27 comes from `stats`, which
+    counts server-side without a limit.
+  */
+  const sentAtById = useMemo(() => {
+    const m = new Map<string, string>();
+    (sentUsers ?? []).forEach((u) => {
+      const at =
+        (campaign === 'v10' ? u.incomplete_signup_v10_sent_at : u.incomplete_signup_v3_sent_at) ??
+        null;
+      if (at) m.set(u.id, at);
+    });
+    return m;
+  }, [sentUsers, campaign]);
+
+  /*
+    One roster instead of two lists.
+
+    The page had an "Abandoned Checkouts" card and, four hundred pixels lower
+    under a divider, a "Recently Emailed" card — the same people, split by a
+    boolean, with no way to see them together, search across them or tell from
+    the first list that 397 of the 526 had already been contacted. They are one
+    population with a status, so they are now one list with a status chip.
+
+    Membership comes from the cohort (complete, 526) and the status from the
+    eligible endpoint's id set, so "not emailed" + "emailed" is a partition of
+    the cohort by construction and the chip counts cannot fail to sum to All.
+    That was the other reconciliation bug: the old tabs counted the eligible
+    list only, so "All 129" sat under a headline claiming 427 had been emailed.
+  */
+  const eligibleReady = Array.isArray(eligibleUsers);
+  const roster = useMemo<RosterUser[]>(() => {
+    if (!eligibleReady) return [];
+    const pendingIds = new Set(eligibleUsers.map((u) => u.id));
+    const now = Date.now();
+    return cohort.map((u) => {
+      const created = u.created_at;
+      return {
+        id: u.id,
+        full_name: u.full_name,
+        username: u.username ?? null,
+        email: u.email as string,
+        role: u.role ?? null,
+        created_at: created,
+        ageMs: Math.max(0, now - new Date(created).getTime()),
+        status: pendingIds.has(u.id) ? 'pending' : 'emailed',
+        sentAt: sentAtById.get(u.id) ?? null,
+      };
+    });
+  }, [cohort, eligibleUsers, eligibleReady, sentAtById]);
+
+  /*
+    `get_v10_eligible` caps at `.limit(500)`. Under that cap the partition above
+    is exact (129 pending today). If it ever saturates, everyone past row 500
+    would be mis-labelled "emailed" and the counts would look healthier than
+    they are, so say so rather than render a confident wrong number.
+  */
+  const eligibleTruncated = (eligibleUsers?.length ?? 0) >= 500;
+
+  const counts = useMemo(() => {
+    const pending = roster.filter((r) => r.status === 'pending').length;
+    return { all: roster.length, pending, emailed: roster.length - pending };
+  }, [roster]);
+
+  /*
+    Recovery rate against the right denominator.
+
+    The backend divides conversions by `sent` — a count of every profile with a
+    sent timestamp, taken with no role filter and no Stripe filter at all, which
+    is why "Emailed" read 427 while the cohort it was supposedly a slice of read
+    0. Three of those 427 are not in the checkout cohort. The people the email
+    could possibly have converted are the cohort members who received it: the
+    397 still unsubscribed plus the 27 who since subscribed = 424.
+  */
+  const recovered = stats?.conversions ?? 0;
+  const everEmailed = counts.emailed + recovered;
+  const recoveryRate = everEmailed > 0 ? (recovered / everEmailed) * 100 : 0;
+
+  /** Replaces the fake "Last 24h" cell — a real seven-day window, currently 18. */
+  const newThisWeek = useMemo(() => roster.filter((r) => r.ageMs < 7 * 86400000).length, [roster]);
+
+  const ageBuckets = useMemo(() => {
+    const out = AGE_BANDS.map((b) => ({ ...b, count: 0 }));
+    roster.forEach((r) => {
+      const band = bandFor(r.ageMs);
+      const slot = out.find((b) => b.key === band.key);
+      if (slot) slot.count += 1;
+    });
+    return out;
+  }, [roster]);
+
+  const filtered = useMemo(() => {
+    let list = roster;
+    if (statusFilter !== 'all') list = list.filter((u) => u.status === statusFilter);
     if (roleFilter !== 'all') list = list.filter((u) => u.role === roleFilter);
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       list = list.filter(
         (u) =>
           (u.full_name || '').toLowerCase().includes(q) ||
-          (u.email || '').toLowerCase().includes(q) ||
+          u.email.toLowerCase().includes(q) ||
           (u.username || '').toLowerCase().includes(q)
       );
     }
-    return list;
-  }, [eligibleUsers, roleFilter, searchQuery]);
+    const sorted = [...list];
+    if (sortBy === 'newest') sorted.sort((a, b) => a.ageMs - b.ageMs);
+    else if (sortBy === 'oldest') sorted.sort((a, b) => b.ageMs - a.ageMs);
+    else {
+      // Default: the people you still have to do something about, freshest
+      // first, because a checkout abandoned this week is the one worth chasing.
+      sorted.sort((a, b) => {
+        if (a.status !== b.status) return a.status === 'pending' ? -1 : 1;
+        return a.ageMs - b.ageMs;
+      });
+    }
+    return sorted;
+  }, [roster, statusFilter, roleFilter, searchQuery, sortBy]);
 
-  const roleCounts = useMemo(() => {
-    if (!eligibleUsers) return { all: 0, electrician: 0, apprentice: 0 };
-    return {
-      all: eligibleUsers.length,
-      electrician: eligibleUsers.filter((u) => u.role === 'electrician').length,
-      apprentice: eligibleUsers.filter((u) => u.role === 'apprentice').length,
-    };
-  }, [eligibleUsers]);
-
-  const allFilteredSelected =
-    filteredEligible.length > 0 && filteredEligible.every((u) => selectedIds.has(u.id));
+  /*
+    Only unsent rows are selectable, and only unsent rows are counted in the
+    send button. The backend re-filters to `incomplete_signup_*_sent_at is null`
+    before it sends anything, so a selection containing already-emailed people
+    was harmless but the confirmation dialog still promised to email all of
+    them — "Send to all 526 filtered" when the true send was 129.
+  */
+  const pendingInView = useMemo(() => filtered.filter((u) => u.status === 'pending'), [filtered]);
+  const allPendingSelected =
+    pendingInView.length > 0 && pendingInView.every((u) => selectedIds.has(u.id));
 
   const toggleUser = (id: string) => {
     setSelectedIds((prev) => {
@@ -233,14 +450,11 @@ export default function AdminIncompleteSignup() {
     });
   };
 
-  const toggleAllFiltered = () => {
+  const toggleAllPending = () => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      if (allFilteredSelected) {
-        filteredEligible.forEach((u) => next.delete(u.id));
-      } else {
-        filteredEligible.forEach((u) => next.add(u.id));
-      }
+      if (allPendingSelected) pendingInView.forEach((u) => next.delete(u.id));
+      else pendingInView.forEach((u) => next.add(u.id));
       return next;
     });
   };
@@ -283,10 +497,7 @@ export default function AdminIncompleteSignup() {
     mutationFn: async () => invoke<{ reset: number }>(C.actions.reset),
     onSuccess: (data) => {
       haptic.success();
-      toast({
-        title: `Reset ${data?.reset ?? 0} users — ready to re-send`,
-        variant: 'success',
-      });
+      toast({ title: `Reset ${data?.reset ?? 0} users — ready to re-send`, variant: 'success' });
       refreshAll();
     },
     onError: (error: Error) => {
@@ -295,21 +506,21 @@ export default function AdminIncompleteSignup() {
     },
   });
 
+  const selectedCount = selectedIds.size;
+  const sendTargetCount = selectedCount > 0 ? selectedCount : pendingInView.length;
+
   const sendCampaign = async () => {
     setConfirmSend(false);
     setBatchSending(true);
 
     try {
-      const ids = Array.from(selectedIds);
+      const ids = selectedCount > 0 ? Array.from(selectedIds) : pendingInView.map((u) => u.id);
       const data = await invoke<{ sent: number; remaining: number; message?: string }>(
         C.actions.campaign,
         ids.length > 0 ? { userIds: ids } : {}
       );
       haptic.success();
-      toast({
-        title: data?.message || `Sent ${data?.sent ?? 0} emails`,
-        variant: 'success',
-      });
+      toast({ title: data?.message || `Sent ${data?.sent ?? 0} emails`, variant: 'success' });
       clearSelection();
     } catch (err: unknown) {
       haptic.error();
@@ -323,37 +534,26 @@ export default function AdminIncompleteSignup() {
     }
   };
 
-  const selectedCount = selectedIds.size;
-  const totalSendCount = selectedCount > 0 ? selectedCount : filteredEligible.length;
-  const sendingToSelectedLabel =
-    selectedCount > 0 ? `selected ${selectedCount}` : `all ${filteredEligible.length} filtered`;
+  const loading = baseLoading || eligibleLoading;
 
-  const totalAbandoned = stats?.totalAbandoned ?? 0;
-  const totalSent = stats?.sent ?? 0;
-  const conversions = stats?.conversions ?? 0;
-  const conversionRate = stats?.conversionRate ?? '0%';
-
-  const recoveredPill = conversions > 0;
-
-  const statusToneFor = (u: IncompleteUser): Tone => {
-    if (selectedIds.has(u.id)) return 'yellow';
-    if (u.role === 'electrician') return 'emerald';
-    if (u.role === 'apprentice') return 'blue';
-    return 'amber';
-  };
+  const statusChips: { value: StatusFilter; label: string; count: number }[] = [
+    { value: 'all', label: 'All', count: counts.all },
+    { value: 'pending', label: 'Not emailed', count: counts.pending },
+    { value: 'emailed', label: 'Emailed', count: counts.emailed },
+  ];
 
   return (
     <PullToRefresh
       onRefresh={async () => {
-        await refetch();
+        await Promise.all([refetch(), refetchBase()]);
       }}
     >
       <PageFrame>
         <PageHero
           eyebrow="Campaigns"
           title="Incomplete Signup"
-          description="Users who started checkout but never subscribed."
-          tone="amber"
+          description="Users who entered card details but never subscribed."
+          tone="yellow"
           actions={
             <IconButton
               onClick={refreshAll}
@@ -365,117 +565,289 @@ export default function AdminIncompleteSignup() {
           }
         />
 
-        <StatStrip
-          columns={4}
-          stats={[
-            { label: 'Abandoned', value: totalAbandoned },
-            { label: 'Last 24h', value: totalAbandoned, tone: 'orange' },
-            { label: 'Emailed', value: totalSent, tone: 'emerald' },
-            { label: 'Recovered', value: conversions, accent: true },
-          ]}
-        />
+        {/*
+          The size of the list, and how stale it is.
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {(['v10', 'v9'] as CampaignId[]).map((id) => {
-            const c = CAMPAIGNS[id];
-            const active = campaign === id;
-            return (
+          What stood here was a four-cell StatStrip reading "Abandoned 0 ·
+          Last 24h 0 · Emailed 427 · Recovered 27": two structural zeroes (see
+          the cohort comment for the `head: true` bug that produced them) and a
+          427 that belonged to a different population from the 0 beside it. The
+          true shape is 526 outstanding, of which 129 have never been contacted,
+          and four fifths of them abandoned between one and six months ago.
+        */}
+        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="min-w-0">
+              <Eyebrow>Abandoned checkouts</Eyebrow>
+              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
+                {counts.all}
+              </div>
+              <div className="mt-2 text-[13px] text-white">
+                {counts.all === 0
+                  ? loading
+                    ? 'Loading the checkout cohort…'
+                    : 'Nobody has an unfinished checkout.'
+                  : counts.pending === 0
+                    ? `Everyone has had the ${C.short} email. ${recovered} came back and subscribed.`
+                    : `${counts.pending} of them have never had the ${C.short} email.`}
+              </div>
+
+              {counts.all > 0 && (
+                <div className="mt-5">
+                  {/* Proportional, so "mostly ancient" is legible at a glance
+                      rather than something you work out row by row. */}
+                  <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
+                    {ageBuckets
+                      .filter((b) => b.count > 0)
+                      .map((b, i, seg) => (
+                        <div
+                          key={b.key}
+                          title={`${b.label}: ${b.count}`}
+                          style={{
+                            width: `calc(${(b.count / Math.max(counts.all, 1)) * 100}% - ${
+                              (2 * (seg.length - 1)) / seg.length
+                            }px)`,
+                            background: b.fill,
+                            borderTopLeftRadius: i === 0 ? 999 : 2,
+                            borderBottomLeftRadius: i === 0 ? 999 : 2,
+                            borderTopRightRadius: i === seg.length - 1 ? 999 : 2,
+                            borderBottomRightRadius: i === seg.length - 1 ? 999 : 2,
+                          }}
+                        />
+                      ))}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
+                    {ageBuckets
+                      .filter((b) => b.count > 0)
+                      .map((b) => (
+                        <span key={b.key} className="flex items-center gap-2">
+                          <span
+                            className="h-2 w-2 shrink-0 rounded-full"
+                            style={{ background: b.fill }}
+                          />
+                          <span className="font-medium tabular-nums text-white">{b.count}</span>{' '}
+                          {b.label}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {eligibleTruncated && (
+                <p className="mt-4 text-[12px] text-white/60">
+                  The eligible endpoint returns at most 500 rows and it is full, so the
+                  emailed/not-emailed split below understates how many are still to contact.
+                </p>
+              )}
+            </div>
+
+            {/*
+              Campaign state, and each cell is the filter it describes.
+              "Recovered" is the one cell that is not a filter: those people are
+              subscribed, so they have left the abandoned cohort entirely — making
+              it a chip would have produced a rail whose parts exceeded its whole.
+            */}
+            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
               <button
-                key={id}
+                onClick={() => setStatusFilter('pending')}
+                className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+              >
+                <div
+                  className={cn(
+                    'text-[22px] font-semibold leading-none sm:text-[26px]',
+                    counts.pending > 0 ? 'text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {counts.pending}
+                </div>
+                <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                  Not emailed
+                </div>
+                <div className="mt-1 text-[11px] text-white/60">no {C.short} email yet</div>
+              </button>
+
+              <button
+                onClick={() => setStatusFilter('emailed')}
+                className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+              >
+                <div className="text-[22px] font-semibold leading-none text-white sm:text-[26px]">
+                  {counts.emailed}
+                </div>
+                <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                  Emailed
+                </div>
+                <div className="mt-1 text-[11px] text-white/60">still not subscribed</div>
+              </button>
+
+              <div className="bg-[hsl(0_0%_9%)] px-4 py-5">
+                <div
+                  className="text-[22px] font-semibold leading-none sm:text-[26px]"
+                  style={{ color: recovered > 0 ? SERIES.green : undefined }}
+                >
+                  {recovered}
+                </div>
+                <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                  Recovered
+                </div>
+                <div className="mt-1 text-[11px] text-white/60">
+                  {everEmailed > 0
+                    ? `${recoveryRate.toFixed(1)}% of ${everEmailed} emailed`
+                    : 'subscribed after the email'}
+                </div>
+              </div>
+
+              <button
                 onClick={() => {
-                  setCampaign(id);
+                  setStatusFilter('all');
+                  setSortBy('newest');
+                }}
+                className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+              >
+                <div className="text-[22px] font-semibold leading-none text-white sm:text-[26px]">
+                  {newThisWeek}
+                </div>
+                <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                  New this week
+                </div>
+                <div className="mt-1 text-[11px] text-white/60">abandoned in last 7 days</div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/*
+          One filter row.
+
+          There were two full-width rails plus a pair of 100px campaign cards
+          above them: a v9/v10 card grid, then a FilterBar carrying role chips
+          and search — roughly 200px of chrome before a single name appeared.
+          Status is what you actually switch between so it stays as chips;
+          campaign, role and sort collapse into compact selects on the same line
+          with search at the end. The campaign's subject and tagline moved into
+          the send card below, which is where they matter.
+        */}
+        <div className="-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+              {statusChips.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => setStatusFilter(f.value)}
+                  className={cn(
+                    'h-9 touch-manipulation rounded-full px-3 text-[12px] font-medium transition-colors',
+                    statusFilter === f.value
+                      ? 'bg-elec-yellow text-black'
+                      : 'text-white hover:bg-white/[0.08]'
+                  )}
+                >
+                  {f.label}
+                  <span
+                    className={cn(
+                      'ml-1.5 tabular-nums text-[11px]',
+                      statusFilter === f.value ? 'text-black/60' : 'text-white/60'
+                    )}
+                  >
+                    {f.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <select
+                value={campaign}
+                onChange={(e) => {
+                  setCampaign(e.target.value as CampaignId);
                   clearSelection();
                 }}
-                className={cn(
-                  'group relative rounded-2xl border p-4 text-left transition-colors touch-manipulation bg-[hsl(0_0%_12%)] overflow-hidden',
-                  active ? 'border-elec-yellow/40' : 'border-white/[0.06] hover:bg-[hsl(0_0%_15%)]'
-                )}
+                aria-label="Campaign"
+                className={selectCn}
               >
-                {active && (
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-80" />
-                )}
-                <div className="flex items-center justify-between gap-3">
-                  <Eyebrow>{c.label}</Eyebrow>
-                  {active && <Pill tone="yellow">Active</Pill>}
-                </div>
-                <p className="mt-3 text-[13px] text-white leading-relaxed">{c.tagline}</p>
-                <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-3">
-                  <span className="text-[11px] text-white truncate">{c.subject}</span>
-                  <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow shrink-0 ml-3">
-                    {active ? 'Selected →' : 'Switch →'}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+                <option value="v10">V10 — Launch Price</option>
+                <option value="v9">V9 — Quick Question</option>
+              </select>
 
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All', count: roleCounts.all },
-            { value: 'electrician', label: 'Electrician', count: roleCounts.electrician },
-            { value: 'apprentice', label: 'Apprentice', count: roleCounts.apprentice },
-          ]}
-          activeTab={roleFilter}
-          onTabChange={(v) => setRoleFilter(v as RoleFilter)}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search name or email…"
-          actions={
-            <button
-              onClick={() => setConfirmSend(true)}
-              disabled={batchSending || totalSendCount === 0}
-              className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation whitespace-nowrap"
-            >
-              {batchSending ? (
-                <span className="inline-flex items-center gap-2">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" /> Sending…
-                </span>
-              ) : selectedCount > 0 ? (
-                `Send Email (${selectedCount})`
-              ) : (
-                `Send Email (${filteredEligible.length})`
-              )}
-            </button>
-          }
-        />
+              <select
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value as RoleFilter)}
+                aria-label="Filter by role"
+                className={selectCn}
+              >
+                <option value="all">All roles</option>
+                <option value="electrician">Electrician</option>
+                <option value="apprentice">Apprentice</option>
+              </select>
+
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortKey)}
+                aria-label="Sort by"
+                className={selectCn}
+              >
+                <option value="action">Needs action</option>
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+              </select>
+
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search name or email…"
+                aria-label="Search abandoned checkouts"
+                className="h-9 w-[10rem] touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3.5 text-[12px] text-white caret-elec-yellow placeholder:text-white/40 focus:border-elec-yellow focus:outline-none sm:w-56"
+              />
+            </div>
+          </div>
+        </div>
 
         <ListCard>
           <ListCardHeader
-            tone="amber"
-            title="Send Controls"
+            tone="yellow"
+            title="Send controls"
             meta={<Pill tone={C.tone}>{C.label}</Pill>}
             action="Preview"
             onAction={() => setShowPreview(true)}
           />
-          <div className="px-5 sm:px-6 py-5 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <div className="flex-1 min-w-0">
+          <div className="space-y-4 px-5 py-5 sm:px-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="min-w-0 flex-1">
                 <Eyebrow>Subject</Eyebrow>
-                <p className="mt-1.5 text-[14px] font-medium text-white truncate">{C.subject}</p>
+                <p className="mt-1.5 truncate text-[14px] font-medium text-white">{C.subject}</p>
                 <p className="mt-1 text-[12px] text-white">{C.tagline}</p>
+                {/*
+                  The backend's lifetime send count, labelled as exactly that.
+                  It is 427 while the cohort shows 397 emailed, because it counts
+                  every profile carrying a sent timestamp with no role or Stripe
+                  filter — including the 27 who have since subscribed. Shown here
+                  as campaign history, not as a slice of the 526 above.
+                */}
+                <p className="mt-1 text-[11px] text-white/60">
+                  {stats?.sent ?? 0} {C.short} emails sent all time
+                </p>
               </div>
               <button
                 onClick={() => setShowTestEmail(!showTestEmail)}
-                className="h-10 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.08] touch-manipulation whitespace-nowrap"
+                className="h-11 touch-manipulation whitespace-nowrap rounded-full border border-white/[0.08] bg-white/[0.04] px-4 text-[13px] font-medium text-white hover:bg-white/[0.08]"
               >
                 {showTestEmail ? 'Hide test' : 'Send test'}
               </button>
             </div>
 
             {campaign === 'v10' && (
-              <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.06]">
                 <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
                   <Eyebrow>Electrician</Eyebrow>
                   <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-[20px] font-semibold text-white tabular-nums">£9.99</span>
+                    <span className="text-[20px] font-semibold tabular-nums text-white">£9.99</span>
                     <span className="text-[11px] text-white line-through">£14.99</span>
                   </div>
                 </div>
                 <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
                   <Eyebrow>Apprentice</Eyebrow>
                   <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-[20px] font-semibold text-white tabular-nums">£4.99</span>
+                    <span className="text-[20px] font-semibold tabular-nums text-white">£4.99</span>
                     <span className="text-[11px] text-white line-through">£6.99</span>
                   </div>
                 </div>
@@ -483,17 +855,17 @@ export default function AdminIncompleteSignup() {
             )}
 
             {showTestEmail && (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3">
+              <div className="space-y-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
                 <Eyebrow>Send test email</Eyebrow>
                 {campaign === 'v10' && (
                   <div className="flex gap-2">
                     <button
                       onClick={() => setTestRole('electrician')}
                       className={cn(
-                        'flex-1 h-11 rounded-full text-[13px] font-semibold touch-manipulation transition-colors',
+                        'h-11 flex-1 touch-manipulation rounded-full text-[13px] font-semibold transition-colors',
                         testRole === 'electrician'
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                          : 'border border-white/[0.08] bg-white/[0.04] text-white'
                       )}
                     >
                       Electrician £9.99
@@ -501,10 +873,10 @@ export default function AdminIncompleteSignup() {
                     <button
                       onClick={() => setTestRole('apprentice')}
                       className={cn(
-                        'flex-1 h-11 rounded-full text-[13px] font-semibold touch-manipulation transition-colors',
+                        'h-11 flex-1 touch-manipulation rounded-full text-[13px] font-semibold transition-colors',
                         testRole === 'apprentice'
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                          : 'border border-white/[0.08] bg-white/[0.04] text-white'
                       )}
                     >
                       Apprentice £4.99
@@ -517,12 +889,13 @@ export default function AdminIncompleteSignup() {
                     value={testEmail}
                     onChange={(e) => setTestEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="h-11 flex-1 px-4 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                    className="h-11 flex-1 touch-manipulation rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] px-4 text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/60 focus:outline-none"
                   />
                   <button
                     onClick={() => testEmail && sendTestMutation.mutate()}
                     disabled={!testEmail || sendTestMutation.isPending}
-                    className="h-11 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-40 touch-manipulation"
+                    aria-label="Send test email"
+                    className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:opacity-40"
                   >
                     {sendTestMutation.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -542,12 +915,13 @@ export default function AdminIncompleteSignup() {
                   value={manualEmail}
                   onChange={(e) => setManualEmail(e.target.value)}
                   placeholder="someone@example.com"
-                  className="h-11 flex-1 px-4 bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className="h-11 flex-1 touch-manipulation rounded-full border border-white/[0.08] bg-[hsl(0_0%_10%)] px-4 text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/60 focus:outline-none"
                 />
                 <button
                   onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
                   disabled={!manualEmail || sendManualMutation.isPending}
-                  className="h-11 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-40 touch-manipulation"
+                  aria-label="Send email manually"
+                  className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:opacity-40"
                 >
                   {sendManualMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -573,24 +947,28 @@ export default function AdminIncompleteSignup() {
                   }
                 }}
                 disabled={resetMutation.isPending}
-                className="h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation inline-flex items-center justify-center gap-2"
+                className="inline-flex h-11 touch-manipulation items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] text-[13px] font-medium text-white hover:bg-white/[0.08] disabled:opacity-40"
               >
                 {resetMutation.isPending ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <RotateCcw className="h-4 w-4" />
                 )}
-                Reset All Sent
+                Reset all sent
               </button>
+              {/*
+                Counts only people who have not had the email. The old button
+                read `filteredEligible.length`, which was the whole eligible
+                list, and the new roster contains emailed people too — sending
+                "all 526" would have been a promise the backend never keeps.
+              */}
               <button
                 onClick={() => setConfirmSend(true)}
-                disabled={batchSending || totalSendCount === 0}
-                className="h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation inline-flex items-center justify-center gap-2"
+                disabled={batchSending || sendTargetCount === 0}
+                className="inline-flex h-11 touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[13px] font-semibold text-black disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send className="h-4 w-4" />
-                {selectedCount > 0
-                  ? `Send (${selectedCount})`
-                  : `Send All (${filteredEligible.length})`}
+                {selectedCount > 0 ? `Send (${selectedCount})` : `Send all (${sendTargetCount})`}
               </button>
             </div>
           </div>
@@ -598,155 +976,115 @@ export default function AdminIncompleteSignup() {
 
         <ListCard>
           <ListCardHeader
-            tone="amber"
-            title="Abandoned Checkouts"
-            meta={<Pill tone="amber">{filteredEligible.length}</Pill>}
+            tone="yellow"
+            title={
+              statusFilter === 'pending'
+                ? 'Not yet emailed'
+                : statusFilter === 'emailed'
+                  ? 'Already emailed'
+                  : 'Abandoned checkouts'
+            }
+            meta={<Pill tone="yellow">{filtered.length}</Pill>}
             action={
               selectedCount > 0
                 ? 'Clear selection'
-                : filteredEligible.length > 0
-                  ? allFilteredSelected
+                : pendingInView.length > 0
+                  ? allPendingSelected
                     ? 'Deselect all'
-                    : 'Select all'
+                    : `Select ${pendingInView.length} unsent`
                   : undefined
             }
             onAction={
               selectedCount > 0
                 ? clearSelection
-                : filteredEligible.length > 0
-                  ? toggleAllFiltered
+                : pendingInView.length > 0
+                  ? toggleAllPending
                   : undefined
             }
           />
-          {usersLoading ? (
+          {loading ? (
             <div className="p-5">
               <LoadingBlocks />
             </div>
-          ) : filteredEligible.length === 0 ? (
+          ) : filtered.length === 0 ? (
             <EmptyState
-              title="No abandoned checkouts"
+              title="Nothing here"
               description={
-                roleFilter === 'all' && !searchQuery
-                  ? `All ${C.label} emails sent. Use Reset All Sent to re-enable.`
-                  : `No ${roleFilter === 'all' ? 'users' : `${roleFilter}s`} match this filter.`
+                counts.all === 0
+                  ? 'No accounts have an unfinished checkout.'
+                  : 'No one matches these filters. Clear the search or switch status.'
               }
             />
           ) : (
             <ListBody>
-              {filteredEligible.map((user) => {
+              {filtered.map((user) => {
                 const selected = selectedIds.has(user.id);
                 const displayName = user.full_name || user.username || 'Unknown';
-                const tone = statusToneFor(user);
-                const timeAgo = formatDistanceToNow(parseISO(user.created_at), { addSuffix: true });
+                const band = bandFor(user.ageMs);
+                /*
+                  The row's signal is how long this checkout has been dead and
+                  whether we have written to them — not a generic avatar and a
+                  name. It previously showed initials, name, email, a role pill
+                  and "7 months ago" in 11px grey identical to "2 hours ago", so
+                  the fresh leads were indistinguishable from the fossils. The
+                  age now carries the band colour used in the bar above, so the
+                  list and the chart read as one thing.
+                */
                 return (
                   <ListRow
                     key={user.id}
                     accent={selected ? 'yellow' : undefined}
                     lead={<Avatar initials={getInitials(displayName, 'U')} online={selected} />}
-                    title={displayName}
-                    subtitle={user.email}
-                    trailing={
-                      <>
-                        <Pill tone={tone} className="hidden sm:inline-flex">
-                          {user.role || 'unknown'}
-                        </Pill>
-                        {/* Time is secondary — hide on mobile so the name wins */}
-                        <span className="hidden text-[11px] text-white tabular-nums sm:inline">
-                          {timeAgo}
+                    title={
+                      <span className="flex items-baseline gap-2">
+                        <span className="truncate">{displayName}</span>
+                        <span
+                          className="ml-auto shrink-0 text-[13px] font-semibold tabular-nums"
+                          style={{ color: band.fill }}
+                          title={`Signed up ${formatDistanceToNow(parseISO(user.created_at), {
+                            addSuffix: true,
+                          })}`}
+                        >
+                          {ageLabel(user.ageMs)}
                         </span>
+                      </span>
+                    }
+                    subtitle={
+                      <span className="flex items-baseline gap-1.5">
+                        {user.status === 'pending' && (
+                          <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                            Not emailed
+                          </span>
+                        )}
+                        <span className="truncate text-white">{user.email}</span>
+                        <span className="ml-auto hidden shrink-0 text-[10px] uppercase tracking-[0.12em] text-white/60 sm:inline">
+                          {user.status === 'emailed'
+                            ? user.sentAt
+                              ? `sent ${formatDistanceToNow(parseISO(user.sentAt))} ago`
+                              : 'sent'
+                            : user.role || 'unknown'}
+                        </span>
+                      </span>
+                    }
+                    trailing={
+                      user.status === 'pending' ? (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleUser(user.id);
                           }}
                           className={cn(
-                            'h-7 px-2.5 rounded-full text-[11px] font-medium border touch-manipulation transition-colors',
+                            'h-7 touch-manipulation rounded-full border px-2.5 text-[11px] font-medium transition-colors',
                             selected
-                              ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                              ? 'border-elec-yellow bg-elec-yellow text-black'
+                              : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]'
                           )}
                         >
                           {selected ? 'Selected' : 'Select'}
                         </button>
-                      </>
+                      ) : undefined
                     }
                     onClick={() => setSelectedUser(user)}
-                  />
-                );
-              })}
-            </ListBody>
-          )}
-        </ListCard>
-
-        <div>
-          <SectionHeader
-            eyebrow="Performance"
-            title="Campaign"
-            meta={<Pill tone={C.tone}>{C.label}</Pill>}
-          />
-          <div className="mt-4">
-            {/* Honest metrics — the backend tracks completed signups only.
-                The old strip showed the same conversions number twice,
-                dressed up as separate "open" and "click" rates. */}
-            <StatStrip
-              columns={3}
-              stats={[
-                { label: 'Sent', value: totalSent },
-                {
-                  label: 'Recovered',
-                  value: conversions,
-                  sub: 'Completed signup after email',
-                  accent: recoveredPill,
-                },
-                { label: 'Conversion', value: conversionRate },
-              ]}
-            />
-          </div>
-        </div>
-
-        <Divider label="Sent history" />
-
-        <ListCard>
-          <ListCardHeader
-            tone="emerald"
-            title="Recently Emailed"
-            meta={<Pill tone="emerald">{sentUsers?.length || 0}</Pill>}
-          />
-          {sentLoading ? (
-            <div className="p-5">
-              <LoadingBlocks />
-            </div>
-          ) : !sentUsers || sentUsers.length === 0 ? (
-            <EmptyState
-              title="No emails sent yet"
-              description={`Send the ${C.label} email to see results here.`}
-            />
-          ) : (
-            <ListBody>
-              {sentUsers.map((u) => {
-                const sentAt =
-                  (campaign === 'v10'
-                    ? u.incomplete_signup_v10_sent_at
-                    : u.incomplete_signup_v3_sent_at) ?? null;
-                const displayName = u.full_name || u.username || 'Unknown';
-                return (
-                  <ListRow
-                    key={u.id}
-                    lead={<Avatar initials={getInitials(displayName, 'U')} online={u.subscribed} />}
-                    title={displayName}
-                    subtitle={u.role || 'unknown'}
-                    trailing={
-                      <>
-                        <Pill tone={u.subscribed ? 'emerald' : 'amber'}>
-                          {u.subscribed ? 'Converted' : 'Pending'}
-                        </Pill>
-                        <span className="text-[11px] text-white tabular-nums">
-                          {sentAt
-                            ? formatDistanceToNow(parseISO(sentAt), { addSuffix: true })
-                            : 'unknown'}
-                        </span>
-                      </>
-                    }
                   />
                 );
               })}
@@ -757,56 +1095,68 @@ export default function AdminIncompleteSignup() {
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
           <SheetContent
             side="bottom"
-            className="h-[50vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+            className="h-[50vh] rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_10%)] p-0"
           >
-            <div className="flex flex-col h-full">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-white/20" />
+            <div className="flex h-full flex-col">
+              <div className="flex justify-center pb-2 pt-3">
+                <div className="h-1 w-10 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+              <SheetHeader className="border-b border-white/[0.06] px-5 pb-4">
                 <SheetTitle className="flex items-center gap-3 text-left">
                   <Avatar initials={getInitials(selectedUser?.full_name, 'U')} />
                   <div className="min-w-0">
-                    <p className="text-[15px] font-semibold text-white truncate">
+                    <p className="truncate text-[15px] font-semibold text-white">
                       {selectedUser?.full_name || 'Unknown'}
                     </p>
-                    <p className="text-[12px] font-normal text-white truncate">
+                    <p className="truncate text-[12px] font-normal text-white">
                       {selectedUser?.email}
                     </p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-5 space-y-3">
+              <div className="flex-1 space-y-3 overflow-y-auto p-5">
                 <ListCard>
                   <div className="divide-y divide-white/[0.06]">
                     <div className="flex items-center justify-between px-5 py-3.5">
                       <span className="text-[12px] text-white">Role</span>
-                      <Pill tone={statusToneFor(selectedUser ?? ({} as IncompleteUser))}>
+                      <span className="text-[12px] capitalize text-white">
                         {selectedUser?.role || 'unknown'}
-                      </Pill>
+                      </span>
                     </div>
                     <div className="flex items-center justify-between px-5 py-3.5">
-                      <span className="text-[12px] text-white">Signed Up</span>
-                      <span className="text-[12px] text-white tabular-nums">
+                      <span className="text-[12px] text-white">Abandoned</span>
+                      <span className="text-[12px] tabular-nums text-white">
                         {selectedUser?.created_at &&
                           format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
                       </span>
                     </div>
+                    {/* Was missing entirely: the one thing you need before
+                        deciding to send is whether they have already had it. */}
+                    <div className="flex items-center justify-between px-5 py-3.5">
+                      <span className="text-[12px] text-white">{C.short} email</span>
+                      <span className="text-[12px] text-white">
+                        {selectedUser?.status === 'pending'
+                          ? 'Never sent'
+                          : selectedUser?.sentAt
+                            ? format(parseISO(selectedUser.sentAt), 'dd MMM yyyy')
+                            : 'Sent'}
+                      </span>
+                    </div>
                     <div className="flex items-center justify-between px-5 py-3.5">
                       <span className="text-[12px] text-white">Username</span>
-                      <span className="text-[12px] text-white truncate max-w-[60%]">
+                      <span className="max-w-[60%] truncate text-[12px] text-white">
                         {selectedUser?.username || '—'}
                       </span>
                     </div>
                   </div>
                 </ListCard>
-                {selectedUser && (
+                {selectedUser?.status === 'pending' && (
                   <button
                     onClick={() => {
                       toggleUser(selectedUser.id);
                       setSelectedUser(null);
                     }}
-                    className="w-full h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation"
+                    className="h-11 w-full touch-manipulation rounded-full bg-elec-yellow text-[13px] font-semibold text-black"
                   >
                     {selectedIds.has(selectedUser.id)
                       ? 'Remove from selection'
@@ -819,34 +1169,44 @@ export default function AdminIncompleteSignup() {
         </Sheet>
 
         <AlertDialog open={confirmSend} onOpenChange={setConfirmSend}>
-          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6 bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5 sm:max-w-lg sm:p-6">
             <AlertDialogHeader className="space-y-3">
-              <AlertDialogTitle className="text-base sm:text-lg leading-tight text-white">
-                Send {C.label} to {sendingToSelectedLabel}?
+              <AlertDialogTitle className="text-base leading-tight text-white sm:text-lg">
+                Send {C.label} to {sendTargetCount} {sendTargetCount === 1 ? 'person' : 'people'}?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
-                <div className="text-sm leading-relaxed space-y-2">
+                <div className="space-y-2 text-sm leading-relaxed">
                   <p className="text-white">
                     {selectedCount > 0
-                      ? `Sending to ${selectedCount} selected users.`
-                      : `Sending to all ${filteredEligible.length} users matching the current filter${roleFilter !== 'all' ? ` (${roleFilter}s only)` : ''}.`}
+                      ? `${selectedCount} selected, all of whom have never had this email.`
+                      : `Everyone in the current filter who has not had it yet${
+                          roleFilter !== 'all' ? ` (${roleFilter}s only)` : ''
+                        }.`}
                   </p>
-                  <p className="text-white text-xs">
-                    Batched 10 at a time with 2s delay between batches.
+                  {/*
+                    The dialog never mentioned suppression. The edge function
+                    drops any address in `email_suppressions` before sending —
+                    4 of today's 129 — so the number sent is legitimately lower
+                    than the number promised here, and that used to look like a
+                    failure rather than PECR compliance working.
+                  */}
+                  <p className="text-xs text-white">
+                    Batched 10 at a time, 2s between batches. Unsubscribed and bounced addresses are
+                    skipped, so the number actually sent may be lower.
                   </p>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
-              <AlertDialogCancel className="h-11 touch-manipulation text-sm w-full sm:w-auto mt-0 rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08]">
+            <AlertDialogFooter className="flex-col-reverse gap-2 pt-2 sm:flex-row sm:gap-2">
+              <AlertDialogCancel className="mt-0 h-11 w-full touch-manipulation rounded-full border border-white/[0.08] bg-white/[0.04] text-sm text-white hover:bg-white/[0.08] sm:w-auto">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={sendCampaign}
-                className="h-11 touch-manipulation text-sm text-black font-semibold w-full sm:w-auto rounded-full bg-elec-yellow hover:bg-elec-yellow/90"
+                className="h-11 w-full touch-manipulation rounded-full bg-elec-yellow text-sm font-semibold text-black hover:bg-elec-yellow/90 sm:w-auto"
               >
-                <Send className="h-4 w-4 mr-2" />
-                Send to {sendingToSelectedLabel}
+                <Send className="mr-2 h-4 w-4" />
+                Send to {sendTargetCount}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -855,13 +1215,13 @@ export default function AdminIncompleteSignup() {
         <Sheet open={showPreview} onOpenChange={setShowPreview}>
           <SheetContent
             side="bottom"
-            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+            className="h-[85vh] rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_10%)] p-0"
           >
-            <div className="flex flex-col h-full">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-white/20" />
+            <div className="flex h-full flex-col">
+              <div className="flex justify-center pb-2 pt-3">
+                <div className="h-1 w-10 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-5 pb-3 border-b border-white/[0.06]">
+              <SheetHeader className="border-b border-white/[0.06] px-5 pb-3">
                 <SheetTitle className="flex items-center gap-2 text-[13px] text-white">
                   <Eye className="h-4 w-4 text-white" />
                   Preview: {C.subject}
@@ -872,7 +1232,7 @@ export default function AdminIncompleteSignup() {
                 <iframe
                   title="Email Preview"
                   sandbox="allow-same-origin"
-                  className="w-full h-full border-0"
+                  className="h-full w-full border-0"
                   srcDoc={
                     campaign === 'v10'
                       ? `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:48px 24px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;min-height:90vh}.pill{padding:6px 14px;background:rgba(16,185,129,0.14);border:1px solid rgba(16,185,129,0.4);border-radius:999px;color:#34d399;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.4px}h1{margin:8px 0 4px;font-size:28px;font-weight:800;line-height:1.1}h1 span{color:#34d399}.card{width:100%;max-width:340px;padding:20px;background:linear-gradient(180deg,rgba(16,185,129,0.08),rgba(16,185,129,0.02));border:1px solid rgba(16,185,129,0.28);border-radius:18px;margin-top:12px}.old{font-size:13px;opacity:0.55;text-decoration:line-through;text-decoration-color:#f87171}.new{font-size:44px;font-weight:800;color:#34d399;letter-spacing:-1px;margin:4px 0 2px}.mo{font-size:16px;color:#fff;opacity:0.7;font-weight:600}.cta{display:inline-block;margin-top:20px;padding:14px 28px;background:#34d399;border-radius:12px;font-weight:800;color:#000;text-decoration:none;font-size:14px}p.note{margin-top:12px;font-size:11px;color:#fff;opacity:0.5}</style></head><body><div class="pill">Ends Sunday 26 April</div><h1>Your launch price,<br><span>just for you.</span></h1><p style="opacity:0.7;font-size:13px;max-width:320px;margin:0">Send a test email to see the real template rendered in your inbox.</p><div class="card"><div style="font-size:11px;color:#34d399;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Elec-Mate Electrician</div><span class="old">£14.99/mo normally</span><div class="new">£9.99<span class="mo">/mo</span></div><div style="font-size:10px;opacity:0.5;letter-spacing:0.4px;text-transform:uppercase;margin-top:10px">Locked in &middot; Cancel anytime</div></div><a class="cta" href="#">Claim £9.99/month &rarr;</a><p class="note">Secure checkout via Stripe &middot; No code to enter</p></body></html>`

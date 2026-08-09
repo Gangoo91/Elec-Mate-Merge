@@ -8,14 +8,7 @@
 export type AchievementRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
 export type AchievementCategory =
-  | 'flashcards'
-  | 'quizzes'
-  | 'streaks'
-  | 'ojt'
-  | 'portfolio'
-  | 'diary'
-  | 'xp'
-  | 'epa';
+  'flashcards' | 'quizzes' | 'streaks' | 'ojt' | 'portfolio' | 'diary' | 'xp' | 'epa' | 'courses';
 
 export interface AchievementDef {
   id: string;
@@ -410,6 +403,73 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDef[] = [
     conditionKey: 'epa_distinction',
     conditionParams: {},
   },
+  // ─── Course progress ─────────────────────────────────────────
+  //
+  // The Study Centre carries 45 courses and, until now, awarded nothing at all
+  // for working through them — every category above rewards flashcards,
+  // quizzes, streaks or apprentice paperwork. Someone could finish four whole
+  // tracks and unlock nothing.
+  //
+  // Measured in SECTIONS, not courses, because course-level completion is not
+  // recorded: `course_progress` holds 3,490 completed rows and every single one
+  // is a section, with zero course-level rows. Rewarding "courses completed"
+  // would mean inventing a number the database cannot support, so these count
+  // the thing that is actually tracked.
+  {
+    id: 'section-first',
+    title: 'Off the Mark',
+    description: 'Complete your first course section',
+    icon: 'BookOpen',
+    category: 'courses',
+    rarity: 'common',
+    xpBonus: 25,
+    conditionKey: 'sections_completed',
+    conditionParams: { count: 1 },
+  },
+  {
+    id: 'section-10',
+    title: 'Getting Stuck In',
+    description: 'Complete 10 course sections',
+    icon: 'BookOpen',
+    category: 'courses',
+    rarity: 'uncommon',
+    xpBonus: 50,
+    conditionKey: 'sections_completed',
+    conditionParams: { count: 10 },
+  },
+  {
+    id: 'section-25',
+    title: 'Serious Study',
+    description: 'Complete 25 course sections',
+    icon: 'BookOpen',
+    category: 'courses',
+    rarity: 'rare',
+    xpBonus: 100,
+    conditionKey: 'sections_completed',
+    conditionParams: { count: 25 },
+  },
+  {
+    id: 'section-100',
+    title: 'Century of Sections',
+    description: 'Complete 100 course sections',
+    icon: 'GraduationCap',
+    category: 'courses',
+    rarity: 'epic',
+    xpBonus: 250,
+    conditionKey: 'sections_completed',
+    conditionParams: { count: 100 },
+  },
+  {
+    id: 'section-250',
+    title: 'Scholar of the Trade',
+    description: 'Complete 250 course sections',
+    icon: 'GraduationCap',
+    category: 'courses',
+    rarity: 'legendary',
+    xpBonus: 500,
+    conditionKey: 'sections_completed',
+    conditionParams: { count: 250 },
+  },
 ];
 
 /** Category display metadata */
@@ -425,6 +485,7 @@ export const ACHIEVEMENT_CATEGORY_META: Record<
   diary: { name: 'Site Diary', colour: 'text-pink-400' },
   xp: { name: 'XP & Levels', colour: 'text-elec-yellow' },
   epa: { name: 'EPA', colour: 'text-red-400' },
+  courses: { name: 'Courses', colour: 'text-elec-yellow' },
 };
 
 /** Rarity display colours */

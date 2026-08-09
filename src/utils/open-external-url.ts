@@ -14,6 +14,18 @@ import { Browser } from '@capacitor/browser';
 import { addBreadcrumb } from '@/lib/sentry';
 
 // URLs that should open in external apps, not in-app browser
+//
+// ELE-1520 — `maps.google.com` alone did not cover the URLs we actually build.
+// Every navigate action in the app uses the documented Maps URL API form,
+// `https://www.google.com/maps/search/?api=1&query=…`, which does NOT contain
+// the substring `maps.google.com`. So every one of them fell through to
+// Browser.open() and opened a map inside SFSafariViewController — you could
+// look at your destination but not drive to it. `google.com/maps` matches both
+// that form and the older maps.google.com host.
+//
+// `maps:` and `geo:` are the Apple and Android map schemes; like tel:/mailto:
+// they are handed to the OS rather than to a web view, which cannot render
+// them at all.
 const EXTERNAL_APP_PATTERNS = [
   'wa.me',
   'api.whatsapp.com',
@@ -23,6 +35,9 @@ const EXTERNAL_APP_PATTERNS = [
   'sms:',
   'maps.apple.com',
   'maps.google.com',
+  'google.com/maps',
+  'maps:',
+  'geo:',
   'youtube.com/watch',
   'youtu.be/',
 ];

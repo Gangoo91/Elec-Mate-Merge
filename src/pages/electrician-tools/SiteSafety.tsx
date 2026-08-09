@@ -23,6 +23,7 @@ import {
   HubBody,
   HubMasthead,
   HubToolGrid,
+  HubAlertLine,
   HubKpi,
   HubKpiRow,
   type HubTool,
@@ -30,6 +31,8 @@ import {
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
+import { SafetyScoreCard } from '@/components/electrician-tools/site-safety/SafetyScoreCard';
+import { useFireWatchFollowUpCheck } from '@/hooks/useFireWatchRecords';
 import { useAllSafetyDocuments } from '@/hooks/useAllSafetyDocuments';
 import { SafetyScoreSheet } from '@/components/electrician-tools/site-safety/SafetyScoreSheet';
 import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
@@ -210,6 +213,10 @@ const SiteSafety = () => {
   const [scoreSheetOpen, setScoreSheetOpen] = useState(false);
 
   const { stats: dashboardStats } = useSafetyDashboardStats();
+  // Mounted at the hub, not inside the Fire Watch module — the whole point of
+  // the two-hour check is that everyone has left the area by then. Also writes
+  // to the app bell so it survives the app being closed when it falls due.
+  useFireWatchFollowUpCheck();
   const { data: recentDocuments } = useRecentDocuments();
   // Real document count across all modules — same source the Documents
   // page reads from, so the hub stat agrees with what the user sees inside.
@@ -217,7 +224,7 @@ const SiteSafety = () => {
   const totalDocuments = allDocuments?.length ?? 0;
   const { overdueItems: equipmentOverdue, dueSoonItems: equipmentDueSoon } = useSafetyEquipment();
   const { data: coshhOverdue = [] } = useCOSHHOverdueReviews();
-  const { data: weeklySummary } = useWeeklySafetySummary();
+  const { data: weeklySummary, isLoading: weeklyLoading } = useWeeklySafetySummary();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -277,10 +284,7 @@ const SiteSafety = () => {
       title: 'Documents Hub',
       description: 'Every saved RAMS, permit and assessment in one place.',
       onClick: () => setActiveView('documents'),
-      meta:
-        totalDocuments > 0
-          ? `${totalDocuments} saved`
-          : 'Empty',
+      meta: totalDocuments > 0 ? `${totalDocuments} saved` : 'Empty',
     },
     {
       id: 'safety-templates',
@@ -364,10 +368,7 @@ const SiteSafety = () => {
       title: 'COSHH Assessments',
       description: 'Chemical substance hazard assessments.',
       onClick: () => setActiveView('coshh'),
-      meta:
-        coshhOverdue.length > 0
-          ? `${coshhOverdue.length} overdue`
-          : 'All current',
+      meta: coshhOverdue.length > 0 ? `${coshhOverdue.length} overdue` : 'All current',
       alert: coshhOverdue.length > 0,
     },
     {
@@ -422,8 +423,7 @@ const SiteSafety = () => {
       title: 'Equipment Tracker',
       description: 'Track PPE and safety equipment inspections.',
       onClick: () => setActiveView('equipment'),
-      meta:
-        equipmentDueCount > 0 ? `${equipmentDueCount} due` : 'All clear',
+      meta: equipmentDueCount > 0 ? `${equipmentDueCount} due` : 'All clear',
       alert: equipmentOverdue.length > 0,
     },
     {
@@ -568,7 +568,10 @@ const SiteSafety = () => {
     [...coreTools, ...recordingTools, ...complianceTools, ...resourceTools].map((c) => [c.id, c])
   );
   const group = (ids: string[]): HubTool[] =>
-    ids.map((id) => byId.get(id)).filter(Boolean).map((c) => toHubTool(c as ToolCard));
+    ids
+      .map((id) => byId.get(id))
+      .filter(Boolean)
+      .map((c) => toHubTool(c as ToolCard));
 
   const buildTools = group(['ai-rams', 'documents', 'safety-templates', 'hazard-database']);
   const onSiteTools = group(['team-briefing', 'photo-docs', 'site-diary', 'pre-use-checks']);
@@ -587,71 +590,123 @@ const SiteSafety = () => {
         <HubMasthead section="Electrician" title="Site Safety" backTo="/electrician" />
 
         <HubBody>
-          <HubKpiRow>
-            <HubKpi
-              accent
-              label="Safety score"
-              value={safetyScore != null ? String(safetyScore) : '—'}
-              sentiment={
-                safetyScore == null ? 'neutral' : safetyScore >= 80 ? 'good' : safetyScore >= 60 ? 'neutral' : 'bad'
-              }
-              verdict={
-                safetyScore == null
-                  ? 'No data yet'
-                  : safetyScore >= 80
-                    ? 'Strong'
-                    : safetyScore >= 60
-                      ? 'Steady'
-                      : 'Needs attention'
-              }
+          {/*
+           * Full width, laid out 2x2.
+           *
+           * This was capped at ~900px on the theory that two columns across the
+           * full 1600px body made each card a slab. In front of the actual
+           * screen that was the wrong call: the cap left a quarter of the
+           * window empty to the right of the cards while the rule under the
+           * breadcrumb still ran the full width, so the page read as
+           * unfinished rather than composed.
+           */}
+          <div className="w-full space-y-8 sm:space-y-10">
+            {/* The two-hour fire watch check (HSG168) is the one outstanding item
+              that, by definition, nobody is on site for. It gets a line above
+              the metrics rather than a fifth KPI tile: the row is a four-column
+              grid, and it is an action to take, not a figure to read. */}
+            {dashboardStats.fireWatchFollowUpsDue > 0 && (
+              <HubAlertLine
+                text={
+                  dashboardStats.fireWatchFollowUpsDue === 1
+                    ? 'A fire watch needs its two-hour check'
+                    : `${dashboardStats.fireWatchFollowUpsDue} fire watches need their two-hour check`
+                }
+                action="Check"
+                onClick={() => setActiveView('fire-watch')}
+              />
+            )}
+
+            {/* Not <HubKpiRow> — that is lg:grid-cols-4 and shared with seven other
+              hubs. Site Safety reads as pairs (score vs overdue, equipment vs
+              permits), so it gets a true 2x2 block here rather than changing
+              the row for everyone. */}
+            {/* The score leads: it is the only composite figure on the page, and
+              the only one that answers "how am I doing" rather than "how many".
+              Full width above the counts, as a chart rather than a tile. */}
+            <SafetyScoreCard
+              summary={weeklySummary}
+              isLoading={weeklyLoading}
               onClick={() => setScoreSheetOpen(true)}
             />
-            <HubKpi
-              label="COSHH overdue"
-              value={String(coshhOverdue.length)}
-              sentiment={coshhOverdue.length > 0 ? 'bad' : 'neutral'}
-              direction={coshhOverdue.length > 0 ? 'up' : 'flat'}
-              verdict={coshhOverdue.length > 0 ? 'Review these first' : 'All reviews current'}
-              onClick={() => setActiveView('coshh')}
-            />
-            <HubKpi
-              label="Equipment due"
-              value={String(equipmentDueCount)}
-              sentiment={equipmentOverdue.length > 0 ? 'bad' : 'neutral'}
-              verdict={
-                equipmentOverdue.length > 0
-                  ? 'Inspections overdue'
-                  : equipmentDueCount > 0
-                    ? 'Due soon'
-                    : 'All clear'
-              }
-              context={
-                equipmentOverdue.length > 0 ? `${equipmentOverdue.length} already overdue` : undefined
-              }
-              onClick={() => setActiveView('equipment')}
-            />
-            <HubKpi
-              label="Permits live"
-              value={String(dashboardStats.activePermits)}
-              verdict={dashboardStats.activePermits > 0 ? 'Work under permit now' : 'No live permits'}
-              context={totalDocuments > 0 ? `${totalDocuments} documents on file` : undefined}
-              onClick={() => setActiveView('permit-to-work')}
-            />
-          </HubKpiRow>
 
-          {recentCards.length > 0 && (
-            <HubToolGrid label="Recent" cards={recentCards.map(recentToHubTool)} columns="four" />
-          )}
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+              {/* Replaces the old "Safety score" tile, which now has the chart
+                  above it — the same figure twice on one screen taught nothing
+                  the second time. Days-since is the other composite worth a
+                  slot: it is the figure a site actually puts on the board. */}
+              <HubKpi
+                label="Days since near miss"
+                value={
+                  dashboardStats.daysSinceLastNearMiss == null
+                    ? '—'
+                    : String(dashboardStats.daysSinceLastNearMiss)
+                }
+                verdict={
+                  dashboardStats.daysSinceLastNearMiss == null
+                    ? 'None reported yet'
+                    : dashboardStats.daysSinceLastNearMiss === 0
+                      ? 'One reported today'
+                      : 'Since the last report'
+                }
+                context={
+                  dashboardStats.totalNearMisses > 0
+                    ? `${dashboardStats.totalNearMisses} on record`
+                    : undefined
+                }
+                onClick={() => setActiveView('near-miss')}
+              />
+              <HubKpi
+                label="COSHH overdue"
+                value={String(coshhOverdue.length)}
+                sentiment={coshhOverdue.length > 0 ? 'bad' : 'neutral'}
+                direction={coshhOverdue.length > 0 ? 'up' : 'flat'}
+                verdict={coshhOverdue.length > 0 ? 'Review these first' : 'All reviews current'}
+                onClick={() => setActiveView('coshh')}
+              />
+              <HubKpi
+                label="Equipment due"
+                value={String(equipmentDueCount)}
+                sentiment={equipmentOverdue.length > 0 ? 'bad' : 'neutral'}
+                verdict={
+                  equipmentOverdue.length > 0
+                    ? 'Inspections overdue'
+                    : equipmentDueCount > 0
+                      ? 'Due soon'
+                      : 'All clear'
+                }
+                context={
+                  equipmentOverdue.length > 0
+                    ? `${equipmentOverdue.length} already overdue`
+                    : undefined
+                }
+                onClick={() => setActiveView('equipment')}
+              />
+              <HubKpi
+                label="Permits live"
+                value={String(dashboardStats.activePermits)}
+                verdict={
+                  dashboardStats.activePermits > 0 ? 'Work under permit now' : 'No live permits'
+                }
+                context={totalDocuments > 0 ? `${totalDocuments} documents on file` : undefined}
+                onClick={() => setActiveView('permit-to-work')}
+              />
+            </div>
 
-          <HubToolGrid label="Build the documents" cards={buildTools} columns="four" />
+            {recentCards.length > 0 && (
+              <HubToolGrid label="Recent" cards={recentCards.map(recentToHubTool)} columns="pair" />
+            )}
 
-          <HubToolGrid label="On site" cards={onSiteTools} columns="four" />
+            <HubToolGrid label="Build the documents" cards={buildTools} columns="pair" />
 
-          <HubToolGrid label="Report something" cards={reportingTools} columns="four" />
+            <HubToolGrid label="On site" cards={onSiteTools} columns="pair" />
 
-          <HubToolGrid label="Permits & control" cards={controlTools} columns="four" />
+            <HubToolGrid label="Report something" cards={reportingTools} columns="pair" />
 
-          <HubToolGrid label="Kit & reference" cards={referenceTools} columns="four" />
+            <HubToolGrid label="Permits & control" cards={controlTools} columns="pair" />
+
+            <HubToolGrid label="Kit & reference" cards={referenceTools} columns="pair" />
+          </div>
         </HubBody>
       </HubPage>
 

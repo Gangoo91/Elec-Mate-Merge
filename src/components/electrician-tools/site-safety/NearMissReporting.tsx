@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
@@ -21,8 +22,6 @@ import {
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -55,6 +54,8 @@ import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templ
 import { JobLinkField } from './common/JobLinkField';
 import { NearMissReport, Witness } from './types';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 interface FormData {
   category: string;
@@ -81,6 +82,20 @@ interface FormData {
   likelihood: number;
 }
 
+/**
+ * Quick-start templates.
+ *
+ * These prefill the *incident description* — the factual account of what
+ * happened, which is the part an investigator, an insurer or the HSE reads.
+ *
+ * The previous versions appended a citation to each one ("Ref: EAWR 1989
+ * Reg 4, GS38", "PPER 2022", "CDM 2015, HSG47"). Two problems: none of those
+ * references at that level of precision could be verified against the safety
+ * corpus (GS38 and HSG47 return no rows in `safety_facets` at all), and a
+ * boilerplate regulation reference does not belong in a description of an
+ * event — it is a claim about the law that the reporter did not make and
+ * cannot check on site. Removed rather than swapped for another guess.
+ */
 const QUICK_TEMPLATES = [
   {
     id: 'electrical',
@@ -88,7 +103,7 @@ const QUICK_TEMPLATES = [
     category: 'electrical_hazard',
     severity: 'high',
     description:
-      'Near miss involving electrical hazard — exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.',
+      'Near miss involving an electrical hazard — exposed live parts, shock risk, or inadequate isolation discovered. ',
   },
   {
     id: 'fire',
@@ -96,7 +111,7 @@ const QUICK_TEMPLATES = [
     category: 'fire_risk',
     severity: 'critical',
     description:
-      'Near miss involving fire hazard — overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.',
+      'Near miss involving a fire hazard — overheating connection, arcing, sparking, or potential ignition source. ',
   },
   {
     id: 'ppe',
@@ -104,7 +119,7 @@ const QUICK_TEMPLATES = [
     category: 'ppe_failure',
     severity: 'medium',
     description:
-      'Near miss due to PPE issue — missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.',
+      'Near miss due to a PPE issue — missing, damaged, or incorrect PPE identified before work commenced. ',
   },
   {
     id: 'worksite',
@@ -112,7 +127,7 @@ const QUICK_TEMPLATES = [
     category: 'worksite_hazard',
     severity: 'medium',
     description:
-      'Near miss involving worksite hazard — trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.',
+      'Near miss involving a worksite hazard — trip hazard, cable strike risk, unstable surface, or access issue. ',
   },
 ];
 
@@ -177,19 +192,36 @@ function sevTone(severity: string): Tone {
         ? 'amber'
         : 'blue';
 }
-const SEV_CLASS: Record<string, string> = {
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+/**
+ * Two colour treatments, deliberately not one.
+ *
+ * A STATUS PILL is read-only labelling on a list of twenty rows. Tinting the
+ * whole pill body puts twenty coloured rectangles on the page and the eye
+ * stops being able to find the one that matters — so the pill is a neutral
+ * chip and the severity is carried by the text colour alone.
+ *
+ * A SELECTED SEVERITY BUTTON is the opposite: one of four, and the fill *is*
+ * the answer to "which did I pick". Tinted fills stay right there.
+ */
+const SEV_TEXT: Record<string, string> = {
+  red: 'text-red-400',
+  orange: 'text-orange-400',
+  amber: 'text-amber-400',
+  blue: 'text-blue-400',
+};
+const SEV_SELECTED: Record<string, string> = {
+  red: 'bg-red-500/15 text-red-400 border-red-500/40',
+  orange: 'bg-orange-500/15 text-orange-400 border-orange-500/40',
+  amber: 'bg-amber-500/15 text-amber-400 border-amber-500/40',
+  blue: 'bg-blue-500/15 text-blue-400 border-blue-500/40',
 };
 
 function SevPill({ severity }: { severity: string }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        SEV_CLASS[sevTone(severity)]
+        'inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em]',
+        SEV_TEXT[sevTone(severity)]
       )}
     >
       {(severity || '—').toUpperCase()}
@@ -209,9 +241,15 @@ function CollapsibleSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    // Was a flat `hsl(0 0% 12%)` slab with a white/6 hairline, which is a
+    // different material from every other card on the page. The shared recipe
+    // (diagonal ramp + inset bevel) under the volt edge is what the rest of
+    // Site Safety is made of.
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
       <Collapsible open={open} onOpenChange={onOpenChange}>
-        <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
+        {/* Press brightens; a hover fill painted over a gradient card shows its
+            own rectangle at the moment of contact. */}
+        <CollapsibleTrigger className="flex min-h-11 w-full touch-manipulation items-center justify-between px-5 py-4 text-left transition-all duration-150 active:scale-[0.99] active:brightness-125 [-webkit-tap-highlight-color:transparent]">
           <Eyebrow>{title}</Eyebrow>
           <span
             className={cn(
@@ -223,7 +261,9 @@ function CollapsibleSection({
             ⌄
           </span>
         </CollapsibleTrigger>
-        <CollapsibleContent className="px-5 pb-5 pt-1 space-y-4">{children}</CollapsibleContent>
+        <CollapsibleContent className="space-y-4 border-t border-white/[0.08] px-5 pb-5 pt-4">
+          {children}
+        </CollapsibleContent>
       </Collapsible>
     </div>
   );
@@ -327,12 +367,17 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     const loadReports = async () => {
       if (!user) return;
       setLoadingReports(true);
+      // Was `.limit(10)`. The stat strip and every filter-tab count are
+      // computed from this array, so a user with 40 reports was shown
+      // "Total 10" and could never reach the other 30 — `useShowMore` pages at
+      // 20, so the "Show more" button could not appear either. The list is
+      // still paged for rendering; only the fetch ceiling moved.
       const { data, error } = await supabase
         .from('near_miss_reports')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
-        .limit(10);
+        .limit(200);
       if (!error && data) setReports(data as unknown as NearMissReport[]);
       setLoadingReports(false);
     };
@@ -489,7 +534,11 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         preventive_measures: formData.preventive_measures || null,
         status: 'open',
         follow_up_required: formData.severity === 'high' || formData.severity === 'critical',
-        witnesses: validWitnesses.length > 0 ? validWitnesses : null,
+        // `witnesses` is a jsonb column. `Witness` is an interface, and an
+        // interface has no index signature, so it never satisfies `Json` —
+        // cast this one field rather than the whole payload, which is what
+        // used to hide the missing-column bug noted below.
+        witnesses: validWitnesses.length > 0 ? (validWitnesses as unknown as Json) : null,
         third_party_involved: formData.third_party_involved,
         third_party_details: formData.third_party_details || null,
         weather_conditions: formData.weather_conditions || null,
@@ -502,16 +551,24 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         previous_similar_incidents: formData.previous_similar_incidents || null,
         photos: photoUrls.length > 0 ? photoUrls : null,
         reporter_signature: reporterSig || null,
-        likelihood: formData.likelihood > 0 ? formData.likelihood : null,
-        risk_rating:
-          formData.likelihood > 0 && formData.severity
-            ? formData.likelihood * severityToNumber(formData.severity)
-            : null,
         job_id: linkedJobId,
+        // ⚠️ `likelihood` and `risk_rating` are NOT written here, and must not
+        // be added back until the columns exist.
+        //
+        // Neither column is on `near_miss_reports` — confirmed against
+        // information_schema and by a live PostgREST select, which answers
+        // 42703 "column near_miss_reports.likelihood does not exist"
+        // (2026-08-09). PostgREST rejects an unknown key in an insert body
+        // outright, so sending them failed the WHOLE insert: every single
+        // submission of this form died on "Failed to submit report", with the
+        // real cause swallowed by the catch. The `as Record<string, unknown>`
+        // cast below is what let it ship — it opted the payload out of the
+        // generated Insert type, which knows the real column list. Cast
+        // removed so the compiler guards this from now on.
       };
       const { data, error } = await supabase
         .from('near_miss_reports')
-        .insert(insertData as Record<string, unknown>)
+        .insert(insertData)
         .select()
         .single();
       if (error) throw error;
@@ -624,24 +681,28 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
               {QUICK_TEMPLATES.map((t) => (
                 <button
                   key={t.id}
+                  type="button"
                   onClick={() => applyTemplate(t)}
                   className={cn(
-                    'p-3 rounded-xl border text-left text-[13px] font-medium touch-manipulation active:scale-[0.98] transition-all',
+                    'flex min-h-11 items-center rounded-xl border px-3 py-3 text-left text-[13px] font-medium transition-all duration-150 touch-manipulation active:scale-[0.98] active:brightness-125',
                     selectedTemplate === t.id
-                      ? 'border-elec-yellow border border-elec-yellow/35 text-elec-yellow'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_12%)] text-white'
+                      ? // Solid volt, not a volt wash — a translucent yellow
+                        // fill goes muddy brown over this ground.
+                        'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-white/[0.08] bg-white/[0.05] text-white'
                   )}
                 >
                   {t.label}
                 </button>
               ))}
             </div>
+            {/* A bare 12px text link is not a tap target. Same job, real button. */}
             <button
               type="button"
               onClick={() => setShowLoadTemplate(true)}
-              className="mt-2 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow touch-manipulation"
+              className="mt-2 flex h-11 w-full touch-manipulation items-center justify-center rounded-xl border border-elec-yellow/35 text-[13px] font-medium text-elec-yellow transition-all duration-150 active:scale-[0.99] active:brightness-125"
             >
-              Load from a saved template →
+              Load from a saved template
             </button>
           </div>
 
@@ -713,13 +774,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                       type="button"
                       onClick={() => setFormData((p) => ({ ...p, severity: s.value }))}
                       className={cn(
-                        'p-3 rounded-xl border text-left transition-all active:scale-[0.98]',
+                        'min-h-11 rounded-xl border p-3 text-left transition-all duration-150 touch-manipulation active:scale-[0.98] active:brightness-125',
                         selected
-                          ? SEV_CLASS[sevTone(s.value)]
-                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                          ? SEV_SELECTED[sevTone(s.value)]
+                          : 'border-white/[0.08] bg-white/[0.05] text-white'
                       )}
                     >
-                      <span className="text-[13px] font-medium block">{s.label}</span>
+                      <span className="block text-[13px] font-semibold">{s.label}</span>
                       <span className="text-[11px] text-white">{s.description}</span>
                     </button>
                   );
@@ -727,6 +788,12 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
               </div>
             </Field>
 
+            {/* Likelihood drives the risk matrix below, which is how the
+                reporter arrives at a defensible severity. ⚠️ It is a
+                capture-time aid only: `near_miss_reports` has no `likelihood`
+                or `risk_rating` column, so the number is not stored. Adding
+                those two columns is the outstanding piece of work — until then
+                do not add either key back to the insert (see submitReport). */}
             <Field label="Likelihood">
               <div className="flex gap-1.5">
                 {LIKELIHOOD_LEVELS.map((l) => (
@@ -735,10 +802,10 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                     type="button"
                     onClick={() => setFormData((p) => ({ ...p, likelihood: l.value }))}
                     className={cn(
-                      'flex-1 h-11 rounded-xl border text-[13px] font-medium touch-manipulation active:scale-[0.97] transition-all',
+                      'h-11 flex-1 rounded-xl border text-[13px] font-semibold transition-all duration-150 touch-manipulation active:scale-[0.97] active:brightness-125',
                       formData.likelihood === l.value
-                        ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-white/[0.08] bg-white/[0.05] text-white'
                     )}
                   >
                     {l.value}
@@ -830,8 +897,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                       />
                     </div>
                     <button
+                      type="button"
                       onClick={() => removeWitness(index)}
-                      className="h-11 w-11 shrink-0 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
+                      className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.05] text-white transition-all duration-150 active:scale-[0.97] active:brightness-125"
                       aria-label="Remove witness"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -1007,10 +1075,12 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
             >
               {isSubmitting ? 'Submitting…' : 'Submit report'}
             </PrimaryButton>
+            {/* Quieter secondary — same 44px target, but it reads as the
+                lesser of the two actions instead of competing with submit. */}
             <button
               type="button"
               onClick={() => setShowSaveTemplate(true)}
-              className="w-full h-9 text-[12px] font-medium text-white hover:text-white touch-manipulation"
+              className="h-11 w-full touch-manipulation rounded-xl text-[13px] font-medium text-white transition-all duration-150 active:scale-[0.99] active:brightness-125"
             >
               Save as template
             </button>
@@ -1047,8 +1117,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
       onBack={onBack ?? (() => {})}
       moduleName="Near Miss"
       hero={
-        <PageHero
-          eyebrow="Near Miss · MHSWR 1999"
+        <SafetyPageHeader
+          // Was "Near Miss · MHSWR 1999". MHSWR 1999's requirement, per the
+          // safety corpus, is that employers carry out a risk assessment — it
+          // says nothing about near-miss reporting, so hanging that citation
+          // over this module was false precision. Left uncited rather than
+          // swapped for another unverified reference.
+          eyebrow="Near Miss"
           title="Report and learn from near misses"
           description="Capture what nearly went wrong, rate the risk, and turn it into a toolbox talk — before it becomes an accident."
           tone="red"
@@ -1059,7 +1134,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
       }
       stats={
         total > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               { value: total, label: 'Total' },
               { value: serious, label: 'Serious', sub: 'high / critical' },

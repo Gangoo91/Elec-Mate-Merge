@@ -489,6 +489,7 @@ const CableCurrentCapacityCalculator = () => {
       description="Calculate current carrying capacity with BS 7671 compliance verification"
     >
       <CalculatorPanes
+        copyTitle="Cable Current Capacity"
         form={
           <>
             {/* Circuit Design Section */}

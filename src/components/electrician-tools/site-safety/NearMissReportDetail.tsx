@@ -1,42 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import {
-  ArrowLeft,
-  MapPin,
-  AlertTriangle,
-  Shield,
-  Zap,
-  Flame,
-  HardHat,
-  Users,
-  FileText,
-  Calendar,
-  Sparkles,
-  CloudSun,
-  Wrench,
-  UserCheck,
-  Eye,
-  Download,
-  Loader2,
-  CheckCircle2,
-  Clock,
-  CircleDot,
-  Share2,
-  Briefcase,
-} from 'lucide-react';
+import { Download, Loader2, Share2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { Eyebrow } from '@/components/college/primitives';
 import { NearMissReport, Witness } from './types';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { SafetyMasthead } from './common/SafetyModuleShell';
 import { AuditTimeline } from './common/AuditTimeline';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
-import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
+import { FiveWhysAnalysis, type FiveWhysEntry } from './common/FiveWhysAnalysis';
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
@@ -44,86 +21,136 @@ interface NearMissReportDetailProps {
   onUpdate?: (updated: Partial<NearMissReport>) => void;
 }
 
-const CATEGORIES: Record<string, { label: string; icon: React.ElementType }> = {
-  electrical_hazard: { label: 'Electrical Hazard', icon: Zap },
-  fire_risk: { label: 'Fire Risk', icon: Flame },
-  fall_hazard: { label: 'Fall Hazard', icon: AlertTriangle },
-  ppe_failure: { label: 'PPE Failure/Issue', icon: HardHat },
-  worksite_hazard: { label: 'Worksite Hazard', icon: Users },
-  tool_equipment: { label: 'Tool/Equipment Issue', icon: AlertTriangle },
-  chemical_exposure: { label: 'Chemical Exposure', icon: AlertTriangle },
-  manual_handling: { label: 'Manual Handling', icon: AlertTriangle },
-  vehicle_incident: { label: 'Vehicle Incident', icon: AlertTriangle },
-  other: { label: 'Other', icon: FileText },
+/**
+ * The root-cause columns live on `near_miss_reports` but are not on the shared
+ * `NearMissReport` interface (types.ts is used by several modules and is not
+ * this component's to change). Declaring the shape here beats the previous
+ * `(report as Record<string, unknown>).five_whys as []` — three casts that
+ * TypeScript rejected outright, and which typed the whys array as `never[]`.
+ */
+type NearMissWithRootCause = NearMissReport & {
+  five_whys?: FiveWhysEntry[] | null;
+  root_cause_category?: string | null;
+  root_cause_analysis?: string | null;
 };
 
-const SEVERITIES: Record<string, { label: string; colour: string; bgColour: string }> = {
-  low: { label: 'Low', colour: 'text-green-400', bgColour: 'bg-green-500/20 border-green-500/30' },
-  medium: {
-    label: 'Medium',
-    colour: 'text-yellow-400',
-    bgColour: 'bg-yellow-500/20 border-yellow-500/30',
-  },
-  high: {
-    label: 'High',
-    colour: 'text-orange-400',
-    bgColour: 'bg-orange-500/20 border-orange-500/30',
-  },
-  critical: {
-    label: 'Critical',
-    colour: 'text-red-400',
-    bgColour: 'bg-red-500/20 border-red-500/30',
-  },
+const CATEGORY_LABELS: Record<string, string> = {
+  electrical_hazard: 'Electrical hazard',
+  fire_risk: 'Fire risk',
+  fall_hazard: 'Fall hazard',
+  ppe_failure: 'PPE failure / issue',
+  worksite_hazard: 'Worksite hazard',
+  tool_equipment: 'Tool / equipment issue',
+  chemical_exposure: 'Chemical exposure',
+  manual_handling: 'Manual handling',
+  vehicle_incident: 'Vehicle incident',
+  other: 'Other',
 };
 
-const SEVERITY_BORDER: Record<string, string> = {
-  low: 'border-l-green-500',
-  medium: 'border-l-yellow-500',
-  high: 'border-l-orange-500',
-  critical: 'border-l-red-500',
+/**
+ * Severity and status are labels on a read-only record, so they get the
+ * house pill: a neutral chip carrying a coloured word. The old version filled
+ * each badge with its own tint (`bg-red-500/20 border-red-500/30` and so on),
+ * which put four differently-coloured blocks in one row and left nothing for
+ * the eye to rank.
+ */
+const SEVERITY_LABELS: Record<string, { label: string; text: string }> = {
+  low: { label: 'Low', text: 'text-emerald-400' },
+  medium: { label: 'Medium', text: 'text-amber-400' },
+  high: { label: 'High', text: 'text-orange-400' },
+  critical: { label: 'Critical', text: 'text-red-400' },
+};
+
+const SEVERITY_EDGE: Record<string, string> = {
+  low: 'bg-emerald-400',
+  medium: 'bg-amber-400',
+  high: 'bg-orange-400',
+  critical: 'bg-red-400',
 };
 
 const WEATHER_LABELS: Record<string, string> = {
-  clear: 'Clear/Sunny',
+  clear: 'Clear / sunny',
   overcast: 'Overcast',
   rain: 'Rain',
-  wind: 'High Wind',
-  cold: 'Cold/Frost',
+  wind: 'High wind',
+  cold: 'Cold / frost',
   hot: 'Hot',
-  dark: 'Dark/Night',
+  dark: 'Dark / night',
 };
 
 const LIGHTING_LABELS: Record<string, string> = {
-  good: 'Good Natural Light',
+  good: 'Good natural light',
   adequate: 'Adequate',
   poor: 'Poor',
-  artificial: 'Artificial Only',
-  dark: 'Very Dark/No Light',
+  artificial: 'Artificial only',
+  dark: 'Very dark / no light',
 };
 
-const STATUS_CONFIG: Record<
-  string,
-  { label: string; colour: string; bg: string; icon: React.ElementType }
-> = {
-  open: {
-    label: 'Open',
-    colour: 'text-amber-400',
-    bg: 'bg-amber-500/15 border-amber-500/30',
-    icon: CircleDot,
-  },
-  in_progress: {
-    label: 'In Progress',
-    colour: 'text-blue-400',
-    bg: 'bg-blue-500/15 border-blue-500/30',
-    icon: Clock,
-  },
-  closed: {
-    label: 'Closed',
-    colour: 'text-green-400',
-    bg: 'bg-green-500/15 border-green-500/30',
-    icon: CheckCircle2,
-  },
+type StatusKey = 'open' | 'in_progress' | 'closed';
+
+const STATUS_CONFIG: Record<StatusKey, { label: string; text: string }> = {
+  open: { label: 'Open', text: 'text-amber-400' },
+  in_progress: { label: 'In progress', text: 'text-white' },
+  closed: { label: 'Closed', text: 'text-emerald-400' },
 };
+
+/** The one status move that advances the record from where it is now. */
+const NEXT_STATUS: Record<StatusKey, { to: StatusKey; label: string }> = {
+  open: { to: 'in_progress', label: 'Start investigation' },
+  in_progress: { to: 'closed', label: 'Close out' },
+  // A closed report had NO control at all before — the whole action row was
+  // hidden behind `currentStatus !== 'closed'`, so closing was a one-way door
+  // and a report closed by mistake could never be corrected.
+  closed: { to: 'in_progress', label: 'Reopen' },
+};
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function Pill({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center whitespace-nowrap rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] font-semibold tracking-[0.04em]',
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+function DetailCard({
+  eyebrow,
+  children,
+  className,
+}: {
+  eyebrow?: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        'space-y-4 rounded-2xl border border-elec-yellow/35 p-5',
+        CARD_SURFACE,
+        className
+      )}
+    >
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {children}
+    </div>
+  );
+}
+
+/** Label above, value below — no icon. An icon here just restates the label. */
+function DataRow({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="space-y-1">
+      <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white">{label}</div>
+      <div className="text-[14px] leading-relaxed text-white">{children}</div>
+    </div>
+  );
+}
 
 export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   report,
@@ -134,30 +161,40 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   const { toast } = useToast();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
-  const category = CATEGORIES[report.category] || CATEGORIES['other'];
-  const severity = SEVERITIES[report.severity] || SEVERITIES['low'];
-  const CategoryIcon = category.icon;
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const currentStatus = report.status || 'open';
-  const statusConf = STATUS_CONFIG[currentStatus] || STATUS_CONFIG.open;
-  const StatusIcon = statusConf.icon;
+  const rootCause = report as NearMissWithRootCause;
+  const categoryLabel = CATEGORY_LABELS[report.category] || CATEGORY_LABELS.other;
+  const severity = SEVERITY_LABELS[report.severity] || SEVERITY_LABELS.low;
+
+  const currentStatus: StatusKey = (
+    STATUS_CONFIG[report.status as StatusKey] ? report.status : 'open'
+  ) as StatusKey;
+  const statusConf = STATUS_CONFIG[currentStatus];
+  const nextStatus = NEXT_STATUS[currentStatus];
 
   const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = report.job_id
     ? (jobs.find((j) => j.id === report.job_id)?.title ?? null)
     : null;
 
-  const handleStatusChange = async (newStatus: 'open' | 'in_progress' | 'closed') => {
+  const handleStatusChange = async (newStatus: StatusKey) => {
     setIsUpdating(true);
     try {
-      const updates: Record<string, unknown> = { status: newStatus };
-      if (newStatus === 'closed') {
-        updates.completed_date = new Date().toISOString().split('T')[0];
-      }
-      if (newStatus === 'in_progress' && currentStatus === 'open') {
-        updates.completed_date = null;
-      }
+      const completedDate = newStatus === 'closed' ? new Date().toISOString().split('T')[0] : null;
+
+      // Typed against the generated Update shape rather than
+      // `Record<string, unknown>` — the loose record defeated the column check
+      // entirely, which is how a phantom column in the sibling insert survived.
+      //
+      // completed_date is cleared for ANY non-closed status. The old code only
+      // cleared it on open → in_progress, a transition that can never have set
+      // it, so a reopened report kept a completion date and the card showed
+      // "Completed: <date>" next to a status of In progress.
+      const updates: { status: string; completed_date: string | null } = {
+        status: newStatus,
+        completed_date: completedDate,
+      };
 
       const { error } = await supabase
         .from('near_miss_reports')
@@ -167,16 +204,19 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
       if (error) throw error;
 
       onUpdate?.({
-        ...report,
+        // `id` is load-bearing: the list owner matches on `r.id === updated.id`,
+        // so a patch without it silently updates nothing in the list behind.
+        id: report.id,
         status: newStatus,
-        ...(newStatus === 'closed'
-          ? { completed_date: new Date().toISOString().split('T')[0] }
-          : {}),
+        // null, not undefined — the parent spreads this over the existing row,
+        // and `undefined` would leave a stale completion date sitting on a
+        // report that has just been reopened.
+        completed_date: completedDate as string | undefined,
       });
 
       toast({
-        title: 'Status Updated',
-        description: `Near miss marked as ${STATUS_CONFIG[newStatus].label}.`,
+        title: 'Status updated',
+        description: `Near miss marked as ${STATUS_CONFIG[newStatus].label.toLowerCase()}.`,
       });
     } catch {
       toast({ title: 'Error', description: 'Could not update status.', variant: 'destructive' });
@@ -185,29 +225,25 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
     }
   };
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-GB', {
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString('en-GB', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
-  };
 
-  const formatTime = (timeStr: string) => {
-    const [hours, minutes] = timeStr.split(':');
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minutes} ${ampm}`;
-  };
+  // 24-hour. `incident_time` is a UK site record and the form captures it from
+  // a 24-hour <input type="time">; rendering it back as "3:45 PM" changed the
+  // notation between entry and review.
+  const formatTime = (timeStr: string) => (timeStr || '').slice(0, 5);
 
   const handleCreateTeamBriefing = () => {
     const sessionId = `near-miss-${Date.now()}`;
     const nearMissData = {
       id: report.id,
       category: report.category,
-      categoryLabel: category.label,
+      categoryLabel,
       severity: report.severity,
       severityLabel: severity.label,
       description: report.description,
@@ -236,9 +272,8 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
     navigate(`/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`);
   };
 
-  const hasWitnesses =
-    report.witnesses && Array.isArray(report.witnesses) && report.witnesses.length > 0;
-  const hasPeopleInfo = hasWitnesses || report.third_party_involved;
+  const witnesses = Array.isArray(report.witnesses) ? (report.witnesses as Witness[]) : [];
+  const hasPeopleInfo = witnesses.length > 0 || report.third_party_involved;
   const hasEnvironmentInfo =
     report.weather_conditions ||
     report.lighting_conditions ||
@@ -246,448 +281,264 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
     report.equipment_faulty;
   const hasInvestigationInfo = report.supervisor_notified || report.previous_similar_incidents;
 
+  // `assigned_to` is a uuid column. Nothing in Site Safety writes it yet, and
+  // printing a raw uuid at a user is worse than printing nothing — so only
+  // show it once it holds something a person could read.
+  const assignedToLabel =
+    report.assigned_to && !UUID_RE.test(report.assigned_to) ? report.assigned_to : null;
+
+  const isOverdue =
+    !!report.due_date && new Date(report.due_date) < new Date() && currentStatus !== 'closed';
+
+  const secondaryBtn =
+    'flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.10] bg-white/[0.05] text-[13px] font-medium text-white transition-all duration-150 active:scale-[0.98] active:brightness-125 disabled:opacity-50';
+
   return (
-    <div className="space-y-4 pb-24">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onBack}
-          className="h-11 w-11 touch-manipulation"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-foreground">Report Details</h2>
-            {report.incident_number && (
-              <Badge className="bg-white/10 text-white border-white/20 text-xs font-mono">
-                {report.incident_number}
-              </Badge>
-            )}
-          </div>
-          <p className="text-sm text-white">
-            Submitted {new Date(report.created_at).toLocaleDateString('en-GB')}
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_7%)] pb-44">
+      <SafetyMasthead
+        onBack={onBack}
+        backLabel="Reports"
+        moduleName="Near miss report"
+        trailing={
+          report.incident_number ? (
+            <span className="font-mono text-[11px] text-white">{report.incident_number}</span>
+          ) : undefined
+        }
+      />
 
-      {/* Main Info Card */}
-      <Card className={`border-l-4 ${SEVERITY_BORDER[report.severity] || 'border-l-muted'}`}>
-        <CardContent className="p-4 space-y-4">
-          {/* Badges */}
-          <div className="flex flex-wrap gap-2">
-            <Badge className={`${severity.bgColour} border ${severity.colour}`}>
-              {severity.label} Severity
-            </Badge>
-            <Badge variant="outline" className="flex items-center gap-1.5">
-              <CategoryIcon className="h-3.5 w-3.5" />
-              {category.label}
-            </Badge>
+      <div className="mx-auto max-w-3xl space-y-4 px-4 py-4">
+        {/* Summary — the record's identity, and the only place severity is
+            allowed to carry a coloured edge. */}
+        <DetailCard className="relative overflow-hidden">
+          <span
+            aria-hidden
+            className={cn(
+              'absolute inset-y-0 left-0 w-[3px]',
+              SEVERITY_EDGE[report.severity] || 'bg-white/20'
+            )}
+          />
+          <div className="flex flex-wrap items-center gap-2">
+            <Pill className={severity.text}>{severity.label} severity</Pill>
+            <Pill className="text-white">{categoryLabel}</Pill>
+            <Pill className={statusConf.text}>{statusConf.label}</Pill>
+            {/* Populates once a risk_rating column exists — see the note in
+                NearMissReporting.submitReport. */}
             {report.risk_rating != null && (
-              <Badge
-                className={`border ${
-                  report.risk_rating <= 4
-                    ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                    : report.risk_rating <= 9
-                      ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-                      : report.risk_rating <= 16
-                        ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
-                        : 'bg-red-500/20 text-red-400 border-red-500/30'
-                }`}
-              >
-                Risk: {report.risk_rating}
-              </Badge>
+              <Pill className="text-white">Risk {report.risk_rating}</Pill>
             )}
           </div>
 
-          {/* Description */}
-          <div>
-            <p className="text-foreground leading-relaxed">{report.description}</p>
-          </div>
+          <p className="text-[15px] leading-relaxed text-white">{report.description}</p>
 
-          {/* Location & Time */}
-          <div className="space-y-3 pt-2 border-t border-border">
-            <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-white mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <p className="text-xs text-white uppercase tracking-wide">Location</p>
-                <p className="text-foreground">{report.location}</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Calendar className="h-5 w-5 text-white mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <p className="text-xs text-white uppercase tracking-wide">Date & Time</p>
-                <p className="text-foreground">
-                  {formatDate(report.incident_date)} at {formatTime(report.incident_time)}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Users className="h-5 w-5 text-white mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <p className="text-xs text-white uppercase tracking-wide">Reported By</p>
-                <p className="text-foreground">{report.reporter_name || 'Anonymous'}</p>
-              </div>
-            </div>
+          <div className="grid gap-4 border-t border-white/[0.08] pt-4 sm:grid-cols-2">
+            <DataRow label="Location">{report.location}</DataRow>
+            <DataRow label="Date and time">
+              {formatDate(report.incident_date)} at {formatTime(report.incident_time)}
+            </DataRow>
+            <DataRow label="Reported by">{report.reporter_name || 'Anonymous'}</DataRow>
+            <DataRow label="Submitted">
+              {new Date(report.created_at).toLocaleDateString('en-GB')}
+            </DataRow>
             {report.job_id && (
-              <div className="flex items-start gap-3">
-                <Briefcase className="h-5 w-5 text-white mt-0.5 shrink-0" />
-                <div className="flex-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Linked Project</p>
-                  <p className="text-foreground">{linkedJobTitle || 'Linked project'}</p>
-                </div>
-              </div>
+              <DataRow label="Linked project">{linkedJobTitle || 'Linked project'}</DataRow>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </DetailCard>
 
-      {/* Additional Details */}
-      {(report.potential_consequences ||
-        report.immediate_actions ||
-        report.preventive_measures) && (
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-primary" />
-              <h3 className="font-medium text-foreground">Actions & Analysis</h3>
-            </div>
+        {(report.potential_consequences ||
+          report.immediate_actions ||
+          report.preventive_measures) && (
+          <DetailCard eyebrow="Actions and analysis">
+            {report.potential_consequences && (
+              <DataRow label="Potential consequences">{report.potential_consequences}</DataRow>
+            )}
+            {report.immediate_actions && (
+              <DataRow label="Immediate actions taken">{report.immediate_actions}</DataRow>
+            )}
+            {report.preventive_measures && (
+              <DataRow label="Preventive measures">{report.preventive_measures}</DataRow>
+            )}
+          </DetailCard>
+        )}
 
-            <div className="space-y-4">
-              {report.potential_consequences && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">
-                    Potential Consequences
-                  </p>
-                  <p className="text-foreground text-sm leading-relaxed">
-                    {report.potential_consequences}
-                  </p>
+        {hasPeopleInfo && (
+          <DetailCard eyebrow="People involved">
+            {witnesses.length > 0 && (
+              <div className="space-y-2">
+                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white">
+                  Witnesses
                 </div>
-              )}
-
-              {report.immediate_actions && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">
-                    Immediate Actions Taken
-                  </p>
-                  <p className="text-foreground text-sm leading-relaxed">
-                    {report.immediate_actions}
-                  </p>
-                </div>
-              )}
-
-              {report.preventive_measures && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Preventive Measures</p>
-                  <p className="text-foreground text-sm leading-relaxed">
-                    {report.preventive_measures}
-                  </p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* People Involved */}
-      {hasPeopleInfo && (
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-2">
-              <Eye className="h-5 w-5 text-primary" />
-              <h3 className="font-medium text-foreground">People Involved</h3>
-            </div>
-
-            <div className="space-y-4">
-              {hasWitnesses && (
-                <div className="space-y-2">
-                  <p className="text-xs text-white uppercase tracking-wide">Witnesses</p>
-                  <div className="space-y-2">
-                    {(report.witnesses as Witness[]).map((witness, index) => (
-                      <div key={index} className="bg-muted/50 rounded-lg p-3">
-                        <p className="text-foreground text-sm font-medium">{witness.name}</p>
-                        {witness.contact && <p className="text-white text-xs">{witness.contact}</p>}
-                      </div>
-                    ))}
+                {witnesses.map((witness, index) => (
+                  <div
+                    key={index}
+                    className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3"
+                  >
+                    <p className="text-[14px] font-medium text-white">{witness.name}</p>
+                    {witness.contact && <p className="text-[12px] text-white">{witness.contact}</p>}
                   </div>
-                </div>
-              )}
-
-              {report.third_party_involved && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Third Party Involved</p>
-                  <p className="text-foreground text-sm leading-relaxed">
-                    {report.third_party_details || 'Yes (no details provided)'}
-                  </p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Environment & Equipment */}
-      {hasEnvironmentInfo && (
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-2">
-              <CloudSun className="h-5 w-5 text-primary" />
-              <h3 className="font-medium text-foreground">Environment & Equipment</h3>
-            </div>
-
-            <div className="space-y-4">
-              {(report.weather_conditions || report.lighting_conditions) && (
-                <div className="grid grid-cols-2 gap-4">
-                  {report.weather_conditions && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-white uppercase tracking-wide">Weather</p>
-                      <p className="text-foreground text-sm">
-                        {WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}
-                      </p>
-                    </div>
-                  )}
-                  {report.lighting_conditions && (
-                    <div className="space-y-1">
-                      <p className="text-xs text-white uppercase tracking-wide">Lighting</p>
-                      <p className="text-foreground text-sm">
-                        {LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {report.equipment_involved && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Equipment Involved</p>
-                  <p className="text-foreground text-sm">{report.equipment_involved}</p>
-                </div>
-              )}
-
-              {report.equipment_faulty && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Equipment Fault</p>
-                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-                    <p className="text-orange-400 text-sm font-medium">Faulty Equipment Reported</p>
-                    {report.equipment_fault_details && (
-                      <p className="text-foreground text-sm mt-1">
-                        {report.equipment_fault_details}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Investigation */}
-      {hasInvestigationInfo && (
-        <Card>
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-2">
-              <UserCheck className="h-5 w-5 text-primary" />
-              <h3 className="font-medium text-foreground">Investigation</h3>
-            </div>
-
-            <div className="space-y-4">
-              {report.supervisor_notified && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Supervisor Notified</p>
-                  <p className="text-foreground text-sm">
-                    Yes{report.supervisor_name ? ` - ${report.supervisor_name}` : ''}
-                  </p>
-                </div>
-              )}
-
-              {report.previous_similar_incidents && (
-                <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">
-                    Previous Similar Incidents
-                  </p>
-                  <p className="text-foreground text-sm capitalize">
-                    {report.previous_similar_incidents}
-                  </p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Follow-Up & Status */}
-      <Card className="border-l-4 border-l-elec-yellow">
-        <CardContent className="p-4 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-elec-yellow" />
-              <h3 className="font-medium text-foreground">Follow-Up Status</h3>
-            </div>
-            <Badge
-              className={`${statusConf.bg} border ${statusConf.colour} flex items-center gap-1`}
-            >
-              <StatusIcon className="h-3 w-3" />
-              {statusConf.label}
-            </Badge>
-          </div>
-
-          {/* Follow-up required indicator */}
-          {report.follow_up_required && (
-            <div className="flex items-center gap-2 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-              <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
-              <span className="text-sm text-white font-medium">Follow-up required</span>
-            </div>
-          )}
-
-          {/* Due date & assigned to */}
-          <div className="space-y-2">
-            {report.assigned_to && (
-              <div className="flex items-center gap-2 text-sm">
-                <UserCheck className="h-4 w-4 text-white" />
-                <span className="text-white">Assigned to: {report.assigned_to}</span>
+                ))}
               </div>
             )}
-            {report.due_date && (
-              <div className="flex items-center gap-2 text-sm">
-                <Calendar className="h-4 w-4 text-white" />
-                <span className="text-white">
-                  Due: {new Date(report.due_date).toLocaleDateString('en-GB')}
-                </span>
-                {new Date(report.due_date) < new Date() && currentStatus !== 'closed' && (
-                  <Badge className="bg-red-500/15 text-red-400 border-red-500/30 text-[10px]">
-                    Overdue
-                  </Badge>
+            {report.third_party_involved && (
+              <DataRow label="Third party involved">
+                {report.third_party_details || 'Yes (no details provided)'}
+              </DataRow>
+            )}
+          </DetailCard>
+        )}
+
+        {hasEnvironmentInfo && (
+          <DetailCard eyebrow="Environment and equipment">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {report.weather_conditions && (
+                <DataRow label="Weather">
+                  {WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}
+                </DataRow>
+              )}
+              {report.lighting_conditions && (
+                <DataRow label="Lighting">
+                  {LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}
+                </DataRow>
+              )}
+            </div>
+            {report.equipment_involved && (
+              <DataRow label="Equipment involved">{report.equipment_involved}</DataRow>
+            )}
+            {report.equipment_faulty && (
+              <div className="rounded-xl border border-orange-500/40 bg-orange-500/15 p-3">
+                {/* A binary safety verdict — faulty kit is exactly the case the
+                    tinted fill is for. */}
+                <p className="text-[13px] font-semibold text-orange-400">
+                  Faulty equipment reported
+                </p>
+                {report.equipment_fault_details && (
+                  <p className="mt-1 text-[13px] text-white">{report.equipment_fault_details}</p>
                 )}
               </div>
             )}
-            {report.completed_date && (
-              <div className="flex items-center gap-2 text-sm">
-                <CheckCircle2 className="h-4 w-4 text-green-400" />
-                <span className="text-white">
-                  Completed: {new Date(report.completed_date).toLocaleDateString('en-GB')}
-                </span>
-              </div>
-            )}
-          </div>
+          </DetailCard>
+        )}
 
-          {/* Status action buttons */}
-          {currentStatus !== 'closed' && (
-            <div className="flex gap-2 pt-1">
-              {currentStatus === 'open' && (
-                <Button
-                  onClick={() => handleStatusChange('in_progress')}
-                  disabled={isUpdating}
-                  className="flex-1 h-11 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl touch-manipulation"
-                >
-                  {isUpdating ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Clock className="h-4 w-4 mr-2" />
-                  )}
-                  Start Investigation
-                </Button>
+        {hasInvestigationInfo && (
+          <DetailCard eyebrow="Investigation">
+            {report.supervisor_notified && (
+              <DataRow label="Supervisor notified">
+                Yes{report.supervisor_name ? ` — ${report.supervisor_name}` : ''}
+              </DataRow>
+            )}
+            {report.previous_similar_incidents && (
+              <DataRow label="Previous similar incidents">
+                <span className="capitalize">{report.previous_similar_incidents}</span>
+              </DataRow>
+            )}
+          </DetailCard>
+        )}
+
+        {/* Follow-up state only. The action that changes it is the single
+            primary in the bar below, rather than a third button competing
+            with Export and Share halfway down the page. */}
+        <DetailCard eyebrow="Follow-up">
+          <div className="flex flex-wrap items-center gap-2">
+            <Pill className={statusConf.text}>{statusConf.label}</Pill>
+            {report.follow_up_required && (
+              <Pill className="text-amber-400">Follow-up required</Pill>
+            )}
+            {isOverdue && <Pill className="text-red-400">Overdue</Pill>}
+          </div>
+          {(assignedToLabel || report.due_date || report.completed_date) && (
+            <div className="grid gap-4 border-t border-white/[0.08] pt-4 sm:grid-cols-2">
+              {assignedToLabel && <DataRow label="Assigned to">{assignedToLabel}</DataRow>}
+              {report.due_date && (
+                <DataRow label="Due">
+                  {new Date(report.due_date).toLocaleDateString('en-GB')}
+                </DataRow>
               )}
-              {currentStatus === 'in_progress' && (
-                <>
-                  <Button
-                    onClick={() => handleStatusChange('closed')}
-                    disabled={isUpdating}
-                    className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
-                  >
-                    {isUpdating ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <CheckCircle2 className="h-4 w-4 mr-2" />
-                    )}
-                    Close
-                  </Button>
-                  <Button
-                    onClick={() => handleStatusChange('open')}
-                    disabled={isUpdating}
-                    variant="outline"
-                    className="h-11 border-white/20 text-white rounded-xl touch-manipulation"
-                  >
-                    Reopen
-                  </Button>
-                </>
+              {report.completed_date && (
+                <DataRow label="Completed">
+                  {new Date(report.completed_date).toLocaleDateString('en-GB')}
+                </DataRow>
               )}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </DetailCard>
 
-      {/* Root Cause Analysis */}
-      <FiveWhysAnalysis
-        table="near_miss_reports"
-        recordId={report.id}
-        existingWhys={((report as Record<string, unknown>).five_whys as []) || []}
-        existingCategory={((report as Record<string, unknown>).root_cause_category as string) || ''}
-        existingSummary={((report as Record<string, unknown>).root_cause_analysis as string) || ''}
-      />
+        <FiveWhysAnalysis
+          table="near_miss_reports"
+          recordId={report.id}
+          existingWhys={rootCause.five_whys ?? []}
+          existingCategory={rootCause.root_cause_category ?? ''}
+          existingSummary={rootCause.root_cause_analysis ?? ''}
+        />
 
-      {/* Corrective Actions */}
-      <CorrectiveActionsPanel sourceType="near_miss" sourceId={report.id} />
+        <CorrectiveActionsPanel sourceType="near_miss" sourceId={report.id} />
 
-      {/* Photos */}
-      {report.photos && report.photos.length > 0 && (
-        <Card>
-          <CardContent className="p-4 space-y-3">
-            <h3 className="font-medium text-foreground">Photos</h3>
+        {report.photos && report.photos.length > 0 && (
+          <DetailCard eyebrow="Photos">
             <div className="grid grid-cols-2 gap-2">
               {report.photos.map((url, index) => (
-                <div key={index} className="aspect-square rounded-lg overflow-hidden bg-muted">
+                <div
+                  key={index}
+                  className="aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]"
+                >
                   <img
                     src={url}
                     alt={`Evidence photo ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </DetailCard>
+        )}
 
-      {/* Audit Trail */}
-      <AuditTimeline recordType="near_miss" recordId={report.id} />
-
-      {/* Fixed Action Buttons */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={() => exportPDF('near-miss', report.id)}
-            disabled={isExporting && exportingId === report.id}
-            className="h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-          >
-            {isExporting && exportingId === report.id ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Download className="h-4 w-4" />
-            )}
-            Export PDF
-          </button>
-          <button
-            onClick={() => setShowShare(true)}
-            className="h-11 px-4 rounded-xl border border-elec-yellow/35 text-elec-yellow text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-          >
-            <Share2 className="h-4 w-4" />
-            Share
-          </button>
-        </div>
-        <Button
-          onClick={handleCreateTeamBriefing}
-          className="w-full h-14 text-base font-medium bg-primary text-primary-foreground"
-        >
-          <Sparkles className="h-5 w-5 mr-2" />
-          Create Team Briefing
-        </Button>
+        <AuditTimeline recordType="near_miss" recordId={report.id} />
       </div>
 
-      {/* Share sheet */}
+      {/* Sticky actions. One primary — the move that advances the record — over
+          a quieter row of three. Previously all four buttons sat at the same
+          weight and the status change was somewhere up the page.
+          The bar also had no safe-area inset, so on a notched iPhone the
+          bottom row sat under the home indicator. */}
+      <div
+        className="fixed inset-x-0 bottom-0 border-t border-white/[0.08] bg-[hsl(0_0%_7%)]/95 px-4 py-3 backdrop-blur-sm"
+        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+      >
+        <div className="mx-auto max-w-3xl space-y-2">
+          <button
+            type="button"
+            onClick={() => handleStatusChange(nextStatus.to)}
+            disabled={isUpdating}
+            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:opacity-50"
+          >
+            {isUpdating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
+            {nextStatus.label}
+          </button>
+          <div className="flex gap-2">
+            <button type="button" onClick={handleCreateTeamBriefing} className={secondaryBtn}>
+              Team briefing
+            </button>
+            <button
+              type="button"
+              onClick={() => exportPDF('near-miss', report.id)}
+              disabled={isExporting && exportingId === report.id}
+              className={secondaryBtn}
+            >
+              {isExporting && exportingId === report.id ? (
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+              ) : (
+                <Download className="h-4 w-4" aria-hidden />
+              )}
+              PDF
+            </button>
+            <button type="button" onClick={() => setShowShare(true)} className={secondaryBtn}>
+              <Share2 className="h-4 w-4" aria-hidden />
+              Share
+            </button>
+          </div>
+        </div>
+      </div>
+
       <SafetyDocumentShare
         open={showShare}
         onClose={() => setShowShare(false)}

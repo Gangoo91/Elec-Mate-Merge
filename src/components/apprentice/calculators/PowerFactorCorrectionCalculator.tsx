@@ -475,6 +475,7 @@ const PowerFactorCorrectionCalculator = () => {
       description="Calculate capacitor bank sizing for power factor improvement"
     >
       <CalculatorPanes
+        copyTitle="Power Factor Correction"
         form={
           <>
             {/* Input Method & Phases */}

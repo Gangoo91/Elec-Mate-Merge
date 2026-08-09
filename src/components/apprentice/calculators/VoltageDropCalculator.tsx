@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   LineChart,
   Line,
@@ -414,6 +415,7 @@ const VoltageDropCalculator = () => {
       description="Calculate voltage drop using BS 7671 Appendix 4 tabulated values"
     >
       <CalculatorPanes
+        copyTitle="Voltage Drop"
         form={
           <>
             {/* Calculator Inputs */}
@@ -702,8 +704,19 @@ const VoltageDropCalculator = () => {
                         result alone. Regulation 433.1.1 additionally requires Ib ≤ In ≤ Iz — the
                         conductor&apos;s current-carrying capacity, derated for ambient temperature,
                         grouping and thermal insulation, must still be checked against the
-                        protective device. Use the cable sizing / current capacity calculator for
-                        that step.
+                        protective device.{' '}
+                        {/* Was dead prose telling you to go somewhere with no way to get
+                            there. Every calculator is addressable via ?calc=, so it can
+                            just be a link — and it carries the design current across so
+                            you do not retype it. */}
+                        <Link
+                          to={`/electrician/calculations?calc=cable-current-capacity${
+                            result.atCurrent ? `&ib=${result.atCurrent}` : ''
+                          }`}
+                          className="font-semibold text-elec-yellow underline underline-offset-2 touch-manipulation"
+                        >
+                          Check it in the cable current capacity calculator →
+                        </Link>
                       </div>
                     </div>
                   </div>

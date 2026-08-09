@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useInspectionRecords, useCreateInspectionRecord } from '@/hooks/useInspectionRecords';
@@ -11,8 +12,6 @@ import type { Json } from '@/integrations/supabase/types';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -39,6 +38,7 @@ import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 // ─── Types ───
 
@@ -388,7 +388,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'db-inspection',
     title: 'Distribution Board Inspection',
     description: 'Consumer unit & distribution board check',
-    regulation: 'BS 7671:2018+A2:2022 / Electricity at Work Regulations 1989',
+    regulation: 'BS 7671:2018+A4:2026 / Electricity at Work Regulations 1989',
     sections: [
       {
         title: 'Enclosure & Labelling',
@@ -440,7 +440,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'socket-lighting-check',
     title: 'Socket & Lighting Circuit Check',
     description: 'Final circuit inspection walkthrough',
-    regulation: 'BS 7671:2018+A2:2022 Section 7',
+    regulation: 'BS 7671:2018+A4:2026 Section 7',
     sections: [
       {
         title: 'Socket Outlets',
@@ -491,7 +491,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'rcd-test-schedule',
     title: 'RCD Testing Schedule',
     description: 'Periodic RCD functional testing record',
-    regulation: 'BS 7671:2018+A2:2022 Reg 514.12.2 / IET Guidance Note 3',
+    regulation: 'BS 7671:2018+A4:2026 Reg 514.12.2 / IET Guidance Note 3',
     sections: [
       {
         title: 'Pre-Test Checks',
@@ -510,16 +510,32 @@ const TEMPLATES: ChecklistTemplate[] = [
           'RCD trips when test button pressed',
           'RCD resets correctly after test button trip',
           'Test button mechanism not stiff or jammed',
-          'Test performed quarterly as recommended',
+          // Was "quarterly". The notice text that Reg 514.12.2 requires to be
+          // fixed at each RCD says "Test six-monthly by pressing the relevant
+          // test button(s)". The Post-Test section of this same checklist
+          // already said 6-monthly, so the sheet contradicted itself and the
+          // standard in the same breath.
+          'User test button pressed six-monthly, per the Reg 514.12.2 notice',
           'Date and result recorded in log',
         ],
       },
       {
         title: 'Instrument Test',
+        /*
+         * This was the ½× / 1× / 5× IΔn sequence — trip at 5×IΔn within 40 ms,
+         * no-trip at 50% IΔn. That sequence came from Table 3A, which
+         * BS 7671:2018+A4:2026 DELETED. It is no longer how an RCD is verified.
+         *
+         * 643.8 is now explicit: "Regardless of RCD Type, effectiveness is
+         * deemed to have been verified where an RCD disconnects within the time
+         * stated below with an alternating current test at rated residual
+         * operating current (IΔn): for general non-delay type, 300 ms maximum."
+         * One test, one current, one limit.
+         */
         items: [
-          'Trip time at 1×IΔn within 300ms (general) / 200ms (no time delay)',
-          'Trip time at 5×IΔn within 40ms',
-          'No-trip test at 50% IΔn confirms device does not trip',
+          'Single alternating current test at rated residual operating current (IΔn) — Reg 643.8',
+          'Disconnects within 300 ms for general non-delay type',
+          'Test equipment to BS EN 61557-6 (Reg 643.1)',
           'Instrument calibration date current',
           'Results compared with previous test records',
         ],
@@ -540,7 +556,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'earth-bonding-verification',
     title: 'Earth Bonding Verification',
     description: 'Earthing & bonding system inspection',
-    regulation: 'BS 7671:2018+A2:2022 Chapter 54 / Reg 411.3.1.2',
+    regulation: 'BS 7671:2018+A4:2026 Chapter 54 / Reg 411.3.1.2',
     sections: [
       {
         title: 'Main Earthing',
@@ -590,7 +606,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'fire-alarm-check',
     title: 'Fire Alarm System Check',
     description: 'Fire detection & alarm system inspection',
-    regulation: 'BS 5839-1:2017 / Regulatory Reform (Fire Safety) Order 2005',
+    regulation: 'BS 5839-1:2025 / Regulatory Reform (Fire Safety) Order 2005',
     sections: [
       {
         title: 'Control Panel',
@@ -693,7 +709,7 @@ const TEMPLATES: ChecklistTemplate[] = [
     id: 'ev-charger-commissioning',
     title: 'EV Charger Commissioning Check',
     description: 'Electric vehicle charge point inspection',
-    regulation: 'BS 7671:2018+A2:2022 Section 722 / IET Code of Practice for EV Charging',
+    regulation: 'BS 7671:2018+A4:2026 Section 722 / IET Code of Practice for EV Charging',
     sections: [
       {
         title: 'Supply & Protection',
@@ -774,11 +790,14 @@ function resultTone(result: CompletedInspection['overall_result']): Tone {
   return 'green';
 }
 
+// Neutral surface, coloured label — the convention now used across the hub.
+// Tinted pills muddy and converge at 10% over near-black, so four results that
+// need to be told apart end up looking like four shades of the same brown.
 const PILL_TONE: Record<'green' | 'amber' | 'red' | 'orange' | 'neutral', string> = {
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  orange: 'bg-white/[0.05] text-orange-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
@@ -1147,7 +1166,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
           </div>
         }
         hero={
-          <PageHero
+          <SafetyPageHeader
             eyebrow="Inspection in progress"
             title={activeTemplate.title}
             description={activeTemplate.regulation}
@@ -1173,7 +1192,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             />
           </div>
           {answeredCount > 0 && (
-            <StatStrip
+            <SafetyStatStrip
               columns={3}
               stats={[
                 { value: passCount, label: 'Pass', tone: 'green' },
@@ -1223,11 +1242,19 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             return (
               <div
                 key={section.id}
-                className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 overflow-hidden',
+                  CARD_SURFACE
+                )}
               >
                 <button
                   onClick={() => toggleSection(section.id)}
-                  className="w-full flex items-center justify-between gap-3 px-5 py-4 min-h-[48px] touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                  // Was hover:bg-[hsl(0_0%_15%)]. The card behind it is now the
+                  // volt gradient, and a flat hover fill painted straight over
+                  // it — the material visibly changed under the cursor. Press
+                  // feel across the hub is scale plus brightness, never a
+                  // different surface.
+                  className="w-full flex items-center justify-between gap-3 px-5 py-4 min-h-[48px] touch-manipulation transition-[filter] hover:brightness-110 active:brightness-125 [-webkit-tap-highlight-color:transparent]"
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <h3 className="text-[15px] font-semibold text-white truncate">
@@ -1258,7 +1285,8 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                         <div
                           key={item.id}
                           className={cn(
-                            'p-3 rounded-xl border bg-[hsl(0_0%_10%)] transition-colors',
+                            'p-3 rounded-xl border transition-colors',
+                            CARD_SURFACE,
                             tone === 'red'
                               ? 'border-red-500/25'
                               : tone === 'green'
@@ -1398,7 +1426,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
               )}
             </div>
             {criticalCount > 0 && (
-              <p className="text-[12px] text-red-400/90 font-medium">
+              <p className="text-[12px] text-red-400 font-medium">
                 Critical non-conformance detected — stop work and rectify before proceeding.
               </p>
             )}
@@ -1460,7 +1488,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
       onBack={onBack ?? (() => {})}
       moduleName="Inspection Checklists"
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Inspection Checklists"
           title="Run standardised safety inspections"
           description="Workplace, scaffold, electrical, fire and BS 7671 check sheets — record pass / fail / N/A results, classify non-conformances and track them to close-out."
@@ -1472,7 +1500,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
       }
       stats={
         completedInspections.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               {
                 value: completedInspections.length,
@@ -1679,7 +1707,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   />
 
                   {/* Result summary */}
-                  <StatStrip
+                  <SafetyStatStrip
                     columns={3}
                     stats={[
                       { value: viewingInspection.pass_count, label: 'Pass', tone: 'green' },
@@ -1743,10 +1771,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                 )}
                               </div>
                               {item.notes && (
-                                <p className="text-[12px] text-red-400/85 mt-1">{item.notes}</p>
+                                <p className="text-[12px] text-red-400 mt-1">{item.notes}</p>
                               )}
                               {item.remedial_action && (
-                                <p className="text-[12px] text-amber-400/85 mt-1">
+                                <p className="text-[12px] text-amber-400 mt-1">
                                   Remedial action: {item.remedial_action}
                                 </p>
                               )}

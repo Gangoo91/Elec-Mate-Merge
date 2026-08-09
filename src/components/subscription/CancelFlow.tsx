@@ -72,11 +72,11 @@ const REASON_CHIPS: Record<string, { prompt: string; options: string[] }> = {
   },
   too_expensive: {
     prompt: 'What would feel fair?',
-    options: ['About half the price', 'Pay per certificate', 'Free tier + paid extras', "Wouldn't pay at any price"],
+    options: ['About half the price', 'Pay per certificate', 'Free tier + paid extras', "Wouldn't pay at any price", 'Other'],
   },
   not_using: {
     prompt: 'What got in the way?',
-    options: ['Work changed / less certs', 'Never got set up properly', 'Only needed it once', 'Too complicated'],
+    options: ['Work changed / less certs', 'Never got set up properly', 'Only needed it once', 'Too complicated', 'Other'],
   },
 };
 const REASONS: { id: Reason; label: string; hint: string }[] = [
@@ -597,9 +597,18 @@ export function CancelFlow({
           >
             Keep my plan
           </Button>
+          {/* One tap on the follow-up is required where one exists. Optional,
+              it was never used: reason_detail fill fell 50% (May, free text) →
+              12% (Jul) → 0 of 18 this week, because the 31 Jul chip rework also
+              removed the free-text box for `not_using` and `too_expensive` —
+              63% of all cancellations — leaving a skippable chip as the only
+              way to say anything. This is one tap, and it never blocks the
+              cancellation itself, only advancing without answering. */}
           <Button
             onClick={handleSubmitReason}
-            disabled={!reason || isSubmitting}
+            disabled={
+              !reason || Boolean(REASON_CHIPS[reason] && !reasonChip) || isSubmitting
+            }
             className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-40"
           >
             {isSubmitting ? (

@@ -536,6 +536,7 @@ const CableDeratingCalculator = () => {
       description="Calculate cable current carrying capacity with BS 7671 derating factors"
     >
       <CalculatorPanes
+        copyTitle="Cable Derating"
         form={
           <>
             {/* Circuit Design Section */}

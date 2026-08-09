@@ -193,6 +193,11 @@ function EngagementRing({ score, size = 28 }: { score: number; size?: number }) 
 
 /* ── component ──────────────────────────────────────────── */
 
+/* Validated dark-surface categorical steps — slots 1 and 2, same set as the
+   Revenue and Trials pages:
+     node scripts/validate_palette.js "#3987E5,#E66767" --mode dark --surface "#1C1C1C" */
+const DASH_SERIES = ['#3987E5', '#E66767'] as const;
+
 export default function AdminDashboard() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -233,8 +238,16 @@ export default function AdminDashboard() {
   });
 
   const mobileSubsRef = useRef<HTMLDivElement>(null);
-  const [showPaid, setShowPaid] = useState(true);
-  const [showTrials, setShowTrials] = useState(true);
+  /*
+    Collapsed by default.
+
+    Both of these opened expanded, so the Mobile subscribers card rendered all
+    79 paying accounts and all 24 trials inline — a single card several screens
+    tall, sitting in a two-column flow next to cards a tenth its height. The
+    counts are in the header; the list is there when it is wanted.
+  */
+  const [showPaid, setShowPaid] = useState(false);
+  const [showTrials, setShowTrials] = useState(false);
   const [showCancelled, setShowCancelled] = useState(false);
   const [showChurned, setShowChurned] = useState(false);
   const [showAllSignups, setShowAllSignups] = useState(false);
@@ -334,7 +347,7 @@ export default function AdminDashboard() {
       // The generated Supabase types are regenerated on a schedule and do not
       // know this function yet — same reason the get_at_risk_subscribers call
       // above casts.
-       
+
       const { data, error } = await supabase.rpc('count_at_risk_subscribers' as any, {
         p_days: 30,
       });
@@ -595,6 +608,31 @@ export default function AdminDashboard() {
   })();
 
   const allPaying = totalSubs + appStoreSubs + playStoreSubs;
+
+  /*
+    What a subscriber is worth, so the risk lists can be ranked by money.
+
+    "At risk of leaving" listed people by how long they had been quiet and
+    showed "Employer · Stripe" beside each — the tier and the billing rail,
+    neither of which tells you whether losing them matters. An Employer at
+    £49.99 and an Apprentice at £6.99 were presented identically. Prices come
+    from the same map the rest of the app uses; an unmapped tier contributes
+    nothing rather than a guess.
+  */
+  const TIER_MRR: Record<string, number> = {
+    founder: 3.99,
+    apprentice: 6.99,
+    apprentice_yearly: 69.99 / 12,
+    electrician: 19.99,
+    electrician_yearly: 199.99 / 12,
+    business_ai: 39.99,
+    business_ai_yearly: 399.99 / 12,
+    employer: 49.99,
+    employer_yearly: 499.99 / 12,
+  };
+  const tierValue = (tier?: string | null) => TIER_MRR[(tier ?? '').toLowerCase()] ?? 0;
+  const atRiskValue = atRiskSubs.reduce((t, u) => t + tierValue(u.subscription_tier), 0);
+
   const conversionRate = stats?.totalUsers ? Math.round((allPaying / stats.totalUsers) * 100) : 0;
 
   const now = new Date();
@@ -647,6 +685,50 @@ export default function AdminDashboard() {
     .filter(Boolean)
     .join(' · ');
 
+  /*
+    The action queue, ordered by deadline.
+
+    Built as data so the ordering rule is visible: anything with a date attached
+    outranks a standing backlog, because only one of them gets worse overnight.
+  */
+  const needsQueue = [
+    hasExpiringTrials && {
+      key: 'trials',
+      title: 'Trials expiring',
+      count: expiringToday + expiringTomorrow + expiringThisWeek,
+      detail: expiringSummary || 'Upcoming trial expirations',
+      action: 'Open trials',
+      urgent: expiringToday > 0,
+      onClick: () => navigate('/admin/trials?status=ending_today'),
+    },
+    (pendingCounts?.unreadMessages ?? 0) > 0 && {
+      key: 'messages',
+      title: 'Unread messages',
+      count: pendingCounts?.unreadMessages ?? 0,
+      detail: 'Someone is waiting on a reply from you',
+      action: 'Open inbox',
+      urgent: true,
+      onClick: () => navigate('/admin/user-messages'),
+    },
+    abandonedThisWeek.length > 0 && {
+      key: 'abandoned',
+      title: 'Abandoned checkouts',
+      count: abandonedThisWeek.length,
+      detail: `Started this week and never subscribed · ${abandonedCheckouts.length} all time`,
+      action: 'See who',
+      urgent: false,
+      onClick: () => navigate('/admin/incomplete-signup'),
+    },
+  ].filter(Boolean) as Array<{
+    key: string;
+    title: string;
+    count: number;
+    detail: string;
+    action: string;
+    urgent: boolean;
+    onClick: () => void;
+  }>;
+
   const tierPill = (tier: string | null | undefined): { label: string; tone: Tone } => {
     const t = (tier || '').toLowerCase();
     if (t.includes('founder')) return { label: 'Founder', tone: 'yellow' };
@@ -684,87 +766,131 @@ export default function AdminDashboard() {
         />
 
         {/*
-          One command bar, not a hero.
+          The money, its composition, and the figures you check it against.
 
-          This was a 52px revenue card with 90% empty space, then a separate
-          four-cell strip underneath. Both said the same kind of thing — a
-          number and a label — so they are one row now, and the row stays
-          readable at any width instead of reflowing into a column of giants.
-
-          MRR keeps the largest type because it is the one figure the page
-          exists to report; the rest are peers.
+          This was one row of eight cells — MRR spanning two, then six peers of
+          equal weight — so the number the page exists to report sat beside
+          "Founders" and "Users" at nearly the same size, and the composition
+          (£41k a year · 269 Stripe · 74 App Store · 8 Play) was crammed into a
+          caption. Same shape as the Revenue and Trials heroes now: the figure
+          leads, a proportional bar shows what it is made of, and a 2x2 carries
+          the counts.
         */}
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.10] sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
-          <button
-            onClick={() => navigate('/admin/revenue')}
-            className="col-span-2 bg-[hsl(0_0%_10%)] px-4 py-4 text-left transition-colors hover:bg-[hsl(0_0%_13%)] touch-manipulation sm:col-span-3 lg:col-span-2"
-          >
-            <span className="flex items-center gap-1.5">
-              <PulseDot tone="green" />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                Monthly recurring
-              </span>
-            </span>
-            <span className="mt-1.5 block text-[30px] font-semibold leading-none tracking-tight text-white tabular-nums sm:text-[34px]">
-              <AnimatedCounter value={mrr} prefix="£" decimals={2} />
-            </span>
-            <span className="mt-1.5 block text-[11.5px] text-white tabular-nums">
-              £{Math.round(arr / 1000)}k a year · {totalSubs} Stripe · {appStoreSubs} App Store ·{' '}
-              {playStoreSubs} Play
-            </span>
-          </button>
-
-          {/*
-            Six metrics beside the MRR cell. Keep this list and the `lg:grid-cols-*`
-            above in step — the MRR cell spans two, so six entries here means
-            eight columns. Add a seventh without widening the grid and the last
-            one wraps onto a row of its own with a dead gap beside it.
-          */}
-          {[
-            { label: 'Paying', value: allPaying, to: '/admin/revenue', accent: true },
-            {
-              // Live trials across both stores and Stripe — the pipeline that
-              // becomes next month's Paying figure.
-              label: 'On trial',
-              value: totalTrials,
-              to: '/admin/trials',
-            },
-            {
-              label: 'Founders',
-              value: stripeStats?.stripe.tierCounts?.founder || 0,
-              to: '/admin/founders',
-            },
-            {
-              label: 'New today',
-              value: stats?.signupsToday || 0,
-              to: '/admin/users?filter=today',
-            },
-            {
-              label: 'Active today',
-              value: stats?.activeToday || 0,
-              to: '/admin/users?filter=active',
-            },
-            { label: 'Users', value: stats?.totalUsers || 0, to: '/admin/users' },
-          ].map((m) => (
-            <button
-              key={m.label}
-              onClick={() => navigate(m.to)}
-              className="bg-[hsl(0_0%_10%)] px-4 py-4 text-left transition-colors hover:bg-[hsl(0_0%_13%)] touch-manipulation"
-            >
-              <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-                {m.label}
-              </span>
-              <span
-                className={cn(
-                  'mt-1.5 block text-[24px] font-semibold leading-none tabular-nums',
-                  m.accent ? 'text-elec-yellow' : 'text-white'
-                )}
+        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2.5">
+                <PulseDot tone="green" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                  Monthly recurring
+                </span>
+              </div>
+              <button
+                onClick={() => navigate('/admin/revenue')}
+                className="mt-4 block touch-manipulation text-left text-[38px] font-semibold leading-none tracking-tight text-white transition-opacity hover:opacity-80 sm:text-[52px]"
               >
-                <AnimatedCounter value={m.value} />
-              </span>
-            </button>
-          ))}
-        </div>
+                <AnimatedCounter value={mrr} prefix="£" decimals={2} />
+              </button>
+              <div className="mt-2 text-[13px] text-white">
+                £{Math.round(arr / 1000)}k a year · {allPaying} paying across Stripe and the stores
+              </div>
+
+              <div className="mt-5">
+                <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
+                  {[
+                    { k: 'stripe', v: stripeMrr, fill: DASH_SERIES[0] },
+                    { k: 'mobile', v: rcMrr, fill: DASH_SERIES[1] },
+                  ]
+                    .filter((x) => x.v > 0)
+                    .map((x, i, arrSeg) => (
+                      <div
+                        key={x.k}
+                        title={`${x.k}: £${x.v.toFixed(2)}`}
+                        style={{
+                          width: `calc(${(x.v / Math.max(mrr, 1)) * 100}% - ${
+                            (2 * (arrSeg.length - 1)) / arrSeg.length
+                          }px)`,
+                          background: x.fill,
+                          borderTopLeftRadius: i === 0 ? 999 : 2,
+                          borderBottomLeftRadius: i === 0 ? 999 : 2,
+                          borderTopRightRadius: i === arrSeg.length - 1 ? 999 : 2,
+                          borderBottomRightRadius: i === arrSeg.length - 1 ? 999 : 2,
+                        }}
+                      />
+                    ))}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ background: DASH_SERIES[0] }}
+                    />
+                    <span className="font-medium tabular-nums">£{stripeMrr.toFixed(2)}</span> Stripe
+                    · {totalSubs} subs
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ background: DASH_SERIES[1] }}
+                    />
+                    <span className="font-medium tabular-nums">£{rcMrr.toFixed(2)}</span> Mobile ·{' '}
+                    {appStoreSubs + playStoreSubs} subs
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+              {[
+                {
+                  label: 'Paying',
+                  value: allPaying,
+                  to: '/admin/revenue',
+                  accent: true,
+                  sub: 'all rails',
+                },
+                {
+                  label: 'On trial',
+                  value: totalTrials,
+                  to: '/admin/trials',
+                  sub: 'next month’s paying',
+                },
+                {
+                  label: 'Active today',
+                  value: stats?.activeToday || 0,
+                  to: '/admin/users?filter=active',
+                  sub: 'seen in 24h',
+                },
+                {
+                  label: 'Users',
+                  value: stats?.totalUsers || 0,
+                  to: '/admin/users',
+                  sub: `${stats?.signupsToday || 0} joined today`,
+                },
+              ].map((m) => (
+                <button
+                  key={m.label}
+                  onClick={() => navigate(m.to)}
+                  className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+                >
+                  <div
+                    className={cn(
+                      'text-[22px] font-semibold leading-none sm:text-[26px]',
+                      m.accent ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    <AnimatedCounter value={m.value} />
+                  </div>
+                  <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                    {m.label}
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/60">{m.sub}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/*
           Needs you today.
@@ -778,52 +904,50 @@ export default function AdminDashboard() {
         {(hasExpiringTrials ||
           abandonedThisWeek.length > 0 ||
           (pendingCounts?.unreadMessages ?? 0) > 0) && (
-          <ListCard>
-            <ListCardHeader tone="orange" title="Needs you today" />
-            <ListBody>
-              {hasExpiringTrials && (
-                <ListRow
-                  accent="orange"
-                  title="Trials expiring"
-                  subtitle={expiringSummary || 'Upcoming trial expirations'}
-                  trailing={
-                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
-                      {expiringToday + expiringTomorrow + expiringThisWeek}
+          <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+            {/*
+              A queue, ordered by how soon it stops mattering.
+
+              These were three identical ListRows with a big amber number on the
+              right — the same treatment for "3 trials expire today", which has
+              a deadline, and "537 abandoned checkouts all time", which does
+              not. Each one now says what the job is and what happens if it is
+              left, and they sit in order of urgency rather than source order.
+            */}
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                Needs you today
+              </span>
+              <span className="text-[11px] text-white/60">{needsQueue.length} open</span>
+            </div>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {needsQueue.map((item) => (
+                <button
+                  key={item.key}
+                  onClick={item.onClick}
+                  className="group touch-manipulation rounded-xl border border-white/[0.1] bg-[hsl(0_0%_9%)] p-4 text-left transition-colors hover:border-white/[0.2] hover:bg-[hsl(0_0%_12%)]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="text-[13px] font-semibold text-white">{item.title}</span>
+                    <span
+                      className={cn(
+                        'shrink-0 text-[24px] font-semibold leading-none',
+                        item.urgent ? 'text-amber-400' : 'text-white'
+                      )}
+                    >
+                      {item.count}
                     </span>
-                  }
-                  onClick={() =>
-                    mobileSubsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  }
-                />
-              )}
-              {abandonedThisWeek.length > 0 && (
-                <ListRow
-                  accent="orange"
-                  title="Abandoned checkouts"
-                  subtitle={`Started this week, never subscribed · ${abandonedCheckouts.length} all time`}
-                  trailing={
-                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
-                      {abandonedThisWeek.length}
-                    </span>
-                  }
-                  onClick={() => navigate('/admin/incomplete-signup')}
-                />
-              )}
-              {(pendingCounts?.unreadMessages ?? 0) > 0 && (
-                <ListRow
-                  accent="orange"
-                  title="Unread messages"
-                  subtitle="Waiting on a reply from you"
-                  trailing={
-                    <span className="text-[20px] font-semibold leading-none text-orange-300 tabular-nums">
-                      {pendingCounts?.unreadMessages}
-                    </span>
-                  }
-                  onClick={() => navigate('/admin/user-messages')}
-                />
-              )}
-            </ListBody>
-          </ListCard>
+                  </div>
+                  <div className="mt-1.5 text-[12px] text-white/70">{item.detail}</div>
+                  <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-elec-yellow">
+                    {item.action}
+                    <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
         )}
 
         {/*
@@ -970,30 +1094,38 @@ export default function AdminDashboard() {
             />
             <ListBody>
               {stats?.recentSignups?.slice(0, showAllSignups ? 50 : 5).map((user) => {
+                /*
+                  Where they got to, not just what they are.
+
+                  The pill said Pro / Checkout / Free — two of which are the
+                  same thing (not paying) and none of which told you whether the
+                  person ever finished setting up. 24.5% of accounts never
+                  complete onboarding, and that is the one thing worth seeing on
+                  a list of people who arrived today.
+                */
                 const status = user.subscribed
-                  ? { label: 'Pro', tone: 'emerald' as Tone }
+                  ? { label: 'Paying', tone: 'emerald' as Tone }
                   : user.stripe_customer_id
-                    ? { label: 'Checkout', tone: 'orange' as Tone }
-                    : { label: 'Free', tone: 'amber' as Tone };
+                    ? { label: 'Started checkout', tone: 'purple' as Tone }
+                    : user.onboarding_completed
+                      ? { label: 'Set up', tone: 'blue' as Tone }
+                      : { label: 'Never finished setup', tone: 'orange' as Tone };
                 return (
                   <ListRow
                     key={user.id}
                     lead={<Avatar initials={getInitials(user.full_name)} />}
                     title={user.full_name || 'Unknown'}
-                    subtitle={user.email}
-                    trailing={
-                      <>
-                        <Pill tone={status.tone}>{status.label}</Pill>
-                        {/* Shown on mobile too — the row reflows now, so the
-                          name no longer has to fight the metadata for width. */}
-                        <span className="text-[11px] font-medium text-white tabular-nums">
-                          {signupWhen(user.created_at).when}
-                        </span>
-                        <span className="text-[11px] text-white tabular-nums">
+                    subtitle={
+                      <span>
+                        {signupWhen(user.created_at).when}
+                        <span className="text-white/50">
+                          {' · '}
                           {signupWhen(user.created_at).relative}
+                          {user.email ? ` · ${user.email}` : ''}
                         </span>
-                      </>
+                      </span>
                     }
+                    trailing={<Pill tone={status.tone}>{status.label}</Pill>}
                     onClick={() => setSelectedUser(user)}
                   />
                 );
@@ -1030,7 +1162,7 @@ export default function AdminDashboard() {
                     ]}
                   />
                   {rcHasDivergence && (
-                    <div className="mt-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 px-4 py-3 flex items-start gap-2.5">
+                    <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3">
                       <Dot tone="amber" className="mt-1.5" />
                       <div className="min-w-0">
                         <div className="text-[12px] font-semibold text-amber-300 leading-tight">
@@ -1239,8 +1371,13 @@ export default function AdminDashboard() {
                 tone="orange"
                 title="At risk of leaving"
                 meta={
-                  <span className="text-[11px] text-orange-400 font-medium tabular-nums">
-                    {atRiskTotal ?? atRiskSubs.length} paying · quiet 30d+
+                  <span className="flex flex-wrap items-center gap-2 text-[11px]">
+                    <span className="font-semibold tabular-nums text-white">
+                      £{Math.round(atRiskValue)}/mo
+                    </span>
+                    <span className="text-white/60">
+                      at risk · {atRiskTotal ?? atRiskSubs.length} quiet 30d+
+                    </span>
                   </span>
                 }
                 action={
@@ -1255,32 +1392,52 @@ export default function AdminDashboard() {
                 }
               />
               <ListBody>
-                {atRiskSubs.slice(0, showAllAtRisk ? atRiskSubs.length : 6).map((u) => {
-                  const matched = baseUsers?.find((bu) => bu.id === u.user_id);
-                  const tone: Tone = u.days_quiet >= 60 ? 'red' : 'orange';
-                  return (
-                    <ListRow
-                      key={u.user_id}
-                      accent={tone}
-                      lead={<Avatar initials={getInitials(u.full_name)} />}
-                      title={u.full_name || 'Unknown'}
-                      subtitle={
-                        <span className="capitalize">
-                          {(u.subscription_tier || 'paid').replace('_', ' ')}
-                          {u.subscription_source
-                            ? ` · ${u.subscription_source.replace('_', ' ')}`
-                            : ''}
-                        </span>
-                      }
-                      trailing={
-                        <Pill tone={tone}>
-                          {u.days_quiet >= 9999 ? 'never active' : `${u.days_quiet}d quiet`}
-                        </Pill>
-                      }
-                      onClick={() => matched && setSelectedUser(matched)}
-                    />
-                  );
-                })}
+                {/*
+                  Ranked by what they are worth, not by how long they have been
+                  quiet. The list used to open with whoever had been silent
+                  longest and showed "Employer · Stripe" beside each name — tier
+                  and billing rail, neither of which says whether losing them
+                  matters. A £49.99 Employer and a £6.99 Apprentice looked the
+                  same; now the money leads and the quiet time qualifies it.
+                */}
+                {[...atRiskSubs]
+                  .sort((a, b) => tierValue(b.subscription_tier) - tierValue(a.subscription_tier))
+                  .slice(0, showAllAtRisk ? atRiskSubs.length : 6)
+                  .map((u) => {
+                    const matched = baseUsers?.find((bu) => bu.id === u.user_id);
+                    const value = tierValue(u.subscription_tier);
+                    const never = u.days_quiet >= 9999;
+                    return (
+                      <ListRow
+                        key={u.user_id}
+                        accent={never || u.days_quiet >= 60 ? 'red' : 'orange'}
+                        lead={<Avatar initials={getInitials(u.full_name)} />}
+                        title={u.full_name || 'Unknown'}
+                        subtitle={
+                          <span>
+                            {never ? 'Never opened the app' : `Quiet ${u.days_quiet} days`}
+                            <span className="text-white/50">
+                              {' · '}
+                              <span className="capitalize">
+                                {(u.subscription_tier || 'paid').replace('_', ' ')}
+                              </span>
+                            </span>
+                          </span>
+                        }
+                        trailing={
+                          <span className="text-right">
+                            <span className="block text-[15px] font-semibold tabular-nums text-white">
+                              {value > 0 ? `£${value.toFixed(2)}` : '—'}
+                            </span>
+                            <span className="block text-[10px] uppercase tracking-[0.12em] text-white/50">
+                              a month
+                            </span>
+                          </span>
+                        }
+                        onClick={() => matched && setSelectedUser(matched)}
+                      />
+                    );
+                  })}
               </ListBody>
             </ListCard>
           )}
@@ -1451,6 +1608,9 @@ export default function AdminDashboard() {
                 {supportMessages.slice(0, 5).map((msg) => {
                   const sender = msg.sender;
                   const isUnread = !msg.read_at;
+                  const waitingDays = Math.floor(
+                    (Date.now() - new Date(msg.created_at).getTime()) / 86400000
+                  );
                   return (
                     <ListRow
                       key={msg.id}
@@ -1473,11 +1633,34 @@ export default function AdminDashboard() {
                             : msg.message}
                         </span>
                       }
+                      /*
+                        Waiting time, sized by how bad it is.
+
+                        Every message showed the same quiet grey "9 days ago" —
+                        a nine-day-old unanswered message and a one-hour-old one
+                        were typographically identical, on the one card where
+                        the age IS the problem.
+                      */
                       trailing={
-                        <span className="text-[11px] text-white tabular-nums">
-                          {formatDistanceToNow(new Date(msg.created_at), {
-                            addSuffix: true,
-                          }).replace('about ', '')}
+                        <span className="text-right">
+                          <span
+                            className={cn(
+                              'block text-[13px] font-semibold tabular-nums',
+                              waitingDays >= 3 ? 'text-amber-400' : 'text-white'
+                            )}
+                          >
+                            {formatDistanceToNow(new Date(msg.created_at))
+                              .replace('about ', '')
+                              .replace(' days', 'd')
+                              .replace(' day', 'd')
+                              .replace(' hours', 'h')
+                              .replace(' hour', 'h')
+                              .replace(' minutes', 'm')
+                              .replace(' minute', 'm')}
+                          </span>
+                          <span className="block text-[10px] uppercase tracking-[0.12em] text-white/50">
+                            waiting
+                          </span>
                         </span>
                       }
                       onClick={() => navigate('/admin/user-messages')}

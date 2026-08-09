@@ -206,6 +206,7 @@ const ACPowerCalculator = () => {
       description="Calculate AC power relationships: Active (P), Reactive (Q), and Apparent (S) power"
     >
       <CalculatorPanes
+        copyTitle="AC Power"
         form={
           <>
             <CalculatorInputGrid columns={2}>

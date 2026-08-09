@@ -50,12 +50,24 @@ export const r1r2Content: CalculatorContent = {
       clauseText:
         'The continuity of protective conductors, including main and supplementary bonding, shall be verified. The measured (R1 + R2) is used to confirm CPC continuity and to establish Zs as Ze + (R1 + R2).',
     },
+    /*
+      Verified word-for-word against the printed regulations (Desktop/BS7671_ocr.pdf).
+      Reg 643.2.1 is narrower than "continuity testing" suggests: it names WHAT must
+      be measured, and it includes ring final live conductors — which is why the ring
+      circuit test exists as a separate step rather than an optional extra.
+    */
+    {
+      standard: 'BS 7671',
+      citation: 'Regulation 643.2.1 — what continuity covers',
+      clauseText:
+        'The continuity of conductors and connections to exposed-conductive-parts and extraneous-conductive-parts, if any, shall be verified by a measurement of resistance of (a) protective conductors, including protective bonding conductors, and (b) in the case of ring final circuits, live conductors.',
+    },
   ],
 
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Zs = Ze + (R1+R2) and continuity testing are foundational (Part 6 / GN3 Ch 10). Per-metre resistances match the engine. Confirm 643.2.1 wording against A4:2026 facets.',
+      'Reg 643.2.1 verified word-for-word against the printed A4:2026 text (Desktop/BS7671_ocr.pdf), including limb (b) covering ring final live conductors. Zs = Ze + (R1+R2) is foundational; per-metre resistances are BS EN 60228 values and match the engine.',
   },
 };

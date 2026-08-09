@@ -49,7 +49,12 @@ export const AGE_LABEL: Record<AgeBand, string> = {
  * Order matters: the Regulations decide pass/fail first, then guidance colours
  * what a technical pass actually means for the installation.
  */
-export function interpretIr(mohm: number, kind: CircuitKind, age: AgeBand, previous?: number): IrVerdict {
+export function interpretIr(
+  mohm: number,
+  kind: CircuitKind,
+  age: AgeBand,
+  previous?: number
+): IrVerdict {
   const t = TABLE_64[kind];
   const base = { requiredTestVolts: t.testVolts, minMohm: t.minMohm };
 
@@ -121,4 +126,3 @@ export function interpretIr(mohm: number, kind: CircuitKind, age: AgeBand, previ
     trend,
   };
 }
-

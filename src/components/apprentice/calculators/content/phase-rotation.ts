@@ -45,16 +45,16 @@ export const phaseRotationContent: CalculatorContent = {
   standards: [
     {
       standard: 'BS 7671',
-      citation: 'Regulation 643.11 — Phase sequence',
+      citation: 'Regulation 643.9 — Check of phase sequence',
       clauseText:
-        'Where required, it shall be verified that the phase sequence is maintained. This is particularly important for circuits supplying rotating machinery, where reversed sequence reverses the direction of rotation.',
+        'For polyphase circuits, it shall be verified that the phase sequence is maintained at all relevant points throughout the installation.',
     },
   ],
 
   _grounding: {
-    status: 'thin',
+    status: 'verified',
     generatedAt: '2026-06-01',
     notes:
-      'Phase-sequence verification is a Part 6 requirement. Confirm exact 643.11 wording against A4:2026 facets.',
+      'CITATION CORRECTED against the printed A4:2026 text (Desktop/BS7671_ocr.pdf): this cited Regulation 643.11, which is \u201cVerification of voltage drop\u201d. Phase sequence is Regulation 643.9, \u201cCheck of phase sequence\u201d \u2014 clause text now quoted verbatim. Test-method guidance is practice, not a BS 7671 requirement.',
   },
 };

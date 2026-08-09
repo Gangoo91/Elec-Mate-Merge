@@ -16,14 +16,9 @@ import {
 } from '@/hooks/useSafetySignatureOverview';
 
 import { SafetyModuleShell } from './common/SafetyModuleShell';
-import {
-  PageHero,
-  StatStrip,
-  EmptyState,
-  LoadingState,
-  type Tone,
-} from '@/components/college/primitives';
+import { EmptyState, LoadingState, type Tone } from '@/components/college/primitives';
 import { SafetyListCard, SafetyListRow } from './common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 
 interface SignatureTrackingDashboardProps {
   /** Returns to the Site Safety hub (rendered via SafetyMasthead). */
@@ -33,8 +28,8 @@ interface SignatureTrackingDashboardProps {
 }
 
 const STATUS_PILL: Record<'green' | 'orange', string> = {
-  green: 'bg-green-500/10 text-green-400 border-green-500/25',
-  orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  orange: 'bg-white/[0.05] text-orange-400 border-white/10',
 };
 
 function StatusPill({ allSigned }: { allSigned: boolean }) {
@@ -68,13 +63,13 @@ export function SignatureTrackingDashboard({ onBack, onTap }: SignatureTrackingD
       moduleName="Signature Tracking"
       trailing={
         hasUnsigned ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-orange-500/10 text-orange-400 border-orange-500/25 whitespace-nowrap">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-orange-400 border-white/10 whitespace-nowrap">
             {data?.totalUnsigned} outstanding
           </span>
         ) : undefined
       }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Site Safety · sign-off coverage"
           title="Signature tracking"
           description="Every safety record that needs a signature, in one place. Chase down anything still outstanding before it leaves site."
@@ -83,7 +78,7 @@ export function SignatureTrackingDashboard({ onBack, onTap }: SignatureTrackingD
       }
       stats={
         data && data.totalDocuments > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               {
                 value: `${data.signedPercent}%`,

@@ -32,45 +32,47 @@ export const CalculatorActions = ({
   void category;
 
   const content = (
-    <div className={cn('flex gap-3', className)}>
-      {showReset && onReset && (
+    <div className={cn('space-y-2', className)}>
+      <div className="flex gap-3">
+        {showReset && onReset && (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onReset}
+            disabled={isCalculating}
+            className={cn(
+              'h-12 sm:h-14 flex-1 rounded-xl border-white/[0.08]',
+              'text-white hover:text-white hover:bg-white/[0.04]',
+              'touch-manipulation active:scale-[0.98] transition-all'
+            )}
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            {resetLabel}
+          </Button>
+        )}
         <Button
           type="button"
-          variant="outline"
-          onClick={onReset}
-          disabled={isCalculating}
+          onClick={onCalculate}
+          disabled={isDisabled || isCalculating}
           className={cn(
-            'h-12 sm:h-14 flex-1 rounded-xl border-white/[0.08]',
-            'text-white hover:text-white hover:bg-white/[0.04]',
-            'touch-manipulation active:scale-[0.98] transition-all'
+            'h-12 sm:h-14 flex-[2] rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
+            'touch-manipulation active:scale-[0.98] transition-all',
+            'disabled:opacity-40 disabled:cursor-not-allowed'
           )}
         >
-          <RotateCcw className="h-4 w-4 mr-2" />
-          {resetLabel}
+          {isCalculating ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Calculating...
+            </>
+          ) : (
+            <>
+              <Calculator className="h-4 w-4 mr-2" />
+              {calculateLabel}
+            </>
+          )}
         </Button>
-      )}
-      <Button
-        type="button"
-        onClick={onCalculate}
-        disabled={isDisabled || isCalculating}
-        className={cn(
-          'h-12 sm:h-14 flex-[2] rounded-xl font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90',
-          'touch-manipulation active:scale-[0.98] transition-all',
-          'disabled:opacity-40 disabled:cursor-not-allowed'
-        )}
-      >
-        {isCalculating ? (
-          <>
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            Calculating...
-          </>
-        ) : (
-          <>
-            <Calculator className="h-4 w-4 mr-2" />
-            {calculateLabel}
-          </>
-        )}
-      </Button>
+      </div>
     </div>
   );
 

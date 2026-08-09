@@ -192,23 +192,38 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
   }, []);
 
   const addRiskFromHazard = useCallback((hazardData: any, taskId?: string) => {
+    /*
+     * Callers that already hold exact figures pass them through.
+     *
+     * The band fallback below turns a riskLevel string back into numbers, which
+     * is fine for sources that only carry a band — but the hazard database
+     * stores real likelihood and severity per hazard, and round-tripping those
+     * through a band corrupts them: a hazard at likelihood 3 / severity 5
+     * (rating 15) lands in "Very High" and comes back as 5 / 5, rating 25.
+     * Overstating risk in a document someone signs is still wrong data, so an
+     * explicit value always wins.
+     */
     const defaultLikelihood =
-      hazardData.riskLevel === 'Very High'
-        ? 5
-        : hazardData.riskLevel === 'High'
-          ? 4
-          : hazardData.riskLevel === 'Medium'
-            ? 3
-            : 2;
+      typeof hazardData.likelihood === 'number'
+        ? hazardData.likelihood
+        : hazardData.riskLevel === 'Very High'
+          ? 5
+          : hazardData.riskLevel === 'High'
+            ? 4
+            : hazardData.riskLevel === 'Medium'
+              ? 3
+              : 2;
 
     const defaultSeverity =
-      hazardData.riskLevel === 'Very High'
-        ? 5
-        : hazardData.riskLevel === 'High'
-          ? 4
-          : hazardData.riskLevel === 'Medium'
-            ? 3
-            : 2;
+      typeof hazardData.severity === 'number'
+        ? hazardData.severity
+        : hazardData.riskLevel === 'Very High'
+          ? 5
+          : hazardData.riskLevel === 'High'
+            ? 4
+            : hazardData.riskLevel === 'Medium'
+              ? 3
+              : 2;
 
     const newRisk: RAMSRisk = {
       id: Date.now().toString(),

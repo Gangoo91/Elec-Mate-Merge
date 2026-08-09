@@ -12,6 +12,7 @@ import { useLocalStorageMigration } from '@/hooks/useLocalStorageMigration';
 // Lazy load with retry for chunk failures
 const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreIndex'));
 const LeaderboardPage = lazyWithRetry(() => import('@/pages/study-centre/LeaderboardPage'));
+const BrowseCoursesPage = lazyWithRetry(() => import('@/pages/study-centre/BrowseCoursesPage'));
 const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
 
 // Import nested route components with retry
@@ -345,6 +346,7 @@ export default function StudyCentreRoutes() {
       <Routes>
         <Route index element={<StudyCentreIndex />} />
         <Route path="leaderboard" element={<LeaderboardPage />} />
+        <Route path="browse" element={<BrowseCoursesPage />} />
         <Route path="videos" element={<LearningVideos backTo="/study-centre" />} />
         <Route path="apprentice/*" element={<ApprenticeCourseRoutes />} />
         <Route path="upskilling/*" element={<UpskillingRoutes />} />

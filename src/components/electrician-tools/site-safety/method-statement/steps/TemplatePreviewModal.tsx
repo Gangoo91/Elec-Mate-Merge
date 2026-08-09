@@ -261,7 +261,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                       Safety & Compliance Notice
                     </div>
                     <p className="text-sm text-white leading-relaxed">
-                      This template is designed to meet BS7671:2018+A3:2024 requirements and CDM
+                      This template is designed to meet BS7671:2018+A4:2026 requirements and CDM
                       regulations. Always conduct site-specific risk assessments and adapt
                       procedures as needed for your specific installation.
                     </p>

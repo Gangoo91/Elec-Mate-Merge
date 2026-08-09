@@ -1,7 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { Navigation } from 'lucide-react';
 import { Customer } from '@/hooks/inspection/useCustomers';
+import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 
@@ -304,6 +306,27 @@ export const CustomerListRow = ({
             >
               Email
             </a>
+          )}
+          {/* ELE-1520 — the whole card is role="button" and opens the customer,
+              so this has to stop the click from bubbling or you would navigate
+              and change page at the same time. */}
+          {canNavigateTo(customer) && (
+            <button
+              type="button"
+              onClick={(e) => {
+                stopPropagation(e);
+                navigateToAddress({
+                  address: customer.address,
+                  latitude: customer.latitude,
+                  longitude: customer.longitude,
+                });
+              }}
+              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
+              aria-label={`Navigate to ${customer.name}`}
+            >
+              <Navigation className="h-3.5 w-3.5 text-elec-yellow" />
+              Navigate
+            </button>
           )}
           <span className="ml-1 flex h-9 items-center text-[12.5px] font-semibold text-elec-yellow">
             Open

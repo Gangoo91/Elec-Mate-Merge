@@ -8,7 +8,7 @@
  */
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { getCategoriesFromHazards } from './CategoryPill';
+import { getCategoriesFromHazards, normaliseCategory, hazardMatchesCategory } from './CategoryPill';
 import { HazardDetailSheet } from './HazardDetailSheet';
 import { BookmarksSheet } from './BookmarksSheet';
 import { RiskPill, riskTone } from './RiskBar';
@@ -16,10 +16,11 @@ import { enhancedRiskDatabase } from '@/data/enhanced-hazard-database';
 import type { EnhancedRiskConsequence } from '@/data/hazards';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
-import { PageHero, StatStrip, FilterBar, EmptyState } from '@/components/college/primitives';
+import { FilterBar, EmptyState } from '@/components/college/primitives';
 import { SafetyModuleShell } from '../common/SafetyModuleShell';
 import { LoadMoreButton } from '../common/LoadMoreButton';
 import { SafetyListCard, SafetyListRow } from '../common/SafetyList';
+import { SafetyPageHeader, SafetyStatStrip } from '../common/SafetyPageHeader';
 
 const BOOKMARKS_KEY = 'hazard-bookmarks';
 
@@ -76,11 +77,21 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
   // Categories derived from hazards
   const categories = useMemo(() => getCategoriesFromHazards(hazards), [hazards]);
 
+  /** Canonical category → hazard count, so "Other" knows what it holds. */
+  const categoryCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    hazards.forEach((h) => {
+      const id = normaliseCategory(h.category);
+      c[id] = (c[id] || 0) + 1;
+    });
+    return c;
+  }, [hazards]);
+
   // Filtered hazards based on category + free-text search.
   const filteredHazards = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     return hazards.filter((h) => {
-      if (activeCategory !== 'all' && h.category !== activeCategory) return false;
+      if (!hazardMatchesCategory(h.category, activeCategory, categoryCounts)) return false;
       if (!q) return true;
       return (
         h.hazard.toLowerCase().includes(q) ||
@@ -92,7 +103,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
         )
       );
     });
-  }, [hazards, activeCategory, searchQuery]);
+  }, [hazards, activeCategory, searchQuery, categoryCounts]);
 
   // Highest-risk hazards sort to the top.
   const sortedHazards = useMemo(
@@ -146,7 +157,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
         ) : undefined
       }
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Hazard Database"
           title="Site hazards, controls and BS 7671 references"
           description="Browse the hazard library by category, review the hierarchy of control measures and pull the right guidance into your risk assessments."
@@ -161,7 +172,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
         />
       }
       stats={
-        <StatStrip
+        <SafetyStatStrip
           stats={[
             { value: hazards.length, label: 'Hazards', onClick: () => setActiveCategory('all') },
             { value: highRiskCount, label: 'High risk', sub: 'rating 9+', accent: true },
