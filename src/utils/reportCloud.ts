@@ -695,10 +695,28 @@ export const reportCloud = {
         hasWorkDate: !!data.workDate,
       });
 
+      /*
+       * Allocate the certificate number here — this is the moment the report
+       * first exists, and the only point at which a number is certainly wanted.
+       *
+       * The old fallback stamped `EICR-1786391571379` (a raw timestamp) whenever
+       * the form had not produced a number yet, which is neither the house
+       * format nor traceable. Generating on demand keeps every certificate on
+       * the proper sequence, and `generateCertificateNumber` falls back to its
+       * own prefixed random id for types the RPC cannot serve (ELE-1443).
+       */
+      let certificateNumber = (data.certificateNumber as string | undefined) || '';
+      if (!certificateNumber) {
+        const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+        certificateNumber = await generateCertificateNumber(reportType);
+        // Keep the payload consistent with the row we are about to write.
+        data = { ...data, certificateNumber };
+      }
+
       const reportData = {
         user_id: userId,
         report_type: reportType,
-        certificate_number: data.certificateNumber || `${reportType.toUpperCase()}-${Date.now()}`,
+        certificate_number: certificateNumber,
         report_id: `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
         status,
         customer_id: customerId || null,

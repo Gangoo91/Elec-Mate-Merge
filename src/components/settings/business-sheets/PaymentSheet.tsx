@@ -257,9 +257,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                   <Label className="text-white font-medium text-[13px]">Bank name</Label>
                   <Input
                     value={bankDetails.bankName}
-                    onChange={(e) =>
-                      setBankDetails({ ...bankDetails, bankName: e.target.value })
-                    }
+                    onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
                     placeholder="e.g. Barclays"
                     className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
@@ -304,7 +302,8 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                   inputMode="url"
                 />
                 <p className="text-[11px] text-white/40">
-                  Shown to clients on the portal as a "Pay online" button, alongside your bank details.
+                  Shown to clients on the portal as a "Pay online" button, alongside your bank
+                  details.
                 </p>
               </div>
             </div>

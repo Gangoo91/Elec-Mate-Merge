@@ -17,13 +17,7 @@ interface CompanySheetProps {
   uploadLogo: (file: File) => Promise<{ url?: string; dataUrl?: string } | null>;
 }
 
-const CompanySheet = ({
-  open,
-  onOpenChange,
-  profile,
-  onSave,
-  uploadLogo,
-}: CompanySheetProps) => {
+const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: CompanySheetProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [companyEmail, setCompanyEmail] = useState('');
@@ -173,9 +167,7 @@ const CompanySheet = ({
                       className="w-full h-full object-contain"
                     />
                   ) : (
-                    <span className="text-[11px] uppercase tracking-[0.18em] text-white">
-                      Logo
-                    </span>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-white">Logo</span>
                   )}
                 </div>
                 <div className="flex flex-col gap-2">
@@ -214,9 +206,7 @@ const CompanySheet = ({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-white font-medium text-[12px]">
-                  Logo size on documents
-                </Label>
+                <Label className="text-white font-medium text-[12px]">Logo size on documents</Label>
                 <div className="flex gap-2">
                   {(['small', 'medium', 'large'] as const).map((size) => (
                     <button

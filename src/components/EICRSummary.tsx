@@ -33,6 +33,7 @@ import type { RemedialQuoteItem } from '@/utils/defectToQuoteItems';
 import { mapDefectsToQuoteItems } from '@/utils/defectToQuoteItems';
 import QuoteOptionsSheet from '@/components/inspection/eicr/QuoteOptionsSheet';
 import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
+import ObservationCodeHelpSheet from '@/components/inspection/ObservationCodeHelpSheet';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
@@ -146,6 +147,7 @@ const EICRSummary = ({
   // AI Estimator state
   const [showQuoteOptions, setShowQuoteOptions] = useState(false);
   const [showEstimatorSheet, setShowEstimatorSheet] = useState(false);
+  const [showCodeHelp, setShowCodeHelp] = useState(false);
   const [estimateResult, setEstimateResult] = useState<EstimateResult | null>(null);
   const { estimate, isEstimating, progressStep, elapsedSeconds, cancel } =
     useEstimateRemedialCosts();
@@ -819,6 +821,17 @@ const EICRSummary = ({
   );
   const c1Count = c1Observations.length;
 
+  /*
+   * ⚠️ Do NOT add `&& !d.rectified` here. BS 7671 Appendix 6, producer notes to
+   * the model Condition Report: "The overall assessment of the installation is
+   * to be reported as unsatisfactory where any observation is given a code C1
+   * or C2 classification." There is no rectification exemption — the very next
+   * note contemplates C1 items being "made safe on discovery" and still does
+   * not release the assessment.
+   *
+   * A defect put right on the visit is handled by no longer carrying a live
+   * C1/C2, not by exempting a live one from this count (ELE-1537).
+   */
   const blockingObsCount = (formData.defectObservations || []).filter(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (d: any) => d.defectCode === 'C1' || d.defectCode === 'C2'
@@ -974,7 +987,21 @@ const EICRSummary = ({
 
       {/* Overall assessment */}
       <div className={cardCn}>
-        <h2 className="text-[15px] font-semibold tracking-tight text-white">Overall assessment</h2>
+        <div className="flex items-start justify-between gap-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Overall assessment</h2>
+          {/* The gate used to assert the outcome and explain nothing, which read
+            as a bug to inspectors who had just fixed the fault (ELE-1537). */}
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              setShowCodeHelp(true);
+            }}
+            className="-mr-1 -mt-1 h-11 flex-shrink-0 rounded-lg px-2 text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors hover:bg-white/[0.06]"
+          >
+            How codes decide this
+          </button>
+        </div>
 
         {/* ELE-882 — explicit suggestion + Apply instead of silent auto-set.
             Section E of the model form is strictly SATISFACTORY/UNSATISFACTORY,
@@ -985,6 +1012,13 @@ const EICRSummary = ({
               <span className="text-xs text-white">
                 {blockingObsCount} C1/C2 recorded — the report must be{' '}
                 <span className="font-semibold text-elec-yellow">Unsatisfactory</span>
+                <button
+                  type="button"
+                  onClick={() => setShowCodeHelp(true)}
+                  className="ml-1.5 font-semibold text-elec-yellow underline underline-offset-2 touch-manipulation"
+                >
+                  Why?
+                </button>
               </span>
               <button
                 type="button"
@@ -1671,6 +1705,11 @@ const EICRSummary = ({
         open={showReferralPrompt}
         onOpenChange={(open) => !open && handleReferralClose()}
         context="post_cert_success"
+      />
+      <ObservationCodeHelpSheet
+        open={showCodeHelp}
+        onOpenChange={setShowCodeHelp}
+        observations={formData.defectObservations || []}
       />
     </div>
   );

@@ -798,41 +798,66 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     }
   }, [customerDataFromNav, initialReportId]);
 
-  // Generate certificate number on mount if needed - Prevent regeneration
+  /*
+   * Certificate numbers are allocated once a report row exists — never on mount.
+   *
+   * `generate_certificate_number` is a Postgres sequence: every call consumes a
+   * value permanently. Allocating on mount meant opening the form and backing
+   * out burned a number, and across EICR/EIC/MW that had spent 7,745 of 9,094
+   * issued numbers (85%) on certificates that were never created.
+   *
+   * ⚠️ "First edit" is NOT a usable signal here. Several detail sections write
+   * derived defaults from a mount effect — SupplyCharacteristicsSection sets
+   * `earthElectrodeType` to 'n/a' for TN systems, for one — so a pristine form
+   * updates itself before the inspector touches anything.
+   *
+   * Keying off the report id instead means a number is allocated exactly when
+   * there is a certificate to attach it to, and doubles as a backfill for any
+   * older report that never got one.
+   */
   const certNumberGenerated = React.useRef(false);
-  useEffect(() => {
-    const initCertificateNumber = async () => {
-      if (
-        !formData.certificateNumber &&
-        !currentReportId &&
-        !initialReportId &&
-        !certNumberGenerated.current
-      ) {
-        certNumberGenerated.current = true;
-        const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
-        const certNumber = await generateCertificateNumber('eicr');
-        setFormData((prev) => ({ ...prev, certificateNumber: certNumber }));
-      }
-    };
-    initCertificateNumber();
+
+  const ensureCertificateNumber = React.useCallback(() => {
+    if (certNumberGenerated.current) return;
+    certNumberGenerated.current = true;
+    void (async () => {
+      const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+      const certNumber = await generateCertificateNumber('eicr');
+      setFormData((prev) =>
+        prev.certificateNumber ? prev : { ...prev, certificateNumber: certNumber }
+      );
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.certificateNumber) {
+      certNumberGenerated.current = true;
+      return;
+    }
+    if (currentReportId || initialReportId) {
+      ensureCertificateNumber();
+    }
+  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
 
   // Stable identity — the five details sections are React.memo'd on
   // prevProps.onUpdate === nextProps.onUpdate; a recreated-per-render function
   // defeated every comparator and re-rendered the whole Details step per
   // keystroke.
-  const updateFormData = useCallback((field: string, value: any) => {
-    if (field === 'certificateNumber') {
-      console.warn('Certificate number cannot be modified');
-      return;
-    }
+  const updateFormData = useCallback(
+    (field: string, value: any) => {
+      if (field === 'certificateNumber') {
+        console.warn('Certificate number cannot be modified');
+        return;
+      }
 
-    // Sanitize string inputs to prevent XSS
-    const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
+      // Sanitize string inputs to prevent XSS
+      const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
 
-    setFormData((prev) => ({ ...prev, [field]: sanitizedValue }));
-    setHasUnsavedChanges(true);
-  }, []);
+      setFormData((prev) => ({ ...prev, [field]: sanitizedValue }));
+      setHasUnsavedChanges(true);
+    },
+    []
+  );
 
   const handleManualSave = async () => {
     if (!isAuthenticated) {

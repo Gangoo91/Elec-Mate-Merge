@@ -22,8 +22,19 @@ import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 const AVAILABLE_QUALIFICATIONS = INSPECTOR_QUALIFICATIONS;
 
 const INSURANCE_PROVIDERS = [
-  'Zurich', 'Hiscox', 'AXA', 'Aviva', 'Allianz', 'Markel', 'NFU Mutual', 'QBE',
-  'Tradesman Saver', 'Simply Business', 'PolicyBee', 'Kingsbridge', 'Other',
+  'Zurich',
+  'Hiscox',
+  'AXA',
+  'Aviva',
+  'Allianz',
+  'Markel',
+  'NFU Mutual',
+  'QBE',
+  'Tradesman Saver',
+  'Simply Business',
+  'PolicyBee',
+  'Kingsbridge',
+  'Other',
 ];
 
 const INSURANCE_COVERAGE_OPTIONS = ['£1,000,000', '£2,000,000', '£5,000,000', '£10,000,000'];
@@ -113,9 +124,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Inspector details
             </h2>
-            <p className="mt-1 text-[13px] text-white">
-              Credentials, qualifications and signature
-            </p>
+            <p className="mt-1 text-[13px] text-white">Credentials, qualifications and signature</p>
           </header>
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">

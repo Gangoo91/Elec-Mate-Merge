@@ -12889,18 +12889,24 @@ export type Database = {
         Row: {
           doc_type: string;
           last_number: number;
+          pad_width: number;
+          prefix: string | null;
           updated_at: string;
           user_id: string;
         };
         Insert: {
           doc_type: string;
           last_number?: number;
+          pad_width?: number;
+          prefix?: string | null;
           updated_at?: string;
           user_id: string;
         };
         Update: {
           doc_type?: string;
           last_number?: number;
+          pad_width?: number;
+          prefix?: string | null;
           updated_at?: string;
           user_id?: string;
         };
@@ -41472,6 +41478,16 @@ export type Database = {
           total: number;
         }[];
       };
+      get_document_numbering: {
+        Args: never;
+        Returns: {
+          doc_type: string;
+          last_number: number;
+          next_preview: string;
+          pad_width: number;
+          prefix: string;
+        }[];
+      };
       get_elec_id_by_number: { Args: { p_number: string }; Returns: Json };
       get_elec_id_by_share_token: { Args: { p_token: string }; Returns: Json };
       get_elec_id_work_record: { Args: { p_profile_id: string }; Returns: Json };
@@ -44041,6 +44057,15 @@ export type Database = {
       send_job_pack: { Args: { p_pack_id: string }; Returns: Json };
       send_portal_message: {
         Args: { p_message: string; p_token: string };
+        Returns: string;
+      };
+      set_document_numbering: {
+        Args: {
+          p_doc_type: string;
+          p_next_number?: number;
+          p_pad_width?: number;
+          p_prefix?: string;
+        };
         Returns: string;
       };
       set_marketing_email_optout: {

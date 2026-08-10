@@ -1,12 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import DocumentCamera from '@/components/settings/elec-id/DocumentCamera';
 
 interface InspectionPhotoUploadProps {
   onPhotoCapture: (file: File) => Promise<void>;
   isUploading: boolean;
 }
+
+const MAX_SIZE = 20 * 1024 * 1024;
+const ALLOWED_TYPES = [
+  'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
+  'image/heic', 'image/heif',
+];
+const VALID_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif'];
 
 const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
   onPhotoCapture,
@@ -14,93 +22,106 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
 }) => {
   const { toast } = useToast();
   const haptic = useHaptic();
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const maxSize = 20 * 1024 * 1024;
-    const allowedTypes = [
-      'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
-      'image/heic', 'image/heif',
-    ];
-
-    if (file.size > maxSize) {
+  /** Returns true when the file is within size and type limits. */
+  const isAcceptable = (file: File) => {
+    if (file.size > MAX_SIZE) {
       haptic.warning();
       toast({
         title: 'File too large',
-        description: `Maximum size is 20MB. Yours: ${(file.size / 1024 / 1024).toFixed(1)}MB.`,
+        description: `${file.name} is ${(file.size / 1024 / 1024).toFixed(1)}MB. Maximum is 20MB.`,
         variant: 'destructive',
       });
-      e.target.value = '';
-      return;
+      return false;
     }
 
-    const validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif'];
     const fileName = file.name.toLowerCase();
-    const hasValidExtension = validExtensions.some((ext) => fileName.endsWith(ext));
-    const hasValidType = allowedTypes.includes(file.type) || file.type === '';
+    const hasValidExtension = VALID_EXTENSIONS.some((ext) => fileName.endsWith(ext));
+    const hasValidType = ALLOWED_TYPES.includes(file.type) || file.type === '';
 
     if (!hasValidType && !hasValidExtension) {
       haptic.warning();
       toast({
         title: 'Invalid file type',
-        description: 'Use JPEG, PNG, WEBP, or HEIC.',
+        description: `${file.name} is not a JPEG, PNG, WEBP or HEIC.`,
         variant: 'destructive',
       });
-      e.target.value = '';
-      return;
+      return false;
     }
 
-    await onPhotoCapture(file);
+    return true;
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? []);
+    if (files.length === 0) return;
+
+    // Sequential, not Promise.all — each upload writes a row keyed off the
+    // current photo list, so running them together loses all but the last.
+    for (const file of files) {
+      if (isAcceptable(file)) {
+        await onPhotoCapture(file);
+      }
+    }
+
     e.target.value = '';
   };
 
   return (
-    <div className="grid grid-cols-2 gap-2">
-      <input
-        ref={cameraInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        onChange={handleFileChange}
-        className="hidden"
-      />
-      <button
-        type="button"
-        onClick={() => {
-          haptic.light();
-          cameraInputRef.current?.click();
-        }}
-        disabled={isUploading}
-        className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
-      >
-        {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
-        Take photo
-      </button>
+    <>
+      <div className="grid grid-cols-2 gap-2">
+        {/* Take photo — routed through the shared camera rather than a
+          `capture="environment"` input. That attribute is honoured on mobile
+          only; on a laptop the browser ignores it and silently falls back to
+          the file picker, so "Take photo" and "Upload photo" did exactly the
+          same thing. DocumentCamera uses the native camera under Capacitor and
+          getUserMedia on the web, so the button now works everywhere. */}
+        <button
+          type="button"
+          onClick={() => {
+            haptic.light();
+            setCameraOpen(true);
+          }}
+          disabled={isUploading}
+          className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
+        >
+          {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
+          Take photo
+        </button>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/jpeg,image/jpg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
-        onChange={handleFileChange}
-        className="hidden"
-      />
-      <button
-        type="button"
-        onClick={() => {
-          haptic.light();
-          fileInputRef.current?.click();
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/jpeg,image/jpg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            haptic.light();
+            fileInputRef.current?.click();
+          }}
+          disabled={isUploading}
+          className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
+        >
+          {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
+          Upload photo
+        </button>
+      </div>
+
+      <DocumentCamera
+        open={cameraOpen}
+        onOpenChange={setCameraOpen}
+        documentType="observation"
+        onCapture={(_imageData, file) => {
+          void onPhotoCapture(file);
         }}
-        disabled={isUploading}
-        className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
-      >
-        {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
-        Upload photo
-      </button>
-    </div>
+      />
+    </>
   );
 };
 

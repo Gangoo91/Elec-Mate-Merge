@@ -747,25 +747,39 @@ const MinorWorksForm = ({
     }
   }, [initialReportId]);
 
-  // Generate certificate number on mount if needed
+  /*
+   * Allocated on the first edit, not on mount — see EICRFormProvider for the
+   * full note. `generate_certificate_number` is a sequence, so mounting the form
+   * and backing out consumed a number permanently: Minor Works had spent 1,230
+   * numbers to produce 190 certificates.
+   */
   const certNumberGenerated = React.useRef(false);
-  useEffect(() => {
-    const initCertificateNumber = async () => {
-      if (!formData.certificateNumber && !currentReportId && !certNumberGenerated.current) {
-        certNumberGenerated.current = true;
-        const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
-        const certNumber = await generateCertificateNumber('minor-works');
-        // Fill only if still empty at commit time — draft recovery may have
-        // restored the original number while generation was in flight.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setFormData((prev: any) => ({
-          ...prev,
-          certificateNumber: prev.certificateNumber || certNumber,
-        }));
-      }
-    };
-    initCertificateNumber();
+
+  const ensureCertificateNumber = React.useCallback(() => {
+    if (certNumberGenerated.current) return;
+    certNumberGenerated.current = true;
+    void (async () => {
+      const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+      const certNumber = await generateCertificateNumber('minor-works');
+      // Fill only if still empty at commit time — draft recovery may have
+      // restored the original number while generation was in flight.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setFormData((prev: any) => ({
+        ...prev,
+        certificateNumber: prev.certificateNumber || certNumber,
+      }));
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.certificateNumber) {
+      certNumberGenerated.current = true;
+      return;
+    }
+    if (currentReportId || initialReportId) {
+      ensureCertificateNumber();
+    }
+  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = (field: string, value: any) => {

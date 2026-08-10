@@ -1,26 +1,61 @@
 /**
- * ClientExplainerPage — editorial Client Explainer screen.
+ * ClientExplainerPage — turn a technical finding into copy a client can read.
  *
- * Drops the pink/rose gradient chrome and per-toggle icons. Editorial
- * eyebrows, type-led chips, gradient-surface cards, elec-yellow CTA.
- * All logic preserved (template select, generate via edge function,
- * output panel).
+ * Rebuilt as a workspace rather than a form you scroll to the bottom of.
+ *
+ * ── Desktop ────────────────────────────────────────────────────────────────
+ * The brief is a 2x2 block of panels — audience, findings, tone, include —
+ * beside a sticky rail holding the output. The rail is the point: this is a
+ * tool you use by generating, reading, nudging a setting and generating again,
+ * and the previous single 1024px column put the result far below the controls,
+ * so every iteration was a scroll down to read and a scroll up to change. With
+ * the rail, the copy stays on screen while you work on it.
+ *
+ * ── Mobile ─────────────────────────────────────────────────────────────────
+ * One column, edge-to-edge panels, and the generate button lives in a fixed
+ * bar at the bottom where a thumb already is. The result opens as an 85vh
+ * bottom sheet instead of appending 800px to the page, so reading the copy
+ * doesn't mean scrolling past the whole form, and dismissing it puts you back
+ * exactly where you were.
+ *
+ * ── What was dropped ───────────────────────────────────────────────────────
+ *
+ *   The hero. "Plain English. Every time." over a two-line standfirst, on a
+ *   page reached by tapping a card that already said what it does.
+ *
+ *   Two accordions. Templates and Options were both collapsed by default,
+ *   which hid the fastest way to start and the four switches that most change
+ *   the output. Nothing on this page is hidden now; it is arranged instead.
+ *   Templates appear only while the findings box is empty — picking one
+ *   overwrites that box, so offering it beside text you have just typed is
+ *   offering to delete it.
+ *
+ *   The unlabelled dropdown row. Three selects reading "Professional",
+ *   "Standard" and "Important" with nothing to say which was tone, which was
+ *   reading level and which was urgency — and "Important" means nothing at all
+ *   without its label.
+ *
+ *   `01 ·`–`05 ·` numbering, and the hand-rolled card surface. Panels are made
+ *   of the same material as the rest of the app, and text is full white rather
+ *   than the eleven runs of `text-white/65` this page used to carry.
  */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Loader2, Sparkles, Trash2 } from 'lucide-react';
+
+import useSEO from '@/hooks/useSEO';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
+
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ArrowLeft, Loader2, ChevronDown } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { HubPage, HubMasthead } from '@/components/hub/HubPrimitives';
+
 import ClientTypeSelector, {
   ClientType,
 } from '@/components/electrician-tools/ai-tools/client-explainer/ClientTypeSelector';
@@ -28,22 +63,93 @@ import TemplateSelector, {
   Template,
 } from '@/components/electrician-tools/ai-tools/client-explainer/TemplateSelector';
 import OutputPanel from '@/components/electrician-tools/ai-tools/client-explainer/OutputPanel';
-import { Eyebrow } from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
+const TONE_OPTIONS = [
+  { value: 'professional', label: 'Professional' },
+  { value: 'friendly', label: 'Friendly' },
+  { value: 'reassuring', label: 'Reassuring' },
+  { value: 'urgent', label: 'Urgent' },
+  { value: 'technical', label: 'Technical' },
+];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
-};
+const READING_OPTIONS = [
+  { value: 'simple', label: 'Simple', description: 'Short sentences, no jargon' },
+  { value: 'standard', label: 'Standard', description: 'Plain English' },
+  { value: 'technical', label: 'Technical', description: 'Assumes some knowledge' },
+];
+
+const URGENCY_OPTIONS = [
+  { value: 'low', label: 'Routine' },
+  { value: 'medium', label: 'Important' },
+  { value: 'high', label: 'Safety' },
+  { value: 'immediate', label: 'Immediate' },
+];
+
+const PICKER_TRIGGER =
+  'h-11 rounded-lg border-white/[0.12] bg-white/[0.06] text-white text-[13.5px]';
+
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * One panel of the brief. Edge-to-edge on a phone and inset from `sm:` up,
+ * made of the same lit surface as every card in the app.
+ */
+const Panel = ({
+  title,
+  hint,
+  children,
+  className,
+}: {
+  title: string;
+  hint?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <section
+    className={cn(
+      '-mx-4 border-y border-elec-yellow/35 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
+      'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
+      'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]',
+      className
+    )}
+  >
+    <div className="mb-3 flex items-baseline justify-between gap-3">
+      <h2 className="text-[14px] font-semibold tracking-tight text-elec-yellow">{title}</h2>
+      {hint && <span className="shrink-0 text-[11px] font-medium tabular-nums text-white">{hint}</span>}
+    </div>
+    {children}
+  </section>
+);
+
+/** A labelled control. The row of three bare dropdowns had no labels at all. */
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div>
+    <label className="mb-1.5 block text-[12px] font-medium text-white">{label}</label>
+    {children}
+  </div>
+);
+
+const TOGGLES = [
+  { key: 'analogy', label: 'Analogies', desc: 'Everyday comparisons' },
+  { key: 'safety', label: 'Safety focus', desc: 'Lead with the risk' },
+  { key: 'costs', label: 'Costs', desc: 'Pricing context' },
+  { key: 'bs7671', label: 'BS 7671', desc: 'Cite the regulations' },
+] as const;
+
+// ───────────────────────────────────────────────────────────────────────────
 
 const ClientExplainerPage = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const haptic = useHaptic();
+  const isMobile = useIsMobile();
+
+  useSEO({
+    title: 'Client Explainer',
+    description:
+      'Turn test results, EICR codes and safety findings into plain English your client will understand.',
+    noindex: true,
+  });
+
   const [technicalNotes, setTechnicalNotes] = useState('');
   const [tone, setTone] = useState('professional');
   const [readingLevel, setReadingLevel] = useState('standard');
@@ -55,10 +161,28 @@ const ClientExplainerPage = () => {
   const [includeBS7671, setIncludeBS7671] = useState(false);
   const [generatedExplanation, setGeneratedExplanation] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [showTemplates, setShowTemplates] = useState(false);
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  const toggleValue: Record<string, boolean> = {
+    analogy: includeAnalogy,
+    safety: emphasizeSafety,
+    costs: includeCostInfo,
+    bs7671: includeBS7671,
+  };
+  const toggleSetter: Record<string, (v: boolean) => void> = {
+    analogy: setIncludeAnalogy,
+    safety: setEmphasizeSafety,
+    costs: setIncludeCostInfo,
+    bs7671: setIncludeBS7671,
+  };
+
+  const wordCount = technicalNotes.trim() ? technicalNotes.trim().split(/\s+/).length : 0;
+  const canGenerate = Boolean(technicalNotes.trim()) && !isGenerating;
+  /** Whether the rail has something that needs room to scroll. */
+  const hasOutput = Boolean(generatedExplanation) || isGenerating;
 
   const handleSelectTemplate = (template: Template) => {
+    haptic.light();
     setTechnicalNotes(template.sample);
     switch (template.urgency) {
       case 'high':
@@ -73,20 +197,24 @@ const ClientExplainerPage = () => {
         break;
     }
     setUrgencyLevel(template.urgency);
-    setShowTemplates(false);
   };
 
   const handleGenerate = async () => {
     if (!technicalNotes.trim()) {
       toast({
-        title: 'Add technical notes',
-        description: 'Type or pick a template before generating.',
+        title: 'Add your findings first',
+        description: 'Type what you found, or pick a scenario to start from.',
         variant: 'destructive',
       });
       return;
     }
 
+    haptic.medium();
     setIsGenerating(true);
+    // Open the sheet immediately on a phone so the spinner is visible where
+    // the answer will appear, rather than behind the form.
+    if (isMobile) setSheetOpen(true);
+
     try {
       const { data, error } = await supabase.functions.invoke('generate-electrical-report', {
         body: {
@@ -108,9 +236,10 @@ const ClientExplainerPage = () => {
       if (error) throw error;
 
       setGeneratedExplanation(data.report);
+      haptic.success();
       toast({
         title: 'Explanation ready',
-        description: 'Plain-English copy generated.',
+        description: 'Check it over before you send it.',
         variant: 'success',
       });
     } catch (error) {
@@ -125,321 +254,294 @@ const ClientExplainerPage = () => {
     }
   };
 
-  const getCurrentSettings = () => ({
+  const settings = {
     tone,
     readingLevel,
     clientType,
     includeAnalogy,
     emphasizeSafety,
     includeCostInfo,
-  });
+  };
 
-  const toggleOptions = [
-    {
-      key: 'includeAnalogy',
-      label: 'Analogies',
-      desc: 'Everyday comparisons',
-      value: includeAnalogy,
-      onChange: setIncludeAnalogy,
-    },
-    {
-      key: 'emphasizeSafety',
-      label: 'Safety focus',
-      desc: 'Highlight concerns clearly',
-      value: emphasizeSafety,
-      onChange: setEmphasizeSafety,
-    },
-    {
-      key: 'includeCostInfo',
-      label: 'Costs',
-      desc: 'Pricing context',
-      value: includeCostInfo,
-      onChange: setIncludeCostInfo,
-    },
-    {
-      key: 'includeBS7671',
-      label: 'BS 7671',
-      desc: 'Regulation references',
-      value: includeBS7671,
-      onChange: setIncludeBS7671,
-    },
-  ];
+  const output = (
+    <OutputPanel
+      content={generatedExplanation}
+      settings={settings}
+      isGenerating={isGenerating}
+    />
+  );
 
-  const activeToggleCount = [includeAnalogy, emphasizeSafety, includeCostInfo, includeBS7671].filter(
-    Boolean
-  ).length;
+  const generateButton = (
+    <button
+      type="button"
+      onClick={handleGenerate}
+      disabled={!canGenerate}
+      className={cn(
+        'inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5',
+        'text-[14px] font-semibold text-black',
+        'bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)]',
+        'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-8px_hsl(47_100%_50%_/_0.30)]',
+        'transition-colors duration-150 touch-manipulation select-none',
+        '[-webkit-tap-highlight-color:transparent] active:scale-[0.98]',
+        'hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        'disabled:cursor-not-allowed disabled:opacity-40'
+      )}
+    >
+      {isGenerating ? (
+        <>
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+          Writing it up…
+        </>
+      ) : (
+        <>
+          <Sparkles className="h-4 w-4" aria-hidden />
+          {generatedExplanation ? 'Generate again' : 'Generate explanation'}
+        </>
+      )}
+    </button>
+  );
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
-      {/* Sticky header */}
-      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
+    <HubPage>
+      <HubMasthead
+        section="AI tools"
+        title="Client Explainer"
+        backTo="/electrician-tools/ai-tooling"
+      />
+
+      <div className="mx-auto max-w-[1600px] px-4 pb-32 pt-4 lg:px-8 lg:pb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+          className={cn(
+            'grid gap-4',
+            // The rail appears at the same width `useIsMobile` switches on, so
+            // the sheet and the rail can never both be live.
+            'lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-6',
+            '2xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)]'
+          )}
+        >
+          {/* ── The brief ─────────────────────────────────────────────── */}
+          <div className="min-w-0 space-y-4">
+            {/* Two independent stacks, not a 2x2 grid of cells.
+
+                A grid stretches every panel in a row to the height of the
+                tallest, and "Who it's for" is four chips beside a findings box
+                three times its height — so it sat in 180px of its own empty
+                space. Stacking the short panel above the tall one in each
+                column reads as the same 2x2 block with none of the holes. */}
+            <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
+              <div className="space-y-4">
+                <Panel title="Who it's for">
+                  <ClientTypeSelector selected={clientType} onSelect={setClientType} />
+                </Panel>
+
+                <Panel
+                  title="What you found"
+                hint={wordCount > 0 ? `${wordCount} ${wordCount === 1 ? 'word' : 'words'}` : undefined}
+              >
+                <Textarea
+                  value={technicalNotes}
+                  onChange={(e) => setTechnicalNotes(e.target.value)}
+                  placeholder="Test results, work completed, EICR codes (C1/C2/C3), safety concerns…"
+                  // 16px or iOS zooms the whole page on focus.
+                  style={{ fontSize: '16px' }}
+                  className={cn(
+                    'min-h-[132px] resize-none rounded-xl border-white/[0.12] bg-black/20 text-white',
+                    'placeholder:text-white/45 caret-elec-yellow',
+                    'focus-visible:border-elec-yellow focus-visible:ring-0 focus-visible:ring-offset-0'
+                  )}
+                />
+
+                {technicalNotes.trim() ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setTechnicalNotes('');
+                    }}
+                    className="mt-2 inline-flex h-11 items-center gap-1.5 text-[12px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                    Clear and pick a scenario
+                  </button>
+                ) : (
+                  <div className="mt-3">
+                    <p className="mb-2 text-[12px] font-medium text-white">
+                      Or start from a scenario
+                    </p>
+                    <TemplateSelector onSelectTemplate={handleSelectTemplate} />
+                  </div>
+                )}
+                </Panel>
+              </div>
+
+              <div className="space-y-4">
+                <Panel title="How it should read">
+                  <div className="space-y-3">
+                    <Field label="Tone">
+                      <MobileSelectPicker
+                        value={tone}
+                        onValueChange={setTone}
+                        options={TONE_OPTIONS}
+                        title="Tone"
+                        triggerClassName={PICKER_TRIGGER}
+                      />
+                    </Field>
+                    <Field label="Reading level">
+                      <MobileSelectPicker
+                        value={readingLevel}
+                        onValueChange={setReadingLevel}
+                        options={READING_OPTIONS}
+                        title="Reading level"
+                        triggerClassName={PICKER_TRIGGER}
+                      />
+                    </Field>
+                    <Field label="Urgency">
+                      <MobileSelectPicker
+                        value={urgencyLevel}
+                        onValueChange={setUrgencyLevel}
+                        options={URGENCY_OPTIONS}
+                        title="Urgency"
+                        // Urgency changes what the copy leads with, so the two
+                        // levels meaning "this is a safety matter" are marked.
+                        triggerClassName={cn(
+                          PICKER_TRIGGER,
+                          urgencyLevel === 'high' && 'border-orange-500/50',
+                          urgencyLevel === 'immediate' && 'border-red-500/60'
+                        )}
+                      />
+                    </Field>
+                  </div>
+                </Panel>
+
+                <Panel title="Include">
+                  <div className="grid grid-cols-2 gap-2">
+                    {TOGGLES.map(({ key, label, desc }) => {
+                      const on = toggleValue[key];
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          role="switch"
+                          aria-checked={on}
+                          onClick={() => {
+                            haptic.light();
+                            toggleSetter[key](!on);
+                          }}
+                          className={cn(
+                            'min-h-[60px] rounded-xl border px-3 py-2.5 text-left',
+                            'transition-colors duration-150 touch-manipulation select-none',
+                            '[-webkit-tap-highlight-color:transparent] active:scale-[0.97]',
+                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+                            on
+                              ? 'border-elec-yellow bg-elec-yellow'
+                              : 'border-white/[0.12] bg-white/[0.06] hover:border-white/[0.28]'
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              'block text-[13.5px] font-semibold leading-tight',
+                              on ? 'text-black' : 'text-white'
+                            )}
+                          >
+                            {label}
+                          </span>
+                          <span
+                            className={cn(
+                              'mt-0.5 block text-[11px] leading-tight',
+                              on ? 'text-black/70' : 'text-white'
+                            )}
+                          >
+                            {desc}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Panel>
+              </div>
+            </div>
+
+            {/* Desktop generate. On a phone this lives in the fixed bar. */}
+            <div className="hidden lg:block">{generateButton}</div>
+          </div>
+
+          {/* ── The output rail ───────────────────────────────────────── */}
+          {/* Rendered, not just hidden. Mounting the rail and the sheet
+              together put two OutputPanels on the page, each holding its own
+              format tab — pick SMS on a desktop, narrow the window, and the
+              sheet opened on Standard. `useIsMobile` switches at 1024px, the
+              same width as `lg:`, so exactly one of the two is ever live. */}
+          {!isMobile && (
+            <aside className="hidden lg:block">
+              {/* Height only when there is something to hold.
+
+                  With copy in it the panel is a scrolling region and wants the
+                  full run of the screen: the app header is fixed at 64px and
+                  the masthead another 48px, so this column starts about 130px
+                  down — `top-20` clears the header once it sticks, and 9.5rem
+                  is what must come off for the action row to sit above the fold
+                  in BOTH states (unstuck at 130px, stuck at 80px).
+
+                  Empty, that same calc drew a 770px box beside a 635px column
+                  of controls, which read as a hole in the page. `h-full`
+                  stretches it to the grid row instead, so it matches the brief
+                  exactly — the row is sized by the controls, which are then the
+                  tallest thing in it. */}
+              <div
+                className={cn(
+                  'sticky top-20',
+                  hasOutput ? 'h-[calc(100dvh-9.5rem)] min-h-[420px]' : 'h-full'
+                )}
+              >
+                {output}
+              </div>
+            </aside>
+          )}
+        </motion.div>
+      </div>
+
+      {/* ── Mobile: fixed action bar ────────────────────────────────────── */}
+      <div className="fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-elec-dark via-elec-dark/95 to-transparent px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-4 lg:hidden">
+        <div className="flex items-center gap-2">
+          {generatedExplanation && (
             <button
               type="button"
-              onClick={() => navigate('/electrician-tools/ai-tooling')}
-              aria-label="Back"
-              className="text-white/85 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center touch-manipulation transition-colors"
+              onClick={() => {
+                haptic.light();
+                setSheetOpen(true);
+              }}
+              className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-neutral-900 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation active:bg-white/[0.10]"
             >
-              <ArrowLeft className="h-4 w-4" />
+              View result
             </button>
-            <Eyebrow>CLIENT EXPLAINER</Eyebrow>
-          </div>
+          )}
+          <div className="min-w-0 flex-1">{generateButton}</div>
         </div>
       </div>
 
-      <motion.main
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="px-4 sm:px-6 pt-6 pb-6 space-y-7 max-w-5xl mx-auto"
-      >
-        {/* Hero */}
-        <motion.section variants={itemVariants} className="space-y-2">
-          <Eyebrow>WHAT IT DOES</Eyebrow>
-          <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-[1.05]">
-            <span className="text-elec-yellow">Plain</span>{' '}
-            <span className="text-white">English. Every time.</span>
-          </h1>
-          <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/85 max-w-2xl">
-            Translate test results, EICR codes, design notes and safety findings into clear
-            client-ready copy. Pick the audience, tone and depth — get the right voice every time.
-          </p>
-        </motion.section>
-
-        {/* 01 — Audience */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <Eyebrow>01 · EXPLAIN TO</Eyebrow>
-          <ClientTypeSelector selected={clientType} onSelect={setClientType} />
-        </motion.section>
-
-        {/* 02 — Templates */}
-        <motion.div variants={itemVariants}>
-          <button
-            type="button"
-            onClick={() => setShowTemplates(!showTemplates)}
-            className="w-full flex items-center justify-between rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-white/[0.20] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] px-5 py-4 touch-manipulation transition-colors"
+      {/* ── Mobile: the result ──────────────────────────────────────────── */}
+      {isMobile && (
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.10] bg-elec-dark p-0"
           >
-            <div className="flex items-baseline gap-3 min-w-0">
-              <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
-                02
-              </span>
-              <div className="text-left">
-                <span className="block text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/65">
-                  TEMPLATES
-                </span>
-                <span className="block text-[13.5px] font-semibold text-white">
-                  Quick-start scenarios
-                </span>
-              </div>
-            </div>
-            <motion.div animate={{ rotate: showTemplates ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown className="h-4 w-4 text-white/65" aria-hidden />
-            </motion.div>
-          </button>
-
-          <AnimatePresence>
-            {showTemplates && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="pt-3">
-                  <TemplateSelector onSelectTemplate={handleSelectTemplate} />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* 03 — Notes */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <Eyebrow>03 · TECHNICAL FINDINGS</Eyebrow>
-          <Textarea
-            placeholder="Test results, work completed, EICR codes (C1/C2/C3), safety concerns…"
-            value={technicalNotes}
-            onChange={(e) => setTechnicalNotes(e.target.value)}
-            className="min-h-[140px] resize-none text-[14px] rounded-2xl border-white/[0.10] focus-visible:border-elec-yellow/50 bg-white/[0.04] text-white placeholder:text-white/65"
-            style={{ fontSize: '16px' }}
-          />
-          <p className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 px-0.5">
-            Cited refs (BS 7671) + test readings make the explainer sharper.
-          </p>
-        </motion.section>
-
-        {/* 04 — Tone + style */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <Eyebrow>04 · TONE + STYLE</Eyebrow>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <Select value={tone} onValueChange={setTone}>
-              <SelectTrigger className="h-11 rounded-xl bg-white/[0.04] border-white/[0.10] focus-visible:border-elec-yellow/50 text-white text-[13px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_11%)] border-white/[0.10]">
-                <SelectItem value="professional" className="text-white hover:bg-white/10">
-                  Professional
-                </SelectItem>
-                <SelectItem value="friendly" className="text-white hover:bg-white/10">
-                  Friendly
-                </SelectItem>
-                <SelectItem value="reassuring" className="text-white hover:bg-white/10">
-                  Reassuring
-                </SelectItem>
-                <SelectItem value="urgent" className="text-white hover:bg-white/10">
-                  Urgent
-                </SelectItem>
-                <SelectItem value="technical" className="text-white hover:bg-white/10">
-                  Technical
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={readingLevel} onValueChange={setReadingLevel}>
-              <SelectTrigger className="h-11 rounded-xl bg-white/[0.04] border-white/[0.10] focus-visible:border-elec-yellow/50 text-white text-[13px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_11%)] border-white/[0.10]">
-                <SelectItem value="simple" className="text-white hover:bg-white/10">
-                  Simple
-                </SelectItem>
-                <SelectItem value="standard" className="text-white hover:bg-white/10">
-                  Standard
-                </SelectItem>
-                <SelectItem value="technical" className="text-white hover:bg-white/10">
-                  Technical
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={urgencyLevel} onValueChange={setUrgencyLevel}>
-              <SelectTrigger
-                className={cn(
-                  'h-11 rounded-xl bg-white/[0.04] border-white/[0.10] focus-visible:border-elec-yellow/50 text-white text-[13px]',
-                  urgencyLevel === 'high' && 'border-amber-500/40',
-                  urgencyLevel === 'immediate' && 'border-red-500/50'
-                )}
-              >
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_11%)] border-white/[0.10]">
-                <SelectItem value="low" className="text-white hover:bg-white/10">
-                  Routine
-                </SelectItem>
-                <SelectItem value="medium" className="text-white hover:bg-white/10">
-                  Important
-                </SelectItem>
-                <SelectItem value="high" className="text-white hover:bg-white/10">
-                  Safety
-                </SelectItem>
-                <SelectItem value="immediate" className="text-white hover:bg-white/10">
-                  Immediate
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </motion.section>
-
-        {/* 05 — Options */}
-        <motion.div variants={itemVariants}>
-          <button
-            type="button"
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className="w-full flex items-center justify-between rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-white/[0.20] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] px-5 py-4 touch-manipulation transition-colors"
-          >
-            <div className="flex items-baseline gap-3 min-w-0">
-              <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
-                05
-              </span>
-              <div className="text-left">
-                <span className="block text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/65">
-                  OPTIONS
-                </span>
-                <span className="block text-[13.5px] font-semibold text-white">
-                  Fine-tune the output
-                </span>
-              </div>
-              {activeToggleCount > 0 && (
-                <span className="ml-2 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-bold tabular-nums text-elec-yellow border border-elec-yellow/40 bg-elec-yellow/[0.08] rounded-full">
-                  {activeToggleCount}
-                </span>
-              )}
-            </div>
-            <motion.div animate={{ rotate: showAdvanced ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown className="h-4 w-4 text-white/65" aria-hidden />
-            </motion.div>
-          </button>
-
-          <AnimatePresence>
-            {showAdvanced && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <ul className="pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {toggleOptions.map((opt) => (
-                    <li key={opt.key}>
-                      <button
-                        type="button"
-                        onClick={() => opt.onChange(!opt.value)}
-                        className={cn(
-                          'w-full text-left flex items-baseline justify-between gap-3 rounded-xl px-4 py-3 border transition-colors touch-manipulation',
-                          opt.value
-                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
-                            : 'text-white/85 border-white/15 hover:border-white/30'
-                        )}
-                      >
-                        <div className="min-w-0">
-                          <p
-                            className={cn(
-                              'text-[13px] font-semibold',
-                              opt.value ? 'text-elec-yellow' : 'text-white'
-                            )}
-                          >
-                            {opt.label}
-                          </p>
-                          <p className="text-[11px] text-white/65">{opt.desc}</p>
-                        </div>
-                        <span className="text-[10.5px] uppercase tracking-[0.14em] font-semibold shrink-0">
-                          {opt.value ? 'On' : 'Off'}
-                        </span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Generate */}
-        <motion.div variants={itemVariants}>
-          <button
-            type="button"
-            onClick={handleGenerate}
-            disabled={isGenerating || !technicalNotes.trim()}
-            className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-4 min-h-[52px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Generating…
-              </>
-            ) : (
-              <>Generate explanation →</>
-            )}
-          </button>
-        </motion.div>
-
-        {/* Output */}
-        <OutputPanel content={generatedExplanation} settings={getCurrentSettings()} />
-      </motion.main>
-    </div>
+            <SheetHeader className="border-b border-white/[0.10] px-4 py-3 text-left">
+              <SheetTitle className="text-[15px] font-semibold text-white">
+                Explanation for your {clientType}
+              </SheetTitle>
+            </SheetHeader>
+            {/* 57px is the header above: 12px padding top and bottom around a
+                33px title line. Measured against the rendered sheet. */}
+            <div className="h-[calc(85vh-57px)] p-3">{output}</div>
+          </SheetContent>
+        </Sheet>
+      )}
+    </HubPage>
   );
 };
 

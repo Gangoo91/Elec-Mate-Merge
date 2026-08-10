@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import { DocumentNumberingFields } from './DocumentNumberingFields';
 
 interface CustomTerm {
   id: string;
@@ -28,8 +29,15 @@ const DEFAULT_INVOICE_TERMS_GROUPED = {
   late_payment: {
     label: 'Late Payment',
     terms: [
-      { id: 'inv_late_interest', label: 'Late payment interest may be charged on overdue invoices' },
-      { id: 'inv_debt_recovery', label: 'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act' },
+      {
+        id: 'inv_late_interest',
+        label: 'Late payment interest may be charged on overdue invoices',
+      },
+      {
+        id: 'inv_debt_recovery',
+        label:
+          'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act',
+      },
       { id: 'inv_credit_hold', label: 'Future work may be suspended if invoices remain unpaid' },
     ],
   },
@@ -186,9 +194,7 @@ const InvoiceSettingsSheet = ({
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">
-                  Late payment interest
-                </Label>
+                <Label className="text-white font-medium text-[13px]">Late payment interest</Label>
                 <Input
                   value={latePaymentInterestRate}
                   onChange={(e) => setLatePaymentInterestRate(e.target.value)}
@@ -197,9 +203,7 @@ const InvoiceSettingsSheet = ({
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">
-                  Preferred payment
-                </Label>
+                <Label className="text-white font-medium text-[13px]">Preferred payment</Label>
                 <Input
                   value={preferredPaymentMethod}
                   onChange={(e) => setPreferredPaymentMethod(e.target.value)}
@@ -211,18 +215,45 @@ const InvoiceSettingsSheet = ({
 
             <div className="h-px bg-white/[0.06]" />
 
+            {/* ELE-1028 / ELE-1523 — numbering. Sits above the defaults
+                because joining an existing sequence is the first thing someone
+                arriving from another system needs to do. */}
+            <div className="space-y-3">
+              <Eyebrow>Invoice numbering</Eyebrow>
+              <DocumentNumberingFields docType="invoice" />
+            </div>
+
+            <div className="h-px bg-white/[0.06]" />
+
             {/* ELE-1083 — Defaults for new invoices */}
             <div className="space-y-3">
               <Eyebrow>Defaults for new invoices</Eyebrow>
               <p className="text-[12px] text-white/55 -mt-1">
                 These set how each new invoice starts — you can still change them per invoice.
               </p>
-              {([
-                ['VAT registered', 'Add VAT by default', defVatRegistered, setDefVatRegistered],
-                ['Reverse charge', 'CIS domestic reverse-charge VAT by default', defReverseCharge, setDefReverseCharge],
-                ['CIS deduction', 'Apply CIS to labour by default', defCisEnabled, setDefCisEnabled],
-                ['Summary view', 'Show Labour & Materials totals instead of itemised', defSummaryView, setDefSummaryView],
-              ] as [string, string, boolean, (v: boolean) => void][]).map(([label, hint, val, set]) => (
+              {(
+                [
+                  ['VAT registered', 'Add VAT by default', defVatRegistered, setDefVatRegistered],
+                  [
+                    'Reverse charge',
+                    'CIS domestic reverse-charge VAT by default',
+                    defReverseCharge,
+                    setDefReverseCharge,
+                  ],
+                  [
+                    'CIS deduction',
+                    'Apply CIS to labour by default',
+                    defCisEnabled,
+                    setDefCisEnabled,
+                  ],
+                  [
+                    'Summary view',
+                    'Show Labour & Materials totals instead of itemised',
+                    defSummaryView,
+                    setDefSummaryView,
+                  ],
+                ] as [string, string, boolean, (v: boolean) => void][]
+              ).map(([label, hint, val, set]) => (
                 <div
                   key={label}
                   className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
@@ -248,8 +279,8 @@ const InvoiceSettingsSheet = ({
                   className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
                 <p className="text-[11.5px] text-white/55">
-                  Shown on invoices automatically when CIS deductions apply. Your National
-                  Insurance number is never stored or shown.
+                  Shown on invoices automatically when CIS deductions apply. Your National Insurance
+                  number is never stored or shown.
                 </p>
               </div>
             </div>
@@ -279,9 +310,7 @@ const InvoiceSettingsSheet = ({
                     <CollapsibleTrigger className="w-full">
                       <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation">
                         <div className="flex items-center gap-2.5">
-                          <span className="text-[13px] font-medium text-white">
-                            {group.label}
-                          </span>
+                          <span className="text-[13px] font-medium text-white">{group.label}</span>
                           <span className="text-[11px] text-white">
                             ({selectedInGroup}/{groupTermIds.length})
                           </span>
@@ -341,9 +370,7 @@ const InvoiceSettingsSheet = ({
                         checked={selectedInvoiceTerms.includes(term.id)}
                         onCheckedChange={(checked) =>
                           setSelectedInvoiceTerms((prev) =>
-                            checked
-                              ? [...prev, term.id]
-                              : prev.filter((id) => id !== term.id)
+                            checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                           )
                         }
                         className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
@@ -353,12 +380,8 @@ const InvoiceSettingsSheet = ({
                         type="button"
                         aria-label="Remove term"
                         onClick={() => {
-                          setCustomInvoiceTerms((prev) =>
-                            prev.filter((t) => t.id !== term.id)
-                          );
-                          setSelectedInvoiceTerms((prev) =>
-                            prev.filter((id) => id !== term.id)
-                          );
+                          setCustomInvoiceTerms((prev) => prev.filter((t) => t.id !== term.id));
+                          setSelectedInvoiceTerms((prev) => prev.filter((id) => id !== term.id));
                         }}
                         className="h-8 w-8 rounded-lg text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation text-[16px] leading-none"
                       >

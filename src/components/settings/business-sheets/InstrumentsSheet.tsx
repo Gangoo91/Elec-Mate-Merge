@@ -66,11 +66,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
     setInstruments((prev) => prev.filter((inst) => inst.id !== id));
   };
 
-  const handleInstrumentChange = (
-    id: string,
-    field: keyof TestingInstrument,
-    value: string
-  ) => {
+  const handleInstrumentChange = (id: string, field: keyof TestingInstrument, value: string) => {
     setInstruments((prev) =>
       prev.map((inst) => (inst.id === id ? { ...inst, [field]: value } : inst))
     );
@@ -189,11 +185,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                         type="date"
                         value={instrument.calibration_date}
                         onChange={(e) =>
-                          handleInstrumentChange(
-                            instrument.id,
-                            'calibration_date',
-                            e.target.value
-                          )
+                          handleInstrumentChange(instrument.id, 'calibration_date', e.target.value)
                         }
                         className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
@@ -204,11 +196,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                         type="date"
                         value={instrument.calibration_due || ''}
                         onChange={(e) =>
-                          handleInstrumentChange(
-                            instrument.id,
-                            'calibration_due',
-                            e.target.value
-                          )
+                          handleInstrumentChange(instrument.id, 'calibration_due', e.target.value)
                         }
                         className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />

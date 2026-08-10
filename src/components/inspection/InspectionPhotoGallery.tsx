@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  X,
   Sparkles,
   Loader2,
   ZoomIn,
@@ -12,9 +11,12 @@ import {
   HelpCircle,
   ArrowRight,
   FolderOutput,
+  MoreHorizontal,
+  Trash2,
 } from 'lucide-react';
 import { InspectionPhoto } from '@/types/inspection';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import {
@@ -25,7 +27,6 @@ import {
 } from '@/components/ui/accordion';
 import { Progress } from '@/components/ui/progress';
 import AIAnalysisConfirmDialog from './AIAnalysisConfirmDialog';
-import AIAnalysisSummaryCard from './AIAnalysisSummaryCard';
 import { useSafetyPhotoUpload } from '@/hooks/useSafetyPhotoUpload';
 import { useToast } from '@/hooks/use-toast';
 
@@ -47,6 +48,16 @@ interface InspectionPhotoGalleryProps {
     installationAddress?: string;
     clientName?: string;
   };
+  /**
+   * Per-photo "Get an AI second opinion" trigger. Off by default.
+   *
+   * On EICR/EIC the observation already carries its own AI entry point
+   * ("Write with AI"), so rendering one per photo put up to four AI buttons on a
+   * single observation — and the label read the fault code stamped on the photo
+   * at upload time, so it still said "C3" after the inspector moved the item to
+   * C2. Screens with no observation-level AI (BESS) opt back in.
+   */
+  showAiSecondOpinion?: boolean;
 }
 
 // Map defect codes to photo documentation categories
@@ -66,11 +77,16 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
   isScanning,
   inspectorContext,
   certificateContext,
+  showAiSecondOpinion = false,
 }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<InspectionPhoto | null>(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [photoToScan, setPhotoToScan] = useState<InspectionPhoto | null>(null);
   const [sendingToDocsId, setSendingToDocsId] = useState<string | null>(null);
+  /** Photo whose action sheet is open, with its 1-based position for the title. */
+  const [actionPhoto, setActionPhoto] = useState<{ photo: InspectionPhoto; index: number } | null>(
+    null
+  );
 
   const { copyFromInspection, isUploading } = useSafetyPhotoUpload();
   const { toast } = useToast();
@@ -169,104 +185,134 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
 
   return (
     <>
-      <div className="space-y-2">
+      {/* Thumbnail grid — the photos are the content, so the tiles carry the
+        weight and every action sits behind the ⋯ sheet. The previous layout
+        stacked a full-width AI panel and a Save button under each row, which
+        ran to ~200px per photo and buried the images. */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {photos.map((photo, idx) => (
           <div
             key={photo.id}
-            className="rounded-xl bg-white/[0.03] border border-white/[0.08] overflow-hidden"
+            className="group relative aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]"
           >
-            {/* Photo row: thumbnail + info + actions */}
-            <div className="flex items-center gap-3 p-3">
-              {/* Thumbnail — tap to view full */}
-              <div
-                className="group relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-muted cursor-pointer active:scale-[0.97] transition-transform touch-manipulation"
-                onClick={() => setSelectedPhoto(photo)}
-              >
-                <img
-                  src={photo.thumbnailUrl}
-                  alt="Evidence photo"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/25 active:bg-black/30 transition-colors flex items-center justify-center">
-                  <ZoomIn className="h-4 w-4 text-white/70 group-hover:text-white drop-shadow" />
+            <button
+              type="button"
+              onClick={() => setSelectedPhoto(photo)}
+              className="h-full w-full touch-manipulation transition-transform active:scale-[0.98]"
+              aria-label={`View photo ${idx + 1} full size`}
+            >
+              <img
+                src={photo.thumbnailUrl}
+                alt={`Evidence photo ${idx + 1}`}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/25 active:bg-black/30">
+                <ZoomIn className="h-5 w-5 text-white opacity-0 drop-shadow transition-opacity group-hover:opacity-100" />
+              </div>
+            </button>
+
+            {/* Actions — one affordance per tile */}
+            <button
+              type="button"
+              onClick={() => setActionPhoto({ photo, index: idx })}
+              className="absolute right-1 top-1 flex h-11 w-11 touch-manipulation items-center justify-center rounded-lg text-white transition-colors hover:bg-black/40 active:bg-black/50"
+              aria-label={`Actions for photo ${idx + 1}`}
+            >
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-black/55 backdrop-blur-sm">
+                <MoreHorizontal className="h-4 w-4" />
+              </span>
+            </button>
+
+            {/* AI verdict, when this photo has been analysed */}
+            {photo.aiAnalysis && (
+              <div className="pointer-events-none absolute inset-x-1 bottom-1 flex justify-center">
+                <div className="scale-[0.85] origin-bottom">
+                  {getAgreementBadge(photo.aiAnalysis, photo.faultCode)}
                 </div>
               </div>
+            )}
 
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">Photo {idx + 1}</p>
-                {photo.aiAnalysis ? (
-                  <div className="mt-1">{getAgreementBadge(photo.aiAnalysis, photo.faultCode)}</div>
-                ) : (
-                  <p className="text-xs text-white mt-0.5">Tap to view full size</p>
-                )}
-              </div>
-
-              {/* Delete */}
-              <button
-                onClick={() => onDeletePhoto(photo.id)}
-                className="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Tools — surfaced so inspectors actually use them */}
-            <div className="px-3 pb-3 space-y-2">
-              {!photo.aiAnalysis && (
-                /* The hero tool: AI cross-checks the inspector's call */
-                <button
-                  onClick={() => handleScanClick(photo)}
-                  disabled={isScanning === photo.id}
-                  className="w-full rounded-xl border border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/[0.12] to-amber-500/[0.05] p-3 text-left transition-colors hover:from-elec-yellow/[0.16] touch-manipulation disabled:opacity-60"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center">
-                      {isScanning === photo.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                      ) : (
-                        <Sparkles className="h-4 w-4 text-elec-yellow" />
-                      )}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-elec-yellow leading-tight">
-                        {isScanning === photo.id ? 'AI is checking the photo…' : 'Get an AI second opinion'}
-                      </p>
-                      <p className="text-[11px] text-white/55 leading-snug mt-0.5">
-                        Confirms your {photo.faultCode || 'classification'} or flags a better code — with BS 7671 references.
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              )}
-              <button
-                onClick={() => handleSendToPhotoDocs(photo)}
-                disabled={sendingToDocsId === photo.id}
-                className="w-full h-11 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 bg-white/[0.05] text-white border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
-              >
-                {sendingToDocsId === photo.id ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <FolderOutput className="h-3.5 w-3.5" />
-                )}
-                Save to Photo Docs
-              </button>
-            </div>
-
-            {/* Inline AI Summary Card */}
-            {photo.aiAnalysis && (
-              <div className="px-3 pb-3">
-                <AIAnalysisSummaryCard
-                  aiAnalysis={photo.aiAnalysis}
-                  inspectorClassification={photo.faultCode}
-                  onViewFullAnalysis={() => setSelectedPhoto(photo)}
-                />
+            {isScanning === photo.id && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
               </div>
             )}
           </div>
         ))}
       </div>
+
+      {/* Per-photo actions */}
+      <Sheet open={!!actionPhoto} onOpenChange={(open) => !open && setActionPhoto(null)}>
+        <SheetContent side="bottom" className="rounded-t-2xl border-white/[0.08] bg-[#1a1a1e] p-0">
+          {actionPhoto && (
+            <div className="p-4">
+              <div className="mb-4 flex items-center gap-3">
+                <img
+                  src={actionPhoto.photo.thumbnailUrl}
+                  alt=""
+                  className="h-12 w-12 rounded-lg object-cover"
+                />
+                <p className="text-sm font-semibold text-white">Photo {actionPhoto.index + 1}</p>
+              </div>
+
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedPhoto(actionPhoto.photo);
+                    setActionPhoto(null);
+                  }}
+                  className="flex h-12 w-full touch-manipulation items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.05] px-4 text-sm font-medium text-white transition-colors hover:bg-white/[0.08]"
+                >
+                  <ZoomIn className="h-4 w-4" />
+                  View full size
+                </button>
+
+                {showAiSecondOpinion && !actionPhoto.photo.aiAnalysis && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleScanClick(actionPhoto.photo);
+                      setActionPhoto(null);
+                    }}
+                    className="flex h-12 w-full touch-manipulation items-center gap-3 rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.12] px-4 text-sm font-medium text-elec-yellow transition-colors hover:bg-elec-yellow/[0.16]"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    Get an AI second opinion
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => handleSendToPhotoDocs(actionPhoto.photo)}
+                  disabled={sendingToDocsId === actionPhoto.photo.id}
+                  className="flex h-12 w-full touch-manipulation items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.05] px-4 text-sm font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-50"
+                >
+                  {sendingToDocsId === actionPhoto.photo.id ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <FolderOutput className="h-4 w-4" />
+                  )}
+                  Save to Photo Docs
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onDeletePhoto(actionPhoto.photo.id);
+                    setActionPhoto(null);
+                  }}
+                  className="flex h-12 w-full touch-manipulation items-center gap-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/15"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Delete photo
+                </button>
+              </div>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
 
       {/* AI Analysis Confirmation Dialog */}
       {photoToScan && (
@@ -546,7 +592,11 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                 </>
               ) : (
                 <div className="rounded-lg bg-white/[0.04] border border-white/[0.08] p-4 text-center">
-                  <p className="text-xs text-white">No AI analysis yet — tap AI Scan from the photo list to run a quality check.</p>
+                  <p className="text-xs text-white">
+                    {showAiSecondOpinion
+                      ? 'No AI analysis yet — open the ⋯ menu on this photo to run a quality check.'
+                      : 'No AI analysis for this photo.'}
+                  </p>
                 </div>
               )}
             </div>

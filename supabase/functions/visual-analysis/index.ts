@@ -322,10 +322,31 @@ serve(async (req) => {
     const getSystemPrompt = (
       mode: AnalysisMode,
       fast: boolean,
-      ragContext: { contextText: string; sourceCount: number }
+      ragContext: { contextText: string; sourceCount: number },
+      /**
+       * Whether to assess against BS 7671 at all.
+       *
+       * This setting has been in the request interface since the function was
+       * written and was never read — all four calling pages send
+       * `bs7671_compliance: true` and it changed nothing. Now it does what it
+       * says, so the contract stops being a lie. Every current caller sends
+       * true, so today's behaviour is unchanged.
+       */
+      bs7671Compliance: boolean
     ): string => {
-      const baseContext = `You are a UK electrical expert specialising in BS 7671:2018+A3:2024 (18th Edition).
+      const baseContext = `You are a UK electrical expert specialising in BS 7671:2018+A4:2026 (18th Edition, Amendment 4).
 Always use UK English throughout your response (analyse, colour, centre, organisation, specialise, earthing).
+
+HONESTY ABOUT WHAT A PHOTOGRAPH CAN SHOW:
+- A photograph shows appearance. It does not show test results, terminal
+  tightness, cable sizing behind an enclosure, or anything under a cover.
+- If a label is unreadable, obscured or absent, say so plainly rather than
+  inferring a make, model, rating or age from the general appearance.
+- Report only what is visible. Where something matters but cannot be seen,
+  name it as something to check on site.
+- Confidence must reflect what this specific image actually supports. A clear,
+  square, legible label warrants high confidence; a blurred, partial or
+  oblique view does not. Do not default to a high value.
 
 ${
   ragContext.contextText
@@ -373,7 +394,7 @@ Response format:
     "findings": [{
       "description": "Issue description",
       "eicr_code": "C1|C2|C3|FI",
-      "confidence": 0.95,
+      "confidence": "<number 0-1: how strongly THIS image supports this finding>",
       "bs7671_clauses": ["411.3.2"],
       "fix_guidance": "Remedial action"
     }],
@@ -393,7 +414,23 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-All compliance references must cite BS 7671:2018+A3:2024 (18th Edition with Amendment 3).
+${
+  bs7671Compliance
+    ? `All compliance references must cite BS 7671:2018+A4:2026 (18th Edition, Amendment 4).
+Do not cite Amendment 3 or earlier — they are superseded.
+Where you cannot tie a statement to a regulation you are sure of, omit the
+citation rather than guessing a clause number.`
+    : 'Do not assess regulatory compliance; describe the component only.'
+}
+
+CONFIDENCE (0-100) — calibrate against what is legible in THIS image:
+  90-100  make, model and the rating markings are all clearly readable
+  70-89   the device type is unambiguous, some markings unreadable
+  40-69   type inferred from form factor; markings not legible
+  0-39    working from shape alone
+State "Not visible" for any field you cannot read, and use
+"Not determinable from this photograph" for age or compliance you cannot
+establish. Do not fill a field by inference from the general appearance.
 
 UK ELECTRICAL COMPONENT KNOWLEDGE BASE:
 
@@ -493,7 +530,7 @@ Response format:
       "plain_english": "This is a [component] which controls and protects electrical circuits in [location]. It contains [key features].",
       "manufacturer": "Brand name if visible, otherwise 'Not visible'",
       "model": "Model/part number if visible, otherwise 'Not visible'",
-      "confidence": 85,
+      "confidence": "<0-100, per the CONFIDENCE rubric above>",
       "specifications": {
         "voltage_rating": "230V AC",
         "current_rating": "32A",
@@ -507,8 +544,8 @@ Response format:
         "Multiple MCBs visible in rows",
         "Main switch at top position"
       ],
-      "age_estimate": "Modern (2015+) | Older (2000-2015) | Vintage (pre-2000)",
-      "current_compliance": "Meets BS 7671:2018+A3:2024" | "Requires upgrade - non-compliant",
+      "age_estimate": "Modern (2015+) | Older (2000-2015) | Vintage (pre-2000) | Not determinable from this photograph",
+      "current_compliance": "Appears to meet BS 7671:2018+A4:2026" | "Requires upgrade - non-compliant" | "Not determinable from this photograph",
       "typical_applications": ["Domestic installations", "Commercial distribution"],
       "bs7671_requirements": ["411.3.3 - RCD protection required", "314.1 - Suitable for supply characteristics"],
       "installation_notes": "Typical location: utility cupboard, garage, under-stairs",
@@ -525,7 +562,7 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-Provide comprehensive UK wiring instructions following BS 7671:2018+A3:2024.
+Provide comprehensive UK wiring instructions following BS 7671:2018+A4:2026.
 
 Response format:
 {
@@ -596,7 +633,7 @@ CRITICAL REQUIREMENTS:
           return `${baseContext}
 ${responseFormat}
 
-You are a BS 7671:2018+A3:2024 compliant electrical inspector conducting VISUAL VERIFICATION from photographs.
+You are a BS 7671:2018+A4:2026 compliant electrical inspector conducting VISUAL VERIFICATION from photographs.
 
 CRITICAL CONTEXT:
 - This is VISUAL INSPECTION ONLY from photos - NOT a full EICR
@@ -692,7 +729,7 @@ ${
 ENHANCED RESPONSE FORMAT:
 {
   "overall_result": "compliant_visual|non_compliant|requires_physical_testing|insufficient_image_quality",
-  "confidence": 85,
+  "confidence": "<0-100: how much the image actually supports this>",
   "image_quality_assessment": "Image clarity and what IS/ISN'T visible",
   "installation_context": {
     "installation_type": "Domestic consumer unit / Commercial DB / etc",
@@ -705,7 +742,7 @@ ENHANCED RESPONSE FORMAT:
       "check_name": "Clear, specific check name",
       "regulation_reference": "BS 7671 regulation number",
       "result": "compliant_visual|non_compliant|requires_testing|not_visible",
-      "confidence": 90,
+      "confidence": "<0-100: how much the image actually supports this check>",
       "observation": "DETAILED description of what you observe in the image (2-3 sentences minimum)",
       "assessment": "Technical assessment with reasoning (2-3 sentences minimum)",
       "why_it_matters": "Safety/compliance rationale in plain English",
@@ -765,7 +802,8 @@ RESPONSE REQUIREMENTS:
     const systemPrompt = getSystemPrompt(
       analysis_settings.mode,
       analysis_settings.fast_mode || false,
-      ragContext
+      ragContext,
+      analysis_settings.bs7671_compliance !== false
     );
 
     const getUserPrompt = (mode: AnalysisMode, fast: boolean): string => {

@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import { DocumentNumberingFields } from './DocumentNumberingFields';
 
 interface CustomTerm {
   id: string;
@@ -27,40 +28,82 @@ const DEFAULT_TERMS_GROUPED = {
     label: 'Payment Terms',
     terms: [
       { id: 'payment_30', label: 'Payment due within 30 days of invoice date' },
-      { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences' },
-      { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate' },
+      {
+        id: 'deposit_required',
+        label: 'A deposit of the specified percentage is required before work commences',
+      },
+      {
+        id: 'additional_charges',
+        label:
+          'Additional work not included in this quote will be charged at our standard hourly rate',
+      },
     ],
   },
   warranty: {
     label: 'Warranty & Guarantee',
     terms: [
-      { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified' },
-      { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable' },
+      {
+        id: 'warranty_workmanship',
+        label: 'All workmanship is guaranteed for the warranty period specified',
+      },
+      {
+        id: 'warranty_materials',
+        label: 'Materials are covered by manufacturer warranties where applicable',
+      },
     ],
   },
   compliance: {
     label: 'Compliance & Certification',
     terms: [
-      { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations' },
-      { id: 'part_p_notification', label: 'Building control notification (Part P) included where required' },
-      { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion' },
+      {
+        id: 'bs7671_compliance',
+        label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
+      },
+      {
+        id: 'part_p_notification',
+        label: 'Building control notification (Part P) included where required',
+      },
+      {
+        id: 'testing_cert',
+        label:
+          'Electrical installation certificate or minor works certificate provided on completion',
+      },
     ],
   },
   site: {
     label: 'Site Access & Safety',
     terms: [
       { id: 'access_required', label: 'Clear access to work areas must be provided' },
-      { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given' },
-      { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day' },
-      { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey' },
+      {
+        id: 'power_isolation',
+        label: 'Power may need to be isolated during installation - advance notice will be given',
+      },
+      {
+        id: 'site_safety',
+        label: 'Work area will be left safe and clean at the end of each working day',
+      },
+      {
+        id: 'asbestos_disclaimer',
+        label:
+          'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+      },
     ],
   },
   general: {
     label: 'General Conditions',
     terms: [
-      { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue' },
-      { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges' },
-      { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately' },
+      {
+        id: 'price_validity',
+        label: 'This quotation is valid for the number of days specified from the date of issue',
+      },
+      {
+        id: 'cancellation',
+        label: 'Cancellation within 48 hours of scheduled work may incur charges',
+      },
+      {
+        id: 'unforeseen_works',
+        label: 'Unforeseen works discovered during installation will be quoted separately',
+      },
     ],
   },
 };
@@ -182,9 +225,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                 <Input
                   type="number"
                   value={quoteValidityDays}
-                  onChange={(e) =>
-                    setQuoteValidityDays(parseInt(e.target.value) || 30)
-                  }
+                  onChange={(e) => setQuoteValidityDays(parseInt(e.target.value) || 30)}
                   placeholder="30"
                   className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
@@ -223,6 +264,13 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
 
             <div className="h-px bg-white/[0.06]" />
 
+            <div className="space-y-3">
+              <Eyebrow>Quote numbering</Eyebrow>
+              <DocumentNumberingFields docType="quote" />
+            </div>
+
+            <div className="h-px bg-white/[0.06]" />
+
             {/* T&Cs */}
             <div className="space-y-3">
               <Eyebrow>Terms &amp; conditions</Eyebrow>
@@ -246,9 +294,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                     <CollapsibleTrigger className="w-full">
                       <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation">
                         <div className="flex items-center gap-2.5">
-                          <span className="text-[13px] font-medium text-white">
-                            {group.label}
-                          </span>
+                          <span className="text-[13px] font-medium text-white">{group.label}</span>
                           <span className="text-[11px] text-white">
                             ({selectedInGroup}/{groupTermIds.length})
                           </span>
@@ -308,9 +354,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                         checked={selectedTerms.includes(term.id)}
                         onCheckedChange={(checked) =>
                           setSelectedTerms((prev) =>
-                            checked
-                              ? [...prev, term.id]
-                              : prev.filter((id) => id !== term.id)
+                            checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                           )
                         }
                         className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"

@@ -20,6 +20,7 @@ import { MarkAsPaidDialog } from './MarkAsPaidDialog';
 import { PaymentHistoryDialog } from './PaymentHistoryDialog';
 import { formatDistanceToNow, differenceInDays } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
+import { EditableDocumentNumber } from './EditableDocumentNumber';
 
 interface InvoiceStatusPanelProps {
   invoices: Quote[];
@@ -99,12 +100,24 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         {/* Header: Invoice number + Status */}
         <div className="flex items-start justify-between gap-3 pb-2 sm:pb-3 border-b border-primary/10">
           <div className="space-y-2 flex-1 min-w-0">
-            <h4 className="font-semibold text-sm sm:text-base truncate">
-              {invoice.invoice_number}
+            {/* ELE-1028 — editable in place. The number is the one field on an
+                invoice that people need to control (existing sequences,
+                continuity from a previous system), and it was the only one
+                they could not touch. */}
+            <h4 className="font-semibold text-sm sm:text-base">
+              <EditableDocumentNumber
+                quoteId={invoice.id}
+                value={invoice.invoice_number ?? ''}
+                field="invoice_number"
+                syncedProvider={
+                  (invoice as { external_invoice_provider?: string | null })
+                    .external_invoice_provider ?? null
+                }
+                onSaved={onRefresh}
+                className="block truncate"
+              />
             </h4>
-            <p className="text-xs sm:text-sm text-white truncate">
-              {invoice.client?.name}
-            </p>
+            <p className="text-xs sm:text-sm text-white truncate">{invoice.client?.name}</p>
           </div>
           <div className="flex flex-col gap-1 items-end shrink-0">
             {daysOverdue > 0 && showActions !== 'paid' && (

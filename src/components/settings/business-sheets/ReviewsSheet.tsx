@@ -102,10 +102,12 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
           <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Reviews</Eyebrow>
-            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">Ask for reviews</h2>
+            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+              Ask for reviews
+            </h2>
             <p className="mt-1 text-[13px] text-white/60">
-              Add your review links once. We&apos;ll invite customers to leave a review in your invoice
-              emails and when they pay — no extra sending on your part.
+              Add your review links once. We&apos;ll invite customers to leave a review in your
+              invoice emails and when they pay — no extra sending on your part.
             </p>
           </header>
 
@@ -123,7 +125,9 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
             {enabled && !hasAnyUrl && (
               <div className="rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/25 px-3.5 py-2.5">
-                <p className="text-[12px] text-elec-yellow/90">Add at least one review link below for the request to appear.</p>
+                <p className="text-[12px] text-elec-yellow/90">
+                  Add at least one review link below for the request to appear.
+                </p>
               </div>
             )}
 
@@ -158,8 +162,9 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
                 <Plus className="h-4 w-4" /> Add another link
               </button>
               <p className="text-[11.5px] text-white/45 leading-relaxed pt-1">
-                Tip: for Google, use your &quot;Get more reviews&quot; short link so customers land straight on the
-                star-rating screen. We&apos;ll label each button automatically from the link.
+                Tip: for Google, use your &quot;Get more reviews&quot; short link so customers land
+                straight on the star-rating screen. We&apos;ll label each button automatically from
+                the link.
               </p>
             </div>
 

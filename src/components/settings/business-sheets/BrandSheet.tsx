@@ -145,10 +145,7 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
                   className="flex-1 h-16 rounded-2xl"
                   style={{ backgroundColor: secondaryColor }}
                 />
-                <div
-                  className="flex-1 h-16 rounded-2xl"
-                  style={{ backgroundColor: accentColor }}
-                />
+                <div className="flex-1 h-16 rounded-2xl" style={{ backgroundColor: accentColor }} />
               </div>
             </div>
           </div>

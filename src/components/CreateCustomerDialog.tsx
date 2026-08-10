@@ -58,19 +58,30 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
   const [isCreating, setIsCreating] = useState(false);
   const [emailError, setEmailError] = useState('');
 
-  // Reset form when dialog opens
+  /*
+   * ELE-1533 — reset on OPEN only, never on prefillData identity.
+   *
+   * Both callers pass `prefillData={{ ... }}` as an inline literal, so its
+   * identity changes on every parent render. With it in the dependency array
+   * this effect re-ran mid-typing and reset the whole form to the prefill —
+   * which is why a character would vanish and the field appeared to "boot you
+   * out". A ref keeps the values current without making them a trigger.
+   */
+  const prefillRef = React.useRef(prefillData);
+  prefillRef.current = prefillData;
+
   useEffect(() => {
-    if (open) {
-      setCustomerData({
-        name: prefillData.name || '',
-        email: prefillData.email || '',
-        phone: prefillData.phone || '',
-        address: prefillData.address || '',
-        notes: 'Created from certificate',
-      });
-      setEmailError('');
-    }
-  }, [open, prefillData]);
+    if (!open) return;
+    const prefill = prefillRef.current;
+    setCustomerData({
+      name: prefill.name || '',
+      email: prefill.email || '',
+      phone: prefill.phone || '',
+      address: prefill.address || '',
+      notes: 'Created from certificate',
+    });
+    setEmailError('');
+  }, [open]);
 
   const validateEmail = (email: string) => {
     if (!email) {
@@ -100,8 +111,20 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
     onOpenChange(false);
   };
 
-  // Form content shared between mobile and desktop
-  const FormContent = () => (
+  /*
+   * ELE-1533 — a plain element, NOT `const FormContent = () => (...)`.
+   *
+   * Declaring a component inside the render body gives it a new function
+   * identity on every render, so React treats it as a different component type,
+   * unmounts the whole subtree and builds a fresh one. Every keystroke therefore
+   * destroyed the input the inspector was typing into; Radix then pulled focus
+   * back to the dialog container, so only the first character ever landed.
+   * That is the "every time i type a letter it boots me out the field" report.
+   *
+   * Holding the JSX in a variable introduces no component boundary, so the
+   * inputs keep their identity across renders.
+   */
+  const formContent = (
     <div className="space-y-5">
       {/* Name Field */}
       <div className="space-y-2">
@@ -153,7 +176,10 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
               value={customerData.email}
               onChange={(e) => {
                 setCustomerData({ ...customerData, email: e.target.value });
-                validateEmail(e.target.value);
+                // Clear a standing error as they correct it, but never judge a
+                // half-typed address — "H" is not an invalid email, it is an
+                // unfinished one. Validation happens on blur.
+                if (emailError) setEmailError('');
               }}
               onBlur={(e) => validateEmail(e.target.value)}
               placeholder="customer@example.com"
@@ -323,7 +349,7 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
 
             {/* Scrollable Form Content */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
-              <FormContent />
+              {formContent}
             </div>
 
             {/* Fixed Footer */}
@@ -356,7 +382,7 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto py-4 -mx-6 px-6">
-          <FormContent />
+          {formContent}
         </div>
 
         <DialogFooter className="flex-shrink-0 pt-4 border-t border-border/50">

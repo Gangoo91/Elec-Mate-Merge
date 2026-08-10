@@ -461,20 +461,35 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     }
   }, [initialReportId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Generate certificate number on mount if needed
+  /*
+   * Allocated on the first edit, not on mount — see EICRFormProvider for the
+   * full note. `generate_certificate_number` is a sequence, so mounting the form
+   * and backing out consumed a number permanently: EIC had spent 3,725 numbers
+   * to produce 335 certificates (91% waste), the worst of the three.
+   */
   const certNumberGenerated = useRef(false);
+
+  const ensureCertificateNumber = useCallback(() => {
+    if (certNumberGenerated.current) return;
+    certNumberGenerated.current = true;
+    void (async () => {
+      const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+      const certNumber = await generateCertificateNumber('eic');
+      setFormData((prev) =>
+        prev.certificateNumber ? prev : { ...prev, certificateNumber: certNumber }
+      );
+    })();
+  }, []);
+
   useEffect(() => {
-    const initCertificateNumber = async () => {
-      if (!formData.certificateNumber && !currentReportId && !certNumberGenerated.current) {
-        certNumberGenerated.current = true;
-        const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
-        const certNumber = await generateCertificateNumber('eic');
-        console.log('[EIC] Generated certificate number:', certNumber);
-        setFormData((prev) => ({ ...prev, certificateNumber: certNumber }));
-      }
-    };
-    initCertificateNumber();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (formData.certificateNumber) {
+      certNumberGenerated.current = true;
+      return;
+    }
+    if (currentReportId || initialReportId) {
+      ensureCertificateNumber();
+    }
+  }, [currentReportId, initialReportId, formData.certificateNumber, ensureCertificateNumber]);
 
   // Cloud sync integration
   const handleReportCreated = useCallback((newReportId: string) => {
@@ -838,19 +853,22 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   // Form update handler
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateFormData = useCallback((field: string, value: any) => {
-    if (field === 'certificateNumber') {
-      console.warn('Certificate number cannot be modified');
-      return;
-    }
+  const updateFormData = useCallback(
+    (field: string, value: any) => {
+      if (field === 'certificateNumber') {
+        console.warn('Certificate number cannot be modified');
+        return;
+      }
 
-    setFormData((prev) => {
-      const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
-      const sanitizedValue =
-        typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
-      return { ...prev, [field]: sanitizedValue };
-    });
-  }, []);
+      setFormData((prev) => {
+        const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
+        const sanitizedValue =
+          typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
+        return { ...prev, [field]: sanitizedValue };
+      });
+    },
+    []
+  );
 
   const handleStartNew = () => {
     setShowStartNewDialog(true);

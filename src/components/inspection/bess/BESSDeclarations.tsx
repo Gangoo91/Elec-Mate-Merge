@@ -192,6 +192,9 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
             onDeletePhoto={deletePhoto}
             onScanPhoto={scanPhotoWithAI}
             isScanning={isScanning}
+            // No observation-level AI on this screen, so the per-photo second
+            // opinion is the only route to it here.
+            showAiSecondOpinion
             certificateContext={{
               certificateNumber: formData.certificateNumber || '',
               certificateType: 'BESS',

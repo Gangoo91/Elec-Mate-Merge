@@ -325,6 +325,60 @@ Deno.serve(async (req: Request) => {
         invoice.external_invoice_provider === provider
           ? ((invoice.external_invoice_id as string | null) ?? null)
           : null,
+      /*
+       * ELE-1521 — the invoice-level discount, carried as its own figure.
+       *
+       * It was only ever implicit in `total`, so the provider sync had no way
+       * to represent it as anything but a reduction smeared across every line.
+       * Resolved to a cash amount here: QuickBooks discount lines take an
+       * amount, and resolving a percentage once against the subtotal keeps the
+       * arithmetic in one place.
+       */
+      discount: (() => {
+        /*
+         * DERIVED, never recomputed.
+         *
+         * The first version re-ran the percentage here — `subtotal * value/100`
+         * — and was wrong, because quote-calculations.ts applies a percentage
+         * to `subtotal + overhead + profit` and caps a fixed discount at that
+         * same base. Any document carrying overhead or profit would have had a
+         * discount line that disagreed with its own total.
+         *
+         * These four figures are stored and authoritative, and the identity
+         * holds by construction:
+         *
+         *   netAfterDiscount = (subtotal + overhead + profit) - discount
+         *   total            = netAfterDiscount + vat
+         *
+         * so discount = (subtotal + overhead + profit) - (total - vat).
+         *
+         * That cannot drift from the invoice the customer was sent, whatever
+         * the discount type was, and it needs no knowledge of how the figure
+         * was arrived at.
+         */
+        const st = invoice.settings as Record<string, unknown> | null;
+        if (!st || (st.discountEnabled !== true && st.discountEnabled !== 'true')) return null;
+
+        const base =
+          (parseFloat(String(invoice.subtotal)) || 0) +
+          (parseFloat(String(invoice.overhead || 0)) || 0) +
+          (parseFloat(String(invoice.profit || 0)) || 0);
+        const netTarget =
+          (parseFloat(String(invoice.total)) || 0) -
+          (parseFloat(String(invoice.vat_amount)) || 0);
+        const amount = Math.round((base - netTarget) * 100) / 100;
+
+        // A penny either way is rounding, not a discount.
+        if (!Number.isFinite(amount) || amount <= 0.01) return null;
+
+        return {
+          amount,
+          label:
+            typeof st.discountLabel === 'string' && st.discountLabel.trim()
+              ? String(st.discountLabel).trim()
+              : 'Discount',
+        };
+      })(),
     };
 
     // Sync to provider - WITHOUT retry/timeout wrappers for now to simplify debugging
@@ -676,6 +730,8 @@ interface InvoiceData {
   subtotal: number;
   overhead: number;
   profit: number;
+  /** Invoice-level discount as a cash amount, with the user's own wording. */
+  discount?: { amount: number; label: string } | null;
   vatAmount: number;
   total: number;
   notes?: string;
@@ -982,13 +1038,34 @@ async function syncToQuickBooks(
   const serviceItem = await getOrCreateQBServiceItem(accessToken, realmId);
   console.log('Service Item:', serviceItem);
 
-  // Distribute overhead, profit AND any invoice-level discount proportionally
-  // into the line prices. Providers recompute their invoice total from the
-  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
-  // discount never reached the provider and re-syncs pushed the undiscounted
-  // total back.
+  /*
+   * ELE-1521 — overhead and profit are distributed into the lines; the
+   * DISCOUNT is not.
+   *
+   * This used to fold all three into one `markupFactor`, so a £200 discount on
+   * a £652.75 invoice rewrote every unit price: £26.14, £4.04, £1.54, £3.56.
+   * Three things went wrong with that.
+   *
+   *  - The prices in the customer's accounts stopped matching the prices on
+   *    the invoice the customer was sent.
+   *  - Seven lines each rounded to 2dp against a factor of 0.6936…, so the
+   *    QuickBooks total came out a penny under: £452.74 against £452.75. An
+   *    invoice that does not reconcile is worse than one that is merely ugly.
+   *  - The discount's wording was lost. Users write real conditions in there
+   *    ("only applied if the customer has completed the grant application
+   *    form"), and a proportional reduction cannot carry a sentence.
+   *
+   * Overhead and profit genuinely are part of what a line costs, so they stay
+   * distributed. The discount becomes a QuickBooks discount line, which is
+   * what it is.
+   */
+  const discountAmount = invoice.discount?.amount ?? 0;
   const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
-  const markupFactor = invoice.subtotal > 0 && netTarget > 0 ? netTarget / invoice.subtotal : 1;
+  // Add the discount back before deriving the markup — the lines must sum to
+  // the pre-discount net, and the discount line takes it off again.
+  const grossTarget = netTarget + discountAmount;
+  const markupFactor =
+    invoice.subtotal > 0 && grossTarget > 0 ? grossTarget / invoice.subtotal : 1;
 
   // Resolve the sales tax code once. UK QuickBooks requires a TaxCodeRef on every
   // sales line; without it QuickBooks drops the VAT and can reject the invoice
@@ -1031,12 +1108,81 @@ async function syncToQuickBooks(
     };
   });
 
+  /*
+   * QuickBooks models a discount as a line of its own — DiscountLineDetail,
+   * with PercentBased false and the cash amount. It has to come after the
+   * sales lines; QuickBooks applies it to the subtotal of everything above it.
+   */
+  if (discountAmount > 0) {
+    lineItems.push({
+      LineNum: lineItems.length + 1,
+      Description: invoice.discount?.label ?? 'Discount',
+      Amount: Math.round(discountAmount * 100) / 100,
+      DetailType: 'DiscountLineDetail',
+      DiscountLineDetail: {
+        PercentBased: false,
+        ...(vatTaxCodeId ? { TaxCodeRef: { value: vatTaxCodeId } } : {}),
+      },
+    });
+  }
+
   // Create the invoice. QuickBooks rejects a duplicate DocNumber with a business
   // validation error (code 6140) when the company uses custom transaction
   // numbers — e.g. the number was already used by a prior sync or a manual QBO
   // invoice. Retry once letting QuickBooks auto-assign its own number so the
   // sync still succeeds rather than hard-failing. ELE-1235.
+  /*
+   * ELE-1523 — re-syncing an edited invoice was creating a SECOND invoice in
+   * QuickBooks instead of updating the first.
+   *
+   * There was no update path here at all: every sync POSTed a new invoice, and
+   * `SyncToken` — which QuickBooks requires on any update — appeared nowhere in
+   * this file. Xero has had this since ELE-1339 (`isUpdate` + InvoiceID); the
+   * QuickBooks branch simply ignored the `externalInvoiceId` we already store.
+   *
+   * Worse, the 6140 handler below made it certain. Fault 6140 is QuickBooks
+   * saying "you already have an invoice with this number" — the one signal
+   * that would have caught the duplicate — and the code answered it by
+   * retrying with auto-numbering, which is how the user ended up with two
+   * invoices for one job, the second wearing a number they never chose.
+   *
+   * QuickBooks updates are a POST to the same /invoice endpoint carrying `Id`
+   * and the CURRENT `SyncToken`. The token is a running version counter, so it
+   * has to be read immediately before the write — a stale one is rejected with
+   * fault 5010 (stale object).
+   */
+  const existingQbId = invoice.externalInvoiceId ?? null;
+  let syncToken: string | null = null;
+
+  if (existingQbId) {
+    const existingRes = await fetch(
+      `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice/${existingQbId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/json',
+        },
+      }
+    );
+    if (existingRes.ok) {
+      const existing = (await existingRes.json())?.Invoice;
+      syncToken = existing?.SyncToken != null ? String(existing.SyncToken) : null;
+      console.log(`Updating existing QuickBooks invoice ${existingQbId} (SyncToken ${syncToken})`);
+    } else {
+      // Deleted in QuickBooks, or belongs to a company we are no longer
+      // connected to. Fall through and create a fresh one rather than failing
+      // the sync — but say so, because it is the only path that can legitimately
+      // produce a second invoice.
+      console.log(
+        `QuickBooks invoice ${existingQbId} not retrievable (${existingRes.status}) — creating a new one`
+      );
+    }
+  }
+
+  const isUpdate = Boolean(existingQbId && syncToken !== null);
+
   const buildInvoicePayload = (includeDocNumber: boolean) => ({
+    ...(isUpdate ? { Id: existingQbId, SyncToken: syncToken, sparse: true } : {}),
     CustomerRef: { value: customerId },
     // Net lines + QuickBooks adds VAT on top (UK). Only set when we resolved a
     // tax code, so US Automated-Sales-Tax companies are untouched. ELE-1235.
@@ -1086,7 +1232,14 @@ async function syncToQuickBooks(
       // Fault text wasn't JSON — fall through and surface it as-is.
     }
 
-    if (isDuplicateDocNumber && invoice.invoiceNumber) {
+    /*
+     * Only ever fall back to auto-numbering when we are CREATING. On an update
+     * the DocNumber collides with the invoice's own existing number, and
+     * retrying without it used to mint a second invoice — the exact duplicate
+     * this ticket is about. If an update hits 6140 something else is wrong and
+     * it should surface, not silently branch.
+     */
+    if (isDuplicateDocNumber && invoice.invoiceNumber && !isUpdate) {
       console.log(
         `Duplicate DocNumber "${invoice.invoiceNumber}" — retrying with QuickBooks auto-numbering`
       );
@@ -1545,10 +1698,24 @@ async function tryCreateQBCustomer(
   displayName: string,
   client: InvoiceData['client']
 ): Promise<string | null> {
+  /*
+   * ELE-1522 — the customer arrived in QuickBooks as a bare name.
+   *
+   * This payload carried DisplayName, email and phone and nothing else. The
+   * `Addresses: [...]` further up is the XERO shape, so it was easy to read
+   * this file and assume the address was handled; QuickBooks never received
+   * one. An invoice with no billing address is not much use to whoever has to
+   * post it.
+   *
+   * QuickBooks wants a structured BillAddr. We hold the address as a single
+   * free-text field, and Line1 is the one part it is always safe to put it in
+   * — splitting a UK address on commas guesses wrongly more often than not.
+   */
   const newCustomer = {
     DisplayName: displayName,
     PrimaryEmailAddr: client.email ? { Address: client.email } : undefined,
     PrimaryPhone: client.phone ? { FreeFormNumber: client.phone } : undefined,
+    ...(client.address ? { BillAddr: { Line1: client.address } } : {}),
   };
 
   console.log('Creating customer with payload:', JSON.stringify(newCustomer));

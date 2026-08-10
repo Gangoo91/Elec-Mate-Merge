@@ -38,6 +38,18 @@ const DOCUMENT_GUIDES = {
     ],
     aspectRatio: '85.6 / 54',
   },
+  // Inspection evidence rather than paperwork — used by the EICR/EIC
+  // observation cards, where "Take photo" has to work on a laptop as well as a
+  // phone (the `capture` attribute is honoured on mobile only).
+  observation: {
+    title: 'Observation photo',
+    tips: [
+      'Show the defect and enough around it to place it',
+      'Get close enough to read any labels or ratings',
+      'Keep the camera steady — good light beats a zoom',
+    ],
+    aspectRatio: '4 / 3',
+  },
   default: {
     title: 'Document',
     tips: ['Fill frame with document', 'Keep camera steady', 'Ensure good lighting'],

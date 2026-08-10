@@ -11,6 +11,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import InspectionPhotoUpload from './inspection/InspectionPhotoUpload';
 import InspectionPhotoGallery from './inspection/InspectionPhotoGallery';
 import AIEnhanceObservationSheet from './inspection/eicr/AIEnhanceObservationSheet';
+import ObservationCodeHelpSheet from './inspection/ObservationCodeHelpSheet';
 import { cn } from '@/lib/utils';
 
 interface DefectObservation {
@@ -131,6 +132,7 @@ const DefectObservationCard = ({
   certificateContext,
 }: DefectObservationCardProps) => {
   const [showAISheet, setShowAISheet] = useState(false);
+  const [showCodeHelp, setShowCodeHelp] = useState(false);
   const { enhance, retry, isEnhancing, suggestions, progressStep } = useEnhanceObservation();
   const haptic = useHaptic();
 
@@ -384,7 +386,12 @@ const DefectObservationCard = ({
           {/* Photo evidence */}
           <div>
             <div className="mb-2 flex items-center justify-between gap-2">
-              <span className={cn(labelCn, 'mb-0')}>Photo evidence</span>
+              {/* Once the item is rectified this section is the "before" half of
+                a pair, so it says so. Unrectified, there is no "after" to pair
+                with and "Before" would be meaningless. */}
+              <span className={cn(labelCn, 'mb-0')}>
+                {defect.rectified ? 'Before — as found' : 'Photo evidence'}
+              </span>
               <span className="text-[12px] text-white/85">
                 {beforePhotos.length} photo{beforePhotos.length !== 1 ? 's' : ''}
               </span>
@@ -436,12 +443,29 @@ const DefectObservationCard = ({
                 {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}
               </button>
 
+              {/* Ticking this does not change the outcome, and inspectors expect
+                it to (ELE-1537). Say so where the expectation forms, not at the
+                sign-off gate two tabs later. */}
+              {defect.rectified &&
+                (defect.defectCode === 'C1' || defect.defectCode === 'C2') && (
+                  <p className="mt-2 text-[12px] leading-relaxed text-white">
+                    Still counts as {defect.defectCode} towards the overall assessment.{' '}
+                    <button
+                      type="button"
+                      onClick={() => setShowCodeHelp(true)}
+                      className="font-semibold text-elec-yellow underline underline-offset-2 touch-manipulation"
+                    >
+                      Why?
+                    </button>
+                  </p>
+                )}
+
               {/* Rectification (after) evidence — only once marked rectified */}
               {defect.rectified && (
                 <div className="mt-3 rounded-xl border border-green-500/30 bg-white/[0.05] p-3.5">
                   <div className="mb-2 flex items-center justify-between gap-2">
                     <span className="text-[12px] font-medium text-white">
-                      Rectification evidence (after)
+                      After — rectification evidence
                     </span>
                     <span className="text-[12px] text-white/85">
                       {rectifiedPhotos.length} photo{rectifiedPhotos.length !== 1 ? 's' : ''}
@@ -530,6 +554,13 @@ const DefectObservationCard = ({
           }
         }}
         onRetry={retry}
+      />
+
+      <ObservationCodeHelpSheet
+        open={showCodeHelp}
+        onOpenChange={setShowCodeHelp}
+        observations={[defect]}
+        scope="observation"
       />
     </div>
   );

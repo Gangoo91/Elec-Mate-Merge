@@ -199,11 +199,50 @@ Given an observation description, suggest:
 3. A plain English client explanation
 4. A recommended remedial action
 
+THE RECOMMENDATION IS WORK, ADDRESSED TO THE CLIENT.
+It goes on a report the client reads, describing the remedial work needed to put
+the installation right. It is NOT addressed to the inspector and NOT a list of
+checks. The inspector has already done the inspection — that is where this
+observation came from.
+
+Never write a recommendation that tells the reader to inspect, check, verify,
+assess, confirm, review the design, or carry out a risk assessment in order to
+decide whether there is a problem. If the observation states a fact, recommend
+the work that resolves it. "There is no SPD present" → recommend installing a
+suitable SPD, not "check whether SPD protection was required".
+
+COMMIT TO A POSITION.
+The client explanation must say what is wrong and what it means for them, in one
+direction. Never present both branches — "if it was specified then X, if it was
+not required then Y" is not an explanation, it is the inspector's job handed
+back to the client. The inspector has made the call; explain it.
+
+THE INSPECTOR'S FINDING IS FACT.
+The description is a direct observation made on site by a qualified inspector
+standing in front of the installation. You are not. Treat what they report as
+established fact and work from it. You have no grounds to doubt a stated finding
+merely because you cannot see it yourself — "there is no SPD present" means there
+is no SPD present, not that its presence is unconfirmed.
+
 CLASSIFICATION GUIDE:
 - C1 (Danger present): Risk of injury. Immediate protective action required.
 - C2 (Potentially dangerous): Urgent remedial action required.
 - C3 (Improvement recommended): Does not comply but no immediate danger.
-- FI (Further investigation): Cannot fully assess without further investigation.
+- FI (Further investigation): reserved for what THE INSPECTOR could not determine.
+  BS 7671 Appendix 6: "Where further investigation is advised because the
+  inspection has identified an issue which the inspector is unable to verify due
+  to the extent and limitations, it is to be recorded within Section K as FI."
+  So FI applies ONLY where the inspector's own words show they could not verify
+  something — no access, concealed work, records unavailable, outside the agreed
+  extent. Your own uncertainty is NEVER a reason to suggest FI. Downgrading a
+  definite finding to FI tells a competent inspector to go and investigate what
+  they have already established, and it is wrong.
+
+KEEPING THE INSPECTOR'S CODE:
+Default to their current code. Suggest a different one only when their own
+description supports it — a stated fact that plainly meets a higher or lower
+classification. If you are unsure, keep their code and say why in the
+explanation. Never change a code on the basis of information you lack.
 
 AUTHORITATIVE BS 7671 REGULATIONS (BS 7671:2018+A4:2026) — ground every regulation
 reference in these facets. Do NOT cite or invent any regulation number that is not

@@ -34,7 +34,25 @@ const LOOK_AHEAD_DAYS = 14;
 
 type WorkingHoursDay = { start: string; end: string } | null;
 type WorkingHours = Record<'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun', WorkingHoursDay>;
-type BlackoutEntry = { start: string; end: string; reason?: string };
+/*
+ * A blocked-out period, as written by Settings → Booking availability.
+ *
+ * WHOLE DAYS, and `end` is INCLUSIVE — "away 15th to 16th" blocks both days.
+ * `end` is optional and defaults to `start`, so a single day is just
+ * `{ start: '2026-08-15' }`.
+ *
+ * This is `public-booking`'s reading, and it is now the canonical one. This
+ * function used to read the same rows as a raw timestamp interval:
+ *
+ *     new Date(bo.start) .. new Date(bo.end)
+ *
+ * which disagreed with the booking link in two ways that both let a customer
+ * book a day the electrician had blocked. A single-day entry has no `end`, so
+ * `new Date(undefined)` was NaN and the `isFinite` guard dropped the blackout
+ * entirely; and a range ended at midnight ON the end date, so the final day
+ * stayed bookable. Same JSON, two answers, and the wrong one silently wins.
+ */
+type BlackoutEntry = { start: string; end?: string; reason?: string };
 
 const DAY_KEYS: Array<keyof WorkingHours> = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
@@ -149,9 +167,16 @@ serve(async (req) => {
       });
     }
     for (const bo of blackouts) {
-      const bs = new Date(bo.start).getTime();
-      const be = new Date(bo.end).getTime();
-      if (Number.isFinite(bs) && Number.isFinite(be)) busy.push({ start: bs, end: be });
+      if (!bo?.start) continue;
+      // Date-only, parsed as UTC midnight. `end` defaults to `start`, and the
+      // busy interval runs to the END of the end day — hence +1 day — so an
+      // inclusive range matches what the booking link blocks.
+      const startDay = String(bo.start).slice(0, 10);
+      const endDay = String(bo.end || bo.start).slice(0, 10);
+      const bs = Date.parse(`${startDay}T00:00:00Z`);
+      const be = Date.parse(`${endDay}T00:00:00Z`);
+      if (!Number.isFinite(bs) || !Number.isFinite(be) || be < bs) continue;
+      busy.push({ start: bs, end: be + 24 * 60 * 60 * 1000 });
     }
 
     // Track bookings-per-day to enforce maxPerDay
