@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { inputCn, labelCn, cardCn } from '@/components/forms/fieldStyles';
 
 interface InvoiceSettingsStepProps {
   items?: QuoteItem[];
@@ -24,10 +25,7 @@ interface InvoiceSettingsStepProps {
   onUpdateNotes: (notes: string) => void;
 }
 
-const inputClass =
-  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
 
-const labelClass = 'text-[11px] text-white uppercase tracking-wider block mb-1.5 truncate';
 
 export const InvoiceSettingsStep = ({
   items,
@@ -64,7 +62,7 @@ export const InvoiceSettingsStep = ({
       <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
         <div>
           <p className="text-[14px] font-medium text-white">Summary View</p>
-          <p className="text-[12px] text-white/60 mt-0.5">
+          <p className="text-[12px] text-white mt-0.5">
             {settings?.showSummaryView ? 'Labour & Materials totals only' : 'Itemised breakdown'}
           </p>
         </div>
@@ -76,18 +74,18 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* VAT */}
-      <div className="pt-2">
+      <section className={cardCn}>
         <div className="flex items-baseline gap-2 mb-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Tax</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Tax</span>
         </div>
-        <p className="text-[11px] text-white/50">VAT, reverse charge and CIS</p>
-      </div>
+        <p className="text-[11px] text-white">VAT, reverse charge and CIS</p>
+      </section>
       <div>
         <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div>
             <p className="text-[14px] font-medium text-white">VAT Registered</p>
-            <p className="text-[12px] text-white/60 mt-0.5">Add VAT to this invoice</p>
+            <p className="text-[12px] text-white mt-0.5">Add VAT to this invoice</p>
           </div>
           <Switch
             checked={settings?.vatRegistered || false}
@@ -97,7 +95,7 @@ export const InvoiceSettingsStep = ({
         </div>
         {settings?.vatRegistered && (
           <div className="pt-3">
-            <label className={labelClass}>VAT Rate (%)</label>
+            <label className={labelCn}>VAT Rate (%)</label>
             <input
               type="text"
               inputMode="decimal"
@@ -109,7 +107,7 @@ export const InvoiceSettingsStep = ({
                   onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
                 }
               }}
-              className={inputClass}
+              className={inputCn}
               placeholder="20"
             />
           </div>
@@ -123,7 +121,7 @@ export const InvoiceSettingsStep = ({
         <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div className="pr-3">
             <p className="text-[14px] font-medium text-white">VAT reverse charge</p>
-            <p className="text-[12px] text-white/70 mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
+            <p className="text-[12px] text-white mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
           </div>
           <Switch
             checked={settings?.reverseCharge || false}
@@ -132,8 +130,8 @@ export const InvoiceSettingsStep = ({
           />
         </div>
         {settings?.reverseCharge && (
-          <p className="text-[11px] text-white/60 mt-2 leading-relaxed">
-            Invoice shows £0 VAT with the statement <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span> — the notional VAT is shown for their records.
+          <p className="text-[11px] text-white mt-2 leading-relaxed">
+            Invoice shows £0 VAT with the statement <span className="text-white">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span> — the notional VAT is shown for their records.
           </p>
         )}
 
@@ -141,7 +139,7 @@ export const InvoiceSettingsStep = ({
         <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08] mt-1">
           <div className="pr-3">
             <p className="text-[14px] font-medium text-white">CIS deduction</p>
-            <p className="text-[12px] text-white/70 mt-0.5">Deducted from labour only (ex-VAT)</p>
+            <p className="text-[12px] text-white mt-0.5">Deducted from labour only (ex-VAT)</p>
           </div>
           <Switch
             checked={settings?.cisEnabled || false}
@@ -151,7 +149,7 @@ export const InvoiceSettingsStep = ({
         </div>
         {settings?.cisEnabled && (
           <div className="pt-3">
-            <label className={labelClass}>CIS rate</label>
+            <label className={labelCn}>CIS rate</label>
             <div className="grid grid-cols-2 gap-2">
               {[20, 30].map((rate) => (
                 <button
@@ -169,17 +167,17 @@ export const InvoiceSettingsStep = ({
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+            <p className="text-[11px] text-white mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
 
             {/* Live preview + guard — makes a silent £0 deduction impossible. */}
             {cisPreview.labourNet > 0 ? (
               <div className="mt-3 rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-white/70">Labour (ex-VAT)</span>
+                  <span className="text-white">Labour (ex-VAT)</span>
                   <span className="text-white tabular-nums">£{cisPreview.labourNet.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-white/70">Less CIS ({cisPreview.cisRate}%)</span>
+                  <span className="text-white">Less CIS ({cisPreview.cisRate}%)</span>
                   <span className="text-red-300 tabular-nums">−£{cisPreview.cisAmount.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
@@ -199,18 +197,18 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Deductions & Discounts */}
-      <div className="pt-2">
+      <section className={cardCn}>
         <div className="flex items-baseline gap-2 mb-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Pricing</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Pricing</span>
         </div>
-        <p className="text-[11px] text-white/50">Adjustments and discounts</p>
-      </div>
+        <p className="text-[11px] text-white">Adjustments and discounts</p>
+      </section>
       <div>
         <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div>
             <p className="text-[14px] font-medium text-white">Discount</p>
-            <p className="text-[12px] text-white/60 mt-0.5">Goodwill, retention, early-payment, etc.</p>
+            <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
           </div>
           <Switch
             checked={settings?.discountEnabled || false}
@@ -229,7 +227,7 @@ export const InvoiceSettingsStep = ({
           <div className="pt-4 space-y-4">
             {/* Type */}
             <div>
-              <label className={labelClass}>Type</label>
+              <label className={labelCn}>Type</label>
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -237,7 +235,7 @@ export const InvoiceSettingsStep = ({
                   className={cn(
                     'px-4 h-12 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                     (settings?.discountType || 'percentage') === 'percentage'
-                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                      ? 'bg-white/[0.08] text-elec-yellow border border-elec-yellow/40'
                       : 'bg-white/[0.08] text-white border border-white/[0.12]'
                   )}
                 >
@@ -249,7 +247,7 @@ export const InvoiceSettingsStep = ({
                   className={cn(
                     'px-4 h-12 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                     settings?.discountType === 'fixed'
-                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                      ? 'bg-white/[0.08] text-elec-yellow border border-elec-yellow/40'
                       : 'bg-white/[0.08] text-white border border-white/[0.12]'
                   )}
                 >
@@ -261,24 +259,24 @@ export const InvoiceSettingsStep = ({
             {/* Value + Label side by side */}
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className={labelClass}>
+                <label className={labelCn}>
                   {(settings?.discountType || 'percentage') === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
                 </label>
                 <DecimalInput
                   style={darkStyle}
                   placeholder={(settings?.discountType || 'percentage') === 'percentage' ? '20' : '150.00'}
-                  className={inputClass}
+                  className={inputCn}
                   value={settings?.discountValue || 0}
                   onChange={(val) => onUpdateSettings({ discountValue: val })}
                 />
               </div>
               <div>
-                <label className={labelClass}>Label (on PDF)</label>
+                <label className={labelCn}>Label (on PDF)</label>
                 <input
                   type="text"
                   style={darkStyle}
                   placeholder="e.g. Retention"
-                  className={inputClass}
+                  className={inputCn}
                   value={settings?.discountLabel || ''}
                   onChange={(e) => onUpdateSettings({ discountLabel: e.target.value })}
                 />
@@ -292,20 +290,20 @@ export const InvoiceSettingsStep = ({
       <div>
         <div className="py-3.5 border-b border-white/[0.08]">
           <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
-          <p className="text-[12px] text-white/70 mt-0.5">
+          <p className="text-[12px] text-white mt-0.5">
             Signed %. Negative = discount, positive = markup. Applied before global discount.
           </p>
         </div>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
           {(['labour', 'materials', 'equipment'] as const).map((cat) => (
             <div key={cat}>
-              <label className={`${labelClass} capitalize`}>{cat}</label>
+              <label className={`${labelCn} capitalize`}>{cat}</label>
               <div className="relative">
                 <DecimalInput
                   allowNegative
                   placeholder="0"
                   style={darkStyle}
-                  className={`${inputClass} pr-8`}
+                  className={`${inputCn} pr-8`}
                   value={settings?.categoryAdjustments?.[cat] ?? 0}
                   onChange={(val) => {
                     // 0 / cleared means "no adjustment" — keep the map clean
@@ -318,7 +316,7 @@ export const InvoiceSettingsStep = ({
                     });
                   }}
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none">
                   %
                 </span>
               </div>
@@ -328,16 +326,16 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Payment Terms */}
-      <div className="pt-2">
+      <section className={cardCn}>
         <div className="flex items-baseline gap-2 mb-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Payment</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Payment</span>
         </div>
-        <p className="text-[11px] text-white/50">Terms and bank details on the invoice</p>
-      </div>
+        <p className="text-[11px] text-white">Terms and bank details on the invoice</p>
+      </section>
       <div className="space-y-3">
         <div>
-          <label className={labelClass}>Payment Terms</label>
+          <label className={labelCn}>Payment Terms</label>
           <Select
             value={settings?.paymentTerms || '30 days'}
             onValueChange={(value) => {
@@ -355,7 +353,7 @@ export const InvoiceSettingsStep = ({
               onUpdateSettings({ paymentTerms: value, dueDate: newDueDate });
             }}
           >
-            <SelectTrigger className={cn(inputClass, 'pr-8 [&>svg]:text-white')}>
+            <SelectTrigger className={cn(inputCn, 'pr-8 [&>svg]:text-white')}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/[0.1]">
@@ -370,10 +368,10 @@ export const InvoiceSettingsStep = ({
         </div>
 
         <div>
-          <label className={labelClass}>Due Date</label>
+          <label className={labelCn}>Due Date</label>
           <Popover>
             <PopoverTrigger asChild>
-              <button className={cn(inputClass, 'text-left flex items-center')}>
+              <button className={cn(inputCn, 'text-left flex items-center')}>
                 {settings?.dueDate ? format(new Date(settings.dueDate), 'PPP') : 'Select due date'}
               </button>
             </PopoverTrigger>
@@ -394,40 +392,40 @@ export const InvoiceSettingsStep = ({
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className={labelClass}>Bank Name</label>
+            <label className={labelCn}>Bank Name</label>
             <input
               style={darkStyle}
               value={settings?.bankDetails?.bankName || ''}
               onChange={(e) => updateBankField('bankName', e.target.value)}
               placeholder="e.g. Barclays"
-              className={inputClass}
+              className={inputCn}
             />
           </div>
           <div>
-            <label className={labelClass}>Account Name</label>
+            <label className={labelCn}>Account Name</label>
             <input
               style={darkStyle}
               value={settings?.bankDetails?.accountName || ''}
               onChange={(e) => updateBankField('accountName', e.target.value)}
               placeholder="e.g. Smith Electrical"
-              className={inputClass}
+              className={inputCn}
             />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className={labelClass}>Account Number</label>
+            <label className={labelCn}>Account Number</label>
             <input
               style={darkStyle}
               value={settings?.bankDetails?.accountNumber || ''}
               onChange={(e) => updateBankField('accountNumber', e.target.value.replace(/\D/g, '').slice(0, 8))}
               inputMode="numeric"
               placeholder="12345678"
-              className={inputClass}
+              className={inputCn}
             />
           </div>
           <div>
-            <label className={labelClass}>Sort Code</label>
+            <label className={labelCn}>Sort Code</label>
             <input
               style={darkStyle}
               value={settings?.bankDetails?.sortCode || ''}
@@ -440,7 +438,7 @@ export const InvoiceSettingsStep = ({
               }}
               inputMode="numeric"
               placeholder="12-34-56"
-              className={inputClass}
+              className={inputCn}
             />
           </div>
         </div>
@@ -448,13 +446,13 @@ export const InvoiceSettingsStep = ({
 
       {/* Notes */}
       <div>
-        <label className={labelClass}>Invoice Notes (Optional)</label>
+        <label className={labelCn}>Invoice Notes (Optional)</label>
         <textarea
           style={darkStyle}
           value={notes || ''}
           onChange={(e) => onUpdateNotes(e.target.value)}
           placeholder="e.g. Thank you for your business."
-          className={cn(inputClass, 'min-h-[100px] resize-none py-3')}
+          className={cn(inputCn, 'min-h-[100px] resize-none py-3')}
           rows={4}
         />
         <p className="text-[11px] text-white mt-1.5">Appears at the bottom of your invoice</p>

@@ -74,8 +74,15 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   // the canonical EIC code back.
   const displayCode = normalizeEICDefectCode(observation.defectCode);
 
-  const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
-    useInspectionPhotos({
+  const {
+    photos,
+    isLoadingPhotos,
+    isUploading,
+    isScanning,
+    uploadPhoto,
+    deletePhoto,
+    scanPhotoWithAI,
+  } = useInspectionPhotos({
       reportId: reportId || '',
       reportType: 'eic',
       itemId: observation.id,
@@ -191,7 +198,10 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           />
         </div>
 
-        {photos.length > 0 && (
+        {/* An empty gallery mid-fetch reads as "my photos are gone" (ELE-1536). */}
+        {isLoadingPhotos && <p className="text-[12px] text-white">Loading photos…</p>}
+
+        {!isLoadingPhotos && photos.length > 0 && (
           <InspectionPhotoGallery
             photos={photos}
             onDeletePhoto={deletePhoto}

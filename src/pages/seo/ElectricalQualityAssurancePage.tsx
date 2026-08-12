@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   DollarSign,
   Users,
+  GraduationCap,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

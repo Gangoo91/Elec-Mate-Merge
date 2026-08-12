@@ -28,7 +28,10 @@ import {
   storageGetJSONSync,
 } from '@/utils/storage';
 
-const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
+// Median completion is ~85s measured across real jobs (ELE-1386). This was 180,
+// which produced "~2:24 to go" on a run that finishes in well under two minutes
+// — an estimate that is wrong in the direction that makes the product feel slow.
+const EXPECTED_TOTAL_SECONDS = 95;
 const RAMS_LOCAL_DRAFT_KEY = 'rams-local-draft';
 // Mirrors INPUT_DRAFT_KEY in AIRAMSInput — the autosaved input-form draft.
 // Written/read there via raw localStorage, so clear it the same way (not
@@ -194,6 +197,25 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       }
     }
   }, [status, currentJobId]);
+
+  /**
+   * Hand off to the results route once the job reaches a terminal state with
+   * something to show.
+   *
+   * Results used to render inline behind `showResults`, which meant a refresh
+   * or the Back button discarded the finished document — React state was the
+   * only handle on it. The job id is the natural identity, so it goes in the
+   * URL and the results page loads from it.
+   *
+   * `replace` so Back returns to Site Safety rather than to a generating screen
+   * for a job that has already finished.
+   */
+  useEffect(() => {
+    if (!currentJobId) return;
+    if (status !== 'complete' && status !== 'partial') return;
+    if (!ramsData && !methodData) return;
+    navigate(`/electrician/site-safety/ai-rams/${currentJobId}`, { replace: true });
+  }, [status, currentJobId, ramsData, methodData, navigate]);
 
   // Show error notification (prevent duplicate toasts for old jobs)
   useEffect(() => {
@@ -724,7 +746,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               </span>
             )}
             <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/75 hidden sm:inline">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
                 AI RAMS
               </span>
               <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
@@ -748,17 +770,19 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
       {/* Content */}
       <main className="px-4 sm:px-6 md:px-10 lg:px-16 py-4 sm:py-6">
-        {/* Draft recovery banner — editorial */}
+        {/* Draft recovery banner. The bottom margin matches the form grid's gap
+            (gap-4 sm:gap-5) so the banner sits in the same rhythm as the cards
+            below rather than butting straight up against the first one. */}
         {showDraftRecovery && recoveredDraft && !showResults && (
-          <section className="mt-3 bg-[hsl(0_0%_10%)] border border-elec-yellow/30 rounded-2xl p-5">
+          <section className="mt-3 mb-4 sm:mb-5 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-elec-yellow/30 rounded-2xl p-5">
             <div className="flex items-baseline gap-3">
               <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow shrink-0">
                 Draft
               </span>
               <div className="flex-1 min-w-0">
                 <div className="text-[14.5px] font-semibold text-white">Unsaved RAMS found</div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
-                  <span className="text-white">{recoveredDraft.projectName}</span> was saved locally{' '}
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white">
+                  <span className="font-medium">{recoveredDraft.projectName}</span> was saved locally{' '}
                   {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))} minutes ago.
                   Restore to pick up where you left off.
                 </p>
@@ -774,7 +798,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                   <button
                     type="button"
                     onClick={handleDismissDraft}
-                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80 hover:border-white/20 hover:text-white transition-colors active:scale-[0.98] touch-manipulation"
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-white/20 transition-colors active:scale-[0.98] touch-manipulation"
                   >
                     Dismiss
                   </button>
@@ -793,7 +817,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
           <>
             {/* Resuming banner — editorial */}
             {resumedJob && status !== 'complete' && (
-              <section className="bg-[hsl(0_0%_10%)] border border-elec-yellow/30 rounded-2xl p-5 mb-7 sm:mb-10">
+              <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-elec-yellow/30 rounded-2xl p-5 mb-4 sm:mb-5">
                 <div className="flex items-baseline gap-3">
                   <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow shrink-0">
                     Resuming
@@ -802,7 +826,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                     <div className="text-[14.5px] font-semibold text-white">
                       Picking up where you left off
                     </div>
-                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/75 tabular-nums">
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-white tabular-nums">
                       Current progress: {progress}%
                     </p>
                   </div>

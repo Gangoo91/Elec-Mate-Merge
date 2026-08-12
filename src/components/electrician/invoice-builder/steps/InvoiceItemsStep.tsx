@@ -55,6 +55,7 @@ const UNIT_PRESETS = [
 import { DecimalInput as InlineDecimalInput } from '@/components/ui/decimal-input';
 import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
 import { materialQueryMatches, expandMaterialQuery, rankMaterialMatches } from '@/data/materialSynonyms';
+import { chipBase, chipOn, chipOff, inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 
 interface InvoiceItemsStepProps {
   originalItems: InvoiceItem[];
@@ -626,7 +627,7 @@ export const InvoiceItemsStep = ({
               {w.name} — billing {w.need}, only {w.have} in stock
             </p>
           ))}
-          <p className="text-[11px] text-white/55 pt-0.5">
+          <p className="text-[11px] text-white pt-0.5">
             Stock-linked lines deduct automatically when this invoice is saved.
           </p>
         </div>
@@ -641,7 +642,7 @@ export const InvoiceItemsStep = ({
           >
             <span className="flex items-baseline gap-2">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· From the quote ({originalItems.length})</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· From the quote ({originalItems.length})</span>
             </span>
             {showOriginalItems ? (
               <ChevronUp className="h-4 w-4 text-white" />
@@ -683,7 +684,7 @@ export const InvoiceItemsStep = ({
                         className="mr-2 min-w-0 flex-1 whitespace-pre-wrap break-words text-left text-[13px] font-medium leading-snug text-white"
                       >
                         {item.description || (
-                          <span className="font-normal text-white/40">Tap to add a description</span>
+                          <span className="font-normal text-white/25">Tap to add a description</span>
                         )}
                       </button>
                     )}
@@ -709,7 +710,7 @@ export const InvoiceItemsStep = ({
                             setEditingItemId(item.id);
                           }
                         }}
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
+                        className={`w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
                         aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
                       >
                         {editingItemId === item.id ? (
@@ -724,11 +725,11 @@ export const InvoiceItemsStep = ({
                           setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
                         }
                         className={cn(
-                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
+                          'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
                           adjustingItemId === item.id ||
                             (typeof item.itemAdjustmentPercent === 'number' &&
                               item.itemAdjustmentPercent !== 0)
-                            ? 'bg-elec-yellow/20'
+                            ? 'bg-white/[0.08] border border-elec-yellow/40'
                             : 'bg-white/[0.08]'
                         )}
                         aria-label="Per-item adjustment"
@@ -745,7 +746,7 @@ export const InvoiceItemsStep = ({
                       </button>
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                        className="w-11 h-11 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
                       >
                         <Trash2 className="h-3.5 w-3.5 text-red-400" />
                       </button>
@@ -768,7 +769,7 @@ export const InvoiceItemsStep = ({
                           {item.itemAdjustmentPercent}%
                         </span>
                         {item.itemAdjustmentLabel && (
-                          <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                          <span className="text-white">{item.itemAdjustmentLabel}</span>
                         )}
                       </div>
                     )}
@@ -784,7 +785,7 @@ export const InvoiceItemsStep = ({
                             itemAdjustmentPercent: val === 0 ? undefined : val,
                           })
                         }
-                        className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <input
                         type="text"
@@ -795,12 +796,12 @@ export const InvoiceItemsStep = ({
                             itemAdjustmentLabel: e.target.value || undefined,
                           })
                         }
-                        className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                        className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
                       />
                       <button
                         type="button"
                         onClick={() => setAdjustingItemId(null)}
-                        className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center"
+                        className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.12] flex items-center justify-center"
                         aria-label="Done"
                       >
                         <Check className="h-3.5 w-3.5 text-elec-yellow" />
@@ -817,7 +818,7 @@ export const InvoiceItemsStep = ({
                         })
                       }
                       style={darkInputStyle}
-                      className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                      className="h-11 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                     />
                     <span className="text-[12px] text-white">×</span>
                     <InlineDecimalInput
@@ -829,7 +830,7 @@ export const InvoiceItemsStep = ({
                         })
                       }
                       style={darkInputStyle}
-                      className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                      className="h-11 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                     />
                     <span className="text-[12px] text-white flex-1">{item.unit}</span>
                   </div>
@@ -842,17 +843,17 @@ export const InvoiceItemsStep = ({
 
       {/* === ADD FROM — sources === */}
       <div className="pt-1">
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Add from</p>
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">Add from</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {[
             { id: 'quick' as AddMethod, label: 'Quick add', sub: 'Labour, materials & kit', icon: Zap },
-            { id: 'pricebook' as AddMethod, label: 'Price Book', sub: `${pricedBookItems.length} priced items`, icon: BookOpen },
+            { id: 'pricebook' as AddMethod, label: 'Price book', sub: `${pricedBookItems.length} priced items`, icon: BookOpen },
             ...(rateCardItems.length > 0
-              ? [{ id: 'ratecard' as AddMethod, label: 'Rate Card', sub: `${rateCardItems.length} rates`, icon: PoundSterling }]
+              ? [{ id: 'ratecard' as AddMethod, label: 'Rate card', sub: `${rateCardItems.length} rates`, icon: PoundSterling }]
               : []),
             { id: 'manual' as AddMethod, label: 'Manual', sub: 'Type your own line', icon: PenLine },
-            { id: 'templates' as AddMethod, label: 'Job templates', sub: 'Saved job packages', icon: LayoutTemplate },
-            { id: 'scan' as AddMethod, label: 'Scan invoice', sub: 'Import supplier costs', icon: ScanLine },
+            { id: 'templates' as AddMethod, label: 'Templates', sub: 'Pre-built item sets', icon: LayoutTemplate },
+            { id: 'scan' as AddMethod, label: 'Scan invoice', sub: 'Pull items from a photo', icon: ScanLine },
           ].map((method) => {
             const isActive = activeAddMethod === method.id;
             return (
@@ -862,13 +863,13 @@ export const InvoiceItemsStep = ({
                 onClick={() => setActiveAddMethod(method.id)}
                 className={cn(
                   'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
-                  isActive ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+                  isActive ? 'bg-white/[0.08] border-elec-yellow/60' : 'bg-white/[0.04] border-white/[0.08]'
                 )}
               >
-                <method.icon className={cn('h-4 w-4', isActive ? 'text-elec-yellow' : 'text-white/70')} />
+                <method.icon className={cn('h-4 w-4', isActive ? 'text-elec-yellow' : 'text-white')} />
                 <span>
                   <span className="block text-[12px] font-semibold text-white leading-tight">{method.label}</span>
-                  <span className="block text-[10px] text-white/55 mt-0.5">{method.sub}</span>
+                  <span className="block text-[10px] text-white mt-0.5">{method.sub}</span>
                 </span>
               </button>
             );
@@ -894,8 +895,8 @@ export const InvoiceItemsStep = ({
                   className={cn(
                     'flex-1 h-11 rounded-xl text-[13px] font-semibold transition-all touch-manipulation flex items-center justify-center gap-1.5 border',
                     isActive
-                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25] text-elec-yellow'
-                      : 'bg-white/[0.04] border-white/[0.08] text-white/80'
+                      ? 'bg-white/[0.08] border-elec-yellow/60 text-elec-yellow'
+                      : 'bg-white/[0.04] border-white/[0.08] text-white'
                   )}
                 >
                   <span className={cn('h-1.5 w-1.5 rounded-full', cat.dot)} />
@@ -918,10 +919,10 @@ export const InvoiceItemsStep = ({
                       type="button"
                       onClick={() => handleLabourRateModeChange(mode)}
                       className={cn(
-                        'h-10 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                        chipBase,
                         active
-                          ? 'bg-elec-yellow text-black font-semibold'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                          ? chipOn
+                          : chipOff
                       )}
                     >
                       {mode === 'hour' ? 'Hourly rate' : 'Day rate'}
@@ -994,7 +995,7 @@ export const InvoiceItemsStep = ({
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
                 style={darkInputStyle}
-                className="w-full h-12 px-4 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
+                className={cn(inputCn, 'w-full')}
               />
 
               {/* ⚡ Live supplier prices — tap to fill the line */}
@@ -1038,7 +1039,7 @@ export const InvoiceItemsStep = ({
                           <span className="block text-[13px] font-medium text-white truncate">
                             {titleCaseProduct(m.name || m.description || '')}
                           </span>
-                          <span className="block text-[11px] text-white/55 capitalize truncate">
+                          <span className="block text-[11px] text-white capitalize truncate">
                             {m.source === 'live' && <Zap className="inline h-2.5 w-2.5 text-elec-yellow mr-0.5" />}
                             {m.supplier || 'Trade catalogue'}
                             {days !== null && ` · priced ${days === 0 ? 'today' : `${days}d ago`}`}
@@ -1095,7 +1096,7 @@ export const InvoiceItemsStep = ({
 
               {/* Markup Quick Select */}
               <div className="flex items-center justify-between px-3.5 py-3 rounded-xl bg-white/[0.05] border border-white/[0.10]">
-                <span className="text-[11px] font-medium text-white/65 uppercase tracking-wider">Markup</span>
+                <span className="text-[11px] font-medium text-white uppercase tracking-wider">Markup</span>
                 <div className="flex gap-1">
                   {[0, 10, 15, 20].map((markup) => (
                     <button
@@ -1104,8 +1105,8 @@ export const InvoiceItemsStep = ({
                       className={cn(
                         'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
                         priceAdjustment === markup
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.06] text-white/80'
+                          ? chipOn
+                          : 'bg-white/[0.06] text-white'
                       )}
                     >
                       {markup}%
@@ -1163,7 +1164,7 @@ export const InvoiceItemsStep = ({
           {/* Add Button */}
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:brightness-110 active:scale-[0.98] touch-manipulation rounded-xl"
           >
             Add to Invoice
           </Button>
@@ -1179,7 +1180,7 @@ export const InvoiceItemsStep = ({
               break CIS labour detection ("CIS is on but no Labour lines found").
               Set only the category here so the user's typed values are preserved. */}
           <div>
-            <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+            <label className="text-[11px] font-medium text-white uppercase tracking-wider block mb-1.5">
               Category
             </label>
             <div className="flex gap-1.5">
@@ -1197,8 +1198,8 @@ export const InvoiceItemsStep = ({
                     className={cn(
                       'flex-1 h-11 rounded-xl text-[13px] font-semibold transition-all touch-manipulation flex items-center justify-center gap-1.5 border',
                       isActive
-                        ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25] text-elec-yellow'
-                        : 'bg-white/[0.04] border-white/[0.08] text-white/80'
+                        ? 'bg-white/[0.08] border-elec-yellow/60 text-elec-yellow'
+                        : 'bg-white/[0.04] border-white/[0.08] text-white'
                     )}
                   >
                     <span className={cn('h-1.5 w-1.5 rounded-full', cat.dot)} />
@@ -1210,7 +1211,7 @@ export const InvoiceItemsStep = ({
           </div>
           <div>
             <div className="pb-3">
-              <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+              <label className="text-[11px] font-medium text-white uppercase tracking-wider block mb-1.5">
                 Description
               </label>
               <input
@@ -1218,38 +1219,38 @@ export const InvoiceItemsStep = ({
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
                 style={darkInputStyle}
-                className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
+                className={cn(inputCn, 'w-full')}
               />
             </div>
             <div className="grid grid-cols-2 gap-3 py-3">
               <div>
-                <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+                <label className="text-[11px] font-medium text-white uppercase tracking-wider block mb-1.5">
                   Quantity
                 </label>
                 <InlineDecimalInput
                   value={newItem.quantity}
                   onChange={(quantity) => setNewItem((prev) => ({ ...prev, quantity }))}
                   style={darkInputStyle}
-                  className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
+                  className={cn(inputCn, 'w-full')}
                   placeholder="1"
                 />
               </div>
               <div>
-                <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+                <label className="text-[11px] font-medium text-white uppercase tracking-wider block mb-1.5">
                   Unit price (£)
                 </label>
                 <InlineDecimalInput
                   value={newItem.unitPrice}
                   onChange={(unitPrice) => setNewItem((prev) => ({ ...prev, unitPrice }))}
                   style={darkInputStyle}
-                  className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
+                  className={cn(inputCn, 'w-full')}
                   placeholder="0.00"
                 />
               </div>
             </div>
             {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
             <div className="pt-1">
-              <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+              <label className="text-[11px] font-medium text-white uppercase tracking-wider block mb-1.5">
                 Unit
               </label>
               <Select
@@ -1272,7 +1273,7 @@ export const InvoiceItemsStep = ({
                   }
                 }}
               >
-                <SelectTrigger className="h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:ring-2 focus:ring-elec-yellow/15">
+                <SelectTrigger className={inputCn}>
                   <SelectValue placeholder="Choose unit" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-white">
@@ -1298,7 +1299,7 @@ export const InvoiceItemsStep = ({
                   }
                   placeholder="e.g. per circuit, per spur"
                   style={darkInputStyle}
-                  className="w-full h-12 px-3.5 mt-2 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow placeholder:text-white/40 transition-colors"
+                  className={cn(inputCn, 'w-full mt-2')}
                 />
               )}
             </div>
@@ -1315,7 +1316,7 @@ export const InvoiceItemsStep = ({
           </div>
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:brightness-110 active:scale-[0.98] touch-manipulation rounded-xl"
           >
             Add to Invoice
           </Button>
@@ -1333,18 +1334,18 @@ export const InvoiceItemsStep = ({
               value={priceBookSearch}
               onChange={(e) => setPriceBookSearch(e.target.value)}
               style={darkInputStyle}
-              className="w-full h-12 pl-10 pr-3 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
+              className={cn(inputCn, 'w-full pl-10 pr-3')}
             />
           </div>
           {pricedBookItems.length === 0 ? (
             <div className={cn(PANEL, 'text-center py-6 px-4')}>
-              <p className="text-[13px] text-white/60">
+              <p className="text-[13px] text-white">
                 {priceBookSearch ? 'No matching items' : 'No priced items in your materials lists yet.'}
               </p>
             </div>
           ) : (
             <>
-              <p className="text-[11px] text-white/50">
+              <p className="text-[11px] text-white">
                 Stock-linked items show live levels and deduct automatically when the invoice is saved.
               </p>
               <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -1409,7 +1410,7 @@ export const InvoiceItemsStep = ({
                       </p>
                       <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
                         £{pb.item.estimated_price?.toFixed(2)}
-                        <span className="text-[11px] font-medium text-white/55 ml-1">/{pb.item.unit || 'each'}</span>
+                        <span className="text-[11px] font-medium text-white ml-1">/{pb.item.unit || 'each'}</span>
                       </p>
                       <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                         {stock && (
@@ -1430,9 +1431,9 @@ export const InvoiceItemsStep = ({
                           </span>
                         )}
                         {pb.item.supplier && (
-                          <span className="text-[10px] text-white/55 truncate">{pb.item.supplier}</span>
+                          <span className="text-[10px] text-white truncate">{pb.item.supplier}</span>
                         )}
-                        <span className="text-[10px] text-white/40 ml-auto truncate">{pb.listName}</span>
+                        <span className="text-[10px] text-white ml-auto truncate">{pb.listName}</span>
                       </div>
                     </button>
                   );
@@ -1454,7 +1455,7 @@ export const InvoiceItemsStep = ({
               value={rateCardSearch}
               onChange={(e) => setRateCardSearch(e.target.value)}
               style={darkInputStyle}
-              className="w-full h-12 pl-10 pr-3 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
+              className={cn(inputCn, 'w-full pl-10 pr-3')}
             />
           </div>
           <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -1492,9 +1493,9 @@ export const InvoiceItemsStep = ({
                   </p>
                   <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
                     £{Number(item.unit_price).toFixed(2)}
-                    <span className="text-[11px] font-medium text-white/55 ml-1">/{item.unit}</span>
+                    <span className="text-[11px] font-medium text-white ml-1">/{item.unit}</span>
                   </p>
-                  <span className="text-[10px] text-white/55 capitalize mt-2">{item.category}</span>
+                  <span className="text-[10px] text-white capitalize mt-2">{item.category}</span>
                 </button>
               ))}
           </div>
@@ -1509,14 +1510,14 @@ export const InvoiceItemsStep = ({
         <div className={cn(PANEL, 'p-4 space-y-3')}>
           <div>
             <p className="text-[14px] font-semibold text-white">Scan a supplier invoice</p>
-            <p className="text-[12px] text-white/60 mt-0.5">
+            <p className="text-[12px] text-white mt-0.5">
               Photograph or upload an invoice — materials and prices import automatically
             </p>
           </div>
 
           <Button
             onClick={() => setScannerSheetOpen(true)}
-            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:brightness-110 active:scale-[0.98] touch-manipulation rounded-xl"
           >
             <ScanLine className="h-4 w-4 mr-2" />
             Scan invoice
@@ -1526,7 +1527,7 @@ export const InvoiceItemsStep = ({
             {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map((supplier) => (
               <span
                 key={supplier}
-                className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] text-[11px] text-white/70"
+                className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] text-[11px] text-white"
               >
                 {supplier}
               </span>
@@ -1539,7 +1540,7 @@ export const InvoiceItemsStep = ({
       {originalItems.length === 0 && additionalItems.length === 0 && (
         <div className={cn(PANEL, 'text-center py-8 px-4')}>
           <p className="text-[15px] font-semibold text-white mb-1">No items yet</p>
-          <p className="text-[13px] text-white/60 mb-4">
+          <p className="text-[13px] text-white mb-4">
             Add labour, materials or equipment using the tiles above
           </p>
           <div className="flex gap-2 justify-center">
@@ -1564,7 +1565,7 @@ export const InvoiceItemsStep = ({
         <div>
           <p className="flex items-baseline gap-2 py-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Added on site ({additionalItems.length})</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· Added on site ({additionalItems.length})</span>
           </p>
           <AnimatePresence mode="popLayout">
             {additionalItems.map((item) => (
@@ -1606,7 +1607,7 @@ export const InvoiceItemsStep = ({
                       className="mr-2 min-w-0 flex-1 whitespace-pre-wrap break-words text-left text-[13px] font-medium leading-snug text-white"
                     >
                       {item.description || (
-                        <span className="font-normal text-white/40">Tap to add a description</span>
+                        <span className="font-normal text-white/25">Tap to add a description</span>
                       )}
                     </button>
                   )}
@@ -1622,7 +1623,7 @@ export const InvoiceItemsStep = ({
                           setEditingItemId(item.id);
                         }
                       }}
-                      className={`w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
+                      className={`w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
                       aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
                     >
                       {editingItemId === item.id ? (
@@ -1633,7 +1634,7 @@ export const InvoiceItemsStep = ({
                     </button>
                     <button
                       onClick={() => duplicateItem(item)}
-                      className="w-9 h-9 rounded-lg bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-95"
+                      className="w-11 h-11 rounded-lg bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-95"
                     >
                       <Copy className="h-4 w-4 text-white" />
                     </button>
@@ -1643,11 +1644,11 @@ export const InvoiceItemsStep = ({
                         setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
                       }
                       className={cn(
-                        'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
+                        'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
                         adjustingItemId === item.id ||
                           (typeof item.itemAdjustmentPercent === 'number' &&
                             item.itemAdjustmentPercent !== 0)
-                          ? 'bg-elec-yellow/20'
+                          ? 'bg-white/[0.08] border border-elec-yellow/40'
                           : 'bg-white/[0.08]'
                       )}
                       aria-label="Per-item adjustment"
@@ -1667,7 +1668,7 @@ export const InvoiceItemsStep = ({
                         onRemoveItem(item.id);
                         toast({ title: 'Item removed' });
                       }}
-                      className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                      className="w-11 h-11 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
                     >
                       <Trash2 className="h-4 w-4 text-red-400" />
                     </button>
@@ -1689,7 +1690,7 @@ export const InvoiceItemsStep = ({
                         {item.itemAdjustmentPercent}%
                       </span>
                       {item.itemAdjustmentLabel && (
-                        <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                        <span className="text-white">{item.itemAdjustmentLabel}</span>
                       )}
                     </div>
                   )}
@@ -1705,7 +1706,7 @@ export const InvoiceItemsStep = ({
                           itemAdjustmentPercent: val === 0 ? undefined : val,
                         })
                       }
-                      className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                      className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                     />
                     <input
                       type="text"
@@ -1716,12 +1717,12 @@ export const InvoiceItemsStep = ({
                           itemAdjustmentLabel: e.target.value || undefined,
                         })
                       }
-                      className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                      className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
                     />
                     <button
                       type="button"
                       onClick={() => setAdjustingItemId(null)}
-                      className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center"
+                      className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.12] flex items-center justify-center"
                       aria-label="Done"
                     >
                       <Check className="h-3.5 w-3.5 text-elec-yellow" />
@@ -1733,14 +1734,14 @@ export const InvoiceItemsStep = ({
                     value={item.quantity}
                     onChange={(quantity) => onUpdateItem(item.id, { quantity })}
                     style={darkInputStyle}
-                    className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                    className="h-11 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white">×</span>
                   <InlineDecimalInput
                     value={item.unitPrice}
                     onChange={(unitPrice) => onUpdateItem(item.id, { unitPrice })}
                     style={darkInputStyle}
-                    className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                    className="h-11 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white flex-1">{item.unit}</span>
                   <span className="text-[13px] font-bold text-white">
@@ -1757,7 +1758,7 @@ export const InvoiceItemsStep = ({
               type="button"
               onClick={() => saveToPriceBook(unsavedPriceBookItems)}
               disabled={savingToPriceBook}
-              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/15 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-white/[0.06] text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.06] disabled:opacity-50 touch-manipulation active:scale-[0.99]"
             >
               {savingToPriceBook
                 ? 'Saving…'
@@ -1782,12 +1783,12 @@ export const InvoiceItemsStep = ({
                   onClick={() => handleWorkerTypeChange(worker.id)}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
-                    isSelected && 'bg-elec-yellow/[0.06]'
+                    isSelected && 'bg-white/[0.08]'
                   )}
                 >
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">{worker.name}</p>
-                    <p className="text-[12px] text-white/60">{worker.description}</p>
+                    <p className="text-[12px] text-white">{worker.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[15px] font-bold text-white">
@@ -1820,7 +1821,7 @@ export const InvoiceItemsStep = ({
                   inputMode="decimal"
                   placeholder={isDayMode ? '0.5' : '3.5'}
                   style={darkInputStyle}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/25 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       const val = parseFloat((e.target as HTMLInputElement).value);
@@ -1856,7 +1857,7 @@ export const InvoiceItemsStep = ({
                     className={cn(
                       'p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
                       isSelected
-                        ? 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 font-bold'
+                        ? 'bg-white/[0.06] text-elec-yellow border-elec-yellow/20 font-bold'
                         : 'bg-white/[0.06] border-white/[0.12] text-white'
                     )}
                   >
@@ -1884,7 +1885,7 @@ export const InvoiceItemsStep = ({
               }}
               className={cn(
                 'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
-                !newItem.subcategory && 'bg-elec-yellow/[0.06]'
+                !newItem.subcategory && 'bg-white/[0.08]'
               )}
             >
               <span className="text-[16px] font-medium text-white">All Categories</span>
@@ -1901,7 +1902,7 @@ export const InvoiceItemsStep = ({
                   }}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
-                    isSelected && 'bg-elec-yellow/[0.06]'
+                    isSelected && 'bg-white/[0.08]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
@@ -1929,12 +1930,12 @@ export const InvoiceItemsStep = ({
                   onClick={() => handleMaterialSelect(material.id)}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
-                    isSelected && 'bg-elec-yellow/[0.06]'
+                    isSelected && 'bg-white/[0.08]'
                   )}
                 >
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">{material.name}</p>
-                    <p className="text-[12px] text-white/60">{material.category}</p>
+                    <p className="text-[12px] text-white">{material.category}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[15px] font-bold text-white">£{price.toFixed(2)}</span>
@@ -1965,7 +1966,7 @@ export const InvoiceItemsStep = ({
                   }}
                   className={cn(
                     'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
-                    isSelected && 'bg-elec-yellow/[0.06]'
+                    isSelected && 'bg-white/[0.08]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
@@ -1994,7 +1995,7 @@ export const InvoiceItemsStep = ({
                     onClick={() => handleEquipmentSelect(equipment.id)}
                     className={cn(
                       'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
-                      isSelected && 'bg-elec-yellow/[0.06]'
+                      isSelected && 'bg-white/[0.08]'
                     )}
                   >
                     <div className="flex-1 text-left">

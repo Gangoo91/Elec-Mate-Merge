@@ -214,6 +214,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       return true;
     } catch (err) {
       console.warn('[QuoteBuilder] Cloud auto-save failed:', err);
+      // A duplicate quote number is the one autosave failure the user can
+      // actually fix, so it is named rather than left as the generic "error"
+      // status. The allocator now skips numbers already in use, so this can no
+      // longer fire while a quote is being created — only on an existing quote
+      // whose number was changed to one already held. The wording therefore
+      // does not send anyone to a screen they cannot reach yet.
+      if ((err as { code?: string } | null)?.code === '23505') {
+        toast({
+          title: 'That quote number is already used',
+          description: 'Two documents cannot share a number — give this one a different number.',
+          variant: 'destructive',
+        });
+      }
       setCloudSaveStatus('error');
       return false;
     } finally {

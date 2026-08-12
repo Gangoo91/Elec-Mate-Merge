@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -29,6 +28,7 @@ import {
   CircleDot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import { toast } from '@/hooks/use-toast';
 import { TOOLS_DATABASE, TOOL_CATEGORIES, type ToolDefinition } from '@/data/tools-database';
 import {
@@ -268,11 +268,11 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                       <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
                         <Icon className="h-4 w-4 text-elec-yellow" />
                       </div>
-                      <Input
+                      <input
                         value={item}
                         onChange={(e) => handleItemChange(index, e.target.value)}
                         placeholder={config.placeholder}
-                        className="h-10 flex-1 border-0 bg-transparent focus-visible:ring-0 text-white px-0"
+                        className="h-11 sm:h-10 flex-1 border-0 bg-transparent focus-visible:ring-0 text-white px-0"
                       />
                       <Button
                         variant="ghost"
@@ -304,7 +304,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                 {/* Search */}
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
+                  <input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={`Search ${isTools ? 'tools' : 'materials'}...`}
@@ -369,7 +369,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                           onClick={() => handleAddFromDatabase(item)}
                           className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 transition-all text-left touch-manipulation"
                         >
-                          <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
+                          <div className="w-10 h-11 sm:h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
                             <CatIcon className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -412,7 +412,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => handleAddItem()}
-                className="h-9 text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="h-11 sm:h-9 text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Item
@@ -435,11 +435,11 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                     <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
                       <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
                     </div>
-                    <Input
+                    <input
                       value={item}
                       onChange={(e) => handleItemChange(index, e.target.value)}
                       placeholder={config.placeholder}
-                      className="h-10 flex-1 border-0 bg-transparent focus-visible:ring-0 text-white px-0"
+                      className="h-11 sm:h-10 flex-1 border-0 bg-transparent focus-visible:ring-0 text-white px-0"
                     />
                     <Button
                       variant="ghost"
@@ -460,14 +460,14 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
         <div className="shrink-0 bg-background border-t border-white/[0.08] p-4 flex gap-2">
           <Button
             variant="outline"
-            className="flex-1 min-h-[48px] border-white/[0.08]"
+            className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
             onClick={handleClose}
           >
             <X className="h-5 w-5 mr-2" />
             Cancel
           </Button>
           <Button
-            className="flex-1 min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+            className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
             onClick={handleSave}
           >
             <Save className="h-5 w-5 mr-2" />

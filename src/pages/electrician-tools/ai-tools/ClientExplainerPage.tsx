@@ -41,8 +41,7 @@
  */
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Loader2, Sparkles, Trash2 } from 'lucide-react';
+import { Sparkles, Trash2 } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useToast } from '@/hooks/use-toast';
@@ -52,9 +51,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
 import { Textarea } from '@/components/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { HubPage, HubMasthead } from '@/components/hub/HubPrimitives';
+import {
+  AiToolPage,
+  ToolPanel,
+  ToolField,
+  ToolAction,
+} from '@/components/electrician-tools/ai-tools/ToolShell';
 
 import ClientTypeSelector, {
   ClientType,
@@ -87,47 +90,6 @@ const URGENCY_OPTIONS = [
 
 const PICKER_TRIGGER =
   'h-11 rounded-lg border-white/[0.12] bg-white/[0.06] text-white text-[13.5px]';
-
-// ───────────────────────────────────────────────────────────────────────────
-
-/**
- * One panel of the brief. Edge-to-edge on a phone and inset from `sm:` up,
- * made of the same lit surface as every card in the app.
- */
-const Panel = ({
-  title,
-  hint,
-  children,
-  className,
-}: {
-  title: string;
-  hint?: React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <section
-    className={cn(
-      '-mx-4 border-y border-elec-yellow/35 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
-      'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
-      'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]',
-      className
-    )}
-  >
-    <div className="mb-3 flex items-baseline justify-between gap-3">
-      <h2 className="text-[14px] font-semibold tracking-tight text-elec-yellow">{title}</h2>
-      {hint && <span className="shrink-0 text-[11px] font-medium tabular-nums text-white">{hint}</span>}
-    </div>
-    {children}
-  </section>
-);
-
-/** A labelled control. The row of three bare dropdowns had no labels at all. */
-const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div>
-    <label className="mb-1.5 block text-[12px] font-medium text-white">{label}</label>
-    {children}
-  </div>
-);
 
 const TOGGLES = [
   { key: 'analogy', label: 'Analogies', desc: 'Everyday comparisons' },
@@ -272,73 +234,34 @@ const ClientExplainerPage = () => {
   );
 
   const generateButton = (
-    <button
-      type="button"
+    <ToolAction
       onClick={handleGenerate}
       disabled={!canGenerate}
-      className={cn(
-        'inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5',
-        'text-[14px] font-semibold text-black',
-        'bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)]',
-        'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-8px_hsl(47_100%_50%_/_0.30)]',
-        'transition-colors duration-150 touch-manipulation select-none',
-        '[-webkit-tap-highlight-color:transparent] active:scale-[0.98]',
-        'hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-        'disabled:cursor-not-allowed disabled:opacity-40'
-      )}
+      busy={isGenerating}
+      busyLabel="Writing it up…"
+      icon={<Sparkles className="h-4 w-4" aria-hidden />}
     >
-      {isGenerating ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-          Writing it up…
-        </>
-      ) : (
-        <>
-          <Sparkles className="h-4 w-4" aria-hidden />
-          {generatedExplanation ? 'Generate again' : 'Generate explanation'}
-        </>
-      )}
-    </button>
+      {generatedExplanation ? 'Generate again' : 'Generate explanation'}
+    </ToolAction>
   );
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="AI tools"
-        title="Client Explainer"
-        backTo="/electrician-tools/ai-tooling"
-      />
-
-      <div className="mx-auto max-w-[1600px] px-4 pb-32 pt-4 lg:px-8 lg:pb-10">
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-          className={cn(
-            'grid gap-4',
-            // The rail appears at the same width `useIsMobile` switches on, so
-            // the sheet and the rail can never both be live.
-            'lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-6',
-            '2xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)]'
-          )}
-        >
-          {/* ── The brief ─────────────────────────────────────────────── */}
-          <div className="min-w-0 space-y-4">
-            {/* Two independent stacks, not a 2x2 grid of cells.
-
-                A grid stretches every panel in a row to the height of the
-                tallest, and "Who it's for" is four chips beside a findings box
-                three times its height — so it sat in 180px of its own empty
-                space. Stacking the short panel above the tall one in each
-                column reads as the same 2x2 block with none of the holes. */}
-            <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
+    <AiToolPage
+      title="Client Explainer"
+      result={output}
+      resultTitle={`Explanation for your ${clientType}`}
+      hasResult={Boolean(generatedExplanation) || isGenerating}
+      action={generateButton}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={setSheetOpen}
+    >
+      <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
               <div className="space-y-4">
-                <Panel title="Who it's for">
+                <ToolPanel title="Who it's for">
                   <ClientTypeSelector selected={clientType} onSelect={setClientType} />
-                </Panel>
+                </ToolPanel>
 
-                <Panel
+                <ToolPanel
                   title="What you found"
                 hint={wordCount > 0 ? `${wordCount} ${wordCount === 1 ? 'word' : 'words'}` : undefined}
               >
@@ -375,13 +298,13 @@ const ClientExplainerPage = () => {
                     <TemplateSelector onSelectTemplate={handleSelectTemplate} />
                   </div>
                 )}
-                </Panel>
+                </ToolPanel>
               </div>
 
               <div className="space-y-4">
-                <Panel title="How it should read">
+                <ToolPanel title="How it should read">
                   <div className="space-y-3">
-                    <Field label="Tone">
+                    <ToolField label="Tone">
                       <MobileSelectPicker
                         value={tone}
                         onValueChange={setTone}
@@ -389,8 +312,8 @@ const ClientExplainerPage = () => {
                         title="Tone"
                         triggerClassName={PICKER_TRIGGER}
                       />
-                    </Field>
-                    <Field label="Reading level">
+                    </ToolField>
+                    <ToolField label="Reading level">
                       <MobileSelectPicker
                         value={readingLevel}
                         onValueChange={setReadingLevel}
@@ -398,8 +321,8 @@ const ClientExplainerPage = () => {
                         title="Reading level"
                         triggerClassName={PICKER_TRIGGER}
                       />
-                    </Field>
-                    <Field label="Urgency">
+                    </ToolField>
+                    <ToolField label="Urgency">
                       <MobileSelectPicker
                         value={urgencyLevel}
                         onValueChange={setUrgencyLevel}
@@ -413,11 +336,11 @@ const ClientExplainerPage = () => {
                           urgencyLevel === 'immediate' && 'border-red-500/60'
                         )}
                       />
-                    </Field>
+                    </ToolField>
                   </div>
-                </Panel>
+                </ToolPanel>
 
-                <Panel title="Include">
+                <ToolPanel title="Include">
                   <div className="grid grid-cols-2 gap-2">
                     {TOGGLES.map(({ key, label, desc }) => {
                       const on = toggleValue[key];
@@ -461,87 +384,11 @@ const ClientExplainerPage = () => {
                       );
                     })}
                   </div>
-                </Panel>
+                </ToolPanel>
               </div>
             </div>
 
-            {/* Desktop generate. On a phone this lives in the fixed bar. */}
-            <div className="hidden lg:block">{generateButton}</div>
-          </div>
-
-          {/* ── The output rail ───────────────────────────────────────── */}
-          {/* Rendered, not just hidden. Mounting the rail and the sheet
-              together put two OutputPanels on the page, each holding its own
-              format tab — pick SMS on a desktop, narrow the window, and the
-              sheet opened on Standard. `useIsMobile` switches at 1024px, the
-              same width as `lg:`, so exactly one of the two is ever live. */}
-          {!isMobile && (
-            <aside className="hidden lg:block">
-              {/* Height only when there is something to hold.
-
-                  With copy in it the panel is a scrolling region and wants the
-                  full run of the screen: the app header is fixed at 64px and
-                  the masthead another 48px, so this column starts about 130px
-                  down — `top-20` clears the header once it sticks, and 9.5rem
-                  is what must come off for the action row to sit above the fold
-                  in BOTH states (unstuck at 130px, stuck at 80px).
-
-                  Empty, that same calc drew a 770px box beside a 635px column
-                  of controls, which read as a hole in the page. `h-full`
-                  stretches it to the grid row instead, so it matches the brief
-                  exactly — the row is sized by the controls, which are then the
-                  tallest thing in it. */}
-              <div
-                className={cn(
-                  'sticky top-20',
-                  hasOutput ? 'h-[calc(100dvh-9.5rem)] min-h-[420px]' : 'h-full'
-                )}
-              >
-                {output}
-              </div>
-            </aside>
-          )}
-        </motion.div>
-      </div>
-
-      {/* ── Mobile: fixed action bar ────────────────────────────────────── */}
-      <div className="fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-elec-dark via-elec-dark/95 to-transparent px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-4 lg:hidden">
-        <div className="flex items-center gap-2">
-          {generatedExplanation && (
-            <button
-              type="button"
-              onClick={() => {
-                haptic.light();
-                setSheetOpen(true);
-              }}
-              className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-neutral-900 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation active:bg-white/[0.10]"
-            >
-              View result
-            </button>
-          )}
-          <div className="min-w-0 flex-1">{generateButton}</div>
-        </div>
-      </div>
-
-      {/* ── Mobile: the result ──────────────────────────────────────────── */}
-      {isMobile && (
-        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetContent
-            side="bottom"
-            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.10] bg-elec-dark p-0"
-          >
-            <SheetHeader className="border-b border-white/[0.10] px-4 py-3 text-left">
-              <SheetTitle className="text-[15px] font-semibold text-white">
-                Explanation for your {clientType}
-              </SheetTitle>
-            </SheetHeader>
-            {/* 57px is the header above: 12px padding top and bottom around a
-                33px title line. Measured against the rendered sheet. */}
-            <div className="h-[calc(85vh-57px)] p-3">{output}</div>
-          </SheetContent>
-        </Sheet>
-      )}
-    </HubPage>
+    </AiToolPage>
   );
 };
 

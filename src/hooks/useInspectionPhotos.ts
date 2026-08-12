@@ -26,6 +26,22 @@ export const useInspectionPhotos = ({
   observationContext,
 }: UseInspectionPhotosProps) => {
   const [photos, setPhotos] = useState<InspectionPhoto[]>([]);
+  /*
+   * ELE-1536 — "changed tabs and I have lost my photos on observations".
+   *
+   * Nothing was ever lost. Photos live in component state and are re-fetched on
+   * every mount, so switching tabs unmounts the card and it comes back holding
+   * an empty array while two queries plus getUser() go over the network. With
+   * no loading contract the card rendered the truth of that instant — "0 photos"
+   * and an empty gallery — which reads as data loss to an inspector who has
+   * just taken them.
+   *
+   * Start true whenever there is something to load, so the first paint is a
+   * loading state and never a confident zero.
+   */
+  const [isLoadingPhotos, setIsLoadingPhotos] = useState<boolean>(
+    Boolean(reportId && (itemId || observationId))
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [isScanning, setIsScanning] = useState<string | null>(null);
   const { toast } = useToast();
@@ -101,11 +117,17 @@ export const useInspectionPhotos = ({
         }
       } catch (error) {
         console.error('Error loading photos:', error);
+      } finally {
+        setIsLoadingPhotos(false);
       }
     };
 
     if (reportId && (itemId || observationId)) {
+      setIsLoadingPhotos(true);
       loadPhotos();
+    } else {
+      // Nothing to fetch — an empty gallery here is the truth, not a pending load.
+      setIsLoadingPhotos(false);
     }
   }, [reportId, itemId, observationId]);
 
@@ -365,6 +387,7 @@ export const useInspectionPhotos = ({
 
   return {
     photos,
+    isLoadingPhotos,
     isUploading,
     isScanning,
     uploadPhoto,

@@ -337,10 +337,16 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
           </DialogHeader>
           {selectedPhoto && (
             <div className="space-y-4">
+              {/* ELE-1550 — this was capped at max-h-[25vh] inside a dialog up
+                to 90vh tall. `object-contain` then letterboxed a portrait
+                certificate scan into a quarter of the screen, so the document
+                appeared as a thin band of content floating in black. Scale by
+                height and let the width follow, so a tall scan fills the space
+                it has and a wide one is still bounded. */}
               <img
                 src={selectedPhoto.url}
                 alt="Inspection evidence"
-                className="w-full max-w-md sm:max-w-lg mx-auto max-h-[25vh] sm:max-h-[30vh] object-contain rounded-lg border"
+                className="mx-auto max-h-[60vh] w-auto max-w-full rounded-lg border object-contain"
               />
 
               {selectedPhoto.aiAnalysis ? (

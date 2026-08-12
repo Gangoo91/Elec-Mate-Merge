@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -24,6 +22,7 @@ import {
   Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
 import type { MethodStep } from '@/types/method-statement';
 import { toast } from '@/hooks/use-toast';
@@ -102,10 +101,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent side="bottom" className="h-[95vh] overflow-y-auto">
         <SheetHeader className="sticky top-0 bg-background z-10 pb-4 border-b border-primary/10">
-          <SheetTitle className="text-lg font-bold text-elec-light flex items-center gap-3">
+          <SheetTitle className="text-lg font-bold text-white flex items-center gap-3">
             <div
               className={cn(
-                'flex items-center justify-center w-10 h-10 rounded-full font-bold',
+                'flex items-center justify-center w-10 h-11 sm:h-10 rounded-full font-bold',
                 riskColors.bg,
                 riskColors.text
               )}
@@ -119,30 +118,30 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
         <div className="space-y-4 py-4 pb-24">
           {/* Step Title */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">Step Title</label>
-            <Input
+            <label className="text-sm font-semibold text-white">Step Title</label>
+            <input
               value={editedStep.title}
               onChange={(e) => handleChange({ title: e.target.value })}
-              className="text-base min-h-[48px]"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               placeholder="e.g., Install consumer unit"
             />
           </div>
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">Description</label>
-            <Textarea
+            <label className="text-sm font-semibold text-white">Description</label>
+            <textarea
               value={editedStep.description}
               onChange={(e) => handleChange({ description: e.target.value })}
-              className="min-h-[120px] text-base"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               placeholder="Detailed description of this step..."
             />
           </div>
 
           {/* Safety Requirements */}
-          <div className="space-y-3 bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-4">
+          <div className="space-y-3 bg-white/[0.05] border-2 border-white/[0.12] rounded-lg p-4">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-amber-400 flex items-center gap-2">
+              <label className="text-sm font-bold text-elec-yellow flex items-center gap-2">
                 <Shield className="h-5 w-5" />
                 Safety Requirements
               </label>
@@ -157,7 +156,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             <div className="space-y-2">
               {editedStep.safetyRequirements.map((req, idx) => (
                 <div key={idx} className="flex items-start gap-2 bg-background/50 rounded p-2">
-                  <span className="text-amber-500 mt-1">•</span>
+                  <span className="text-elec-yellow mt-1">•</span>
                   <span className="flex-1 text-sm text-white">{req}</span>
                   <Button
                     variant="ghost"
@@ -175,7 +174,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           {/* Equipment Needed */}
           <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-blue-400 flex items-center gap-2">
+              <label className="text-sm font-semibold text-elec-yellow flex items-center gap-2">
                 <Wrench className="h-4 w-4" />
                 Equipment Needed
               </label>
@@ -191,7 +190,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               {editedStep.equipmentNeeded.map((equip, idx) => (
                 <Badge
                   key={idx}
-                  className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-sm py-1"
+                  className="bg-white/[0.05] text-elec-yellow border-white/[0.12] text-sm py-1"
                 >
                   {equip}
                   <button
@@ -208,7 +207,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           {/* Qualifications */}
           <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-purple-400 flex items-center gap-2">
+              <label className="text-sm font-semibold text-elec-yellow flex items-center gap-2">
                 <Award className="h-4 w-4" />
                 Qualifications Required
               </label>
@@ -224,7 +223,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               {editedStep.qualifications.map((qual, idx) => (
                 <Badge
                   key={idx}
-                  className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-sm py-1"
+                  className="bg-white/[0.05] text-elec-yellow border-white/[0.12] text-sm py-1"
                 >
                   ✓ {qual}
                   <button
@@ -241,7 +240,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           {/* Assigned Personnel */}
           <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-green-400 flex items-center gap-2">
+              <label className="text-sm font-semibold text-elec-yellow flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 Assigned Personnel
               </label>
@@ -257,7 +256,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               {(editedStep.assignedPersonnel || []).map((person, idx) => (
                 <Badge
                   key={idx}
-                  className="bg-green-500/10 text-green-400 border-green-500/30 text-sm py-1"
+                  className="bg-white/[0.05] text-elec-yellow border-white/[0.12] text-sm py-1"
                 >
                   👤 {person}
                   <button
@@ -274,7 +273,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           {/* Duration & Risk Level */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-green-400 flex items-center gap-2">
+              <label className="text-sm font-semibold text-elec-yellow flex items-center gap-2">
                 <Clock className="h-4 w-4" />
                 Duration
               </label>
@@ -282,7 +281,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
                 value={editedStep.estimatedDuration}
                 onValueChange={(value) => handleChange({ estimatedDuration: value })}
               >
-                <SelectTrigger className="min-h-[48px]">
+                <SelectTrigger className={cn(textareaCn, "w-full min-h-[120px] resize-y")}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -297,7 +296,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <label className="text-sm font-semibold text-white flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Risk Level
               </label>
@@ -307,7 +306,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
                   handleChange({ riskLevel: value })
                 }
               >
-                <SelectTrigger className="min-h-[48px]">
+                <SelectTrigger className={cn(textareaCn, "w-full min-h-[120px] resize-y")}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -325,19 +324,19 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           {onDelete && (
             <Button
               variant="outline"
-              className="flex-1 min-h-[48px] border-red-500/40 hover:border-red-500 hover:bg-red-500/10 text-red-400"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               onClick={handleDelete}
             >
               <Trash2 className="h-5 w-5 mr-2" />
               Delete
             </Button>
           )}
-          <Button variant="outline" className="flex-1 min-h-[48px]" onClick={handleClose}>
+          <Button variant="outline" className={cn(textareaCn, "w-full min-h-[120px] resize-y")} onClick={handleClose}>
             <X className="h-5 w-5 mr-2" />
             Cancel
           </Button>
           <Button
-            className="flex-1 min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+            className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
             onClick={handleSave}
           >
             <Save className="h-5 w-5 mr-2" />

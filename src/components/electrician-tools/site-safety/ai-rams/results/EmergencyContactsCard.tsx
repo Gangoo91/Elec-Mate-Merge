@@ -14,16 +14,19 @@ interface ContactRowProps {
 const ContactRow: React.FC<ContactRowProps> = ({ role, name, phone }) => {
   if (!name && !phone) return null;
   return (
-    <div className="py-3 flex items-baseline gap-4">
-      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+    /* Stacks on mobile. The fixed w-28 label column left so little room that
+       names truncated to "Michael Br…" while the label itself wrapped over two
+       lines — the worst of both. Label above, name and number below. */
+    <div className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:gap-4">
+      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white sm:w-32 sm:shrink-0">
         {role}
       </span>
-      <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
-        <span className="text-[14px] font-medium text-white truncate">{name || 'TBC'}</span>
+      <div className="flex min-w-0 flex-1 items-baseline justify-between gap-3">
+        <span className="min-w-0 flex-1 text-[14px] font-medium text-white">{name || 'TBC'}</span>
         {phone && (
           <a
             href={`tel:${phone}`}
-            className="text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation tabular-nums shrink-0"
+            className="-my-2 inline-flex min-h-11 shrink-0 items-center py-2 text-[13px] font-semibold tabular-nums text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
           >
             {phone}
           </a>
@@ -47,16 +50,11 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
 
   return (
     <section className="space-y-4">
-      <div className="flex items-baseline justify-between gap-3">
-        <div className="space-y-1">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-            Emergency contacts
-          </div>
-          <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
-            Who to call.
-          </h3>
-        </div>
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400 shrink-0">
+      {/* No heading here — the section card supplies it. This component used
+          to print its own eyebrow AND a large h3, so the page showed the same
+          title three times over. */}
+      <div className="flex justify-end">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400">
           Safety critical
         </span>
       </div>
@@ -96,7 +94,7 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
 
         {methodData.assemblyPoint && (
           <div className="py-3 flex items-baseline gap-4">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white w-28 sm:w-32 shrink-0">
               Assembly point
             </span>
             <span className="text-[14px] font-medium text-white flex-1 min-w-0">
@@ -107,7 +105,7 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
       </div>
 
       {!hasAnyContact && (
-        <p className="text-[12.5px] text-white/55 leading-relaxed">
+        <p className="text-[12.5px] text-white leading-relaxed">
           Complete emergency contact details before starting work — these are embedded into the
           cover page of the RAMS PDF.
         </p>

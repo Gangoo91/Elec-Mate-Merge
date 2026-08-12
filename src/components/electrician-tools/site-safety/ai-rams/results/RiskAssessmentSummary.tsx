@@ -24,7 +24,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
   return (
     <section className="space-y-5">
       <div className="space-y-1">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
           Risk overview
         </div>
         <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -33,24 +33,24 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
       </div>
 
       {/* 4-stat editorial strip */}
-      <div className="-mx-4 sm:mx-0 grid grid-cols-2 lg:grid-cols-4 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+      <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y divide-white/[0.1] lg:divide-y-0 overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.05]">
+        <div className="px-4 py-4 sm:px-5 sm:py-5">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Hazards
           </div>
           <div className="mt-2.5 sm:mt-3 text-[34px] sm:text-[40px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
             {hazardsCount}
           </div>
         </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+        <div className="px-4 py-4 sm:px-5 sm:py-5">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Controls
           </div>
           <div className="mt-2.5 sm:mt-3 text-[34px] sm:text-[40px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
             {controlsCount}
           </div>
         </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
+        <div className="px-4 py-4 sm:px-5 sm:py-5">
           <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400">
             High risk
           </div>
@@ -58,7 +58,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
             {highRiskHazards.length}
           </div>
         </div>
-        <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
+        <div className="px-4 py-4 sm:px-5 sm:py-5">
           <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400">
             Medium
           </div>
@@ -80,7 +80,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
                   {risk.riskRating}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13.5px] text-white/85 leading-relaxed">{risk.hazard}</p>
+                  <p className="text-[13.5px] text-white leading-relaxed">{risk.hazard}</p>
                   {risk.linkedToStep !== undefined && risk.linkedToStep > 0 && (
                     <p className="mt-1 text-[11px] uppercase tracking-[0.18em] font-medium text-elec-yellow tabular-nums">
                       Step {risk.linkedToStep}
@@ -93,7 +93,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
         </div>
       )}
 
-      <p className="text-[12px] text-white/55 leading-relaxed">
+      <p className="text-[12px] text-white leading-relaxed">
         See the Risk Assessment tab for full hazard analysis, control measures and residual risk
         ratings.
       </p>

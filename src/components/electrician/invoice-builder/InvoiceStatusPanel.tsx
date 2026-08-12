@@ -20,7 +20,6 @@ import { MarkAsPaidDialog } from './MarkAsPaidDialog';
 import { PaymentHistoryDialog } from './PaymentHistoryDialog';
 import { formatDistanceToNow, differenceInDays } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
-import { EditableDocumentNumber } from './EditableDocumentNumber';
 
 interface InvoiceStatusPanelProps {
   invoices: Quote[];
@@ -100,22 +99,13 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         {/* Header: Invoice number + Status */}
         <div className="flex items-start justify-between gap-3 pb-2 sm:pb-3 border-b border-primary/10">
           <div className="space-y-2 flex-1 min-w-0">
-            {/* ELE-1028 — editable in place. The number is the one field on an
-                invoice that people need to control (existing sequences,
-                continuity from a previous system), and it was the only one
-                they could not touch. */}
-            <h4 className="font-semibold text-sm sm:text-base">
-              <EditableDocumentNumber
-                quoteId={invoice.id}
-                value={invoice.invoice_number ?? ''}
-                field="invoice_number"
-                syncedProvider={
-                  (invoice as { external_invoice_provider?: string | null })
-                    .external_invoice_provider ?? null
-                }
-                onSaved={onRefresh}
-                className="block truncate"
-              />
+            {/* ELE-1028 — renumbering lives in the Actions sheet on the
+                invoice and quote view pages, not here. A tappable heading
+                inside a scrolling list is easy to hit by accident and nobody
+                discovers it; and this panel only renders invoices, so quotes
+                could never have been served from here. */}
+            <h4 className="font-semibold text-sm sm:text-base truncate">
+              {invoice.invoice_number}
             </h4>
             <p className="text-xs sm:text-sm text-white truncate">{invoice.client?.name}</p>
           </div>
@@ -154,7 +144,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
               <span className="text-success font-medium">
                 Paid {formatCurrency(invoice.total_paid || 0)}
               </span>
-              <span className="text-white/70">
+              <span className="text-white">
                 Outstanding{' '}
                 {formatCurrency(Math.max(0, (invoice.total || 0) - (invoice.total_paid || 0)))}
               </span>

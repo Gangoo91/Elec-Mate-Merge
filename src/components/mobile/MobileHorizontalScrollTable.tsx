@@ -4,6 +4,7 @@ import type { ZsBasis } from '@/utils/autoRegChecker';
 import { TestResult } from '@/types/testResult';
 import { MobileHorizontalScrollTableHeader } from './MobileHorizontalScrollTableHeader';
 import { MobileHorizontalScrollTableRow } from './MobileHorizontalScrollTableRow';
+import { StickyHorizontalScrollbar } from './StickyHorizontalScrollbar';
 import { toast } from 'sonner';
 
 interface MobileHorizontalScrollTableProps {
@@ -306,6 +307,11 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           </TableBody>
         </Table>
       </div>
+
+      {/* ELE-1535 — the native scrollbar lives at the foot of the table, which is
+        off-screen as soon as you work down the circuits. This keeps one within
+        reach without trapping the page scroll. */}
+      <StickyHorizontalScrollbar targetRef={scrollContainerRef} />
     </div>
   );
 };

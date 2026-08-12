@@ -21,6 +21,17 @@ export interface EnhanceRequest {
   description: string;
   location?: string;
   currentCode?: string;
+  /**
+   * ELE-1528 — 'generate' expands a few words into a full observation.
+   * 'polish' tidies wording the inspector has already written and must not
+   * replace it. Defaults to 'generate' so existing callers are unchanged.
+   */
+  mode?: 'generate' | 'polish';
+  /**
+   * The inspector's own recommendation. Only meaningful in polish mode — until
+   * now it was never sent, so the model could only ever replace it.
+   */
+  recommendation?: string;
 }
 
 export function useEnhanceObservation() {
@@ -60,6 +71,8 @@ export function useEnhanceObservation() {
           description: request.description,
           location: request.location,
           currentCode: request.currentCode,
+          mode: request.mode || 'generate',
+          recommendation: request.recommendation,
         },
         headers: { Authorization: `Bearer ${session.access_token}` },
       });

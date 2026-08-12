@@ -76,17 +76,17 @@ export function QuoteSelectorSheet({ open, onOpenChange, onPick }: Props) {
       >
         <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06]">
           <SheetTitle className="text-white text-left">Pre-fill from a quote</SheetTitle>
-          <p className="text-[12px] text-white/60 text-left">
+          <p className="text-[12px] text-white text-left">
             Pick a quote — we'll use its job details to start your RAMS.
           </p>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto p-3">
           {loading ? (
-            <div className="flex items-center justify-center py-12 text-white/60">
+            <div className="flex items-center justify-center py-12 text-white">
               <Loader2 className="h-5 w-5 animate-spin" />
             </div>
           ) : quotes.length === 0 ? (
-            <div className="text-center py-12 text-white/60 text-sm">
+            <div className="text-center py-12 text-white text-sm">
               No quotes found. Create a quote first, then come back.
             </div>
           ) : (
@@ -122,27 +122,27 @@ export function QuoteSelectorSheet({ open, onOpenChange, onPick }: Props) {
                           {clientName}
                         </p>
                         {title && (
-                          <p className="text-white/70 text-[12px] truncate mt-0.5">{title}</p>
+                          <p className="text-white text-[12px] truncate mt-0.5">{title}</p>
                         )}
                         {location && (
-                          <p className="text-white/50 text-[11px] truncate mt-0.5">{location}</p>
+                          <p className="text-white text-[11px] truncate mt-0.5">{location}</p>
                         )}
                       </div>
                       <div className="text-right flex-shrink-0">
                         <p className="text-elec-yellow text-[14px] font-bold tabular-nums">
                           {formatGbp(q.total)}
                         </p>
-                        <p className="text-white/40 text-[10px] mt-0.5 tabular-nums">
+                        <p className="text-white text-[10px] mt-0.5 tabular-nums">
                           {format(new Date(q.created_at), 'd MMM')}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 mt-2">
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/[0.06] text-white/70 uppercase tracking-wider">
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white/[0.06] text-white uppercase tracking-wider">
                         {acceptedTag}
                       </span>
                       {q.quote_number && (
-                        <span className="text-[10px] font-mono text-white/50">
+                        <span className="text-[10px] font-mono text-white">
                           {q.quote_number}
                         </span>
                       )}

@@ -93,7 +93,7 @@ export function InvoiceScanResults({
           <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-white/[0.08] flex items-center justify-center">
                   <Sparkles className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
@@ -124,7 +124,7 @@ export function InvoiceScanResults({
             <span className="text-[13px] text-white">{selectedCount} selected</span>
             <div className="flex gap-1">
               <button
-                className="text-[12px] text-elec-yellow font-medium px-3 py-1.5 rounded-lg hover:bg-elec-yellow/10 touch-manipulation"
+                className="text-[12px] text-elec-yellow font-medium px-3 py-1.5 rounded-lg hover:bg-white/[0.08] touch-manipulation"
                 onClick={onSelectAll}
               >
                 All
@@ -148,7 +148,7 @@ export function InvoiceScanResults({
                   className={cn(
                     'rounded-xl border p-3 transition-all touch-manipulation active:scale-[0.99]',
                     item.selected
-                      ? 'bg-elec-yellow/10 border-elec-yellow/30'
+                      ? 'bg-white/[0.08] border-elec-yellow/30'
                       : 'bg-white/[0.02] border-white/[0.06]'
                   )}
                 >
@@ -176,7 +176,7 @@ export function InvoiceScanResults({
                         <DecimalInput
                           value={item.quantity}
                           onChange={(qty) => onUpdateItem(item.id, { quantity: qty })}
-                          className="h-9 w-14 text-[14px] text-center bg-white/[0.05] border border-white/[0.08] rounded-lg text-white caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                          className="h-11 w-14 text-[14px] text-center bg-white/[0.05] border border-white/[0.08] rounded-lg text-white caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                         />
                       </span>
                       <span className="text-white">×</span>
@@ -193,7 +193,7 @@ export function InvoiceScanResults({
                           value={item.unitPrice}
                           onChange={(price) => onUpdateItem(item.id, { unitPrice: price })}
                           className={cn(
-                            'h-9 w-20 text-[14px] pl-6 bg-white/[0.05] border rounded-lg text-white caret-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20',
+                            'h-11 w-20 text-[14px] pl-6 bg-white/[0.05] border rounded-lg text-white caret-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20',
                             item.unitPrice === 0
                               ? 'border-red-500/50 focus:border-red-400'
                               : 'border-white/[0.08] focus:border-elec-yellow'
@@ -240,7 +240,7 @@ export function InvoiceScanResults({
                 Cancel
               </Button>
               <Button
-                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 rounded-xl disabled:opacity-50"
+                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-white/[0.08] rounded-xl disabled:opacity-50"
                 onClick={onConfirm}
                 disabled={selectedCount === 0 || hasPriceWarning}
               >

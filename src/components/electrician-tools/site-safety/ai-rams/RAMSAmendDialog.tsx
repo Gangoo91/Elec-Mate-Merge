@@ -27,7 +27,7 @@ interface InfoRowProps {
 
 const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
   <div className="py-3 flex items-baseline gap-4">
-    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-24 shrink-0">
+    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white w-24 shrink-0">
       {label}
     </span>
     <span className="text-[13.5px] text-white flex-1 min-w-0 break-words leading-relaxed">
@@ -175,7 +175,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[92vw] sm:w-auto sm:max-w-[480px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden rounded-2xl border-white/[0.08] bg-[hsl(0_0%_8%)] p-0">
+      <DialogContent className="w-[92vw] sm:w-auto sm:max-w-[480px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden rounded-2xl border-white/[0.08] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-0">
         <div className="p-6 space-y-6">
           <DialogHeader className="space-y-2 text-left">
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
@@ -184,7 +184,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             <DialogTitle className="text-[22px] sm:text-[26px] font-semibold tracking-tight leading-[1.15] text-white">
               Update this document.
             </DialogTitle>
-            <DialogDescription className="text-[13px] text-white/65 leading-relaxed">
+            <DialogDescription className="text-[13px] text-white leading-relaxed">
               Edit risks and steps in place, or regenerate the whole document with new context.
             </DialogDescription>
           </DialogHeader>
@@ -225,11 +225,11 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
                 >
                   <div className="text-left">
                     <p className="text-[14px] font-semibold">Regenerate with AI</p>
-                    <p className="text-[11.5px] font-medium text-white/55">
+                    <p className="text-[11.5px] font-medium text-white">
                       Rebuild from scratch with new info
                     </p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-white/55 shrink-0" />
+                  <ArrowRight className="h-4 w-4 text-white shrink-0" />
                 </button>
               </div>
             </div>

@@ -17,31 +17,31 @@ export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEs
   const estimatedTime = totalEstimatedTime || `${totalSteps * 30} min`;
 
   return (
-    <section className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
-      <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+    <section className="grid grid-cols-1 divide-y divide-white/[0.1] overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.05] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      <div className="px-4 py-4 sm:px-5 sm:py-5">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
           Steps
         </div>
-        <div className="mt-2.5 sm:mt-3 text-[34px] sm:text-[40px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
+        <div className="mt-2.5 sm:mt-3 text-[28px] sm:text-[36px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
           {totalSteps}
         </div>
       </div>
-      <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+      <div className="px-4 py-4 sm:px-5 sm:py-5">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
           Progress
         </div>
-        <div className="mt-2.5 sm:mt-3 text-[34px] sm:text-[40px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
+        <div className="mt-2.5 sm:mt-3 text-[28px] sm:text-[36px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
           {progressPercent}%
         </div>
-        <div className="mt-2 text-[11px] text-white/55 tabular-nums">
+        <div className="mt-2 text-[11px] text-white tabular-nums">
           {completedSteps} of {totalSteps} done
         </div>
       </div>
-      <div className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+      <div className="px-4 py-4 sm:px-5 sm:py-5">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
           Estimated
         </div>
-        <div className="mt-2.5 sm:mt-3 text-[22px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-white">
+        <div className="mt-2.5 sm:mt-3 text-[17px] sm:text-[22px] font-semibold tabular-nums tracking-tight leading-none text-white">
           {estimatedTime}
         </div>
       </div>

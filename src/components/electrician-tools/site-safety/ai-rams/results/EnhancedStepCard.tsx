@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Save, Trash2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import type { MethodStep } from '@/types/method-statement';
@@ -24,11 +23,84 @@ interface EnhancedStepCardProps {
 }
 
 /**
- * Method step card — editorial. No icons, no heavy chips. Step number
- * is a small mono ordinal; risk level + duration are compact pills.
- * Expanded section uses the same eyebrow + content rhythm as the rest
- * of the document.
+ * Rich fields the method agent writes on `method_steps[]`, flattened onto the
+ * step by mergeV2Steps(). None of these exist on the base MethodStep type, and
+ * none of them were rendered before — the card showed a title and a paragraph
+ * and discarded hold points, acceptance criteria, instruments, citations and
+ * the hazards each step controls.
  */
+type RichStep = MethodStep & {
+  phase?: string;
+  objective?: string;
+  duration?: string;
+  hold_points?: string[];
+  quality_checks?: string[];
+  acceptance_criteria?: string[] | Record<string, string>;
+  named_instruments?: string[];
+  named_values?: string[];
+  bs7671_cites?: string[];
+  safety_cites?: string[];
+  ppe_required?: string[];
+  competence_required?: string[];
+  stop_work_triggers?: string[];
+  documentation_produced?: string[];
+  linked_hazard_titles?: string[];
+  sign_off_required?: boolean;
+};
+
+const RISK_LEVELS = ['low', 'medium', 'high'] as const;
+
+const Block: React.FC<{ label: string; children: React.ReactNode; wide?: boolean }> = ({
+  label,
+  children,
+  wide,
+}) => (
+  <div className={cn('space-y-2', wide && 'sm:col-span-2')}>
+    <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+      {label}
+    </span>
+    {children}
+  </div>
+);
+
+const ChipList: React.FC<{ items: string[]; accent?: boolean }> = ({ items, accent }) => (
+  <div className="flex flex-wrap gap-1.5">
+    {items.map((item, i) => (
+      <span
+        key={`${item}-${i}`}
+        className={cn(
+          'inline-flex items-center rounded-lg border px-2.5 py-1 text-[12px] font-medium',
+          accent
+            ? 'border-elec-yellow/30 bg-elec-yellow/[0.1] text-elec-yellow'
+            : 'border-white/[0.14] bg-white/[0.06] text-white'
+        )}
+      >
+        {item}
+      </span>
+    ))}
+  </div>
+);
+
+const Bullets: React.FC<{ items: string[] }> = ({ items }) => (
+  <ul className="space-y-1.5">
+    {items.map((item, i) => (
+      <li key={i} className="flex items-start gap-2 text-[13.5px] leading-relaxed text-white">
+        <span className="mt-[7px] inline-block h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+        <span className="min-w-0 flex-1">{item}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+/** Accepts an array or an object map and returns a flat list of strings. */
+const asList = (v: unknown): string[] => {
+  if (Array.isArray(v)) return v.map(String).filter(Boolean);
+  if (v && typeof v === 'object') {
+    return Object.entries(v as Record<string, string>).map(([k, val]) => `${k}: ${val}`);
+  }
+  return [];
+};
+
 export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   step,
   index,
@@ -37,12 +109,15 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   onRemove,
 }) => {
   const { isMobile } = useMobileEnhanced();
-  const riskColors = getRiskColorsByLevel(step.riskLevel || 'low');
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [showEditSheet, setShowEditSheet] = useState(false);
   const [editedStep, setEditedStep] = useState<MethodStep>(step);
   const [isSaving, setIsSaving] = useState(false);
+
+  const s = step as RichStep;
+  const riskColors = getRiskColorsByLevel(step.riskLevel || 'low');
+  const duration = step.estimatedDuration || s.duration || '';
 
   useEffect(() => {
     setEditedStep(step);
@@ -53,21 +128,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   }, [step, isSaving]);
 
   const handleSave = () => {
-    if (onUpdate) {
-      setIsSaving(true);
-      onUpdate(step.id, editedStep);
-    }
-  };
-
-  const handleCancel = () => {
-    setEditedStep(step);
-    setIsEditing(false);
-  };
-
-  const handleDelete = () => {
-    if (onRemove && confirm('Delete this step?')) {
-      onRemove(step.id);
-    }
+    if (!onUpdate) return;
+    setIsSaving(true);
+    onUpdate(step.id, editedStep);
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -80,7 +143,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
     }
   };
 
-  const duration = step.estimatedDuration || step.duration;
+  const holdPoints = asList(s.hold_points);
+  const acceptance = asList(s.acceptance_criteria);
+  const quality = asList(s.quality_checks);
 
   return (
     <>
@@ -88,17 +153,17 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
         step={step}
         open={showEditSheet}
         onOpenChange={setShowEditSheet}
-        onSave={(stepId, updates) => {
-          if (onUpdate) onUpdate(stepId, updates);
-        }}
+        onSave={(stepId, updates) => onUpdate?.(stepId, updates)}
         onDelete={onRemove}
       />
 
       <div
         className={cn(
-          'border-l-2 sm:rounded-2xl border border-white/[0.08] transition-colors overflow-hidden',
-          riskColors.border,
-          'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_13%)]'
+          'flex h-full flex-col overflow-hidden rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.06)_inset] transition-all',
+          'bg-gradient-to-b from-white/[0.11] to-white/[0.055]',
+          isEditing
+            ? 'border-elec-yellow/45'
+            : 'border-white/[0.14] hover:border-white/[0.22] hover:from-white/[0.14] hover:to-white/[0.07]'
         )}
       >
         <div
@@ -113,34 +178,36 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
             }
           }}
           aria-expanded={isExpanded}
-          className="w-full p-4 sm:p-5 flex flex-col gap-3 text-left min-h-[80px] touch-manipulation active:bg-white/[0.04] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/40"
+          className="w-full cursor-pointer touch-manipulation p-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/40 sm:p-5"
         >
-          {/* Top row: ordinal + risk pill + duration */}
-          <div className="flex items-baseline justify-between w-full gap-3">
-            <div className="flex items-baseline gap-3 min-w-0">
-              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0 text-white/45">
+          <div className="flex items-baseline justify-between gap-3">
+            <div className="flex min-w-0 items-baseline gap-2.5">
+              <span className="shrink-0 text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
                 {String(index + 1).padStart(2, '0')}
               </span>
               <span
                 className={cn(
-                  'inline-flex items-center gap-1.5 h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] shrink-0',
+                  'inline-flex h-6 shrink-0 items-center rounded-lg px-2 text-[10.5px] font-semibold uppercase tracking-[0.12em]',
                   riskColors.bg,
                   riskColors.text
                 )}
               >
                 {step.riskLevel || 'Low'}
               </span>
-              {duration && (
-                <span className="text-[11px] text-white/55 tabular-nums shrink-0">{duration}</span>
+              {s.phase && (
+                <span className="truncate text-[11px] font-medium uppercase tracking-[0.14em] text-white">
+                  {s.phase}
+                </span>
               )}
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex shrink-0 items-center gap-3">
+              {duration && <span className="text-[11.5px] tabular-nums text-white">{duration}</span>}
               {editable && !isEditing && (
                 <button
                   type="button"
                   onClick={handleEditClick}
-                  className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
+                  className="min-h-11 text-[12.5px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
                 >
                   Edit
                 </button>
@@ -148,7 +215,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
               {!isEditing && (
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/55 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     isExpanded && 'rotate-180'
                   )}
                 />
@@ -156,520 +223,204 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
             </div>
           </div>
 
-          {/* Title + preview */}
-          <div className="flex-1 min-w-0 pl-1">
+          <div className="mt-2.5">
             {isEditing ? (
-              <Input
+              <input
                 value={editedStep.title}
                 onChange={(e) => setEditedStep({ ...editedStep, title: e.target.value })}
                 placeholder="Step title"
                 onClick={(e) => e.stopPropagation()}
-                className="h-11 text-base touch-manipulation"
+                className={cn(inputCn, 'text-[16px]')}
               />
             ) : (
               <>
-                <h4 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug line-clamp-2">
+                <h4 className="text-[16px] font-semibold leading-snug tracking-tight text-white sm:text-[17px]">
                   {step.title || 'Untitled step'}
                 </h4>
-                <p className="mt-1.5 text-[13px] text-white/65 line-clamp-2 leading-relaxed">
-                  {step.description || 'No description'}
-                </p>
+                {!isExpanded && (
+                  <>
+                    <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-white">
+                      {s.objective || step.description}
+                    </p>
+                    {/* Signals worth seeing without opening the step. */}
+                    {(holdPoints.length > 0 || s.sign_off_required) && (
+                      <div className="mt-2.5 flex flex-wrap gap-1.5">
+                        {holdPoints.length > 0 && (
+                          <span className="inline-flex items-center rounded-lg border border-amber-500/30 bg-amber-500/[0.1] px-2 py-0.5 text-[11px] font-medium text-amber-300">
+                            {holdPoints.length} hold point{holdPoints.length === 1 ? '' : 's'}
+                          </span>
+                        )}
+                        {s.sign_off_required && (
+                          <span className="inline-flex items-center rounded-lg border border-elec-yellow/30 bg-elec-yellow/[0.1] px-2 py-0.5 text-[11px] font-medium text-elec-yellow">
+                            Sign-off required
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
               </>
             )}
           </div>
         </div>
 
-        {/* Expanded */}
         {isExpanded && (
-          <div className="px-4 sm:px-5 pb-5 space-y-6 border-t border-white/[0.06] animate-slide-down">
-            {/* Description */}
-            <div className="pt-5">
-              <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 text-left block">
-                Description
-              </label>
+          <div className="space-y-5 border-t border-white/[0.1] px-4 pb-5 pt-5 sm:px-5">
+            {s.objective && !isEditing && (
+              <Block label="Objective">
+                <p className="text-[13.5px] leading-relaxed text-white">{s.objective}</p>
+              </Block>
+            )}
+
+            <Block label="Method">
               {isEditing ? (
-                <Textarea
+                <textarea
                   value={editedStep.description}
                   onChange={(e) => setEditedStep({ ...editedStep, description: e.target.value })}
-                  className="mt-2 min-h-[80px]"
+                  className={cn(textareaCn, 'w-full min-h-[200px] resize-y')}
                   placeholder="Describe the step"
                 />
               ) : (
-                <div className="mt-2 text-[13.5px] text-white/85 leading-relaxed space-y-3 text-left">
-                  {(step.description || '')
-                    .split(/(?=(?:^|\n)\d+\.|[A-Z]{2,}:|•|\n\n)/gm)
-                    .filter((section) => section.trim())
-                    .map((section, idx) => (
-                      <p key={idx} className="leading-relaxed text-left">
-                        {section.trim()}
-                      </p>
-                    ))}
-                </div>
+                <p className="whitespace-pre-line text-[13.5px] leading-relaxed text-white">
+                  {step.description}
+                </p>
               )}
-            </div>
+            </Block>
 
-            {/* Safety requirements */}
-            {((step.safetyRequirements?.length ?? 0) > 0 || isEditing) && (
-              <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400 mb-3">
-                  Safety requirements
-                </div>
-                {isEditing ? (
-                  <Textarea
-                    value={editedStep.safetyRequirements?.join('\n') || ''}
-                    onChange={(e) =>
-                      setEditedStep({
-                        ...editedStep,
-                        safetyRequirements: e.target.value.split('\n').filter(Boolean),
-                      })
-                    }
-                    className="min-h-[80px]"
-                    placeholder="One requirement per line"
-                  />
-                ) : (
-                  <ul className="space-y-2 text-left">
-                    {step.safetyRequirements?.map((req, i) => (
-                      <li
-                        key={i}
-                        className="text-[13.5px] text-white/85 flex items-start gap-3 leading-relaxed text-left"
-                      >
-                        <span className="text-amber-400 mt-0.5 shrink-0">·</span>
-                        <span>{req}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-
-            {/* Equipment */}
-            {((step.equipmentNeeded?.length ?? 0) > 0 || isEditing) && (
-              <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
-                  Equipment
-                </div>
-                {isEditing ? (
-                  <Textarea
-                    value={editedStep.equipmentNeeded?.join('\n') || ''}
-                    onChange={(e) =>
-                      setEditedStep({
-                        ...editedStep,
-                        equipmentNeeded: e.target.value.split('\n').filter(Boolean),
-                      })
-                    }
-                    className="min-h-[80px]"
-                    placeholder="One item per line"
-                  />
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {step.equipmentNeeded?.map((item, i) => (
-                      <span
-                        key={i}
-                        className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white/85"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Qualifications */}
-            {((step.qualifications?.length ?? 0) > 0 || isEditing) && (
-              <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
-                  Qualifications
-                </div>
-                {isEditing ? (
-                  <Textarea
-                    value={editedStep.qualifications?.join('\n') || ''}
-                    onChange={(e) =>
-                      setEditedStep({
-                        ...editedStep,
-                        qualifications: e.target.value.split('\n').filter(Boolean),
-                      })
-                    }
-                    className="min-h-[60px]"
-                    placeholder="One qualification per line"
-                  />
-                ) : (
-                  <ul className="space-y-2 text-left">
-                    {step.qualifications?.map((q, i) => (
-                      <li key={i} className="text-[13.5px] text-white/85 leading-relaxed text-left">
-                        {q}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-
-            {/* v2 rich detail — only when AI emitted v2 fields, read-only */}
-            {!isEditing &&
-              (() => {
-                const s: any = step;
-                const hasV2 =
-                  s.phase ||
-                  s.objective ||
-                  (Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length) ||
-                  (Array.isArray(s.inputs) && s.inputs.length) ||
-                  (Array.isArray(s.outputs) && s.outputs.length) ||
-                  (Array.isArray(s.named_instruments) && s.named_instruments.length) ||
-                  (Array.isArray(s.named_values) && s.named_values.length) ||
-                  (Array.isArray(s.hold_points) && s.hold_points.length) ||
-                  (Array.isArray(s.witness_points) && s.witness_points.length) ||
-                  (Array.isArray(s.quality_checks) && s.quality_checks.length) ||
-                  (Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length) ||
-                  (Array.isArray(s.bs7671_cites) && s.bs7671_cites.length) ||
-                  (Array.isArray(s.safety_cites) && s.safety_cites.length) ||
-                  (Array.isArray(s.ppe_required) && s.ppe_required.length) ||
-                  (Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length);
-                if (!hasV2) return null;
-
-                return (
-                  <div className="space-y-5">
-                    {(s.phase || s.objective) && (
-                      <div className="grid sm:grid-cols-2 gap-5">
-                        {s.phase && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Phase
-                            </div>
-                            <p className="text-[13px] text-white/85">{s.phase}</p>
-                          </div>
-                        )}
-                        {s.objective && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Objective
-                            </div>
-                            <p className="text-[13px] text-white/85 leading-relaxed">
-                              {s.objective}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {Array.isArray(s.named_instruments) && s.named_instruments.length > 0 && (
-                      <div>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                          Named instruments
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {s.named_instruments.map((m: string, i: number) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/85"
-                            >
-                              {m}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {Array.isArray(s.named_values) && s.named_values.length > 0 && (
-                      <div>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
-                          Target values
-                        </div>
-                        <ul className="divide-y divide-white/[0.06] border border-white/[0.08] rounded-xl overflow-hidden">
-                          {s.named_values.map((nv: any, i: number) => (
-                            <li key={i} className="px-3 py-2.5 text-[12.5px]">
-                              <div className="flex items-baseline justify-between gap-3">
-                                <span className="font-medium text-white">{nv.parameter}</span>
-                                <span className="tabular-nums text-elec-yellow font-semibold">
-                                  {nv.value}
-                                </span>
-                              </div>
-                              {nv.method && (
-                                <p className="mt-1 text-white/65 leading-relaxed">{nv.method}</p>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length > 0 && (
-                      <div>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-400/85 mb-2">
-                          Acceptance criteria
-                        </div>
-                        <ul className="space-y-1.5 text-[13px] text-white/85">
-                          {s.acceptance_criteria.map((c: string, i: number) => (
-                            <li key={i} className="leading-relaxed">
-                              · {c}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {((Array.isArray(s.inputs) && s.inputs.length > 0) ||
-                      (Array.isArray(s.outputs) && s.outputs.length > 0)) && (
-                      <div className="grid sm:grid-cols-2 gap-5">
-                        {Array.isArray(s.inputs) && s.inputs.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Inputs
-                            </div>
-                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                              {s.inputs.map((x: string, i: number) => (
-                                <li key={i} className="leading-relaxed">
-                                  · {x}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {Array.isArray(s.outputs) && s.outputs.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Outputs
-                            </div>
-                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                              {s.outputs.map((x: string, i: number) => (
-                                <li key={i} className="leading-relaxed">
-                                  · {x}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {((Array.isArray(s.hold_points) && s.hold_points.length > 0) ||
-                      (Array.isArray(s.witness_points) && s.witness_points.length > 0) ||
-                      (Array.isArray(s.quality_checks) && s.quality_checks.length > 0)) && (
-                      <div className="grid sm:grid-cols-3 gap-5">
-                        {Array.isArray(s.hold_points) && s.hold_points.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Hold points
-                            </div>
-                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                              {s.hold_points.map((x: string, i: number) => (
-                                <li key={i} className="leading-relaxed">
-                                  · {x}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {Array.isArray(s.witness_points) && s.witness_points.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Witness points
-                            </div>
-                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                              {s.witness_points.map((x: string, i: number) => (
-                                <li key={i} className="leading-relaxed">
-                                  · {x}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {Array.isArray(s.quality_checks) && s.quality_checks.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              Quality checks
-                            </div>
-                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                              {s.quality_checks.map((x: string, i: number) => (
-                                <li key={i} className="leading-relaxed">
-                                  · {x}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {((Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0) ||
-                      (Array.isArray(s.safety_cites) && s.safety_cites.length > 0) ||
-                      (Array.isArray(s.linked_hazard_titles) &&
-                        s.linked_hazard_titles.length > 0)) && (
-                      <div className="space-y-3">
-                        {Array.isArray(s.linked_hazard_titles) &&
-                          s.linked_hazard_titles.length > 0 && (
-                            <div>
-                              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                                Linked hazards
-                              </div>
-                              <div className="flex flex-wrap gap-1.5">
-                                {s.linked_hazard_titles.map((h: string, i: number) => (
-                                  <span
-                                    key={i}
-                                    className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-red-500/10 border border-red-500/30 text-red-300"
-                                  >
-                                    {h}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        {Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              BS 7671
-                            </div>
-                            <div className="flex flex-wrap gap-1.5">
-                              {s.bs7671_cites.map((c: string, i: number) => (
-                                <span
-                                  key={i}
-                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
-                                >
-                                  {c}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        {Array.isArray(s.safety_cites) && s.safety_cites.length > 0 && (
-                          <div>
-                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                              HSE / CDM
-                            </div>
-                            <div className="flex flex-wrap gap-1.5">
-                              {s.safety_cites.map((c: string, i: number) => (
-                                <span
-                                  key={i}
-                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
-                                >
-                                  {c}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {Array.isArray(s.ppe_required) && s.ppe_required.length > 0 && (
-                      <div>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                          PPE for this step
-                        </div>
-                        <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                          {s.ppe_required.map((p: string, i: number) => (
-                            <li key={i} className="leading-relaxed">
-                              · {p}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length > 0 && (
-                      <div>
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400 mb-2">
-                          Stop work
-                        </div>
-                        <ul className="space-y-1.5 text-[12.5px] text-red-300">
-                          {s.stop_work_triggers.map((x: string, i: number) => (
-                            <li key={i} className="leading-relaxed">
-                              · {x}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
-
-            {/* Duration + Risk level */}
-            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/[0.06]">
-              <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-                  Duration
-                </div>
-                {isEditing ? (
-                  <Input
-                    value={editedStep.estimatedDuration || ''}
+            {isEditing && (
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <span className={labelCn}>Estimated duration</span>
+                  <input
+                    value={editedStep.estimatedDuration ?? ''}
                     onChange={(e) =>
                       setEditedStep({ ...editedStep, estimatedDuration: e.target.value })
                     }
-                    className="mt-2"
-                    placeholder="e.g. 30 mins"
+                    placeholder="e.g. 45 minutes"
+                    className={inputCn}
                   />
-                ) : (
-                  <p className="mt-2 text-[14px] font-medium text-white tabular-nums">
-                    {duration || 'Not specified'}
-                  </p>
-                )}
-              </div>
-              <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-                  Risk level
                 </div>
-                {isEditing ? (
-                  <Select
-                    value={editedStep.riskLevel || 'low'}
-                    onValueChange={(v) =>
-                      setEditedStep({ ...editedStep, riskLevel: v as MethodStep['riskLevel'] })
-                    }
-                  >
-                    <SelectTrigger className="mt-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                    </SelectContent>
-                  </Select>
-                ) : (
-                  <p className={cn('mt-2 text-[14px] font-medium capitalize', riskColors.text)}>
-                    {step.riskLevel || 'Low'}
-                  </p>
+                <div>
+                  <span className={labelCn}>Risk level</span>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {RISK_LEVELS.map((lvl) => (
+                      <button
+                        key={lvl}
+                        type="button"
+                        onClick={() => setEditedStep({ ...editedStep, riskLevel: lvl })}
+                        className={cn(
+                          chipBase,
+                          editedStep.riskLevel === lvl ? chipOn : chipOff,
+                          'px-0 capitalize'
+                        )}
+                      >
+                        {lvl}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!isEditing && (
+              <div className="grid gap-5 sm:grid-cols-2">
+                {holdPoints.length > 0 && (
+                  <Block label="Hold points">
+                    <Bullets items={holdPoints} />
+                  </Block>
+                )}
+                {acceptance.length > 0 && (
+                  <Block label="Acceptance criteria">
+                    <Bullets items={acceptance} />
+                  </Block>
+                )}
+                {quality.length > 0 && (
+                  <Block label="Quality checks">
+                    <Bullets items={quality} />
+                  </Block>
+                )}
+                {!!s.stop_work_triggers?.length && (
+                  <Block label="Stop work if">
+                    <Bullets items={s.stop_work_triggers} />
+                  </Block>
+                )}
+                {asList(s.named_instruments).length > 0 && (
+                  <Block label="Instruments">
+                    <ChipList items={asList(s.named_instruments)} />
+                  </Block>
+                )}
+                {asList(step.equipmentNeeded).length > 0 && (
+                  <Block label="Equipment">
+                    <ChipList items={asList(step.equipmentNeeded)} />
+                  </Block>
+                )}
+                {asList(s.ppe_required).length > 0 && (
+                  <Block label="PPE">
+                    <ChipList items={asList(s.ppe_required)} accent />
+                  </Block>
+                )}
+                {asList(s.competence_required ?? step.qualifications).length > 0 && (
+                  <Block label="Competence">
+                    <ChipList items={asList(s.competence_required ?? step.qualifications)} />
+                  </Block>
+                )}
+                {!!s.linked_hazard_titles?.length && (
+                  <Block label="Controls these hazards" wide>
+                    <ChipList items={s.linked_hazard_titles} />
+                  </Block>
+                )}
+                {asList(s.named_values).length > 0 && (
+                  <Block label="Values to record" wide>
+                    <ChipList items={asList(s.named_values)} accent />
+                  </Block>
+                )}
+                {(!!s.bs7671_cites?.length || !!s.safety_cites?.length) && (
+                  <Block label="References" wide>
+                    <ChipList items={[...(s.bs7671_cites ?? []), ...(s.safety_cites ?? [])]} />
+                  </Block>
+                )}
+                {!!s.documentation_produced?.length && (
+                  <Block label="Produces" wide>
+                    <ChipList items={s.documentation_produced} />
+                  </Block>
                 )}
               </div>
-            </div>
+            )}
 
-            {/* Edit actions */}
             {editable && isEditing && (
-              <div className="flex gap-2 pt-4 border-t border-white/[0.06]">
+              <div className="flex items-center gap-2 border-t border-white/[0.1] pt-4">
                 <button
                   type="button"
-                  onClick={handleDelete}
-                  className="flex-1 inline-flex items-center justify-center h-10 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-red-500/30 text-red-400 hover:border-red-500/50 transition-colors touch-manipulation"
+                  onClick={() => onRemove && confirm('Delete this step?') && onRemove(step.id)}
+                  className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-500/[0.06] px-3.5 text-[13px] font-medium text-red-400 transition-colors hover:bg-red-500/[0.12] touch-manipulation"
                 >
-                  Delete
+                  <Trash2 className="h-4 w-4" />
+                  <span className="hidden sm:inline">Delete</span>
                 </button>
                 <button
                   type="button"
-                  onClick={handleCancel}
-                  className="flex-1 inline-flex items-center justify-center h-10 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80 hover:border-white/20 transition-colors touch-manipulation"
+                  onClick={() => {
+                    setEditedStep(step);
+                    setIsEditing(false);
+                  }}
+                  className="inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
                 >
+                  <X className="h-4 w-4" />
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="flex-1 inline-flex items-center justify-center h-10 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                  className="ml-auto inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation sm:flex-none sm:min-w-[150px]"
                 >
-                  Save
+                  <Save className="h-4 w-4" />
+                  Save step
                 </button>
               </div>
             )}
           </div>
         )}
       </div>
-
-      <style>{`
-        @keyframes slideDown {
-          from { opacity: 0; max-height: 0; }
-          to { opacity: 1; max-height: 1000px; }
-        }
-        .animate-slide-down { animation: slideDown 0.2s ease-out; }
-      `}</style>
     </>
   );
 };

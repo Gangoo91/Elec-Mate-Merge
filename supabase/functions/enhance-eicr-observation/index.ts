@@ -44,7 +44,8 @@ serve(async (req) => {
       });
     }
 
-    const { description, location, currentCode } = await req.json();
+    const { description, location, currentCode, mode, recommendation } = await req.json();
+    const isPolish = mode === 'polish';
 
     if (!description || description.trim().length < 5) {
       return new Response(
@@ -262,9 +263,37 @@ Respond ONLY with valid JSON matching this schema:
 }
 
 Use UK English only. Be concise but technically accurate. Reference regulation
-numbers ONLY from the authoritative list above.`;
+numbers ONLY from the authoritative list above.${
+      isPolish
+        ? `
 
-    const userPrompt = `Observation: "${description}"${location ? `\nLocation: ${location}` : ''}${currentCode ? `\nCurrent code: ${currentCode}` : ''}`;
+MODE: POLISH — TIDY THEIR WORDING, DO NOT REPLACE IT.
+The inspector has written this themselves and wants it cleaned up, not rewritten.
+They asked for it to be "jazzed up a little", and they meant a little.
+
+- Preserve their meaning and their findings exactly. Add nothing they did not
+  say, and remove nothing they did.
+- Fix spelling, grammar and capitalisation. On-site notes arrive in shorthand
+  and often in block capitals — return normal sentence case.
+- Keep their recommendation as theirs. If they wrote one, tidy that wording and
+  nothing more; do NOT substitute your own. Only write one from scratch if they
+  left it empty.
+- Preserve any condition, judgement or reasoning they expressed. If they wrote a
+  conditional recommendation — "if the cost of loss is greater than the cost of
+  the SPD then install one" — it stays conditional. Do not flatten it into a
+  flat instruction to install. That condition is their professional judgement,
+  and rewriting it as an order changes the advice they are signing.
+- The rule against hedging applies to language you generate, never to a
+  qualification the inspector deliberately made.
+- Do not pad. A short, clear observation stays short. Length is not quality, and
+  they will have to read every word back on site.
+- Keep their classification unless their own words plainly contradict it.`
+        : ''
+    }`;
+
+    const userPrompt = `Observation: "${description}"${location ? `\nLocation: ${location}` : ''}${currentCode ? `\nCurrent code: ${currentCode}` : ''}${
+      isPolish && recommendation ? `\nInspector's own recommendation: "${recommendation}"` : ''
+    }`;
 
     const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

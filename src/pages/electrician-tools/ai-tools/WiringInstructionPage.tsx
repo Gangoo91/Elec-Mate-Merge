@@ -1,32 +1,77 @@
 /**
- * WiringInstructionPage — editorial Wiring Guide screen.
+ * WiringInstructionPage — what goes in which terminal, for the thing in front of you.
  *
- * Drops the per-circuit colour configs (~60 colour declarations across
- * domestic / commercial / industrial), the per-property gradient hero, and
- * all the inline icons. Editorial eyebrows, type-led property + circuit
- * pills, gradient-surface cards, elec-yellow CTA. All logic preserved
- * (camera, upload, wiring-diagram-generator-rag edge function, results via
- * WiringGuidanceDisplay).
+ * Last of the five AI tools onto the shared shell: 2x2 brief beside a sticky
+ * result rail on a desktop, one column with a fixed action bar and an 85vh
+ * sheet on a phone.
+ *
+ * ── Fixed here ─────────────────────────────────────────────────────────────
+ *
+ * THE CAMERA NEVER OPENED — the last page carrying it. `setIsCameraActive`
+ * was called from inside `if (videoRef.current)`, and the <video> holding that
+ * ref only mounts once the flag is true, so the first tap acquired a
+ * MediaStream, showed nothing, and never released it. Acquire → set state →
+ * attach in an effect → stop every track on close and on unmount.
+ *
+ * FOUR PHOTOS OFFERED, ONE ACCEPTED. Unlike the sibling tools this is not a
+ * request bug: `wiring-diagram-generator-rag` takes a single
+ * `component_image_url`. The picker was the thing lying, so it now takes one
+ * photo and says so, rather than collecting four and quietly binning three.
+ *
+ * THE STEP INDICATOR NEVER SHOWED STEP 1. `currentStep` was
+ * `!selectedCircuit ? 2 : 3`, so the page opened on "02" with "01" already
+ * greyed out as though something had been done. Gone — the panels are the
+ * structure.
+ *
+ * PHOTO *OR* DESCRIPTION WAS AN ARTIFICIAL CHOICE. The two were behind a tab
+ * pair, and the edge function happily takes both. A photo of the accessory
+ * plus a line about where it's going is the best input this tool can get, and
+ * the UI made you pick one.
+ *
+ * Plus: `URL.createObjectURL` in the thumbnail render and never revoked, a
+ * `Math.random()` progress bar, a reset that left the property, context,
+ * earthing, supply and notes populated, a CTA that did not exist until the
+ * form was filled in, and an invalid `ragSourcesCount` prop that was a live
+ * TypeScript error against WiringGuidanceDisplay.
+ *
+ * ── The answers ────────────────────────────────────────────────────────────
+ *
+ * Retrieval moved off the A3 corpus in the edge function (see the header
+ * there). Clause numbers are now constrained to what retrieval actually
+ * returned, so a step either cites a real A4:2026 clause or cites nothing.
  */
 
-import { useState, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { X, Camera, Upload, Cable } from 'lucide-react';
+
+import useSEO from '@/hooks/useSEO';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
 import { mintFreshSignedUrl } from '@/utils/storageUrls';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, X, Loader2 } from 'lucide-react';
-import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+
+import { Textarea } from '@/components/ui/textarea';
+import { useCameraCapture } from '@/hooks/useCameraCapture';
+import {
+  AiToolPage,
+  ToolPanel,
+  ToolChip,
+  ToolField,
+  ToolAction,
+  ToolResult,
+  ToolWorking,
+} from '@/components/electrician-tools/ai-tools/ToolShell';
 import WiringGuidanceDisplay from '@/components/electrician-tools/ai-tools/WiringGuidanceDisplay';
 
-const propertyTypes = [
-  { id: 'domestic', label: 'Domestic', desc: 'Houses, flats, apartments' },
-  { id: 'commercial', label: 'Commercial', desc: 'Offices, shops, restaurants' },
-  { id: 'industrial', label: 'Industrial', desc: 'Factories, warehouses, workshops' },
+const PROPERTY_TYPES = [
+  { id: 'domestic', label: 'Domestic' },
+  { id: 'commercial', label: 'Commercial' },
+  { id: 'industrial', label: 'Industrial' },
 ];
 
-const circuitsByProperty: Record<string, Array<{ id: string; label: string }>> = {
+const CIRCUITS: Record<string, { id: string; label: string }[]> = {
   domestic: [
     { id: 'consumer-unit', label: 'Consumer unit' },
     { id: 'lighting', label: 'Lighting circuit' },
@@ -42,7 +87,7 @@ const circuitsByProperty: Record<string, Array<{ id: string; label: string }>> =
     { id: 'distribution-board', label: 'Distribution board' },
     { id: 'three-phase', label: '3-phase supply' },
     { id: 'commercial-lighting', label: 'Commercial lighting' },
-    { id: 'hvac', label: 'HVAC systems' },
+    { id: 'hvac', label: 'HVAC' },
     { id: 'commercial-kitchen', label: 'Commercial kitchen' },
     { id: 'server-room', label: 'Server room / IT' },
     { id: 'emergency-lighting', label: 'Emergency lighting' },
@@ -56,13 +101,13 @@ const circuitsByProperty: Record<string, Array<{ id: string; label: string }>> =
     { id: 'industrial-lighting', label: 'Industrial lighting' },
     { id: 'ups-systems', label: 'UPS systems' },
     { id: 'plc-automation', label: 'PLC / automation' },
-    { id: 'crane-hoist', label: 'Crane / hoist systems' },
+    { id: 'crane-hoist', label: 'Crane / hoist' },
     { id: 'welding', label: 'Welding equipment' },
     { id: 'other', label: 'Other' },
   ],
 };
 
-const installContexts = [
+const CONTEXTS = [
   { id: 'new', label: 'New install' },
   { id: 'replacement', label: 'Replacement' },
   { id: 'upgrade', label: 'Upgrade' },
@@ -70,601 +115,504 @@ const installContexts = [
   { id: 'fault-repair', label: 'Fault repair' },
 ];
 
-const earthingSystems = [
+const EARTHING = [
   { id: 'tn-c-s', label: 'TN-C-S (PME)' },
   { id: 'tn-s', label: 'TN-S' },
   { id: 'tt', label: 'TT' },
   { id: 'unknown', label: 'Unknown' },
 ];
 
+/** Main supply rating. Chips beat a free-text box on a phone. */
+const SUPPLY = ['60 A', '80 A', '100 A', "Don't know"];
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type WiringResult = any;
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+// ───────────────────────────────────────────────────────────────────────────
+
 const WiringInstructionPage = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const haptic = useHaptic();
+  const isMobile = useIsMobile();
+
+  useSEO({
+    title: 'Wiring Guide',
+    description:
+      'Step-by-step UK wiring for the accessory in front of you — terminals, colours and sequence, cited to BS 7671.',
+    noindex: true,
+  });
+
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const [images, setImages] = useState<File[]>([]);
-  const [selectedProperty, setSelectedProperty] = useState<string>('domestic');
-  const [selectedCircuit, setSelectedCircuit] = useState<string | null>(null);
-  const [selectedContext, setSelectedContext] = useState<string>('new');
-  const [selectedEarthing, setSelectedEarthing] = useState<string>('unknown');
-  const [supplyAmps, setSupplyAmps] = useState<string>('');
-  const [additionalNotes, setAdditionalNotes] = useState('');
-  const [textDescription, setTextDescription] = useState('');
-  const [isCameraActive, setIsCameraActive] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
-  const [analysisProgress, setAnalysisProgress] = useState(0);
-  const [inputTab, setInputTab] = useState<'photo' | 'describe'>('describe');
-
-  const currentCircuits = circuitsByProperty[selectedProperty] || circuitsByProperty.domestic;
-
-  const currentStep = useMemo(() => {
-    if (!selectedCircuit) return 2;
-    return 3;
-  }, [selectedCircuit]);
-
-  const hasInput = images.length > 0 || textDescription.trim().length > 0;
-  const canGenerate = selectedCircuit && hasInput;
-
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setIsCameraActive(true);
-      }
-    } catch {
+  const camera = useCameraCapture({
+    onError: () =>
       toast({
-        title: 'Camera error',
-        description: 'Unable to access camera',
+        title: 'No camera access',
+        description: 'Allow camera access, or upload a photo instead.',
+        variant: 'destructive',
+      }),
+  });
+
+  const [image, setImage] = useState<File | null>(null);
+  const [property, setProperty] = useState('domestic');
+  const [circuit, setCircuit] = useState<string | null>(null);
+  const [context, setContext] = useState('new');
+  const [earthing, setEarthing] = useState('unknown');
+  const [supply, setSupply] = useState<string | null>(null);
+  const [description, setDescription] = useState('');
+  const [notes, setNotes] = useState('');
+  const [isAnalysing, setIsAnalysing] = useState(false);
+  const [result, setResult] = useState<WiringResult>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  const circuits = CIRCUITS[property] ?? CIRCUITS.domestic;
+
+  // One URL for the one photo, revoked when it changes or the page unmounts.
+  const preview = useMemo(() => (image ? URL.createObjectURL(image) : null), [image]);
+  useEffect(() => {
+    if (!preview) return;
+    return () => URL.revokeObjectURL(preview);
+  }, [preview]);
+
+  const handleCapture = async () => {
+    const file = await camera.capture('accessory.jpg');
+    if (file) {
+      haptic.success();
+      setImage(file);
+    }
+  };
+
+  const hasInput = Boolean(image) || description.trim().length > 0;
+  const canGenerate = Boolean(circuit) && hasInput && !isAnalysing;
+
+  const handleGenerate = async () => {
+    if (!circuit) {
+      toast({
+        title: 'Pick a circuit first',
+        description: 'It changes which regulations apply.',
         variant: 'destructive',
       });
+      return;
     }
-  };
-
-  const stopCamera = () => {
-    if (videoRef.current?.srcObject) {
-      (videoRef.current.srcObject as MediaStream).getTracks().forEach((track) => track.stop());
-      setIsCameraActive(false);
-    }
-  };
-
-  const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const video = videoRef.current;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext('2d')?.drawImage(video, 0, 0);
-      canvas.toBlob(
-        (blob) => {
-          if (blob) {
-            setImages((prev) => [
-              ...prev,
-              new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' }),
-            ]);
-            stopCamera();
-          }
-        },
-        'image/jpeg',
-        0.9
-      );
-    }
-  };
-
-  const handleFileSelect = (files: FileList | null) => {
-    if (files) {
-      setImages((prev) =>
-        [...prev, ...Array.from(files).filter((f) => f.type.startsWith('image/'))].slice(0, 4)
-      );
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handlePropertyChange = (propertyId: string) => {
-    setSelectedProperty(propertyId);
-    setSelectedCircuit(null);
-  };
-
-  const handleAnalysis = async () => {
-    const hasImage = images.length > 0;
-    const hasText = textDescription.trim().length > 0;
-
-    if (!hasImage && !hasText) {
+    if (!hasInput) {
       toast({
-        title: 'Add input',
-        description: 'Upload a photo or describe the component',
+        title: 'Describe it or photograph it',
+        description: 'Either works — both together works best.',
         variant: 'destructive',
       });
       return;
     }
 
-    setIsAnalyzing(true);
-    setAnalysisProgress(0);
-
-    const progressInterval = setInterval(() => {
-      setAnalysisProgress((prev) => Math.min(prev + Math.random() * 12, 90));
-    }, 600);
+    haptic.medium();
+    setIsAnalysing(true);
+    if (isMobile) setSheetOpen(true);
 
     try {
-      let publicUrl: string | null = null;
+      let imageUrl: string | null = null;
 
-      if (hasImage) {
-        const image = images[0];
+      if (image) {
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const fileName = `${user?.id}/visual-analysis/wiring-${Date.now()}.jpg`;
+        const path = `${user?.id}/visual-analysis/wiring-${Date.now()}.jpg`;
         const { error: uploadError } = await supabase.storage
           .from('visual-uploads')
-          .upload(fileName, image);
+          .upload(path, image);
         if (uploadError) throw uploadError;
-        // Fresh signed URL (1h) — the wiring-diagram fn fetches it
-        // server-side, so it must stay valid after visual-uploads goes
-        // private. Identical behaviour while the bucket is still public.
-        publicUrl = await mintFreshSignedUrl('visual-uploads', fileName);
-        if (!publicUrl) throw new Error('Could not prepare the uploaded image for analysis');
+
+        // Fresh signed URL (1h) — the function fetches it server-side, so it
+        // must stay valid once visual-uploads goes private.
+        imageUrl = await mintFreshSignedUrl('visual-uploads', path);
+        if (!imageUrl) throw new Error('Could not prepare the uploaded image for analysis');
       }
 
-      const circuitLabel = currentCircuits.find((c) => c.id === selectedCircuit)?.label || '';
-      const earthingLabel = earthingSystems.find((e) => e.id === selectedEarthing)?.label || '';
+      const circuitLabel = circuits.find((c) => c.id === circuit)?.label ?? '';
+      const earthingLabel = EARTHING.find((e) => e.id === earthing)?.label ?? '';
+      const contextLabel = CONTEXTS.find((c) => c.id === context)?.label ?? '';
 
       const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
         body: {
-          component_image_url: publicUrl,
-          component_description: hasText
-            ? `${textDescription.trim()}${additionalNotes ? `. ${additionalNotes}` : ''}`
-            : null,
-          property_type: selectedProperty,
+          component_image_url: imageUrl,
+          // Description and notes both go, with the job context folded in —
+          // "replacement" and "new install" want different sequences.
+          component_description:
+            [description.trim(), notes.trim() && `Notes: ${notes.trim()}`, `Job: ${contextLabel}`]
+              .filter(Boolean)
+              .join('. ') || null,
+          property_type: property,
           circuit_type: circuitLabel,
           earthing_system: earthingLabel,
-          supply_amps: supplyAmps || null,
+          supply_amps: supply && supply !== "Don't know" ? supply : null,
         },
       });
 
       if (error) throw error;
 
-      const wiringData = data?.wiring_schematic;
-      if (!wiringData) {
+      if (!data?.wiring_schematic) {
         toast({
-          title: 'Invalid response',
-          description: "The analysis didn't return wiring instructions.",
+          title: 'No guidance returned',
+          description: 'Try naming the accessory more specifically, or add a photo.',
           variant: 'destructive',
         });
         return;
       }
 
-      setAnalysisProgress(100);
-      setAnalysisResult(data);
-    } catch (error) {
-      console.error('Analysis error:', error);
-      toast({ title: 'Analysis failed', description: 'Please try again', variant: 'destructive' });
+      setResult(data);
+      haptic.success();
+      toast({
+        title: 'Wiring guide ready',
+        description: data.wiring_schematic.component_name ?? 'Work through it step by step.',
+        variant: 'success',
+      });
+    } catch (err) {
+      console.error('Wiring guidance failed:', err);
+      toast({
+        title: 'Could not generate',
+        description: 'Try again in a moment.',
+        variant: 'destructive',
+      });
     } finally {
-      clearInterval(progressInterval);
-      setIsAnalyzing(false);
+      setIsAnalysing(false);
     }
   };
 
-  const resetAnalysis = () => {
-    setAnalysisResult(null);
-    setImages([]);
-    setTextDescription('');
-    setSelectedCircuit(null);
-    setAnalysisProgress(0);
+  /** Everything. The old reset kept the property, context, earthing and notes. */
+  const reset = () => {
+    haptic.light();
+    setResult(null);
+    setImage(null);
+    setDescription('');
+    setNotes('');
+    setCircuit(null);
+    setProperty('domestic');
+    setContext('new');
+    setEarthing('unknown');
+    setSupply(null);
+    setSheetOpen(false);
   };
 
-  return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
-      {/* Sticky header */}
-      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11 max-w-5xl mx-auto">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician-tools/ai-tooling')}
-              aria-label="Back"
-              className="text-white/85 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center touch-manipulation transition-colors shrink-0"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-            <Eyebrow>WIRING GUIDE</Eyebrow>
+  // ── The result panel ─────────────────────────────────────────────────────
+  const schematic = result?.wiring_schematic;
 
-            {!analysisResult && !isAnalyzing && (
-              <div className="ml-auto flex items-center gap-2">
-                {[1, 2, 3].map((s) => (
-                  <span
-                    key={s}
-                    className={cn(
-                      'inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.14em] tabular-nums',
-                      currentStep >= s ? 'text-elec-yellow' : 'text-white/40'
-                    )}
-                  >
-                    0{s}
-                    {s < 3 && (
-                      <span
-                        className={cn(
-                          'ml-2 w-4 h-px',
-                          currentStep > s ? 'bg-elec-yellow/60' : 'bg-white/15'
-                        )}
-                      />
-                    )}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+  const panel = (
+    <div
+      className={cn(
+        'flex h-full min-h-[260px] flex-col overflow-hidden rounded-2xl border border-elec-yellow/35',
+        'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
+        'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]'
+      )}
+    >
+      <div className="shrink-0 border-b border-white/[0.10] px-5 py-4">
+        <h2 className="text-[14px] font-semibold tracking-tight text-elec-yellow">
+          How to wire it
+        </h2>
       </div>
 
-      <main
-        className={cn(
-          'px-4 sm:px-6 pt-6 pb-6 space-y-7 max-w-5xl mx-auto',
-          canGenerate && !analysisResult && !isAnalyzing && 'pb-28'
-        )}
-      >
-        {analysisResult?.wiring_schematic ? (
-          <div className="space-y-4">
+      {schematic ? (
+        <>
+          <div className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-4">
             <WiringGuidanceDisplay
-              componentName={analysisResult.wiring_schematic.component_name}
-              componentDetails={analysisResult.wiring_schematic.component_details}
+              componentName={schematic.component_name}
+              componentDetails={schematic.component_details}
               wiringScenarios={
-                analysisResult.wiring_schematic.wiring_scenarios || [
-                  {
-                    scenario_id: 'default',
-                    scenario_name: 'Standard installation',
-                    use_case: 'Standard BS 7671 compliant installation',
-                    complexity: 'simple',
-                    recommended: true,
-                    wiring_steps: analysisResult.wiring_schematic.wiring_steps,
-                    terminal_connections: analysisResult.wiring_schematic.terminal_connections,
-                    safety_warnings: analysisResult.wiring_schematic.safety_warnings,
-                    required_tests: analysisResult.wiring_schematic.required_tests,
-                  },
-                ]
+                schematic.wiring_scenarios?.length
+                  ? schematic.wiring_scenarios
+                  : [
+                      {
+                        scenario_id: 'default',
+                        scenario_name: 'Standard installation',
+                        use_case: 'Standard BS 7671 compliant installation',
+                        complexity: 'simple',
+                        recommended: true,
+                        wiring_steps: schematic.wiring_steps,
+                        terminal_connections: schematic.terminal_connections,
+                        safety_warnings: schematic.safety_warnings,
+                        required_tests: schematic.required_tests,
+                      },
+                    ]
               }
-              comparison={analysisResult.wiring_schematic.comparison}
-              ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
-              preInstallationTasks={analysisResult.wiring_schematic.pre_installation_tasks}
-              boardLayoutGuide={analysisResult.wiring_schematic.board_layout_guide}
-              wiringSequenceStrategy={analysisResult.wiring_schematic.wiring_sequence_strategy}
-              practicalTips={analysisResult.wiring_schematic.practical_tips}
-              commonMistakes={analysisResult.wiring_schematic.common_mistakes}
+              comparison={schematic.comparison}
+              preInstallationTasks={schematic.pre_installation_tasks}
+              boardLayoutGuide={schematic.board_layout_guide}
+              wiringSequenceStrategy={schematic.wiring_sequence_strategy}
+              practicalTips={schematic.practical_tips}
+              commonMistakes={schematic.common_mistakes}
             />
+          </div>
+          <div className="shrink-0 border-t border-white/[0.10] p-2.5">
             <button
               type="button"
-              onClick={resetAnalysis}
-              className="w-full text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+              onClick={reset}
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.28] active:bg-white/[0.10]"
             >
-              Get a new wiring guide
+              Wire something else
             </button>
           </div>
-        ) : isAnalyzing ? (
-          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-6 sm:p-8">
-            <div className="flex items-center gap-3">
-              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" aria-hidden />
-              <Eyebrow>GENERATING</Eyebrow>
-            </div>
-            <p className="mt-3 text-[14px] text-white">
-              {analysisProgress < 30
-                ? 'Analysing the component…'
-                : analysisProgress < 60
-                  ? 'Pulling matched BS 7671 regs…'
-                  : 'Composing the wiring guide…'}
-            </p>
-            <p className="mt-1 text-[11.5px] text-white/65">
-              BS 7671 cited · GN3 + manufacturer guidance referenced
-            </p>
-            <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-elec-yellow rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${analysisProgress}%` }}
-              />
-            </div>
-            <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums text-right">
-              {Math.round(analysisProgress)}%
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Hero */}
-            <section className="space-y-2">
-              <Eyebrow>WHAT IT DOES</Eyebrow>
-              <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-[1.05]">
-                <span className="text-elec-yellow">Wire</span>{' '}
-                <span className="text-white">it right.</span>
-              </h1>
-              <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/85 max-w-2xl">
-                Pick the property and circuit, drop in a photo or describe what you've got, get
-                step-by-step UK-compliant wiring with cited regs, terminal connections, safety
-                warnings, and the tests to run.
-              </p>
-            </section>
+        </>
+      ) : isAnalysing ? (
+        <ToolWorking
+          title="Working out the sequence…"
+          detail="Matching the accessory against BS 7671 and the manufacturer install data."
+        />
+      ) : (
+        <div className="flex-1 p-5">
+          <p className="text-[12.5px] leading-relaxed text-white">
+            Name the accessory or photograph it, pick the circuit, and you'll get:
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {[
+              ['Terminals', 'Which core goes where, and what the terminal is marked.'],
+              ['Colours', 'Including when a blue core has to be sleeved brown.'],
+              ['Sequence', 'The order to work in, and what to check at each step.'],
+              ['Tests', 'What to prove before you energise it.'],
+            ].map(([label, blurb]) => (
+              <li key={label} className="flex gap-3">
+                <span className="w-[68px] shrink-0 text-[12px] font-semibold text-white">
+                  {label}
+                </span>
+                <span className="min-w-0 flex-1 text-[12px] leading-snug text-white">{blurb}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 
-            {/* 01 — Property */}
-            <section className="space-y-3">
-              <Eyebrow>01 · PROPERTY TYPE</Eyebrow>
-              <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {propertyTypes.map((prop) => {
-                  const active = selectedProperty === prop.id;
-                  return (
-                    <li key={prop.id}>
-                      <button
-                        type="button"
-                        onClick={() => handlePropertyChange(prop.id)}
-                        className={cn(
-                          'w-full text-left rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 transition-colors touch-manipulation',
-                          active
-                            ? 'border-elec-yellow/40'
-                            : 'border-white/[0.10] hover:border-white/[0.20]'
-                        )}
+  const generateButton = (
+    <ToolAction
+      onClick={handleGenerate}
+      disabled={!canGenerate}
+      busy={isAnalysing}
+      busyLabel="Working it out…"
+      icon={<Cable className="h-4 w-4" aria-hidden />}
+    >
+      {circuit ? 'Show me how to wire it' : 'Pick a circuit first'}
+    </ToolAction>
+  );
+
+  return (
+    <AiToolPage
+      title="Wiring Guide"
+      result={panel}
+      resultTitle="Wiring guide"
+      hasResult={Boolean(schematic) || isAnalysing}
+      action={generateButton}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={setSheetOpen}
+    >
+      <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
+              <div className="space-y-4">
+                <ToolPanel title="What you're wiring">
+                  <p className="mb-2 text-[12px] font-medium text-white">Property</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {PROPERTY_TYPES.map((p) => (
+                      <ToolChip
+                        key={p.id}
+                        on={property === p.id}
+                        onClick={() => {
+                          haptic.light();
+                          setProperty(p.id);
+                          // The circuit lists don't overlap between property
+                          // types, so a stale selection would be meaningless.
+                          setCircuit(null);
+                        }}
                       >
-                        <Eyebrow>{prop.label.toUpperCase()}</Eyebrow>
-                        <p className="mt-1.5 text-[12px] text-white/85">{prop.desc}</p>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-
-            {/* 02 — Circuit */}
-            <section className="space-y-3">
-              <Eyebrow>02 · CIRCUIT TYPE</Eyebrow>
-              <ul className="flex flex-wrap gap-1.5">
-                {currentCircuits.map((circuit) => {
-                  const active = selectedCircuit === circuit.id;
-                  return (
-                    <li key={circuit.id}>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedCircuit(active ? null : circuit.id)}
-                        className={cn(
-                          'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
-                          active
-                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
-                            : 'text-white/85 border-white/15 hover:border-white/30'
-                        )}
-                      >
-                        {circuit.label}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-
-            {/* 03 — Component (only after circuit picked) */}
-            {selectedCircuit && (
-              <>
-                {/* Tab switcher */}
-                <section className="space-y-3">
-                  <Eyebrow>03 · COMPONENT</Eyebrow>
-                  <div className="grid grid-cols-2 gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.10]">
-                    {(['describe', 'photo'] as const).map((tab) => {
-                      const active = inputTab === tab;
-                      return (
-                        <button
-                          key={tab}
-                          type="button"
-                          onClick={() => setInputTab(tab)}
-                          className={cn(
-                            'inline-flex items-center justify-center text-[11px] font-semibold uppercase tracking-[0.14em] rounded-full px-3 py-2 min-h-[36px] transition-colors touch-manipulation',
-                            active
-                              ? 'text-black bg-elec-yellow'
-                              : 'text-white/85 hover:text-white'
-                          )}
-                        >
-                          {tab === 'describe' ? 'Describe' : 'Photo'}
-                        </button>
-                      );
-                    })}
+                        {p.label}
+                      </ToolChip>
+                    ))}
                   </div>
 
-                  {inputTab === 'describe' ? (
-                    <textarea
-                      placeholder="e.g. 'Hager 32A Type B MCB for ring main' or 'Schneider Acti9 RCBO'…"
-                      value={textDescription}
-                      onChange={(e) => setTextDescription(e.target.value)}
-                      className="w-full min-h-[100px] px-4 py-3 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 resize-none"
-                      style={{ fontSize: '16px' }}
-                    />
+                  <p className="mb-2 mt-4 text-[12px] font-medium text-white">Circuit</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {circuits.map((c) => (
+                      <ToolChip
+                        key={c.id}
+                        on={circuit === c.id}
+                        onClick={() => {
+                          haptic.light();
+                          setCircuit(circuit === c.id ? null : c.id);
+                        }}
+                      >
+                        {c.label}
+                      </ToolChip>
+                    ))}
+                  </div>
+                </ToolPanel>
+
+                <ToolPanel title="The accessory" hint={image ? '1 photo' : undefined}>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="What is it? e.g. 2-gang 2-way switch, Hager 6kA Type B MCB, Wylex dual RCD board…"
+                    style={{ fontSize: '16px' }}
+                    className={cn(
+                      'min-h-[84px] resize-none rounded-xl border-white/[0.12] bg-black/20 text-white',
+                      'caret-elec-yellow placeholder:text-white/45',
+                      'focus-visible:border-elec-yellow focus-visible:ring-0 focus-visible:ring-offset-0'
+                    )}
+                  />
+
+                  {camera.isActive ? (
+                    <div className="mt-3 space-y-2">
+                      <div className="relative aspect-video overflow-hidden rounded-xl border border-elec-yellow/40 bg-black">
+                        <video
+                          ref={camera.videoRef}
+                          autoPlay
+                          playsInline
+                          muted
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={handleCapture}
+                          className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[12.5px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
+                        >
+                          <Camera className="h-4 w-4" aria-hidden />
+                          Capture
+                        </button>
+                        <button
+                          type="button"
+                          onClick={camera.stop}
+                          aria-label="Close camera"
+                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] text-white transition-colors touch-manipulation hover:border-white/[0.28]"
+                        >
+                          <X className="h-4 w-4" aria-hidden />
+                        </button>
+                      </div>
+                    </div>
+                  ) : preview ? (
+                    <div className="mt-3 flex items-center gap-3">
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-white/[0.12]">
+                        <img src={preview} alt="" className="h-full w-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => setImage(null)}
+                          aria-label="Remove photo"
+                          className="absolute right-1 top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/25 bg-black/75 touch-manipulation"
+                        >
+                          <X className="h-3 w-3 text-white" aria-hidden />
+                        </button>
+                      </div>
+                      <p className="text-[11.5px] leading-snug text-white">
+                        A photo of the terminals is worth more than the model number.
+                      </p>
+                    </div>
                   ) : (
-                    <>
-                      <AnimatePresence>
-                        {isCameraActive && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="space-y-3 overflow-hidden"
-                          >
-                            <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-elec-yellow/30">
-                              <video
-                                ref={videoRef}
-                                autoPlay
-                                playsInline
-                                muted
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                onClick={captureImage}
-                                className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
-                              >
-                                Capture
-                              </button>
-                              <button
-                                type="button"
-                                onClick={stopCamera}
-                                aria-label="Cancel"
-                                className="h-11 w-11 rounded-full inline-flex items-center justify-center border border-white/15 hover:border-white/30 text-white/85 touch-manipulation transition-colors shrink-0"
-                              >
-                                <X className="h-4 w-4" />
-                              </button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {!isCameraActive && (
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={startCamera}
-                            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
-                          >
-                            Open camera
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => fileInputRef.current?.click()}
-                            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
-                          >
-                            Upload
-                          </button>
-                        </div>
-                      )}
-
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileSelect(e.target.files)}
-                        className="hidden"
-                      />
-
-                      {images.length > 0 && (
-                        <div className="grid grid-cols-4 gap-2">
-                          {images.map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.10]"
-                            >
-                              <img
-                                src={URL.createObjectURL(img)}
-                                alt=""
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => removeImage(idx)}
-                                aria-label="Remove"
-                                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 border border-white/20 flex items-center justify-center touch-manipulation"
-                              >
-                                <X className="h-3 w-3 text-white" />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={camera.start}
+                        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.28] active:bg-white/[0.10]"
+                      >
+                        <Camera className="h-4 w-4" aria-hidden />
+                        Camera
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.28] active:bg-white/[0.10]"
+                      >
+                        <Upload className="h-4 w-4" aria-hidden />
+                        Upload
+                      </button>
+                    </div>
                   )}
-                </section>
 
-                {/* 04 — Context */}
-                <section className="space-y-3">
-                  <Eyebrow>04 · CONTEXT</Eyebrow>
-                  <ul className="flex flex-wrap gap-1.5">
-                    {installContexts.map((ctx) => {
-                      const active = selectedContext === ctx.id;
-                      return (
-                        <li key={ctx.id}>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedContext(ctx.id)}
-                            className={cn(
-                              'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
-                              active
-                                ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
-                                : 'text-white/85 border-white/15 hover:border-white/30'
-                            )}
-                          >
-                            {ctx.label}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-
-                {/* 05 — Earthing + supply */}
-                <section className="space-y-3">
-                  <Eyebrow>05 · EARTHING + SUPPLY</Eyebrow>
-                  <ul className="flex flex-wrap gap-1.5">
-                    {earthingSystems.map((sys) => {
-                      const active = selectedEarthing === sys.id;
-                      return (
-                        <li key={sys.id}>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedEarthing(sys.id)}
-                            className={cn(
-                              'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
-                              active
-                                ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
-                                : 'text-white/85 border-white/15 hover:border-white/30'
-                            )}
-                          >
-                            {sys.label}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
                   <input
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="Supply amperage (e.g. 100A) — optional"
-                    value={supplyAmps}
-                    onChange={(e) => setSupplyAmps(e.target.value)}
-                    className="w-full h-12 px-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 tabular-nums"
-                    style={{ fontSize: '16px' }}
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      // Materialised immediately: clearing the input below
+                      // empties the live FileList, and a lazy setState updater
+                      // would then read nothing.
+                      const picked = Array.from(e.target.files ?? []).find((f) =>
+                        f.type.startsWith('image/')
+                      );
+                      if (picked) setImage(picked);
+                      e.target.value = '';
+                    }}
+                    className="hidden"
                   />
-                </section>
 
-                {/* 06 — Notes */}
-                <section className="space-y-3">
-                  <Eyebrow>06 · ADDITIONAL NOTES</Eyebrow>
-                  <input
-                    type="text"
-                    placeholder="Cable run, location, special conditions…"
-                    value={additionalNotes}
-                    onChange={(e) => setAdditionalNotes(e.target.value)}
-                    className="w-full h-12 px-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30"
+                  <p className="mt-3 text-[11.5px] leading-snug text-white">
+                    One photo — that's all this tool reads. Get the terminals in frame.
+                  </p>
+                </ToolPanel>
+              </div>
+
+              <div className="space-y-4">
+                <ToolPanel title="The situation">
+                  <p className="mb-2 text-[12px] font-medium text-white">Job</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {CONTEXTS.map((c) => (
+                      <ToolChip
+                        key={c.id}
+                        on={context === c.id}
+                        onClick={() => {
+                          haptic.light();
+                          setContext(c.id);
+                        }}
+                      >
+                        {c.label}
+                      </ToolChip>
+                    ))}
+                  </div>
+
+                  <p className="mb-2 mt-4 text-[12px] font-medium text-white">Earthing</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {EARTHING.map((e) => (
+                      <ToolChip
+                        key={e.id}
+                        on={earthing === e.id}
+                        onClick={() => {
+                          haptic.light();
+                          setEarthing(e.id);
+                        }}
+                      >
+                        {e.label}
+                      </ToolChip>
+                    ))}
+                  </div>
+
+                  <p className="mb-2 mt-4 text-[12px] font-medium text-white">Main supply</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {SUPPLY.map((a) => (
+                      <ToolChip
+                        key={a}
+                        on={supply === a}
+                        onClick={() => {
+                          haptic.light();
+                          setSupply(supply === a ? null : a);
+                        }}
+                      >
+                        {a}
+                      </ToolChip>
+                    ))}
+                  </div>
+                </ToolPanel>
+
+                <ToolPanel title="Anything else">
+                  <Textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Existing cabling, awkward access, what's already there…"
                     style={{ fontSize: '16px' }}
+                    className={cn(
+                      'min-h-[84px] resize-none rounded-xl border-white/[0.12] bg-black/20 text-white',
+                      'caret-elec-yellow placeholder:text-white/45',
+                      'focus-visible:border-elec-yellow focus-visible:ring-0 focus-visible:ring-offset-0'
+                    )}
                   />
-                </section>
-              </>
-            )}
+                </ToolPanel>
+              </div>
+            </div>
 
-            {/* Generate */}
-            {canGenerate && (
-              <button
-                type="button"
-                onClick={handleAnalysis}
-                className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-4 min-h-[52px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
-              >
-                Generate wiring guide →
-              </button>
-            )}
-          </>
-        )}
-
-        <canvas ref={canvasRef} className="hidden" />
-      </main>
-    </div>
+      <canvas ref={camera.canvasRef} className="hidden" />
+    </AiToolPage>
   );
 };
 

@@ -208,7 +208,9 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
             scrolling 30 columns to move/duplicate a circuit) but NOT sticky
             (founder call) — it scrolls away under the pinned Way column.
             Density cell — h-7 controls exempt from the 44px rule. */}
-        <TableCell className="h-8 px-1.5 py-0.5 align-middle w-[210px] min-w-[210px] max-w-[210px] border-r border-white/10">
+        {/* pl-3 rather than px-1.5: the row of controls nearly fills the cell,
+          so centring left the select box hard against the table's left border. */}
+        <TableCell className="h-8 pl-3 pr-1.5 py-0.5 align-middle w-[210px] min-w-[210px] max-w-[210px] border-r border-white/10">
           {/* One even row of compact controls — no pills, no dividers.
               Density cell — h-7 controls exempt from the 44px rule. */}
           <div className="flex items-center justify-center gap-1">

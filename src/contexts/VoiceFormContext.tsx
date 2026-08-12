@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 
 export interface FormField {
   name: string;
@@ -248,24 +248,47 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
     return context;
   }, [activeForm]);
 
-  return (
-    <VoiceFormContext.Provider
-      value={{
-        activeForm,
-        registerForm,
-        unregisterForm,
-        fillField,
-        executeAction,
-        submitForm,
-        clearForm,
-        cancelForm,
-        nextStep,
-        getFormContext,
-      }}
-    >
-      {children}
-    </VoiceFormContext.Provider>
+  /*
+   * Memoised. This was an object literal, so every provider render produced a
+   * new context value — and `registerForm` sets state on this provider.
+   *
+   * That closed a loop with any consumer whose effect depended on the context
+   * object: register → setActiveForm → provider re-renders → new value object →
+   * the consumer's effect sees a changed dependency → register again. The quote
+   * builder hit exactly this and died with "Maximum update depth exceeded"
+   * before the page could paint.
+   *
+   * Every callback below is `useCallback`'d, so `activeForm` is the only thing
+   * that can legitimately change the value.
+   */
+  const value = useMemo(
+    () => ({
+      activeForm,
+      registerForm,
+      unregisterForm,
+      fillField,
+      executeAction,
+      submitForm,
+      clearForm,
+      cancelForm,
+      nextStep,
+      getFormContext,
+    }),
+    [
+      activeForm,
+      registerForm,
+      unregisterForm,
+      fillField,
+      executeAction,
+      submitForm,
+      clearForm,
+      cancelForm,
+      nextStep,
+      getFormContext,
+    ]
   );
+
+  return <VoiceFormContext.Provider value={value}>{children}</VoiceFormContext.Provider>;
 }
 
 export function useVoiceFormContext() {

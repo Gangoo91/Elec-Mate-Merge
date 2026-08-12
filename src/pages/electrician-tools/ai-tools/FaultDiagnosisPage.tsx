@@ -50,8 +50,8 @@
  *   now saves the diagnosis.
  */
 
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { X, Loader2, Camera, Upload, Stethoscope } from 'lucide-react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { X, Camera, Upload, Stethoscope } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useToast } from '@/hooks/use-toast';
@@ -62,8 +62,15 @@ import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { cn } from '@/lib/utils';
 
 import { Textarea } from '@/components/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { HubPage, HubMasthead } from '@/components/hub/HubPrimitives';
+import { useCameraCapture } from '@/hooks/useCameraCapture';
+import {
+  AiToolPage,
+  ToolPanel,
+  ToolChip,
+  ToolChoice,
+  ToolAction,
+  ToolWorking,
+} from '@/components/electrician-tools/ai-tools/ToolShell';
 import FaultDiagnosisResult, {
   type FaultDiagnosisData,
 } from '@/components/electrician-tools/ai-tools/FaultDiagnosisResult';
@@ -132,66 +139,6 @@ const worstCode = (codes: EicrCode[]): EicrCode =>
 
 // ───────────────────────────────────────────────────────────────────────────
 
-/** One panel of the brief. Edge-to-edge on a phone, inset from `sm:` up. */
-const Panel = ({
-  title,
-  hint,
-  children,
-}: {
-  title: string;
-  hint?: React.ReactNode;
-  children: React.ReactNode;
-}) => (
-  <section
-    className={cn(
-      '-mx-4 border-y border-elec-yellow/35 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
-      'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
-      'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]'
-    )}
-  >
-    <div className="mb-3 flex items-baseline justify-between gap-3">
-      <h2 className="text-[14px] font-semibold tracking-tight text-elec-yellow">{title}</h2>
-      {hint && (
-        <span className="shrink-0 text-[11px] font-medium tabular-nums text-white">{hint}</span>
-      )}
-    </div>
-    {children}
-  </section>
-);
-
-/**
- * A pill. Sentence case, not the uppercase `tracking-[0.12em]` the whole form
- * used to be set in — eight shouting chips is harder to scan than eight words.
- */
-const Chip = ({
-  on,
-  onClick,
-  children,
-}: {
-  on: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) => (
-  <button
-    type="button"
-    aria-pressed={on}
-    onClick={onClick}
-    className={cn(
-      'inline-flex min-h-11 items-center rounded-full border px-3.5 text-[12.5px] font-medium',
-      'transition-colors duration-150 touch-manipulation select-none',
-      '[-webkit-tap-highlight-color:transparent] active:scale-[0.97]',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-      on
-        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-        : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.28]'
-    )}
-  >
-    {children}
-  </button>
-);
-
-// ───────────────────────────────────────────────────────────────────────────
-
 const FaultDiagnosisPage = () => {
   const { toast } = useToast();
   const haptic = useHaptic();
@@ -205,16 +152,20 @@ const FaultDiagnosisPage = () => {
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const camera = useCameraCapture({
+    onError: () =>
+      toast({
+        title: 'No camera access',
+        description: 'Allow camera access, or upload a photo instead.',
+        variant: 'destructive',
+      }),
+  });
 
   const [images, setImages] = useState<File[]>([]);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [timeframe, setTimeframe] = useState('unknown');
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalysing, setIsAnalysing] = useState(false);
   const [diagnosis, setDiagnosis] = useState<FaultDiagnosisData | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -225,68 +176,12 @@ const FaultDiagnosisPage = () => {
   const previews = useMemo(() => images.map((file) => URL.createObjectURL(file)), [images]);
   useEffect(() => () => previews.forEach(URL.revokeObjectURL), [previews]);
 
-  // ── Camera ───────────────────────────────────────────────────────────────
-  const startCamera = async () => {
-    try {
-      const media = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      });
-      // State FIRST. The <video> does not exist until this flips, which is
-      // exactly what the old ordering got wrong.
-      setStream(media);
-      setIsCameraActive(true);
-    } catch {
-      toast({
-        title: 'No camera access',
-        description: 'Allow camera access, or upload a photo instead.',
-        variant: 'destructive',
-      });
+  const handleCapture = async () => {
+    const file = await camera.capture(`capture-${images.length + 1}.jpg`);
+    if (file) {
+      haptic.success();
+      setImages((prev) => [...prev, file].slice(0, MAX_PHOTOS));
     }
-  };
-
-  // Attach once the element is on the page.
-  useEffect(() => {
-    if (isCameraActive && stream && videoRef.current) {
-      videoRef.current.srcObject = stream;
-    }
-  }, [isCameraActive, stream]);
-
-  // The one place tracks are stopped: whenever the stream we hold is replaced
-  // or dropped, and on unmount. Navigating away mid-capture used to leave the
-  // camera running.
-  useEffect(() => {
-    if (!stream) return;
-    return () => stream.getTracks().forEach((track) => track.stop());
-  }, [stream]);
-
-  const stopCamera = useCallback(() => {
-    setStream(null);
-    setIsCameraActive(false);
-  }, []);
-
-  const captureImage = () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d')?.drawImage(video, 0, 0);
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) return;
-        haptic.success();
-        setImages((prev) =>
-          [...prev, new File([blob], `capture-${prev.length + 1}.jpg`, { type: 'image/jpeg' })].slice(
-            0,
-            MAX_PHOTOS
-          )
-        );
-        stopCamera();
-      },
-      'image/jpeg',
-      0.9
-    );
   };
 
   const handleFileSelect = (files: FileList | null) => {
@@ -538,18 +433,10 @@ const FaultDiagnosisPage = () => {
           <FaultDiagnosisResult data={diagnosis} onExport={handleExport} onReset={reset} />
         </div>
       ) : isAnalysing ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-          <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" aria-hidden />
-          <p className="text-[13.5px] font-semibold text-white">Working through it…</p>
-          <p className="max-w-[30ch] text-[12px] leading-snug text-white">
-            Matching the symptoms against BS 7671 and GN3 guidance.
-          </p>
-          {/* Indeterminate. The old bar counted up in random increments to a
-              number it had no way of knowing. */}
-          <div className="mt-1 h-1 w-40 overflow-hidden rounded-full bg-white/[0.10]">
-            <div className="h-full w-full animate-pulse rounded-full bg-elec-yellow/70" />
-          </div>
-        </div>
+        <ToolWorking
+          title="Working through it…"
+          detail="Matching the symptoms against BS 7671 and GN3 guidance."
+        />
       ) : (
         <div className="flex-1 p-5">
           <p className="text-[12.5px] leading-relaxed text-white">
@@ -576,53 +463,30 @@ const FaultDiagnosisPage = () => {
   );
 
   const diagnoseButton = (
-    <button
-      type="button"
+    <ToolAction
       onClick={handleDiagnose}
       disabled={!canDiagnose || isAnalysing}
-      className={cn(
-        'inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5',
-        'text-[14px] font-semibold text-black',
-        'bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)]',
-        'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-8px_hsl(47_100%_50%_/_0.30)]',
-        'transition-colors duration-150 touch-manipulation select-none',
-        '[-webkit-tap-highlight-color:transparent] active:scale-[0.98]',
-        'hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-        'disabled:cursor-not-allowed disabled:opacity-40'
-      )}
+      busy={isAnalysing}
+      busyLabel="Working through it…"
+      icon={<Stethoscope className="h-4 w-4" aria-hidden />}
     >
-      {isAnalysing ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-          Working through it…
-        </>
-      ) : (
-        <>
-          <Stethoscope className="h-4 w-4" aria-hidden />
-          {images.length > 0 ? 'Diagnose from the photos' : 'Diagnose the fault'}
-        </>
-      )}
-    </button>
+      {images.length > 0 ? 'Diagnose from the photos' : 'Diagnose the fault'}
+    </ToolAction>
   );
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="AI tools"
-        title="Fault Diagnosis"
-        backTo="/electrician-tools/ai-tooling"
-      />
-
-      <div className="mx-auto max-w-[1600px] px-4 pb-32 pt-4 lg:px-8 lg:pb-10">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
-          {/* ── The brief ───────────────────────────────────────────────── */}
-          <div className="min-w-0 space-y-4">
-            {/* Two independent stacks rather than a 2x2 of grid cells, so a
-                short panel isn't stretched to the height of a tall neighbour. */}
-            <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
+    <AiToolPage
+      title="Fault Diagnosis"
+      result={result}
+      resultTitle="Fault diagnosis"
+      hasResult={Boolean(diagnosis) || isAnalysing}
+      action={diagnoseButton}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={setSheetOpen}
+    >
+      <div className="grid gap-4 xl:grid-cols-2 xl:items-start">
               <div className="space-y-4">
-                <Panel
+                <ToolPanel
                   title="What you see"
                   hint={selectedSymptoms.length > 0 ? `${selectedSymptoms.length} picked` : undefined}
                 >
@@ -667,9 +531,9 @@ const FaultDiagnosisPage = () => {
                       );
                     })}
                   </div>
-                </Panel>
+                </ToolPanel>
 
-                <Panel title="Anything else">
+                <ToolPanel title="Anything else">
                   <Textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -682,15 +546,15 @@ const FaultDiagnosisPage = () => {
                       'focus-visible:border-elec-yellow focus-visible:ring-0 focus-visible:ring-offset-0'
                     )}
                   />
-                </Panel>
+                </ToolPanel>
               </div>
 
               <div className="space-y-4">
-                <Panel title="When and where">
+                <ToolPanel title="When and where">
                   <p className="mb-2 text-[12px] font-medium text-white">It started</p>
                   <div className="flex flex-wrap gap-1.5">
                     {TIMEFRAMES.map((t) => (
-                      <Chip
+                      <ToolChip
                         key={t.id}
                         on={timeframe === t.id}
                         onClick={() => {
@@ -699,14 +563,14 @@ const FaultDiagnosisPage = () => {
                         }}
                       >
                         {t.label}
-                      </Chip>
+                      </ToolChip>
                     ))}
                   </div>
 
                   <p className="mb-2 mt-4 text-[12px] font-medium text-white">Where it is</p>
                   <div className="flex flex-wrap gap-1.5">
                     {LOCATIONS.map((loc) => (
-                      <Chip
+                      <ToolChip
                         key={loc}
                         on={location === loc}
                         onClick={() => {
@@ -715,20 +579,20 @@ const FaultDiagnosisPage = () => {
                         }}
                       >
                         {loc}
-                      </Chip>
+                      </ToolChip>
                     ))}
                   </div>
-                </Panel>
+                </ToolPanel>
 
-                <Panel
+                <ToolPanel
                   title="Photos"
                   hint={images.length > 0 ? `${images.length} of ${MAX_PHOTOS}` : 'Optional'}
                 >
-                  {isCameraActive ? (
+                  {camera.isActive ? (
                     <div className="space-y-2">
                       <div className="relative aspect-video overflow-hidden rounded-xl border border-elec-yellow/40 bg-black">
                         <video
-                          ref={videoRef}
+                          ref={camera.videoRef}
                           autoPlay
                           playsInline
                           muted
@@ -738,7 +602,7 @@ const FaultDiagnosisPage = () => {
                       <div className="flex gap-2">
                         <button
                           type="button"
-                          onClick={captureImage}
+                          onClick={handleCapture}
                           className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[12.5px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
                         >
                           <Camera className="h-4 w-4" aria-hidden />
@@ -746,7 +610,7 @@ const FaultDiagnosisPage = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={stopCamera}
+                          onClick={camera.stop}
                           aria-label="Close camera"
                           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] text-white transition-colors touch-manipulation hover:border-white/[0.28]"
                         >
@@ -758,7 +622,7 @@ const FaultDiagnosisPage = () => {
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
-                        onClick={startCamera}
+                        onClick={camera.start}
                         disabled={images.length >= MAX_PHOTOS}
                         className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.28] active:bg-white/[0.10] disabled:opacity-40"
                       >
@@ -814,71 +678,12 @@ const FaultDiagnosisPage = () => {
                   <p className="mt-3 text-[11.5px] leading-snug text-white">
                     Optional — a description alone works, but a photo sharpens the call.
                   </p>
-                </Panel>
+                </ToolPanel>
               </div>
             </div>
 
-            <div className="hidden lg:block">{diagnoseButton}</div>
-          </div>
-
-          {/* ── The result rail ─────────────────────────────────────────── */}
-          {/* Exactly one of the rail and the sheet is ever mounted —
-              `useIsMobile` switches at 1024px, the same width as `lg:`. */}
-          {!isMobile && (
-            <aside className="hidden lg:block">
-              {/* Full height once there is something to scroll; matched to the
-                  brief's height when empty, so it isn't a hole in the page. */}
-              <div
-                className={cn(
-                  'sticky top-20',
-                  diagnosis || isAnalysing ? 'h-[calc(100dvh-9.5rem)] min-h-[420px]' : 'h-full'
-                )}
-              >
-                {result}
-              </div>
-            </aside>
-          )}
-        </div>
-      </div>
-
-      {/* ── Mobile: fixed action bar ────────────────────────────────────── */}
-      <div className="fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-elec-dark via-elec-dark/95 to-transparent px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-4 lg:hidden">
-        <div className="flex items-center gap-2">
-          {diagnosis && (
-            <button
-              type="button"
-              onClick={() => {
-                haptic.light();
-                setSheetOpen(true);
-              }}
-              className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-neutral-900 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation active:bg-white/[0.10]"
-            >
-              View diagnosis
-            </button>
-          )}
-          <div className="min-w-0 flex-1">{diagnoseButton}</div>
-        </div>
-      </div>
-
-      {/* ── Mobile: the diagnosis ───────────────────────────────────────── */}
-      {isMobile && (
-        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetContent
-            side="bottom"
-            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.10] bg-elec-dark p-0"
-          >
-            <SheetHeader className="border-b border-white/[0.10] px-4 py-3 text-left">
-              <SheetTitle className="text-[15px] font-semibold text-white">
-                Fault diagnosis
-              </SheetTitle>
-            </SheetHeader>
-            <div className="h-[calc(85vh-57px)] p-3">{result}</div>
-          </SheetContent>
-        </Sheet>
-      )}
-
-      <canvas ref={canvasRef} className="hidden" />
-    </HubPage>
+      <canvas ref={camera.canvasRef} className="hidden" />
+    </AiToolPage>
   );
 };
 

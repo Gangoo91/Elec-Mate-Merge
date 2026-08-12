@@ -278,8 +278,8 @@ export function InvoiceScannerSheet({
           {/* Processing Overlay */}
           {isProcessing && (
             <div className="absolute inset-0 z-50 bg-black/80 flex flex-col items-center justify-center">
-              <div className="w-16 h-16 rounded-2xl bg-elec-yellow/20 flex items-center justify-center mb-4">
-                <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+              <div className="w-16 h-16 rounded-2xl bg-white/[0.08] flex items-center justify-center mb-4">
+                <Loader2 className="h-11 w-11 text-elec-yellow animate-spin" />
               </div>
               <p className="text-white font-medium text-lg">{progress || 'Processing...'}</p>
               <p className="text-white text-sm mt-1">This may take a few seconds</p>
@@ -289,7 +289,7 @@ export function InvoiceScannerSheet({
           {/* Mode Selection */}
           {mode === 'select' && (
             <div className="p-4 sm:p-6">
-              <p className="text-[12px] text-white/60 mb-4 -mt-1">
+              <p className="text-[12px] text-white mb-4 -mt-1">
                 Take a photo or upload an image/PDF — every line item is extracted automatically.
               </p>
 
@@ -307,14 +307,14 @@ export function InvoiceScannerSheet({
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleCameraPress}
-                  className="flex flex-col items-start gap-3 p-4 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/[0.2] hover:bg-elec-yellow/[0.1] touch-manipulation active:scale-[0.98] transition-all select-none"
+                  className="flex flex-col items-start gap-3 p-4 rounded-xl bg-white/[0.08]] border border-elec-yellow/[0.2] hover:bg-white/[0.08]] touch-manipulation active:scale-[0.98] transition-all select-none"
                 >
                   <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center">
                     <Camera className="h-5 w-5 text-black" />
                   </div>
                   <div className="text-left">
                     <p className="text-[14px] font-semibold text-white">Take photo</p>
-                    <p className="text-[11px] text-white/60 mt-0.5">Use the camera</p>
+                    <p className="text-[11px] text-white mt-0.5">Use the camera</p>
                   </div>
                 </button>
 
@@ -323,11 +323,11 @@ export function InvoiceScannerSheet({
                   className="flex flex-col items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all select-none"
                 >
                   <div className="w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
-                    <Upload className="h-5 w-5 text-white/85" />
+                    <Upload className="h-5 w-5 text-white" />
                   </div>
                   <div className="text-left">
                     <p className="text-[14px] font-semibold text-white">Upload file</p>
-                    <p className="text-[11px] text-white/60 mt-0.5">Image or PDF</p>
+                    <p className="text-[11px] text-white mt-0.5">Image or PDF</p>
                   </div>
                 </button>
               </div>
@@ -343,17 +343,17 @@ export function InvoiceScannerSheet({
 
               {/* Tips — compact */}
               <div className="mt-4 pt-3 border-t border-white/[0.08] pb-[max(8px,env(safe-area-inset-bottom))]">
-                <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-[11px] text-white/55">
+                <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-[11px] text-white">
                   <li className="flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-elec-yellow/70" />
+                    <span className="w-1 h-1 rounded-full bg-white/[0.08]" />
                     Good lighting, no shadows
                   </li>
                   <li className="flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-elec-yellow/70" />
+                    <span className="w-1 h-1 rounded-full bg-white/[0.08]" />
                     Keep it flat, capture all lines
                   </li>
                   <li className="flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-elec-yellow/70" />
+                    <span className="w-1 h-1 rounded-full bg-white/[0.08]" />
                     Best with printed invoices (Screwfix, Toolstation…)
                   </li>
                 </ul>
@@ -382,10 +382,10 @@ export function InvoiceScannerSheet({
                         style={{ width: '90%', aspectRatio: '210 / 297' }}
                       >
                         {/* Corner markers */}
-                        <div className="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-elec-yellow rounded-tl" />
-                        <div className="absolute -top-1 -right-1 w-8 h-8 border-t-4 border-r-4 border-elec-yellow rounded-tr" />
-                        <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-4 border-l-4 border-elec-yellow rounded-bl" />
-                        <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-elec-yellow rounded-br" />
+                        <div className="absolute -top-1 -left-1 w-11 h-11 border-t-4 border-l-4 border-elec-yellow rounded-tl" />
+                        <div className="absolute -top-1 -right-1 w-11 h-11 border-t-4 border-r-4 border-elec-yellow rounded-tr" />
+                        <div className="absolute -bottom-1 -left-1 w-11 h-11 border-b-4 border-l-4 border-elec-yellow rounded-bl" />
+                        <div className="absolute -bottom-1 -right-1 w-11 h-11 border-b-4 border-r-4 border-elec-yellow rounded-br" />
 
                         {/* Center text */}
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -400,7 +400,7 @@ export function InvoiceScannerSheet({
                   {/* Loading state */}
                   {!isStreaming && !error && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Loader2 className="h-10 w-10 text-white animate-spin" />
+                      <Loader2 className="h-11 w-10 text-white animate-spin" />
                     </div>
                   )}
                 </>
@@ -486,7 +486,7 @@ export function InvoiceScannerSheet({
 
                     {/* Use Photo button */}
                     <Button
-                      className="h-12 flex-1 max-w-[140px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                      className="h-12 flex-1 max-w-[140px] bg-elec-yellow hover:brightness-110 text-black font-semibold"
                       onClick={confirmPhoto}
                     >
                       <Check className="h-4 w-4 mr-2" />

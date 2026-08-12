@@ -18,7 +18,16 @@ interface RAMSJob {
   created_at: string;
   started_at: string | null;
   completed_at: string | null;
+  /** Server heartbeat — refreshed every ~15s while an agent is actually alive. */
+  updated_at: string | null;
 }
+
+/**
+ * Client-side backstop only. The server `rams-stall-reaper` cron runs every
+ * minute against a 5-minute window and will almost always get there first; this
+ * exists so a user staring at the screen isn't left waiting on a cron.
+ */
+const CLIENT_STALL_MS = 6 * 60 * 1000;
 
 interface UseRAMSJobPollingReturn {
   job: RAMSJob | null;
@@ -35,14 +44,13 @@ interface UseRAMSJobPollingReturn {
   ramsData: any;
   methodData: any;
   error: string | null;
+  /** Seconds since the server last reported activity. null when not running. */
+  secondsSinceHeartbeat: number | null;
 }
 
 export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn => {
   const [job, setJob] = useState<RAMSJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
-  const [lastProgress, setLastProgress] = useState(0);
-  const [lastCurrentStep, setLastCurrentStep] = useState<string>('');
-  const [lastActivityUpdate, setLastActivityUpdate] = useState(Date.now());
 
   const pollJob = useCallback(async () => {
     if (!jobId) return;
@@ -61,32 +69,30 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
 
       setJob(data);
 
-      // Stuck job detection: 180s timeout (3 minutes) - reset on progress OR step change
+      // Liveness comes straight from the server heartbeat. The agents refresh
+      // `updated_at` every ~15s while streaming, so a stale value means the
+      // isolate is genuinely gone — previously this inferred activity from
+      // `progress` / `current_step`, which barely move during a long stream.
       if (data.status === 'processing') {
-        const hasProgressChanged = data.progress !== lastProgress;
-        const hasStepChanged = data.current_step !== lastCurrentStep;
+        const lastBeat = data.updated_at ? new Date(data.updated_at).getTime() : Date.now();
+        const stalledMs = Date.now() - lastBeat;
 
-        if (hasProgressChanged || hasStepChanged) {
-          // Any activity detected - reset timer
-          setLastProgress(data.progress);
-          setLastCurrentStep(data.current_step || '');
-          setLastActivityUpdate(Date.now());
-        } else {
-          // No activity - check if stuck (increased timeout to 6 minutes)
-          const stuckDuration = Date.now() - lastActivityUpdate;
-          if (stuckDuration > 360000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', data.progress + '%');
-            await supabase
-              .from('rams_generation_jobs')
-              .update({
-                status: 'failed',
-                error_message:
-                  'Generation timed out - no activity detected for 6 minutes. Please try again.',
-              })
-              .eq('id', jobId);
-            setIsPolling(false);
-            return;
-          }
+        if (stalledMs > CLIENT_STALL_MS) {
+          console.error(`RAMS job ${jobId}: no server heartbeat for ${Math.round(stalledMs / 1000)}s`);
+          await supabase
+            .from('rams_generation_jobs')
+            .update({
+              status: 'failed',
+              error_message:
+                'Generation timed out — no activity detected for 6 minutes. Please try again.',
+            })
+            .eq('id', jobId)
+            // Guard: without this, a job that finished while the timer was
+            // expiring gets its `complete` status overwritten with `failed`
+            // and the finished document is thrown away.
+            .eq('status', 'processing');
+          setIsPolling(false);
+          return;
         }
       }
 
@@ -102,7 +108,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     } catch (error) {
       console.error('Error polling job:', error);
     }
-  }, [jobId, lastProgress, lastCurrentStep, lastActivityUpdate]);
+  }, [jobId]);
 
   useEffect(() => {
     if (!jobId || !isPolling) return;
@@ -170,5 +176,9 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     ramsData: job?.rams_data,
     methodData: job?.method_data,
     error: job?.error_message,
+    secondsSinceHeartbeat:
+      job?.status === 'processing' && job?.updated_at
+        ? Math.max(0, Math.round((Date.now() - new Date(job.updated_at).getTime()) / 1000))
+        : null,
   };
 };

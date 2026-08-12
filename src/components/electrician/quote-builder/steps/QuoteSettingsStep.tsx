@@ -9,6 +9,7 @@ import { QuoteSettings, QuoteItem } from '@/types/quote';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { inputCn, cardCn } from '@/components/forms/fieldStyles';
 
 const settingsSchema = z.object({
   vatRate: z.number().min(0).max(100, 'VAT rate must be between 0-100%'),
@@ -45,17 +46,15 @@ interface QuoteSettingsStepProps {
   onUpdate: (settings: QuoteSettings) => void;
 }
 
-const inputClass =
-  'h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white/40';
 
 /** Group eyebrow — matches the quotes pages */
 const GroupHeader = ({ n, title, sub }: { n: string; title: string; sub?: string }) => (
   <div className="mb-1">
     <div className="flex items-baseline gap-2">
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· {title}</span>
     </div>
-    {sub && <p className="text-[11px] text-white/50 mt-1">{sub}</p>}
+    {sub && <p className="text-[11px] text-white mt-1">{sub}</p>}
   </div>
 );
 
@@ -74,7 +73,7 @@ const ToggleRow = ({
   <div className={cn('flex items-center justify-between py-3.5', !last && 'border-b border-white/[0.08]')}>
     <div className="pr-3">
       <p className="text-[14px] font-medium text-white">{label}</p>
-      <p className="text-[12px] text-white/60 mt-0.5">{description}</p>
+      <p className="text-[12px] text-white mt-0.5">{description}</p>
     </div>
     {children}
   </div>
@@ -154,12 +153,14 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
 
   return (
     <Form {...form}>
-      <div className="space-y-8 text-left">
+      {/* Two columns from lg up: Tax beside Pricing, Presentation under
+          them. Stacked on anything narrower. */}
+      <div className="space-y-4 text-left lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
         {/* Document type (Quote / Estimate) now lives in the wizard header so
             it stays visible on every step. */}
 
         {/* ============ 01 · TAX ============ */}
-        <div>
+        <section className={cardCn}>
           <GroupHeader n="01" title="Tax" sub="VAT, reverse charge and CIS" />
 
           <ToggleRow label="VAT registered" description="Add VAT to this quote">
@@ -184,7 +185,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                         inputMode="decimal"
                         step="0.1"
                         placeholder="20"
-                        className={cn(inputClass, 'max-w-[120px]')}
+                        className={cn(inputCn, 'max-w-[120px]')}
                         value={field.value}
                         onChange={(e) => field.onChange(e.target.value === '' ? '' : parseFloat(e.target.value) || '')}
                       />
@@ -203,9 +204,9 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
             {switchField('reverseCharge')}
           </ToggleRow>
           {isReverseCharge && (
-            <p className="text-[11px] text-white/60 py-2 leading-relaxed border-b border-white/[0.08]">
+            <p className="text-[11px] text-white py-2 leading-relaxed border-b border-white/[0.08]">
               Invoice shows £0 VAT with the statement{' '}
-              <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span>{' '}
+              <span className="text-white">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span>{' '}
               — the notional VAT is shown for their records.
             </p>
           )}
@@ -250,7 +251,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                   </button>
                 ))}
               </div>
-              <p className="text-[11px] text-white/55 mt-2">
+              <p className="text-[11px] text-white mt-2">
                 Calculated on the Labour element only — categorise chargeable labour as Labour.
               </p>
 
@@ -258,11 +259,11 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
               {cisPreview.labourNet > 0 ? (
                 <div className="mt-3 rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
                   <div className="flex justify-between text-[12px]">
-                    <span className="text-white/70">Labour (ex-VAT)</span>
+                    <span className="text-white">Labour (ex-VAT)</span>
                     <span className="text-white tabular-nums">£{cisPreview.labourNet.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[12px]">
-                    <span className="text-white/70">Less CIS ({cisPreview.cisRate}%)</span>
+                    <span className="text-white">Less CIS ({cisPreview.cisRate}%)</span>
                     <span className="text-red-300 tabular-nums">−£{cisPreview.cisAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
@@ -279,15 +280,16 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
               )}
             </div>
           )}
-        </div>
 
-        {/* ============ 02 · PRICING ============ */}
-        <div>
+          {/* Tax and pricing are one card: both are "what the money does".
+              Presentation — what the client actually sees — is the other. */}
+          <div className="h-px bg-white/[0.08]" />
+
           <GroupHeader n="02" title="Pricing" sub="Adjustments and discounts" />
 
           <div className="py-3.5 border-b border-white/[0.08]">
             <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
-            <p className="text-[12px] text-white/60 mt-0.5">
+            <p className="text-[12px] text-white mt-0.5">
               Signed %. Negative = discount, positive = markup. Applied before global discount.
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2">
@@ -305,14 +307,14 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                             type="number"
                             step="0.1"
                             placeholder="0"
-                            className={cn(inputClass, 'pr-8')}
+                            className={cn(inputCn, 'pr-8')}
                             value={field.value ?? ''}
                             onChange={(e) => {
                               const v = e.target.value;
                               field.onChange(v === '' ? undefined : parseFloat(v));
                             }}
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm pointer-events-none">
                             %
                           </span>
                         </div>
@@ -363,7 +365,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                       <FormControl>
                         <DecimalInput
                           placeholder={discountType === 'percentage' ? '20' : '50.00'}
-                          className={inputClass}
+                          className={inputCn}
                           value={(field.value as number) || 0}
                           onChange={(val) => field.onChange(val)}
                         />
@@ -378,7 +380,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                     <FormItem>
                       <label className="text-xs font-medium text-white mb-1.5 block">Label (optional)</label>
                       <FormControl>
-                        <Input placeholder="e.g. Retention" className={inputClass} {...field} />
+                        <Input placeholder="e.g. Retention" className={inputCn} {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -386,10 +388,10 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
               </div>
             </div>
           )}
-        </div>
+        </section>
 
         {/* ============ 03 · PRESENTATION ============ */}
-        <div>
+        <section className={cardCn}>
           <GroupHeader n="03" title="Presentation" sub="What the client sees on the quote and PDF" />
 
           <ToggleRow label="Materials breakdown" description="Show each material as a line item on the PDF">
@@ -407,7 +409,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
           >
             {switchField('hideMarkupFromCustomer')}
           </ToggleRow>
-        </div>
+        </section>
       </div>
     </Form>
   );

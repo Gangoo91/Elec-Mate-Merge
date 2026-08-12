@@ -16,6 +16,8 @@ import { FEATURES } from '@/config/features';
 import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
 import type { Quote, QuoteClient, QuoteItem, JobDetails, QuoteSettings } from '@/types/quote';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { DocumentStepPanel } from '@/components/electrician/shared/DocumentStepPanel';
 
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
@@ -155,6 +157,8 @@ export const QuoteWizard = ({
   const [recoveredDraft, setRecoveredDraft] = useState<Record<string, unknown> | null>(null);
   const quoteIdRef = useRef<string | null>(null);
   const [step, setStep] = useState(0);
+  // Desktop shows the whole document at once; the phone keeps the five tabs.
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const handleQuoteGenerated = useCallback(() => {
     draftStorage.clearDraft('quote', quoteIdRef.current);
@@ -246,6 +250,16 @@ export const QuoteWizard = ({
   }, [quote.id]);
 
   const voiceForm = useOptionalVoiceFormContext();
+  /*
+   * Pulled out as individual functions. Depending on the whole context object
+   * looped: registering sets state on the provider, the provider re-renders,
+   * and — before the value was memoised — that alone changed the object's
+   * identity and re-ran this effect. Even memoised, `activeForm` changes on
+   * every register, so the container is still the wrong dependency. These two
+   * are `useCallback([])` in the provider and never change.
+   */
+  const registerVoiceForm = voiceForm?.registerForm;
+  const unregisterVoiceForm = voiceForm?.unregisterForm;
 
   // Keep a live ref to the latest quote so the localStorage fallback timer can
   // stay stable instead of resetting on every keystroke (ELE-1163).
@@ -349,7 +363,7 @@ export const QuoteWizard = ({
 
   // Register voice form
   useEffect(() => {
-    if (!voiceForm) return;
+    if (!registerVoiceForm || !unregisterVoiceForm) return;
     const allFields: FormField[] = [
       {
         name: 'client_name',
@@ -387,7 +401,7 @@ export const QuoteWizard = ({
         currentValue: quote.jobDetails?.description,
       },
     ];
-    voiceForm.registerForm({
+    registerVoiceForm({
       formId: 'quote-form',
       formName: 'Quote Builder',
       fields: allFields,
@@ -399,9 +413,17 @@ export const QuoteWizard = ({
       onCancel: () => window.history.back(),
     });
     return () => {
-      voiceForm.unregisterForm('quote-form');
+      unregisterVoiceForm('quote-form');
     };
-  }, [voiceForm, quote, handleVoiceFillField, handleVoiceAction, generateQuote, resetQuote]);
+  }, [
+    registerVoiceForm,
+    unregisterVoiceForm,
+    quote,
+    handleVoiceFillField,
+    handleVoiceAction,
+    generateQuote,
+    resetQuote,
+  ]);
 
   // Import cost data
   useEffect(() => {
@@ -499,8 +521,8 @@ export const QuoteWizard = ({
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
 
       {/* === DOCUMENT TYPE — always visible so Quote vs Estimate is never missed === */}
-      <div className="flex items-center gap-3 pt-2">
-        <span className="text-[11px] font-medium uppercase tracking-wider text-white/55">
+      <div className="flex items-center gap-3 pt-2 pb-5">
+        <span className="text-[11px] font-medium uppercase tracking-wider text-white">
           Creating
         </span>
         <div className="inline-flex p-1 rounded-xl bg-white/[0.05] border border-white/[0.10]">
@@ -519,12 +541,12 @@ export const QuoteWizard = ({
                   updateSettings({ ...quote.settings, isEstimate: val } as QuoteSettings)
                 }
                 className={cn(
-                  'h-9 px-4 rounded-lg text-[13px] font-semibold touch-manipulation transition-all',
+                  'h-11 px-4 rounded-lg text-[13px] font-semibold touch-manipulation transition-all',
                   active
                     ? val
                       ? 'bg-amber-500 text-black'
                       : 'bg-elec-yellow text-black'
-                    : 'text-white/55'
+                    : 'text-white'
                 )}
               >
                 {label}
@@ -539,8 +561,8 @@ export const QuoteWizard = ({
         )}
       </div>
 
-      {/* === STEP RAIL — spans the column === */}
-      <div className="pt-3 pb-6">
+      {/* === STEP RAIL — phone only; desktop shows every section at once === */}
+      <div className={cn('pt-3 pb-6', isDesktop && 'hidden')}>
         <div className="flex items-center">
           {STEPS.map((s, i) => (
             <Fragment key={s.key}>
@@ -548,14 +570,14 @@ export const QuoteWizard = ({
                 <div
                   className={cn(
                     'flex-1 h-[2px] rounded-full mx-2 sm:mx-3 min-w-3',
-                    i <= step ? 'bg-elec-yellow/50' : 'bg-white/[0.10]'
+                    i <= step ? 'bg-elec-yellow' : 'bg-white/[0.10]'
                   )}
                 />
               )}
               <button
                 type="button"
                 onClick={() => goToStep(i)}
-                className="flex items-center gap-2 flex-shrink-0 py-1 touch-manipulation select-none"
+                className="flex min-h-11 items-center gap-2 flex-shrink-0 py-1.5 touch-manipulation select-none"
               >
                 <span
                   className={cn(
@@ -563,8 +585,10 @@ export const QuoteWizard = ({
                     i === step
                       ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
                       : completed[i]
-                        ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-white/[0.06] text-white/55 border border-white/[0.10]'
+                        // Done reads as Volt on neutral, not a third colour.
+                        // Green here made the rail a traffic light.
+                        ? 'bg-white/[0.06] text-elec-yellow border border-elec-yellow/40'
+                        : 'bg-white/[0.06] text-white border border-white/[0.10]'
                   )}
                 >
                   {completed[i] && i !== step ? <Check className="h-4 w-4" /> : i + 1}
@@ -572,7 +596,7 @@ export const QuoteWizard = ({
                 <span
                   className={cn(
                     'text-[12px] font-medium leading-none hidden sm:block',
-                    i === step ? 'text-white' : completed[i] ? 'text-white/80' : 'text-white/50'
+                    i === step ? 'text-white' : 'text-white'
                   )}
                 >
                   {s.label}
@@ -585,27 +609,30 @@ export const QuoteWizard = ({
 
       {/* === STEP CONTENT — heading inside the panel === */}
       {/* Mobile: flat + full width. sm+: elevated panel matching the quotes pages. */}
-      <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6 lg:p-8">
-        <div className="mb-5 pb-4 border-b border-white/[0.08]">
-          <h2 className="text-[20px] font-bold text-white leading-tight">
-            {isEstimate ? STEPS[step].title.replace(/quote/g, 'estimate') : STEPS[step].title}
-          </h2>
-          <p className="text-[12px] text-white/60 mt-1">{STEPS[step].sub}</p>
-        </div>
-        <section className={cn(step !== 0 && 'hidden')}>
+      <div>
+        {!isDesktop && (
+          <div className="mb-5 pb-4 border-b border-white/[0.08]">
+            <h2 className="text-[20px] font-bold text-white leading-tight">
+              {isEstimate ? STEPS[step].title.replace(/quote/g, 'estimate') : STEPS[step].title}
+            </h2>
+            <p className="text-[12px] text-white mt-1">{STEPS[step].sub}</p>
+          </div>
+        )}
+        <div className={cn(isDesktop && 'grid grid-cols-2 gap-5')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 0} title={STEPS[0].title} sub={STEPS[0].sub}>
           <ClientDetailsStep client={quote.client} onUpdate={updateClient} quoteId={quote.id} />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 1 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 1} title={STEPS[1].title} sub={STEPS[1].sub}>
           <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
           <MarketBenchmarkHint
             jobText={benchmarkJobText}
             postcode={quote.client?.postcode}
             className="mt-5"
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 2 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 2} wide title={STEPS[2].title} sub={STEPS[2].sub}>
           <MarketBenchmarkHint
             jobText={benchmarkJobText}
             postcode={quote.client?.postcode}
@@ -623,19 +650,20 @@ export const QuoteWizard = ({
             calculateAdjustedPrice={calculateAdjustedPrice}
             stockItems={stockItems}
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 3 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 3} wide title={STEPS[3].title} sub={STEPS[3].sub}>
           <QuoteSettingsStep
             settings={quote.settings}
             items={quote.items}
             onUpdate={updateSettings}
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 4 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 4} wide title={STEPS[4].title} sub={STEPS[4].sub}>
           <QuoteReviewStep quote={quote} />
-        </section>
+        </DocumentStepPanel>
+        </div>
       </div>
 
       {/* === STICKY FOOTER — centred, symmetric === */}
@@ -652,11 +680,11 @@ export const QuoteWizard = ({
           {/* Mobile strip — desktop folds this into the nav row */}
           <div className="flex items-center justify-between pt-2.5 pb-1 sm:hidden">
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="text-[11px] text-white/55 tabular-nums flex-shrink-0">
+              <span className="text-[11px] text-white tabular-nums flex-shrink-0">
                 Step {step + 1} of {STEPS.length}
               </span>
               <span className="text-white/20">·</span>
-              <span className="text-[11px] text-white/70 tabular-nums truncate">
+              <span className="text-[11px] text-white tabular-nums truncate">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
                 {quote.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
               </span>
@@ -681,7 +709,7 @@ export const QuoteWizard = ({
 
           {/* Navigation — one balanced row on sm+ */}
           <div className="flex items-center gap-3 pb-[max(16px,env(safe-area-inset-bottom))] pt-1.5 sm:pt-3">
-            {step > 0 && (
+            {step > 0 && !isDesktop && (
               <button
                 type="button"
                 onClick={() => goToStep(step - 1)}
@@ -691,12 +719,16 @@ export const QuoteWizard = ({
                 <ChevronLeft className="h-5 w-5" />
               </button>
             )}
-            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white/55 tabular-nums">
-              <span>
-                Step {step + 1} of {STEPS.length}
-              </span>
-              <span className="text-white/20">·</span>
-              <span className="text-white/70 truncate">
+            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white tabular-nums">
+              {!isDesktop && (
+                <>
+                  <span>
+                    Step {step + 1} of {STEPS.length}
+                  </span>
+                  <span className="text-white/20">·</span>
+                </>
+              )}
+              <span className="text-white truncate">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
                 {quote.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
               </span>
@@ -728,11 +760,11 @@ export const QuoteWizard = ({
                 {isGenerating ? 'Saving…' : 'Save'}
               </button>
             )}
-            {isLastStep ? (
+            {isLastStep || isDesktop ? (
               <Button
                 onClick={generateQuote}
                 disabled={isGenerating || !canSave}
-                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98]"
+                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98]"
               >
                 {isGenerating ? (
                   <>

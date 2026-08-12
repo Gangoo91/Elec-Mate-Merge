@@ -133,6 +133,11 @@ function parseLenient(text: string): any {
  * until the stream completes.
  */
 function makeIncrementalArrayExtractor(arrayKey: string) {
+  // ELE-1386: hoisted. This used to be rebuilt — and matched against the WHOLE
+  // accumulated buffer — on every stream delta, which is quadratic until the
+  // array key shows up.
+  const openRe = new RegExp(`"${arrayKey}"\\s*:\\s*\\[`, 'm');
+
   let buffer = '';
   let arrayStart = -1;
   let depth = 0;
@@ -141,65 +146,79 @@ function makeIncrementalArrayExtractor(arrayKey: string) {
   let elementStart = -1;
   let nextScan = 0;
 
-  return {
-    /** Append a streamed chunk and return any newly-completed elements. */
-    push(chunk: string): any[] {
-      buffer += chunk;
+  /**
+   * Append only. This runs on EVERY stream delta (tens of thousands per agent),
+   * so it must stay as close to free as possible — see `drain()`.
+   */
+  function append(chunk: string): void {
+    buffer += chunk;
+  }
 
-      if (arrayStart === -1) {
-        // Find the array opening — handles both " and unquoted keys defensively.
-        const m = buffer.match(new RegExp(`"${arrayKey}"\\s*:\\s*\\[`, 'm'));
-        if (!m) return [];
-        arrayStart = (m.index ?? 0) + m[0].length;
-        nextScan = arrayStart;
-      }
+  /** Scan the buffer for newly-completed elements. Driven off a timer. */
+  function drain(): any[] {
+    if (arrayStart === -1) {
+      // Find the array opening — handles both " and unquoted keys defensively.
+      const m = buffer.match(openRe);
+      if (!m) return [];
+      arrayStart = (m.index ?? 0) + m[0].length;
+      nextScan = arrayStart;
+    }
 
-      const found: any[] = [];
-      let i = nextScan;
-      while (i < buffer.length) {
-        const c = buffer[i];
-        if (escape) {
-          escape = false;
-          i++;
-          continue;
-        }
-        if (c === '\\') {
-          escape = true;
-          i++;
-          continue;
-        }
-        if (c === '"') {
-          inStr = !inStr;
-          i++;
-          continue;
-        }
-        if (inStr) {
-          i++;
-          continue;
-        }
-        if (c === '{') {
-          if (depth === 0) elementStart = i;
-          depth++;
-        } else if (c === '}') {
-          depth--;
-          if (depth === 0 && elementStart >= 0) {
-            const slice = buffer.slice(elementStart, i + 1);
-            try {
-              found.push(JSON.parse(slice));
-            } catch {
-              // Partial / malformed element — skip silently; full lenient
-              // parse runs on the final buffer too so nothing is lost.
-            }
-            elementStart = -1;
-          }
-        } else if (c === ']' && depth === 0) {
-          // End of the target array; stop scanning.
-          break;
-        }
+    const found: any[] = [];
+    let i = nextScan;
+    while (i < buffer.length) {
+      const c = buffer[i];
+      if (escape) {
+        escape = false;
         i++;
+        continue;
       }
-      nextScan = i;
-      return found;
+      if (c === '\\') {
+        escape = true;
+        i++;
+        continue;
+      }
+      if (c === '"') {
+        inStr = !inStr;
+        i++;
+        continue;
+      }
+      if (inStr) {
+        i++;
+        continue;
+      }
+      if (c === '{') {
+        if (depth === 0) elementStart = i;
+        depth++;
+      } else if (c === '}') {
+        depth--;
+        if (depth === 0 && elementStart >= 0) {
+          const slice = buffer.slice(elementStart, i + 1);
+          try {
+            found.push(JSON.parse(slice));
+          } catch {
+            // Partial / malformed element — skip silently; full lenient
+            // parse runs on the final buffer too so nothing is lost.
+          }
+          elementStart = -1;
+        }
+      } else if (c === ']' && depth === 0) {
+        // End of the target array; stop scanning.
+        break;
+      }
+      i++;
+    }
+    nextScan = i;
+    return found;
+  }
+
+  return {
+    append,
+    drain,
+    /** Append + scan in one call. Kept for callers that want it synchronously. */
+    push(chunk: string): any[] {
+      append(chunk);
+      return drain();
     },
     fullText(): string {
       return buffer;
@@ -481,11 +500,24 @@ interface RAMSJobRow {
    ──────────────────────────────────────────────────────── */
 
 /**
- * Re-run a single agent for an existing job and merge into the row.
- * Used when one half of a partial RAMS failed and the user wants to
- * patch it without regenerating the whole document.
+ * ELE-1386 — run ONE agent, in its own edge-function invocation.
+ *
+ * Both agents used to stream concurrently inside a single isolate, sharing one
+ * Supabase CPU budget. That budget was exhausted on ~37% of jobs and the
+ * isolate was killed (`Shutdown reason: CPUTime`) before any error handler
+ * could run, leaving the row stuck at `processing` for the reaper to sweep up.
+ * Running each agent as a separate invocation gives each its own budget.
+ *
+ * This function deliberately NEVER writes the overall `status` column. With two
+ * invocations in flight, each reads the row before the other has written its
+ * half, so both would compute 'partial' and the last writer would win. Instead
+ * each writes only its own half plus its own agent-status column, then calls
+ * `finalise_rams_job()`, which derives the overall status atomically and is a
+ * no-op until both halves are terminal.
+ *
+ * Also used by the `retry-agent` action to patch one half of a partial RAMS.
  */
-export async function runSingleAgent(
+export async function runAgentPhase(
   supabase: any,
   jobId: string,
   which: 'hs' | 'method'
@@ -502,11 +534,8 @@ export async function runSingleAgent(
     if (error || !job) throw new Error(`Job not found: ${jobId}`);
 
     await updateJob(supabase, jobId, {
-      status: 'processing',
-      progress: 20,
       current_step:
         which === 'hs' ? 'Drafting the hazard register' : 'Drafting the method statement',
-      error_message: null,
       ...(which === 'hs'
         ? { hs_agent_status: 'processing', hs_agent_progress: 0 }
         : { installer_agent_status: 'processing', installer_agent_progress: 0 }),
@@ -538,6 +567,17 @@ export async function runSingleAgent(
 
     if (await isCancelled(supabase, jobId)) return;
 
+    // Publish this agent's grounding counts so the UI can show a live "sources
+    // consulted" figure. Each agent writes its OWN stage: the two invocations
+    // run concurrently and writePartial upserts on (job_id, stage), so a shared
+    // stage would have them clobber each other.
+    await writePartial(supabase, jobId, which === 'hs' ? 'rag_hs' : 'rag_method', {
+      bs7671FacetCount: bs7671Facets.length,
+      ...(which === 'hs'
+        ? { safetyFacetCount: safetyFacets.length }
+        : { practicalCount: practical.length }),
+    });
+
     const visionContext: string | null = job.vision_context ?? null;
 
     let result: any;
@@ -559,76 +599,119 @@ export async function runSingleAgent(
       });
     }
 
-    // Stitch the new agent output into the existing row. Determine the new
-    // overall status: if both halves now exist → complete; if only one →
-    // partial; otherwise failed.
-    const existingHs = which === 'hs' ? result : job.rams_data;
-    const existingMethod = which === 'method' ? result : job.method_data;
-    if (existingHs && existingMethod) {
-      mapMethodStepsToHazards(existingMethod, existingHs);
-    }
-
-    const both = !!existingHs && !!existingMethod;
-    const partial = !both && (!!existingHs || !!existingMethod);
-    const finalStatus = both ? 'complete' : partial ? 'partial' : 'failed';
+    // Write ONLY this agent's half plus its own status column. The overall
+    // status is derived atomically by finalise_rams_job() below — see the note
+    // on this function.
     const elapsedSeconds = Math.round((Date.now() - start) / 1000);
 
     await updateJob(supabase, jobId, {
-      status: finalStatus,
-      progress: 100,
-      current_step:
-        finalStatus === 'complete'
-          ? `Patched in ${elapsedSeconds}s`
-          : finalStatus === 'partial'
-            ? 'Generated with gaps'
-            : 'Failed',
+      // Each agent contributes half the remaining bar; finalise_rams_job sets
+      // 100. Deliberately not derived from the other agent's state — that read
+      // is exactly the race this split removes.
+      progress: 60,
       ...(which === 'hs'
-        ? {
-            rams_data: result,
-            hs_agent_status: 'complete',
-            hs_agent_progress: 100,
-          }
-        : {
-            method_data: result,
-            installer_agent_status: 'complete',
-            installer_agent_progress: 100,
-          }),
-      completed_at: new Date().toISOString(),
+        ? { rams_data: result, hs_agent_status: 'complete', hs_agent_progress: 100 }
+        : { method_data: result, installer_agent_status: 'complete', installer_agent_progress: 100 }),
     });
 
-    await writePartial(supabase, jobId, 'finalise', {
-      hsOk: !!existingHs,
-      methodOk: !!existingMethod,
-      elapsedSeconds,
-      hazardCount: existingHs?.risks?.length ?? 0,
-      stepCount: existingMethod?.method_steps?.length ?? existingMethod?.steps?.length ?? 0,
-      retried: which,
-    });
+    // Null means the other agent is still running — it will finalise instead.
+    const outcome = await finaliseJob(supabase, jobId);
+    if (outcome) await onJobFinalised(supabase, jobId, elapsedSeconds);
   } catch (err: any) {
-    console.error(`[rams-core] runSingleAgent(${which}) fatal:`, err);
-    // Re-read so we know whether the OTHER half is still good. If so, keep
-    // status as 'partial' instead of overwriting the previously-good run.
-    const { data: cur } = await supabase
-      .from('rams_generation_jobs')
-      .select('rams_data, method_data')
-      .eq('id', jobId)
-      .maybeSingle();
-    const otherStillGood = which === 'hs' ? !!cur?.method_data : !!cur?.rams_data;
-    const fallbackStatus = otherStillGood ? 'partial' : 'failed';
-    await updateJob(supabase, jobId, {
-      status: fallbackStatus,
-      progress: 100,
-      current_step:
-        fallbackStatus === 'partial' ? 'Retry failed — original RAMS preserved' : 'Failed',
-      error_message: String(err?.message ?? err),
-      ...(which === 'hs' ? { hs_agent_status: 'failed' } : { installer_agent_status: 'failed' }),
-      completed_at: new Date().toISOString(),
+    console.error(`[rams-core] runAgentPhase(${which}) fatal:`, err);
+    await captureException(err, {
+      functionName: 'rams-generator/runAgentPhase',
+      tags: { agent: which },
+      extra: { jobId },
     }).catch(() => {});
+
+    // Clear the `streaming: true` flag on this agent's partial, or the UI's
+    // timeline row pulses "Live" forever after the failure.
+    await finaliseStreamingPartial(
+      supabase,
+      jobId,
+      which === 'hs' ? 'hazards' : 'steps',
+      which
+    ).catch(() => {});
+
+    // Mark only THIS agent failed, record why, then let finalise decide the
+    // overall outcome. If the other half succeeded the job lands on 'partial'
+    // and the good half is preserved.
+    await updateJob(supabase, jobId, {
+      error_message: String(err?.message ?? err),
+      ...(which === 'hs'
+        ? { hs_agent_status: 'failed' }
+        : { installer_agent_status: 'failed' }),
+    }).catch(() => {});
+    const outcome = await finaliseJob(supabase, jobId).catch(() => null);
+    if (outcome) {
+      await onJobFinalised(supabase, jobId, Math.round((Date.now() - start) / 1000)).catch(
+        () => {}
+      );
+    }
   }
 }
 
-export async function runRAMSGeneration(supabase: any, jobId: string): Promise<void> {
-  const start = Date.now();
+/**
+ * Ask Postgres to derive the overall job status from the two agent-status
+ * columns. Returns null while the other agent is still running.
+ */
+async function finaliseJob(supabase: any, jobId: string): Promise<string | null> {
+  const { data, error } = await supabase.rpc('finalise_rams_job', { p_job_id: jobId });
+  if (error) {
+    console.error('[rams-core] finalise_rams_job failed:', error);
+    return null;
+  }
+  return (data as string | null) ?? null;
+}
+
+/**
+ * Runs exactly once per job, in whichever invocation actually finalised it.
+ *
+ * Cross-links method steps to hazard IDs — only possible now, because it needs
+ * both halves and neither agent can see the other's output until this point.
+ * Re-reads the row rather than trusting the copy loaded before the other agent
+ * ran; that stale read is precisely the race the split removes.
+ */
+async function onJobFinalised(
+  supabase: any,
+  jobId: string,
+  elapsedSeconds: number
+): Promise<void> {
+  const { data: full } = await supabase
+    .from('rams_generation_jobs')
+    .select('rams_data, method_data')
+    .eq('id', jobId)
+    .maybeSingle();
+
+  if (full?.rams_data && full?.method_data) {
+    mapMethodStepsToHazards(full.method_data, full.rams_data);
+    await updateJob(supabase, jobId, { method_data: full.method_data });
+  }
+
+  await writePartial(supabase, jobId, 'finalise', {
+    hsOk: !!full?.rams_data,
+    methodOk: !!full?.method_data,
+    elapsedSeconds,
+    hazardCount: full?.rams_data?.risks?.length ?? 0,
+    stepCount: full?.method_data?.method_steps?.length ?? full?.method_data?.steps?.length ?? 0,
+  });
+}
+
+/**
+ * ELE-1386 — shared preparation, run ONCE in the parent invocation before the
+ * two agents are dispatched.
+ *
+ * Kept deliberately cheap in CPU terms: it is I/O-bound (a vision call and a
+ * status write), so the parent isolate stays well inside its budget. The RAG
+ * searches are NOT done here — each agent runs only the corpora it needs, in
+ * its own invocation, which keeps the two children independent and avoids
+ * shuttling a large facet payload through the database between them.
+ *
+ * Returns false if the job was cancelled or is missing, in which case the
+ * caller must not dispatch the agents.
+ */
+export async function runRAMSPrep(supabase: any, jobId: string): Promise<boolean> {
   try {
     const { data: job, error } = await supabase
       .from('rams_generation_jobs')
@@ -646,189 +729,34 @@ export async function runRAMSGeneration(supabase: any, jobId: string): Promise<v
       installer_agent_status: 'pending',
     });
 
-    if (await isCancelled(supabase, jobId)) return;
+    if (await isCancelled(supabase, jobId)) return false;
 
-    // 1. Parallel RAG across all three corpora AND a vision pre-pass over
-    //    any uploaded photos / drawings. Vision is best-effort: if it fails
-    //    or there are no images, the H&S agent runs with text brief only.
-    const workType: WorkType = (job.job_scale ?? 'commercial') as WorkType;
-    const ragQuery = buildRagQuery(job);
-
-    const [bs7671Facets, safetyFacets, practical, visionContext] = await Promise.all([
-      searchFacets(supabase, { query: ragQuery, matchCount: 10 }),
-      searchSafetyFacets(supabase, { query: ragQuery, matchCount: 18 }),
-      searchPracticalWorkV2(supabase, {
-        query: ragQuery,
-        matchCount: 16,
-        facetTypes: ['installation', 'testing', 'commissioning'],
-        appliesTo: [workType],
-      }),
-      runVisionPrepass(supabase, job),
-    ]);
-
+    // Vision pre-pass over any uploaded photos / drawings. Best-effort: if it
+    // fails or there are no images, both agents run on the text brief alone.
+    // Done once here so the two agents don't each pay for it.
+    const visionContext = await runVisionPrepass(supabase, job);
     if (visionContext) {
       await updateJob(supabase, jobId, { vision_context: visionContext });
     }
 
-    await writePartial(supabase, jobId, 'rag', {
-      bs7671FacetCount: bs7671Facets.length,
-      safetyFacetCount: safetyFacets.length,
-      practicalCount: practical.length,
-      workType,
-      visionFindings: visionContext ? true : false,
-    });
-
-    if (await isCancelled(supabase, jobId)) return;
+    if (await isCancelled(supabase, jobId)) return false;
 
     await updateJob(supabase, jobId, {
       progress: 20,
       current_step: 'Drafting hazards and method statement',
-      hs_agent_status: 'processing',
-      installer_agent_status: 'processing',
     });
 
-    // 2. Parallel single-pass AI calls — H&S and Method statement.
-    //    Each writes its own partials as it returns so the frontend
-    //    sees hazards land before steps (or vice versa) depending on
-    //    which call finishes first. As each one settles we bump
-    //    progress so the UI doesn't sit at 20% for the whole window.
-    let completedAgents = 0;
-    const onAgentDone = async (which: 'hs' | 'method') => {
-      completedAgents += 1;
-      const progress = completedAgents === 1 ? 60 : 95;
-      await updateJob(supabase, jobId, {
-        progress,
-        current_step: completedAgents === 1 ? 'Stitching findings' : 'Finalising document',
-        ...(which === 'hs'
-          ? { hs_agent_status: 'complete', hs_agent_progress: 100 }
-          : { installer_agent_status: 'complete', installer_agent_progress: 100 }),
-      });
-    };
-
-    const hsPromise = runHealthSafetyAgent(supabase, jobId, {
-      job,
-      workType,
-      bs7671Facets,
-      safetyFacets,
-      visionContext,
-    })
-      .then(async (r) => {
-        await onAgentDone('hs');
-        return r;
-      })
-      .catch(async (err) => {
-        // Clear the `streaming: true` flag on the hazards partial so the
-        // timeline row stops pulsing "Live" indefinitely after a failure.
-        await finaliseStreamingPartial(supabase, jobId, 'hazards', 'hs');
-        throw err;
-      });
-    const methodPromise = runMethodStatementAgent(supabase, jobId, {
-      job,
-      workType,
-      bs7671Facets,
-      practical,
-      visionContext,
-    })
-      .then(async (r) => {
-        await onAgentDone('method');
-        return r;
-      })
-      .catch(async (err) => {
-        await finaliseStreamingPartial(supabase, jobId, 'steps', 'method');
-        throw err;
-      });
-    const [hsResult, methodResult] = await Promise.allSettled([hsPromise, methodPromise]);
-
-    if (await isCancelled(supabase, jobId)) return;
-
-    const ramsData = hsResult.status === 'fulfilled' ? hsResult.value : null;
-    const methodData = methodResult.status === 'fulfilled' ? methodResult.value : null;
-
-    if (hsResult.status === 'rejected') {
-      console.error('[rams-core] H&S agent failed:', hsResult.reason);
-    }
-    if (methodResult.status === 'rejected') {
-      console.error('[rams-core] Method statement agent failed:', methodResult.reason);
-    }
-
-    // 3b. Map method_steps[].linked_hazard_titles → risk IDs from the parallel H&S agent.
-    if (ramsData && methodData) {
-      mapMethodStepsToHazards(methodData, ramsData);
-    }
-
-    // 4. Merge + finalise.
-    const both = !!ramsData && !!methodData;
-    const partial = !both && (!!ramsData || !!methodData);
-    const finalStatus = both ? 'complete' : partial ? 'partial' : 'failed';
-    const elapsedSeconds = Math.round((Date.now() - start) / 1000);
-
-    // Report any non-complete generation to Sentry so failures are visible
-    // (a partial = one agent down, a failed = both). Observability only.
-    if (finalStatus !== 'complete') {
-      const reason =
-        hsResult.status === 'rejected'
-          ? hsResult.reason
-          : methodResult.status === 'rejected'
-            ? methodResult.reason
-            : new Error('RAMS generation produced no usable output');
-      await captureException(reason, {
-        functionName: 'rams-generator/runRAMSGeneration',
-        userId: job.user_id,
-        tags: {
-          outcome: finalStatus,
-          job_scale: String(job.job_scale ?? 'unknown'),
-          hs_agent: hsResult.status === 'fulfilled' ? 'ok' : 'failed',
-          method_agent: methodResult.status === 'fulfilled' ? 'ok' : 'failed',
-        },
-        extra: {
-          jobId,
-          elapsedSeconds,
-          hsReason:
-            hsResult.status === 'rejected'
-              ? String(hsResult.reason?.message ?? hsResult.reason)
-              : null,
-          methodReason:
-            methodResult.status === 'rejected'
-              ? String(methodResult.reason?.message ?? methodResult.reason)
-              : null,
-        },
-      }).catch(() => {});
-    }
-
-    await updateJob(supabase, jobId, {
-      status: finalStatus,
-      progress: 100,
-      current_step:
-        finalStatus === 'complete'
-          ? `Done in ${elapsedSeconds}s`
-          : finalStatus === 'partial'
-            ? 'Generated with gaps'
-            : 'Failed',
-      rams_data: ramsData,
-      method_data: methodData,
-      hs_agent_progress: ramsData ? 100 : 0,
-      installer_agent_progress: methodData ? 100 : 0,
-      hs_agent_status: ramsData ? 'complete' : 'failed',
-      installer_agent_status: methodData ? 'complete' : 'failed',
-      error_message:
-        finalStatus === 'failed'
-          ? 'Both H&S and Method statement generation failed. Try again.'
-          : null,
-      completed_at: new Date().toISOString(),
+    await writePartial(supabase, jobId, 'rag', {
+      workType: (job.job_scale ?? 'commercial') as WorkType,
+      visionFindings: !!visionContext,
     });
 
-    await writePartial(supabase, jobId, 'finalise', {
-      hsOk: !!ramsData,
-      methodOk: !!methodData,
-      elapsedSeconds,
-      hazardCount: ramsData?.risks?.length ?? 0,
-      stepCount: methodData?.steps?.length ?? 0,
-    });
+    return true;
   } catch (err: any) {
-    console.error('[rams-core] worker fatal:', err);
+    console.error('[rams-core] runRAMSPrep fatal:', err);
     await captureException(err, {
-      functionName: 'rams-generator/runRAMSGeneration',
-      tags: { outcome: 'worker-fatal' },
+      functionName: 'rams-generator/runRAMSPrep',
+      tags: { outcome: 'prep-fatal' },
       extra: { jobId },
     }).catch(() => {});
     await updateJob(supabase, jobId, {
@@ -838,6 +766,7 @@ export async function runRAMSGeneration(supabase: any, jobId: string): Promise<v
       error_message: String(err?.message ?? err),
       completed_at: new Date().toISOString(),
     }).catch(() => {});
+    return false;
   }
 }
 
@@ -857,6 +786,107 @@ async function isCancelled(supabase: any, jobId: string): Promise<boolean> {
     .eq('id', jobId)
     .maybeSingle();
   return data?.status === 'cancelled';
+}
+
+/**
+ * Heartbeat. The BEFORE UPDATE trigger `rams_jobs_touch_updated_at` refreshes
+ * `updated_at`, which is what the `rams-stall-reaper` cron keys off. Without
+ * this, `updated_at` only moves at coarse stage checkpoints, so a job that is
+ * alive but mid-stream looks identical to one whose isolate has been killed.
+ */
+async function touchJob(supabase: any, jobId: string): Promise<void> {
+  await supabase
+    .from('rams_generation_jobs')
+    .update({ updated_at: new Date().toISOString() })
+    .eq('id', jobId);
+}
+
+/* ────────────────────────────────────────────────────────
+   Live streaming counters — ELE-1386 CPU-time budget
+   ──────────────────────────────────────────────────────── */
+
+/** How often to scan the stream buffer and publish a live count. */
+const LIVE_DRAIN_INTERVAL_MS = 400;
+/** How often to refresh the job heartbeat. Reaper window is 5 minutes. */
+const HEARTBEAT_INTERVAL_MS = 15_000;
+
+/**
+ * ELE-1386 — this is the main CPU-time fix.
+ *
+ * The previous code ran the element scan AND awaited a `rams_partials` upsert
+ * INSIDE the stream read loop, once per extracted element. Its "throttle" was a
+ * no-op: `liveCount - lastWritten >= 1` is always true whenever anything was
+ * found. Two agents doing that concurrently in one isolate exhausted the
+ * Supabase CPU budget, and the isolate was killed — `Shutdown reason: CPUTime`
+ * — on ~37% of jobs, before any error handler could run.
+ *
+ * Stream deltas now only append to the buffer. Scanning and DB writes happen on
+ * a timer, so the per-delta cost is a single string concatenation.
+ */
+function startLiveDrain(
+  supabase: any,
+  jobId: string,
+  stage: 'hazards' | 'steps',
+  extractor: { drain(): any[] },
+  buildPayload: (count: number) => Record<string, unknown>,
+  /** Pull a human-readable name off a drained element, for the live feed. */
+  nameOf?: (element: any) => string | undefined
+) {
+  let liveCount = 0;
+  let lastWritten = -1;
+  let lastHeartbeat = 0;
+  let inFlight = false;
+  /** Names of the most recent elements — the UI shows these landing live. */
+  const recent: string[] = [];
+
+  async function flush(): Promise<void> {
+    if (inFlight) return; // never overlap DB writes
+    inFlight = true;
+    try {
+      const found = extractor.drain();
+      if (found.length) {
+        liveCount += found.length;
+        if (nameOf) {
+          for (const el of found) {
+            const name = nameOf(el);
+            if (name) recent.push(String(name).slice(0, 120));
+          }
+        }
+      }
+
+      if (liveCount !== lastWritten) {
+        lastWritten = liveCount;
+        await writePartial(supabase, jobId, stage, {
+          ...buildPayload(liveCount),
+          // Last few only — this row is upserted on every tick and the UI only
+          // ever renders a short tail.
+          recent: recent.slice(-6),
+        });
+      }
+
+      const now = Date.now();
+      if (now - lastHeartbeat >= HEARTBEAT_INTERVAL_MS) {
+        lastHeartbeat = now;
+        await touchJob(supabase, jobId);
+      }
+    } catch (err) {
+      // Never let a partial-write failure kill the generation.
+      console.warn(`[rams-core] live drain (${stage}) failed:`, err);
+    } finally {
+      inFlight = false;
+    }
+  }
+
+  const timer = setInterval(() => void flush(), LIVE_DRAIN_INTERVAL_MS);
+
+  return {
+    /** Stop the timer and do one final pass so trailing elements are counted. */
+    async stop(): Promise<number> {
+      clearInterval(timer);
+      await flush();
+      return liveCount;
+    },
+  };
 }
 
 async function writePartial(supabase: any, jobId: string, stage: string, payload: any) {
@@ -1060,8 +1090,15 @@ Hard rules:
   // hazard completes in the running buffer. The UI subscribes to that
   // partial via realtime and shows a live count.
   const extractor = makeIncrementalArrayExtractor('risks');
-  let liveCount = 0;
-  let lastWritten = 0;
+  const live = startLiveDrain(
+    supabase,
+    jobId,
+    'hazards',
+    extractor,
+    (count) => ({ count, streaming: true }),
+    // Risks carry the title on `hazard`; method steps use `title`.
+    (el) => el?.hazard ?? el?.title
+  );
   let text = '';
   let finishReason: string | null = null;
   try {
@@ -1076,26 +1113,17 @@ Hard rules:
           { role: 'user', content: userBlock },
         ],
       },
-      onContent: async (delta) => {
-        const found = extractor.push(delta);
-        if (found.length) {
-          liveCount += found.length;
-          // Throttle writes so we don't hammer the realtime channel —
-          // emit every new element since the last write.
-          if (liveCount - lastWritten >= 1) {
-            await writePartial(supabase, jobId, 'hazards', {
-              count: liveCount,
-              streaming: true,
-            });
-            lastWritten = liveCount;
-          }
-        }
-      },
+      // ELE-1386: append only — scanning and DB writes run on the drain timer.
+      onContent: (delta) => extractor.append(delta),
     });
     text = result.text;
     finishReason = result.finishReason;
   } catch (err) {
     throw new Error(`OpenAI (H&S) stream failed: ${(err as Error).message}`);
+  } finally {
+    // Always clear the timer — a leaked interval would keep the isolate alive
+    // and keep writing partials after the agent has failed.
+    await live.stop();
   }
 
   let parsed: any;
@@ -1333,8 +1361,14 @@ Hard rules:
   // Stream the Method response and tick the `steps` partial up as each
   // step completes in the running buffer.
   const extractor = makeIncrementalArrayExtractor('method_steps');
-  let liveCount = 0;
-  let lastWritten = 0;
+  const live = startLiveDrain(
+    supabase,
+    jobId,
+    'steps',
+    extractor,
+    (count) => ({ count, v2Count: count, streaming: true }),
+    (el) => el?.title ?? el?.name
+  );
   let text = '';
   let finishReason: string | null = null;
   try {
@@ -1349,25 +1383,15 @@ Hard rules:
           { role: 'user', content: userBlock },
         ],
       },
-      onContent: async (delta) => {
-        const found = extractor.push(delta);
-        if (found.length) {
-          liveCount += found.length;
-          if (liveCount - lastWritten >= 1) {
-            await writePartial(supabase, jobId, 'steps', {
-              count: liveCount,
-              v2Count: liveCount,
-              streaming: true,
-            });
-            lastWritten = liveCount;
-          }
-        }
-      },
+      // ELE-1386: append only — scanning and DB writes run on the drain timer.
+      onContent: (delta) => extractor.append(delta),
     });
     text = result.text;
     finishReason = result.finishReason;
   } catch (err) {
     throw new Error(`OpenAI (Method) stream failed: ${(err as Error).message}`);
+  } finally {
+    await live.stop();
   }
 
   let parsed: any;

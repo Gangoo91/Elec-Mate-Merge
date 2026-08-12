@@ -47,7 +47,7 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
   ];
 
   return (
-    <section className="-mx-4 sm:mx-0 grid grid-cols-2 lg:grid-cols-4 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
+    <section className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y divide-white/[0.1] lg:divide-y-0 overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.05]">
       {stats.map((stat, idx) => {
         const valueClass =
           stat.tone === 'yellow'
@@ -59,8 +59,8 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
                 : 'text-white';
 
         return (
-          <div key={idx} className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div key={idx} className="px-4 py-4 sm:px-5 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               {stat.eyebrow}
             </div>
             <div
@@ -72,7 +72,7 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
               {stat.value}
             </div>
             {stat.sub && (
-              <div className="mt-2 text-[11px] font-medium uppercase tracking-[0.18em] text-white/55 tabular-nums">
+              <div className="mt-2 text-[11px] font-medium uppercase tracking-[0.18em] text-white tabular-nums">
                 {stat.sub}
               </div>
             )}

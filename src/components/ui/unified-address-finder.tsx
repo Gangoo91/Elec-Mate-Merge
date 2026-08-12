@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, MapPin, Loader2, Edit3, Check } from 'lucide-react';
+import { Search, MapPin, Loader2, Edit3, Check, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { Input } from './input';
 import { Textarea } from './textarea';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
 
 interface UnifiedAddressFinderProps {
   onAddressSelect: (address: string, postcode: string) => void;
@@ -283,14 +284,14 @@ export const UnifiedAddressFinder = ({
             }}
             className="text-xs text-white hover:text-foreground transition-colors"
           >
-            Use Address Search
+            Use address search
           </button>
         </div>
         <Textarea
           value={manualAddress}
           onChange={(e) => handleManualAddressChange(e.target.value)}
           placeholder="Enter full address including postcode&#10;e.g. 123 High Street, London, SW1A 1AA"
-          className="min-h-[80px] text-base touch-manipulation resize-none"
+          className={cn(textareaCn, "w-full resize-none")}
         />
         <p className="text-xs text-white">
           Include the postcode at the end of the address
@@ -302,62 +303,77 @@ export const UnifiedAddressFinder = ({
   return (
     <div ref={wrapperRef} className={cn('relative space-y-4', className)}>
       <div>
-        <label className="text-sm font-medium mb-2 block">Search Address *</label>
+        <label className={labelCn}>
+          Search address <span className="text-elec-yellow">*</span>
+        </label>
         <div className="relative">
           {!searchValue && (
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none sm:hidden" />
+            <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
           )}
-          <Input
+          <input
             value={searchValue}
             onChange={(e) => handleInputChange(e.target.value)}
-            placeholder="Enter address or postcode..."
-            className={cn(!searchValue && 'pl-12 sm:pl-4')}
+            placeholder="Postcode or street name"
+            className={cn(inputCn, !searchValue && 'pl-6')}
           />
           {isLoading && (
-            <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-white" />
+            <Loader2 className="absolute right-1 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-elec-yellow" />
           )}
         </div>
       </div>
 
-      {/* Suggestions Dropdown - Google Places */}
-      {showDropdown && predictions.length > 0 && !isPostcodeMode && (
-        <div className="absolute z-50 w-full mt-1 bg-background border border-primary/30 rounded-xl shadow-lg max-h-60 overflow-y-auto">
-          {predictions.map((prediction) => (
-            <button
-              key={prediction.place_id}
-              type="button"
-              onClick={() => handleSelectAddress(prediction)}
-              className="w-full px-4 py-3 text-left hover:bg-primary/5 transition-colors flex items-start gap-3 border-b border-primary/10 last:border-0"
-            >
-              <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-              <span className="text-sm">{prediction.description}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Suggestions Dropdown - Postcode Results */}
-      {showDropdown && postcodeResults.length > 0 && isPostcodeMode && (
-        <div className="absolute z-50 w-full mt-1 bg-background border border-elec-yellow/30 rounded-xl shadow-lg max-h-60 overflow-y-auto">
-          <div className="px-4 py-2 bg-elec-yellow/10 border-b border-elec-yellow/20">
-            <p className="text-xs text-elec-yellow font-medium">Postcode Results</p>
+      {/*
+       * One presentation for both lists.
+       *
+       * These were two separately-styled dropdowns that happened to sit in the
+       * same place — the postcode one carried a translucent Volt header that
+       * renders as muddy brown on the dark ground, the Places one had no header
+       * at all. Neither said what tapping a row would do, which is the only
+       * thing a first-time user actually needs to know.
+       */}
+      {showDropdown && (predictions.length > 0 || postcodeResults.length > 0) && (
+        <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-xl border border-white/[0.14] bg-[hsl(0_0%_9%)] shadow-[0_16px_40px_rgba(0,0,0,0.55)]">
+          <p className="border-b border-white/[0.08] px-4 py-2 text-[11px] text-white">
+            {isPostcodeMode
+              ? 'Tap a postcode to fill the job address'
+              : 'Tap an address to fill the job address'}
+          </p>
+          <div className="max-h-64 overflow-y-auto overscroll-contain">
+            {(isPostcodeMode
+              ? postcodeResults.map((r, i) => ({
+                  key: `${r.postcode}-${i}`,
+                  primary: r.postcode,
+                  secondary: [r.line_2, r.post_town, r.county].filter(Boolean).join(', '),
+                  onSelect: () => handleSelectPostcodeResult(r),
+                }))
+              : predictions.map((p) => ({
+                  key: p.place_id,
+                  primary: p.description,
+                  secondary: '',
+                  onSelect: () => handleSelectAddress(p),
+                }))
+            ).map((row) => (
+              <button
+                key={row.key}
+                type="button"
+                onClick={row.onSelect}
+                className="flex min-h-[52px] w-full items-center gap-3 border-b border-white/[0.06] px-4 py-3 text-left transition-colors last:border-0 hover:bg-white/[0.05] active:bg-white/[0.08] touch-manipulation"
+              >
+                <MapPin className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[14px] font-medium text-white">
+                    {row.primary}
+                  </span>
+                  {row.secondary && (
+                    <span className="block truncate text-[12px] text-white">{row.secondary}</span>
+                  )}
+                </span>
+                {/* Carries the affordance the rows were missing — without it a
+                    result reads as a label rather than something tappable. */}
+                <ChevronRight className="h-4 w-4 flex-shrink-0 text-white" />
+              </button>
+            ))}
           </div>
-          {postcodeResults.map((result, index) => (
-            <button
-              key={`${result.postcode}-${index}`}
-              type="button"
-              onClick={() => handleSelectPostcodeResult(result)}
-              className="w-full px-4 py-3 text-left hover:bg-elec-yellow/5 transition-colors flex items-start gap-3 border-b border-primary/10 last:border-0"
-            >
-              <MapPin className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white">{result.postcode}</p>
-                <p className="text-xs text-white truncate">
-                  {[result.line_2, result.post_town, result.county].filter(Boolean).join(', ')}
-                </p>
-              </div>
-            </button>
-          ))}
         </div>
       )}
 
@@ -368,7 +384,7 @@ export const UnifiedAddressFinder = ({
             <Check className="h-4 w-4 text-green-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-green-400 font-medium mb-0.5">Address Selected</p>
+            <p className="text-xs text-green-400 font-medium mb-0.5">Address selected</p>
             <p className="text-sm text-white leading-relaxed">{selectedAddress.fullAddress}</p>
           </div>
         </div>

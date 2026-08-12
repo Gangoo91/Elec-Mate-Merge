@@ -1,4 +1,6 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
+import { chipBase, chipOn, chipOff, labelCn } from '@/components/forms/fieldStyles';
 
 export interface JobScaleBadgeProps {
   scale: 'domestic' | 'commercial' | 'industrial';
@@ -6,61 +8,68 @@ export interface JobScaleBadgeProps {
   onManualChange?: (scale: 'domestic' | 'commercial' | 'industrial') => void;
 }
 
+const SCALES: Array<{ value: JobScaleBadgeProps['scale']; label: string }> = [
+  { value: 'domestic', label: 'Domestic' },
+  { value: 'commercial', label: 'Commercial' },
+  { value: 'industrial', label: 'Industrial' },
+];
+
+/**
+ * Job scale — detected from the brief, overridable in one tap.
+ *
+ * Was a coloured pill (green/blue/orange) plus a `<details>` disclosure. Three
+ * problems with that: the colours were off-palette (the industrial orange in
+ * particular), it used emoji icons, and the summary rendered the browser's
+ * native ▶ marker *and* a hardcoded ▼, so it read "▶ ▼Not right? Change it".
+ * Changing the scale also took two interactions.
+ *
+ * A segmented control shows the detected value AND the alternatives at once, so
+ * correcting it is a single tap, and selection is carried by elec-yellow like
+ * every other choice in the app.
+ */
 export const JobScaleBadge: React.FC<JobScaleBadgeProps> = ({
   scale,
   confidence,
   onManualChange,
 }) => {
-  const config = {
-    domestic: {
-      icon: '🏠',
-      label: 'Domestic',
-      color: 'bg-green-500/20 text-green-400 border-green-500/30',
-    },
-    commercial: {
-      icon: '🏢',
-      label: 'Commercial',
-      color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    },
-    industrial: {
-      icon: '🏭',
-      label: 'Industrial',
-      color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    },
-  };
-
   return (
-    <div className="space-y-3">
-      <div
-        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${config[scale].color}`}
-      >
-        <span className="text-base sm:text-lg">{config[scale].icon}</span>
-        <span className="font-semibold text-sm sm:text-sm">Detected: {config[scale].label}</span>
-        {confidence > 70 && <span className="text-xs opacity-75">({confidence}% sure)</span>}
+    <div>
+      <div className="mb-1 flex items-baseline justify-between gap-3">
+        <span className={cn(labelCn, 'mb-0')}>Job scale</span>
+        {confidence > 70 && (
+          <span className="text-[11px] font-medium text-white">
+            Detected from your brief
+          </span>
+        )}
       </div>
 
-      {onManualChange && (
-        <details className="text-sm">
-          <summary className="cursor-pointer text-white hover:text-foreground touch-manipulation py-1">
-            ▼Not right? Change it
-          </summary>
-          <div className="flex flex-col sm:flex-row gap-2 mt-3">
-            {(['domestic', 'commercial', 'industrial'] as const).map((s) => (
-              <button
-                key={s}
-                onClick={() => onManualChange(s)}
-                className={`min-h-[44px] w-full sm:w-auto px-4 py-2.5 rounded-lg border transition-all touch-manipulation ${
-                  s === scale
-                    ? config[s].color + ' shadow-sm'
-                    : 'border-muted/50 text-white hover:border-foreground/50 active:scale-95'
-                }`}
-              >
-                {config[s].icon} {config[s].label}
-              </button>
-            ))}
-          </div>
-        </details>
-      )}
+      <div
+        role={onManualChange ? 'radiogroup' : undefined}
+        aria-label="Job scale"
+        className="grid grid-cols-3 gap-2"
+      >
+        {SCALES.map((s) => {
+          const selected = s.value === scale;
+          return (
+            <button
+              key={s.value}
+              type="button"
+              role={onManualChange ? 'radio' : undefined}
+              aria-checked={onManualChange ? selected : undefined}
+              disabled={!onManualChange}
+              onClick={() => onManualChange?.(s.value)}
+              className={cn(
+                chipBase,
+                selected ? chipOn : chipOff,
+                'px-2',
+                !onManualChange && 'cursor-default'
+              )}
+            >
+              {s.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

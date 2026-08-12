@@ -13,6 +13,7 @@ import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomer
 import { supabase } from '@/integrations/supabase/client';
 import { TrendingUp } from 'lucide-react';
 import { regionFromPostcode } from '@/components/live-pricing/lib/postcodeRegion';
+import { inputCn, labelCn, cardCn } from '@/components/forms/fieldStyles';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
@@ -41,18 +42,17 @@ const extractPostcode = (address: string): { address: string; postcode: string }
   return { address: address.trim(), postcode: '' };
 };
 
-/** Numbered eyebrow — matches the quotes design language */
+/** Numbered eyebrow — the step rail's counterpart inside the panel. */
 const SectionHeader = ({ n, title }: { n: string; title: string }) => (
   <div className="flex items-baseline gap-2 mb-3">
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow tabular-nums">
+      {n}
+    </span>
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+      · {title}
+    </span>
   </div>
 );
-
-const inputClass =
-  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
-
-const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
 export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsStepProps) => {
   const [customerId, setCustomerId] = useState<string | undefined>(client?.customerId);
@@ -141,25 +141,25 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
     <Form {...form}>
       <div className="space-y-6 text-left">
         {/* Customer selector */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="01" title="Existing customer" />
           {selectedCustomer ? (
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/20">
-              <div className="h-10 w-10 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
-                <span className="text-[13px] font-bold text-emerald-400">
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.05] border border-white/[0.12]">
+              <div className="h-10 w-10 rounded-full bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <span className="text-[13px] font-bold text-black">
                   {selectedCustomer.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
                 </span>
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[14px] font-semibold text-white truncate">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white/60 truncate">
+                <p className="text-[12px] text-white truncate">
                   {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
-                className="h-9 px-3 rounded-lg text-[11px] font-semibold text-red-400 bg-red-500/[0.08] border border-red-500/[0.15] touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+                className="h-11 px-3.5 rounded-lg text-[12px] font-medium text-white bg-white/[0.06] border border-white/[0.12] touch-manipulation active:brightness-125 transition-all flex-shrink-0"
               >
                 Clear
               </button>
@@ -173,7 +173,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
           {/* Previous quotes for this client */}
           {previousQuotes.length > 0 && (
             <div className="mt-3">
-              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Previous quotes</p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">Previous quotes</p>
               <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-3 px-3 pb-1">
                 {previousQuotes.map((pq) => (
                   <div key={pq.id} className="flex-shrink-0 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.10]">
@@ -184,10 +184,10 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                           pq.status === 'approved' ? 'bg-emerald-400' : pq.status === 'rejected' ? 'bg-red-400' : pq.status === 'sent' || pq.status === 'pending' ? 'bg-amber-400' : 'bg-white/60'
                         )}
                       />
-                      <p className="text-[11px] font-mono text-white/70">{pq.quote_number}</p>
+                      <p className="text-[11px] font-mono text-white">{pq.quote_number}</p>
                     </div>
                     <p className="text-[13px] text-elec-yellow font-bold tabular-nums mt-0.5">£{pq.total?.toFixed(2)}</p>
-                    <p className="text-[10px] text-white/55 mt-0.5">
+                    <p className="text-[10px] text-white mt-0.5">
                       {new Date(pq.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                     </p>
                   </div>
@@ -195,10 +195,10 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
               </div>
             </div>
           )}
-        </div>
+        </section>
 
         {/* Client information */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="02" title="Client details" />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <FormField
@@ -206,9 +206,9 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
               name="name"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <label className={labelClass}>Client name <span className="text-elec-yellow">*</span></label>
+                  <label className={labelCn}>Client name <span className="text-elec-yellow">*</span></label>
                   <FormControl>
-                    <input {...field} placeholder="Full name" className={inputClass} autoComplete="name" />
+                    <input {...field} placeholder="Full name" className={inputCn} autoComplete="name" />
                   </FormControl>
                   <FormMessage className="text-[12px] text-red-400" />
                 </FormItem>
@@ -219,9 +219,9 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <label className={labelClass}>Phone</label>
+                  <label className={labelCn}>Phone</label>
                   <FormControl>
-                    <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputClass} autoComplete="tel" />
+                    <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputCn} autoComplete="tel" />
                   </FormControl>
                   <FormMessage className="text-[12px] text-red-400" />
                 </FormItem>
@@ -232,19 +232,19 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <label className={labelClass}>Email</label>
+                  <label className={labelCn}>Email</label>
                   <FormControl>
-                    <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputClass} autoComplete="email" />
+                    <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputCn} autoComplete="email" />
                   </FormControl>
                   <FormMessage className="text-[12px] text-red-400" />
                 </FormItem>
               )}
             />
           </div>
-        </div>
+        </section>
 
         {/* Address */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="03" title="Job site address" />
           <div className="lg:max-w-2xl">
           <UnifiedAddressFinder
@@ -259,7 +259,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
           {(() => {
             const region = regionFromPostcode(form.watch('postcode') || '');
             return (
-              <p className="flex items-start gap-1.5 text-[11px] text-white/65 mt-2">
+              <p className="flex items-start gap-1.5 text-[11px] text-white mt-2">
                 <TrendingUp className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-px" />
                 {region ? (
                   <span>
@@ -276,7 +276,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
             );
           })()}
           </div>
-        </div>
+        </section>
 
         {/* Save customer prompt */}
         {showSavePrompt && !customerId && form.watch('name')?.trim() && (

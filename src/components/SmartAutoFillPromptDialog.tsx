@@ -4,6 +4,7 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { X } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
+import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
@@ -111,6 +112,25 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
     onSkip();
   };
 
+  /**
+   * A spare way, placed in one tap.
+   *
+   * The cascade already existed — `getSpareCircuitFields()` sets the description
+   * to "Spare" and N/As every test and circuit-detail field with 0 points served
+   * — but it was only reachable from the Spare button on a row that already
+   * existed. Adding a spare therefore meant picking a preset you did not want
+   * just to get a row, then overwriting all of it. Boards come with runs of
+   * spare ways, so it belongs here, at the point of adding.
+   *
+   * It sits beside "Add blank way" rather than among the preset tiles: this
+   * footer is for the way you want regardless of what the list is showing, and
+   * a Spare tile would render its spec line as "N/A · N/A · N/A".
+   */
+  const handleAddSpare = () => {
+    haptic.success();
+    onUseAutoFill('Spare', getSpareCircuitFields() as Partial<TestResult>);
+  };
+
   const body = (
     <div className="flex h-full flex-col">
       {/* Header */}
@@ -196,16 +216,28 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
       {/* Footer — a blank way is the escape hatch for the circuits no list
           will ever hold, and stays available whatever the filter shows. */}
       <div className="border-t border-white/[0.1] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        <button
-          type="button"
-          onClick={handleAddBlank}
-          className={cn(
-            'h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-semibold text-white touch-manipulation active:scale-[0.98]',
-            noFocusRing
-          )}
-        >
-          Add blank way
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={handleAddSpare}
+            className={cn(
+              'h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-semibold text-white touch-manipulation active:scale-[0.98]',
+              noFocusRing
+            )}
+          >
+            Add spare way
+          </button>
+          <button
+            type="button"
+            onClick={handleAddBlank}
+            className={cn(
+              'h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-semibold text-white touch-manipulation active:scale-[0.98]',
+              noFocusRing
+            )}
+          >
+            Add blank way
+          </button>
+        </div>
       </div>
     </div>
   );

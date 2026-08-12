@@ -446,7 +446,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                   </div>
                 </div>
               </div>
-              <p className="text-[12px] text-white/50 leading-relaxed">
+              <p className="text-[12px] text-white leading-relaxed">
                 Buffer adds padding before and after each existing calendar event so you have travel
                 time. Min notice prevents clients booking a slot too close to now.
               </p>
@@ -458,7 +458,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:brightness-110 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

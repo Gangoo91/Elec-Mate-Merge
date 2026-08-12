@@ -48,17 +48,17 @@ const SummarySection: React.FC<SummarySectionProps> = ({
       <CollapsibleTrigger className="w-full group">
         <div className="flex items-baseline justify-between py-3 px-1 touch-manipulation min-h-[44px]">
           <div className="flex items-baseline gap-3">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               {title}
             </span>
-            <span className="text-[11px] text-white/45 tabular-nums">{count}</span>
+            <span className="text-[11px] text-white tabular-nums">{count}</span>
           </div>
           <div className="flex items-center gap-3">
             {editable && onEdit && (
               <span
                 role="button"
                 tabIndex={0}
-                className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation opacity-0 group-hover:opacity-100"
+                className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation opacity-0 group-hover:opacity-100"
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit();
@@ -76,7 +76,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
             )}
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/55 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 isOpen && 'rotate-180'
               )}
             />
@@ -88,9 +88,9 @@ const SummarySection: React.FC<SummarySectionProps> = ({
           {items.map((item, idx) => (
             <li
               key={idx}
-              className="flex items-baseline gap-3 text-[13.5px] text-white/85 leading-relaxed"
+              className="flex items-baseline gap-3 text-[13.5px] text-white leading-relaxed"
             >
-              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/40 w-8 shrink-0">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white w-8 shrink-0">
                 {String(idx + 1).padStart(2, '0')}
               </span>
               <span className="flex-1">{item}</span>
@@ -102,7 +102,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
             <button
               type="button"
               onClick={onEdit}
-              className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
+              className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
             >
               Edit {title.toLowerCase()}
             </button>
@@ -187,14 +187,14 @@ export function MethodStatementSummary({
         {/* Editorial header */}
         <div className="flex items-baseline justify-between gap-3">
           <div className="space-y-1">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Job summary
             </div>
             <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
               Tools, materials, gotchas.
             </h3>
           </div>
-          <span className="text-[11px] text-white/45 tabular-nums shrink-0">
+          <span className="text-[11px] text-white tabular-nums shrink-0">
             {totalItems} items
           </span>
         </div>

@@ -4,6 +4,8 @@ import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
 const TasksPage = lazyWithRetry(() => import('@/pages/electrician/TasksPage'));
+const AIRAMSPage = lazyWithRetry(() => import('@/pages/electrician-tools/AIRAMSPage'));
+const RAMSResultsPage = lazyWithRetry(() => import('@/pages/electrician-tools/RAMSResultsPage'));
 const RenewablesHub = lazyWithRetry(() => import('@/pages/electrician/RenewablesHub'));
 const RenewableCertificates = lazyWithRetry(() => import('@/pages/electrician/RenewableCertificates'));
 const RenewableCalculators = lazyWithRetry(
@@ -995,6 +997,29 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <SiteSafety />
+        </LazyRoute>
+      }
+    />
+    {/*
+      These two only existed in ElectricianRoutes, which AppRouter mounts at
+      `/electrician-tools/*`. This tree serves `/electrician/*` — the path the
+      app actually links to — so `/electrician/site-safety/ai-rams` matched
+      nothing and rendered a blank page. Not a stale chunk: a missing route.
+      The `:jobId` route must stay AFTER the bare one so the generator matches.
+    */}
+    <Route
+      path="site-safety/ai-rams"
+      element={
+        <LazyRoute>
+          <AIRAMSPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="site-safety/ai-rams/:jobId"
+      element={
+        <LazyRoute>
+          <RAMSResultsPage />
         </LazyRoute>
       }
     />

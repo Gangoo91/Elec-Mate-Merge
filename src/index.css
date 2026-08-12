@@ -752,6 +752,29 @@ input::-webkit-caps-lock-indicator {
   }
 
   /* Keep main scrollbar visible and styled */
+  /* ELE-1535 — the floating scroll track over the schedule of tests. Slimmer
+     than the page scrollbar: it sits over content, so it should read as a
+     control rather than a bar of furniture. */
+  .sot-sticky-scrollbar::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .sot-sticky-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sot-sticky-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .sot-sticky-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+    background-clip: padding-box;
+  }
+
   body::-webkit-scrollbar {
     width: 12px;
   }
@@ -2651,13 +2674,18 @@ input::-webkit-caps-lock-indicator {
      scroll-overlap fix: scrolling cells must pass BEHIND these columns, so
      z-40 plus an OPAQUE background. Body sticky cells carry the SAME tone as
      their row (base + zebra) so the frozen zone never reads as a grey band. */
+  /* z-20, BELOW the sticky header rows (z-30). At z-40 these body cells
+     outranked the header, so scrolling down painted Way and Description over
+     the top of it — circuit numbers appearing above the column labels. The
+     header's own frozen cells are lifted to z-40 below, so the top-left corner
+     still covers everything as it must. */
   .sot-sticky-col {
-    @apply sticky left-0 z-40;
+    @apply sticky left-0 z-20;
     background: hsl(0 0% 10%);
   }
 
   .sot-sticky-col-2 {
-    @apply sticky z-40;
+    @apply sticky z-20;
     left: 112px; /* flush after the pinned Way column */
     background: hsl(0 0% 10%);
   }
@@ -2675,11 +2703,15 @@ input::-webkit-caps-lock-indicator {
     background: hsl(0 0% 12%);
   }
 
-  /* Header sticky columns — same single header tone as the rows they sit in */
+  /* Header sticky columns — same single header tone as the rows they sit in.
+     These are the top-left corner cells: frozen horizontally AND pinned
+     vertically, so they must sit above both the body's frozen columns (z-20)
+     and the rest of the header (z-30). */
   .sot-header-labels .sot-sticky-col,
   .sot-header-labels .sot-sticky-col-2,
   .sot-header-group .sot-sticky-col,
   .sot-header-group .sot-sticky-col-2 {
+    @apply z-40;
     background: hsl(0 0% 12%);
   }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import {
   Select,
@@ -32,6 +31,7 @@ import {
   Search,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import type { PPEItem } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
 import {
@@ -371,7 +371,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                       {/* Standard - auto-filled but editable */}
                       <div className="space-y-1.5 mb-3">
                         <label className="text-xs font-medium text-white">BS EN Standard</label>
-                        <Input
+                        <input
                           value={item.standard}
                           onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
                           placeholder="e.g., BS EN 397"
@@ -382,7 +382,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                       {/* Purpose - auto-filled but editable */}
                       <div className="space-y-1.5">
                         <label className="text-xs font-medium text-white">Purpose</label>
-                        <Input
+                        <input
                           value={item.purpose}
                           onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
                           placeholder="e.g., Head protection from falling objects"
@@ -438,7 +438,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                 </h4>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
+                  <input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search PPE, standards..."
@@ -502,7 +502,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                         onClick={() => handleAddFromDatabase(ppe)}
                         className="w-full flex items-start gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 transition-all text-left touch-manipulation"
                       >
-                        <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-11 sm:h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0">
                           <CatIcon className="h-5 w-5 text-elec-yellow" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -543,14 +543,14 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
         <div className="shrink-0 bg-background border-t border-white/[0.08] p-4 flex gap-2">
           <Button
             variant="outline"
-            className="flex-1 min-h-[48px] border-white/[0.08]"
+            className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
             onClick={handleClose}
           >
             <X className="h-5 w-5 mr-2" />
             Cancel
           </Button>
           <Button
-            className="flex-1 min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+            className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
             onClick={handleSave}
           >
             <Save className="h-5 w-5 mr-2" />

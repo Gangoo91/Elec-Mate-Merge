@@ -2,8 +2,9 @@ import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder, ShieldCheck } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder, ShieldCheck, Hash } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { DocumentNumberSheet } from '@/components/electrician/invoice-builder/DocumentNumberSheet';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { Helmet } from 'react-helmet';
@@ -52,6 +53,7 @@ const QuoteViewPage = () => {
   const [isSendingReminder, setIsSendingReminder] = useState(false);
   const [isReverting, setIsReverting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
+  const [showNumberSheet, setShowNumberSheet] = useState(false);
   const [showDeclineSheet, setShowDeclineSheet] = useState(false);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showProjectPicker, setShowProjectPicker] = useState(false);
@@ -1133,6 +1135,22 @@ const QuoteViewPage = () => {
                 </span>
               </button>
 
+              {/* ELE-1028 — the number is the one field people need to control
+                  (continuity with a sequence they already run) and it was the
+                  only one they could not touch. */}
+              <button
+                onClick={() => { setShowActionsSheet(false); setShowNumberSheet(true); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+              >
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Hash className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Change number</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">This quote only</span>
+                </span>
+              </button>
+
               <button
                 onClick={() => { setShowActionsSheet(false); handleDuplicate(); }}
                 className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
@@ -1331,6 +1349,15 @@ const QuoteViewPage = () => {
           </div>
         </SheetContent>
       </Sheet>
+
+      <DocumentNumberSheet
+        open={showNumberSheet}
+        onOpenChange={setShowNumberSheet}
+        quoteId={quote.id}
+        value={quote.quoteNumber || ''}
+        field="quote_number"
+        onSaved={(next) => setQuote((prev) => (prev ? { ...prev, quoteNumber: next } : prev))}
+      />
 
       {/* Decline reason — one tap, feeds win/loss analytics */}
       <Sheet open={showDeclineSheet} onOpenChange={setShowDeclineSheet}>

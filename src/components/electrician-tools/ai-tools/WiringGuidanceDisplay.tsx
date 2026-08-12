@@ -14,9 +14,9 @@ import {
   ChevronDown,
   Wrench,
   TestTube,
+  Check,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TerminalDiagram, ExpandableSection } from './results';
 import { cn } from '@/lib/utils';
@@ -77,6 +77,28 @@ interface WiringSequenceStrategy {
   order: string[];
   rationale: string;
 }
+
+/**
+ * A tick box that is NOT a button.
+ *
+ * Radix's <Checkbox> renders a <button>, and all three of these sit inside a
+ * <button> row that owns the toggle — invalid HTML that React reports as
+ * `validateDOMNesting: <button> cannot appear as a descendant of <button>`,
+ * and nested interactive elements swallow clicks. The row is the control; this
+ * is only the indicator, so a span is the honest element.
+ */
+const TickBox = ({ checked, className }: { checked?: boolean; className?: string }) => (
+  <span
+    aria-hidden
+    className={cn(
+      'flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors',
+      checked ? 'border-elec-yellow bg-elec-yellow' : 'border-white/30',
+      className
+    )}
+  >
+    {checked && <Check className="h-3 w-3 text-black" />}
+  </span>
+);
 
 interface WiringGuidanceDisplayProps {
   componentName: string;
@@ -304,10 +326,7 @@ const WiringGuidanceDisplay = ({
                       : 'bg-background/50 border border-amber-500/20 hover:bg-amber-500/5'
                   )}
                 >
-                  <Checkbox
-                    checked={preflightChecked[itemIndex] || false}
-                    className="mt-0.5 flex-shrink-0"
-                  />
+                  <TickBox checked={preflightChecked[itemIndex] || false} className="mt-0.5" />
                   <div className="flex items-start gap-2 flex-1 min-w-0">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span
@@ -340,10 +359,7 @@ const WiringGuidanceDisplay = ({
                       : 'bg-background/50 border border-amber-500/20 hover:bg-amber-500/5'
                   )}
                 >
-                  <Checkbox
-                    checked={preflightChecked[itemIndex] || false}
-                    className="mt-0.5 flex-shrink-0"
-                  />
+                  <TickBox checked={preflightChecked[itemIndex] || false} className="mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <span
                       className={cn(
@@ -397,7 +413,7 @@ const WiringGuidanceDisplay = ({
                     : 'bg-background/50 border border-border/30 hover:bg-accent/30'
                 )}
               >
-                <Checkbox checked={checkedTasks[idx]} className="mt-0.5" />
+                <TickBox checked={checkedTasks[idx]} className="mt-0.5" />
                 <div className="flex-1 min-w-0">
                   <h4
                     className={cn(

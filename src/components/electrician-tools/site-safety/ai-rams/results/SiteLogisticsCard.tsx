@@ -17,12 +17,12 @@ const LogisticsRow: React.FC<LogisticsRowProps> = ({ label, value, tone = 'defau
     <div className="py-4 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
       <span
         className={`text-[10.5px] font-semibold uppercase tracking-[0.18em] sm:w-44 shrink-0 ${
-          tone === 'warning' ? 'text-red-400' : 'text-white/55'
+          tone === 'warning' ? 'text-red-400' : 'text-white'
         }`}
       >
         {label}
       </span>
-      <span className="text-[13.5px] text-white/85 leading-relaxed flex-1 min-w-0">{value}</span>
+      <span className="text-[13.5px] text-white leading-relaxed flex-1 min-w-0">{value}</span>
     </div>
   );
 };
@@ -45,15 +45,9 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
 
   return (
     <section className="space-y-5">
-      <div className="space-y-1">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-          Site logistics
-        </div>
-        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
-          Getting to and around site.
-        </h3>
-      </div>
-
+      {/* No heading here — the section card supplies it. This component used
+          to print its own eyebrow AND a large h3, so the page showed the same
+          title three times over. */}
       <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
         <LogisticsRow label="Vehicle access" value={logistics.vehicleAccess} />
         <LogisticsRow label="Parking" value={logistics.parking} />

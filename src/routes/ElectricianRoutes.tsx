@@ -36,6 +36,7 @@ const ClientExplainerPage = lazyWithRetry(
 const TestingProjects = lazyWithRetry(() => import('@/pages/electrician/testing-projects'));
 const SiteSafety = lazyWithRetry(() => import('@/pages/electrician-tools/SiteSafety'));
 const AIRAMSPage = lazyWithRetry(() => import('@/pages/electrician-tools/AIRAMSPage'));
+const RAMSResultsPage = lazyWithRetry(() => import('@/pages/electrician-tools/RAMSResultsPage'));
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -148,6 +149,17 @@ const ElectricianRoutes = () => (
       element={
         <LazyRoute>
           <AIRAMSPage />
+        </LazyRoute>
+      }
+    />
+    {/* Results live on their own route so a refresh, a shared link or Back
+        doesn't discard the finished document. Must stay AFTER the bare
+        `site-safety/ai-rams` route above so the generator still matches. */}
+    <Route
+      path="site-safety/ai-rams/:jobId"
+      element={
+        <LazyRoute>
+          <RAMSResultsPage />
         </LazyRoute>
       }
     />

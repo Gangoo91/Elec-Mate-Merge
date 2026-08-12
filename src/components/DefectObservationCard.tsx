@@ -136,8 +136,15 @@ const DefectObservationCard = ({
   const { enhance, retry, isEnhancing, suggestions, progressStep } = useEnhanceObservation();
   const haptic = useHaptic();
 
-  const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
-    useInspectionPhotos({
+  const {
+    photos,
+    isLoadingPhotos,
+    isUploading,
+    isScanning,
+    uploadPhoto,
+    deletePhoto,
+    scanPhotoWithAI,
+  } = useInspectionPhotos({
       reportId: reportId || '',
       reportType: 'eicr',
       itemId: defect.inspectionItemId,
@@ -154,6 +161,13 @@ const DefectObservationCard = ({
 
   // The AI needs something to work from — the gate stays, but the button says so.
   const canUseAI = defect.description.trim().length >= 5;
+  /*
+   * Polishing only makes sense once there is real prose to polish. A handful of
+   * keywords is the generate case; a written sentence — or any recommendation of
+   * their own — is the polish case (ELE-1528).
+   */
+  const canPolish =
+    defect.description.trim().length >= 25 || (defect.recommendation || '').trim().length >= 15;
 
   // Split photos into the defect (before) evidence and rectification (after)
   // evidence. After-photos are tagged with a sentinel prefix on the description
@@ -380,6 +394,38 @@ const DefectObservationCard = ({
                 Jot a few words above — AI writes the full observation, recommendation and BS 7671
                 references from the regulations database.
               </p>
+
+              {/* ELE-1528 — inspectors who have written it properly themselves
+                want it tidied, not replaced: "somewhere for me to write my shit
+                like this… and ai just jazz it up a little". Only offered once
+                there is enough of their own wording to be worth polishing. */}
+              {canPolish && (
+                <>
+                  <Button
+                    type="button"
+                    onClick={async () => {
+                      haptic.light();
+                      setShowAISheet(true);
+                      await enhance({
+                        description: defect.description,
+                        location: defect.item,
+                        currentCode: defect.defectCode,
+                        mode: 'polish',
+                        recommendation: defect.recommendation,
+                      });
+                    }}
+                    disabled={isEnhancing}
+                    variant="ghost"
+                    className="mt-2 h-12 w-full rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.08] text-sm font-semibold text-elec-yellow transition-all touch-manipulation hover:bg-elec-yellow/[0.14] hover:text-elec-yellow active:scale-[0.99]"
+                  >
+                    Polish my wording
+                  </Button>
+                  <p className="mt-2 text-[12px] leading-relaxed text-white/85">
+                    Keeps your words and your findings — fixes the spelling and tidies it to
+                    certificate standard.
+                  </p>
+                </>
+              )}
             </div>
           )}
 
@@ -392,8 +438,11 @@ const DefectObservationCard = ({
               <span className={cn(labelCn, 'mb-0')}>
                 {defect.rectified ? 'Before — as found' : 'Photo evidence'}
               </span>
+              {/* Never claim zero while the fetch is still out (ELE-1536). */}
               <span className="text-[12px] text-white/85">
-                {beforePhotos.length} photo{beforePhotos.length !== 1 ? 's' : ''}
+                {isLoadingPhotos
+                  ? 'Loading…'
+                  : `${beforePhotos.length} photo${beforePhotos.length !== 1 ? 's' : ''}`}
               </span>
             </div>
 
@@ -468,7 +517,9 @@ const DefectObservationCard = ({
                       After — rectification evidence
                     </span>
                     <span className="text-[12px] text-white/85">
-                      {rectifiedPhotos.length} photo{rectifiedPhotos.length !== 1 ? 's' : ''}
+                      {isLoadingPhotos
+                        ? 'Loading…'
+                        : `${rectifiedPhotos.length} photo${rectifiedPhotos.length !== 1 ? 's' : ''}`}
                     </span>
                   </div>
 

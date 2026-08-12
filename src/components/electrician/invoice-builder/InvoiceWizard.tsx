@@ -16,6 +16,8 @@ import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
 import { InvoiceItemsStep } from './steps/InvoiceItemsStep';
 import { InvoiceSettingsStep } from './steps/InvoiceSettingsStep';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { DocumentStepPanel } from '@/components/electrician/shared/DocumentStepPanel';
 
 
 const STEPS = [
@@ -225,6 +227,8 @@ export const InvoiceWizard = ({
   };
 
   const [step, setStep] = useState(0);
+  // Desktop shows the whole document at once; the phone keeps the four tabs.
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
   const goToStep = (next: number) => {
     setStep(Math.max(0, Math.min(STEPS.length - 1, next)));
     window.scrollTo({ top: 0 });
@@ -294,8 +298,8 @@ export const InvoiceWizard = ({
         </div>
       )}
 
-      {/* === STEP RAIL === */}
-      <div className="pt-3 pb-6">
+      {/* === STEP RAIL — phone only === */}
+      <div className={cn('pt-3 pb-6', isDesktop && 'hidden')}>
         <div className="flex items-center">
           {STEPS.map((st, i) => (
             <Fragment key={st.key}>
@@ -303,14 +307,14 @@ export const InvoiceWizard = ({
                 <div
                   className={cn(
                     'flex-1 h-[2px] rounded-full mx-2 sm:mx-3 min-w-3',
-                    i <= step ? 'bg-elec-yellow/50' : 'bg-white/[0.10]'
+                    i <= step ? 'bg-elec-yellow' : 'bg-white/[0.10]'
                   )}
                 />
               )}
               <button
                 type="button"
                 onClick={() => goToStep(i)}
-                className="flex items-center gap-2 flex-shrink-0 py-1 touch-manipulation select-none"
+                className="flex min-h-11 items-center gap-2 flex-shrink-0 py-1.5 touch-manipulation select-none"
               >
                 <span
                   className={cn(
@@ -319,7 +323,7 @@ export const InvoiceWizard = ({
                       ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
                       : completed[i]
                         ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-white/[0.06] text-white/55 border border-white/[0.10]'
+                        : 'bg-white/[0.06] text-white border border-white/[0.10]'
                   )}
                 >
                   {completed[i] && i !== step ? <Check className="h-4 w-4" /> : i + 1}
@@ -327,7 +331,7 @@ export const InvoiceWizard = ({
                 <span
                   className={cn(
                     'text-[12px] font-medium leading-none hidden sm:block',
-                    i === step ? 'text-white' : completed[i] ? 'text-white/80' : 'text-white/50'
+                    i === step ? 'text-white' : completed[i] ? 'text-white' : 'text-white'
                   )}
                 >
                   {st.label}
@@ -339,13 +343,16 @@ export const InvoiceWizard = ({
       </div>
 
       {/* === STEP CONTENT — all mounted, current visible === */}
-      <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6 lg:p-8">
-        <div className="mb-5 pb-4 border-b border-white/[0.08]">
-          <h2 className="text-[20px] font-bold text-white leading-tight">{STEPS[step].title}</h2>
-          <p className="text-[12px] text-white/60 mt-1">{STEPS[step].sub}</p>
-        </div>
+      <div>
+        {!isDesktop && (
+          <div className="mb-5 pb-4 border-b border-white/[0.08]">
+            <h2 className="text-[20px] font-bold text-white leading-tight">{STEPS[step].title}</h2>
+            <p className="text-[12px] text-white mt-1">{STEPS[step].sub}</p>
+          </div>
+        )}
+        <div className={cn(isDesktop && 'grid grid-cols-2 gap-5')}>
 
-        <section className={cn(step !== 0 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 0} wide title={STEPS[0].title} sub={STEPS[0].sub}>
           <InvoiceClientDetailsStep
             initialData={{
               client: invoiceBuilder.invoice.client,
@@ -353,9 +360,9 @@ export const InvoiceWizard = ({
             }}
             onUpdate={handleClientUpdate}
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 1 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 1} wide title={STEPS[1].title} sub={STEPS[1].sub}>
           <InvoiceItemsStep
             originalItems={invoiceBuilder.invoice.items || []}
             additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
@@ -368,9 +375,9 @@ export const InvoiceWizard = ({
             total={invoiceBuilder.invoice.total || 0}
             stockItems={stockItems}
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 2 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 2} wide title={STEPS[2].title} sub={STEPS[2].sub}>
           <InvoiceSettingsStep
             settings={invoiceBuilder.invoice.settings}
             items={[
@@ -381,11 +388,12 @@ export const InvoiceWizard = ({
             onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
             onUpdateNotes={invoiceBuilder.setInvoiceNotes}
           />
-        </section>
+        </DocumentStepPanel>
 
-        <section className={cn(step !== 3 && 'hidden')}>
+        <DocumentStepPanel isDesktop={isDesktop} active={step === 3} wide title={STEPS[3].title} sub={STEPS[3].sub}>
           <InvoiceReviewStep invoice={invoiceBuilder.invoice} />
-        </section>
+        </DocumentStepPanel>
+        </div>
       </div>
 
       {/* === STICKY FOOTER — live total + navigation === */}
@@ -400,10 +408,10 @@ export const InvoiceWizard = ({
 
           {/* Mobile strip */}
           <div className="flex items-center justify-between pt-2.5 pb-1 sm:hidden">
-            <span className="text-[11px] text-white/55 tabular-nums">
+            <span className="text-[11px] text-white tabular-nums">
               Step {step + 1} of {STEPS.length}
               <span className="text-white/20 mx-1.5">·</span>
-              <span className="text-white/70">
+              <span className="text-white">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
                 {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
               </span>
@@ -418,7 +426,7 @@ export const InvoiceWizard = ({
 
           {/* Navigation */}
           <div className="flex items-center gap-3 pb-[max(16px,env(safe-area-inset-bottom))] pt-1.5 sm:pt-3">
-            {step > 0 && (
+            {step > 0 && !isDesktop && (
               <button
                 type="button"
                 onClick={() => goToStep(step - 1)}
@@ -428,10 +436,10 @@ export const InvoiceWizard = ({
                 <ChevronLeft className="h-5 w-5" />
               </button>
             )}
-            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white/55 tabular-nums">
-              <span>Step {step + 1} of {STEPS.length}</span>
+            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white tabular-nums">
+              {!isDesktop && <span>Step {step + 1} of {STEPS.length}</span>}
               <span className="text-white/20">·</span>
-              <span className="text-white/70 truncate">
+              <span className="text-white truncate">
                 {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
                 {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
               </span>
@@ -453,11 +461,11 @@ export const InvoiceWizard = ({
                 {isGenerating ? 'Saving…' : existingInvoice ? 'Save' : 'Create'}
               </button>
             )}
-            {isLastStep ? (
+            {isLastStep || isDesktop ? (
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating || !canSave}
-                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
               >
                 {isGenerating
                   ? 'Creating…'

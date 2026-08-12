@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { inputCn, labelCn, textareaCn, selectTriggerCn, cardCn } from '@/components/forms/fieldStyles';
 
 interface JobDetailsStepProps {
   jobDetails?: JobDetails;
@@ -30,10 +31,7 @@ const durationOptions = [
   { value: 'Other', label: 'Other...' },
 ];
 
-const inputClass =
-  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
 
-const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
 const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const [showOptional, setShowOptional] = useState(false);
@@ -61,30 +59,30 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const startDateValid = startDate && isValid(startDate) ? startDate : undefined;
 
   return (
-    <div className="space-y-5 text-left">
+    <section className={cn(cardCn, "text-left")}>
       {/* Title · Duration · Start date — one row on desktop */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+      <div className="grid grid-cols-2 gap-3 lg:gap-4">
         <div className="col-span-2">
-          <label className={labelClass}>
+          <label className={labelCn}>
             Job title <span className="text-elec-yellow">*</span>
           </label>
           <input
             value={jobDetails?.title || ''}
             onChange={(e) => handleChange('title', e.target.value)}
             placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
-            className={inputClass}
+            className={inputCn}
           />
         </div>
 
         <div>
-          <label className={labelClass}>Estimated duration</label>
+          <label className={labelCn}>Estimated duration</label>
           {jobDetails?.estimatedDuration === 'Other' ? (
             <div className="flex gap-2">
               <input
                 value={jobDetails?.customDuration || ''}
                 onChange={(e) => handleChange('customDuration', e.target.value)}
                 placeholder="Enter duration"
-                className={inputClass}
+                className={inputCn}
               />
               <button
                 type="button"
@@ -99,7 +97,7 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
               value={jobDetails?.estimatedDuration || ''}
               onValueChange={(value) => handleChange('estimatedDuration', value)}
             >
-              <SelectTrigger className="h-12 rounded-xl touch-manipulation bg-white/[0.05] border-white/[0.10] focus:border-elec-yellow text-white data-[placeholder]:text-white/40">
+              <SelectTrigger className={cn(selectTriggerCn, "w-full data-[placeholder]:text-white/25")}>
                 <SelectValue placeholder="Select duration" />
               </SelectTrigger>
               <SelectContent className="z-[100] bg-elec-gray border-white/10 text-white">
@@ -118,12 +116,12 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
         </div>
 
         <div>
-          <label className={labelClass}>Proposed start date</label>
+          <label className={labelCn}>Proposed start date</label>
           {startTbd ? (
             <div
               className={cn(
-                inputClass,
-                'flex items-center justify-between text-left text-white/70'
+                inputCn,
+                'flex items-center justify-between text-left text-white'
               )}
             >
               To be decided
@@ -135,13 +133,13 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
                 <button
                   type="button"
                   className={cn(
-                    inputClass,
+                    inputCn,
                     'flex items-center justify-between text-left',
-                    !startDateValid && 'text-white/40'
+                    !startDateValid && 'text-white/25'
                   )}
                 >
                   {startDateValid ? format(startDateValid, 'EEE d MMM yyyy') : 'Pick a date'}
-                  <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
+                  <CalendarIcon className="h-4 w-4 text-white flex-shrink-0 ml-2" />
                 </button>
               </PopoverTrigger>
               <PopoverContent
@@ -163,7 +161,7 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
           <button
             type="button"
             onClick={toggleStartTbd}
-            className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-white/65 touch-manipulation active:scale-[0.98]"
+            className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-white touch-manipulation active:scale-[0.98]"
           >
             <span
               className={cn(
@@ -182,7 +180,7 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
 
       {/* Description — full width */}
       <div>
-        <label className={labelClass}>
+        <label className={labelCn}>
           Job description <span className="text-elec-yellow">*</span>
         </label>
         <textarea
@@ -190,7 +188,7 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
           onChange={(e) => handleChange('description', e.target.value)}
           placeholder="Describe the scope of work — your client reads this on the quote"
           rows={4}
-          className="w-full px-3.5 py-3 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 resize-none transition-colors"
+          className={cn(textareaCn, "w-full resize-none")}
         />
       </div>
 
@@ -206,27 +204,27 @@ const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
       {showOptional && (
         <div className="grid lg:grid-cols-2 gap-4 space-y-0">
           <div>
-            <label className={labelClass}>Work location</label>
+            <label className={labelCn}>Work location</label>
             <input
               value={jobDetails?.location || ''}
               onChange={(e) => handleChange('location', e.target.value)}
               placeholder="If different from client address"
-              className={inputClass}
+              className={inputCn}
             />
           </div>
           <div>
-            <label className={labelClass}>Special requirements</label>
+            <label className={labelCn}>Special requirements</label>
             <textarea
               value={jobDetails?.specialRequirements || ''}
               onChange={(e) => handleChange('specialRequirements', e.target.value)}
               placeholder="Access, parking, isolation requirements..."
               rows={2}
-              className="w-full px-3.5 py-3 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 resize-none transition-colors"
+              className={cn(textareaCn, "w-full resize-none")}
             />
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

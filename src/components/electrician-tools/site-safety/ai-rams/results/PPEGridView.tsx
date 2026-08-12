@@ -115,7 +115,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
       <section className="space-y-4">
         <div className="flex items-baseline justify-between gap-3">
           <div className="space-y-1">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Required PPE
             </div>
             <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -123,14 +123,14 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
             </h3>
           </div>
           <div className="flex items-baseline gap-3 shrink-0">
-            <span className="text-[11px] text-white/45 tabular-nums">
+            <span className="text-[11px] text-white tabular-nums">
               {isEditing ? editedPPE.length : items.length} items
             </span>
             {editable && !isEditing && (
               <button
                 type="button"
                 onClick={handleEditClick}
-                className="text-[12.5px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
+                className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
                 Edit
               </button>
@@ -143,12 +143,12 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="w-full text-left">
               <div className="flex items-baseline justify-between py-2 touch-manipulation">
-                <span className="text-[12px] font-medium text-white/55">
+                <span className="text-[12px] font-medium text-white">
                   {isOpen ? 'Hide details' : 'Show details'}
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/55 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     isOpen && 'rotate-180'
                   )}
                 />
@@ -164,7 +164,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                     <div className="flex-1 min-w-0">
                       <p className="text-[14px] font-medium text-white">{item.ppeType}</p>
                       {item.standard && (
-                        <p className="mt-0.5 text-[12px] text-white/55">{item.standard}</p>
+                        <p className="mt-0.5 text-[12px] text-white">{item.standard}</p>
                       )}
                     </div>
                     {item.mandatory && (
@@ -185,7 +185,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
             <button
               type="button"
               onClick={handleAddItem}
-              className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80 hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+              className="inline-flex items-center gap-1.5 h-11 sm:h-9 px-3 rounded-xl text-[12.5px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
             >
               + Add PPE item
             </button>
@@ -194,7 +194,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
               {editedPPE.map((item, index) => (
                 <div
                   key={item.id}
-                  className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl p-4 space-y-3"
+                  className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-4 space-y-3"
                 >
                   <div className="flex items-baseline justify-between">
                     <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
@@ -203,43 +203,43 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                     <button
                       type="button"
                       onClick={() => handleRemoveItem(item.id)}
-                      className="text-[12px] font-medium text-white/55 hover:text-red-400 transition-colors touch-manipulation"
+                      className="text-[12px] font-medium text-white hover:text-red-400 transition-colors touch-manipulation"
                     >
                       Remove
                     </button>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div className="space-y-1.5">
-                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                         Type
                       </label>
                       <Input
                         value={item.ppeType}
                         onChange={(e) => handleItemChange(item.id, { ppeType: e.target.value })}
                         placeholder="e.g. Safety helmet"
-                        className="h-10 text-sm"
+                        className="h-11 sm:h-10 text-sm"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                         Standard
                       </label>
                       <Input
                         value={item.standard}
                         onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
                         placeholder="e.g. BS EN 397"
-                        className="h-10 text-sm"
+                        className="h-11 sm:h-10 text-sm"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                      <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                         Purpose
                       </label>
                       <Input
                         value={item.purpose}
                         onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
                         placeholder="e.g. Head protection"
-                        className="h-10 text-sm"
+                        className="h-11 sm:h-10 text-sm"
                       />
                     </div>
                   </div>
@@ -248,9 +248,9 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
             </div>
 
             {editedPPE.length === 0 && (
-              <div className="bg-[hsl(0_0%_10%)] border border-dashed border-white/[0.12] rounded-2xl p-6 text-center">
-                <p className="text-[13px] text-white/65">No PPE items yet</p>
-                <p className="mt-1 text-[12px] text-white/45">
+              <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 text-center">
+                <p className="text-[13px] text-white">No PPE items yet</p>
+                <p className="mt-1 text-[12px] text-white">
                   Click "+ Add PPE item" to add requirements
                 </p>
               </div>
@@ -260,14 +260,14 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 inline-flex items-center justify-center h-10 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80 hover:border-white/20 transition-colors touch-manipulation"
+                className="flex-1 inline-flex items-center justify-center h-11 sm:h-10 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-white/20 transition-colors touch-manipulation"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSave}
-                className="flex-1 inline-flex items-center justify-center h-10 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                className="flex-1 inline-flex items-center justify-center h-11 sm:h-10 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation"
               >
                 Save changes
               </button>

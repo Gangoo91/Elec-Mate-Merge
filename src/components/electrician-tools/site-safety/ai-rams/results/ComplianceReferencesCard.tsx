@@ -26,7 +26,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
   return (
     <section className="space-y-6">
       <div className="space-y-1">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
           Compliance &amp; regulations
         </div>
         <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -36,14 +36,14 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
 
       {complianceRegulations.length > 0 && (
         <div className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Referenced
           </div>
           <div className="flex flex-wrap gap-2">
             {complianceRegulations.map((reg, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium tabular-nums bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white/85"
+                className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium tabular-nums bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.10] text-white"
               >
                 {reg}
               </span>
@@ -63,7 +63,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
                 <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-red-400 w-8 shrink-0">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span className="text-[13.5px] text-white/85 leading-relaxed flex-1">
+                <span className="text-[13.5px] text-white leading-relaxed flex-1">
                   {warning}
                 </span>
               </li>
@@ -74,7 +74,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
 
       {ragCitations.length > 0 && (
         <div className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Detailed citations
           </div>
           <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -90,23 +90,23 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
                     <span className="text-[11.5px] font-medium tabular-nums text-elec-yellow shrink-0">
                       {citation.regulation}
                     </span>
-                    <span className="text-[11px] uppercase tracking-[0.18em] font-medium text-white/45 shrink-0">
+                    <span className="text-[11px] uppercase tracking-[0.18em] font-medium text-white shrink-0">
                       {citation.source === 'health-safety' ? 'H&S' : 'Installer'}
                     </span>
                     {citation.linkedToStep !== undefined && citation.linkedToStep > 0 && (
-                      <span className="text-[11px] uppercase tracking-[0.18em] font-medium text-white/45 shrink-0 tabular-nums">
+                      <span className="text-[11px] uppercase tracking-[0.18em] font-medium text-white shrink-0 tabular-nums">
                         Step {citation.linkedToStep}
                       </span>
                     )}
                     <ChevronDown
                       className={cn(
-                        'h-4 w-4 text-white/55 ml-auto transition-transform duration-200 shrink-0',
+                        'h-4 w-4 text-white ml-auto transition-transform duration-200 shrink-0',
                         isOpen && 'rotate-180'
                       )}
                     />
                   </button>
                   {isOpen && (
-                    <p className="pb-4 text-[13px] text-white/80 leading-relaxed whitespace-pre-wrap">
+                    <p className="pb-4 text-[13px] text-white leading-relaxed whitespace-pre-wrap">
                       {citation.content}
                     </p>
                   )}
@@ -117,7 +117,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
         </div>
       )}
 
-      <p className="text-[12px] text-white/55 leading-relaxed">
+      <p className="text-[12px] text-white leading-relaxed">
         All work must comply with current UK regulations and industry standards. Consult the latest
         editions of referenced documents.
       </p>

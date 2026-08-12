@@ -38,8 +38,8 @@
  * bug.
  */
 
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { X, Loader2, Camera, Upload, ScanSearch } from 'lucide-react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { X, Camera, Upload, ScanSearch } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useToast } from '@/hooks/use-toast';
@@ -49,8 +49,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { cn } from '@/lib/utils';
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { HubPage, HubMasthead } from '@/components/hub/HubPrimitives';
+import { useCameraCapture } from '@/hooks/useCameraCapture';
+import {
+  AiToolPage,
+  ToolPanel,
+  ToolChip,
+  ToolAction,
+  ToolWorking,
+} from '@/components/electrician-tools/ai-tools/ToolShell';
 import ComponentIdentificationResults from '@/components/electrician-tools/ai-tools/ComponentIdentificationResults';
 
 const MAX_PHOTOS = 4;
@@ -78,62 +84,6 @@ type AnalysisResult = any;
 
 // ───────────────────────────────────────────────────────────────────────────
 
-const Panel = ({
-  title,
-  hint,
-  children,
-}: {
-  title: string;
-  hint?: React.ReactNode;
-  children: React.ReactNode;
-}) => (
-  <section
-    className={cn(
-      '-mx-4 border-y border-elec-yellow/35 p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5',
-      'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
-      'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]'
-    )}
-  >
-    <div className="mb-3 flex items-baseline justify-between gap-3">
-      <h2 className="text-[14px] font-semibold tracking-tight text-elec-yellow">{title}</h2>
-      {hint && (
-        <span className="shrink-0 text-[11px] font-medium tabular-nums text-white">{hint}</span>
-      )}
-    </div>
-    {children}
-  </section>
-);
-
-/** Sentence case, not the uppercase `tracking-[0.12em]` these chips were in. */
-const Chip = ({
-  on,
-  onClick,
-  children,
-}: {
-  on: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) => (
-  <button
-    type="button"
-    aria-pressed={on}
-    onClick={onClick}
-    className={cn(
-      'inline-flex min-h-11 items-center rounded-full border px-3.5 text-[12.5px] font-medium',
-      'transition-colors duration-150 touch-manipulation select-none',
-      '[-webkit-tap-highlight-color:transparent] active:scale-[0.97]',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-      on
-        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-        : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.28]'
-    )}
-  >
-    {children}
-  </button>
-);
-
-// ───────────────────────────────────────────────────────────────────────────
-
 const ComponentIdentifyPage = () => {
   const { toast } = useToast();
   const haptic = useHaptic();
@@ -147,14 +97,18 @@ const ComponentIdentifyPage = () => {
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const camera = useCameraCapture({
+    onError: () =>
+      toast({
+        title: 'No camera access',
+        description: 'Allow camera access, or upload a photo instead.',
+        variant: 'destructive',
+      }),
+  });
 
   const [images, setImages] = useState<File[]>([]);
   const [category, setCategory] = useState<string | null>(null);
   const [info, setInfo] = useState<string[]>(['specs', 'bs7671']);
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const [isCameraActive, setIsCameraActive] = useState(false);
   const [isAnalysing, setIsAnalysing] = useState(false);
   const [result, setResult] = useState<AnalysisResult>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -163,71 +117,19 @@ const ComponentIdentifyPage = () => {
   const previews = useMemo(() => images.map((f) => URL.createObjectURL(f)), [images]);
   useEffect(() => () => previews.forEach(URL.revokeObjectURL), [previews]);
 
-  // ── Camera ───────────────────────────────────────────────────────────────
-  const startCamera = async () => {
-    try {
-      const media = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      });
-      setStream(media);
-      setIsCameraActive(true);
-    } catch {
-      toast({
-        title: 'No camera access',
-        description: 'Allow camera access, or upload a photo instead.',
-        variant: 'destructive',
-      });
+  const handleCapture = async () => {
+    const file = await camera.capture(`component-${images.length + 1}.jpg`);
+    if (file) {
+      haptic.success();
+      setImages((prev) => [...prev, file].slice(0, MAX_PHOTOS));
     }
-  };
-
-  useEffect(() => {
-    if (isCameraActive && stream && videoRef.current) {
-      videoRef.current.srcObject = stream;
-    }
-  }, [isCameraActive, stream]);
-
-  // The only place tracks stop: when the stream we hold is replaced or
-  // dropped, and on unmount.
-  useEffect(() => {
-    if (!stream) return;
-    return () => stream.getTracks().forEach((t) => t.stop());
-  }, [stream]);
-
-  const stopCamera = useCallback(() => {
-    setStream(null);
-    setIsCameraActive(false);
-  }, []);
-
-  const captureImage = () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d')?.drawImage(video, 0, 0);
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) return;
-        haptic.success();
-        setImages((prev) =>
-          [
-            ...prev,
-            new File([blob], `component-${prev.length + 1}.jpg`, { type: 'image/jpeg' }),
-          ].slice(0, MAX_PHOTOS)
-        );
-        stopCamera();
-      },
-      'image/jpeg',
-      0.9
-    );
   };
 
   const handleFileSelect = (files: FileList | null) => {
     if (!files) return;
-    setImages((prev) =>
-      [...prev, ...Array.from(files).filter((f) => f.type.startsWith('image/'))].slice(0, MAX_PHOTOS)
-    );
+    const picked = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    if (picked.length === 0) return;
+    setImages((prev) => [...prev, ...picked].slice(0, MAX_PHOTOS));
   };
 
   // ── Analysis ─────────────────────────────────────────────────────────────
@@ -368,17 +270,10 @@ const ComponentIdentifyPage = () => {
           </div>
         </>
       ) : isAnalysing ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-          <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" aria-hidden />
-          <p className="text-[13.5px] font-semibold text-white">Reading the photo…</p>
-          <p className="max-w-[34ch] text-[12px] leading-snug text-white">
-            Matching what's on the label against BS 7671 and the component data.
-          </p>
-          {/* Indeterminate. The old bar counted up in random increments. */}
-          <div className="mt-1 h-1 w-40 overflow-hidden rounded-full bg-white/[0.10]">
-            <div className="h-full w-full animate-pulse rounded-full bg-elec-yellow/70" />
-          </div>
-        </div>
+        <ToolWorking
+          title="Reading the photo…"
+          detail="Matching what's on the label against BS 7671 and the component data."
+        />
       ) : (
         <div className="flex-1 p-5">
           <p className="text-[12.5px] leading-relaxed text-white">
@@ -407,58 +302,38 @@ const ComponentIdentifyPage = () => {
   );
 
   const analyseButton = (
-    <button
-      type="button"
+    <ToolAction
       onClick={handleAnalyse}
       disabled={!canAnalyse}
-      className={cn(
-        'inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5',
-        'text-[14px] font-semibold text-black',
-        'bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)]',
-        'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-8px_hsl(47_100%_50%_/_0.30)]',
-        'transition-colors duration-150 touch-manipulation select-none',
-        '[-webkit-tap-highlight-color:transparent] active:scale-[0.98]',
-        'hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
-        'disabled:cursor-not-allowed disabled:opacity-40'
-      )}
+      busy={isAnalysing}
+      busyLabel="Reading the photo…"
+      icon={<ScanSearch className="h-4 w-4" aria-hidden />}
     >
-      {isAnalysing ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-          Reading the photo…
-        </>
-      ) : (
-        <>
-          <ScanSearch className="h-4 w-4" aria-hidden />
-          Identify {images.length > 1 ? `from ${images.length} photos` : 'the component'}
-        </>
-      )}
-    </button>
+      Identify {images.length > 1 ? `from ${images.length} photos` : 'the component'}
+    </ToolAction>
   );
 
   return (
-    <HubPage>
-      <HubMasthead
-        section="AI tools"
-        title="Component ID"
-        backTo="/electrician-tools/ai-tooling"
-      />
-
-      <div className="mx-auto max-w-[1600px] px-4 pb-32 pt-4 lg:px-8 lg:pb-10">
-        {/* Inverted against the sibling tools: small brief, big answer. */}
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-6 2xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
-          {/* ── The brief ───────────────────────────────────────────────── */}
-          <div className="min-w-0 space-y-4">
-            <Panel
+    <AiToolPage
+      title="Component ID"
+      emphasis="result"
+      result={panel}
+      resultTitle="Component"
+      hasResult={Boolean(result) || isAnalysing}
+      action={analyseButton}
+      sheetOpen={sheetOpen}
+      onSheetOpenChange={setSheetOpen}
+    >
+      <div className="space-y-4">
+            <ToolPanel
               title="The photo"
               hint={images.length > 0 ? `${images.length} of ${MAX_PHOTOS}` : undefined}
             >
-              {isCameraActive ? (
+              {camera.isActive ? (
                 <div className="space-y-2">
                   <div className="relative aspect-video overflow-hidden rounded-xl border border-elec-yellow/40 bg-black">
                     <video
-                      ref={videoRef}
+                      ref={camera.videoRef}
                       autoPlay
                       playsInline
                       muted
@@ -472,7 +347,7 @@ const ComponentIdentifyPage = () => {
                   <div className="flex gap-2">
                     <button
                       type="button"
-                      onClick={captureImage}
+                      onClick={handleCapture}
                       className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[12.5px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
                     >
                       <Camera className="h-4 w-4" aria-hidden />
@@ -480,7 +355,7 @@ const ComponentIdentifyPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={stopCamera}
+                      onClick={camera.stop}
                       aria-label="Close camera"
                       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.06] text-white transition-colors touch-manipulation hover:border-white/[0.28]"
                     >
@@ -492,7 +367,7 @@ const ComponentIdentifyPage = () => {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={startCamera}
+                    onClick={camera.start}
                     disabled={images.length >= MAX_PHOTOS}
                     className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:border-white/[0.28] active:bg-white/[0.10] disabled:opacity-40"
                   >
@@ -549,12 +424,12 @@ const ComponentIdentifyPage = () => {
                 Square to the label, bright and even light, no glare. Up to {MAX_PHOTOS} photos —
                 all of them are read.
               </p>
-            </Panel>
+            </ToolPanel>
 
-            <Panel title="What sort of thing is it">
+            <ToolPanel title="What sort of thing is it">
               <div className="flex flex-wrap gap-1.5">
                 {CATEGORIES.map((c) => (
-                  <Chip
+                  <ToolChip
                     key={c.id}
                     on={category === c.id}
                     onClick={() => {
@@ -563,18 +438,18 @@ const ComponentIdentifyPage = () => {
                     }}
                   >
                     {c.label}
-                  </Chip>
+                  </ToolChip>
                 ))}
               </div>
               <p className="mt-2.5 text-[11.5px] leading-snug text-white">
                 Optional — it narrows the search when a label is hard to read.
               </p>
-            </Panel>
+            </ToolPanel>
 
-            <Panel title="What to tell me">
+            <ToolPanel title="What to tell me">
               <div className="flex flex-wrap gap-1.5">
                 {INFO.map((i) => (
-                  <Chip
+                  <ToolChip
                     key={i.id}
                     on={info.includes(i.id)}
                     onClick={() => {
@@ -585,68 +460,15 @@ const ComponentIdentifyPage = () => {
                     }}
                   >
                     {i.label}
-                  </Chip>
+                  </ToolChip>
                 ))}
               </div>
-            </Panel>
+            </ToolPanel>
 
-            <div className="hidden lg:block">{analyseButton}</div>
-          </div>
-
-          {/* ── The result ──────────────────────────────────────────────── */}
-          {!isMobile && (
-            <aside className="hidden lg:block">
-              <div
-                className={cn(
-                  'sticky top-20',
-                  result || isAnalysing ? 'h-[calc(100dvh-9.5rem)] min-h-[420px]' : 'h-full'
-                )}
-              >
-                {panel}
-              </div>
-            </aside>
-          )}
-        </div>
       </div>
 
-      {/* ── Mobile: fixed action bar ────────────────────────────────────── */}
-      <div className="fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-elec-dark via-elec-dark/95 to-transparent px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-4 lg:hidden">
-        <div className="flex items-center gap-2">
-          {result && (
-            <button
-              type="button"
-              onClick={() => {
-                haptic.light();
-                setSheetOpen(true);
-              }}
-              className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-neutral-900 px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation active:bg-white/[0.10]"
-            >
-              View result
-            </button>
-          )}
-          <div className="min-w-0 flex-1">{analyseButton}</div>
-        </div>
-      </div>
-
-      {/* ── Mobile: the result ──────────────────────────────────────────── */}
-      {isMobile && (
-        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetContent
-            side="bottom"
-            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.10] bg-elec-dark p-0"
-          >
-            <SheetHeader className="border-b border-white/[0.10] px-4 py-3 text-left">
-              <SheetTitle className="text-[15px] font-semibold text-white">
-                Component
-              </SheetTitle>
-            </SheetHeader>
-            <div className="h-[calc(85vh-57px)] p-3">{panel}</div>
-          </SheetContent>
-        </Sheet>
-      )}
-
-      <canvas ref={canvasRef} className="hidden" />
-    </HubPage>
+      <canvas ref={camera.canvasRef} className="hidden" />
+    </AiToolPage>
   );
 };
 

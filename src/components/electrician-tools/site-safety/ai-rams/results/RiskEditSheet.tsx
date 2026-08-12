@@ -3,10 +3,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
 import { Save, X, Trash2, Shield, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 import { getRiskColors } from '@/utils/risk-level-helpers';
 import type { RAMSRisk } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
@@ -96,42 +96,42 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
 
           {/* Hazard Title */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-elec-yellow" />
               Hazard Title
             </label>
-            <Input
+            <input
               value={editedRisk.hazard}
               onChange={(e) => handleChange({ hazard: e.target.value })}
-              className="text-base min-h-[48px]"
+              className={cn(inputCn, "text-[16px]")}
               placeholder="e.g., Working at height"
             />
           </div>
 
           {/* Risk Description */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <Info className="h-4 w-4 text-blue-400" />
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white flex items-center gap-2">
+              <Info className="h-4 w-4 text-elec-yellow" />
               Risk Description
             </label>
-            <Textarea
+            <textarea
               value={editedRisk.risk}
               onChange={(e) => handleChange({ risk: e.target.value })}
-              className="min-h-[100px] text-base"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               placeholder="Describe the potential risk or consequence"
             />
           </div>
 
           {/* Control Measures - Most Important */}
           <div className="space-y-2 bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-4">
-            <label className="text-sm font-bold text-amber-400 flex items-center gap-2">
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow flex items-center gap-2">
               <Shield className="h-5 w-5" />
               Control Measures (Critical)
             </label>
-            <Textarea
+            <textarea
               value={editedRisk.controls}
               onChange={(e) => handleChange({ controls: e.target.value })}
-              className="min-h-[140px] text-base"
+              className={cn(textareaCn, "w-full min-h-[140px] resize-y")}
               placeholder="List all control measures to mitigate the risk..."
             />
             <p className="text-xs text-white mt-2">
@@ -139,64 +139,80 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
             </p>
           </div>
 
-          {/* Likelihood Slider */}
-          <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-elec-light">Likelihood</label>
-              <Badge className="bg-elec-yellow/20 text-elec-yellow">
+          {/* Chips, not a slider. A 5-stop slider is imprecise under a thumb and
+              the scale labels underneath were unreadable at phone width. */}
+          <div className="space-y-2 rounded-xl border border-white/[0.12] bg-white/[0.05] p-4">
+            <div className="flex items-baseline justify-between">
+              <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">Likelihood</label>
+              <span className="text-[12px] font-semibold tabular-nums text-elec-yellow">
                 {editedRisk.likelihood}/5
-              </Badge>
+              </span>
             </div>
-            <Slider
-              value={[editedRisk.likelihood]}
-              onValueChange={(value) => handleChange({ likelihood: value[0] })}
-              min={1}
-              max={5}
-              step={1}
-              className="w-full py-4"
-            />
-            <div className="flex justify-between text-xs text-white">
-              <span>Rare</span>
-              <span>Unlikely</span>
-              <span>Possible</span>
-              <span>Likely</span>
-              <span>Almost Certain</span>
+            <div className="grid grid-cols-5 gap-1.5">
+              {['Rare', 'Unlikely', 'Possible', 'Likely', 'Certain'].map((word, i) => (
+                <button
+                  key={word}
+                  type="button"
+                  onClick={() => handleChange({ likelihood: i + 1 })}
+                  aria-pressed={editedRisk.likelihood === i + 1}
+                  className={cn(
+                    'flex h-14 flex-col items-center justify-center gap-0.5 rounded-xl border px-0.5 transition-colors touch-manipulation',
+                    editedRisk.likelihood === i + 1
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white'
+                  )}
+                >
+                  <span className="text-[15px] font-semibold tabular-nums">{i + 1}</span>
+                  <span className="text-[8.5px] font-medium uppercase leading-none tracking-[0.02em]">
+                    {word}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Severity Slider */}
-          <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-elec-light">Severity</label>
-              <Badge className="bg-red-500/20 text-red-400">{editedRisk.severity}/5</Badge>
+          {/* Chips, not a slider. A 5-stop slider is imprecise under a thumb and
+              the scale labels underneath were unreadable at phone width. */}
+          <div className="space-y-2 rounded-xl border border-white/[0.12] bg-white/[0.05] p-4">
+            <div className="flex items-baseline justify-between">
+              <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">Severity</label>
+              <span className="text-[12px] font-semibold tabular-nums text-elec-yellow">
+                {editedRisk.severity}/5
+              </span>
             </div>
-            <Slider
-              value={[editedRisk.severity]}
-              onValueChange={(value) => handleChange({ severity: value[0] })}
-              min={1}
-              max={5}
-              step={1}
-              className="w-full py-4"
-            />
-            <div className="flex justify-between text-xs text-white">
-              <span>Minor</span>
-              <span>Low</span>
-              <span>Moderate</span>
-              <span>Major</span>
-              <span>Catastrophic</span>
+            <div className="grid grid-cols-5 gap-1.5">
+              {['Minor', 'Low', 'Moderate', 'Major', 'Severe'].map((word, i) => (
+                <button
+                  key={word}
+                  type="button"
+                  onClick={() => handleChange({ severity: i + 1 })}
+                  aria-pressed={editedRisk.severity === i + 1}
+                  className={cn(
+                    'flex h-14 flex-col items-center justify-center gap-0.5 rounded-xl border px-0.5 transition-colors touch-manipulation',
+                    editedRisk.severity === i + 1
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white'
+                  )}
+                >
+                  <span className="text-[15px] font-semibold tabular-nums">{i + 1}</span>
+                  <span className="text-[8.5px] font-medium uppercase leading-none tracking-[0.02em]">
+                    {word}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Residual Risk */}
-          <div className="space-y-2 bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-            <label className="text-sm font-semibold text-green-400">
+          <div className="space-y-2 rounded-xl border border-white/[0.12] bg-white/[0.05] p-4">
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
               Residual Risk (After Controls)
             </label>
-            <Input
+            <input
               type="number"
               value={editedRisk.residualRisk}
               onChange={(e) => handleChange({ residualRisk: parseInt(e.target.value) || 0 })}
-              className="min-h-[48px] text-base"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               min={0}
               max={25}
             />
@@ -204,24 +220,24 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
 
           {/* Further Action */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-blue-400">
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
               Further Action Required (Optional)
             </label>
-            <Textarea
+            <textarea
               value={editedRisk.furtherAction || ''}
               onChange={(e) => handleChange({ furtherAction: e.target.value })}
-              className="min-h-[80px] text-base"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               placeholder="Any additional actions needed..."
             />
           </div>
 
           {/* Responsible Person */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">Person Responsible</label>
-            <Input
+            <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">Person Responsible</label>
+            <input
               value={editedRisk.responsible || ''}
               onChange={(e) => handleChange({ responsible: e.target.value })}
-              className="min-h-[48px] text-base"
+              className={cn(textareaCn, "w-full min-h-[120px] resize-y")}
               placeholder="Name or role"
             />
           </div>

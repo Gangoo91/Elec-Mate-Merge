@@ -5,64 +5,91 @@ interface ScopeOfWorkCardProps {
   methodData: MethodStatementData;
 }
 
+/** Fields the method agent actually writes, none of which are on the base type. */
+type ScopeFields = MethodStatementData & {
+  scope?: string;
+  executive_summary?: string;
+  exclusions?: string | string[];
+};
+
+const Para: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
+  <div className="space-y-2">
+    <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+      {label}
+    </span>
+    <p className="text-[13.5px] leading-relaxed text-white">{children}</p>
+  </div>
+);
+
 /**
- * Scope of work — editorial. No icons, no purple chrome. Description,
- * deliverables list, exclusions all in flat editorial rhythm.
+ * Scope of work.
+ *
+ * This card rendered nothing at all: it read `methodData.scopeOfWork`, an object
+ * the agent has never written. With it undefined every guard failed and the
+ * component returned null, so an empty card sat on the page — while the agent's
+ * `executive_summary`, `scope`, `description` and `exclusions` all went unused.
+ * Field names verified against live job data before wiring.
  */
 export function ScopeOfWorkCard({ methodData }: ScopeOfWorkCardProps) {
-  const scopeOfWork = methodData.scopeOfWork;
-  const hasDescription =
-    scopeOfWork?.description && scopeOfWork.description !== 'Work scope to be defined';
-  const hasDeliverables = scopeOfWork?.keyDeliverables && scopeOfWork.keyDeliverables.length > 0;
-  const hasExclusions = scopeOfWork?.exclusions;
+  const m = methodData as ScopeFields;
+  const legacy = methodData.scopeOfWork;
 
-  if (!hasDescription && !hasDeliverables && !hasExclusions) return null;
+  const summary = m.executive_summary || legacy?.description;
+  const scope = m.scope || m.description;
+  const deliverables = legacy?.keyDeliverables ?? [];
+  const exclusionsRaw = m.exclusions ?? legacy?.exclusions;
+  const exclusions = Array.isArray(exclusionsRaw)
+    ? exclusionsRaw.filter(Boolean)
+    : exclusionsRaw
+      ? [exclusionsRaw]
+      : [];
+
+  if (!summary && !scope && !deliverables.length && !exclusions.length) {
+    return <p className="text-[13px] text-white">No scope recorded for this job.</p>;
+  }
 
   return (
-    <section className="space-y-5">
-      <div className="space-y-1">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-          Scope of work
-        </div>
-        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
-          What's in scope.
-        </h3>
-      </div>
+    <div className="space-y-5">
+      {summary && <Para label="Summary">{summary}</Para>}
+      {scope && summary !== scope && <Para label="In scope">{scope}</Para>}
 
-      <p className="text-[13.5px] text-white/85 leading-relaxed max-w-3xl">
-        {scopeOfWork?.description || methodData.description || 'Work scope to be defined'}
-      </p>
-
-      {scopeOfWork?.keyDeliverables && scopeOfWork.keyDeliverables.length > 0 && (
-        <div className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+      {deliverables.length > 0 && (
+        <div className="space-y-2">
+          <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
             Key deliverables
-          </div>
-          <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
-            {scopeOfWork.keyDeliverables.map((deliverable, idx) => (
-              <li key={idx} className="py-3 flex items-baseline gap-3">
-                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-emerald-400 w-8 shrink-0">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[13.5px] text-white/85 leading-relaxed flex-1">
-                  {deliverable}
-                </span>
+          </span>
+          <ul className="space-y-1.5">
+            {deliverables.map((d, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-[13.5px] leading-relaxed text-white"
+              >
+                <span className="mt-[7px] inline-block h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+                <span className="min-w-0 flex-1">{d}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {scopeOfWork?.exclusions && (
+      {exclusions.length > 0 && (
         <div className="space-y-2">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400">
+          <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400">
             Out of scope
-          </div>
-          <p className="text-[13.5px] text-white/85 leading-relaxed max-w-3xl">
-            {scopeOfWork.exclusions}
-          </p>
+          </span>
+          <ul className="space-y-1.5">
+            {exclusions.map((e, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-[13.5px] leading-relaxed text-white"
+              >
+                <span className="mt-[7px] inline-block h-1 w-1 shrink-0 rounded-full bg-red-400" />
+                <span className="min-w-0 flex-1">{e}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-    </section>
+    </div>
   );
 }

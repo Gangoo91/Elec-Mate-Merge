@@ -81,7 +81,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
-import { labourLinesFor, labourAllocations, describeLabour, describeLines, shortGradeLabel } from '@/utils/labourGrades';
+import { labourLinesFor, labourAllocations, describeLabour, describeLines, shortGradeLabel, rateForGrade, DEFAULT_LABOUR_GRADE } from '@/utils/labourGrades';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
@@ -90,6 +90,7 @@ import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { useMaterialsAutocomplete } from '@/hooks/useMaterialsAutocomplete';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
 import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
+import { chipBase, chipOn, chipOff, inputCn, labelCn, textareaCn, cardCn } from '@/components/forms/fieldStyles';
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -291,9 +292,30 @@ export const EnhancedQuoteItemsStep = ({
   const [scanResultsOpen, setScanResultsOpen] = useState(false);
   const scanner = useInvoiceScanner();
 
+  /*
+   * Templates carry a hardcoded labour price — £50/hr on most of them, with a
+   * few at £55/£60/£65. That is somebody else's rate. Labour is costed per user
+   * from `company_profiles.worker_rates` (ELE-1445), so applying a template used
+   * to silently overwrite the electrician's own rate: anyone charging £75/hr
+   * quoted a third under on every templated labour line.
+   *
+   * The template's HOURS are kept — that is the estimating knowledge it holds.
+   * Only the rate is re-resolved. `rateForGrade` returns 0 when the user has
+   * saved nothing rather than invent a number, and in that case the template's
+   * own figure is a better answer than zero.
+   *
+   * Fixed-price labour lines (`unit: 'each'` — a call-out or a test fee) are
+   * left alone: they are a price, not an hourly rate.
+   */
   const handleTemplateSelect = (template: JobTemplate) => {
+    const ownRate = rateForGrade(DEFAULT_LABOUR_GRADE, rateSources);
     template.items.forEach((item) => {
-      onAdd(item);
+      const isHourlyLabour = item.category === 'labour' && item.unit === 'hours';
+      if (isHourlyLabour && ownRate > 0) {
+        onAdd({ ...item, unitPrice: ownRate, hourlyRate: ownRate, hours: item.quantity });
+      } else {
+        onAdd(item);
+      }
     });
     setShowTemplates(false);
   };
@@ -675,23 +697,23 @@ export const EnhancedQuoteItemsStep = ({
   ];
 
   return (
-    <div className="space-y-4">
+    <section className={cardCn}>
       {/* === ADD FROM — sources === */}
       <div>
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Add from</p>
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">Add from</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           <button
             type="button"
             onClick={() => { const v = !showPriceBook; setShowPriceBook(v); setShowRateCard(false); setShowBundles(false); setShowTemplates(false); }}
             className={cn(
-              'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
-              showPriceBook ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+              'flex min-h-[76px] flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all touch-manipulation active:scale-[0.98] select-none',
+              showPriceBook ? 'bg-white/[0.08] border-elec-yellow/60' : 'bg-white/[0.04] border-white/[0.08]'
             )}
           >
-            <BookOpen className={cn('h-4 w-4', showPriceBook ? 'text-elec-yellow' : 'text-white/70')} />
+            <BookOpen className={cn('h-4 w-4', showPriceBook ? 'text-elec-yellow' : 'text-white')} />
             <span>
-              <span className="block text-[12px] font-semibold text-white leading-tight">Price Book</span>
-              <span className="block text-[10px] text-white/55 mt-0.5">{pricedBookItems.length} priced items</span>
+              <span className="block text-[12px] font-semibold text-white leading-tight">Price book</span>
+              <span className="block text-[10px] text-white mt-0.5">{pricedBookItems.length} priced items</span>
             </span>
           </button>
 
@@ -700,14 +722,14 @@ export const EnhancedQuoteItemsStep = ({
               type="button"
               onClick={() => { const v = !showRateCard; setShowRateCard(v); setShowPriceBook(false); setShowBundles(false); setShowTemplates(false); }}
               className={cn(
-                'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
-                showRateCard ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+                'flex min-h-[76px] flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all touch-manipulation active:scale-[0.98] select-none',
+                showRateCard ? 'bg-white/[0.08] border-elec-yellow/60' : 'bg-white/[0.04] border-white/[0.08]'
               )}
             >
-              <PoundSterling className={cn('h-4 w-4', showRateCard ? 'text-elec-yellow' : 'text-white/70')} />
+              <PoundSterling className={cn('h-4 w-4', showRateCard ? 'text-elec-yellow' : 'text-white')} />
               <span>
-                <span className="block text-[12px] font-semibold text-white leading-tight">Rate Card</span>
-                <span className="block text-[10px] text-white/55 mt-0.5">{rateCardItems.length} rates</span>
+                <span className="block text-[12px] font-semibold text-white leading-tight">Rate card</span>
+                <span className="block text-[10px] text-white mt-0.5">{rateCardItems.length} rates</span>
               </span>
             </button>
           )}
@@ -717,14 +739,14 @@ export const EnhancedQuoteItemsStep = ({
               type="button"
               onClick={() => { const v = !showBundles; setShowBundles(v); setShowPriceBook(false); setShowRateCard(false); setShowTemplates(false); }}
               className={cn(
-                'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
-                showBundles ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+                'flex min-h-[76px] flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all touch-manipulation active:scale-[0.98] select-none',
+                showBundles ? 'bg-white/[0.08] border-elec-yellow/60' : 'bg-white/[0.04] border-white/[0.08]'
               )}
             >
-              <Boxes className={cn('h-4 w-4', showBundles ? 'text-elec-yellow' : 'text-white/70')} />
+              <Boxes className={cn('h-4 w-4', showBundles ? 'text-elec-yellow' : 'text-white')} />
               <span>
                 <span className="block text-[12px] font-semibold text-white leading-tight">Bundles</span>
-                <span className="block text-[10px] text-white/55 mt-0.5">{bundles.length} assemblies</span>
+                <span className="block text-[10px] text-white mt-0.5">{bundles.length} assemblies</span>
               </span>
             </button>
           )}
@@ -733,14 +755,14 @@ export const EnhancedQuoteItemsStep = ({
             type="button"
             onClick={() => { const v = !showTemplates; setShowTemplates(v); setShowPriceBook(false); setShowRateCard(false); setShowBundles(false); }}
             className={cn(
-              'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
-              showTemplates ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+              'flex min-h-[76px] flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all touch-manipulation active:scale-[0.98] select-none',
+              showTemplates ? 'bg-white/[0.08] border-elec-yellow/60' : 'bg-white/[0.04] border-white/[0.08]'
             )}
           >
-            <LayoutTemplate className={cn('h-4 w-4', showTemplates ? 'text-elec-yellow' : 'text-white/70')} />
+            <LayoutTemplate className={cn('h-4 w-4', showTemplates ? 'text-elec-yellow' : 'text-white')} />
             <span>
               <span className="block text-[12px] font-semibold text-white leading-tight">Templates</span>
-              <span className="block text-[10px] text-white/55 mt-0.5">Pre-built item sets</span>
+              <span className="block text-[10px] text-white mt-0.5">Pre-built item sets</span>
             </span>
           </button>
 
@@ -749,10 +771,10 @@ export const EnhancedQuoteItemsStep = ({
             onClick={() => setScannerSheetOpen(true)}
             className="flex flex-col items-start gap-1.5 p-3 rounded-xl border border-white/[0.08] bg-white/[0.04] text-left touch-manipulation active:scale-[0.98] transition-all select-none"
           >
-            <ScanLine className="h-4 w-4 text-white/70" />
+            <ScanLine className="h-4 w-4 text-white" />
             <span>
-              <span className="block text-[12px] font-semibold text-white leading-tight">Scan Invoice</span>
-              <span className="block text-[10px] text-white/55 mt-0.5">Pull items from a photo</span>
+              <span className="block text-[12px] font-semibold text-white leading-tight">Scan invoice</span>
+              <span className="block text-[10px] text-white mt-0.5">Pull items from a photo</span>
             </span>
           </button>
         </div>
@@ -775,7 +797,7 @@ export const EnhancedQuoteItemsStep = ({
       {showPriceBook && (
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
           <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-            <h3 className="font-semibold text-white">My Price Book</h3>
+            <h3 className="font-semibold text-white">My price book</h3>
             <button
               type="button"
               onClick={() => setShowPriceBook(false)}
@@ -790,10 +812,10 @@ export const EnhancedQuoteItemsStep = ({
               <input
                 type="text"
                 autoFocus
-                placeholder="Search price book..."
+                placeholder="Search price book…"
                 value={priceBookSearch}
                 onChange={(e) => setPriceBookSearch(e.target.value)}
-                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                className="w-full h-11 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
               />
             </div>
             {pricedBookItems.length === 0 ? (
@@ -861,7 +883,7 @@ export const EnhancedQuoteItemsStep = ({
                     </p>
                     <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
                       £{p.item.estimated_price?.toFixed(2)}
-                      <span className="text-[11px] font-medium text-white/55 ml-1">/{p.item.unit || 'each'}</span>
+                      <span className="text-[11px] font-medium text-white ml-1">/{p.item.unit || 'each'}</span>
                     </p>
                     <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                       {(() => {
@@ -880,9 +902,9 @@ export const EnhancedQuoteItemsStep = ({
                         </span>
                       )}
                       {p.item.supplier && (
-                        <span className="text-[10px] text-white/55 truncate">{p.item.supplier}</span>
+                        <span className="text-[10px] text-white truncate">{p.item.supplier}</span>
                       )}
-                      <span className="text-[10px] text-white/40 ml-auto truncate">{p.listName}</span>
+                      <span className="text-[10px] text-white ml-auto truncate">{p.listName}</span>
                     </div>
                   </button>
                 ))}
@@ -913,7 +935,7 @@ export const EnhancedQuoteItemsStep = ({
                   placeholder="Search rates..."
                   value={rateCardSearch}
                   onChange={(e) => setRateCardSearch(e.target.value)}
-                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                  className="w-full h-11 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
                 />
               </div>
               <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -949,10 +971,10 @@ export const EnhancedQuoteItemsStep = ({
                       <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">{item.name}</p>
                       <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
                         £{item.unit_price.toFixed(2)}
-                        <span className="text-[11px] font-medium text-white/55 ml-1">/{item.unit}</span>
+                        <span className="text-[11px] font-medium text-white ml-1">/{item.unit}</span>
                       </p>
                       {item.description && (
-                        <p className="text-[10px] text-white/55 line-clamp-1 mt-2">{item.description}</p>
+                        <p className="text-[10px] text-white line-clamp-1 mt-2">{item.description}</p>
                       )}
                     </button>
                   ))
@@ -1041,7 +1063,7 @@ export const EnhancedQuoteItemsStep = ({
                             });
                             setExpandedBundle(null);
                           }}
-                          className="w-full py-2.5 text-[13px] font-semibold text-black bg-elec-yellow rounded-lg touch-manipulation active:bg-elec-yellow/90"
+                          className="w-full py-2.5 text-[13px] font-semibold text-black bg-elec-yellow rounded-lg touch-manipulation active:brightness-110"
                         >
                           Add all to quote
                         </button>
@@ -1056,7 +1078,7 @@ export const EnhancedQuoteItemsStep = ({
 
 
       {/* === OR BUILD MANUALLY === */}
-      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 pt-2">Add manually</p>
+      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white pt-2">Add manually</p>
 
       {/* Material markup */}
       {setPriceAdjustment && (
@@ -1069,10 +1091,10 @@ export const EnhancedQuoteItemsStep = ({
                 type="button"
                 onClick={() => setPriceAdjustment(markup)}
                 className={cn(
-                  'h-9 px-3 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
+                  cn(chipBase, 'px-3.5'),
                   priceAdjustment === markup
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                    ? chipOn
+                    : chipOff
                 )}
               >
                 {markup}%
@@ -1092,10 +1114,10 @@ export const EnhancedQuoteItemsStep = ({
               type="button"
               onClick={() => handleCategoryChange(cat.id)}
               className={cn(
-                'flex-1 h-11 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                cn(chipBase, 'flex-1'),
                 isActive
-                  ? 'bg-elec-yellow text-black font-semibold'
-                  : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                  ? chipOn
+                  : chipOff
               )}
             >
               {cat.label}
@@ -1119,10 +1141,10 @@ export const EnhancedQuoteItemsStep = ({
                     type="button"
                     onClick={() => handleLabourRateModeChange(mode)}
                     className={cn(
-                      'h-10 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                      chipBase,
                       active
-                        ? 'bg-elec-yellow text-black font-semibold'
-                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                        ? chipOn
+                        : chipOff
                     )}
                   >
                     {mode === 'hour' ? 'Hourly rate' : 'Day rate'}
@@ -1145,8 +1167,8 @@ export const EnhancedQuoteItemsStep = ({
                       className={cn(
                         'w-full flex items-center justify-between h-11 px-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
                         isSelected
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                          ? chipOn
+                          : chipOff
                       )}
                     >
                       <span className={cn('text-[13px] font-medium', isSelected ? 'text-black' : 'text-white')}>{w.name}</span>
@@ -1165,7 +1187,7 @@ export const EnhancedQuoteItemsStep = ({
                   placeholder={isDayMode ? '0.5' : '3.5'}
                   value={newItem.hours}
                   onChange={handleHoursChange}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/25 touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                 />
                 <span className="text-[13px] font-medium text-white">{isDayMode ? 'days' : 'hours'}</span>
               </div>
@@ -1185,8 +1207,8 @@ export const EnhancedQuoteItemsStep = ({
                       className={cn(
                         'h-11 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                         isSelected
-                          ? 'bg-elec-yellow text-black font-semibold'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                          ? chipOn
+                          : chipOff
                       )}
                     >
                       {opt.label}
@@ -1208,14 +1230,14 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="Search materials by name or code..."
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
-                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-white/25 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
               />
             </div>
 
             {/* Recently used — zero-typing path for the usual stuff */}
             {materialSearch.length < 2 && recentMaterials.length > 0 && (
               <div>
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                   Recently used
                 </p>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
@@ -1238,9 +1260,9 @@ export const EnhancedQuoteItemsStep = ({
                       <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
                         {titleCaseProduct(rm.description)}
                       </p>
-                      <p className="font-bold text-[15px] text-white/90 tabular-nums mt-1">
+                      <p className="font-bold text-[15px] text-white tabular-nums mt-1">
                         £{rm.unitPrice.toFixed(2)}
-                        <span className="text-[11px] font-medium text-white/55 ml-1">/{rm.unit}</span>
+                        <span className="text-[11px] font-medium text-white ml-1">/{rm.unit}</span>
                       </p>
                     </button>
                   ))}
@@ -1259,7 +1281,7 @@ export const EnhancedQuoteItemsStep = ({
                       setMaterialSearch(sug.name);
                       clearSuggestions();
                     }}
-                    className="h-8 px-3 rounded-lg bg-white/[0.05] border border-white/[0.10] text-[12px] text-white/80 touch-manipulation active:scale-[0.97] transition-all select-none"
+                    className="h-11 px-3 rounded-lg bg-white/[0.05] border border-white/[0.10] text-[12px] text-white touch-manipulation active:scale-[0.97] transition-all select-none"
                   >
                     {titleCaseProduct(sug.name)}
                   </button>
@@ -1271,7 +1293,7 @@ export const EnhancedQuoteItemsStep = ({
             {materialSearch.length >= 2 && (
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[12px] text-white/65 tabular-nums">
+                  <p className="text-[12px] text-white tabular-nums">
                     {filteredMaterials.length + ragResults.length} result
                     {filteredMaterials.length + ragResults.length !== 1 ? 's' : ''}
                   </p>
@@ -1315,7 +1337,7 @@ export const EnhancedQuoteItemsStep = ({
                               className={cn(
                                 'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
                                 isSelected
-                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  ? 'bg-white/[0.08] border-elec-yellow/60'
                                   : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]',
                                 /out of stock/i.test(material.stockStatus || '') && 'opacity-55'
                               )}
@@ -1334,14 +1356,14 @@ export const EnhancedQuoteItemsStep = ({
                                 £{adjustedPrice.toFixed(2)}
                               </p>
                               {adjustedPrice !== basePrice && (
-                                <p className="text-[10px] text-white/50 tabular-nums">
+                                <p className="text-[10px] text-white tabular-nums">
                                   cost £{basePrice.toFixed(2)} · your markup applied
                                 </p>
                               )}
                               {/out of stock/i.test(material.stockStatus || '') && (
                                 <p className="text-[10px] font-semibold text-red-400 mt-1">Out of stock</p>
                               )}
-                              <p className="text-[10px] text-white/55 mt-1.5 truncate">
+                              <p className="text-[10px] text-white mt-1.5 truncate">
                                 {material.supplier}
                                 {material.scrapedAt && (
                                   <span className="text-emerald-400/80">
@@ -1362,7 +1384,7 @@ export const EnhancedQuoteItemsStep = ({
                   {/* Trade catalogue — static reference prices */}
                   {ragResults.filter((m) => m.source !== 'live').length > 0 && (
                     <div>
-                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                         Trade catalogue
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -1390,22 +1412,22 @@ export const EnhancedQuoteItemsStep = ({
                               className={cn(
                                 'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
                                 isSelected
-                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  ? 'bg-white/[0.08] border-elec-yellow/60'
                                   : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]'
                               )}
                             >
                               <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
                                 {titleCaseProduct(material.name)}
                               </p>
-                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white/90')}>
+                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white')}>
                                 £{adjustedPrice.toFixed(2)}
                               </p>
                               {adjustedPrice !== basePrice && (
-                                <p className="text-[10px] text-white/50 tabular-nums">
+                                <p className="text-[10px] text-white tabular-nums">
                                   cost £{basePrice.toFixed(2)} · your markup applied
                                 </p>
                               )}
-                              <p className="text-[10px] text-white/55 mt-1.5 truncate">{material.supplier}</p>
+                              <p className="text-[10px] text-white mt-1.5 truncate">{material.supplier}</p>
                             </button>
                           );
                         })}
@@ -1416,7 +1438,7 @@ export const EnhancedQuoteItemsStep = ({
                   {/* Standard list */}
                   {filteredMaterials.length > 0 && (
                     <div>
-                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                         Standard list
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -1433,17 +1455,17 @@ export const EnhancedQuoteItemsStep = ({
                               className={cn(
                                 'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
                                 isSelected
-                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  ? 'bg-white/[0.08] border-elec-yellow/60'
                                   : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]'
                               )}
                             >
                               <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
                                 {titleCaseProduct(material.name)}
                               </p>
-                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white/90')}>
+                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white')}>
                                 £{adjustedPrice.toFixed(2)}
                               </p>
-                              <p className="text-[10px] text-white/55 mt-1.5 capitalize truncate">{material.category}</p>
+                              <p className="text-[10px] text-white mt-1.5 capitalize truncate">{material.category}</p>
                             </button>
                           );
                         })}
@@ -1453,7 +1475,7 @@ export const EnhancedQuoteItemsStep = ({
 
                   {/* No matches */}
                   {!isSearchingRAG && filteredMaterials.length === 0 && ragResults.length === 0 && materialSearch.length >= 3 && (
-                    <p className="text-[12px] text-white/55 py-4 text-center">
+                    <p className="text-[12px] text-white py-4 text-center">
                       No matches — fill in the fields below to add it manually.
                     </p>
                   )}
@@ -1513,10 +1535,10 @@ export const EnhancedQuoteItemsStep = ({
                     type="button"
                     onClick={() => setCustomCategory(opt.id)}
                     className={cn(
-                      'flex-1 h-11 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                      cn(chipBase, 'flex-1'),
                       customCategory === opt.id
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                        ? chipOn
+                        : chipOff
                     )}
                   >
                     {opt.label}
@@ -1531,7 +1553,7 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="e.g., Site visit fee, Call-out charge"
                 value={newItem.description}
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
-                className="min-h-[80px] px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/40 resize-none"
+                className="min-h-[80px] px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/25 resize-none"
               />
             </div>
             {/* Quantity */}
@@ -1561,7 +1583,7 @@ export const EnhancedQuoteItemsStep = ({
                   setQuantityInput(String(val));
                 }}
                 placeholder="1"
-                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/25"
               />
             </div>
             {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
@@ -1613,7 +1635,7 @@ export const EnhancedQuoteItemsStep = ({
                     setNewItem((prev) => ({ ...prev, unit: e.target.value }))
                   }
                   placeholder="e.g. per circuit, per spur"
-                  className="h-11 px-3 mt-2 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
+                  className="h-11 px-3 mt-2 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/25"
                 />
               )}
             </div>
@@ -1648,12 +1670,12 @@ export const EnhancedQuoteItemsStep = ({
                   if (val > 0) setUnitPriceInput(val.toFixed(2));
                 }}
                 placeholder="0.00"
-                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/25"
               />
             </div>
             {/* Total Preview */}
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
-              <div className="flex items-center justify-between p-3.5 bg-elec-yellow/5">
+              <div className="flex items-center justify-between p-3.5 bg-white/[0.04]">
                 <span className="text-[14px] text-white">Item Total</span>
                 <span className="text-lg font-bold text-elec-yellow">
                   £{(newItem.quantity * newItem.unitPrice).toFixed(2)}
@@ -1668,7 +1690,7 @@ export const EnhancedQuoteItemsStep = ({
           <Button
             onClick={handleAddItem}
             disabled={!newItem.description || newItem.unitPrice <= 0}
-            className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
+            className="w-full h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
           >
             Add to Quote
           </Button>
@@ -1730,7 +1752,7 @@ export const EnhancedQuoteItemsStep = ({
                         className="min-w-0 flex-1 whitespace-pre-wrap break-words text-left font-medium text-[14px] leading-snug text-white"
                       >
                         {item.description || (
-                          <span className="font-normal text-white/40">Tap to add a description</span>
+                          <span className="font-normal text-white/25">Tap to add a description</span>
                         )}
                       </button>
                     )}
@@ -1747,7 +1769,7 @@ export const EnhancedQuoteItemsStep = ({
                         style={{ colorScheme: 'dark' }}
                         value={item.quantity}
                         onChange={(quantity) => onUpdate(item.id, { quantity })}
-                        className="w-12 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className="w-14 h-11 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <span className="text-[11px] text-white w-8 truncate">{item.unit}</span>
                       <span className="text-[12px] text-white">×</span>
@@ -1756,7 +1778,7 @@ export const EnhancedQuoteItemsStep = ({
                         style={{ colorScheme: 'dark' }}
                         value={item.unitPrice}
                         onChange={(unitPrice) => onUpdate(item.id, { unitPrice })}
-                        className="w-14 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        className="w-16 h-11 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                     </div>
 
@@ -1776,9 +1798,9 @@ export const EnhancedQuoteItemsStep = ({
                           }
                         }}
                         className={cn(
-                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                          'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
                           editingItemId === item.id
-                            ? 'bg-elec-yellow/20 active:bg-elec-yellow/30'
+                            ? 'bg-white/[0.08] border border-elec-yellow/40 active:brightness-125'
                             : 'bg-white/[0.05] active:bg-white/[0.1]'
                         )}
                         aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
@@ -1790,7 +1812,7 @@ export const EnhancedQuoteItemsStep = ({
                       <button
                         type="button"
                         onClick={() => duplicateItem(item)}
-                        className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1] active:scale-95 transition-transform"
+                        className="w-11 h-11 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1] active:scale-95 transition-transform"
                         aria-label="Duplicate item"
                       >
                         <Copy className="h-4 w-4 text-white" />
@@ -1801,11 +1823,11 @@ export const EnhancedQuoteItemsStep = ({
                           setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
                         }
                         className={cn(
-                          'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                          'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
                           adjustingItemId === item.id ||
                             (typeof item.itemAdjustmentPercent === 'number' &&
                               item.itemAdjustmentPercent !== 0)
-                            ? 'bg-elec-yellow/20 active:bg-elec-yellow/30'
+                            ? 'bg-white/[0.08] border border-elec-yellow/40 active:brightness-125'
                             : 'bg-white/[0.05] active:bg-white/[0.1]'
                         )}
                         aria-label="Per-item adjustment"
@@ -1833,8 +1855,8 @@ export const EnhancedQuoteItemsStep = ({
                               onClick={() => handleSaveToPriceBook(item)}
                               disabled={savingItemId === item.id}
                               className={cn(
-                                'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
-                                inBook ? 'bg-white/[0.04]' : 'bg-elec-yellow/10 active:bg-elec-yellow/20'
+                                'w-11 h-11 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                                inBook ? 'bg-white/[0.04]' : 'bg-white/[0.06] border border-elec-yellow/30 active:brightness-125'
                               )}
                               aria-label={inBook ? 'Update price in price book' : 'Save to price book'}
                               title={inBook ? 'In your price book — tap to update the price' : 'Save to price book'}
@@ -1852,7 +1874,7 @@ export const EnhancedQuoteItemsStep = ({
                       <button
                         type="button"
                         onClick={() => onRemove(item.id)}
-                        className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20 active:scale-95 transition-transform"
+                        className="w-11 h-11 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20 active:scale-95 transition-transform"
                         aria-label="Remove item"
                       >
                         <Trash2 className="h-4 w-4 text-red-400" />
@@ -1877,7 +1899,7 @@ export const EnhancedQuoteItemsStep = ({
                           {item.itemAdjustmentPercent}%
                         </span>
                         {item.itemAdjustmentLabel && (
-                          <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                          <span className="text-white">{item.itemAdjustmentLabel}</span>
                         )}
                       </div>
                     )}
@@ -1896,7 +1918,7 @@ export const EnhancedQuoteItemsStep = ({
                               itemAdjustmentPercent: val === 0 ? undefined : val,
                             })
                           }
-                          className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                          className="w-20 h-11 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                         />
                         <input
                           type="text"
@@ -1907,18 +1929,18 @@ export const EnhancedQuoteItemsStep = ({
                               itemAdjustmentLabel: e.target.value || undefined,
                             })
                           }
-                          className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                          className="flex-1 h-11 px-2.5 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/25"
                         />
                         <button
                           type="button"
                           onClick={() => setAdjustingItemId(null)}
-                          className="w-8 h-8 rounded-lg bg-elec-yellow/20 active:bg-elec-yellow/30 flex items-center justify-center"
+                          className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.12] active:brightness-125 flex items-center justify-center"
                           aria-label="Done"
                         >
                           <Check className="h-4 w-4 text-elec-yellow" />
                         </button>
                       </div>
-                      <p className="text-[10px] text-white/50">
+                      <p className="text-[10px] text-white">
                         Negative = discount (e.g. −20 for mates rate). Positive = markup.
                       </p>
                     </div>
@@ -1936,7 +1958,7 @@ export const EnhancedQuoteItemsStep = ({
               type="button"
               onClick={() => saveToPriceBook(unsavedPriceBookItems)}
               disabled={savingToPriceBook}
-              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/15 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-white/[0.06] text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.06] disabled:opacity-50 touch-manipulation active:scale-[0.99]"
             >
               {savingToPriceBook ? (
                 <>
@@ -1981,6 +2003,6 @@ export const EnhancedQuoteItemsStep = ({
         onDeselectAll={scanner.deselectAll}
         onConfirm={handleConfirmScannedItems}
       />
-    </div>
+    </section>
   );
 };

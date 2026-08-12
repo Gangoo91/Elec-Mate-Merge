@@ -5,7 +5,19 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
-import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
+/*
+ * A4:2026, not A3.
+ *
+ * `retrieveRegulations` (../_shared/rag-retrieval.ts) reads `bs7671_embeddings`
+ * and `regulations_intelligence`. Measured: 2,557 rows all stamped A3:2024, and
+ * 47,588 rows with zero mention of Chapter 57 — which is new in Amendment 4.
+ * `bs7671_facets` holds 46,745 A4:2026 rows across BS 7671, GN3 and the OSG and
+ * is what the rest of the estate retrieves from.
+ *
+ * The shared helper is left alone: its other consumer (regulation-helper.ts →
+ * health-safety-v3) is not this function's to re-point.
+ */
+import { searchFacets, type BS7671Facet } from '../_shared/bs7671-facets-rag.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 // JSON extraction and repair helpers to handle occasional malformed outputs
@@ -240,39 +252,37 @@ Keep it brief - list facts only, no explanations.`,
           {
             name: 'wiring_regs',
             execute: async () => {
-              if (!openAiKey) return { data: [], error: null };
               const ctxSuffix = circuit_type ? ` ${circuit_type}` : '';
-              const results = await retrieveRegulations(
-                `${componentType}${ctxSuffix} wiring requirements: terminal connections, cable colors, protection requirements`,
-                8,
-                openAiKey
-              );
+              const results = await searchFacets(supabase, {
+                query: `${componentType}${ctxSuffix} wiring requirements: terminal connections, cable colours, protection requirements`,
+                matchCount: 8,
+                documentTypes: ['bs7671'],
+              });
               return { data: results, error: null };
             },
           },
           {
             name: 'safety_regs',
             execute: async () => {
-              if (!openAiKey) return { data: [], error: null };
               const earthCtx = earthing_system ? ` ${earthing_system} earthing` : '';
-              const results = await retrieveRegulations(
-                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation${earthCtx}`,
-                5,
-                openAiKey
-              );
+              const results = await searchFacets(supabase, {
+                query: `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation${earthCtx}`,
+                matchCount: 5,
+                documentTypes: ['bs7671'],
+              });
               return { data: results, error: null };
             },
           },
           {
             name: 'installation_regs',
             execute: async () => {
-              if (!openAiKey) return { data: [], error: null };
               const propCtx = property_type ? ` ${property_type}` : '';
-              const results = await retrieveRegulations(
-                `${componentType}${propCtx} installation method: cable sizing, mounting, earthing, bonding`,
-                5,
-                openAiKey
-              );
+              // GN3 and the On-Site Guide are where the practical method lives.
+              const results = await searchFacets(supabase, {
+                query: `${componentType}${propCtx} installation method: mounting, earthing, bonding, testing`,
+                matchCount: 5,
+                documentTypes: ['bs7671', 'gn3', 'osg'],
+              });
               return { data: results, error: null };
             },
           },
@@ -288,9 +298,33 @@ Keep it brief - list facts only, no explanations.`,
     const safetyRegs = successes.find((s) => s.name === 'safety_regs')?.result?.data || [];
     const installRegs = successes.find((s) => s.name === 'installation_regs')?.result?.data || [];
 
-    // Merge and deduplicate regulations
-    const allRegulations = [...wiringRegs, ...safetyRegs, ...installRegs];
-    const regulations = Array.from(new Map(allRegulations.map((reg) => [reg.id, reg])).values());
+    /*
+     * Merge, dedupe, and work out which clause numbers we are willing to let
+     * the model cite.
+     *
+     * A facet's `regNumber` comes off a join that does not always resolve — a
+     * note whose body reads "referenced to Regulation 526.1" came back tagged
+     * 559.41 on the fault-diagnosis tool. So a number counts as citable only
+     * when the facet's own prose backs it up, and any clause the model quotes
+     * that isn't on this list is stripped after generation.
+     */
+    const allFacets: BS7671Facet[] = [...wiringRegs, ...safetyRegs, ...installRegs];
+    const facets = Array.from(new Map(allFacets.map((f) => [f.facetId, f])).values());
+
+    const REG_PATTERN = /\b\d{3}(?:\.\d+){1,3}\b/g;
+    const citableClauses = new Set<string>();
+    for (const f of facets) {
+      const prose = `${f.primaryTopic ?? ''} ${f.content ?? ''}`;
+      // Annotated: `match()` returns RegExpMatchArray | null, and `?? []`
+      // widens the fallback to never[], which makes `.includes(string)` pick
+      // the wrong overload.
+      const inProse: string[] = prose.match(REG_PATTERN) ?? [];
+      if (f.regNumber && inProse.includes(f.regNumber)) citableClauses.add(f.regNumber);
+      else if (inProse.length === 1) citableClauses.add(inProse[0]);
+    }
+
+    // Kept for the log line below, which reports a count.
+    const regulations = facets;
 
     logger.info('Smart RAG retrieval completed', {
       installationCount: installationDocs.length,
@@ -305,8 +339,16 @@ Keep it brief - list facts only, no explanations.`,
 Installation Manuals (${installationDocs.length} sources):
 ${installationDocs.map((doc) => `- ${doc.topic}: ${doc.content.substring(0, 200)}`).join('\n')}
 
-BS 7671 Wiring Regulations (${regulations.length} relevant regulations):
-${regulations.map((reg) => `- [${reg.regulation_number}] ${reg.similarity ? `(relevance: ${(reg.similarity * 100).toFixed(0)}%)` : ''} ${reg.content.substring(0, 250)}`).join('\n\n')}
+BS 7671:2018+A4:2026, GN3 and On-Site Guide extracts (${facets.length}):
+${facets
+  .map((f) => {
+    const label = f.regNumber && citableClauses.has(f.regNumber) ? f.regNumber : '(no clause number)';
+    return `- [${f.documentType.toUpperCase()} ${label}] ${(f.content ?? '').substring(0, 250)}`;
+  })
+  .join('\n\n')}
+
+CITABLE CLAUSES — the ONLY clause numbers you may put in a bs7671_reference:
+${citableClauses.size > 0 ? Array.from(citableClauses).join(', ') : '(none — leave every bs7671_reference empty)'}
 `;
 
     logger.info('Generating wiring guidance with AI');
@@ -327,7 +369,12 @@ ${regulations.map((reg) => `- [${reg.regulation_number}] ${reg.similarity ? `(re
                     role: 'user',
                     parts: [
                       {
-                        text: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
+                        text: `You are an experienced UK electrician providing BS 7671:2018+A4:2026 compliant wiring guidance.
+
+CITATIONS:
+- A bs7671_reference may ONLY be a number from the CITABLE CLAUSES list above.
+- If no listed clause supports a step, leave bs7671_reference as an empty string.
+- Never invent a clause number, and never cite Amendment 3 or earlier.
 
 CRITICAL UK CABLE COLOUR STANDARDS:
 - Brown = Line (Live) - permanent live or switched live
@@ -563,7 +610,39 @@ Format:
         }
       }
 
-      logger.info('JSON validation passed', { scenarioCount: guidance.wiring_scenarios.length });
+      /*
+       * Strip any clause the retrieval did not supply.
+       *
+       * The instruction above asks the model to cite only from CITABLE
+       * CLAUSES; this enforces it. `bs7671_reference` is free text in the
+       * schema, so without this a plausible-looking number that appears
+       * nowhere in the A4 corpus reaches an electrician as though it were
+       * checked. Dropped rather than corrected — a step with no citation is
+       * honest, a step with the wrong one is not.
+       */
+      let strippedCitations = 0;
+      for (const scenario of guidance.wiring_scenarios) {
+        for (const step of scenario.wiring_steps ?? []) {
+          const ref = String(step.bs7671_reference ?? '').trim();
+          if (!ref) continue;
+          const cited = ref.match(/\b\d{3}(?:\.\d+){1,3}\b/g) ?? [];
+          const kept = cited.filter((n: string) => citableClauses.has(n));
+          if (kept.length !== cited.length || cited.length === 0) strippedCitations++;
+          step.bs7671_reference = kept.join(', ');
+        }
+      }
+      if (strippedCitations > 0) {
+        logger.warn('Stripped ungrounded clause citations', {
+          strippedCitations,
+          citableCount: citableClauses.size,
+        });
+      }
+
+      logger.info('JSON validation passed', {
+        scenarioCount: guidance.wiring_scenarios.length,
+        citableClauses: citableClauses.size,
+        strippedCitations,
+      });
     } catch (parseError) {
       logger.error('JSON parsing failed', {
         error: parseError.message,

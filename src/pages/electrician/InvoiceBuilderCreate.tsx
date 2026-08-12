@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { Helmet } from 'react-helmet';
-import { X } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
@@ -320,7 +320,7 @@ const InvoiceBuilderCreate = () => {
               onClick={handleBack}
               className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] touch-manipulation"
             >
-              <X className="h-5 w-5" />
+              <ArrowLeft className="h-5 w-5" />
             </button>
             <div className="flex-1 min-w-0">
               <h1 className="text-base font-semibold text-white">New Invoice</h1>

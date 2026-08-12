@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { cn } from '@/lib/utils';
-import { Loader2, ArrowLeft, MoreHorizontal, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard, Hash } from 'lucide-react';
+import { DocumentNumberSheet } from '@/components/electrician/invoice-builder/DocumentNumberSheet';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useEffect, useState, useMemo, Fragment } from 'react';
@@ -46,6 +47,7 @@ const InvoiceViewPage = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
+  const [showNumberSheet, setShowNumberSheet] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isRefreshingFromProvider, setIsRefreshingFromProvider] = useState(false);
   const [totalPaid, setTotalPaid] = useState<number>(0);
@@ -986,6 +988,24 @@ const InvoiceViewPage = () => {
                 </button>
               )}
 
+              {/* ELE-1028 — the number is the one field people need to control
+                  (continuity with a sequence they already run) and it was the
+                  only one they could not touch. Offered on paid invoices too:
+                  correcting a wrong number on an issued invoice is exactly when
+                  you need it most. */}
+              <button
+                onClick={() => { setShowActionsSheet(false); setShowNumberSheet(true); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]"
+              >
+                <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08]">
+                  <Hash className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Change number</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">This invoice only</span>
+                </span>
+              </button>
+
               {isDraft && (
                 <button
                   onClick={async () => {
@@ -1169,6 +1189,19 @@ const InvoiceViewPage = () => {
           </div>
         </SheetContent>
       </Sheet>
+
+      <DocumentNumberSheet
+        open={showNumberSheet}
+        onOpenChange={setShowNumberSheet}
+        quoteId={invoice.id}
+        value={invoice.invoice_number ?? ''}
+        field="invoice_number"
+        syncedProvider={
+          (invoice as { external_invoice_provider?: string | null }).external_invoice_provider ??
+          null
+        }
+        onSaved={fetchInvoice}
+      />
 
       {/* Mark as Paid Dialog */}
       <AlertDialog open={showMarkPaidDialog} onOpenChange={setShowMarkPaidDialog}>

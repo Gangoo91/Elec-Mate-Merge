@@ -1046,7 +1046,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               <div
                 className={cn(
                   'testing-table-container mt-2',
-                  !isMobile && 'lg:-mx-5 lg:rounded-none lg:border-x-0'
+                  // -mr-9 rather than the symmetric -mx-5: the schedule is the
+                  // widest thing in the app and every pixel is a column, so it
+                  // reclaims the gutter the page shell leaves on the right.
+                  // Scoped here so no other screen's layout moves.
+                  !isMobile && 'lg:-mx-5 lg:-mr-9 lg:rounded-none lg:border-x-0'
                 )}
                 data-autofill-section
               >

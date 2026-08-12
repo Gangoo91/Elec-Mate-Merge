@@ -273,7 +273,7 @@ export const InvoiceGenerationStep = ({
           variant="outline"
           onClick={handlePreviewPDF}
           disabled={isPreviewing || isGenerating}
-          className="flex-1 h-10"
+          className="flex-1 h-11"
         >
           <Download className="mr-2 h-4 w-4" />
           {isPreviewing ? 'Generating...' : 'Preview PDF'}
@@ -281,7 +281,7 @@ export const InvoiceGenerationStep = ({
         <Button
           onClick={onGenerate}
           disabled={isGenerating || isPreviewing}
-          className="flex-1 h-10"
+          className="flex-1 h-11"
         >
           <FileText className="mr-2 h-4 w-4" />
           {isGenerating ? 'Generating...' : 'Save Invoice'}

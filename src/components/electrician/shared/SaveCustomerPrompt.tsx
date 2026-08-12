@@ -74,20 +74,34 @@ export const SaveCustomerPrompt = ({ client, onSaved, onDismiss }: SaveCustomerP
   };
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-500/10 border border-blue-500/30 animate-in slide-in-from-bottom-2">
-      <UserPlus className="h-5 w-5 text-blue-400 shrink-0" />
-      <p className="text-[13px] text-white flex-1">
-        Save <span className="font-medium text-white">{client.name}</span> to your customers?
+    /*
+     * Was blue — a colour that appears nowhere else in the product. The accent
+     * is Volt, and the fill is solid: a translucent Volt wash turns muddy brown
+     * against the dark ground.
+     */
+    <div className="flex items-center gap-3 rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 py-3 animate-in slide-in-from-bottom-2">
+      <UserPlus className="h-5 w-5 shrink-0 text-elec-yellow" />
+      <p className="flex-1 text-[13px] text-white">
+        Save <span className="font-semibold text-white">{client.name}</span> to your customers so
+        you can pick them next time
       </p>
       <button
         type="button"
         onClick={handleSave}
         disabled={isSaving}
-        className="px-3 py-1.5 rounded-lg bg-blue-500 text-white text-[13px] font-medium touch-manipulation active:scale-[0.97] disabled:opacity-50"
+        // "Save" alone sits inches from the wizard's own Save button in the
+        // footer, which saves the quote rather than the customer. Naming the
+        // object removes the ambiguity.
+        className="h-11 shrink-0 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation active:scale-[0.97] active:brightness-110 disabled:opacity-50"
       >
-        {isSaving ? 'Saving...' : 'Save'}
+        {isSaving ? 'Saving…' : 'Save customer'}
       </button>
-      <button type="button" onClick={onDismiss} className="p-1 touch-manipulation">
+      <button
+        type="button"
+        onClick={onDismiss}
+        aria-label="Dismiss"
+        className="flex h-11 w-11 shrink-0 items-center justify-center touch-manipulation"
+      >
         <X className="h-4 w-4 text-white" />
       </button>
     </div>

@@ -14,7 +14,7 @@ interface InfoRowProps {
 
 const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
   <div className="py-3 flex items-baseline gap-4">
-    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white w-28 sm:w-32 shrink-0">
       {label}
     </span>
     <span className="text-[14px] font-medium text-white flex-1 min-w-0">{value}</span>
@@ -35,15 +35,12 @@ export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
 
   return (
     <section className="space-y-5">
-      {/* Hero title */}
-      <div className="space-y-2">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
-          Method statement
-        </div>
-        <h2 className="text-[22px] sm:text-[28px] font-semibold tracking-tight leading-[1.15] text-white">
-          {title}
-        </h2>
-      </div>
+      {/* Hero title. No "Method statement" eyebrow here — the column already
+          carries that heading, and printing it twice in a row was the most
+          jarring thing on the page. */}
+      <h2 className="text-[22px] sm:text-[28px] font-semibold tracking-tight leading-[1.15] text-white">
+        {title}
+      </h2>
 
       {/* Info rows */}
       <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">

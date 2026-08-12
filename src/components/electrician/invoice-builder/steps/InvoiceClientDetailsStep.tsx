@@ -14,6 +14,7 @@ import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import { supabase } from '@/integrations/supabase/client';
+import { inputCn, labelCn, cardCn } from '@/components/forms/fieldStyles';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
@@ -152,9 +153,6 @@ export const InvoiceClientDetailsStep = ({
     return () => subscription.unsubscribe();
   }, [form, onUpdate, customerId, savePromptDismissed]);
 
-  const inputClass =
-    'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
-  const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
   const [dateOpen, setDateOpen] = useState(false);
   const completionRaw = form.watch('workStartDate');
   const completionDate = completionRaw ? parse(completionRaw, 'yyyy-MM-dd', new Date()) : undefined;
@@ -164,34 +162,37 @@ export const InvoiceClientDetailsStep = ({
   const SectionHeader = ({ n, title }: { n: string; title: string }) => (
     <div className="flex items-baseline gap-2 mb-3">
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">· {title}</span>
     </div>
   );
 
   return (
     <Form {...form}>
-      <div className="space-y-6 text-left">
+      {/* Two columns from lg up, mirroring the quote wizard's Client | Job
+          pairing. The invoice merges client and job into one step, so the
+          split happens between its sections instead of between panels. */}
+      <div className="space-y-4 text-left lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
 
         {/* Customer selector */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="01" title="Existing customer" />
           {selectedCustomer ? (
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/20">
-              <div className="h-10 w-10 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
-                <span className="text-[13px] font-bold text-emerald-400">
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.05] border border-white/[0.12]">
+              <div className="h-10 w-10 rounded-full bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <span className="text-[13px] font-bold text-black">
                   {selectedCustomer.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
                 </span>
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[14px] font-semibold text-white truncate">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white/60 truncate">
+                <p className="text-[12px] text-white truncate">
                   {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
-                className="h-9 px-3 rounded-lg text-[11px] font-semibold text-red-400 bg-red-500/[0.08] border border-red-500/[0.15] touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+                className="h-11 px-3.5 rounded-lg text-[12px] font-medium text-white bg-white/[0.06] border border-white/[0.12] touch-manipulation active:brightness-125 transition-all flex-shrink-0"
               >
                 Clear
               </button>
@@ -202,43 +203,43 @@ export const InvoiceClientDetailsStep = ({
               selectedCustomerId={customerId}
             />
           )}
-        </div>
+        </section>
 
         {/* Client details */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="02" title="Client details" />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <FormField control={form.control} name="name" render={({ field }) => (
               <FormItem className="col-span-2">
-                <label className={labelClass}>Client name <span className="text-elec-yellow">*</span></label>
+                <label className={labelCn}>Client name <span className="text-elec-yellow">*</span></label>
                 <FormControl>
-                  <input {...field} placeholder="Full name" className={inputClass} autoComplete="name" />
+                  <input {...field} placeholder="Full name" className={inputCn} autoComplete="name" />
                 </FormControl>
                 <FormMessage className="text-[12px] text-red-400" />
               </FormItem>
             )} />
             <FormField control={form.control} name="phone" render={({ field }) => (
               <FormItem>
-                <label className={labelClass}>Phone</label>
+                <label className={labelCn}>Phone</label>
                 <FormControl>
-                  <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputClass} autoComplete="tel" />
+                  <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputCn} autoComplete="tel" />
                 </FormControl>
               </FormItem>
             )} />
             <FormField control={form.control} name="email" render={({ field }) => (
               <FormItem>
-                <label className={labelClass}>Email</label>
+                <label className={labelCn}>Email</label>
                 <FormControl>
-                  <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputClass} autoComplete="email" />
+                  <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputCn} autoComplete="email" />
                 </FormControl>
                 <FormMessage className="text-[12px] text-red-400" />
               </FormItem>
             )} />
           </div>
-        </div>
+        </section>
 
         {/* Address */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="03" title="Job site address" />
           <div className="lg:max-w-2xl">
           <UnifiedAddressFinder
@@ -251,7 +252,7 @@ export const InvoiceClientDetailsStep = ({
             }
           />
           </div>
-        </div>
+        </section>
 
         {/* Save customer prompt */}
         {showSavePrompt && !customerId && (
@@ -268,30 +269,36 @@ export const InvoiceClientDetailsStep = ({
         )}
 
         {/* Job Details */}
-        <div>
+        <section className={cardCn}>
           <SectionHeader n="04" title="Job details" />
           <div className="space-y-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4">
               <FormField control={form.control} name="jobTitle" render={({ field }) => (
                 <FormItem className="lg:col-span-2">
-                  <label className={labelClass}>Job title <span className="text-elec-yellow">*</span></label>
+                  <label className={labelCn}>Job title <span className="text-elec-yellow">*</span></label>
                   <FormControl>
-                    <input {...field} placeholder="e.g. Consumer Unit Replacement" className={inputClass} />
+                    <input {...field} placeholder="e.g. Consumer Unit Replacement" className={inputCn} />
                   </FormControl>
                   <FormMessage className="text-[12px] text-red-400" />
                 </FormItem>
               )} />
               <FormField control={form.control} name="workStartDate" render={({ field }) => (
                 <FormItem>
-                  <label className={labelClass}>Work completion date</label>
+                  <label className={labelCn}>Work completion date</label>
                   <Popover open={dateOpen} onOpenChange={setDateOpen}>
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        className={cn(inputClass, 'flex items-center justify-between text-left', !completionValid && 'text-white/40')}
+                        // Empty state reads as a placeholder, so it uses the
+                        // kit's placeholder shade rather than an arbitrary one.
+                        className={cn(
+                          inputCn,
+                          'flex items-center justify-between text-left',
+                          !completionValid && 'text-white/25'
+                        )}
                       >
                         {completionValid ? format(completionValid, 'EEE d MMM yyyy') : 'Pick a date'}
-                        <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
+                        <CalendarIcon className="h-4 w-4 text-white flex-shrink-0 ml-2" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent align="start" className="w-auto p-0 z-[100] bg-elec-gray border-white/10">
@@ -311,14 +318,14 @@ export const InvoiceClientDetailsStep = ({
             </div>
             <FormField control={form.control} name="jobDescription" render={({ field }) => (
               <FormItem>
-                <label className={labelClass}>Description</label>
+                <label className={labelCn}>Description</label>
                 <FormControl>
-                  <textarea {...field} placeholder="Describe the work completed — your client reads this on the invoice" className={`${inputClass} min-h-[100px] resize-none py-3`} rows={4} />
+                  <textarea {...field} placeholder="Describe the work completed — your client reads this on the invoice" className={`${inputCn} min-h-[100px] resize-none py-3`} rows={4} />
                 </FormControl>
               </FormItem>
             )} />
           </div>
-        </div>
+        </section>
       </div>
     </Form>
   );

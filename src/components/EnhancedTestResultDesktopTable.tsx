@@ -5,6 +5,7 @@ import type { ZsBasis } from '@/utils/autoRegChecker';
 import { TestResult } from '@/types/testResult';
 import { cn } from '@/lib/utils';
 import EnhancedTestResultDesktopTableHeader from './EnhancedTestResultDesktopTableHeader';
+import { StickyHorizontalScrollbar } from './mobile/StickyHorizontalScrollbar';
 import EnhancedTestResultDesktopTableRow from './EnhancedTestResultDesktopTableRow';
 import { toast } from 'sonner';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
@@ -96,6 +97,9 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   // 1200-line header from re-rendering its ~15 popovers on every keystroke.
   const resultsRef = useRef(testResults);
   resultsRef.current = testResults;
+
+  /** The horizontally scrolling box, mirrored by the sticky scrollbar (ELE-1535). */
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Create a bulk update handler that matches the mobile interface
   const handleBulkUpdate = useCallback(
@@ -481,6 +485,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         ) : (
           <div className="sot-table-wrapper">
             <div
+              ref={scrollContainerRef}
               className="w-full overflow-auto enhanced-table-scroll"
               // ELE-1485 — Enter and the arrows move between cells. Handled here
               // rather than per cell: the keydown bubbles up from the input, and
@@ -599,6 +604,12 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
           </div>
         </div>
       )}
+
+      {/* ELE-1535 — this table caps at calc(100vh - 140px) and scrolls inside
+        itself, so its horizontal scrollbar lives on its bottom edge. In normal
+        use that edge sits below the fold, and the only way to move sideways is
+        to scroll the page hunting for it. */}
+      <StickyHorizontalScrollbar targetRef={scrollContainerRef} />
     </div>
   );
 };

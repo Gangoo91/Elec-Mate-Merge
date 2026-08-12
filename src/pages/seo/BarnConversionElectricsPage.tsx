@@ -16,6 +16,7 @@ import {
   Thermometer,
   ClipboardCheck,
   Ruler,
+  Home,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

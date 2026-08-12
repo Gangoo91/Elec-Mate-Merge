@@ -615,6 +615,16 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
   const rentalCapApplies = isRentedProperty && parseInt(baseInterval, 10) > 5;
   const suggestedInterval = rentalCapApplies ? '5' : baseInterval;
 
+  // ELE-1544 — the tenure prompt below. Domestic premises only: commercial and
+  // industrial guidance is already 5 years or less, so the PRS cap cannot bite.
+  const isDomesticPremises =
+    formData.description === 'domestic' || formData.description === 'domestic-dwelling';
+  const intervalExceedsRentedLimit = parseInt(formData.inspectionInterval || '0', 10) > 5;
+  // Answered per session rather than stored — it is a prompt, not a form field,
+  // and adding one would mean a schema and PDF change for a question the model
+  // form does not ask.
+  const [tenureConfirmed, setTenureConfirmed] = useState(false);
+
   // ELE-882 — Track whether the user has manually overridden the next
   // inspection date. Once they have, never silently recompute it again.
   // Initial value: if a date already exists when the component mounts (loaded
@@ -805,6 +815,45 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               >
                 Apply
               </button>
+            </div>
+          )}
+
+          {/* ELE-1544 — nothing on this form declares tenure, so a landlord
+            inspecting a rented flat picks Domestic + Flat + Periodic and gets
+            the 10-year domestic guidance with no warning. `isRentedProperty`
+            only catches HMOs and rental wording in free text, and the guidance
+            panel above hides itself once the interval matches the suggestion —
+            so at 10 years on a domestic property nothing is shown at all.
+            Ask the question rather than guess it. */}
+          {isDomesticPremises && intervalExceedsRentedLimit && !isRentedProperty && !tenureConfirmed && (
+            <div className="mt-3 rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2.5">
+              <p className="text-xs text-orange-300">
+                Is this a rented home? Rented homes in England must be inspected at least every 5
+                years — PRS Regulations 2020.
+              </p>
+              <div className="mt-2.5 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('inspectionInterval', '5');
+                    setTenureConfirmed(true);
+                  }}
+                  className="h-11 flex-1 rounded-lg bg-elec-yellow px-3 text-[13px] font-semibold text-black touch-manipulation transition-all active:scale-[0.98]"
+                >
+                  Rented — set 5 years
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setTenureConfirmed(true);
+                  }}
+                  className="h-11 flex-1 rounded-lg border border-white/[0.12] bg-white/[0.06] px-3 text-[13px] font-medium text-white touch-manipulation transition-all active:scale-[0.98]"
+                >
+                  Not rented
+                </button>
+              </div>
             </div>
           )}
         </FormField>

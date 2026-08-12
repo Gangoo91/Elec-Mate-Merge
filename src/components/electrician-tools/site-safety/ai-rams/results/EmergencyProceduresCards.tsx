@@ -23,7 +23,7 @@ export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> =
       </div>
 
       {!procedures || procedures.length === 0 ? (
-        <p className="text-[13px] text-white/55 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           No emergency procedures specified.
         </p>
       ) : (
@@ -33,7 +33,7 @@ export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> =
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-red-400 w-8 shrink-0">
                 {String(idx + 1).padStart(2, '0')}
               </span>
-              <span className="text-[13.5px] text-white/85 leading-relaxed flex-1">
+              <span className="text-[13.5px] text-white leading-relaxed flex-1">
                 {procedure}
               </span>
             </li>

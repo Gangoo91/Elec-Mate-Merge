@@ -15,6 +15,7 @@ import {
   Eye,
   ClipboardCheck,
   Phone,
+  Gauge,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

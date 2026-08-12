@@ -13,6 +13,7 @@ import {
   ClipboardCheck,
   Home,
   Building,
+  Clock,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

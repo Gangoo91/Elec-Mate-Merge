@@ -183,10 +183,36 @@ const relabelForNewNumber = (designation: unknown, newNumber: string): string | 
  * `phaseSeq` > 0 marks the row as part of an L1/L2/L3 group sharing one way,
  * which is written as "4.1" / "4.2" / "4.3".
  */
+/**
+ * True when a board carries more than one line, so a phase suffix on a way
+ * actually tells the reader something.
+ *
+ * On a domestic single-phase board every circuit is L1, so "Way 4 L1" repeats
+ * the same non-fact on every row — the suffix only earns its place where there
+ * is another line it could have been. Decided per BOARD rather than per circuit
+ * so a label cannot appear and disappear while a single circuit is edited; it
+ * flips only when a second phase is genuinely introduced, which is the moment
+ * the distinction starts to matter.
+ */
+export const boardIsMultiPhase = (boardCircuits: TestResult[]): boolean =>
+  boardCircuits.some(
+    (c) =>
+      c.phaseAssignment === 'L2' ||
+      c.phaseAssignment === 'L3' ||
+      c.phaseAssignment === 'L1,L2,L3' ||
+      c.phaseType === '3P'
+  );
+
 export const applyCircuitNumber = (
   circuit: TestResult,
   wayNum: number,
-  phaseSeq = 0
+  phaseSeq = 0,
+  /**
+   * Whether to append the phase to the auto-generated designation. Defaults to
+   * true so existing callers are unchanged; `renumberCircuits` works it out per
+   * board and passes the answer in.
+   */
+  showPhase = true
 ): TestResult => {
   // A device row holds no way, so there is nothing to apply. Without this a
   // duplicated RCD row would keep the flag but be stamped with a real number —
@@ -201,7 +227,7 @@ export const applyCircuitNumber = (
   };
   if (isAutoDesignation(circuit.circuitDesignation)) {
     const phase =
-      circuit.phaseAssignment && circuit.phaseAssignment !== 'L1,L2,L3'
+      showPhase && circuit.phaseAssignment && circuit.phaseAssignment !== 'L1,L2,L3'
         ? ` ${circuit.phaseAssignment}`
         : '';
     next.circuitDesignation = `Way ${wayNum}${phase}`;
@@ -238,6 +264,19 @@ export const renumberDuplicateCircuits = (circuits: TestResult[]): TestResult[] 
   const groupWayByBoard = new Map<string, number>();
   const phaseSeqByBoard = new Map<string, number>();
 
+  // Worked out once per board over the whole set, before any labelling — a
+  // single-phase board drops the "L1" that would otherwise sit on every row.
+  const multiPhaseByBoard = new Map<string, boolean>();
+  circuits.forEach((c) => {
+    const id = c.boardId || MAIN_BOARD_ID;
+    if (!multiPhaseByBoard.has(id)) {
+      multiPhaseByBoard.set(
+        id,
+        boardIsMultiPhase(circuits.filter((x) => (x.boardId || MAIN_BOARD_ID) === id))
+      );
+    }
+  });
+
   return circuits.map((circuit) => {
     // A device row keeps its dash and its position, and — crucially — does not
     // advance the counter. Resequencing through it would shunt every real
@@ -245,6 +284,7 @@ export const renumberDuplicateCircuits = (circuits: TestResult[]): TestResult[] 
     if (isDeviceRow(circuit)) return circuit;
 
     const boardId = circuit.boardId || MAIN_BOARD_ID;
+    const showPhase = multiPhaseByBoard.get(boardId) ?? true;
     const phase = circuit.phaseAssignment;
     const continuesGroup =
       (phase === 'L2' || phase === 'L3') && groupWayByBoard.has(boardId);
@@ -253,7 +293,7 @@ export const renumberDuplicateCircuits = (circuits: TestResult[]): TestResult[] 
       const way = groupWayByBoard.get(boardId) as number;
       const seq = (phaseSeqByBoard.get(boardId) ?? 1) + 1;
       phaseSeqByBoard.set(boardId, seq);
-      return applyCircuitNumber(circuit, way, seq);
+      return applyCircuitNumber(circuit, way, seq, showPhase);
     }
 
     const way = (nextWayByBoard.get(boardId) ?? 0) + 1;
@@ -262,11 +302,11 @@ export const renumberDuplicateCircuits = (circuits: TestResult[]): TestResult[] 
     if (phase === 'L1') {
       groupWayByBoard.set(boardId, way);
       phaseSeqByBoard.set(boardId, 1);
-      return applyCircuitNumber(circuit, way, 1);
+      return applyCircuitNumber(circuit, way, 1, showPhase);
     }
 
     groupWayByBoard.delete(boardId);
     phaseSeqByBoard.delete(boardId);
-    return applyCircuitNumber(circuit, way, 0);
+    return applyCircuitNumber(circuit, way, 0, showPhase);
   });
 };

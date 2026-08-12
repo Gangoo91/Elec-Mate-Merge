@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -87,6 +88,20 @@ const toInputDate = (value?: string): string => {
   return isNaN(parsed.getTime()) ? today : parsed.toISOString().split('T')[0];
 };
 
+/**
+ * Column heading for the ≥xl side-by-side layout. Sticks to the top of its
+ * column so you always know which half you're scrolling — the two columns
+ * scroll together, and without this the further down you go the easier it is to
+ * lose track of which is which.
+ */
+const PanelHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="sticky top-0 z-20 -mt-1 mb-5 bg-elec-dark/95 py-3 backdrop-blur-sm">
+    <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+      {children}
+    </span>
+  </div>
+);
+
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   ramsData: initialRamsData,
   methodData: initialMethodData,
@@ -102,29 +117,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   onRetry,
   onRetryAgent,
 }) => {
-  // PHASE 4: Handle missing data gracefully
-  if (!initialRamsData && !initialMethodData) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Card className="max-w-md">
-          <CardContent className="pt-6">
-            <div className="flex flex-col items-center text-center space-y-4">
-              <AlertCircle className="h-12 w-12 text-destructive" />
-              <h3 className="text-lg font-semibold">No Data Available</h3>
-              <p className="text-sm text-white">
-                Both risk assessment and method statement generation failed. Please try again.
-              </p>
-              {onRetry && (
-                <Button onClick={onRetry} variant="default">
-                  Retry Generation
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  // NOTE: the "no data" guard deliberately lives at the BOTTOM of this
+  // component, after every hook — see the comment above the final return.
+  // Do not reintroduce an early return here.
 
   // Normalize data on load to handle old/incomplete structures
   const normalizedRamsData: RAMSData | undefined = initialRamsData
@@ -238,6 +233,32 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [localLastSaved, setLocalLastSaved] = useState<Date | null>(null);
 
   const { isVisible: keyboardVisible } = useMobileKeyboard();
+
+  /**
+   * Adopt a half that arrives AFTER mount.
+   *
+   * `ramsData` / `methodData` above are seeded from props via useState, which
+   * captures the value at mount and ignores every later prop change. The editor
+   * opens as soon as the job is `partial` OR `complete`, so it can mount in the
+   * window where one agent has written its half and the other has not — and
+   * then never picks the second half up. The result was "Method statement not
+   * generated" displayed over a complete, correct 15-step document.
+   *
+   * Splitting the two agents into separate invocations (ELE-1386) widened that
+   * window, because the halves now land independently rather than together.
+   *
+   * Only fills a half that is currently EMPTY — never overwrites, because this
+   * is an editor and the user's edits must win over a late-arriving prop.
+   */
+  useEffect(() => {
+    if (!ramsData?.risks?.length && normalizedRamsData?.risks?.length) {
+      setRamsData(normalizedRamsData);
+    }
+    if (!methodData?.steps?.length && normalizedMethodData?.steps?.length) {
+      setMethodData(normalizedMethodData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialRamsData, initialMethodData]);
 
   // Notify parent of updates and track unsaved changes
   useEffect(() => {
@@ -880,114 +901,42 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     });
   };
 
-  return (
-    <div className={cn('space-y-7 sm:space-y-10 pb-12', isMobile && 'pb-24')}>
-      {/* Sub-toolbar — orchestrator's editorial header already carries the
-          status, project name and "New" button, so this strip just shows
-          save state and the regenerate action. */}
-      <div className="flex items-center justify-between gap-3 text-[11.5px]">
-        <span className="text-white/55 tabular-nums">
-          {lastSaved
-            ? isSaving
-              ? 'Saving…'
-              : `Saved ${lastSaved.toLocaleTimeString()}`
-            : 'Unsaved draft'}
-        </span>
-        {onRegenerate && (
-          <button
-            type="button"
-            onClick={onRegenerate}
-            className="inline-flex items-center gap-1.5 text-[12px] font-medium text-white/65 hover:text-elec-yellow transition-colors touch-manipulation"
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Regenerate</span>
-          </button>
-        )}
-      </div>
-
-      <div className="space-y-7 sm:space-y-10">
-        {/* Partial completion banner — editorial style. Retry just the
-            failed half if we know which one it is. */}
-        {isPartial && (
-          <section className="bg-[hsl(0_0%_10%)] border border-amber-500/30 rounded-2xl p-5">
-            <div className="flex items-baseline gap-3">
-              <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0">
-                Partial
-              </span>
-              <div className="flex-1 min-w-0">
-                <div className="text-[14.5px] font-semibold text-white">
-                  RAMS generated with gaps
-                </div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
-                  {!ramsData && 'Risk assessment generation failed. '}
-                  {!methodData && 'Method statement generation failed. '}
-                  Proceed with what's available, or retry just the failed half.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {onRetryAgent && !ramsData && (
-                    <button
-                      type="button"
-                      onClick={() => onRetryAgent('hs')}
-                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Retry hazard register
-                    </button>
-                  )}
-                  {onRetryAgent && !methodData && (
-                    <button
-                      type="button"
-                      onClick={() => onRetryAgent('method')}
-                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Retry method statement
-                    </button>
-                  )}
-                  {!onRetryAgent && onRetry && (
-                    <button
-                      type="button"
-                      onClick={onRetry}
-                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Retry failed section
-                    </button>
-                  )}
-                </div>
-              </div>
+  /**
+   * "No data" guard — MUST stay below every hook in this component.
+   *
+   * This used to be an early return at the top of the function, before all ~15
+   * hooks. React counts hooks per render: a first render with no data called
+   * ZERO hooks, then the render after the data arrived called fifteen, which
+   * throws "Rendered more hooks than during the previous render" and takes the
+   * whole tree down to a blank screen. tsc and the production build both pass
+   * it happily; only eslint's rules-of-hooks catches it.
+   */
+  if (!initialRamsData && !initialMethodData) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <Card className="max-w-md">
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <AlertCircle className="h-12 w-12 text-destructive" />
+              <h3 className="text-lg font-semibold text-white">Nothing generated</h3>
+              <p className="text-sm text-white">
+                Neither the risk assessment nor the method statement came back. Try again.
+              </p>
+              {onRetry && (
+                <Button onClick={onRetry} variant="default">
+                  Retry generation
+                </Button>
+              )}
             </div>
-          </section>
-        )}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
-        <div>
-          <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-auto bg-transparent rounded-none p-0 gap-0 border-b border-white/[0.08]">
-              <TabsTrigger
-                value="rams"
-                className={cn(
-                  'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
-                  'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
-                  'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
-                  'data-[state=inactive]:text-white/55 data-[state=inactive]:hover:text-white'
-                )}
-              >
-                Risk Assessment
-              </TabsTrigger>
-              <TabsTrigger
-                value="method"
-                className={cn(
-                  'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
-                  'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
-                  'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
-                  'data-[state=inactive]:text-white/55 data-[state=inactive]:hover:text-white'
-                )}
-              >
-                Method Statement
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="rams" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 p-0">
+  // Built once, rendered by whichever layout is active (see the note below).
+  const ramsPanel = (
+    <>
               {ramsData ? (
                 <>
                   {/* Summary Stats Card */}
@@ -1015,12 +964,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     const selectCls =
                       'h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14px] text-white touch-manipulation focus:border-elec-yellow/50 focus:outline-none [color-scheme:dark]';
                     return (
-                      <section className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3">
+                      <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3">
                         <div className="space-y-0.5">
-                          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60 block">
+                          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white block">
                             Issued date
                           </span>
-                          <p className="text-[12px] text-white/55">
+                          <p className="text-[12px] text-white">
                             Defaults to today — change to backdate the document.
                           </p>
                         </div>
@@ -1070,7 +1019,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <section className="space-y-4">
                     <div className="flex items-baseline justify-between gap-3">
                       <div className="space-y-1">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                           Identified hazards
                         </div>
                         <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -1089,14 +1038,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
                     {/* Empty state — editorial banner */}
                     {(!ramsData.risks || ramsData.risks.length === 0) && (
-                      <div className="bg-[hsl(0_0%_10%)] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
-                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/45 mb-2">
+                      <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
                           Nothing here yet
                         </div>
                         <h4 className="text-[17px] font-semibold text-white mb-2">
                           No hazards identified
                         </h4>
-                        <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                        <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
                           Add a hazard manually with the button above, or regenerate to let the AI
                           re-read your brief.
                         </p>
@@ -1144,7 +1093,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
 
                   {/* Safety / emergency contacts — editable */}
-                  <section className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-2xl p-4 sm:p-6 space-y-4">
+                  <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] rounded-2xl p-4 sm:p-6 space-y-4">
                     <div>
                       <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow mb-1">
                         Safety contacts
@@ -1152,7 +1101,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <h3 className="text-[17px] font-semibold text-white">
                         Emergency &amp; site contacts
                       </h3>
-                      <p className="text-[12.5px] leading-relaxed text-white/55 mt-1">
+                      <p className="text-[12.5px] leading-relaxed text-white mt-1">
                         Who to call on site. These appear on the RAMS and the exported PDF.
                       </p>
                     </div>
@@ -1177,47 +1126,47 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         ] as const
                       ).map((c) => (
                         <div key={c.nameKey} className="space-y-2">
-                          <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white/55">
+                          <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
                             {c.label}
                           </label>
                           <Input
                             value={(ramsData[c.nameKey] as string) || ''}
                             onChange={(e) => updateContact(c.nameKey, e.target.value)}
                             placeholder="Name"
-                            className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                            className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
                           />
                           <Input
                             value={(ramsData[c.phoneKey] as string) || ''}
                             onChange={(e) => updateContact(c.phoneKey, e.target.value)}
                             placeholder="Phone"
                             inputMode="tel"
-                            className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                            className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
                           />
                         </div>
                       ))}
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white/55">
+                      <label className="block text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
                         Assembly point
                       </label>
                       <Input
                         value={ramsData.assemblyPoint || ''}
                         onChange={(e) => updateContact('assemblyPoint', e.target.value)}
                         placeholder="e.g. Main car park, front gate"
-                        className="h-11 text-base touch-manipulation bg-[hsl(0_0%_8%)] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
+                        className="h-11 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/20 focus:border-elec-yellow focus:ring-elec-yellow text-white"
                       />
                     </div>
                   </section>
                 </>
               ) : (
-                <div className="bg-[hsl(0_0%_10%)] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+                <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
                   <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
                     Section unavailable
                   </div>
                   <h3 className="text-[17px] font-semibold text-white mb-2">
                     Risk assessment not generated
                   </h3>
-                  <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                  <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
                     The risk assessment didn't generate. Retry just this half to patch it in.
                   </p>
                   {onRetryAgent ? (
@@ -1243,9 +1192,11 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   )}
                 </div>
               )}
-            </TabsContent>
+    </>
+  );
 
-            <TabsContent value="method" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 pb-16">
+  const methodPanel = (
+    <>
               {methodData && Object.keys(methodData).length > 0 ? (
                 <div className="space-y-7 sm:space-y-10">
                   {/* Project Info Header */}
@@ -1289,13 +1240,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <section className="space-y-4">
                     <div className="flex items-baseline justify-between gap-3">
                       <div className="space-y-1">
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                           Installation steps
                         </div>
                         <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
                           The method, step by step.
                         </h3>
-                        <p className="text-[12.5px] text-white/60 tabular-nums">
+                        <p className="text-[12.5px] text-white tabular-nums">
                           {methodData.steps?.length || 0}{' '}
                           {(methodData.steps?.length || 0) === 1 ? 'step' : 'steps'}
                         </p>
@@ -1324,14 +1275,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         ))}
                       </div>
                     ) : (
-                      <div className="bg-[hsl(0_0%_10%)] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
-                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/45 mb-2">
+                      <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white mb-2">
                           Nothing here yet
                         </div>
                         <h4 className="text-[17px] font-semibold text-white mb-2">
                           No installation steps
                         </h4>
-                        <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                        <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
                           Add a step manually with the button above, or regenerate to have the AI
                           build the method statement.
                         </p>
@@ -1356,14 +1307,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
                 </div>
               ) : (
-                <div className="bg-[hsl(0_0%_10%)] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+                <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
                   <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
                     Section unavailable
                   </div>
                   <h3 className="text-[17px] font-semibold text-white mb-2">
                     Method statement not generated
                   </h3>
-                  <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                  <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto mb-4">
                     The method statement didn't generate. Retry just this half to patch it into the
                     existing RAMS.
                   </p>
@@ -1390,8 +1341,169 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   )}
                 </div>
               )}
-            </TabsContent>
-          </Tabs>
+    </>
+  );
+
+  return (
+    <div className={cn('space-y-7 sm:space-y-10 pb-12', isMobile && 'pb-24')}>
+      {/* Sub-toolbar — orchestrator's editorial header already carries the
+          status, project name and "New" button, so this strip just shows
+          save state and the regenerate action. */}
+      <div className="flex items-center justify-between gap-3 text-[11.5px]">
+        <span className="text-white tabular-nums">
+          {lastSaved
+            ? isSaving
+              ? 'Saving…'
+              : `Saved ${lastSaved.toLocaleTimeString()}`
+            : 'Unsaved draft'}
+        </span>
+        {onRegenerate && (
+          <button
+            type="button"
+            onClick={onRegenerate}
+            className="inline-flex items-center gap-1.5 text-[12px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Regenerate</span>
+          </button>
+        )}
+      </div>
+
+      <div className="space-y-7 sm:space-y-10">
+        {/* Partial completion banner — editorial style. Retry just the
+            failed half if we know which one it is. */}
+        {isPartial && (
+          <section className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 rounded-2xl p-5">
+            <div className="flex items-baseline gap-3">
+              <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0">
+                Partial
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[14.5px] font-semibold text-white">
+                  RAMS generated with gaps
+                </div>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white">
+                  {!ramsData && 'Risk assessment generation failed. '}
+                  {!methodData && 'Method statement generation failed. '}
+                  Proceed with what's available, or retry just the failed half.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {onRetryAgent && !ramsData && (
+                    <button
+                      type="button"
+                      onClick={() => onRetryAgent('hs')}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry hazard register
+                    </button>
+                  )}
+                  {onRetryAgent && !methodData && (
+                    <button
+                      type="button"
+                      onClick={() => onRetryAgent('method')}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry method statement
+                    </button>
+                  )}
+                  {!onRetryAgent && onRetry && (
+                    <button
+                      type="button"
+                      onClick={onRetry}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry failed section
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/*
+          Desktop shows BOTH halves at once; tabs only exist below xl.
+
+          A RAMS is one document in two parts, and the parts reference each
+          other — a step cites the hazards it controls. Tabs forced a round
+          trip to check that, and on a wide screen there was room for both all
+          along. Below xl the two panels go back to being tabs, because side by
+          side on a phone is unreadable.
+
+          Both panels are built once and reused by the two layouts, so there is
+          no duplicated markup and no chance of the two drifting apart.
+        */}
+        <div>
+          {/* ≥ xl — side by side. The two columns settle in one after the other
+              so the eye is led left-to-right through the document rather than
+              having the whole thing appear at once. */}
+          <div className="hidden xl:grid xl:grid-cols-2 xl:items-start xl:gap-8">
+            {/*
+              ONE scroll only — the page's.
+
+              These columns briefly had their own `overflow-y-auto`, which gave
+              two inner scrollbars on top of the page's: nested scroll regions
+              trap the wheel and it stops being obvious what you're scrolling.
+              The columns just flow; the shorter one simply ends first, which is
+              normal for a two-column document.
+            */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            >
+              <PanelHeading>Risk assessment</PanelHeading>
+              <div className="space-y-7">{ramsPanel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut', delay: 0.08 }}
+            >
+              <PanelHeading>Method statement</PanelHeading>
+              <div className="space-y-7">{methodPanel}</div>
+            </motion.div>
+          </div>
+
+          {/* < xl — tabbed */}
+          <div className="xl:hidden">
+            <Tabs defaultValue="rams" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 h-auto bg-transparent rounded-none p-0 gap-0 border-b border-white/[0.08]">
+                <TabsTrigger
+                  value="rams"
+                  className={cn(
+                    'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
+                    'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
+                    'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
+                    'data-[state=inactive]:text-white data-[state=inactive]:hover:text-elec-yellow'
+                  )}
+                >
+                  Risk Assessment
+                </TabsTrigger>
+                <TabsTrigger
+                  value="method"
+                  className={cn(
+                    'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
+                    'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
+                    'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
+                    'data-[state=inactive]:text-white data-[state=inactive]:hover:text-elec-yellow'
+                  )}
+                >
+                  Method Statement
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="rams" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 p-0">
+                {ramsPanel}
+              </TabsContent>
+              <TabsContent value="method" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 pb-16">
+                {methodPanel}
+              </TabsContent>
+            </Tabs>
+          </div>
 
           {/* Sticky export footer — editorial CTA pair */}
           <div className="hidden sm:block pt-4 mt-4 border-t border-white/[0.08]">

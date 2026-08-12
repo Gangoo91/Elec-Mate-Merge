@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { normalizeEICDefectCode } from '@/hooks/useEICObservations';
 
 export type EICTabId = 'details' | 'inspection' | 'testing' | 'declarations' | 'certificate';
 
@@ -125,6 +126,45 @@ export const useEICValidation = (formData: any): ValidationResult => {
         if (rule.severity === 'error') errors.push(item);
         else warnings.push(item);
       }
+    }
+
+    /*
+     * Uncorrected defects block issue outright — this is not a warning.
+     *
+     * BS 7671 644.1.1 (new installation): "any defect or omission revealed
+     * during the inspection and testing shall be corrected before the
+     * Certificate is issued."
+     * 644.1.2 (addition or alteration): the same for any defect or omission
+     * "that will affect the safety of the addition or alteration".
+     *
+     * This is the mirror image of the EICR's C1/C2 gate, and it resolves the
+     * opposite way. An EICR reports condition, so a C2 forces the outcome to
+     * Unsatisfactory. An EIC *declares compliance*, so there is no unsatisfactory
+     * EIC to fall back on — the certificate simply must not be issued yet. That
+     * is why this is an error and why the EIC has no satisfactory/unsatisfactory
+     * toggle: adding one would let somebody sign a declaration that their own
+     * work does not comply.
+     *
+     * `rectified` is the release valve, and it is the regulation's own wording:
+     * put right before issue, and the certificate may be issued. Defects in the
+     * *existing* installation are a separate matter — they belong in Section I,
+     * "Comments on existing installation", and never block.
+     */
+    const uncorrectedDefects = Array.isArray(formData.observations)
+      ? formData.observations.filter(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (obs: any) => normalizeEICDefectCode(obs?.defectCode) === 'unsatisfactory' && !obs?.rectified
+        ).length
+      : 0;
+
+    if (uncorrectedDefects > 0) {
+      errors.push({
+        field: 'observations',
+        message: `${uncorrectedDefects} unsatisfactory item${uncorrectedDefects === 1 ? '' : 's'} must be corrected before issue`,
+        severity: 'error',
+        regulation: '644.1.1 / 644.1.2',
+        tab: 'inspection',
+      });
     }
 
     // Technical Validation Warnings

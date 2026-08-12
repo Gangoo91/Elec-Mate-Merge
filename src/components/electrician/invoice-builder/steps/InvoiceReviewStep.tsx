@@ -79,7 +79,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
             </div>
           )}
-          <div className="mt-3 p-4 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
+          <div className="mt-3 p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
             <span className="text-[15px] font-bold text-white">Total Due</span>
             <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
           </div>
@@ -212,7 +212,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                   <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
                 </div>
               )}
-              <div className="mt-3 p-4 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
+              <div className="mt-3 p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
                 <span className="text-[15px] font-bold text-white">Total Due</span>
                 <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
               </div>
