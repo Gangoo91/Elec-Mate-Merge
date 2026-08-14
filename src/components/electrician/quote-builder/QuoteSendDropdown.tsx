@@ -18,6 +18,7 @@ import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { isPermanentPdfUrl } from '@/utils/pdfUrl';
 import { trackUserEvent } from '@/hooks/useActivityTracking';
+import { trackQuoteSent } from '@/lib/analytics-events';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -289,6 +290,11 @@ export const QuoteSendDropdown = ({
           eventData: { quote_number: quote.quoteNumber ?? null, channel: 'email' },
         });
       }
+      trackQuoteSent({
+        quote_id: quote.id,
+        amount_pence: Math.round((quote.total || 0) * 100),
+        channel: 'email',
+      });
 
       onSuccess?.();
     } catch (error: any) {

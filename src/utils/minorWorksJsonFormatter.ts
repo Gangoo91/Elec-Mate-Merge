@@ -15,6 +15,7 @@
  * called outside a component — which was the thing keeping this untestable.
  */
 import { formatFieldForPdf } from '@/utils/minorWorksValidation';
+import { normalisePdfDates } from '@/utils/certDate';
 
 /** Company branding, already loaded by the caller. Null when none is saved. */
 export interface MinorWorksBranding {
@@ -100,5 +101,8 @@ export const formatMinorWorksJson = async (
     formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
   }
 
-  return formattedFormData;
+  // ELE-1552 — formatFieldForPdf only formats four hard-coded field names
+  // (the ELE-1167 fix), so testEquipmentCalDate and bsAmendmentDate still
+  // reached the template as ISO. See utils/certDate.ts.
+  return normalisePdfDates(formattedFormData);
 };

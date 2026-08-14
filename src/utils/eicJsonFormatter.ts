@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { supabase } from '@/integrations/supabase/client';
+import { normalisePdfDates } from '@/utils/certDate';
 import { normalizeEICDefectCode } from '@/hooks/useEICObservations';
 import { getBoardWays } from '@/types/distributionBoard';
 import { formatDesignStandard } from '@/data/standards';
@@ -1033,5 +1034,7 @@ export async function formatEicJson(
     };
   }
 
-  return json;
+  // ELE-1552 — last step, so a date field added above is formatted without
+  // anyone having to remember to wrap it. See utils/certDate.ts.
+  return normalisePdfDates(json);
 }

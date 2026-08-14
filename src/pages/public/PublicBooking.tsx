@@ -1,7 +1,15 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Check, CalendarDays, Loader2, AlertCircle, ChevronLeft, Zap } from 'lucide-react';
+import {
+  Check,
+  CalendarDays,
+  CalendarClock,
+  Loader2,
+  AlertCircle,
+  ChevronLeft,
+  Zap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -83,9 +91,12 @@ const PublicBooking = () => {
   const [quoteNumber, setQuoteNumber] = useState<string | null>(null);
   /** An earlier request or confirmed booking already on this quote. */
   const [alreadySettled, setAlreadySettled] = useState<{
-    kind: 'requested' | 'booked';
+    kind: 'requested' | 'booked' | 'proposed';
     date: string;
     preference?: TimePreference;
+    /** ELE-1562 — the day they originally asked for, when kind is 'proposed'. */
+    theirDate?: string;
+    note?: string | null;
   } | null>(null);
   /** Set when the client chooses to change what they asked for. */
   const [overrideSettled, setOverrideSettled] = useState(false);
@@ -137,7 +148,13 @@ const PublicBooking = () => {
           quote_id_param: quoteId,
         });
         if (rpcErr || cancelled) return;
-        const row = (Array.isArray(data) ? data[0] : data) as
+        /*
+         * Cast through `unknown`: the generated Supabase types are a snapshot
+         * and do not yet carry the three `proposed_*` columns this RPC now
+         * returns. Regenerating types.ts is a 40k-line diff on a file other
+         * work is touching, so the shape is asserted locally instead.
+         */
+        const row = (Array.isArray(data) ? data[0] : data) as unknown as
           | {
               client_name: string | null;
               client_phone: string | null;
@@ -148,6 +165,9 @@ const PublicBooking = () => {
               booked_slot_start: string | null;
               requested_start_date: string | null;
               requested_time_preference: TimePreference | null;
+              proposed_start_date: string | null;
+              proposed_at: string | null;
+              proposed_note: string | null;
             }
           | null;
         if (!row) return;
@@ -162,6 +182,20 @@ const PublicBooking = () => {
          */
         if (row.booked_slot_start) {
           setAlreadySettled({ kind: 'booked', date: row.booked_slot_start });
+        } else if (row.proposed_start_date) {
+          /*
+           * ELE-1562 — the electrician could not do the day they picked and
+           * has offered another. That is the newer move, so it outranks the
+           * client's own request: showing "you asked for the 26th" when he has
+           * already come back with the 2nd would be a conversation a step
+           * behind.
+           */
+          setAlreadySettled({
+            kind: 'proposed',
+            date: row.proposed_start_date,
+            theirDate: row.requested_start_date || undefined,
+            note: row.proposed_note,
+          });
         } else if (row.requested_start_date) {
           setAlreadySettled({
             kind: 'requested',
@@ -470,7 +504,60 @@ const PublicBooking = () => {
           the link — from the same email, days later — sees where things stand
           rather than a blank slate inviting a duplicate.
         */}
-        {showSettled && (
+        {showSettled && alreadySettled!.kind === 'proposed' && (
+          /*
+           * ELE-1562 — the electrician cannot do the day they picked and has
+           * offered another. Deliberately NOT the green tick used by the other
+           * two states: nothing is settled here, it needs a decision. Leads
+           * with the new date rather than the refusal, and accepting is one
+           * tap because that is the outcome everyone wants.
+           */
+          <div className="space-y-4 py-4 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/20">
+              <CalendarClock className="h-7 w-7 text-amber-300" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold text-white">A different day is needed</h2>
+              <p className="text-white">
+                {who} can't make{' '}
+                {alreadySettled!.theirDate
+                  ? formatDate(alreadySettled!.theirDate).full
+                  : 'the day you picked'}
+                , but can do{' '}
+                <strong className="text-elec-yellow">
+                  {formatDate(alreadySettled!.date).full}
+                </strong>
+                .
+              </p>
+              {alreadySettled!.note && (
+                <p className="mx-auto max-w-sm rounded-xl border border-white/[0.12] bg-white/[0.06] p-3 text-sm text-white">
+                  “{alreadySettled!.note}”
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  setSelectedDate(alreadySettled!.date);
+                  setOverrideSettled(true);
+                  setStep('details');
+                }}
+                className="min-h-12 w-full rounded-xl bg-elec-yellow px-5 text-[15px] font-semibold text-black touch-manipulation"
+              >
+                Yes, {formatDate(alreadySettled!.date).full} works
+              </button>
+              <button
+                onClick={() => setOverrideSettled(true)}
+                className="min-h-11 w-full text-sm font-medium text-elec-yellow touch-manipulation"
+              >
+                Neither suits — pick another day
+              </button>
+            </div>
+          </div>
+        )}
+
+        {showSettled && alreadySettled!.kind !== 'proposed' && (
           <div className="space-y-4 py-4 text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-500/20">
               <Check className="h-7 w-7 text-green-400" />

@@ -1,5 +1,6 @@
 import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
 import { CARD, LABEL, DIVIDE } from '@/components/seo/seoSurface';
+import { trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 
 interface SEOInlineLeadMagnetProps {
   /** Headline above the form. Defaults to the BS 7671 A4:2026 cheatsheet offer. */
@@ -32,6 +33,9 @@ export function SEOInlineLeadMagnet({
 }: SEOInlineLeadMagnetProps) {
   const handleSuccess = ({ downloadUrl }: { downloadUrl: string | null }) => {
     if (!downloadUrl) return;
+    // Distinct magnet label so SEO-page downloads are separable from the
+    // landing page's — the two audiences convert very differently.
+    trackLeadMagnetDownloaded({ magnet: 'cheatsheet_seo' });
     window.open(downloadUrl, '_blank', 'noopener,noreferrer');
   };
 

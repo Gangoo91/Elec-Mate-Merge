@@ -4,6 +4,7 @@ import { X, Zap } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { EmailCaptureForm } from './EmailCaptureForm';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 
 const EXIT_SHOWN_KEY = 'elec-mate-exit-intent-shown';
 const CAPTURED_KEY = 'elec-mate-email-captured';
@@ -56,7 +57,10 @@ export function ExitIntentModal() {
   }, []);
 
   const handleSuccess = ({ downloadUrl }: { downloadUrl: string | null }) => {
-    if (downloadUrl) window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+    if (downloadUrl) {
+      trackLeadMagnetDownloaded({ magnet: 'cheatsheet_exit_intent' });
+      window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+    }
     window.setTimeout(() => setOpen(false), 2500);
   };
 

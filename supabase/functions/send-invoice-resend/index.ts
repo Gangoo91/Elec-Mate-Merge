@@ -659,7 +659,27 @@ const handler = async (req: Request): Promise<Response> => {
       (i: any) => i.status === 'connected' && i.autoSyncEnabled !== false
     );
 
-    if (connectedAccounting) {
+    /*
+     * ELE-1561 — only sync to accounting on the FIRST send.
+     *
+     * This fired on every send and every resend. Re-syncing an unchanged
+     * invoice gains nothing: the figures in QuickBooks are already right. What
+     * it does do is run the create-vs-update decision again, and any wobble in
+     * that decision writes a second invoice into somebody's books. mglowacki
+     * resent because his customer had not received the email, and each attempt
+     * left another duplicate behind.
+     *
+     * `external_invoice_id` being present means this invoice is already in the
+     * accounting package, so a plain resend has nothing to push. Changing the
+     * invoice still syncs — that path runs from the invoice builder, not here.
+     */
+    const alreadyInAccounting = Boolean((invoice as { external_invoice_id?: string | null })?.external_invoice_id);
+
+    if (connectedAccounting && alreadyInAccounting) {
+      console.log(
+        `📊 Skipping accounting sync — invoice already in ${connectedAccounting.provider} (resend does not change the figures)`
+      );
+    } else if (connectedAccounting) {
       console.log(`📊 Auto-syncing to ${connectedAccounting.provider}...`);
       try {
         const syncResponse = await fetch(`${supabaseUrl}/functions/v1/accounting-sync-invoice`, {

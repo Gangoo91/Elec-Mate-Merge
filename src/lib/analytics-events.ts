@@ -34,20 +34,33 @@ function sendVercel(name: string, props?: Record<string, string | number | boole
 }
 
 // ─── Certificates ──────────────────────────────────────────────────
+/**
+ * Activation events dual-send like the signup funnel does. Only low-cardinality
+ * props go to Vercel — `report_id`/`quote_id`/`amount_pence` are unbounded and
+ * would shred the custom-event dimensions, so they stay in PostHog.
+ */
 export function trackCertGenerated(props: {
   cert_type: string; // 'eic' | 'eicr' | 'minor_works' | 'pat' | 'fire_alarm' | 'solar_pv' | 'ev_charging' | ...
   report_id?: string;
   source?: 'web' | 'native';
 }): void {
   send('cert_generated', props);
+  sendVercel('cert_generated', { cert_type: props.cert_type, source: props.source ?? null });
 }
 
+/**
+ * ⚠️ Still unwired, deliberately. Unlike generation — which funnels through
+ * `saveCertificatePdf` — downloading has no single choke point: each cert screen
+ * opens the stored URL itself. Wiring a subset would under-count while looking
+ * complete, so this waits for a shared download helper to hook once.
+ */
 export function trackCertDownloaded(props: {
   cert_type: string;
   report_id?: string;
   format?: 'pdf' | 'html';
 }): void {
   send('cert_downloaded', props);
+  sendVercel('cert_downloaded', { cert_type: props.cert_type, format: props.format ?? null });
 }
 
 // ─── Quotes & Invoices ─────────────────────────────────────────────
@@ -57,6 +70,7 @@ export function trackQuoteCreated(props: {
   source?: 'voice' | 'manual' | 'ai';
 }): void {
   send('quote_created', props);
+  sendVercel('quote_created', { source: props.source ?? null });
 }
 
 export function trackQuoteSent(props: {
@@ -65,17 +79,31 @@ export function trackQuoteSent(props: {
   channel?: 'email' | 'whatsapp' | 'link';
 }): void {
   send('quote_sent', props);
+  sendVercel('quote_sent', { channel: props.channel ?? null });
 }
 
 export function trackInvoiceRaised(props: { invoice_id?: string; amount_pence?: number }): void {
   send('invoice_raised', props);
+  sendVercel('invoice_raised');
 }
 
 export function trackInvoicePaid(props: { invoice_id?: string; amount_pence?: number }): void {
   send('invoice_paid', props);
+  sendVercel('invoice_paid');
 }
 
 // ─── Subscription lifecycle ────────────────────────────────────────
+/**
+ * 🔴 DO NOT CALL FROM THE CLIENT.
+ *
+ * `subscription_started` is already emitted server-side, from the payment
+ * processor's own truth rather than the browser:
+ *   - `supabase/functions/stripe-subscription-webhook/index.ts` (~line 1475)
+ *   - `supabase/functions/revenuecat-webhook/index.ts` (~line 441)
+ * Both send richer properties than this signature and fire even when the user
+ * never returns to the app. Calling this as well would double-count every
+ * subscription. Kept only so the schema is documented in one place.
+ */
 export function trackSubscriptionStarted(props: {
   tier: string;
   source: 'stripe' | 'revenuecat';
@@ -84,6 +112,15 @@ export function trackSubscriptionStarted(props: {
   send('subscription_started', props);
 }
 
+/**
+ * 🔴 Currently emitted by NOBODY — client or server.
+ *
+ * `cancel_confirmed` only covers in-app cancellations via CancelFlow; it misses
+ * store-initiated and Stripe-portal cancellations entirely. The correct home is
+ * server-side alongside `subscription_started` (Stripe
+ * `customer.subscription.deleted`, RevenueCat `CANCELLATION`). Wiring it here
+ * would under-count and disagree with the started event's source of truth.
+ */
 export function trackSubscriptionCancelled(props: { tier?: string; reason?: string }): void {
   send('subscription_cancelled', props);
 }
@@ -102,12 +139,30 @@ export function trackReferralClicked(props: { code: string; source?: string }): 
 
 export function trackLeadMagnetDownloaded(props: { magnet: string; email_domain?: string }): void {
   send('lead_magnet_downloaded', props);
+  // Dual-sent like the rest of the acquisition funnel: this fires on the landing
+  // page and on SEO pages, where consent-gated PostHog misses most visitors.
+  // `email_domain` stays out of Vercel — unbounded cardinality.
+  sendVercel('lead_magnet_downloaded', { magnet: props.magnet });
 }
 
+/**
+ * Keep this union in step with the `Source` type in
+ * `supabase/functions/newsletter-subscribe/index.ts`, which is the widest of the
+ * three (the landing form's own union omits `calculator_result`, which is sent
+ * by `components/seo/CalculatorResultEmail.tsx` instead).
+ */
 export function trackEmailCaptured(props: {
-  source: 'landing_form' | 'exit_intent' | 'lead_magnet_cheatsheet' | 'footer' | 'other';
+  source:
+    | 'landing_form'
+    | 'exit_intent'
+    | 'lead_magnet_cheatsheet'
+    | 'mock_exam_result'
+    | 'calculator_result'
+    | 'footer'
+    | 'other';
 }): void {
   send('email_captured', props);
+  sendVercel('email_captured', { source: props.source });
 }
 
 export function trackLandingCtaClicked(props: {

@@ -347,13 +347,13 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
       {/* 2x2 on desktop, single column on mobile. Cards stretch so both in a
           row are the same height, and each is a flex column so its content can
           grow into that height rather than leaving a void underneath. */}
-      <div className="grid flex-1 content-start gap-4 sm:gap-5 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
+      <div className="-mx-4 grid flex-1 content-start gap-4 sm:mx-0 sm:gap-5 lg:grid-cols-2 lg:grid-rows-[auto_1fr]">
         {/* 01 — PROGRESS */}
         <motion.section
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className={cn(cardCn, 'flex flex-col')}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
         >
           <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
             {isComplete ? '01 · Generated' : '01 · Generating'}
@@ -397,7 +397,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className={cn(cardCn, 'flex flex-col')}
+          className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}
         >
           <div className="flex items-baseline justify-between gap-3">
             <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
@@ -445,7 +445,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               transition={{ duration: 0.3, delay: 0.1 + idx * 0.05 }}
               className={cn(
                 cardCn,
-                'flex flex-col',
+                'mx-0 flex min-w-0 flex-col',
                 state === 'live' && 'sm:ring-1 sm:ring-elec-yellow/25',
                 state === 'failed' && 'sm:ring-1 sm:ring-red-500/30'
               )}

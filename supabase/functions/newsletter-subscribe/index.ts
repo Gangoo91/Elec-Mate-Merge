@@ -18,7 +18,7 @@
  *  - LEAD_MAGNET_CHEATSHEET_URL (signed URL or public path to the PDF)
  */
 
-import { serve, corsHeaders } from '../_shared/deps.ts';
+import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { sendCheatSheetEmail } from '../_shared/cheatsheet-email.ts';
 import {
@@ -290,6 +290,40 @@ serve(async (req) => {
     };
 
     const brevo = await addToBrevoList(apiKey, email, listId, attributes);
+
+    // Record the capture in our own database BEFORE the non-OK early return, so a
+    // Brevo outage shows up as rows with brevo_ok = false rather than as silence.
+    // Never allowed to fail the request: the lead already gave us their address
+    // and the Brevo call has already happened either way.
+    try {
+      const supabaseUrl = Deno.env.get('SUPABASE_URL');
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (supabaseUrl && serviceKey) {
+        const db = createClient(supabaseUrl, serviceKey);
+        const { error: leadErr } = await db.from('captured_leads').upsert(
+          {
+            email,
+            first_name: body.first_name ?? null,
+            source: body.source,
+            utm_source: body.utm?.utm_source ?? null,
+            utm_medium: body.utm?.utm_medium ?? null,
+            utm_campaign: body.utm?.utm_campaign ?? null,
+            gclid: body.utm?.gclid ?? null,
+            fbclid: body.utm?.fbclid ?? null,
+            brevo_ok: brevo.ok,
+            brevo_status: brevo.status,
+            event_id: body.event_id ?? null,
+            last_seen_at: new Date().toISOString(),
+          },
+          { onConflict: 'email,source', ignoreDuplicates: false }
+        );
+        if (leadErr) {
+          console.warn('[newsletter-subscribe] captured_leads write failed', leadErr.message);
+        }
+      }
+    } catch (leadErr) {
+      console.warn('[newsletter-subscribe] captured_leads write threw', leadErr);
+    }
 
     if (!brevo.ok) {
       const brevoErr = (brevo.response as { message?: string; code?: string })?.message;

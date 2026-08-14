@@ -23,6 +23,7 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { PANEL, LABEL } from '@/components/seo/seoSurface';
+import { trackEmailCaptured } from '@/lib/analytics-events';
 
 export interface CalculatorResultRow {
   label: string;
@@ -80,6 +81,9 @@ export function CalculatorResultEmail({ result }: Props) {
           },
         });
         if (error) throw error;
+        // The one conversion event that fires from an SEO page rather than the
+        // landing page — keep it distinct so SEO's contribution stays visible.
+        trackEmailCaptured({ source: 'calculator_result' });
         setState('sent');
       } catch {
         // Don't leave them staring at a spinner if Brevo or the function is down.

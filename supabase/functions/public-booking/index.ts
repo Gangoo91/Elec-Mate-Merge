@@ -162,13 +162,24 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
   const dateFrom = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   const dateTo = new Date(dateFrom.getTime() + days * 24 * 60 * 60 * 1000);
 
-  // Fetch existing calendar events in range
+  /*
+   * Existing diary entries, by OVERLAP with the window rather than by start.
+   *
+   * `.gte('start_at', dateFrom)` missed anything that began earlier and runs
+   * into the range — which for an all-day job is the common case, because an
+   * all-day event is stored from 23:00 UTC the previous evening (UK midnight
+   * during BST). A two-day booking starting yesterday occupies today and was
+   * invisible here.
+   *
+   * `all_day` is selected because the slot walker has to treat those events
+   * differently: they block the whole working day, not a gap in it.
+   */
   const { data: events } = await supabase
     .from('calendar_events')
-    .select('start_at, end_at')
+    .select('start_at, end_at, all_day')
     .eq('user_id', electricianId)
-    .gte('start_at', dateFrom.toISOString())
     .lte('start_at', dateTo.toISOString())
+    .gte('end_at', dateFrom.toISOString())
     .order('start_at', { ascending: true });
 
   // Find available slots using the electrician's working hours.
@@ -190,6 +201,75 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     return anchorMs + Math.ceil((ms - anchorMs) / stepMs) * stepMs;
   };
 
+  /**
+   * Minutes Europe/London is ahead of UTC at a given instant. 0 in winter,
+   * 60 during BST.
+   */
+  const ukOffsetMinutes = (utcMs: number): number => {
+    const parts = Object.fromEntries(
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/London',
+        hour12: false,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      })
+        .formatToParts(new Date(utcMs))
+        .map((part) => [part.type, part.value])
+    ) as Record<string, string>;
+
+    const asIfUtc = Date.UTC(
+      Number(parts.year),
+      Number(parts.month) - 1,
+      Number(parts.day),
+      Number(parts.hour === '24' ? '0' : parts.hour),
+      Number(parts.minute),
+      Number(parts.second)
+    );
+    return (asIfUtc - utcMs) / 60000;
+  };
+
+  /** The instant UK-local midnight begins on `dateStr`. */
+  const ukDayStartMs = (dateStr: string): number => {
+    const naive = Date.parse(`${dateStr}T00:00:00Z`);
+    return naive - ukOffsetMinutes(naive) * 60000;
+  };
+
+  /**
+   * The events occupying a given UK calendar date.
+   *
+   * Was `start_at.startsWith(dateStr)`, a string comparison against a UTC
+   * timestamp. All-day events are stored from 23:00 UTC the previous evening
+   * (UK midnight in BST), so that test filed every one of them under the day
+   * BEFORE the day it blocks, and saw only the first day of a multi-day job.
+   * A real example from the diary: a booking covering 26-27 August is stored
+   * as `2026-08-25T23:00:00Z`, so it was counted against the 25th and neither
+   * of the days it actually occupies.
+   *
+   * Half-open interval overlap: an event ending exactly at midnight does not
+   * occupy the next day.
+   */
+  const eventsOnDate = (dateStr: string) => {
+    const dayStart = ukDayStartMs(dateStr);
+    const dayEnd = ukDayStartMs(
+      new Date(Date.parse(`${dateStr}T00:00:00Z`) + 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0]
+    );
+    return (events || []).filter((e) => {
+      const start = new Date(e.start_at as string).getTime();
+      const end = new Date(e.end_at as string).getTime();
+      return start < dayEnd && end > dayStart;
+    });
+  };
+
+  /** A full-day job takes the day out entirely — no slots, not bookable. */
+  const hasAllDayEvent = (dateStr: string): boolean =>
+    eventsOnDate(dateStr).some((e) => e.all_day === true);
+
   const isBlackedOut = (dateStr: string): boolean => {
     if (!Array.isArray(blackoutDates) || blackoutDates.length === 0) return false;
     return blackoutDates.some((b) => {
@@ -208,6 +288,8 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     const dateStr = d.toISOString().split('T')[0];
     if (isBlackedOut(dateStr)) continue;
+    // A full-day job blocks the whole working window, not a gap inside it.
+    if (hasAllDayEvent(dateStr)) continue;
 
     // Working window for the day
     const dayStartMs = new Date(`${dateStr}T${window.start}:00Z`).getTime();
@@ -236,8 +318,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     // Get events for this specific day. Pad each event by the
     // configured buffer on either side so the sparky has travel time
     // between jobs.
-    const dayEvents = (events || [])
-      .filter((e) => (e.start_at as string).startsWith(dateStr))
+    const dayEvents = eventsOnDate(dateStr)
       .map((e) => ({
         start: new Date(e.start_at as string).getTime() - bufferMs,
         end: new Date(e.end_at as string).getTime() + bufferMs,
@@ -246,12 +327,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     // Daily booking cap — if the day already has the max number of
     // calendar events, surface zero slots for it.
-    if (
-      (events || []).filter((e) => (e.start_at as string).startsWith(dateStr)).length >=
-      maxBookingsPerDay
-    ) {
-      continue;
-    }
+    if (eventsOnDate(dateStr).length >= maxBookingsPerDay) continue;
 
     const daySlots: Array<{ date: string; start: string; end: string }> = [];
 
@@ -283,19 +359,34 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
   }
 
   /*
-   * Days the electrician works, independent of what is already in the diary.
+   * Days a client may ask to START on.
    *
-   * The quote-acceptance flow asks for a START DATE rather than an hour, so it
-   * needs the days that are plausible at all — a working day, not a holiday.
-   * It deliberately ignores existing events and the daily cap: those govern
-   * whether a one-hour slot is free, which has no bearing on whether a client
-   * may ask to begin a multi-week job that week. The electrician confirms.
+   * This is a looser test than the slot walker: the quote-acceptance flow asks
+   * for a start DATE rather than an hour, so a day with a couple of hours
+   * already booked is still a fair day to begin a multi-week job on. The
+   * electrician confirms either way.
+   *
+   * But it previously ignored the diary ENTIRELY, by design — and that is the
+   * bug Dan reported. A day he has already committed to a full-day job is not
+   * a day a customer can start on, and offering it invites a double booking
+   * that only surfaces when someone turns up. A full-day job, and a day
+   * already at the daily cap, now come out of the list.
    */
   const openDates: string[] = [];
   for (let d = new Date(dateFrom); d < dateTo; d.setUTCDate(d.getUTCDate() + 1)) {
     const dateStr = d.toISOString().split('T')[0];
     if (!workingHours[DAY_KEYS[d.getUTCDay()]]) continue;
     if (isBlackedOut(dateStr)) continue;
+    if (hasAllDayEvent(dateStr)) continue;
+    /*
+     * Deliberately NOT excluding days that are merely at the daily slot cap.
+     *
+     * The cap governs how many one-hour appointments fit in a day; this list
+     * is about which day a job may BEGIN on, which is a different question —
+     * a morning already holding two callouts is still a fair Monday to start
+     * a rewire. Only a full-day commitment genuinely takes the day off the
+     * table, and that is what was reported.
+     */
     // Respect the same notice period the slot walker applies.
     if (new Date(`${dateStr}T23:59:59Z`).getTime() < now.getTime() + minNoticeMs) continue;
     openDates.push(dateStr);

@@ -5,6 +5,29 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
+
+/**
+ * Coerce a date-ish value to a real Date, or null.
+ *
+ * `Invoice` types these fields as `Date`, but nothing enforces that at runtime.
+ * JSON has no Date type, so an invoice restored from a localStorage draft — or
+ * read back from Supabase — arrives with ISO **strings** in them. Optional
+ * chaining does not help: `?.` only guards null/undefined, so a string sails
+ * through and `.toISOString()` throws
+ * "o.toISOString is not a function" (Sentry, /electrician/invoice-builder/create).
+ *
+ * Coercing at the point of use is deliberate. Normalising on load would need
+ * every read path to remember, and the last one to forget reintroduces this.
+ */
+const asDate = (v: unknown): Date | null => {
+  if (v instanceof Date) return Number.isNaN(v.getTime()) ? null : v;
+  if (typeof v === 'string' || typeof v === 'number') {
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  return null;
+};
+
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 import { useStockMovements } from '@/hooks/useStockMovements';
 import {
@@ -306,9 +329,9 @@ export const useInvoiceStorage = () => {
       // or now + 30 days if no invoice_date either. Same fallback pattern
       // saveQuote uses for the active-quote path.
       const fallbackDueIso = new Date(
-        (invoice.invoice_date?.getTime() ?? Date.now()) + 30 * 24 * 60 * 60 * 1000
+        (asDate(invoice.invoice_date)?.getTime() ?? Date.now()) + 30 * 24 * 60 * 60 * 1000
       ).toISOString();
-      const dueDateIso = invoice.invoice_due_date?.toISOString() ?? fallbackDueIso;
+      const dueDateIso = asDate(invoice.invoice_due_date)?.toISOString() ?? fallbackDueIso;
 
       if (isNewInvoice) {
         // INSERT new standalone invoice
@@ -332,11 +355,11 @@ export const useInvoiceStorage = () => {
               status: 'approved',
               invoice_raised: true,
               invoice_number: finalInvoiceNumber,
-              invoice_date: invoice.invoice_date?.toISOString(),
+              invoice_date: asDate(invoice.invoice_date)?.toISOString(),
               invoice_due_date: dueDateIso,
               invoice_status: invoice.invoice_status || 'draft',
               invoice_notes: invoice.invoice_notes || null,
-              work_completion_date: invoice.work_completion_date?.toISOString(),
+              work_completion_date: asDate(invoice.work_completion_date)?.toISOString(),
               additional_invoice_items: [] as any,
               tags: [] as any,
               expiry_date: dueDateIso,
@@ -366,12 +389,12 @@ export const useInvoiceStorage = () => {
           .update({
             invoice_raised: true,
             invoice_number: finalInvoiceNumber,
-            invoice_date: invoice.invoice_date?.toISOString(),
-            invoice_due_date: invoice.invoice_due_date?.toISOString(),
+            invoice_date: asDate(invoice.invoice_date)?.toISOString(),
+            invoice_due_date: asDate(invoice.invoice_due_date)?.toISOString(),
             invoice_status: invoice.invoice_status,
             additional_invoice_items: JSON.parse(JSON.stringify([])), // Clear after merging
             invoice_notes: invoice.invoice_notes || null,
-            work_completion_date: invoice.work_completion_date?.toISOString(),
+            work_completion_date: asDate(invoice.work_completion_date)?.toISOString(),
             items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
             client_data: JSON.parse(JSON.stringify(invoice.client)) as any,
             settings: JSON.parse(JSON.stringify(invoice.settings || {})),

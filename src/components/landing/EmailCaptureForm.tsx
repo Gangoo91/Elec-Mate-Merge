@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { trackLead } from '@/lib/marketing-pixels';
 import { getStoredAttribution, fireServerCapi } from '@/lib/attribution';
+import { trackEmailCaptured } from '@/lib/analytics-events';
 import { storageSetSync } from '@/utils/storage';
 
 type Source =
@@ -99,6 +100,10 @@ export function EmailCaptureForm({
       // Flag that we've captured — used by ExitIntentModal to skip itself so
       // we don't ask the same person for their email twice in one session.
       storageSetSync('elec-mate-email-captured', String(Date.now()));
+
+      // Only fired on a confirmed success, so the count matches leads that
+      // actually reached Brevo rather than every submit attempt.
+      trackEmailCaptured({ source });
 
       setStatus('success');
       onSuccess?.({

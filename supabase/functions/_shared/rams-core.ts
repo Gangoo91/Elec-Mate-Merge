@@ -838,6 +838,16 @@ function startLiveDrain(
   let inFlight = false;
   /** Names of the most recent elements — the UI shows these landing live. */
   const recent: string[] = [];
+  /**
+   * Every complete element seen mid-stream, kept as a salvage copy.
+   *
+   * ELE-1563: when the model hits the token cap part-way through the `risks`
+   * array, `repairTruncatedJson` strips the incomplete array wholesale and
+   * closes the object — so the final parse yields a tidy document with NO
+   * hazards, which then passes as a success. These elements had already been
+   * parsed on the way past; discarding them was throwing away a usable register.
+   */
+  const collected: any[] = [];
 
   async function flush(): Promise<void> {
     if (inFlight) return; // never overlap DB writes
@@ -846,6 +856,7 @@ function startLiveDrain(
       const found = extractor.drain();
       if (found.length) {
         liveCount += found.length;
+        collected.push(...found);
         if (nameOf) {
           for (const el of found) {
             const name = nameOf(el);
@@ -885,6 +896,10 @@ function startLiveDrain(
       clearInterval(timer);
       await flush();
       return liveCount;
+    },
+    /** Complete elements parsed mid-stream — the salvage path (ELE-1563). */
+    elements(): any[] {
+      return collected;
     },
   };
 }
@@ -1142,6 +1157,44 @@ Hard rules:
       text.slice(0, 400)
     );
     throw new Error('H&S agent returned malformed JSON');
+  }
+
+  /**
+   * ELE-1563 — a RAMS with no hazards is not a RAMS.
+   *
+   * Observed on job e2ec795a: the model hit the 24k cap part-way through
+   * `risks`, JSON-repair stripped the incomplete array and closed the object,
+   * and the result parsed cleanly with every key BEFORE `risks` and none after.
+   * The agent reported success and the user got a hazard-free document.
+   *
+   * Salvage first — the streaming extractor had already parsed the hazards that
+   * completed before the cut. Only fail if there is genuinely nothing.
+   */
+  if (!Array.isArray(parsed.risks) || parsed.risks.length === 0) {
+    const salvaged = live.elements();
+    if (salvaged.length > 0) {
+      console.warn(
+        `[rams-core] H&S risks missing after parse (finish_reason: ${finishReason}) — ` +
+          `salvaged ${salvaged.length} from the stream.`
+      );
+      // Report it. Salvage stops truncation breaking the document, but if we
+      // don't record it the problem goes invisible again — and it is the
+      // signal that the token budget is too tight for real briefs.
+      await captureException(
+        new Error(`H&S output truncated — salvaged ${salvaged.length} risks from the stream`),
+        {
+          functionName: 'rams-generator/runHealthSafetyAgent',
+          tags: { agent: 'hs', outcome: 'truncated-salvaged' },
+          extra: { jobId, finishReason, salvaged: salvaged.length },
+        }
+      ).catch(() => {});
+      parsed.risks = salvaged;
+    } else {
+      throw new Error(
+        `H&S agent produced no hazards (finish_reason: ${finishReason ?? 'unknown'}). ` +
+          'A risk assessment with an empty hazard register is not usable.'
+      );
+    }
   }
 
   // Stamp project info back from input (don't trust AI to copy correctly).
@@ -1410,6 +1463,39 @@ Hard rules:
       text.slice(0, 400)
     );
     throw new Error('Method agent returned malformed JSON');
+  }
+
+  /**
+   * ELE-1563 — same failure mode as the hazard register, same treatment.
+   * `method_steps` sits mid-schema, so a truncated response loses it to the
+   * JSON repair and yields a method statement with no method in it.
+   */
+  const v2Steps = Array.isArray(parsed.method_steps) ? parsed.method_steps : [];
+  if (v2Steps.length === 0) {
+    const salvaged = live.elements();
+    if (salvaged.length > 0) {
+      console.warn(
+        `[rams-core] Method steps missing after parse (finish_reason: ${finishReason}) — ` +
+          `salvaged ${salvaged.length} from the stream.`
+      );
+      // Report it. Salvage stops truncation breaking the document, but if we
+      // don't record it the problem goes invisible again — and it is the
+      // signal that the token budget is too tight for real briefs.
+      await captureException(
+        new Error(`Method output truncated — salvaged ${salvaged.length} method_steps from the stream`),
+        {
+          functionName: 'rams-generator/runMethodStatementAgent',
+          tags: { agent: 'method', outcome: 'truncated-salvaged' },
+          extra: { jobId, finishReason, salvaged: salvaged.length },
+        }
+      ).catch(() => {});
+      parsed.method_steps = salvaged;
+    } else {
+      throw new Error(
+        `Method agent produced no steps (finish_reason: ${finishReason ?? 'unknown'}). ` +
+          'A method statement with no steps is not usable.'
+      );
+    }
   }
 
   // Stamp project info back from input.

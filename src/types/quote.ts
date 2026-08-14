@@ -138,6 +138,18 @@ export interface Quote {
   requested_start_date?: string | null;
   requested_time_preference?: 'morning' | 'afternoon' | 'flexible' | null;
   booked_slot_start?: string | null;
+  /*
+   * ELE-1562 — the middle of the negotiation.
+   *
+   * `requested_start_date` is what the client asked for and
+   * `booked_slot_start` is what was agreed. When the electrician cannot do the
+   * requested day he offers another one here; it stays set until the client
+   * accepts it (at which point it becomes the requested date and is confirmed)
+   * or asks for a different day.
+   */
+  proposed_start_date?: string | null;
+  proposed_at?: string | null;
+  proposed_note?: string | null;
   // ELE-956 — Quote versioning + variations
   user_id?: string;
   client_id?: string;

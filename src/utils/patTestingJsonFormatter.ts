@@ -9,7 +9,7 @@
 
 import { PATTestingFormData, Appliance, PAT_REPAIR_CODES } from '@/types/pat-testing';
 import type { PATTestingPayloadType } from '@/types/pat-testing-payload';
-import { ukDate } from '@/utils/certDate';
+import { normalisePdfDates, ukDate } from '@/utils/certDate';
 
 /** Compact result code: 'P' = pass, 'F' = fail, '' = not tested */
 const resultCode = (val: string): string => {
@@ -178,7 +178,9 @@ export const formatPATTestingJson = (
     }
   }
 
-  return {
+  // ELE-1552 — this formatter wraps its dates in ukDate() by hand, and the two
+  // test_equipment calibration dates were missed. See utils/certDate.ts.
+  return normalisePdfDates({
     // Metadata
     metadata: {
       certificate_number: formData.certificateNumber || `PAT-${Date.now()}`,
@@ -263,5 +265,5 @@ export const formatPATTestingJson = (
     registration_scheme: branding?.registrationScheme || '',
     registration_number: branding?.registrationNumber || '',
     registration_scheme_logo: branding?.registrationSchemeLogo || '',
-  };
+  });
 };

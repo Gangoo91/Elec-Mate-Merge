@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { FileText, ShieldCheck, Zap } from 'lucide-react';
 import { EmailCaptureForm } from './EmailCaptureForm';
+import { trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 
 /**
  * Lead magnet section — offers the BS 7671 A4:2026 cheat sheet in exchange
@@ -15,6 +16,9 @@ export function LeadMagnetSection() {
 
   const handleSuccess = ({ downloadUrl }: { downloadUrl: string | null }) => {
     if (!downloadUrl) return;
+    // Tracked here rather than on capture: email_captured already counts the
+    // address, this counts the magnet actually being handed over.
+    trackLeadMagnetDownloaded({ magnet: 'cheatsheet' });
     // Open in a new tab so the user stays on the landing page
     window.open(downloadUrl, '_blank', 'noopener,noreferrer');
   };

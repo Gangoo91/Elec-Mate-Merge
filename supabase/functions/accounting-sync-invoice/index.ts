@@ -1168,13 +1168,40 @@ async function syncToQuickBooks(
       const existing = (await existingRes.json())?.Invoice;
       syncToken = existing?.SyncToken != null ? String(existing.SyncToken) : null;
       console.log(`Updating existing QuickBooks invoice ${existingQbId} (SyncToken ${syncToken})`);
-    } else {
-      // Deleted in QuickBooks, or belongs to a company we are no longer
-      // connected to. Fall through and create a fresh one rather than failing
-      // the sync — but say so, because it is the only path that can legitimately
-      // produce a second invoice.
+    } else if (existingRes.status === 404 || existingRes.status === 410) {
+      // Genuinely gone — deleted in QuickBooks. Creating a replacement is the
+      // right answer and cannot duplicate anything, because there is nothing
+      // left to duplicate.
       console.log(
-        `QuickBooks invoice ${existingQbId} not retrievable (${existingRes.status}) — creating a new one`
+        `QuickBooks invoice ${existingQbId} no longer exists (${existingRes.status}) — creating a replacement`
+      );
+    } else {
+      /*
+       * ELE-1561 — do NOT create on any other failure.
+       *
+       * This branch used to fall through to the create path for *every*
+       * non-OK response. An expired token, a rate limit, a transient 5xx or a
+       * realm mismatch all look identical to "deleted" from here, so a
+       * five-second QuickBooks blip silently produced a second invoice for a
+       * job that already had one. mglowacki hit this repeatedly: every resend
+       * rolled the dice again, and each loss left another duplicate to void by
+       * hand.
+       *
+       * Failing is safe. Every caller treats an accounting sync failure as
+       * non-fatal — the invoice email still goes out — so the cost of stopping
+       * here is a retry, and the cost of guessing is a duplicate in somebody's
+       * books.
+       */
+      const detail = await existingRes.text().catch(() => '');
+      console.error(
+        `QuickBooks invoice ${existingQbId} not retrievable (${existingRes.status}) — refusing to create a duplicate`
+      );
+      // Thrown, not returned: this function's contract is SyncResult, and every
+      // other hard failure in it throws. The caller catches and reports the sync
+      // as failed without touching the invoice.
+      throw new Error(
+        `Could not reach existing QuickBooks invoice ${existingQbId} (HTTP ${existingRes.status}). ` +
+          `Not creating a new one — retry the sync. ${detail.slice(0, 200)}`
       );
     }
   }

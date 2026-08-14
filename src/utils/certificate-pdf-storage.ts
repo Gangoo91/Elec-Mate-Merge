@@ -1,4 +1,18 @@
 import { supabase } from '@/integrations/supabase/client';
+import { trackCertGenerated } from '@/lib/analytics-events';
+
+/**
+ * Report IDs are `<TYPE>-<epoch-ms>-<random>` (e.g. `EV-CHARGING-1786269098388-pjqkx5`),
+ * so the type is the segment before the timestamp. Anything that doesn't match
+ * that shape returns 'unknown' rather than the raw id — an id would be unbounded
+ * cardinality in the Vercel custom-event dimensions.
+ */
+function certTypeFromReportId(reportId: string): string {
+  const prefix = reportId.replace(/-\d{10,}-.*$/, '');
+  if (prefix === reportId) return 'unknown'; // no timestamp segment matched
+  const slug = prefix.toLowerCase();
+  return /^[a-z][a-z-]{0,39}$/.test(slug) ? slug : 'unknown';
+}
 
 /**
  * Save a certificate PDF to permanent Supabase Storage.
@@ -50,6 +64,15 @@ export async function saveCertificatePdf(
   } = supabase.storage.from('certificates').getPublicUrl(storagePath);
 
   console.log('[certificate-pdf-storage] PDF saved permanently:', { storagePath, publicUrl });
+
+  // Single choke point for every certificate type — all seven specialist certs
+  // plus EIC/EICR/minor works reach storage through here, so tracking once here
+  // beats wiring each call site. Note this counts REGENERATIONS too (the upload
+  // is an upsert by design), so read it as certificates produced, not unique certs.
+  trackCertGenerated({
+    cert_type: certTypeFromReportId(reportId),
+    report_id: reportId,
+  });
 
   return { permanentUrl: `${publicUrl}?v=${Date.now()}`, storagePath };
 }

@@ -27,7 +27,11 @@ import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useUserCount } from '@/hooks/useUserCount';
 import { useCookieConsent } from '@/components/CookieConsent';
 import { trackInitiateCheckout } from '@/lib/marketing-pixels';
-import { trackCheckoutStarted, trackPostSignupStepViewed } from '@/lib/analytics-events';
+import {
+  trackCheckoutStarted,
+  trackPlanSelected,
+  trackPostSignupStepViewed,
+} from '@/lib/analytics-events';
 import { fireServerCapi } from '@/lib/attribution';
 
 const ROLE_TO_PRICE: Record<
@@ -181,7 +185,10 @@ const CheckoutTrial = () => {
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
         // Fire InitiateCheckout on both Pixel and server CAPI before redirect
         const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
-        // Cookieless funnel event — consent-independent count for the Vercel dashboard
+        // Cookieless funnel events — consent-independent counts for the Vercel dashboard.
+        // plan_selected also fires here: most people reach checkout via this page rather
+        // than Subscriptions.tsx, so tracking it only there made the step read as a cliff.
+        trackPlanSelected({ tier: priceInfo.planId });
         trackCheckoutStarted({ tier: priceInfo.planId });
         const eventId = trackInitiateCheckout({
           value: checkoutValue,

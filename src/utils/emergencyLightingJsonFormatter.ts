@@ -11,6 +11,7 @@ import {
   CertificatePhoto,
 } from '@/types/emergency-lighting';
 import type { EmergencyLightingPayloadType } from '@/types/emergency-lighting-payload';
+import { normalisePdfDates } from '@/utils/certDate';
 import {
   EL_CURRENT_DESIGN_STANDARD,
   elStandardsList,
@@ -250,7 +251,9 @@ export const formatEmergencyLightingJson = (
     (annualTest.actionTaken && annualTest.actionTaken.trim())
   );
 
-  return {
+  // ELE-1552 — next_three_yearly_inspection_due was the one date this
+  // formatter's own getDate() never covered. See utils/certDate.ts.
+  return normalisePdfDates({
     // ============================================
     // METADATA
     // ============================================
@@ -569,7 +572,7 @@ export const formatEmergencyLightingJson = (
     lux_meter_model: get('luxMeterModel'),
     lux_meter_serial: get('luxMeterSerial'),
     lux_meter_calibration_date: getDate('luxMeterCalibrationDate'),
-  };
+  });
 };
 
 // ============================================

@@ -31,6 +31,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
+import { trackInvoiceRaised } from '@/lib/analytics-events';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -255,6 +256,13 @@ export const InvoiceSendDropdown = ({
           invoice_sent_at: new Date().toISOString(),
         })
         .eq('id', invoice.id);
+
+      // An invoice is "raised" the moment it reaches the client. Totals are
+      // pounds (see computeQuoteTotals), hence ×100 for amount_pence.
+      trackInvoiceRaised({
+        invoice_id: invoice.id,
+        amount_pence: Math.round((invoice.total || 0) * 100),
+      });
 
       onSuccess?.();
       recordPositiveAction();

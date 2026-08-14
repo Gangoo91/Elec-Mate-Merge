@@ -7,6 +7,7 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { toast } from '@/hooks/use-toast';
 import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { trackFeatureUse } from '@/components/ActivityTracker';
+import { trackQuoteCreated } from '@/lib/analytics-events';
 import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { useStockMovements } from '@/hooks/useStockMovements';
 
@@ -132,6 +133,11 @@ export const useQuoteStorage = () => {
        * quote cannot null them.
        */
       requested_start_date: row.requested_start_date,
+      // ELE-1562 — without these the panel can never see a proposal it has
+      // just sent, and would keep offering "Can't do that date".
+      proposed_start_date: row.proposed_start_date,
+      proposed_at: row.proposed_at,
+      proposed_note: row.proposed_note,
       requested_time_preference: row.requested_time_preference,
       booked_slot_start: row.booked_slot_start,
     }),
@@ -365,6 +371,9 @@ export const useQuoteStorage = () => {
   // Save a new quote to Supabase
   const saveQuote = useCallback(
     async (quote: Quote) => {
+      // Captured before the upsert and before setSavedQuotes, so it reflects
+      // whether this quote existed prior to this save.
+      const isNewQuote = !savedQuotes.some((q) => q.id === quote.id);
       try {
         const {
           data: { user },
@@ -522,6 +531,17 @@ export const useQuoteStorage = () => {
         // Track successful quote creation/update
         trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
         trackFeatureUse(user.id, 'quote_saved', { quoteId: quote.id, total: quote.total });
+
+        // Activation event. `saveQuote` is an upsert called by autosave as well as
+        // by the first save, so gate on the quote being absent from the pre-save
+        // list — otherwise every keystroke-triggered persist counts as a new quote.
+        // Totals are pounds (`round2` in computeQuoteTotals), hence the ×100.
+        if (isNewQuote) {
+          trackQuoteCreated({
+            quote_id: quote.id,
+            amount_pence: Math.round((quote.total || 0) * 100),
+          });
+        }
 
         return true;
       } catch (error) {

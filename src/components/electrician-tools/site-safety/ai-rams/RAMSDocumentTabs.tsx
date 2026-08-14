@@ -41,7 +41,7 @@ export const SectionHeader: React.FC<{ title: string; action?: React.ReactNode }
   action,
 }) => (
   <div className="mb-3 flex items-baseline justify-between gap-3">
-    <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+    <h2 className="min-w-0 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
     {action}
   </div>
 );

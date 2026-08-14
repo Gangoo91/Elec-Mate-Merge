@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { trackInvoicePaid } from '@/lib/analytics-events';
 import {
   Select,
   SelectContent,
@@ -86,6 +87,13 @@ export const MarkAsPaidDialog = ({
       });
 
       if (paymentError) throw paymentError;
+
+      // Fired only once both writes succeed, so the count tracks money actually
+      // recorded as received rather than attempts. Totals are pounds, hence ×100.
+      trackInvoicePaid({
+        invoice_id: invoice.id,
+        amount_pence: Math.round((invoice.total || 0) * 100),
+      });
 
       toast({
         title: 'Invoice marked as paid',

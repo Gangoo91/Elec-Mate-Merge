@@ -222,7 +222,10 @@ export interface EICRPayload {
     alterations_details: string;
     alterations_age: string;
     installation_records_available: string;
+    /** Resolved for print: slug mapped to its label, or the free text for 'other'. */
     purpose_of_inspection: string;
+    /** The stored slug, for any template that needs to branch on the value. */
+    purpose_of_inspection_raw: string;
     other_purpose: string;
     agreed_with: string;
     extent_of_inspection: string;

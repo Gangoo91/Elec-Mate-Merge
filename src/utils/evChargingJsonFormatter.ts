@@ -6,7 +6,7 @@
 import { EVChargingFormData } from '@/types/ev-charging';
 import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
-import { ukDate } from '@/utils/certDate';
+import { normalisePdfDates, ukDate } from '@/utils/certDate';
 
 /**
  * The methods permitted by Reg 722.411.4.1, spelled out for the certificate.
@@ -680,5 +680,8 @@ export const formatEVChargingJson = (
     nestedKeys: ['testResults'],
   });
 
-  return payload;
+  // ELE-1552 — this formatter had a local formatDateUK but three fields
+  // (installation_date, installer_date, dno_notification_date) were never
+  // wrapped in it. See utils/certDate.ts.
+  return normalisePdfDates(payload);
 };

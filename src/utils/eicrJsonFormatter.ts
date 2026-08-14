@@ -5,6 +5,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { normalisePdfDates } from '@/utils/certDate';
 import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards } from '@/types/distributionBoard';
 import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
@@ -883,6 +884,38 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     return raw;
   };
 
+  /**
+   * Resolve the purpose of the report to what should actually print — ELE-1551.
+   *
+   * The chips store slugs, and the slug was going straight onto the certificate:
+   * 526 of the 607 reports with a purpose set printed a lowercase value, and 43
+   * of those printed the hyphenated `change-of-occupancy`. The ticket only
+   * noticed `other`, because that one reads most obviously wrong.
+   *
+   * `other` resolves to the free text the inspector typed. That text is captured
+   * and was already being sent as `other_purpose` — it was simply never the
+   * field the template printed.
+   *
+   * Unknown values pass through untouched. 81 reports predate the chips and
+   * store the display string 'Periodic inspection' already; mapping only the
+   * known slugs leaves those rendering exactly as they do today.
+   */
+  const PURPOSE_LABELS: Record<string, string> = {
+    periodic: 'Periodic inspection',
+    'change-of-occupancy': 'Change of occupancy',
+    'change-of-use': 'Change of use',
+    extension: 'Extension',
+  };
+
+  const resolvePurpose = (raw: string): string => {
+    if (raw === 'other') {
+      // A handful of reports selected Other and left the box empty. Printing
+      // the label beats printing nothing where a purpose is required.
+      return get('otherPurpose').trim() || 'Other';
+    }
+    return PURPOSE_LABELS[raw] ?? raw;
+  };
+
   // Normalise phases: form default is 'single', buttons write '1'/'3'.
   // Normalise to numeric string so PDF and derived supply_type logic are consistent.
   const normalisePhases = (raw: string): string => {
@@ -1027,7 +1060,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       alterations_details: get('alterationsDetails'),
       alterations_age: get('alterationsAge'),
       installation_records_available: get('installationRecordsAvailable'),
-      purpose_of_inspection: get('purposeOfInspection'),
+      purpose_of_inspection: resolvePurpose(get('purposeOfInspection')),
+      purpose_of_inspection_raw: get('purposeOfInspection'),
       other_purpose: get('otherPurpose'),
       agreed_with: get('agreedWith'),
       extent_of_inspection: get('extentOfInspection'),
@@ -1607,8 +1641,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     nextInspectionDate: get('nextInspectionDate'),
     inspection_interval: get('inspectionInterval'),
     inspectionInterval: get('inspectionInterval'),
-    purpose_of_inspection: get('purposeOfInspection'),
-    purposeOfInspection: get('purposeOfInspection'),
+    purpose_of_inspection: resolvePurpose(get('purposeOfInspection')),
+    purposeOfInspection: resolvePurpose(get('purposeOfInspection')),
+    purpose_of_inspection_raw: get('purposeOfInspection'),
     other_purpose: get('otherPurpose'),
     extent_of_inspection: get('extentOfInspection'),
     extentOfInspection: get('extentOfInspection'),
@@ -1914,5 +1949,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     flat.report_authorised_by_position = qsReview.qs_position;
   }
 
-  return payload;
+  // ELE-1552 — last step, so a date field added above is formatted without
+  // anyone having to remember to wrap it. See utils/certDate.ts.
+  return normalisePdfDates(payload);
 };

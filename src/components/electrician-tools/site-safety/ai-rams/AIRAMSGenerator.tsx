@@ -717,11 +717,21 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
         <div className="px-4 sm:px-6 md:px-10 lg:px-16">
           <div className="flex items-center h-12 gap-3 sm:gap-4">
+            {/*
+                ELE-1564 — this was a 16x16px tap target on a phone.
+                The label is `hidden sm:inline`, so below `sm` the button
+                collapsed to the bare 4x4 icon: measured at 16px against a
+                44px minimum, and it is the only way back out of the
+                generator. `-ml-2 px-2` buys the height back without
+                indenting the icon — the tap area grows left into the
+                container padding, the same trick HubMasthead uses.
+            */}
             {!showResults && (
               <button
                 type="button"
                 onClick={() => handleBack()}
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+                aria-label="Back"
+                className="-ml-2 inline-flex h-11 items-center gap-1.5 px-2 text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span className="hidden sm:inline">Back</span>
@@ -758,7 +768,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               <button
                 type="button"
                 onClick={handleStartOver}
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation whitespace-nowrap"
+                className="-mr-2 inline-flex h-11 items-center gap-1.5 px-2 text-[12.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation whitespace-nowrap"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>New</span>

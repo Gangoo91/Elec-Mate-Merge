@@ -469,9 +469,9 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
           Deliberately NOT `items-start`: the cards stretch so both in a row are
           the same height. Each card is a flex column so its content can grow
           into that height instead of leaving a void underneath. */}
-      <div className="grid gap-4 sm:gap-5 lg:grid-cols-2">
+      <div className="-mx-4 grid gap-4 sm:mx-0 sm:gap-5 lg:grid-cols-2">
         {/* 01 — BRIEFING */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'flex flex-col')}>
+        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
           <SectionHead
             eyebrow="01 · Briefing"
             title="Describe the job"
@@ -518,7 +518,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
           {/* Quick-pick examples — scroll on mobile, wrap from sm: up. */}
           <div>
             <span className={labelCn}>Start from an example</span>
-            <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-hide sm:flex-wrap sm:overflow-x-visible">
+            <div className="flex flex-wrap gap-2">
               {examplePrompts[manualScale || detectedScale].map((prompt, idx) => (
                 <button
                   key={idx}
@@ -528,7 +528,11 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
                   className={cn(
                     chipBase,
                     chipOff,
-                    'h-11 flex-shrink-0 whitespace-nowrap px-3.5 hover:border-elec-yellow/50 disabled:opacity-50'
+                    // Leftovers from when this was a carousel: `flex-shrink-0`
+                    // and `whitespace-nowrap` stop a long prompt shrinking, so
+                    // it would still overflow a 360px screen. `min-h-11` rather
+                    // than `h-11` so a wrapped label isn't clipped.
+                    'h-auto min-h-11 max-w-full whitespace-normal px-3.5 py-2 text-left hover:border-elec-yellow/50 disabled:opacity-50'
                   )}
                 >
                   {prompt}
@@ -547,7 +551,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         </motion.section>
 
         {/* 02 — SITE PHOTOS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'flex flex-col')}>
+        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
           <SectionHead
             eyebrow="02 · Site photos"
             title="Show us the site"
@@ -666,7 +670,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         </motion.section>
 
         {/* 03 — PROJECT DETAILS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'flex flex-col')}>
+        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
           <SectionHead
             eyebrow="03 · Project details"
             title="Where, and who"
@@ -720,7 +724,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         </motion.section>
 
         {/* 04 — EMERGENCY CONTACTS */}
-        <motion.section variants={itemVariants} className={cn(cardCn, 'flex flex-col')}>
+        <motion.section variants={itemVariants} className={cn(cardCn, 'mx-0 flex min-w-0 flex-col')}>
           <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
             <CollapsibleTrigger asChild>
               <button
