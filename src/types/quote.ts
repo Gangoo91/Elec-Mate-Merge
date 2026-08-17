@@ -139,6 +139,12 @@ export interface Quote {
   requested_time_preference?: 'morning' | 'afternoon' | 'flexible' | null;
   booked_slot_start?: string | null;
   /*
+   * ELE-1572 — end of the booked slot. Already a column on `quotes`; the type
+   * only carried the start, so a multi-day booking made from the quote screen
+   * had nowhere to record when it finished.
+   */
+  booked_slot_end?: string | null;
+  /*
    * ELE-1562 — the middle of the negotiation.
    *
    * `requested_start_date` is what the client asked for and

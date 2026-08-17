@@ -24,6 +24,7 @@ import { format, differenceInDays, isPast } from 'date-fns';
 import { createQuickTask } from '@/utils/createQuickTask';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
+import BookJobSheet from '@/components/project-management/BookJobSheet';
 
 /** Why a quote was lost — feeds win/loss analytics. Keys persist in quotes.declined_reason. */
 const DECLINE_REASONS = [
@@ -57,6 +58,7 @@ const QuoteViewPage = () => {
   const [showDeclineSheet, setShowDeclineSheet] = useState(false);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showProjectPicker, setShowProjectPicker] = useState(false);
+  const [showBookSheet, setShowBookSheet] = useState(false);
   const [projects, setProjects] = useState<
     { id: string; title: string; status: string; customer?: string }[] | null
   >(null);
@@ -104,6 +106,11 @@ const QuoteViewPage = () => {
           invoice_number: data.invoice_number || undefined,
           pdf_url: data.pdf_url || undefined,
           pdf_version: data.pdf_version || 0,
+          // ELE-1572 — drives the Book job / Change booking tile. The column
+          // already existed for the client-side acceptance flow but was never
+          // mapped here, so the electrician's own screen couldn't see it.
+          booked_slot_start: data.booked_slot_start || undefined,
+          booked_slot_end: data.booked_slot_end || undefined,
         };
         setQuote(transformedQuote);
         setEmailTracking({ first_sent_at: data.first_sent_at, reminder_count: data.reminder_count || 0 });
@@ -1242,6 +1249,28 @@ const QuoteViewPage = () => {
                 </span>
               </button>
 
+              {/* ELE-1572 — book straight from the quote. Reuses BookJobSheet,
+                  so the booking lands in calendar_events exactly like a project
+                  booking and flows out through the iCal feed. */}
+              <button
+                onClick={() => { setShowActionsSheet(false); setShowBookSheet(true); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+              >
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <CalendarPlus className="h-4 w-4 text-white/85" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-semibold text-white truncate">
+                    {quote.booked_slot_start ? 'Change booking' : 'Book job'}
+                  </span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">
+                    {quote.booked_slot_start
+                      ? format(new Date(quote.booked_slot_start), 'EEE d MMM, HH:mm')
+                      : 'Get it in the diary'}
+                  </span>
+                </span>
+              </button>
+
               {canAccept && (
                 <button
                   onClick={() => { setShowActionsSheet(false); handleMarkAsAccepted(); }}
@@ -1360,6 +1389,37 @@ const QuoteViewPage = () => {
       />
 
       {/* Decline reason — one tap, feeds win/loss analytics */}
+      {/* ELE-1572 — quote-scoped booking. Same sheet the project screen uses,
+          so clash detection and the failed-write rollback are shared rather
+          than reimplemented here. */}
+      <BookJobSheet
+        open={showBookSheet}
+        onOpenChange={setShowBookSheet}
+        quoteId={quote.id}
+        projectTitle={quote.jobDetails?.title || `Quote ${quote.quoteNumber || ''}`.trim()}
+        location={quote.jobDetails?.location || quote.client?.address || null}
+        onBooked={async () => {
+          // Re-read just the slot rather than reloading the whole quote — the
+          // page's loader lives inside a useEffect and isn't callable here.
+          const { data } = await supabase
+            .from('quotes')
+            .select('booked_slot_start, booked_slot_end')
+            .eq('id', quote.id)
+            .maybeSingle();
+          if (data) {
+            setQuote((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    booked_slot_start: data.booked_slot_start || undefined,
+                    booked_slot_end: data.booked_slot_end || undefined,
+                  }
+                : prev
+            );
+          }
+        }}
+      />
+
       <Sheet open={showDeclineSheet} onOpenChange={setShowDeclineSheet}>
         <SheetContent
           side="bottom"

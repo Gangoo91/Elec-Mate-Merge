@@ -4105,6 +4105,7 @@ export type Database = {
           notes: string | null;
           parent_event_id: string | null;
           project_id: string | null;
+          quote_id: string | null;
           recurrence_rule: string | null;
           recurring: boolean | null;
           reminder_minutes: number | null;
@@ -4133,6 +4134,7 @@ export type Database = {
           notes?: string | null;
           parent_event_id?: string | null;
           project_id?: string | null;
+          quote_id?: string | null;
           recurrence_rule?: string | null;
           recurring?: boolean | null;
           reminder_minutes?: number | null;
@@ -4161,6 +4163,7 @@ export type Database = {
           notes?: string | null;
           parent_event_id?: string | null;
           project_id?: string | null;
+          quote_id?: string | null;
           recurrence_rule?: string | null;
           recurring?: boolean | null;
           reminder_minutes?: number | null;

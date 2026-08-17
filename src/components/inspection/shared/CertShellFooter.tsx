@@ -204,6 +204,7 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
           onOpenChange={setShowPreview}
           reportType={previewReportType as string}
           data={previewData as Record<string, unknown>}
+          reportId={previewReportId}
         />
       )}
     </div>

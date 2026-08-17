@@ -10,7 +10,21 @@ import { loadCertPreviewPayload } from '@/utils/certPreviewPayload';
  * and returns null otherwise, so anything else must use the generic renderer —
  * pointing it at an EV cert would show a header and nothing else.
  */
-const FIXED_WIRING_TYPES = new Set(['eicr', 'eic', 'minor-works', 'testing-only']);
+/**
+ * ELE-1549 — 'eic' was removed from this set.
+ *
+ * `QsCertReviewBody` is shaped around the EICR: its sections read
+ * `overallAssessment`, `limitationsOfInspection` and
+ * `satisfactoryForContinuedUse`. An EIC certifies new work, so it carries none
+ * of those — it carries `extentOfInstallation` and `workType`, which the
+ * component never reads. A complete EIC therefore previewed as an essentially
+ * empty document while its PDF came out correct, because the PDF goes through
+ * `formatEicJson` and the preview did not. EIC now previews from that same
+ * payload, so the two cannot disagree.
+ *
+ * EICR and Minor Works stay here: the component genuinely fits them.
+ */
+const FIXED_WIRING_TYPES = new Set(['eicr', 'minor-works', 'testing-only']);
 
 interface CertPreviewSheetProps {
   open: boolean;
@@ -19,6 +33,12 @@ interface CertPreviewSheetProps {
   reportType: string;
   /** The live form data. Read-only here; nothing in this sheet writes. */
   data: Record<string, unknown>;
+  /**
+   * Saved report id, when there is one. Formatters that fetch observation
+   * photos or a QS countersignature need it; without it those sections simply
+   * come back empty, which is correct for a cert that has not been saved yet.
+   */
+  reportId?: string | null;
 }
 
 /**
@@ -44,6 +64,7 @@ export const CertPreviewSheet: React.FC<CertPreviewSheetProps> = ({
   onOpenChange,
   reportType,
   data,
+  reportId,
 }) => {
   // ELE-1477 — resolve the cert's PDF payload when the sheet opens. Raw
   // formData shows internal ids and autosave flags in arbitrary order; the
@@ -60,7 +81,7 @@ export const CertPreviewSheet: React.FC<CertPreviewSheetProps> = ({
       return;
     }
     let cancelled = false;
-    loadCertPreviewPayload(reportType, data).then((p) => {
+    loadCertPreviewPayload(reportType, data, reportId ?? '').then((p) => {
       if (!cancelled) setPayload(p);
     });
     return () => {
@@ -70,7 +91,9 @@ export const CertPreviewSheet: React.FC<CertPreviewSheetProps> = ({
     // and re-resolving mid-preview would thrash the formatter. The payload is
     // resolved fresh each time the sheet opens, which is when it is read.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, reportType]);
+    // `reportId` is included: it changes once, when an unsaved cert is first
+    // saved, and the payload must then pick up photos and any QS signature.
+  }, [open, reportType, reportId]);
 
   return (
   <Sheet open={open} onOpenChange={onOpenChange}>

@@ -15,14 +15,33 @@
  * The imports are dynamic so none of the ~15 formatters is bundled into a cert
  * page until someone actually opens a preview.
  *
- * EICR and EIC are absent on purpose: their formatters are async, and both
- * render through QsCertReviewBody instead.
+ * EICR and Minor Works are absent on purpose — `QsCertReviewBody` is shaped
+ * around them and renders them correctly.
+ *
+ * EIC is NOT, despite that component naming it — ELE-1549. Its sections read
+ * `overallAssessment`, `limitationsOfInspection` and `satisfactoryForContinuedUse`,
+ * which are EICR concepts: an EIC certifies new work, so there is nothing to
+ * assess for continued use and no inspection limitations to record. Across 180
+ * completed EICs those keys are present on 8, 8 and 8 respectively, while the
+ * fields an EIC actually carries — `extentOfInstallation` (174), `workType`
+ * (178) — are not read at all. The result was a preview that looked blank on a
+ * complete certificate, sitting immediately to the left of Generate, so the
+ * natural order of use was to look at it first and conclude the work was lost.
+ *
+ * Previewing from the formatter fixes the class rather than the instance: the
+ * preview now shows what the PDF shows, so the two cannot drift again.
  */
 
 type Payload = Record<string, unknown>;
-type Loader = (formData: Record<string, unknown>) => Promise<Payload>;
+type Loader = (formData: Record<string, unknown>, reportId: string) => Promise<Payload>;
 
 const LOADERS: Record<string, Loader> = {
+  // Async, and needs the report id for observation photos and the QS
+  // countersignature. Company branding is passed as null on purpose — the
+  // preview shows content, not styling, and every read of it in the formatter
+  // is optional-chained.
+  eic: async (d, reportId) =>
+    (await import('./eicJsonFormatter')).formatEicJson(d, null, reportId) as unknown as Payload,
   'ev-charging': async (d) =>
     (await import('./evChargingJsonFormatter')).formatEVChargingJson(d) as Payload,
   'solar-pv': async (d) =>
@@ -69,12 +88,13 @@ export const hasPreviewPayload = (reportType: string): boolean => reportType in 
  */
 export const loadCertPreviewPayload = async (
   reportType: string,
-  formData: Record<string, unknown>
+  formData: Record<string, unknown>,
+  reportId: string = ''
 ): Promise<Payload> => {
   const loader = LOADERS[reportType];
   if (!loader) return formData;
   try {
-    const payload = await loader(formData);
+    const payload = await loader(formData, reportId);
     return payload && typeof payload === 'object' ? payload : formData;
   } catch (error) {
     console.warn(`[CertPreview] ${reportType} formatter failed, showing raw form data`, error);

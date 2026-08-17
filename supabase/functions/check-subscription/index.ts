@@ -71,10 +71,116 @@ serve(async (req) => {
     const { data: profileData } = await supabaseClient
       .from('profiles')
       .select(
-        'free_access_granted, free_access_expires_at, subscription_tier, subscribed, stripe_customer_id'
+        'free_access_granted, free_access_expires_at, free_access_reason, subscription_tier, subscribed, stripe_customer_id'
       )
       .eq('id', user.id)
       .single();
+
+    // ── ELE-1574: employer seat access ──────────────────────────────────
+    //
+    // A worker on a subscribed employer's seat had NO access source here.
+    // The gate granted access on exactly three paths — admin free access, a
+    // Stripe subscription on the user's own customer, or profiles.subscribed
+    // from RevenueCat — and a seat is none of them, so every team member an
+    // employer added fell through to subscribed:false and hit the paywall,
+    // despite the invite sheet promising "their access is covered".
+    //
+    // Rather than add a fourth return path, this reconciles the seat into the
+    // EXISTING free-access mechanism. That matters because the frontend
+    // derives access from `profiles` (useSubscriptionStatus reads
+    // profile.subscribed || profile.free_access_granted), not from this
+    // response alone — returning subscribed:true without persisting anything
+    // leaves the profile saying false and the two fight each other on every
+    // mount, which also trips the cache/profile mismatch refresh loop.
+    //
+    // `free_access_reason` carries the provenance so a seat grant can be told
+    // apart from an admin grant and withdrawn when the seat goes.
+    const SEAT_REASON_PREFIX = 'employer_seat:';
+    const hadSeatGrant =
+      profileData?.free_access_granted === true &&
+      typeof profileData?.free_access_reason === 'string' &&
+      profileData.free_access_reason.startsWith(SEAT_REASON_PREFIX);
+
+    try {
+      // employer_seats is the seat of record — it is what seat billing counts.
+      // employer_employees is only a roster and has a null employer_id on a
+      // large share of rows, so it cannot be trusted to say who pays.
+      const { data: seat } = await supabaseClient
+        .from('employer_seats')
+        .select('employer_id')
+        .eq('user_id', user.id)
+        .eq('status', 'active')
+        .is('revoked_at', null)
+        .maybeSingle();
+
+      let seatCovered = false;
+      if (seat?.employer_id) {
+        const { data: employer } = await supabaseClient
+          .from('profiles')
+          .select('subscribed, free_access_granted, free_access_expires_at')
+          .eq('id', seat.employer_id)
+          .maybeSingle();
+
+        // The employer must currently have access themselves, or a lapsed
+        // employer's whole team would keep the app free indefinitely.
+        const employerFreeLive =
+          employer?.free_access_granted === true &&
+          (!employer.free_access_expires_at ||
+            new Date(employer.free_access_expires_at) > new Date());
+        seatCovered = employer?.subscribed === true || employerFreeLive;
+      }
+
+      if (seatCovered && !hadSeatGrant) {
+        logger.info('Granting employer-seat access', {
+          userId: user.id,
+          employerId: seat?.employer_id,
+        });
+        await supabaseClient
+          .from('profiles')
+          .update({
+            free_access_granted: true,
+            free_access_reason: `${SEAT_REASON_PREFIX}${seat!.employer_id}`,
+            free_access_expires_at: null,
+            // Deliberately NOT the employer's tier. isEmployerUser() in
+            // src/config/employerAccess.ts passes on any tier starting
+            // "employer", so copying it would hand a worker their boss's
+            // Employer Hub. Only fills an empty tier — never downgrades
+            // someone who already pays for a higher one.
+            ...(profileData?.subscription_tier
+              ? {}
+              : { subscription_tier: 'electrician' }),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', user.id);
+
+        if (profileData) {
+          profileData.free_access_granted = true;
+          profileData.free_access_expires_at = null;
+          profileData.subscription_tier = profileData.subscription_tier || 'electrician';
+        }
+      } else if (!seatCovered && hadSeatGrant) {
+        // Seat revoked, or the employer's own access lapsed. Withdraw the
+        // grant we made — scoped by reason so an admin grant is never touched.
+        logger.info('Withdrawing employer-seat access (seat no longer covered)', {
+          userId: user.id,
+        });
+        await supabaseClient
+          .from('profiles')
+          .update({
+            free_access_granted: false,
+            free_access_reason: null,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', user.id);
+
+        if (profileData) profileData.free_access_granted = false;
+        // Falls through to the Stripe check — they may pay for themselves.
+      }
+    } catch (seatError) {
+      // Never let a seat lookup failure lock out a user who has another
+      // access route; just continue to the normal checks.
+      logger.error('Employer seat check failed (continuing)', { error: String(seatError) });
+    }
 
     if (profileData?.free_access_granted === true) {
       const now = new Date();
