@@ -16,6 +16,12 @@ import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 import { generateWaCodeForUser } from '../_shared/wa-onboarding.ts';
+import {
+  liveMonthlyPence,
+  priceMonthlyPence,
+  referralCreditPence,
+  tierMonthlyPence,
+} from '../_shared/referral-reward.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -656,18 +662,6 @@ const PRICE_TO_TIER: Record<string, string> = {
 /**
  * Get monthly price in pence from a Stripe price ID
  */
-async function getMonthlyPrice(stripe: Stripe, priceId: string): Promise<number> {
-  try {
-    const price = await stripe.prices.retrieve(priceId);
-    if (price.recurring?.interval === 'year' && price.unit_amount) {
-      return Math.round(price.unit_amount / 12); // Convert yearly to monthly equivalent
-    }
-    return price.unit_amount || 999; // Default to £9.99 if can't determine
-  } catch {
-    return 999; // Default fallback: £9.99
-  }
-}
-
 serve(async (req) => {
   // Generate request ID for tracing
   const requestId = req.headers.get('x-request-id') || generateRequestId();
@@ -1234,24 +1228,31 @@ serve(async (req) => {
                   // who referred five mates was credited once and silently got
                   // nothing for the rest.
                   //
-                  // Prices: source of truth is src/data/stripePrices.ts. These
-                  // were stale at pre-June-2026 values, so a "free month"
-                  // credited £12.99 against a £19.99 charge and the referrer was
-                  // still billed the difference.
+                  // Reward value = one month free, capped at what the referral
+                  // actually brought in: min(referrer's month, referee's
+                  // month). This used to read the referrer's tier string alone,
+                  // which both lies (founders on £3.99/mo carry tier
+                  // 'employer' → £49.99 credited) and ignores what the mate
+                  // came in on (an employer referring an apprentice earned
+                  // £6.99 of MRR and was credited £49.99 for it).
+                  // `priceId` is the subscription that just started, i.e. the
+                  // referee's own price.
                   {
-                    const tierPrices: Record<string, number> = {
-                      apprentice: 699, // £6.99
-                      apprentice_yearly: 583, // £69.99/yr ÷ 12
-                      electrician: 1999, // £19.99
-                      electrician_yearly: 1667, // £199.99/yr ÷ 12
-                      business_ai: 3999, // £39.99
-                      business_ai_yearly: 3999,
-                      employer: 4999, // £49.99
-                      employer_yearly: 4999,
-                    };
-                    const creditPence =
-                      tierPrices[referrerProfile.subscription_tier || ''] ||
-                      (priceId ? await getMonthlyPrice(stripe, priceId) : 1999);
+                    const [referrerMonthly, refereeMonthly] = await Promise.all([
+                      liveMonthlyPence(stripe, referrerProfile.stripe_customer_id).then(
+                        (live) => live ?? tierMonthlyPence(referrerProfile.subscription_tier)
+                      ),
+                      priceId
+                        ? priceMonthlyPence(stripe, priceId)
+                        : Promise.resolve<number | null>(null),
+                    ]);
+                    const creditPence = referralCreditPence(referrerMonthly, refereeMonthly);
+
+                    logger.info('Referral credit sized', {
+                      referrerMonthly,
+                      refereeMonthly,
+                      creditPence,
+                    });
 
                     // Apply Stripe balance credit (negative amount = credit to customer)
                     try {

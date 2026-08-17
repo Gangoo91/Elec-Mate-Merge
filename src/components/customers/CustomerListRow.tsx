@@ -6,6 +6,7 @@ import { Customer } from '@/hooks/inspection/useCustomers';
 import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
+import { resolveCustomerRisk } from '@/lib/customerRisk';
 
 interface CustomerListRowProps {
   customer: Customer;
@@ -31,11 +32,13 @@ const chipBase =
   'inline-flex h-6 items-center rounded-full border px-2.5 text-[11px] font-semibold whitespace-nowrap';
 const chipNeutral = 'border-white/[0.1] bg-white/[0.06] text-white/70';
 
-const reliabilityChip: Record<Exclude<ReliabilityLevel, 'none'>, { label: string; cls: string }> = {
-  good: { label: 'Reliable', cls: 'border-green-500/25 bg-green-500/[0.1] text-green-400' },
-  fair: { label: 'Fair', cls: 'border-amber-500/25 bg-amber-500/[0.1] text-amber-300' },
-  poor: { label: 'Pays late', cls: 'border-red-500/25 bg-red-500/[0.12] text-red-400' },
-};
+/**
+ * ELE-1555 — the reliability chip now comes from resolveCustomerRisk, which
+ * folds the manual flag over the computed payment level. The old local
+ * `reliabilityChip` map lived here; it only knew about payments, so a customer
+ * the electrician had marked red still showed "Reliable" if their invoices
+ * happened to be clean.
+ */
 
 const getInitials = (name: string): string =>
   name
@@ -134,6 +137,11 @@ export const CustomerListRow = ({
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
   const certCount = customer.certificateCount || 0;
+  const risk = resolveCustomerRisk({
+    riskRating: customer.riskRating,
+    riskReason: customer.riskReason,
+    paymentReliability,
+  });
 
   return (
     <div
@@ -228,7 +236,7 @@ export const CustomerListRow = ({
         customer.status === 'inactive' ||
         isDuplicate ||
         certCount > 0 ||
-        (paymentReliability && paymentReliability !== 'none') ||
+        risk.rating !== null ||
         (customer.tags && customer.tags.length > 0)) && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
           {hasOverdue && (
@@ -250,9 +258,28 @@ export const CustomerListRow = ({
               {certCount} cert{certCount !== 1 ? 's' : ''}
             </span>
           )}
-          {paymentReliability && paymentReliability !== 'none' && (
-            <span className={cn(chipBase, reliabilityChip[paymentReliability].cls)}>
-              {reliabilityChip[paymentReliability].label}
+          {risk.rating && (
+            <span
+              className={cn(chipBase, risk.chipClass, 'max-w-full')}
+              // The reason rides IN the chip rather than in a title attribute:
+              // this is used on a phone, where there is no hover and title
+              // never renders. Truncation keeps a long note from wrapping the
+              // chip row.
+              title={risk.reason || undefined}
+            >
+              {risk.source === 'manual' && (
+                <span
+                  className={cn('mr-1.5 h-1.5 w-1.5 shrink-0 rounded-full', risk.dotClass)}
+                />
+              )}
+              {/* min-w-0 is load-bearing: a flex child defaults to
+                  min-width:auto and will not shrink below its content, so
+                  `truncate` alone would let a long reason push the chip past
+                  the card edge instead of ellipsising. */}
+              <span className="min-w-0 truncate">
+                {risk.label}
+                {risk.reason ? ` · ${risk.reason}` : ''}
+              </span>
             </span>
           )}
           {customer.tags?.slice(0, 2).map((tag) =>

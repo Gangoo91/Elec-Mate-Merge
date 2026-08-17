@@ -27,7 +27,7 @@ import { cn } from '@/lib/utils';
 import { inputCn } from '@/components/forms/fieldStyles';
 import CableComparison from '@/components/marketplace/CableComparison';
 import PriceMoves from '@/components/marketplace/PriceMoves';
-import { chipOff, chipOn } from '@/components/shared/surfaceStyles';
+import { chipBase, chipOff, chipOn } from '@/components/shared/surfaceStyles';
 
 
 export interface UnifiedMarketplaceProps {

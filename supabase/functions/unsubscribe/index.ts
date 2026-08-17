@@ -70,7 +70,21 @@ function timingSafeEqual(a: string, b: string): boolean {
   return out === 0;
 }
 
-async function verifyToken(token: string): Promise<{ email: string; issued_at: number } | null> {
+interface UnsubPayload {
+  email: string;
+  issued_at: number;
+  /**
+   * ELE-1554. Present only on electrician→client campaign emails. Scopes the
+   * opt-out to that ONE electrician instead of the global block list: the
+   * recipient asked to stop hearing from their electrician, not from every
+   * tradesperson who happens to use Elec-Mate. Absent = global (the original
+   * winback/outreach behaviour, unchanged).
+   */
+  scope?: string;
+  user_id?: string;
+}
+
+async function verifyToken(token: string): Promise<UnsubPayload | null> {
   if (!SECRET) throw new Error('WINBACK_UNSUBSCRIBE_SECRET not configured');
   const dot = token.indexOf('.');
   if (dot <= 0) return null;
@@ -82,7 +96,7 @@ async function verifyToken(token: string): Promise<{ email: string; issued_at: n
     const payloadStr = new TextDecoder().decode(b64urlDecode(payloadB64));
     const payload = JSON.parse(payloadStr);
     if (typeof payload.email !== 'string' || typeof payload.issued_at !== 'number') return null;
-    return payload;
+    return payload as UnsubPayload;
   } catch {
     return null;
   }
@@ -146,19 +160,39 @@ Deno.serve(async (req) => {
     const reason =
       req.method === 'POST' ? 'user_unsubscribed_one_click' : 'user_unsubscribed_link_click';
 
-    const { error: suppressError } = await supabase.from('email_suppressions').upsert(
-      {
-        email,
-        reason,
-        source: 'winback_unsubscribe',
-        unsubscribed_at: new Date().toISOString(),
-        metadata: { issued_at: payload.issued_at, method: req.method },
-      },
-      { onConflict: 'email' }
-    );
+    // ELE-1554 — scoped opt-out. A client unsubscribing from their
+    // electrician's "keep in touch" campaign must NOT land on the global block
+    // list: that would also stop a different electrician they use, and stop
+    // Elec-Mate's own mail to them if they are a user in their own right.
+    // Only the campaign_opted_out_at flag on that electrician's copy of the
+    // customer record is set.
+    const isScoped = payload.scope === 'customer_campaign' && !!payload.user_id;
+
+    let suppressError: { message: string } | null = null;
+
+    if (isScoped) {
+      const { error } = await supabase
+        .from('customers')
+        .update({ campaign_opted_out_at: new Date().toISOString() })
+        .eq('user_id', payload.user_id!)
+        .ilike('email', email);
+      suppressError = error;
+    } else {
+      const { error } = await supabase.from('email_suppressions').upsert(
+        {
+          email,
+          reason,
+          source: 'winback_unsubscribe',
+          unsubscribed_at: new Date().toISOString(),
+          metadata: { issued_at: payload.issued_at, method: req.method },
+        },
+        { onConflict: 'email' }
+      );
+      suppressError = error;
+    }
 
     if (suppressError) {
-      console.error('email_suppressions upsert failed:', suppressError);
+      console.error('unsubscribe write failed:', suppressError);
       return new Response(
         pageHtml({
           title: 'Something went wrong',

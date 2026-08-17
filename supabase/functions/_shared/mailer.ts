@@ -103,7 +103,11 @@ async function brevoSend(
   // which was silently dropped before this alias was added, causing client
   // replies to land on the sender (founder@elec-mate.com) instead of the
   // electrician.
-  const replyToRaw = params.replyTo ?? (params as Record<string, unknown>).reply_to;
+  // Double assertion: ResendSendParams has no index signature, so a direct
+  // cast to Record<string, unknown> is a TS2352 error that fails `deno check`
+  // for every function importing this file. Type-only — no runtime change.
+  const replyToRaw =
+    params.replyTo ?? (params as unknown as Record<string, unknown>).reply_to;
   if (typeof replyToRaw === 'string' && replyToRaw.trim()) {
     body.replyTo = parseAddress(replyToRaw);
   }

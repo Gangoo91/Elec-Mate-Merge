@@ -26,6 +26,13 @@ export interface Customer {
   certificateCount?: number;
   propertyCount?: number;
   lastActivityAt?: string;
+  // ELE-1555 — the electrician's own RAG flag. Separate from the payment
+  // reliability computed off invoice history, and takes precedence over it.
+  riskRating?: 'green' | 'amber' | 'red';
+  riskReason?: string;
+  riskUpdatedAt?: string;
+  // ELE-1554 — set when this client opted out of THIS electrician's campaigns.
+  campaignOptedOutAt?: string;
 }
 
 /**
@@ -60,6 +67,10 @@ const mapCustomerRow = (row: CustomerRow): Customer => {
     certificate_count?: number | null;
     property_count?: number | null;
     last_activity_at?: string | null;
+    risk_rating?: string | null;
+    risk_reason?: string | null;
+    risk_updated_at?: string | null;
+    campaign_opted_out_at?: string | null;
   };
 
   return {
@@ -83,6 +94,10 @@ const mapCustomerRow = (row: CustomerRow): Customer => {
     certificateCount: c.certificate_count || 0,
     propertyCount: c.property_count || 0,
     lastActivityAt: c.last_activity_at || undefined,
+    riskRating: (c.risk_rating as Customer['riskRating']) || undefined,
+    riskReason: c.risk_reason || undefined,
+    riskUpdatedAt: c.risk_updated_at || undefined,
+    campaignOptedOutAt: c.campaign_opted_out_at || undefined,
   };
 };
 
@@ -302,8 +317,11 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   ) => {
     try {
       // companyName is camelCase in the app but company_name in the DB —
-      // strip it from the spread and remap
-      const { companyName, ...rest } = updates;
+      // strip it from the spread and remap. Same for the ELE-1555 risk fields
+      // and the ELE-1554 opt-out: left in the spread they reach Postgres as
+      // unknown columns and fail the whole update.
+      const { companyName, riskRating, riskReason, riskUpdatedAt, campaignOptedOutAt, ...rest } =
+        updates;
 
       // ELE-1515 — clearing a geocode has to send null, not undefined.
       // supabase-js serialises the update as JSON and JSON.stringify drops
@@ -326,6 +344,14 @@ export const useCustomers = (options?: UseCustomersOptions) => {
           ? { email: updates.email?.trim().toLowerCase() || null }
           : {}),
         ...(companyName !== undefined ? { company_name: companyName?.trim() || null } : {}),
+        // Presence-keyed, like the geocode nulls above: clearing a flag has to
+        // send null, and a caller that never mentions it must leave it alone.
+        ...(riskRating !== undefined ? { risk_rating: riskRating ?? null } : {}),
+        ...(riskReason !== undefined ? { risk_reason: riskReason?.trim() || null } : {}),
+        ...(riskUpdatedAt !== undefined ? { risk_updated_at: riskUpdatedAt ?? null } : {}),
+        ...(campaignOptedOutAt !== undefined
+          ? { campaign_opted_out_at: campaignOptedOutAt ?? null }
+          : {}),
         updated_at: new Date().toISOString(),
       };
 

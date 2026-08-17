@@ -20,7 +20,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useUserCount } from '@/hooks/useUserCount';
 import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
-import { addBreadcrumb } from '@/lib/sentry';
+import { addBreadcrumb, captureCriticalError } from '@/lib/sentry';
+import { normaliseReferralSource } from '@/lib/referralSource';
 import { isPasswordBreached } from '@/utils/passwordCheck';
 import { useCookieConsent } from '@/components/CookieConsent';
 import { trackLead, trackCompleteRegistration } from '@/lib/marketing-pixels';
@@ -413,17 +414,34 @@ const SignUp = () => {
                 .maybeSingle();
               if (refData?.user_id) {
                 payload.referred_by = refData.user_id;
-                await supabase.from('referrals').insert({
+                // This row is the ONLY thing that pays the referrer — both
+                // reward paths (stripe-subscription-webhook and
+                // process-referral-reward) look it up by referred_id. If the
+                // insert fails there is no second chance, so the error is
+                // logged rather than swallowed, and `source` is normalised
+                // against referrals_source_check: an unrecognised ?src= used to
+                // fail the CHECK and silently cost the referrer their month.
+                const { error: referralErr } = await supabase.from('referrals').insert({
                   referrer_id: refData.user_id,
                   referred_id: userId,
                   referred_email: email,
                   referral_code: storedRef,
                   status: 'signed_up',
-                  source: (searchParams.get('src') as string) || 'link',
+                  source: normaliseReferralSource(searchParams.get('src')),
                 });
+                if (referralErr) {
+                  console.error('[signup] referral row insert failed', referralErr);
+                  captureCriticalError(referralErr, {
+                    context: 'signup_referral_insert',
+                    referralCode: storedRef,
+                    referrerId: refData.user_id,
+                    referredId: userId,
+                  });
+                }
               }
-            } catch {
-              /* non-critical */
+            } catch (err) {
+              console.error('[signup] referral attribution threw', err);
+              captureCriticalError(err, { context: 'signup_referral_attribution' });
             }
           }
           const { error: profileErr } = await supabase

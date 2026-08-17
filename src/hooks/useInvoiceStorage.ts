@@ -347,11 +347,16 @@ export const useInvoiceStorage = () => {
               job_details: invoice.jobDetails
                 ? (JSON.parse(JSON.stringify(invoice.jobDetails)) as any)
                 : null,
-              subtotal: invoice.subtotal,
-              overhead: invoice.overhead,
-              profit: invoice.profit,
-              vat_amount: invoice.vatAmount,
-              total: invoice.total,
+              // All five money columns are NOT NULL DEFAULT 0. The default only
+              // fires when a column is omitted — an explicit null still fails
+              // with "null value in column subtotal violates not-null
+              // constraint" and loses the user's invoice (JAVASCRIPT-REACT-CT).
+              // parseNumber already guards the read path; write it too.
+              subtotal: parseNumber(invoice.subtotal),
+              overhead: parseNumber(invoice.overhead),
+              profit: parseNumber(invoice.profit),
+              vat_amount: parseNumber(invoice.vatAmount),
+              total: parseNumber(invoice.total),
               status: 'approved',
               invoice_raised: true,
               invoice_number: finalInvoiceNumber,
@@ -399,11 +404,11 @@ export const useInvoiceStorage = () => {
             client_data: JSON.parse(JSON.stringify(invoice.client)) as any,
             settings: JSON.parse(JSON.stringify(invoice.settings || {})),
             job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) : null,
-            subtotal: invoice.subtotal,
-            overhead: invoice.overhead,
-            profit: invoice.profit,
-            vat_amount: invoice.vatAmount,
-            total: invoice.total,
+            subtotal: parseNumber(invoice.subtotal),
+            overhead: parseNumber(invoice.overhead),
+            profit: parseNumber(invoice.profit),
+            vat_amount: parseNumber(invoice.vatAmount),
+            total: parseNumber(invoice.total),
             pdf_version: (invoice.pdf_version || 0) + 1,
             updated_at: new Date().toISOString(),
           })

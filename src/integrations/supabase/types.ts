@@ -12138,6 +12138,96 @@ export type Database = {
           },
         ];
       };
+      customer_campaign_sends: {
+        Row: {
+          customer_id: string | null;
+          email: string;
+          error_message: string | null;
+          id: string;
+          opened_at: string | null;
+          provider_message_id: string | null;
+          sent_at: string;
+          status: string;
+          subject: string | null;
+          template_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          customer_id?: string | null;
+          email: string;
+          error_message?: string | null;
+          id?: string;
+          opened_at?: string | null;
+          provider_message_id?: string | null;
+          sent_at?: string;
+          status?: string;
+          subject?: string | null;
+          template_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          customer_id?: string | null;
+          email?: string;
+          error_message?: string | null;
+          id?: string;
+          opened_at?: string | null;
+          provider_message_id?: string | null;
+          sent_at?: string;
+          status?: string;
+          subject?: string | null;
+          template_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'customer_campaign_sends_customer_id_fkey';
+            columns: ['customer_id'];
+            isOneToOne: false;
+            referencedRelation: 'customers';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'customer_campaign_sends_template_id_fkey';
+            columns: ['template_id'];
+            isOneToOne: false;
+            referencedRelation: 'customer_campaign_templates';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      customer_campaign_templates: {
+        Row: {
+          body: string;
+          created_at: string;
+          id: string;
+          is_default: boolean;
+          name: string;
+          subject: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          body: string;
+          created_at?: string;
+          id?: string;
+          is_default?: boolean;
+          name: string;
+          subject: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          body?: string;
+          created_at?: string;
+          id?: string;
+          is_default?: boolean;
+          name?: string;
+          subject?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       customer_contacts: {
         Row: {
           created_at: string;
@@ -12288,6 +12378,7 @@ export type Database = {
       customers: {
         Row: {
           address: string | null;
+          campaign_opted_out_at: string | null;
           certificate_count: number | null;
           client_notifications_enabled: boolean | null;
           company_name: string | null;
@@ -12302,6 +12393,9 @@ export type Database = {
           phone: string | null;
           postcode: string | null;
           property_count: number | null;
+          risk_rating: string | null;
+          risk_reason: string | null;
+          risk_updated_at: string | null;
           status: string;
           tags: string[];
           updated_at: string;
@@ -12309,6 +12403,7 @@ export type Database = {
         };
         Insert: {
           address?: string | null;
+          campaign_opted_out_at?: string | null;
           certificate_count?: number | null;
           client_notifications_enabled?: boolean | null;
           company_name?: string | null;
@@ -12323,6 +12418,9 @@ export type Database = {
           phone?: string | null;
           postcode?: string | null;
           property_count?: number | null;
+          risk_rating?: string | null;
+          risk_reason?: string | null;
+          risk_updated_at?: string | null;
           status?: string;
           tags?: string[];
           updated_at?: string;
@@ -12330,6 +12428,7 @@ export type Database = {
         };
         Update: {
           address?: string | null;
+          campaign_opted_out_at?: string | null;
           certificate_count?: number | null;
           client_notifications_enabled?: boolean | null;
           company_name?: string | null;
@@ -12344,6 +12443,9 @@ export type Database = {
           phone?: string | null;
           postcode?: string | null;
           property_count?: number | null;
+          risk_rating?: string | null;
+          risk_reason?: string | null;
+          risk_updated_at?: string | null;
           status?: string;
           tags?: string[];
           updated_at?: string;

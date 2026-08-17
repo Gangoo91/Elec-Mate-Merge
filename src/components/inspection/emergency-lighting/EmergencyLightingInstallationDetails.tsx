@@ -300,10 +300,12 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
         <Field label="Premises address" required>
           <Textarea
             value={formData.premisesAddress || ''}
-            onChange={(e) => {
-              onUpdate('premisesAddress', e.target.value);
-              setSameAsClientAddress(false);
-            }}
+            // No sameAsClientAddress flag to clear here — unlike the EV
+            // charging tab's checkbox, "Same as client address" on this form is
+            // a one-shot copy button. A stray setSameAsClientAddress(false)
+            // survived the copy-paste and threw ReferenceError on every
+            // keystroke in this field (JAVASCRIPT-REACT-E5 / E1).
+            onChange={(e) => onUpdate('premisesAddress', e.target.value)}
             className={textareaCn}
             placeholder="Full installation address"
           />

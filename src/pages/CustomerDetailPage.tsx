@@ -8,6 +8,9 @@ import { useCustomerActivity } from '@/hooks/inspection/useCustomerActivity';
 import { CustomerReminders } from '@/components/customers/CustomerReminders';
 import { CustomerContacts } from '@/components/customers/CustomerContacts';
 import { useCustomerDuplicates } from '@/hooks/useCustomerDuplicates';
+import { useCustomerPaymentStats } from '@/hooks/useCustomerPaymentStats';
+import { CustomerRiskSheet } from '@/components/customers/CustomerRiskSheet';
+import { resolveCustomerRisk, type RiskRating } from '@/lib/customerRisk';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { CustomerForm } from '@/components/customers/CustomerForm';
@@ -392,6 +395,31 @@ export default function CustomerDetailPage() {
     refetch();
   };
 
+  // ELE-1555 — the computed half of the RAG. Same hook the payment stats card
+  // uses, so the sheet and the card can never disagree about the invoice story.
+  const paymentStats = useCustomerPaymentStats(customerId || '');
+  const [showRiskSheet, setShowRiskSheet] = useState(false);
+
+  const handleSaveRisk = async (rating: RiskRating | null, reason: string) => {
+    if (!customerId) return;
+    // NULL, not undefined. updateCustomer keys these off presence and
+    // supabase-js drops undefined keys when it serialises, so `undefined`
+    // would mean "leave the column alone" — clearing a flag would silently
+    // do nothing. Same trap as the ELE-1515 geocode reset above.
+    const payload = {
+      riskRating: rating,
+      // Clearing the rating clears the note with it — a "why" with no flag
+      // attached is orphaned text nothing would ever surface again.
+      riskReason: rating ? reason || null : null,
+      riskUpdatedAt: rating ? new Date().toISOString() : null,
+    };
+    await updateCustomer(
+      customerId,
+      payload as unknown as Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>
+    );
+    refetch();
+  };
+
   const certCount = customer?.certificateCount ?? reports.length;
   const nextAction = useMemo(
     () => (customer ? computeNextAction(customer, certCount, stats.totalInvoiced) : null),
@@ -523,6 +551,47 @@ export default function CustomerDetailPage() {
                 ))}
               </div>
             )}
+
+            {/* ELE-1555 — RAG rating. Always rendered, including when unrated,
+                because an empty state is how the feature gets discovered at
+                all; hiding it until set would mean nobody ever sets one. */}
+            {(() => {
+              const risk = resolveCustomerRisk({
+                riskRating: customer.riskRating,
+                riskReason: customer.riskReason,
+                paymentReliability: paymentStats.reliabilityLevel,
+              });
+              return (
+                <button
+                  type="button"
+                  onClick={() => setShowRiskSheet(true)}
+                  className="mt-4 flex min-h-11 w-full items-center gap-3 rounded-xl border border-white/[0.12] bg-white/[0.04] px-3.5 py-2.5 text-left transition-colors hover:bg-white/[0.07] touch-manipulation"
+                >
+                  <span
+                    className={cn(
+                      'h-2.5 w-2.5 shrink-0 rounded-full',
+                      risk.dotClass || 'bg-white/25'
+                    )}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13.5px] font-semibold text-white">
+                      {risk.rating ? risk.label : 'Not rated'}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[11.5px] text-white">
+                      {risk.reason ||
+                        (risk.source === 'payments'
+                          ? 'From invoice history'
+                          : risk.source === 'manual'
+                            ? 'Your rating'
+                            : 'Tap to flag a good client or a bad payer')}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-[12px] font-semibold text-elec-yellow">
+                    {risk.source === 'manual' ? 'Change' : 'Rate'}
+                  </span>
+                </button>
+              );
+            })()}
 
             {/* Contact rows — inline editable */}
             <div className="mt-4 rounded-xl border border-white/[0.12] bg-white/[0.04] px-3">
@@ -987,6 +1056,16 @@ export default function CustomerDetailPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CustomerRiskSheet
+        open={showRiskSheet}
+        onOpenChange={setShowRiskSheet}
+        customerName={customer.name}
+        value={customer.riskRating ?? null}
+        reason={customer.riskReason ?? null}
+        paymentReliability={paymentStats.reliabilityLevel}
+        onSave={handleSaveRisk}
+      />
 
       <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
         <AlertDialogContent className="max-w-[90vw] rounded-2xl border border-white/[0.08] bg-[#111114] shadow-2xl sm:max-w-md">

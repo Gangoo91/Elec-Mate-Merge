@@ -8,6 +8,7 @@ import {
   MobileAccordionTrigger,
 } from '@/components/ui/mobile-accordion';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { NMW_RATES, NMW_EFFECTIVE_FROM } from '@/data/nmwRates';
 import {
   FileText,
   Shield,
@@ -58,16 +59,17 @@ const LegalRequirementsTab = () => {
     },
   ];
 
-  // Updated 2025 wage rates
+  // REVIEW: NMW rates are uprated every April — figures come from
+  // src/data/nmwRates.ts, the single source of truth. Update that file, not this one.
   const currentWageFramework = [
     {
-      category: '2025 Minimum Wage Requirements',
-      timing: 'Updated April 2024',
+      category: 'Minimum Wage Requirements',
+      timing: `Effective ${NMW_EFFECTIVE_FROM}`,
       description: 'Legal minimum wage rates for apprentices with enforcement implications',
       components: [
-        'Apprentice minimum wage: £7.00/hour (first year or under 19)',
-        '18-20 National minimum wage: £12.21/hour (after first year)',
-        '21+ National minimum wage: £12.21/hour (after first year)',
+        `Apprentice minimum wage: ${NMW_RATES.apprentice}/hour (first year or under 19)`,
+        `18-20 National minimum wage: ${NMW_RATES.age18to20}/hour (after first year)`,
+        `21+ National Living Wage: ${NMW_RATES.age21Plus}/hour (after first year)`,
         'Automatic penalty system for underpayment (up to £25,000 per worker)',
       ],
       employerView:
@@ -295,7 +297,7 @@ const LegalRequirementsTab = () => {
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="framework">
           <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-red-400" />}>
-            2025 Legal Framework
+            Legal Framework
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">

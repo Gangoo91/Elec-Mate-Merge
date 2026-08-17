@@ -2,6 +2,11 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import Stripe from 'https://esm.sh/stripe@14.14.0';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  liveMonthlyPence,
+  referralCreditPence,
+  tierMonthlyPence,
+} from '../_shared/referral-reward.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -57,7 +62,7 @@ serve(async (req) => {
     // 1. Check if this user was referred
     const { data: profile } = await supabase
       .from('profiles')
-      .select('referred_by, subscription_tier')
+      .select('referred_by, subscription_tier, stripe_customer_id')
       .eq('id', referred_user_id)
       .single();
 
@@ -98,24 +103,28 @@ serve(async (req) => {
       .eq('id', profile.referred_by)
       .single();
 
-    // Reward value = one month at the referrer's own price. Computed before the
-    // Stripe check so the pending (App Store / Play Store) path banks the right
-    // amount too — it used to hardcode 1299.
-    // Source of truth: src/data/stripePrices.ts — keep in step with it. These
-    // were stale at the pre-June-2026 prices (apprentice 599, electrician 1299),
-    // so a "free month" credited £12.99 against a £19.99 charge and the user was
-    // still billed the difference.
-    const tierPrices: Record<string, number> = {
-      apprentice: 699, // £6.99
-      apprentice_yearly: 583, // £69.99/yr ÷ 12
-      electrician: 1999, // £19.99
-      electrician_yearly: 1667, // £199.99/yr ÷ 12
-      business_ai: 3999, // £39.99
-      business_ai_yearly: 3999,
-      employer: 4999, // £49.99
-      employer_yearly: 4999,
-    };
-    const creditPence = tierPrices[referrerProfile?.subscription_tier || ''] || 1999;
+    // Reward value = one month free, capped at what the referral actually
+    // brought in: min(referrer's month, referee's month). An employer referring
+    // an apprentice earns £6.99 of MRR, so £6.99 is the credit — it used to pay
+    // £49.99 off the referrer's tier string alone. The live subscription is
+    // preferred over that string because the string lies (founders on £3.99/mo
+    // carry tier 'employer'). Computed before the Stripe check so the pending
+    // App Store / Play Store path banks the right amount too.
+    const [referrerMonthly, refereeMonthly] = await Promise.all([
+      liveMonthlyPence(stripe, referrerProfile?.stripe_customer_id).then(
+        (live) => live ?? tierMonthlyPence(referrerProfile?.subscription_tier)
+      ),
+      liveMonthlyPence(stripe, profile.stripe_customer_id).then(
+        (live) => live ?? tierMonthlyPence(profile.subscription_tier)
+      ),
+    ]);
+    const creditPence = referralCreditPence(referrerMonthly, refereeMonthly);
+
+    console.log('[process-referral-reward] Credit sized', {
+      referrerMonthly,
+      refereeMonthly,
+      creditPence,
+    });
 
     if (!referrerProfile?.stripe_customer_id) {
       // No Stripe customer — the referrer is billed by Apple or Google, so a

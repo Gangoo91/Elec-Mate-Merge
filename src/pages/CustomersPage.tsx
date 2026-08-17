@@ -6,6 +6,13 @@ import { useCustomers, Customer, SortField, SortDirection } from '@/hooks/inspec
 import { useDebounce } from '@/hooks/useDebounce';
 import { supabase } from '@/integrations/supabase/client';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
+import {
+  resolveCustomerRisk,
+  matchesRiskFilter,
+  RISK_FILTER_LABEL,
+  type RiskFilter,
+} from '@/lib/customerRisk';
+import { CustomerCampaignSheet } from '@/components/customers/CustomerCampaignSheet';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { MergeDuplicatesSheet } from '@/components/customers/MergeDuplicatesSheet';
@@ -87,6 +94,8 @@ export default function CustomersPage() {
   const [showFollowUpOnly, setShowFollowUpOnly] = useState(false);
   const [statusFilter, setStatusFilter] = useState<'lead' | 'active' | 'inactive' | null>(null);
   const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
+  const [riskFilter, setRiskFilter] = useState<RiskFilter>('all');
+  const [showCampaignSheet, setShowCampaignSheet] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [mapSelectedId, setMapSelectedId] = useState<string | null>(null);
   const debouncedSearch = useDebounce(searchTerm, 300);
@@ -293,9 +302,20 @@ export default function CustomersPage() {
         if (!c.tags || !c.tags.includes(activeTagFilter)) return false;
       }
       if (statusFilter && (c.status || 'active') !== statusFilter) return false;
+      // ELE-1555 — resolved here rather than off c.riskRating alone, so the
+      // filter catches customers flagged by invoice history as well as those
+      // flagged by hand. "Needs care" spans amber and red from both sources.
+      if (riskFilter !== 'all') {
+        const risk = resolveCustomerRisk({
+          riskRating: c.riskRating,
+          riskReason: c.riskReason,
+          paymentReliability: reliabilityMap.get(c.id) ?? null,
+        });
+        if (!matchesRiskFilter(risk, riskFilter)) return false;
+      }
       return true;
     });
-  }, [customers, showFollowUpOnly, activeTagFilter, statusFilter]);
+  }, [customers, showFollowUpOnly, activeTagFilter, statusFilter, riskFilter, reliabilityMap]);
 
   // Tag aggregation — collect all tags + counts across loaded customers.
   const tagCounts = useMemo(() => {
@@ -1142,6 +1162,37 @@ export default function CustomersPage() {
                 </div>
               </section>
 
+              {/* ELE-1555 — rating filter. Sits above tags because "who do I
+                  need to be careful with" is a far more common question than
+                  any individual tag. */}
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Rating</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {(['all', 'flagged', 'red', 'amber', 'green'] as RiskFilter[]).map((f) => {
+                    const active = riskFilter === f;
+                    return (
+                      <button
+                        key={f}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => {
+                          haptic.light();
+                          setRiskFilter(f);
+                        }}
+                        className={cn(
+                          'inline-flex h-11 items-center rounded-xl border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation active:scale-[0.99]',
+                          active
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                            : 'border-white/[0.08] bg-white/[0.03] text-white'
+                        )}
+                      >
+                        {RISK_FILTER_LABEL[f]}
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
               {tagCounts.length > 0 && (
                 <section>
                   <h3 className="mb-2 text-[13px] font-semibold text-white">Tags</h3>
@@ -1189,6 +1240,19 @@ export default function CustomersPage() {
                   >
                     Select multiple
                   </button>
+                  {/* ELE-1554 */}
+                  <button
+                    type="button"
+                    disabled={customers.length === 0}
+                    onClick={() => {
+                      haptic.light();
+                      setShowFiltersSheet(false);
+                      setShowCampaignSheet(true);
+                    }}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 text-left text-[13px] font-semibold text-white touch-manipulation active:scale-[0.99] disabled:opacity-40"
+                  >
+                    Send a keep-in-touch email
+                  </button>
                   <button
                     type="button"
                     disabled={customers.length === 0}
@@ -1220,6 +1284,15 @@ export default function CustomersPage() {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* ELE-1554 — the sheet loads its own recipient list rather than taking
+          one from here. This page paginates at 50 and applies the active
+          search/filters, so passing `customers` in would have capped the send
+          at the first page with nothing to say the rest existed. */}
+      <CustomerCampaignSheet
+        open={showCampaignSheet}
+        onOpenChange={setShowCampaignSheet}
+      />
 
       <MergeDuplicatesSheet
         open={showMergeSheet}
