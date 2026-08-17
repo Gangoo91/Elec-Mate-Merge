@@ -190,7 +190,10 @@ const HourlyRateCalculator = () => {
   const vehicleAnnual = parseFloat(inputs.vehicleAnnual) || 0;
   const overheadPercentage = parseFloat(inputs.overheadPercentage) || 0;
   const profitMargin = parseFloat(inputs.profitMargin) || 0;
-  const utilizationRate = parseFloat(inputs.utilizationRate) || 0;
+  // ELE-1569 — utilisation is a share of your working time, so it cannot
+  // exceed 100%. The field is free text with no bounds; without this, "750"
+  // silently multiplies billable hours by 7.5 and under-prices the work.
+  const utilizationRate = Math.min(Math.max(parseFloat(inputs.utilizationRate) || 0, 0), 100);
   const callOutMinHours = parseFloat(inputs.callOutMinHours) || 0;
   const afterHoursMultiplier = parseFloat(inputs.afterHoursMultiplier) || 0;
   const weekendMultiplier = parseFloat(inputs.weekendMultiplier) || 0;
@@ -202,6 +205,24 @@ const HourlyRateCalculator = () => {
   );
   const totalWorkingHours = effectiveWorkingDays * hoursPerDay;
   const billableHours = Math.max((totalWorkingHours * utilizationRate) / 100, 1);
+
+  /**
+   * ELE-1569 — why a rate of £27,150/hr was possible.
+   *
+   * `Math.max(…, 1)` above is a divide-by-zero guard, but it guards by
+   * inventing a divisor rather than refusing to answer. Utilisation is a free
+   * text field with no bounds, and `parseFloat('') || 0` turns a cleared box
+   * into 0% — so billable hours collapse to a single hour and the whole annual
+   * cost of running the business is reported as the hourly rate. The
+   * arithmetic is correct throughout; the answer is meaningless.
+   *
+   * Rather than silently substitute a plausible-looking number, say the inputs
+   * cannot produce a rate. A genuinely part-time electrician is unaffected:
+   * this only triggers when there is effectively nothing to divide by.
+   */
+  const RATE_NEEDS_HOURS = 100; // ≈ two hours a week across a year
+  const rateInputsUnusable =
+    totalWorkingHours <= 0 || utilizationRate <= 0 || billableHours < RATE_NEEDS_HOURS;
 
   // Employer NI is charged only on pay ABOVE the £5,000 secondary threshold and
   // the 3% employer pension minimum only on QUALIFYING EARNINGS (£6,240 to
@@ -649,12 +670,20 @@ const HourlyRateCalculator = () => {
             {calculated ? (
               <>
                 <CalculatorResult category="business">
-                  <ResultHeadline
-                    label="Charge this per hour"
-                    value={`£${roundedHourlyExVat.toFixed(2)}`}
-                    aside={vatRegistered ? `£${hourlyIncVat?.toFixed(2)} inc VAT` : undefined}
-                    caption={`Covers your costs and pays you £${parseFloat(inputs.annualSalary || '0').toLocaleString('en-GB')} a year across ${Math.round(billableHours)} billable hours.`}
-                  />
+                  {rateInputsUnusable ? (
+                    <ResultHeadline
+                      label="Charge this per hour"
+                      value="—"
+                      caption={`Set your utilisation and working hours first. ${Math.round(billableHours)} billable hour${Math.round(billableHours) === 1 ? '' : 's'} a year is too few to spread your costs across, so any rate here would be an artefact of the sum rather than a price.`}
+                    />
+                  ) : (
+                    <ResultHeadline
+                      label="Charge this per hour"
+                      value={`£${roundedHourlyExVat.toFixed(2)}`}
+                      aside={vatRegistered ? `£${hourlyIncVat?.toFixed(2)} inc VAT` : undefined}
+                      caption={`Covers your costs and pays you £${parseFloat(inputs.annualSalary || '0').toLocaleString('en-GB')} a year across ${Math.round(billableHours)} billable hours.`}
+                    />
+                  )}
                   <div className="hidden">
                     {vatRegistered && (
                       <p className="text-sm text-white mt-2">

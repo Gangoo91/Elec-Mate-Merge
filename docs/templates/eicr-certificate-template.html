@@ -1251,6 +1251,52 @@
         white-space: nowrap;
       }
 
+      /* ELE-1543 — CSS-drawn tick box.
+         Replaces the BALLOT BOX / BALLOT BOX WITH CHECK characters (U+2610 and
+         U+2611), neither of which exists in the Helvetica/Arial stack this
+         document declares, so whether an empty box appeared at all came down to
+         each renderer's font fallback. Drawn with a border instead of a
+         character: no font dependency, identical in every engine. */
+      .cb {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border: 1.2px solid #0f172a;
+        border-radius: 1.5px;
+        background: #fff;
+        position: relative;
+        vertical-align: -1px;
+        flex-shrink: 0;
+      }
+      .cb.on {
+        background: #0f172a;
+        border-color: #0f172a;
+      }
+      .cb.on::after {
+        content: '';
+        position: absolute;
+        left: 2.6px;
+        top: 0.4px;
+        width: 2.2px;
+        height: 5.2px;
+        border: solid #fff;
+        border-width: 0 1.4px 1.4px 0;
+        transform: rotate(45deg);
+      }
+      /* Larger variant for the two overall-assessment boxes */
+      .cb-lg {
+        width: 13px;
+        height: 13px;
+        border-width: 1.6px;
+      }
+      .cb-lg.on::after {
+        left: 3.8px;
+        top: 0.8px;
+        width: 3.2px;
+        height: 7.4px;
+        border-width: 0 1.8px 1.8px 0;
+      }
+
       /* =============================================
            ELE-849 — LIM / N/V / N/A marker badges + field notes
            ============================================= */
@@ -1446,10 +1492,10 @@
         <div class="inline-group">
           <span class="inline-label">Type:</span>
           <div class="checkbox-row">
-            <div class="tick-row"><span class="tick">{% if installation_details.description == "domestic" or installation_details.description == "residential" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Residential</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.description == "commercial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Commercial</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.description == "industrial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Industrial</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.description == "other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other (include brief description)</div>
+            <div class="tick-row"><span class="cb{% if installation_details.description == "domestic" or installation_details.description == "residential" %} on{% endif %}"></span>&nbsp;Residential</div>
+            <div class="tick-row"><span class="cb{% if installation_details.description == "commercial" %} on{% endif %}"></span>&nbsp;Commercial</div>
+            <div class="tick-row"><span class="cb{% if installation_details.description == "industrial" %} on{% endif %}"></span>&nbsp;Industrial</div>
+            <div class="tick-row"><span class="cb{% if installation_details.description == "other" %} on{% endif %}"></span>&nbsp;Other (include brief description)</div>
             {% if installation_details.description == "other" and installation_details.other_premises_description != "" %}
             <span class="inline-value" style="margin-left: 8px;">{{installation_details.other_premises_description}}</span>
             {% endif %}
@@ -1476,8 +1522,8 @@
         <div class="inline-group">
           <span class="inline-label">Evidence of alterations:</span>
           <div class="checkbox-row">
-            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Not apparent</div>
+            <div class="tick-row"><span class="cb{% if installation_details.evidence_of_alterations == "yes" %} on{% endif %}"></span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="cb{% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %} on{% endif %}"></span>&nbsp;Not apparent</div>
             {% if installation_details.evidence_of_alterations == "yes" %}
             <div class="checkbox-item" style="margin-left: 10px;">
               <span class="inline-label">If yes, age:</span>
@@ -1496,16 +1542,16 @@
         <div class="inline-group">
           <span class="inline-label">Installation records available? (Reg 651.1):</span>
           <div class="checkbox-row">
-            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No</div>
+            <div class="tick-row"><span class="cb{% if installation_details.installation_records_available == "yes" %} on{% endif %}"></span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="cb{% if installation_details.installation_records_available == "no" %} on{% endif %}"></span>&nbsp;No</div>
           </div>
         </div>
         <div class="inline-group">
           <span class="inline-label">Date of last inspection:</span>
           <div class="checkbox-row">
-            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "known" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Known</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "unknown" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Unknown</div>
-            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;N/A (First)</div>
+            <div class="tick-row"><span class="cb{% if installation_details.last_inspection_type == "known" %} on{% endif %}"></span>&nbsp;Known</div>
+            <div class="tick-row"><span class="cb{% if installation_details.last_inspection_type == "unknown" %} on{% endif %}"></span>&nbsp;Unknown</div>
+            <div class="tick-row"><span class="cb{% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %} on{% endif %}"></span>&nbsp;N/A (First)</div>
           </div>
         </div>
         <div class="inline-group">
@@ -1602,19 +1648,11 @@
         <span class="assessment-label">Overall Assessment:</span>
         <div class="assessment-options">
           <div class="assessment-option">
-            <input
-              type="checkbox"
-              id="satisfactory"
-              {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
-            />
+            <span class="cb cb-lg{% if declarations.overall_assessment == 'satisfactory' %} on{% endif %}"></span>
             <label for="satisfactory" class="satisfactory">SATISFACTORY</label>
           </div>
           <div class="assessment-option">
-            <input
-              type="checkbox"
-              id="unsatisfactory"
-              {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
-            />
+            <span class="cb cb-lg{% if declarations.overall_assessment == 'unsatisfactory' %} on{% endif %}"></span>
             <label for="unsatisfactory" class="unsatisfactory">UNSATISFACTORY</label>
           </div>
         </div>
@@ -1658,30 +1696,30 @@
             <span class="marker-badge marker-{% if supply_characteristics.earthing_arrangement == 'LIM' %}lim{% elsif supply_characteristics.earthing_arrangement == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.earthing_arrangement}}</span>
             {% if supply_characteristics.earthing_arrangement_note != "" %}<div class="field-note">{{supply_characteristics.earthing_arrangement_note}}</div>{% endif %}
           {% else %}
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C</div>
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-S" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-S</div>
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PME)</div>
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PNB)</div>
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TT</div>
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "IT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;IT</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "TN-C" %} on{% endif %}"></span>&nbsp;TN-C</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "TN-S" %} on{% endif %}"></span>&nbsp;TN-S</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %} on{% endif %}"></span>&nbsp;TN-C-S (PME)</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %} on{% endif %}"></span>&nbsp;TN-C-S (PNB)</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "TT" %} on{% endif %}"></span>&nbsp;TT</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.earthing_arrangement == "IT" %} on{% endif %}"></span>&nbsp;IT</div>
           {% endif %}
         </div>
 
         <!-- Col 2: Number and Type of Live Conductors -->
         <div class="compound-col" style="width: 26%">
           <div class="compound-title">Number and Type of Live Conductors</div>
-          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "ac" or supply_characteristics.supply_ac_dc == "" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>AC</strong></div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-2-wire" or supply_characteristics.conductor_configuration == "2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 2-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 3-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "2-phase-3-wire" or supply_characteristics.conductor_configuration == "3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-phase, 3-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 3-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-4-wire" or supply_characteristics.conductor_configuration == "4-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 4-wire</div>
-          <div class="tick-row" style="display: flex; margin-top: 3px;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "dc" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>DC</strong></div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-wire</div>
-          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other</div>
+          <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.supply_ac_dc == "ac" or supply_characteristics.supply_ac_dc == "" %} on{% endif %}"></span>&nbsp;<strong>AC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.conductor_configuration == "1-phase-2-wire" or supply_characteristics.conductor_configuration == "2-wire" %} on{% endif %}"></span>&nbsp;1-phase, 2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.conductor_configuration == "1-phase-3-wire" %} on{% endif %}"></span>&nbsp;1-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.conductor_configuration == "2-phase-3-wire" or supply_characteristics.conductor_configuration == "3-wire" %} on{% endif %}"></span>&nbsp;2-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.conductor_configuration == "3-phase-3-wire" %} on{% endif %}"></span>&nbsp;3-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.conductor_configuration == "3-phase-4-wire" or supply_characteristics.conductor_configuration == "4-wire" %} on{% endif %}"></span>&nbsp;3-phase, 4-wire</div>
+          <div class="tick-row" style="display: flex; margin-top: 3px;"><span class="cb{% if supply_characteristics.supply_ac_dc == "dc" %} on{% endif %}"></span>&nbsp;<strong>DC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.dc_conductor_config == "dc-2-wire" %} on{% endif %}"></span>&nbsp;2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.dc_conductor_config == "dc-3-wire" %} on{% endif %}"></span>&nbsp;3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="cb{% if supply_characteristics.dc_conductor_config == "dc-other" %} on{% endif %}"></span>&nbsp;Other</div>
           <div style="margin-top: 4px; border-top: 1px dotted #cbd5e1; padding-top: 3px;">
-            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_polarity_confirmed == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Confirmation of supply polarity</div>
+            <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.supply_polarity_confirmed == true %} on{% endif %}"></span>&nbsp;Confirmation of supply polarity</div>
           </div>
         </div>
 
@@ -1746,7 +1784,7 @@
           <div class="tick-row"><span class="marker-badge marker-na">N/A</span>&nbsp;Other sources of supply</div>
           {% if supply_characteristics.other_sources_of_supply_note != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply_note}}</div>{% endif %}
         {% else %}
-          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.other_sources_of_supply_present == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other sources of supply (as detailed on attached continuation sheet)</div>
+          <div class="tick-row" style="display: flex;"><span class="cb{% if supply_characteristics.other_sources_of_supply_present == true %} on{% endif %}"></span>&nbsp;Other sources of supply (as detailed on attached continuation sheet)</div>
           {% if supply_characteristics.other_sources_of_supply_present == true and supply_characteristics.other_sources_of_supply != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply}}</div>{% endif %}
         {% endif %}
       </div>
@@ -1766,13 +1804,13 @@
         {% else %}
           <div class="inline-group">
             <div class="checkbox-item">
-              <input type="checkbox" {% if earthing_bonding.means_of_earthing_distributor == true %}checked{% endif %} />
+              <span class="cb{% if earthing_bonding.means_of_earthing_distributor == true %} on{% endif %}"></span>
               <label>Distributor's facility</label>
             </div>
           </div>
           <div class="inline-group">
             <div class="checkbox-item">
-              <input type="checkbox" {% if earthing_bonding.means_of_earthing_electrode == true %}checked{% endif %} />
+              <span class="cb{% if earthing_bonding.means_of_earthing_electrode == true %} on{% endif %}"></span>
               <label>Installation earth electrode</label>
             </div>
           </div>
@@ -1921,38 +1959,38 @@
             </div>
             <div class="grid-cell">
               <div class="cell-label">Polarity</div>
-              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_correct_polarity %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+              <div class="cell-check"><span class="cb{% if distribution_board_verification.confirmed_correct_polarity %} on{% endif %}"></span>Confirmed</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">Phase Seq</div>
-              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+              <div class="cell-check"><span class="cb{% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %} on{% endif %}"></span>Confirmed</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">Ring Final</div>
-              <div class="cell-check"><span class="tick">{% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
+              <div class="cell-check"><span class="cb{% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %} on{% endif %}"></span>Confirmed</div>
             </div>
           </div>
           <!-- Row 3: SPD Operational / N/A / T1 / T2 / T3 -->
           <div class="grid-row cols-5">
             <div class="grid-cell">
               <div class="cell-label">SPD</div>
-              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_operational_status %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div>
+              <div class="cell-check"><span class="cb{% if distribution_board_verification.spd_operational_status %} on{% endif %}"></span>Operational</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">SPD N/A</div>
-              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div>
+              <div class="cell-check"><span class="cb{% if distribution_board_verification.spd_na %} on{% endif %}"></span>Not installed</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">Type 1</div>
-              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div>
+              <div class="cell-check"><span class="cb{% if main_board_schedule.spd_t1 %} on{% endif %}"></span>T1</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">Type 2</div>
-              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div>
+              <div class="cell-check"><span class="cb{% if main_board_schedule.spd_t2 %} on{% endif %}"></span>T2</div>
             </div>
             <div class="grid-cell">
               <div class="cell-label">Type 3</div>
-              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div>
+              <div class="cell-check"><span class="cb{% if main_board_schedule.spd_t3 %} on{% endif %}"></span>T3</div>
             </div>
           </div>
           <!-- Row 4: SPD details (only when SPD present) -->
@@ -1993,16 +2031,16 @@
           <div class="grid-row cols-5">
             <div class="grid-cell"><div class="cell-label">Zdb (&#937;)</div><div class="cell-value">{{board.zdb}}</div></div>
             <div class="grid-cell"><div class="cell-label">Ipf (kA)</div><div class="cell-value">{{board.ipf}}</div></div>
-            <div class="grid-cell"><div class="cell-label">Polarity</div><div class="cell-check"><span class="tick">{% if board.polarity_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
-            <div class="grid-cell"><div class="cell-label">Phase Seq</div><div class="cell-check"><span class="tick">{% if board.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
-            <div class="grid-cell"><div class="cell-label">Ring Final</div><div class="cell-check"><span class="tick">{% if board.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Polarity</div><div class="cell-check"><span class="cb{% if board.polarity_confirmed %} on{% endif %}"></span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Phase Seq</div><div class="cell-check"><span class="cb{% if board.phase_sequence_confirmed %} on{% endif %}"></span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Ring Final</div><div class="cell-check"><span class="cb{% if board.ring_final_circuit_confirmed %} on{% endif %}"></span>Confirmed</div></div>
           </div>
           <div class="grid-row cols-5">
-            <div class="grid-cell"><div class="cell-label">SPD</div><div class="cell-check"><span class="tick">{% if board.spd_operational %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div></div>
-            <div class="grid-cell"><div class="cell-label">SPD N/A</div><div class="cell-check"><span class="tick">{% if board.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div></div>
-            <div class="grid-cell"><div class="cell-label">Type 1</div><div class="cell-check"><span class="tick">{% if board.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div></div>
-            <div class="grid-cell"><div class="cell-label">Type 2</div><div class="cell-check"><span class="tick">{% if board.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div></div>
-            <div class="grid-cell"><div class="cell-label">Type 3</div><div class="cell-check"><span class="tick">{% if board.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD</div><div class="cell-check"><span class="cb{% if board.spd_operational %} on{% endif %}"></span>Operational</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD N/A</div><div class="cell-check"><span class="cb{% if board.spd_na %} on{% endif %}"></span>Not installed</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 1</div><div class="cell-check"><span class="cb{% if board.spd_t1 %} on{% endif %}"></span>T1</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 2</div><div class="cell-check"><span class="cb{% if board.spd_t2 %} on{% endif %}"></span>T2</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 3</div><div class="cell-check"><span class="cb{% if board.spd_t3 %} on{% endif %}"></span>T3</div></div>
           </div>
           {% if board.spd_make != "" or board.spd_model != "" or board.spd_location != "" or board.spd_rated_current_ka != "" %}
           <div class="grid-row cols-3">
@@ -2063,8 +2101,8 @@
         Referring to the attached Schedule(s) of Inspection and Schedule(s) of Circuit Details and Test Results, and subject to the limitations specified at the Extent and limitations of inspection and testing section:
       </div>
       <div class="tick-row" style="display: flex; margin-bottom: 4px;">
-        <span class="tick">{% if no_obs %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No remedial action is required&nbsp;&nbsp;
-        <span class="tick">{% if no_obs == false %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;The following observations are made (see below)
+        <span class="cb{% if no_obs %} on{% endif %}"></span>&nbsp;No remedial action is required&nbsp;&nbsp;
+        <span class="cb{% if no_obs == false %} on{% endif %}"></span>&nbsp;The following observations are made (see below)
       </div>
 
       <!-- Table 1: C1 and C2 observations (legally distinct — affect overall assessment) -->
@@ -2288,10 +2326,10 @@
         <div class="board-verification">
           <span><strong>Zdb:</strong> {{board.zdb | default: "-"}} Ω</span>
           <span><strong>Ipf:</strong> {{board.ipf | default: "-"}} kA</span>
-          <span>Polarity: {% if board.polarity_confirmed %}✓{% else %}○{% endif %}</span>
-          <span>Phase Seq: {% if board.phase_sequence_confirmed %}✓{% else %}○{% endif %}</span>
-          <span>Ring Final: {% if board.ring_final_circuit_confirmed %}✓{% else %}○{% endif %}</span>
-          <span>SPD: {% if board.spd_operational %}✓{% elsif board.spd_na %}N/A{% else %}○{% endif %}</span>
+          <span>Polarity: <span class="cb{% if board.polarity_confirmed %} on{% endif %}"></span></span>
+          <span>Phase Seq: <span class="cb{% if board.phase_sequence_confirmed %} on{% endif %}"></span></span>
+          <span>Ring Final: <span class="cb{% if board.ring_final_circuit_confirmed %} on{% endif %}"></span></span>
+          <span>SPD: {% if board.spd_na %}N/A{% else %}<span class="cb{% if board.spd_operational %} on{% endif %}"></span>{% endif %}</span>
           {% if board.spd_t1 %}<span>T1 ✓</span>{% endif %}
           {% if board.spd_t2 %}<span>T2 ✓</span>{% endif %}
           {% if board.spd_t3 %}<span>T3 ✓</span>{% endif %}
@@ -2511,15 +2549,15 @@
         <div class="grid-row cols-3">
           <div class="grid-cell">
             <div class="cell-label">BS 7671 Compliance</div>
-            <div class="cell-check"><span class="tick">{% if declarations.bs7671_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Installation complies with BS 7671 as amended</div>
+            <div class="cell-check"><span class="cb{% if declarations.bs7671_compliance == true %} on{% endif %}"></span>Installation complies with BS 7671 as amended</div>
           </div>
           <div class="grid-cell">
             <div class="cell-label">Building Regs Compliance</div>
-            <div class="cell-check"><span class="tick">{% if declarations.building_regs_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Complies with applicable Building Regulations</div>
+            <div class="cell-check"><span class="cb{% if declarations.building_regs_compliance == true %} on{% endif %}"></span>Complies with applicable Building Regulations</div>
           </div>
           <div class="grid-cell">
             <div class="cell-label">Competent Person Scheme</div>
-            <div class="cell-check"><span class="tick">{% if declarations.competent_person_scheme == true %}&#9745;{% else %}&#9744;{% endif %}</span>Notified under CPS where applicable</div>
+            <div class="cell-check"><span class="cb{% if declarations.competent_person_scheme == true %} on{% endif %}"></span>Notified under CPS where applicable</div>
           </div>
         </div>
         {% if departures and departures != "" %}
@@ -2572,17 +2610,7 @@
               >{{declarations.inspected_by.cp_scheme}}</span
             >
             <span style="font-size: 8px; margin-left: 8px">
-              <input
-                type="checkbox"
-                {%
-                if
-                declarations.inspected_by.cp_scheme_na
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <span class="cb{% if declarations.inspected_by.cp_scheme_na %} on{% endif %}"></span>
               N/A
             </span>
           </div>
@@ -2654,19 +2682,13 @@
             <div
               class="final-assessment-option {% if declarations.overall_assessment == 'satisfactory' %}satisfactory-selected{% endif %}"
             >
-              <input
-                type="checkbox"
-                {% if declarations.overall_assessment == 'satisfactory' %}checked{% endif %}
-              />
+              <span class="cb cb-lg{% if declarations.overall_assessment == 'satisfactory' %} on{% endif %}"></span>
               <span class="option-label satisfactory-label">SATISFACTORY</span>
             </div>
             <div
               class="final-assessment-option {% if declarations.overall_assessment == 'unsatisfactory' %}unsatisfactory-selected{% endif %}"
             >
-              <input
-                type="checkbox"
-                {% if declarations.overall_assessment == 'unsatisfactory' %}checked{% endif %}
-              />
+              <span class="cb cb-lg{% if declarations.overall_assessment == 'unsatisfactory' %} on{% endif %}"></span>
               <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
             </div>
           </div>

@@ -6,12 +6,27 @@ export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
+    /*
+     * ELE-1527 / ELE-1480 — spell check was off on every textarea in the app,
+     * because it was hardcoded off here in the base component rather than at
+     * any call site. Observations and recommendations are prose that ends up on
+     * a certificate a client reads, so a typo matters.
+     *
+     * These defaults are declared before {...props}, so the call sites that
+     * deliberately pass spellCheck={false} — signature capture, chat, search —
+     * still win.
+     *
+     * autoCorrect stays off on purpose: it mangles the vocabulary this app is
+     * full of (RCBO, Zs, SWA, CPC), and a silent "correction" on a compliance
+     * document is worse than a red squiggle. autoCapitalize moves to
+     * "sentences" because these are sentences.
+     */
     return (
       <textarea
-        spellCheck="false"
+        spellCheck="true"
         autoComplete="off"
         autoCorrect="off"
-        autoCapitalize="off"
+        autoCapitalize="sentences"
         className={cn(
           // Base layout
           'flex w-full min-h-[100px] md:min-h-[80px]',
