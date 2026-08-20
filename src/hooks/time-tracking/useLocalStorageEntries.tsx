@@ -1,14 +1,15 @@
 import { TimeEntry } from '@/types/time-tracking';
-import { storageGetSync, storageGetJSONSync } from '@/utils/storage';
+import { storageGetSync, storageGetJSONSync, storageKeysSync } from '@/utils/storage';
 
 export const useLocalStorageEntries = () => {
-  // Load course time entries from storage
-  // NOTE: Object.keys(localStorage) only works on web; on native, the cache
-  // is used via storageGetSync but there is no sync key-enumeration API yet.
+  // Load course time entries from storage.
+  // storageKeysSync() rather than Object.keys(localStorage): the raw call
+  // throws where storage is blocked (Android WebView with site data off), and
+  // it returned nothing on native — these entries never loaded there at all.
   const loadCourseEntriesFromLocalStorage = (): TimeEntry[] => {
     const loadedCourseEntries: TimeEntry[] = [];
 
-    Object.keys(localStorage).forEach((key) => {
+    storageKeysSync().forEach((key) => {
       if (key.startsWith('course_') && key.endsWith('_todayTime')) {
         const courseName = key.replace('course_', '').replace('_todayTime', '');
         const formattedCourseName = courseName
@@ -37,7 +38,7 @@ export const useLocalStorageEntries = () => {
   const loadQuizEntriesFromLocalStorage = (): TimeEntry[] => {
     const loadedQuizEntries: TimeEntry[] = [];
 
-    Object.keys(localStorage).forEach((key) => {
+    storageKeysSync().forEach((key) => {
       if (key.includes('_quiz_attempts')) {
         const unitCode = key.split('_quiz_attempts')[0].replace('unit_', '');
         const attempts = storageGetJSONSync<any[]>(key, []);

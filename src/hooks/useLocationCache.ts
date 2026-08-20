@@ -1,5 +1,11 @@
 import { useState, useCallback } from 'react';
-import { storageGetSync, storageSetJSONSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
+import {
+  storageGetSync,
+  storageSetJSONSync,
+  storageRemoveSync,
+  storageGetJSONSync,
+  storageKeysSync,
+} from '@/utils/storage';
 
 interface CachedLocation {
   coordinates: { lat: number; lng: number };
@@ -68,7 +74,7 @@ export function useLocationCache() {
 
   const clearCache = useCallback((pattern?: string) => {
     try {
-      const keys = Object.keys(localStorage);
+      const keys = storageKeysSync();
       const cacheKeys = keys.filter((key) => {
         if (pattern) {
           return key.startsWith('geo_cache_') && key.includes(pattern);
@@ -76,7 +82,7 @@ export function useLocationCache() {
         return key.startsWith('geo_cache_');
       });
 
-      cacheKeys.forEach((key) => localStorage.removeItem(key));
+      cacheKeys.forEach((key) => storageRemoveSync(key));
       console.log(`Cleared ${cacheKeys.length} location cache entries`);
     } catch (error) {
       console.warn('Error clearing location cache:', error);
@@ -85,10 +91,9 @@ export function useLocationCache() {
 
   const getCacheStats = useCallback(() => {
     try {
-      const keys = Object.keys(localStorage);
-      const cacheKeys = keys.filter((key) => key.startsWith('geo_cache_'));
+      const cacheKeys = storageKeysSync().filter((key) => key.startsWith('geo_cache_'));
       const totalSize = cacheKeys.reduce((size, key) => {
-        return size + (localStorage.getItem(key)?.length || 0);
+        return size + (storageGetSync(key)?.length || 0);
       }, 0);
 
       return {

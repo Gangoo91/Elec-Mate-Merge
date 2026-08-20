@@ -1323,6 +1323,63 @@ serve(async (req) => {
                       });
                     }
                   } // end reward block (uncapped)
+                } else {
+                  // Referrer is billed by Apple or Google, so there is no Stripe
+                  // customer to credit. This branch did not exist: the whole
+                  // block was skipped and the referral vanished — no reward row,
+                  // no stats, no notification, not even a pending record. A
+                  // quarter of paying users are store-billed, and it is the
+                  // REFERRER's billing that decides this, not the referee's, so
+                  // any of them referring a mate on web earned nothing at all.
+                  // Mirrors the pending path in process-referral-reward.
+                  const referrerMonthly =
+                    (await liveMonthlyPence(stripe, referrerProfile?.stripe_customer_id)) ??
+                    tierMonthlyPence(referrerProfile?.subscription_tier);
+                  const refereeMonthly = priceId
+                    ? await priceMonthlyPence(stripe, priceId)
+                    : null;
+                  const creditPence = referralCreditPence(referrerMonthly, refereeMonthly);
+                  const successfulReferrals = (referrerProfile?.successful_referrals || 0) + 1;
+
+                  await supabase.from('referral_rewards').insert({
+                    user_id: profile.referred_by,
+                    referral_id: referralRow.id,
+                    reward_type: 'credit',
+                    amount_pence: creditPence,
+                    status: 'pending',
+                  });
+
+                  await supabase
+                    .from('profiles')
+                    .update({
+                      successful_referrals: successfulReferrals,
+                      total_referrals: successfulReferrals,
+                    })
+                    .eq('id', profile.referred_by);
+
+                  // Tell them it is owed. Silence reads as "the scheme is
+                  // broken" — the credit itself has to be settled out of band
+                  // because a Stripe balance credit cannot reach an App Store
+                  // or Play subscription.
+                  const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
+                  await supabase.from('user_notifications').insert({
+                    user_id: profile.referred_by,
+                    type: 'referral_reward',
+                    title: 'Referral Reward!',
+                    message: `Your mate just subscribed! Your ${creditFormatted} reward is on its way — we'll be in touch to set it up.`,
+                    metadata: {
+                      referral_id: referralRow.id,
+                      credit_pence: creditPence,
+                      referred_user_id: userId,
+                      payout: 'pending_store_billed',
+                    },
+                    is_read: false,
+                  });
+
+                  logger.info('Referral reward banked as pending (store-billed referrer)', {
+                    referrerId: profile.referred_by,
+                    creditPence,
+                  });
                 }
               }
             }

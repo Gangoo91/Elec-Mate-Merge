@@ -117,6 +117,28 @@ export function storageGetSync(key: string): string | null {
 }
 
 /**
+ * Every stored key, for callers that need to scan rather than look up.
+ *
+ * `Object.keys(localStorage)` is not safe to call directly: where storage is
+ * blocked — an Android WebView with site data disabled, some private modes —
+ * `localStorage` is null and it throws "Cannot convert undefined or null to
+ * object" (Sentry JAVASCRIPT-REACT-DH, on /guides/electrical-symbols-chart).
+ *
+ * On native this reads the primed cache, which also gives sync key enumeration
+ * that callers previously had no way to do.
+ */
+export function storageKeysSync(): string[] {
+  if (isNative) {
+    return Array.from(cache.keys());
+  }
+  try {
+    return Object.keys(localStorage);
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Returns `false` when the write did not land (web quota exceeded).
  *
  * This used to swallow every error silently. Callers that store large payloads
