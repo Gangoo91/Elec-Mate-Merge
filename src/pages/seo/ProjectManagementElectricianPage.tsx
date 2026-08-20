@@ -450,12 +450,6 @@ export default function ProjectManagementElectricianPage() {
             priceCurrency: 'GBP',
             description: '7-day free trial, then from £19.99/month',
           },
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '1000',
-            bestRating: '5',
-          },
         },
       ]}
       pagePath={PAGE_PATH}

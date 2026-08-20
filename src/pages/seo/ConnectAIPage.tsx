@@ -481,7 +481,7 @@ export default function ConnectAIPage() {
               <div>
                 <h3 className="font-bold text-lg">Try the full Elec-Mate platform</h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  16 certificate types, 70+ calculators, AM2 prep, business management. 7-day free
+                  19 certificate types, 70+ calculators, AM2 prep, business management. 7-day free
                   trial.
                 </p>
               </div>

@@ -25,7 +25,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'IPAF Training Course Online: MEWP Safety';
 const PAGE_DESCRIPTION =
-  'IPAF training online: MEWP categories, pre-use checks, safe operation, emergency procedures. Mock exams + AI-powered study tools.';
+  'IPAF training online: MEWP categories 3a, 3b and 1b, pre-use checks, safe operation and rescue procedures. Mock exams for the PAL card theory test.';
 
 const faqs = [
   {

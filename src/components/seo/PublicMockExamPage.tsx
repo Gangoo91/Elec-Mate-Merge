@@ -234,13 +234,14 @@ export function PublicMockExamPage({
     ],
   };
 
-  // The @graph goes through useSEO, whose direct DOM injection demonstrably
-  // renders. It previously went through a <Helmet><script> here, which never
-  // reached the DOM on any mock-exam page (verified against production
-  // 2026-08-20) — the Quiz/FAQPage/LearningResource markup was silently
-  // missing site-wide. No <link rel="canonical"> here either: the static
-  // prerender bakes one in and useSEO() maintains it, so a Helmet copy
-  // rendered a SECOND canonical (Bing flagged 20 pages).
+  // The @graph goes through useSEO, whose direct DOM injection renders in
+  // dev, in the prerender capture, and in the hydrated runtime DOM alike.
+  // It previously went through a <Helmet><script>, which only reached the
+  // prerendered static HTML — it was absent from the hydrated DOM (what
+  // Googlebot's JS rendering sees) and invisible in dev (see JsonLd.tsx).
+  // No <link rel="canonical"> here either: the static prerender bakes one in
+  // and useSEO() maintains it, so a Helmet copy rendered a SECOND canonical
+  // (Bing flagged 20 pages).
   useSEO({
     title,
     description,

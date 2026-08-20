@@ -16,7 +16,7 @@ with open('/tmp/seo-route-registry.txt') as f:
 # Static pages
 # Real routes only — /auth/*, /privacy-policy etc. were phantom URLs (no routes -> soft-404s), fixed 2026-06-10
 # /compare (hub) and the elec-mate-vs-* pages were removed 2026-07-31 (ELE-1440) — do not re-add
-static = ['/', '/guides', '/tools', '/training', '/connect-ai', '/privacy', '/terms', '/cookies']
+static = ['/', '/guides', '/tools', '/training', '/connect-ai', '/privacy', '/terms', '/cookies', '/reports/uk-electrician-report-2026']
 
 # Categorize
 pages = sorted(set(static))

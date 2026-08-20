@@ -373,10 +373,11 @@ const LandingPage = () => {
   return (
     <div className="bg-black text-white">
       {/* The old <Helmet> block here (title, description, OG, canonical, image
-          preload, three schemas) NEVER rendered — react-helmet is silently
-          non-functional in this app (see JsonLd.tsx, verified 2026-08-20).
-          The landing page's served meta has always come from index.html, so
-          the dead duplicates are gone. What was actually being lost — the
+          preload, three schemas) NEVER rendered — the landing route is not
+          prerendered and react-helmet emits nothing at runtime or in dev
+          (see JsonLd.tsx, verified against prod 2026-08-20: zero
+          data-react-helmet tags on "/", title/OG served from index.html).
+          The dead duplicates are gone. What was actually being lost — the
           FAQPage schema, the SoftwareApplication offers, and the hero LCP
           preload — is re-emitted below through channels that work. The thin
           Organization schema was dropped: index.html already bakes one into

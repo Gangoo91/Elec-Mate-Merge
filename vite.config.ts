@@ -200,6 +200,33 @@ export default defineConfig(({ mode }) => ({
       '@react-google-maps/api',
       '@elevenlabs/react',
       'html5-qrcode',
+
+      // `noDiscovery: true` above disables Vite's dependency scan, so anything
+      // imported but absent from this list is discovered at request time —
+      // which re-optimises and forces a FULL PAGE RELOAD, losing form state.
+      // These sixteen were imported and not listed, so the dev server appeared
+      // to die at random when it was really tied to which screen you opened:
+      // drag-and-drop pulled @dnd-kit, long lists pulled react-window, PDF
+      // export pulled html2pdf.js.
+      //
+      // Anything added to package.json and imported from src/ must be added
+      // here too, or it reintroduces the same reload.
+      '@dnd-kit/core',
+      '@dnd-kit/sortable',
+      '@dnd-kit/utilities',
+      'react-window',
+      'react-dropzone',
+      'html2pdf.js',
+      'pptxgenjs',
+      '@number-flow/react',
+      '@vercel/analytics',
+      '@capacitor/clipboard',
+      '@capacitor/geolocation',
+      '@capacitor/network',
+      '@capacitor/preferences',
+      '@capacitor-community/in-app-review',
+      '@capgo/capacitor-native-biometric',
+      '@revenuecat/purchases-capacitor',
     ],
   },
   resolve: {

@@ -1004,7 +1004,21 @@ serve(async (req) => {
       const invNotionalVat = invReverseCharge
         ? round2cis(invNetAfterDiscount * ((settings.vatRate || 20) / 100))
         : 0;
-      const invNetPayable = round2cis(total - invCisAmount);
+      /*
+       * ELE-1571 — grant on the INVOICE path.
+       *
+       * Kept identical to the quote path (qGrantAmount below) and to
+       * computeQuoteTotals. An invoice is the document that actually gets
+       * paid, so a grant showing on the quote and not on the invoice would
+       * bill the customer the grant amount a second time.
+       */
+      const invGrantLabel = String(settings.grantLabel || '').trim() || 'Grant';
+      const invAfterCis = round2cis(total - invCisAmount);
+      const invGrantAmount =
+        settings.grantEnabled && Number(settings.grantAmount) > 0
+          ? round2cis(Math.min(Number(settings.grantAmount), Math.max(0, invAfterCis)))
+          : 0;
+      const invNetPayable = round2cis(invAfterCis - invGrantAmount);
 
       // ELE-954 — "Deposit paid" summary. Resolved from (in priority):
       //   1. invoice settings.depositApplied (set on quote→invoice conversion)
@@ -1077,7 +1091,16 @@ serve(async (req) => {
       // must not be counted twice.
       const depositAmt = depositPaidSummary?.amount || 0;
       const totalPaidAmt = Number((freshQuote as Record<string, unknown> | null)?.total_paid || 0);
-      const balanceDue = Math.max(0, total - Math.max(depositAmt, totalPaidAmt));
+      /*
+       * ELE-1571 — the balance must come off what the CUSTOMER owes, not the
+       * value of the supply. With a £500 grant and a £150 deposit paid on a
+       * £1,000 job the customer owes £350; computing from `total` demanded
+       * £850 — the grant charged to them a second time.
+       */
+      const balanceDue = Math.max(
+        0,
+        total - invGrantAmount - Math.max(depositAmt, totalPaidAmt)
+      );
 
       // ELE-T-inv-extra — three extra lookups (parent quote number,
       // deposit invoice number, view tracking). All non-fatal — if any
@@ -1156,6 +1179,9 @@ serve(async (req) => {
           cisEnabled: invCisEnabled,
           cisRate: invCisRate,
           cisAmount: invCisAmount,
+          grantAmount: invGrantAmount,
+          grantLabel: invGrantLabel,
+          grantFormatted: invGrantAmount > 0 ? `−${gbp(invGrantAmount)}` : null,
           // ELE-1373 — UTR is auto-shown on the invoice only when CIS applies.
           // NI is never included.
           cisUtr: invCisEnabled && freshCompanyProfile?.utr ? String(freshCompanyProfile.utr) : '',
@@ -1206,6 +1232,9 @@ serve(async (req) => {
           cisEnabled: invCisEnabled,
           cisRate: invCisRate,
           cisAmount: invCisAmount,
+          grantAmount: invGrantAmount,
+          grantLabel: invGrantLabel,
+          grantFormatted: invGrantAmount > 0 ? `−${gbp(invGrantAmount)}` : null,
           cisAmountFormatted: gbp(invCisAmount),
           // ELE-1373 — UTR only when CIS applies; NI never included.
           cisUtr: invCisEnabled && freshCompanyProfile?.utr ? String(freshCompanyProfile.utr) : '',
@@ -1379,7 +1408,19 @@ serve(async (req) => {
       const qCisEnabled = !!quoteSettings.cisEnabled;
       const qCisRate = qCisEnabled ? Number(quoteSettings.cisRate) || 0 : 0;
       const qCisAmount = qCisEnabled ? round2cis(qLabourNet * (qCisRate / 100)) : 0;
-      const qNetPayable = round2cis(total - qCisAmount);
+      /*
+       * ELE-1571 — third-party grant, deducted from the VAT-INCLUSIVE total.
+       * Mirrors computeQuoteTotals: `total` and VAT stay on the full value of
+       * the supply (VAT is still due on it), and only the customer's share
+       * falls. Capped so a stale grant cannot produce a negative payable.
+       */
+      const qGrantLabel = String(quoteSettings.grantLabel || '').trim() || 'Grant';
+      const qAfterCis = round2cis(total - qCisAmount);
+      const qGrantAmount =
+        quoteSettings.grantEnabled && Number(quoteSettings.grantAmount) > 0
+          ? round2cis(Math.min(Number(quoteSettings.grantAmount), Math.max(0, qAfterCis)))
+          : 0;
+      const qNetPayable = round2cis(qAfterCis - qGrantAmount);
 
       // Calculate valid until date
       const validUntilDate =
@@ -1562,6 +1603,9 @@ serve(async (req) => {
           cisRate: qCisRate,
           cisAmount: qCisAmount,
           labourNet: qLabourNet,
+          grantAmount: qGrantAmount,
+          grantLabel: qGrantLabel,
+          grantFormatted: qGrantAmount > 0 ? `−${gbpQ(qGrantAmount)}` : null,
           netPayable: qNetPayable,
           // Formatted currency strings (locale — thousands separators)
           subtotalFormatted: gbpQ(itemsSubtotal),

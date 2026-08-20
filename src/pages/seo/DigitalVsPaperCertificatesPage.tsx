@@ -88,7 +88,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
     description:
-      'Complete guide to all 16 certificate types: EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, PAT, EV, and Solar PV.',
+      'Complete guide to all 19 certificate types: EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, PAT, EV, and Solar PV.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -566,7 +566,7 @@ const sections = [
           </div>
         </div>
         <p>
-          The result: 16 certificate types, all completed on your phone, all exported as
+          The result: 19 certificate types, all completed on your phone, all exported as
           professional PDFs, all delivered to the client instantly. No paper, no desk time, no
           delays.
         </p>

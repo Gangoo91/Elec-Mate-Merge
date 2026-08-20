@@ -777,7 +777,7 @@ export default function RingCircuitFaultFindingPage() {
   return (
     <GuideTemplate
       title="Ring Main R1+R2 Test & Fault Finding: (r1+r2)/4"
-      description="Healthy ring main: R1+R2 at every socket ≈ (r1+r2)/4, with r1 ≈ rn. Readings that climb or jump mean an open ring, bridged ring or borrowed neutral."
+      description="Ring circuit fault finding: healthy R1+R2 at every socket ≈ (r1+r2)/4. Readings that climb or jump mean an open ring, bridged ring or borrowed neutral."
       datePublished="2025-10-01"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

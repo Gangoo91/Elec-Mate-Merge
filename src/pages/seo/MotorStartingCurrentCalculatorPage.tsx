@@ -22,7 +22,7 @@ export default function MotorStartingCurrentCalculatorPage() {
   return (
     <ToolTemplate
       title="Motor Starting Current Calculator: DOL 6x FLC"
-      description="DOL starting draws about 6x full load current, star-delta 2–2.7x, soft starter 2–4x, VFD 1–1.5x. Enter motor kW and FLC for starting current and MCB type."
+      description="Motor starting current calculator: DOL draws about 6x FLC, star-delta 2–2.7x, soft starter 2–4x, VFD 1–1.5x. Enter motor kW and FLC for MCB type."
       datePublished="2026-02-01"
       dateModified="2026-06-10"
       breadcrumbs={[

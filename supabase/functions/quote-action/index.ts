@@ -138,11 +138,34 @@ const handler = async (req: Request): Promise<Response> => {
               ? profileDepositPct
               : 0;
 
-        if (depositPct > 0 && (quote.total || 0) > 0) {
-          const totalPennies = Math.round(Number(quote.total) * 100);
-          const depositPennies = Math.round((totalPennies * depositPct) / 100);
+        /*
+         * Kept in step with accept-quote-public, which computes the same
+         * deposit for the other acceptance route. The two used to diverge:
+         * this path honoured only the percentage, so the same quote accepted
+         * here versus there could ask for a different amount.
+         *
+         * ELE-1571 — a third-party grant reduces what the customer owes, so a
+         * percentage deposit is a share of THAT, not of the value of the
+         * supply. ELE-1576 — a named cash deposit beats any percentage.
+         */
+        const grantOnQuote =
+          quoteSettings.grantEnabled && Number(quoteSettings.grantAmount) > 0
+            ? Math.min(Number(quoteSettings.grantAmount), Number(quote.total) || 0)
+            : 0;
+        const customerPayable = Math.max(0, (Number(quote.total) || 0) - grantOnQuote);
+
+        const settingsDepositAmount = Number(quoteSettings.depositAmount);
+        const cappedDeposit = Math.min(settingsDepositAmount, customerPayable);
+        if (
+          Number.isFinite(settingsDepositAmount) &&
+          settingsDepositAmount > 0 &&
+          cappedDeposit > 0
+        ) {
           depositInfo.required = true;
-          depositInfo.amountPennies = depositPennies;
+          depositInfo.amountPennies = Math.round(cappedDeposit * 100);
+        } else if (depositPct > 0 && customerPayable > 0) {
+          depositInfo.required = true;
+          depositInfo.amountPennies = Math.round(customerPayable * 100 * (depositPct / 100));
         }
       } catch (depositErr) {
         console.error('Deposit lookup failed (non-fatal):', depositErr);

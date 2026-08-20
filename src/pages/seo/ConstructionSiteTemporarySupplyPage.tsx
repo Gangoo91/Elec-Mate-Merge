@@ -992,7 +992,7 @@ export default function ConstructionSiteTemporarySupplyPage() {
   return (
     <GuideTemplate
       title="Construction Site Temporary Supply: 110V Guide"
-      description="Complete guide to construction site temporary electrical supply in the UK. BS 7375, 110V CTE supply, site distribution boards, RCD protection."
+      description="Construction site temporary electrical supply: 110V CTE tool circuits (55V to earth), BS 7375 site distribution boards, 30mA RCDs and 3-month EICR cycle."
       datePublished="2025-11-12"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

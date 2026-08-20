@@ -789,7 +789,7 @@ export default function ElectricianToolListPage() {
     <GuideTemplate
       localArea="Tool List Uk"
       title="Electrician Tool List UK 2026: Essential Tools"
-      description="Complete UK electrician tool list for 2026. Hand tools, VDE insulated tools, test equipment, power tools, PPE, budget guide, and brand recommendations."
+      description="Electrical tools list for UK electricians 2026: hand tools, VDE, test instruments, power tools, PPE, budget tiers from £1,500 starter to £5,000+ pro."
       datePublished="2025-01-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -720,7 +720,7 @@ export default function BondingInBathroomPage() {
   return (
     <GuideTemplate
       title="Bathroom Supplementary Bonding: When to Omit It"
-      description="Omit it under Reg 701.415.2 only with main bonding in place, 30 mA RCDs on every circuit and verified disconnection — otherwise 4 mm² under Reg 544.2."
+      description="Supplementary bonding in bathrooms: omit under Reg 701.415.2 only with main bonding, 30 mA RCDs on every circuit and verified disconnection — else 4 mm²."
       datePublished="2025-05-20"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

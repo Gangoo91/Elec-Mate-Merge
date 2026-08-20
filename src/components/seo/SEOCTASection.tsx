@@ -30,7 +30,7 @@ interface SEOCTASectionProps {
  */
 export function SEOCTASection({
   heading = 'Ready to work smarter?',
-  subheading = `Join ${USER_COUNT_LABEL} saving hours every week with 16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses.`,
+  subheading = `Join ${USER_COUNT_LABEL} saving hours every week with 19 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses.`,
 }: SEOCTASectionProps) {
   const t = TESTIMONIALS[0];
 

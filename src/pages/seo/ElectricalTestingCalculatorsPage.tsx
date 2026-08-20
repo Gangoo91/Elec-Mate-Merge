@@ -60,12 +60,6 @@ const softwareApplicationSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '312',
-    bestRating: '5',
-  },
 };
 
 const faqData = [

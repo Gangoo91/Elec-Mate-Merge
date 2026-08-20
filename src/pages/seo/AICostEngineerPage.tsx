@@ -117,12 +117,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
 };
 
 const faqSchema = {
@@ -392,7 +386,7 @@ export default function AICostEngineerPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Trained specifically for UK electrical work. Quote domestic and commercial jobs in
-            minutes instead of hours. Part of 70+ calculators, 8 AI agents, 16 certificate types,
+            minutes instead of hours. Part of 70+ calculators, 8 AI agents, 19 certificate types,
             and 46+ training
             courses.
           </p>

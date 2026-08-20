@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Cable Size Calculator UK: T&E + SWA (BS 7671)';
 const PAGE_DESCRIPTION =
-  'Enter load, length and installation method — get the cable size to BS 7671 with volt drop and Ca/Cg/Ci correction factors. Twin & earth, SWA, singles.';
+  'Cable size calculator to BS 7671: enter load, length and installation method for cable size, volt drop and Ca/Cg/Ci factors. Twin & earth, SWA, singles.';
 
 const faqs = [
   {

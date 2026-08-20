@@ -761,6 +761,12 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
               <div>
                 <p className="text-[13px] font-medium text-white">
                   <span className="font-semibold text-elec-yellow">#{index + 1}</span>{' '}
+                  {/* Reference first — testing a run of fittings means matching
+                      each row to the sticker in front of you, and the code is
+                      the only unique thing. Several can share a location. */}
+                  {lum.reference && (
+                    <span className="font-mono text-[12px] text-white">{lum.reference} · </span>
+                  )}
                   {lum.location || 'Unknown location'}
                 </p>
                 <p className="text-xs text-white/80">
@@ -1034,7 +1040,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         { value: 'general', label: 'General (not specific)' },
                         ...(formData.luminaires || []).map((lum: Luminaire, index: number) => ({
                           value: lum.id,
-                          label: `#${index + 1} - ${lum.location || 'Unknown'}`,
+                          label: `#${index + 1} - ${lum.reference ? `${lum.reference} · ` : ''}${lum.location || 'Unknown'}`,
                         })),
                       ]}
                       placeholder="General"

@@ -915,7 +915,7 @@ export default function ConsumerUnitRegulationsPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. 70+ calculators, 8 AI agents, 16 certificate types,
+            Purpose-built for UK electricians. 70+ calculators, 8 AI agents, 19 certificate types,
             and 46+ training courses — all built to BS 7671:2018+A4:2026.
           </p>
           <SEOFeatureGrid features={features} columns={3} />

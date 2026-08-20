@@ -711,7 +711,7 @@ export default function OutbuildingElectricalSupplyPage() {
   return (
     <GuideTemplate
       title="Outbuilding Supply: 2.5mm SWA 16A, 6mm 32A"
-      description="SWA cable size for a shed, garage or summerhouse: 2.5mm for 16A, 6mm for 32A. Buried or overhead SWA, own consumer unit, 30mA RCD, TN or TT earthing."
+      description="Electric supply to an outbuilding, shed or garage: SWA — 2.5mm for 16A, 6mm for 32A — buried or overhead, own consumer unit, 30mA RCD, TN or TT earthing."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

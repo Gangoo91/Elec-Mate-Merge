@@ -18,6 +18,21 @@ export interface CertificatePhoto {
 
 export interface Luminaire {
   id: string;
+  /**
+   * The reference printed on the fitting's own label, e.g. "ABR-ETSPOT-11".
+   *
+   * Requested by an electrician doing final testing: stickers go on every
+   * luminaire and light box, and the client quotes that reference when
+   * reporting a fault. Without it on the certificate the reference is
+   * meaningless to whoever picks up the remedial. It is also what ties a
+   * fitting to a building layout drawing, and fire auditors ask for it.
+   *
+   * Free text, not generated — it has to match whatever is physically on the
+   * label, including a client's existing asset-numbering scheme. Deliberately
+   * NOT copied when a luminaire is duplicated: every fitting's reference is
+   * unique by definition.
+   */
+  reference?: string;
   location: string;
   luminaireType: string;
   manufacturer: string;
@@ -266,7 +281,10 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
   wiringSystem: '',
   automaticTestSystem: false,
   atsDetails: '',
-  designStandard: 'BS 5266-1:2016',
+  // BS 5266-1:2025 came into force 31 Oct 2025 and withdrew the 2016 edition.
+  // This default PRINTS on the certificate, so a stale year here puts a
+  // withdrawn standard on every emergency lighting cert we issue.
+  designStandard: 'BS 5266-1:2025',
 
   overallResult: '',
 

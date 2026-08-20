@@ -8,6 +8,13 @@ export default function PATTestingGuideUKPage() {
     <GuideTemplate
       title="PAT Testing Guide UK 2026: Requirements & Law"
       description="Complete guide to PAT testing in the UK. Covers legal requirements, Electricity at Work Regulations 1989, IET Code of Practice 5th Edition."
+      answerBox={{
+        question: 'Is PAT testing a legal requirement in the UK?',
+        answer:
+          'No specific UK law requires PAT testing — but the Electricity at Work Regulations 1989 require employers to keep electrical equipment maintained in a safe condition, and PAT testing is the recognised way to demonstrate that compliance.',
+        detail:
+          'The IET Code of Practice for In-Service Inspection and Testing (5th Edition) is the definitive reference, and testing frequency depends on the environment — a construction site drill every 3 months, while an office desk lamp may only need a visual check.',
+      }}
       datePublished="2026-01-25"
       dateModified="2026-05-18"
       breadcrumbs={[

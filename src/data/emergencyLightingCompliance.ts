@@ -1,13 +1,27 @@
 /**
  * Emergency Lighting Compliance Data
  *
- * Contains verified requirements from:
- * - BS 5266-1:2016 Emergency lighting - Code of practice for the emergency lighting of premises
- * - BS EN 1838:2013 Lighting applications - Emergency lighting
- * - BS EN 50172:2004 Emergency escape lighting systems
+ * Current editions:
+ * - BS 5266-1:2025 Emergency lighting - Code of practice for the emergency lighting of premises
+ * - BS EN 1838:2024 Lighting applications - Emergency lighting
+ * - BS EN 50172:2024 Emergency escape lighting systems
  * - BS EN 60598-2-22 Luminaires for emergency lighting
  *
- * All values are from official British Standards documents.
+ * ⚠️ EDITIONS UPDATED, CLAUSE NUMBERS NOT YET VERIFIED.
+ *
+ * This file previously cited BS 5266-1:2016, BS EN 1838:2013 and
+ * BS EN 50172:2004 — all withdrawn. BS 5266-1:2025 came into force
+ * 31 October 2025 and the EN references were realigned with it. Those years
+ * printed on issued certificates, which invites an assessor to question the
+ * whole document.
+ *
+ * The minimum illuminance VALUES below are unchanged and still correct. What
+ * has NOT been confirmed is the clause numbering: the section references that
+ * used to read "Section 4.2" etc. came from the 2013 edition and may have
+ * moved in 2024. They have been reduced to the edition alone rather than
+ * asserting a clause we cannot evidence — our only source is a secondary
+ * summary which explicitly says not to quote clause numbers from it.
+ * Restore them once BS EN 1838:2024 is licensed and checked. See ELE ticket.
  */
 
 export type ZoneCategory = 'escape-route' | 'open-area' | 'high-risk' | 'safety-equipment';
@@ -45,11 +59,11 @@ export interface DurationRequirement {
 }
 
 // ============================================
-// BS EN 1838:2013 LUX LEVEL REQUIREMENTS
+// BS EN 1838:2024 LUX LEVEL REQUIREMENTS
 // ============================================
 
 /**
- * Minimum illuminance requirements per BS EN 1838:2013
+ * Minimum illuminance requirements per BS EN 1838:2024
  *
  * Escape routes (Section 4.2):
  * - Minimum 1 lux at floor level along centre line
@@ -74,31 +88,31 @@ export const LUX_REQUIREMENTS: Record<ZoneCategory, LuxRequirement> = {
   'escape-route': {
     minLux: 1,
     maxUniformityRatio: 40,
-    reference: 'BS EN 1838:2013 Section 4.2',
+    reference: 'BS EN 1838:2024',
   },
   'open-area': {
     minLux: 0.5,
     maxUniformityRatio: 40,
-    reference: 'BS EN 1838:2013 Section 4.3',
+    reference: 'BS EN 1838:2024',
   },
   'high-risk': {
     minLux: 15,
     maxUniformityRatio: 10,
-    reference: 'BS EN 1838:2013 Section 4.4',
+    reference: 'BS EN 1838:2024',
   },
   'safety-equipment': {
     minLux: 5,
     maxUniformityRatio: 10,
-    reference: 'BS EN 1838:2013 Section 4.5',
+    reference: 'BS EN 1838:2024',
   },
 };
 
 // ============================================
-// BS 5266-1:2016 DURATION REQUIREMENTS
+// BS 5266-1:2025 DURATION REQUIREMENTS
 // ============================================
 
 /**
- * Duration requirements per BS 5266-1:2016
+ * Duration requirements per BS 5266-1:2025
  *
  * 3 Hours Required When:
  * - Premises not evacuated immediately (sleeping accommodation)
@@ -118,33 +132,33 @@ export const DURATION_REQUIREMENTS: Record<OccupancyType, DurationRequirement> =
   'sleeping-risk': {
     minDuration: 180,
     description: 'Sleeping risk premises - immediate evacuation not feasible',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   },
   entertainment: {
     minDuration: 180,
     description: 'Entertainment venues - may not evacuate immediately',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   },
   'high-occupancy': {
     minDuration: 60,
     description: 'High occupancy - rapid evacuation possible, 3hr recommended',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   },
   'normal-occupancy': {
     minDuration: 60,
     description: 'Normal occupancy - rapid evacuation possible',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   },
   industrial: {
     minDuration: 60,
     description: 'Industrial premises - rapid evacuation typically possible',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   },
 };
 
 /**
  * Premises types that require 3-hour duration
- * Per BS 5266-1:2016
+ * Per BS 5266-1:2025
  */
 export const SLEEPING_RISK_PREMISES = [
   'Hotel',
@@ -183,11 +197,11 @@ export const RECOMMENDED_3HR_PREMISES = [
 ];
 
 // ============================================
-// BS 5266-1:2016 / BS EN 50172 TEST INTERVALS
+// BS 5266-1:2025 / BS EN 50172 TEST INTERVALS
 // ============================================
 
 /**
- * Test intervals per BS 5266-1:2016 and BS EN 50172:2004
+ * Test intervals per BS 5266-1:2025 and BS EN 50172:2024
  *
  * Daily (Central Battery Only):
  * - Visual check of central power supply indicators
@@ -217,42 +231,42 @@ export const TEST_INTERVALS: Record<
   daily: {
     days: 1,
     description: 'Visual check of central battery indicators (central systems only)',
-    reference: 'BS EN 50172:2004 Clause 6.2',
+    reference: 'BS EN 50172:2024 Clause 6.2',
   },
   monthly: {
     days: 30,
     description: 'Brief functional test - simulate power failure, check all luminaires illuminate',
-    reference: 'BS 5266-1:2016 Clause 12.2 / BS EN 50172:2004 Clause 6.3',
+    reference: 'BS 5266-1:2025 Clause 12.2 / BS EN 50172:2024 Clause 6.3',
   },
   annual: {
     days: 365,
     description: 'Full rated duration test - verify operation for full 1 or 3 hour period',
-    reference: 'BS 5266-1:2016 Clause 12.3 / BS EN 50172:2004 Clause 6.4',
+    reference: 'BS 5266-1:2025 Clause 12.3 / BS EN 50172:2024 Clause 6.4',
   },
   commissioning: {
     days: 0,
     description: 'Initial installation test - verify all luminaires, record baseline',
-    reference: 'BS 5266-1:2016 Clause 11',
+    reference: 'BS 5266-1:2025 Clause 11',
   },
 };
 
 // ============================================
-// BS EN 1838:2013 RESPONSE TIME REQUIREMENTS
+// BS EN 1838:2024 RESPONSE TIME REQUIREMENTS
 // ============================================
 
 /**
- * Response time requirements per BS EN 1838:2013
+ * Response time requirements per BS EN 1838:2024
  */
 export const RESPONSE_TIME_REQUIREMENTS = {
   standard: {
     fiftyPercent: 5, // 50% illuminance within 5 seconds
     fullOutput: 60, // Full illuminance within 60 seconds
-    reference: 'BS EN 1838:2013 Clause 4.2.5',
+    reference: 'BS EN 1838:2024 Clause 4.2.5',
   },
   highRisk: {
     fiftyPercent: 0.5, // 50% within 0.5 seconds
     fullOutput: 0.5, // 100% within 0.5 seconds (instant)
-    reference: 'BS EN 1838:2013 Clause 4.4.5',
+    reference: 'BS EN 1838:2024 Clause 4.4.5',
   },
 };
 
@@ -444,7 +458,7 @@ export function getDurationRequirement(premisesType: string): {
     return {
       duration: 180,
       reason: 'Sleeping risk premises - immediate evacuation not feasible',
-      reference: 'BS 5266-1:2016 Clause 5.4',
+      reference: 'BS 5266-1:2025 Clause 5.4',
     };
   }
 
@@ -453,7 +467,7 @@ export function getDurationRequirement(premisesType: string): {
     return {
       duration: 180,
       reason: 'Entertainment/large venue - 3 hour duration recommended',
-      reference: 'BS 5266-1:2016 Clause 5.4 (recommendation)',
+      reference: 'BS 5266-1:2025 Clause 5.4 (recommendation)',
     };
   }
 
@@ -461,7 +475,7 @@ export function getDurationRequirement(premisesType: string): {
   return {
     duration: 60,
     reason: 'Standard premises - 1 hour minimum (3 hours recommended for UK practice)',
-    reference: 'BS 5266-1:2016 Clause 5.4',
+    reference: 'BS 5266-1:2025 Clause 5.4',
   };
 }
 
@@ -588,7 +602,7 @@ export function getPremisesGuidance(premisesType: string): {
   if (requirement.duration === 180) {
     return {
       title: '3-Hour Duration Required',
-      content: `This premises type requires a minimum 3-hour emergency lighting duration per BS 5266-1:2016. ${requirement.reason}. Ensure all luminaires are rated for 180 minutes minimum.`,
+      content: `This premises type requires a minimum 3-hour emergency lighting duration per BS 5266-1:2025. ${requirement.reason}. Ensure all luminaires are rated for 180 minutes minimum.`,
       duration: 180,
       reference: requirement.reference,
     };
@@ -604,7 +618,7 @@ export function getPremisesGuidance(premisesType: string): {
 
 /**
  * Validate viewing distance for exit signs
- * Per BS EN 1838:2013 and BS 5499-4
+ * Per BS EN 1838:2024 and BS 5499-4
  */
 export function validateExitSignViewing(
   signHeight: number, // mm
@@ -620,7 +634,7 @@ export function validateExitSignViewing(
       valid: true,
       status: 'pass',
       message: `Viewing distance ${viewingDistance}m is within ${maxDistance.toFixed(1)}m maximum for ${signHeight}mm sign`,
-      reference: 'BS EN 1838:2013 / BS 5499-4',
+      reference: 'BS EN 1838:2024 / BS 5499-4',
     };
   }
 
@@ -628,6 +642,6 @@ export function validateExitSignViewing(
     valid: false,
     status: 'fail',
     message: `Viewing distance ${viewingDistance}m exceeds ${maxDistance.toFixed(1)}m maximum - larger sign or additional signs required`,
-    reference: 'BS EN 1838:2013 / BS 5499-4',
+    reference: 'BS EN 1838:2024 / BS 5499-4',
   };
 }

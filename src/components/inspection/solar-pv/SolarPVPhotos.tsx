@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select';
 import { CertificatePhoto, PVArray, Inverter } from '@/types/solar-pv';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -64,6 +65,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   onPhotosChange,
   certificateId,
 }) => {
+  const { session } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CertificatePhoto['category']>('array');
   const [selectedLinkedId, setSelectedLinkedId] = useState<string>('');
@@ -125,10 +127,16 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   const uploadPhoto = async (file: File) => {
     setIsUploading(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      // Same fix as EmergencyLightingPhotos: `supabase.auth.getUser()` is a
+      // NETWORK call and returns null on a weak site connection, so a
+      // signed-in electrician was told "User not authenticated" and could not
+      // attach a photo. The context session is local and already validated.
+      const user = session?.user;
       if (!user) throw new Error('User not authenticated');
+
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        throw new Error('No internet connection — photos will upload once you are back online.');
+      }
 
       // Compress the image
       const compressedBlob = await compressImage(file);

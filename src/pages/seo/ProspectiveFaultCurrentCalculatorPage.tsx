@@ -576,7 +576,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               your phone or tablet.
             </p>
             <p>
-              Combined with 16 certificate types, 8 Elec-AI agents, 12 AI tools, 46+ training
+              Combined with 19 certificate types, 8 Elec-AI agents, 12 AI tools, 46+ training
               courses, and integration with Xero and QuickBooks, Elec-Mate is the complete platform
               for UK electricians.
             </p>
@@ -720,7 +720,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               measured values, get the answer, move on.
             </p>
             <p>
-              The platform also includes 16 certificate types (EICR, EIC, Minor Works, emergency
+              The platform also includes 19 certificate types (EICR, EIC, Minor Works, emergency
               lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI
               tools, and 46+ training courses. Xero and QuickBooks integration means you can manage
               your jobs, certificates, and invoicing all from one app.

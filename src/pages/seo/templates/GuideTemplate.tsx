@@ -151,7 +151,7 @@ function getMidCta(badge: string) {
   return {
     title: 'Try Elec-Mate free for 7 days',
     description:
-      '16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £6.99/mo.',
+      '19 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £6.99/mo.',
     ctaText: 'Start free trial',
   };
 }

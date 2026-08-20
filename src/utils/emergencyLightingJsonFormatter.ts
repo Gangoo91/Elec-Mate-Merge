@@ -71,6 +71,12 @@ export const formatEmergencyLightingJson = (
       photos.find((p) => p.category === 'luminaire' && p.linkedItemId === lum.id)?.url || '';
     return luminaires.map((lum: Luminaire, index: number) => ({
       number: index + 1,
+      // The reference on the fitting's own label (e.g. ABR-ETSPOT-11). This is
+      // what a client quotes when reporting a fault and what ties the fitting
+      // to a layout drawing, so it belongs on the certificate rather than only
+      // in the app. The PDFMonkey template carries a matching "Ref" column
+      // (added 2026-08-20, verified against a real render).
+      reference: lum.reference || '',
       location: lum.location || '',
       make: lum.manufacturer || '',
       model: lum.model || '',

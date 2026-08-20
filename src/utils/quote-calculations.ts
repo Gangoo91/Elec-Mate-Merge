@@ -45,6 +45,9 @@ export interface QuoteTotals {
   labourNet: number;
   cisRate: number;
   cisAmount: number;
+  /** ELE-1571 — third-party grant taken off the VAT-INCLUSIVE total. */
+  grantAmount: number;
+  grantLabel: string;
   netPayable: number;
   categories: CategoryBreakdown[];
 }
@@ -225,8 +228,32 @@ export function computeQuoteTotals(
   const labourNet = subtotal > 0 ? round2(netAfterDiscount * (labourFinal / subtotal)) : 0;
   const cisRate = settings?.cisEnabled ? settings?.cisRate || 0 : 0;
   const cisAmount = settings?.cisEnabled ? round2(labourNet * (cisRate / 100)) : 0;
-  // What the customer actually pays once CIS is withheld.
-  const netPayable = round2(total - cisAmount);
+
+  /*
+   * ELE-1571 — third-party grant (OZEV EV chargepoint grant and similar).
+   *
+   * Deliberately NOT the existing discount, which comes off the ex-VAT net and
+   * has VAT recalculated on the reduced figure. A grant is not a price
+   * reduction: it is consideration paid by a third party, so VAT remains due
+   * on the FULL value of the supply and only the customer's share falls.
+   * Running it through the discount would under-declare VAT to HMRC.
+   *
+   * So it behaves exactly like CIS — a deduction from the gross total, after
+   * VAT, leaving `total` and `vatAmount` untouched:
+   *
+   *   £1,000 inc VAT − £500 grant = £500 for the customer to pay,
+   *   with VAT still declared on the full £1,000.
+   *
+   * Capped at what is left after CIS so the payable can never go negative —
+   * a stale grant on a quote later reduced would otherwise show a credit.
+   */
+  const grantLabel = (settings?.grantLabel || '').trim() || 'Grant';
+  const rawGrant = settings?.grantEnabled ? Number(settings?.grantAmount) || 0 : 0;
+  const afterCis = round2(total - cisAmount);
+  const grantAmount = rawGrant > 0 ? round2(Math.min(rawGrant, Math.max(0, afterCis))) : 0;
+
+  // What the customer actually pays once CIS is withheld and any grant applied.
+  const netPayable = round2(afterCis - grantAmount);
 
   return {
     itemAdjustedSubtotal,
@@ -243,6 +270,8 @@ export function computeQuoteTotals(
     labourNet,
     cisRate,
     cisAmount,
+    grantAmount,
+    grantLabel,
     netPayable,
     categories,
   };

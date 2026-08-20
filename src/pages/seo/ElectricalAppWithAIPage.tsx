@@ -1,4 +1,5 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -208,6 +209,11 @@ const sections = [
     heading: 'What Makes an AI-Powered Electrical App Different',
     content: (
       <>
+        <SEOAnswerBox
+          question="What can an AI electrician app actually do?"
+          answer="Answer regulation questions with BS 7671 references, design circuits, price jobs from live trade data, scan a consumer unit board with the camera, and fill test results by voice — then produce the certificate and the invoice from the same app."
+          detail="Elec-Mate ships 8 AI specialists and 12 AI tools alongside 19 certificate types and 70+ calculators, working offline on site, from £6.99/month after a 7-day free trial."
+        />
         <p>
           There are several electrical apps on the UK market. Most of them digitise paperwork — they
           replace paper certificates with digital forms on your phone. That is useful, but it is not
@@ -605,7 +611,7 @@ export default function ElectricalAppWithAIPage() {
       faqHeading="Frequently Asked Questions About Elec-Mate's AI Features"
       relatedPages={relatedPages}
       ctaHeading="Try Every AI Feature Free for 7 Days"
-      ctaSubheading="8 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No charge until day 8."
+      ctaSubheading="8 AI agents, 12 AI tools, 19 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No charge until day 8."
     />
   );
 }

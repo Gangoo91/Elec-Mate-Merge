@@ -694,9 +694,15 @@ const relatedPages = [
   },
 ];
 
+// Carries reviewedBy on a VALID Article — a bare {@type: Article, reviewedBy}
+// fragment fails Google's required-field checks (headline, datePublished) and
+// was the only Article error in the site-wide schema validation.
 const reviewerSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
+  headline: 'NAPIT Registration Guide: How to Join & Costs',
+  datePublished: '2024-07-01',
+  dateModified: '2026-06-10',
   reviewedBy: {
     '@type': 'Person',
     name: 'Andrew Moore',

@@ -900,7 +900,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Master Part 7 with Elec-Mate"
-          description="AI regulations lookup, 50+ training courses, and professional calculators — all built for UK electricians."
+          description="AI regulations lookup, 46+ training courses, and professional calculators — all built for UK electricians."
           icon={BookOpen}
         />
       </>

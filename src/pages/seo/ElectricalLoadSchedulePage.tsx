@@ -45,7 +45,7 @@ export default function ElectricalLoadSchedulePage() {
           Circuit-by-Circuit Demand Analysis
         </>
       }
-      heroSubtitle="Build a complete load schedule for any installation. List every circuit, apply IET diversity factors, and calculate the total maximum demand automatically. Essential for supply assessments, EIC certificates, and design documentation. Part of Elec-Mate's 50+ electrical calculators."
+      heroSubtitle="Build a complete load schedule for any installation. List every circuit, apply IET diversity factors, and calculate the total maximum demand automatically. Essential for supply assessments, EIC certificates, and design documentation. Part of Elec-Mate's 70+ electrical calculators."
       heroFeaturePills={[
         { icon: ClipboardList, label: 'Circuit Listing' },
         { icon: BarChart3, label: 'Diversity Applied' },

@@ -42,7 +42,7 @@ const keyTakeaways = [
   'There are two main registration types: Domestic Installer (for domestic-only electricians, lower cost) and Approved Contractor (for all electrical work including commercial, higher credibility).',
   'Registration requires appropriate qualifications (18th Edition, 2391 or equivalent), relevant experience, adequate premises, calibrated test instruments, and public liability insurance.',
   'Annual registration fees range from approximately 400 to 650 pounds or more depending on the scheme type, with additional costs for the initial assessment visit.',
-  'Elec-Mate certificates meet NICEIC scheme requirements with professional PDF output, BS 7671 compliance, and all 16 certificate types ready for upload to the NICEIC portal.',
+  'Elec-Mate certificates meet NICEIC scheme requirements with professional PDF output, BS 7671 compliance, and all 19 certificate types ready for upload to the NICEIC portal.',
 ];
 
 const faqs = [
@@ -586,7 +586,7 @@ export default function NICEICRegistrationPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Meet NICEIC Requirements"
-      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 16 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 19 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
     />
   );
 }

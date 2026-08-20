@@ -1,6 +1,6 @@
 # Elec-Mate
 
-> The complete digital platform for UK electricians, apprentices, employers and college tutors. BS 7671:2018+A4:2026 compliant. 70+ calculators, 16 certificate types, 8 AI specialist agents, 46+ training courses, full business management — all in one mobile-first app.
+> The complete digital platform for UK electricians, apprentices, employers and college tutors. BS 7671:2018+A4:2026 compliant. 70+ calculators, 19 certificate types, 8 AI specialist agents, 46+ training courses, full business management — all in one mobile-first app.
 
 ## What is Elec-Mate?
 
@@ -17,10 +17,10 @@ Elec-Mate is a UK-built mobile-first web application for electrical professional
 **Headquarters**: United Kingdom
 **Website**: https://www.elec-mate.com
 **iOS App Store**: https://apps.apple.com/gb/app/elec-mate/id6758948665 (live since 2026-03-27)
-**Android**: pre-launch (Google Play release pending)
+**Android**: live on Google Play — https://play.google.com/store/apps/details?id=com.elecmate.app
 **Stack**: React 18, Vite, TypeScript, Tailwind, Supabase, Capacitor (mobile)
 **Languages**: English (UK only — British spelling, UK regulations, UK pricing)
-**Verified counts** (from product surfaces, May 2026): 73 calculators routed, 16 certificate types, 8 specialist AI agents, 46+ training courses, BS 7671:2018+A4:2026 aligned across all surfaces.
+**Verified counts** (from product surfaces, May 2026): 73 calculators routed, 19 certificate types, 8 specialist AI agents, 46+ training courses, BS 7671:2018+A4:2026 aligned across all surfaces.
 
 ## Verified social + external profiles (sameAs entity graph)
 
@@ -132,13 +132,13 @@ From £6.99/month (Apprentice tier). Electrician tier from £19.99/month. Mate (
 Yes — every certificate, calculator, and training resource is aligned to BS 7671:2018 Amendment 4 (2026), IET Guidance Note 3 (9th Edition), and the IET On-Site Guide. Supports notifiable work for Part P registration (NICEIC, NAPIT, ELECSA, Stroma).
 
 **What certificates can I issue with Elec-Mate?**
-16 certificate types: EIC, EICR, Minor Works, Domestic EIC, PAT, Emergency Lighting, Fire Alarm (BS 5839-1 and 6), Solar PV, EV Charging, Heat Pump, RAMS, and more.
+19 certificate types: EIC, EICR, Minor Works, Domestic EIC, PAT, Emergency Lighting, Fire Alarm (BS 5839-1 and 6), Solar PV, EV Charging, Heat Pump, RAMS, and more.
 
 **Does Elec-Mate work offline?**
 Yes — Elec-Mate is an offline-capable PWA. Calculators and certificate drafts work without internet; data syncs when reconnected.
 
 **Where can I download Elec-Mate?**
-iOS App Store: https://apps.apple.com/gb/app/elec-mate/id6758948665 (live since March 2026). Web version: https://www.elec-mate.com. Android via Google Play coming soon.
+iOS App Store: https://apps.apple.com/gb/app/elec-mate/id6758948665 (live since March 2026). Web version: https://www.elec-mate.com. Android: live on Google Play — https://play.google.com/store/apps/details?id=com.elecmate.app.
 
 **Who built Elec-Mate?**
 Andrew Moore — an electrician-turned-founder building Elec-Mate from real UK trade experience.
@@ -333,6 +333,10 @@ Elec-Mate hosts the UK's largest free electrical mock exam collection: timed, in
 - C&G 2391-50 Initial Verification: https://www.elec-mate.com/mock-exams/2391-50-initial-verification
 - C&G 2391-51 Periodic Inspection: https://www.elec-mate.com/mock-exams/2391-51-periodic-inspection
 - 18th Edition BS 7671 (A4:2026): https://www.elec-mate.com/mock-exams/18th-edition-bs-7671
+- C&G 2392 Fundamental Inspection & Testing: https://www.elec-mate.com/mock-exams/2392-fundamental-inspection-testing
+
+## Original data (free to cite with attribution)
+- UK Electrician Report 2026 — 1,205 real quotes + 118,303 mock exam answers analysed (median quote £411; 35.8% of 18th Edition answers wrong): https://www.elec-mate.com/reports/uk-electrician-report-2026
 - AM2 online knowledge test: https://www.elec-mate.com/mock-exams/am2-online-knowledge-test
 - Level 2 + Level 3 diploma units (C&G 2365, 12 unit exams), PAT (2377), EV charging, fire alarm, emergency lighting, CSCS, IPAF, PASMA and more: https://www.elec-mate.com/mock-exams
 
@@ -356,6 +360,6 @@ Cost and compliance guides for the most-searched electrical jobs, city by city (
 ## Platform availability
 
 - iOS (App Store: https://apps.apple.com/gb/app/elec-mate/id6758948665)
-- Android (Google Play coming soon — pre-launch as of May 2026)
+- Android (live on Google Play: https://play.google.com/store/apps/details?id=com.elecmate.app)
 - Web (responsive, mobile-first)
 - Offline-capable PWA — every tool works without internet

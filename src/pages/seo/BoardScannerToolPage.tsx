@@ -129,7 +129,7 @@ export default function BoardScannerToolPage() {
               <p>
                 This technology powers the same AI capabilities used across{' '}
                 <SEOInternalLink href="/tools/digital-certificates-app">
-                  all 16 certificate types
+                  all 19 certificate types
                 </SEOInternalLink>{' '}
                 in Elec-Mate, giving you a seamless workflow from board scan to completed
                 certificate.
@@ -427,7 +427,7 @@ export default function BoardScannerToolPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 16 certificate types with AI features, digital signatures, and professional PDF output.',
+            'All 19 certificate types with AI features, digital signatures, and professional PDF output.',
           icon: FileCheck2,
           category: 'Certificates',
         },
@@ -473,7 +473,7 @@ export default function BoardScannerToolPage() {
         },
       ]}
       ctaHeading="Scan your first board free"
-      ctaSubheading="7-day free trial includes unlimited board scans, all 16 certificate types, 70+ calculators, and every AI tool. No charge until day 8."
+      ctaSubheading="7-day free trial includes unlimited board scans, all 19 certificate types, 70+ calculators, and every AI tool. No charge until day 8."
       toolPath="/tools/board-scanner"
     />
   );

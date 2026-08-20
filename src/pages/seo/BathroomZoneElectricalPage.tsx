@@ -788,7 +788,7 @@ export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
       title="Bathroom Zones BS 7671: Zone 1 2.25 m, IPX4"
-      description="Zone 0 inside the bath: IPX7, SELV. Zone 1 to 2.25 m or highest shower head: IPX4. Zone 2 a further 0.60 m: IPX4. 30 mA RCD required on bathroom circuits."
+      description="Bathroom electrical zones under BS 7671: zone 0 IPX7 and SELV, zone 1 to 2.25m IPX4, zone 2 a further 0.6m, and 30mA RCD required on all bathroom circuits."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

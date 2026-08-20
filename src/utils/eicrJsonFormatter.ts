@@ -9,6 +9,7 @@ import { normalisePdfDates } from '@/utils/certDate';
 import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards } from '@/types/distributionBoard';
 import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
+import { normaliseRcdRating } from '@/utils/rcdRating';
 
 const toSnakeCase = (str: string): string =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
@@ -399,7 +400,15 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       protective_device_location: na(result.protectiveDeviceLocation),
       rcd_bs_standard: na(result.rcdBsStandard),
       rcd_type: na(result.rcdType),
-      rcd_rating: na(result.rcdRating),
+      // ELE-1579 — normalise on the way OUT, not just on the way in.
+      //
+      // RCD IΔn is stored canonically as '30mA', but historic mobile-filled
+      // certs stored a bare '30'. The desktop cell already runs those through
+      // normaliseRcdRating on READ, so the screen always says "30mA" — while
+      // the PDF printed whatever was stored. Same circuit, two answers, and
+      // the PDF is the legal one. 1,397 of 4,150 stored circuits carrying an
+      // RCD rating hold the bare form, so this is not a rare edge.
+      rcd_rating: na(normaliseRcdRating(result.rcdRating)),
       rcd_rating_a: na(result.rcdRatingA),
       ring_r1: na(result.ringR1),
       ring_rn: na(result.ringRn),
@@ -539,7 +548,15 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       protective_device_location: na(result.protectiveDeviceLocation),
       rcd_bs_standard: na(result.rcdBsStandard),
       rcd_type: na(result.rcdType),
-      rcd_rating: na(result.rcdRating),
+      // ELE-1579 — normalise on the way OUT, not just on the way in.
+      //
+      // RCD IΔn is stored canonically as '30mA', but historic mobile-filled
+      // certs stored a bare '30'. The desktop cell already runs those through
+      // normaliseRcdRating on READ, so the screen always says "30mA" — while
+      // the PDF printed whatever was stored. Same circuit, two answers, and
+      // the PDF is the legal one. 1,397 of 4,150 stored circuits carrying an
+      // RCD rating hold the bare form, so this is not a rare edge.
+      rcd_rating: na(normaliseRcdRating(result.rcdRating)),
       rcd_rating_a: na(result.rcdRatingA),
       ring_r1: na(result.ringR1),
       ring_rn: na(result.ringRn),
@@ -1225,7 +1242,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const rcdMainOff = get('rcdMainSwitch') === 'no';
       return {
         rcd_main_switch: get('rcdMainSwitch'),
-        rcd_rating: rcdMainOff ? 'N/A' : get('rcdRating'),
+        rcd_rating: rcdMainOff ? 'N/A' : normaliseRcdRating(get('rcdRating') as string),
         rcd_type: rcdMainOff ? 'N/A' : get('rcdType'),
         rcd_time_delay: rcdMainOff ? 'N/A' : normaliseRcdTimeDelay(get('rcdTimeDelay')),
         rcd_measured_time: rcdMainOff ? 'N/A' : get('rcdMeasuredTime'),
@@ -1606,7 +1623,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     main_protective_device_type: get('mainProtectiveDevice'),
     rcd_main_switch: get('rcdMainSwitch'),
     rcdMainSwitch: get('rcdMainSwitch'),
-    rcd_rating: get('rcdRating'),
+    rcd_rating: normaliseRcdRating(get('rcdRating') as string),
     rcdRating: get('rcdRating'),
 
     // Client Details

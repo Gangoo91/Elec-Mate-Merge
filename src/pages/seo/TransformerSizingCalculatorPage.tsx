@@ -562,7 +562,7 @@ export default function TransformerSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size Transformers in Seconds on Your Phone"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 70+ calculators, 16 certificate types, and AI tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 70+ calculators, 19 certificate types, and AI tools. 7-day free trial, cancel anytime."
     />
   );
 }

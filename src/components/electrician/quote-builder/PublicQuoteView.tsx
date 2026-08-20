@@ -1005,16 +1005,26 @@ const PublicQuoteView = () => {
                 <span className="tabular-nums">{formatCurrency(quote.total)}</span>
               </div>
               {cisT && cisT.cisAmount > 0 && (
-                <>
-                  <div className="flex justify-between text-slate-600 pt-1">
-                    <span>Less: CIS ({cisT.cisRate}% on labour)</span>
-                    <span className="tabular-nums text-red-600">−{formatCurrency(cisT.cisAmount)}</span>
-                  </div>
-                  <div className="flex justify-between text-[15px] font-bold text-slate-900">
-                    <span>Net payable</span>
-                    <span className="tabular-nums">{formatCurrency(cisT.netPayable)}</span>
-                  </div>
-                </>
+                <div className="flex justify-between text-slate-600 pt-1">
+                  <span>Less: CIS ({cisT.cisRate}% on labour)</span>
+                  <span className="tabular-nums text-red-600">−{formatCurrency(cisT.cisAmount)}</span>
+                </div>
+              )}
+              {/* ELE-1571 — grant sits BELOW the total because it is deducted
+                  from the VAT-inclusive figure, not from the net. Showing it
+                  above would imply VAT was recalculated on the reduced amount,
+                  which is exactly what does not happen. */}
+              {cisT && cisT.grantAmount > 0 && (
+                <div className="flex justify-between text-slate-600 pt-1">
+                  <span>Less: {cisT.grantLabel}</span>
+                  <span className="tabular-nums text-red-600">−{formatCurrency(cisT.grantAmount)}</span>
+                </div>
+              )}
+              {cisT && (cisT.cisAmount > 0 || cisT.grantAmount > 0) && (
+                <div className="flex justify-between text-[15px] font-bold text-slate-900">
+                  <span>{cisT.grantAmount > 0 ? 'Amount to pay' : 'Net payable'}</span>
+                  <span className="tabular-nums">{formatCurrency(cisT.netPayable)}</span>
+                </div>
               )}
               {cisT?.reverseCharge && (
                 <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">

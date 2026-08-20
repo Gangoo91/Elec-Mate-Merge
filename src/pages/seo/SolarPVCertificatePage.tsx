@@ -158,13 +158,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 const faqSchema = {
@@ -614,7 +607,7 @@ export default function SolarPVCertificatePage() {
             <p>
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, prospective fault current, and more — plus specific PV calculators for
-              string sizing and expected generation. Combined with 16 certificate types, 8 Elec-AI
+              string sizing and expected generation. Combined with 19 certificate types, 8 Elec-AI
               agents, 12 AI tools, and 46+ training courses, it replaces multiple separate tools.
               Xero and QuickBooks integration means you can raise invoices directly from completed
               installations.

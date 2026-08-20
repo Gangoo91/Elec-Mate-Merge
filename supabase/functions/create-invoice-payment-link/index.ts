@@ -162,7 +162,32 @@ serve(async (req) => {
           )
         : 0
     );
-    const chargeableTotal = Math.max(0, Number(invoice.total) - paidSoFar);
+    /*
+     * ELE-1571 — a third-party grant reduces what the CUSTOMER owes.
+     *
+     * The grant (OZEV and similar) is deducted from the VAT-inclusive total,
+     * so `invoice.total` is the full value of the supply while the customer's
+     * share is total − grant. Charging `total` here would take the grant
+     * amount off the customer a second time — a £500 grant on a £1,000 job
+     * would bill them £1,000 instead of £500.
+     *
+     * Read from settings rather than a column so it needs no migration, and
+     * clamped to the total so a stale or oversized grant cannot make the
+     * charge negative.
+     */
+    const invSettings =
+      typeof invoice.settings === 'string'
+        ? JSON.parse(invoice.settings || '{}')
+        : invoice.settings || {};
+    const grantAmount =
+      invSettings?.grantEnabled && Number(invSettings?.grantAmount) > 0
+        ? Math.min(Number(invSettings.grantAmount), Number(invoice.total) || 0)
+        : 0;
+
+    const chargeableTotal = Math.max(
+      0,
+      Number(invoice.total) - paidSoFar - grantAmount
+    );
     if (chargeableTotal <= 0) {
       throw new Error('Invoice is already fully paid — no balance left to charge');
     }
@@ -172,7 +197,7 @@ serve(async (req) => {
     const platformFeePence = Math.round(chargeableTotal * PLATFORM_FEE_PERCENT);
 
     console.log(
-      `💰 Invoice: £${invoice.total}, charging balance: £${chargeableTotal}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`
+      `💰 Invoice: £${invoice.total}${grantAmount > 0 ? ` less grant £${grantAmount}` : ''}, charging balance: £${chargeableTotal}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`
     );
 
     // Create Stripe Checkout Session

@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import CableCurrentCapacityCalculator from '@/components/apprentice/calculators/CableCurrentCapacityCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'lucide-react';
@@ -18,6 +20,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'capacity-lookup', label: 'Cable Current Rating Lookup' },
   { id: 'what-is-appendix-4', label: 'What Is Appendix 4?' },
   { id: 'table-numbering', label: 'Understanding Table Numbering' },
   { id: 'cc-tables', label: 'Current-Carrying Capacity Table' },
@@ -83,6 +86,22 @@ const faqs = [
 ];
 
 const sections = [
+  {
+    id: 'capacity-lookup',
+    heading: 'Look Up a Cable Current Rating',
+    content: (
+      <>
+        <p>
+          The quick answer before the theory: pick the cable type, installation method and size,
+          and read the tabulated current-carrying capacity with correction factors applied — the
+          values come from the BS 7671 Appendix 4 tables themselves. Free, no sign-up.
+        </p>
+        <CalculatorSurface>
+          <CableCurrentCapacityCalculator />
+        </CalculatorSurface>
+      </>
+    ),
+  },
   {
     id: 'what-is-appendix-4',
     heading: 'What Is Appendix 4?',
@@ -918,7 +937,7 @@ export default function AppendixFourTablesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every Appendix 4 table, always in your pocket"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 16 certificate types — all BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

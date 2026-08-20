@@ -506,7 +506,7 @@ export default function StudyCentreOnlineCoursesPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'Put your training into practice with 16 certificate types and AI-powered tools.',
+            'Put your training into practice with 19 certificate types and AI-powered tools.',
           icon: FileCheck2,
           category: 'Certificates',
         },

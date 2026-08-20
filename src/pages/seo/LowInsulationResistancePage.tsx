@@ -26,7 +26,7 @@ import {
 
 const PAGE_TITLE = 'Low Insulation Resistance: Under 1 MΩ, 5 Causes';
 const PAGE_DESCRIPTION =
-  'Under 1 MΩ fails BS 7671 Table 64 (500 V DC). Moisture ingress is the top cause, then nail strikes, aged and carbonised cable. How to trace and fix it.';
+  'Low insulation resistance readings under 1 MΩ fail BS 7671 Table 64 (500 V DC). Moisture is the top cause, then nail strikes and aged cable. Trace and fix.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },

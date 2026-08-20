@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Three Phase Formulas: Power, Current, Voltage';
 const PAGE_DESCRIPTION =
-  'Three-phase electrical calculations: power formula (P = √3·VL·IL·cosφ), line vs phase, star vs delta, current, PF, balancing, VD, cable sizing.';
+  'Three phase formulas: P = √3·VL·IL·cosφ, UK line voltage 400V vs 230V phase, star vs delta, current, balancing, voltage drop and cable sizing.';
 
 const breadcrumbs = [
   { label: 'Calculators', href: '/electrical-testing-calculators' },
@@ -915,7 +915,7 @@ export default function ThreePhaseCalculationsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase calculations, one tap away"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 16 certificate types — all BS 7671:2018+A4:2026. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 19 certificate types — all BS 7671:2018+A4:2026. 7-day free trial."
     />
   );
 }

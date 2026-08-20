@@ -820,7 +820,7 @@ export default function SaunaElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Sauna Electrical Requirements UK: 170°C Cable"
-      description="Zone 3 cable must withstand 170°C, equipment 125°C, with 30mA RCD on all sauna circuits (Reg 703.411.3.3). Heaters 4.5-9kW need a 20A to 40A radial."
+      description="Sauna electrical requirements UK: zone 3 cable rated 170°C, equipment 125°C, 30mA RCD on all circuits (703.411.3.3), 4.5-9kW heaters on a 20A-40A radial."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

@@ -284,7 +284,7 @@ export default function ToolTemplate({
             sections.length >= 3 && (
               <SEOAppBridge
                 title="The calculators live where your certs and quotes are"
-                description="Run the calc, fill the certificate, and price the job in the same app — 70+ calculators, 16 certificate types, quoting with AI cost estimation. From £6.99/mo."
+                description="Run the calc, fill the certificate, and price the job in the same app — 70+ calculators, 19 certificate types, quoting with AI cost estimation. From £6.99/mo."
                 ctaText="Start free 7-day trial"
                 icon={Zap}
               />

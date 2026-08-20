@@ -506,7 +506,7 @@ const sections = [
           <SEOInternalLink href="/tools/prospective-fault-current-calculator">
             PFC calculator
           </SEOInternalLink>{' '}
-          as part of its suite of 50+ electrical calculators. The PFC calculator helps with both
+          as part of its suite of 70+ electrical calculators. The PFC calculator helps with both
           design and verification:
         </p>
         <div className="space-y-4 my-4">

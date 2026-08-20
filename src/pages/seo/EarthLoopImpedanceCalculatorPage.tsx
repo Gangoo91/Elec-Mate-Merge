@@ -146,7 +146,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
   useSEO({
     title: 'Free Earth Fault Loop Impedance Calculator (Zs)',
     description:
-      'Zs = Ze + (R1+R2). Get a temperature-corrected Zs checked against BS 7671 max Zs for Type B, C and D MCBs and RCBOs — 1.37 Ω for a 32 A Type B. Free.',
+      'Free earth fault loop impedance calculator: Zs = Ze + (R1+R2), temperature-corrected and checked against BS 7671 max Zs — 1.37 Ω for a 32 A Type B MCB.',
   });
 
   return (

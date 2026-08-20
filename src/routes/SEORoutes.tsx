@@ -746,6 +746,9 @@ const CashFlowManagementElectricianPage = lazyWithRetry(
 );
 const CCTVInstallationCostPage = lazyWithRetry(() => import('@/pages/seo/CCTVInstallationCostPage'));
 const CheckatradeVsMyBuilderPage = lazyWithRetry(() => import('@/pages/seo/CheckatradeVsMyBuilderPage'));
+const UKElectricianReport2026Page = lazyWithRetry(
+  () => import('@/pages/seo/UKElectricianReport2026Page')
+);
 const ChristmasLightingSafetyPage = lazyWithRetry(() => import('@/pages/seo/ChristmasLightingSafetyPage'));
 const CircuitBreakerTypesPage = lazyWithRetry(() => import('@/pages/seo/CircuitBreakerTypesPage'));
 const CityGuilds2365GuidePage = lazyWithRetry(() => import('@/pages/seo/CityGuilds2365GuidePage'));
@@ -6333,6 +6336,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <CheckatradeVsMyBuilderPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/reports/uk-electrician-report-2026"
+        element={
+          <LazyRoute>
+            <UKElectricianReport2026Page />
           </LazyRoute>
         }
       />

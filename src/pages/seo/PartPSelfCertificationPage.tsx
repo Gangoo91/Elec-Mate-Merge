@@ -765,7 +765,7 @@ export default function PartPSelfCertificationPage() {
   return (
     <GuideTemplate
       title="Part P Certificate: What Is Notifiable (UK 2026)"
-      description="Part P for UK electricians: the three notifiable jobs in England, why Wales differs, the three certification routes, and which certificate to issue."
+      description="Part P certificate explained: the three notifiable jobs in England, why Wales differs, the three certification routes, and which certificate to issue."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

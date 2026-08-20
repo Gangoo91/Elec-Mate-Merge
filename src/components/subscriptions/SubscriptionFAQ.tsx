@@ -19,7 +19,7 @@ const SubscriptionFAQ = () => {
     },
     {
       q: 'What do I get with the Electrician plan?',
-      a: 'Everything in Apprentice, plus 9 AI specialists (Circuit Designer, Cost Engineer, Installation, Commissioning, Maintenance, Health & Safety, Project Manager, Tutor and Voice AI) · 15 certificate types end-to-end (EICR, EIC, Minor Works, Solar PV, EV, BESS, Fire Alarm and more) · AI board scanner · full CRM and projects dashboard · Quote and Invoice builder with Stripe · time tracker → auto-invoice · expenses with OCR · live material pricing · RAMS generator · 13 upskilling courses · Xero / QuickBooks sync · Apple and Google Wallet cert passes.',
+      a: 'Everything in Apprentice, plus 9 AI specialists (Circuit Designer, Cost Engineer, Installation, Commissioning, Maintenance, Health & Safety, Project Manager, Tutor and Voice AI) · 19 certificate types end-to-end (EICR, EIC, Minor Works, Solar PV, EV, BESS, Fire Alarm and more) · AI board scanner · full CRM and projects dashboard · Quote and Invoice builder with Stripe · time tracker → auto-invoice · expenses with OCR · live material pricing · RAMS generator · 13 upskilling courses · Xero / QuickBooks sync · Apple and Google Wallet cert passes.',
     },
     {
       q: 'What is Mate? (Early access)',

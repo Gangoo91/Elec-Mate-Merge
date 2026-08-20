@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import LooseNeutralChecker from '@/components/seo/LooseNeutralChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -27,6 +28,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'symptom-checker', label: 'Symptom Checker' },
   { id: 'what-is-loose-neutral', label: 'What Is a Loose Neutral?' },
   { id: 'symptoms', label: 'Symptoms of a Loose Neutral' },
   { id: 'voltage-fluctuation', label: 'Voltage Fluctuation Explained' },
@@ -136,6 +138,19 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'symptom-checker',
+    heading: 'Check Your Symptoms',
+    content: (
+      <>
+        <p>
+          The quick answer before the theory: tick what the installation is doing and see whether
+          the pattern fits a loose neutral — and how urgently to act.
+        </p>
+        <LooseNeutralChecker />
+      </>
+    ),
+  },
   {
     id: 'what-is-loose-neutral',
     heading: 'What Is a Loose Neutral?',

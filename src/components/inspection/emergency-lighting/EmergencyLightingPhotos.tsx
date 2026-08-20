@@ -6,6 +6,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CertificatePhoto, Luminaire } from '@/types/emergency-lighting';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -56,6 +57,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   certificateId,
 }) => {
   const haptic = useHaptic();
+  const { session } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] =
     useState<CertificatePhoto['category']>('installation');
@@ -118,10 +120,28 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   const uploadPhoto = async (file: File) => {
     setIsUploading(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      /*
+       * Identity comes from the in-memory session, NOT supabase.auth.getUser().
+       *
+       * `getUser()` is a NETWORK call — it asks /auth/v1/user to validate the
+       * token. On a weak site connection it resolves with `user: null`, so a
+       * signed-in electrician was told "User not authenticated" and could not
+       * attach a single photo. Reported from an iPad on site with the app's
+       * own Offline badge showing, which is exactly the condition that breaks
+       * it. The session in context is already validated and held locally, so
+       * it works with no signal.
+       *
+       * This is how useSafetyPhotoUpload (Photo Docs) has always done it —
+       * which is why that screen kept working while this one did not.
+       */
+      const user = session?.user;
       if (!user) throw new Error('User not authenticated');
+
+      // Storage still needs the network. Say THAT, rather than blaming their
+      // sign-in, when the device knows it is offline.
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        throw new Error('No internet connection — photos will upload once you are back online.');
+      }
 
       // Compress the image
       const compressedBlob = await compressImage(file);

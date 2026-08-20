@@ -663,6 +663,13 @@ export default function EarthFaultLoopTooHighPage() {
     <GuideTemplate
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
+      answerBox={{
+        question: 'What does it mean if Zs is too high?',
+        answer:
+          'A "too high" Zs means the measured earth fault loop impedance exceeds the maximum BS 7671 permits for the protective device — Table 41.3 for circuit breakers or Table 41.2 for fuses — so the device may not disconnect quickly enough during an earth fault.',
+        detail:
+          'The most common causes are a poor main earth connection, long cable runs with a small CPC, high external impedance (Ze) from the supply, and loose or corroded connections in the earth path. On TT systems high Zs is inherent and protection relies on the RCD instead.',
+      }}
       datePublished="2025-09-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

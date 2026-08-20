@@ -117,7 +117,21 @@ serve(async (req: Request) => {
         ? invoice.partial_payments.reduce((sum, p) => sum + (Number(p?.amount) || 0), 0)
         : 0;
       const amountPaid = Math.max(Number(invoice.total_paid) || 0, partialSum);
-      const invoiceTotal = Number(invoice.total) || 0;
+      /*
+       * ELE-1571 — compare against what the CUSTOMER owes, not the value of
+       * the supply. A £1,000 job with a £500 grant is settled when they have
+       * paid £500; comparing to £1,000 chased them for an invoice they had
+       * already cleared in full.
+       */
+      const invSettings =
+        typeof invoice.settings === 'string'
+          ? JSON.parse(invoice.settings || '{}')
+          : invoice.settings || {};
+      const invGrant =
+        invSettings?.grantEnabled && Number(invSettings?.grantAmount) > 0
+          ? Math.min(Number(invSettings.grantAmount), Number(invoice.total) || 0)
+          : 0;
+      const invoiceTotal = Math.max(0, (Number(invoice.total) || 0) - invGrant);
       if (invoiceTotal > 0 && amountPaid >= invoiceTotal) {
         skipped++;
         results.push({

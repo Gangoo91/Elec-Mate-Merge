@@ -107,12 +107,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
 };
 
 const faqSchema = {
@@ -417,7 +411,7 @@ export default function JobProfitabilityCalculatorPage() {
               Elec-Mate is not a generic business tool — it is built exclusively for UK
               electricians. The Job Profitability Calculator is one of 14 business calculators in
               the Business Hub, sitting alongside 56 technical calculators (cable sizing, voltage
-              drop, fault current, Zs values, and more), 16 certificate types ({' '}
+              drop, fault current, Zs values, and more), 19 certificate types ({' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works, EV
               charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training courses.

@@ -214,11 +214,6 @@
       "statusCode": 301
     },
     {
-      "source": "/compare",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
       "source": "/compare/elec-mate-vs-electrical-om",
       "destination": "/",
       "statusCode": 301
@@ -300,27 +295,12 @@
     },
     {
       "source": "/guides/best-eicr-software-uk",
-      "destination": "/",
+      "destination": "/tools/eicr-certificate",
       "statusCode": 301
     },
     {
       "source": "/best-electrician-app",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/compare/best-quoting-app-electricians",
-      "destination": "/electrical-quoting-app",
-      "statusCode": 301
-    },
-    {
-      "source": "/compare/best-invoice-app-electricians",
-      "destination": "/electrician-invoice-app",
-      "statusCode": 301
-    },
-    {
-      "source": "/compare/best-ai-tool-electricians",
-      "destination": "/ai-electrician-tools",
+      "destination": "/tools/electrical-app-with-ai",
       "statusCode": 301
     },
     {
@@ -331,11 +311,6 @@
     {
       "source": "/guides/best-electrical-training-app",
       "destination": "/training",
-      "statusCode": 301
-    },
-    {
-      "source": "/compare/electrician-app-android",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -830,7 +805,7 @@
     },
     {
       "source": "/tools/best-electrician-app-uk",
-      "destination": "/",
+      "destination": "/tools/electrical-app-with-ai",
       "statusCode": 301
     },
     {
@@ -937,6 +912,31 @@
       "source": "/training/manual-handling",
       "destination": "/manual-handling-course",
       "permanent": true
+    },
+    {
+      "source": "/compare",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-quoting-app-electricians",
+      "destination": "/electrical-quoting-app",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-invoice-app-electricians",
+      "destination": "/electrician-invoice-app",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-ai-tool-electricians",
+      "destination": "/ai-electrician-tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/electrician-app-android",
+      "destination": "/tools/electrical-app-with-ai",
+      "statusCode": 301
     }
   ],
   "rewrites": [

@@ -134,7 +134,7 @@ export const eicrCostOxfordConfig: GeneratedGuideConfig = {
           tone: 'info',
           title: 'Quote EICRs from your phone in 60 seconds',
           body:
-            'Elec-Mate gives Oxford electricians voice-driven test entry, 16 certificate types, on-site Schedule of Test Results, and a professional PDF quote that the client cannot haggle. 7-day free trial — see how much faster you can quote and certify in your area.',
+            'Elec-Mate gives Oxford electricians voice-driven test entry, 19 certificate types, on-site Schedule of Test Results, and a professional PDF quote that the client cannot haggle. 7-day free trial — see how much faster you can quote and certify in your area.',
         },
         {
           type: 'paragraph',
@@ -283,5 +283,5 @@ export const eicrCostOxfordConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'For Electricians: Quote and Certify EICRs in Oxford',
   ctaSubheading:
-    'Join 1,000+ UK electricians using Elec-Mate to inspect, certify and quote EICRs on their phone. Voice-driven test entry, 16 certificate types, on-site PDF. 7-day free trial.',
+    'Join 1,000+ UK electricians using Elec-Mate to inspect, certify and quote EICRs on their phone. Voice-driven test entry, 19 certificate types, on-site PDF. 7-day free trial.',
 };

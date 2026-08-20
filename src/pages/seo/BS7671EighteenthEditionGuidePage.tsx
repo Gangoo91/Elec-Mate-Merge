@@ -900,7 +900,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 regulation, always in your pocket"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 16 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 19 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

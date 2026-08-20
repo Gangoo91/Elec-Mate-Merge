@@ -110,10 +110,25 @@ const handler = async (req: Request): Promise<Response> => {
     // Precedence: settings.depositAmount → settings.depositPercentage →
     // company_profiles.deposit_percentage. The two percentage rungs are
     // unchanged, so every existing quote behaves exactly as before.
+    /*
+     * ELE-1571 — the customer's actual bill, not the value of the supply.
+     *
+     * A third-party grant comes off the VAT-inclusive total, so on a £1,000
+     * job with a £500 OZEV grant the customer owes £500. A percentage deposit
+     * must be a share of THAT, or a "30% deposit" would be 60% of what they
+     * are actually being asked for. The cash-deposit cap uses it too, so a
+     * deposit can never exceed the bill.
+     */
+    const grantOnQuote =
+      quoteSettings.grantEnabled && Number(quoteSettings.grantAmount) > 0
+        ? Math.min(Number(quoteSettings.grantAmount), Number(quote.total) || 0)
+        : 0;
+    const customerPayable = Math.max(0, (Number(quote.total) || 0) - grantOnQuote);
+
     const settingsDepositAmount = Number(quoteSettings.depositAmount);
     // Never ask for more than the job is worth — a stale deposit left on a
     // quote that was later reduced would otherwise overcharge the client.
-    const cappedDeposit = Math.min(settingsDepositAmount, Number(quote.total) || 0);
+    const cappedDeposit = Math.min(settingsDepositAmount, customerPayable);
     if (
       Number.isFinite(settingsDepositAmount) &&
       settingsDepositAmount > 0 &&
@@ -125,9 +140,9 @@ const handler = async (req: Request): Promise<Response> => {
     ) {
       depositRequired = true;
       depositAmountPennies = Math.round(cappedDeposit * 100);
-    } else if (depositPct > 0 && (quote.total || 0) > 0) {
+    } else if (depositPct > 0 && customerPayable > 0) {
       depositRequired = true;
-      depositAmountPennies = Math.round(Number(quote.total) * 100 * (depositPct / 100));
+      depositAmountPennies = Math.round(customerPayable * 100 * (depositPct / 100));
     }
 
     // ── Mark quote accepted ────────────────────────────────────────────

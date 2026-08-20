@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'Complete guide to all 16 certificate types every UK electrician needs to know.',
+    description: 'Complete guide to all 19 certificate types every UK electrician needs to know.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -540,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce NAPIT-compliant certificates on your phone"
-          description="Elec-Mate produces all 16 certificate types with built-in validation, AI board scanning, and voice test entry."
+          description="Elec-Mate produces all 19 certificate types with built-in validation, AI board scanning, and voice test entry."
           icon={ClipboardCheck}
         />
       </>

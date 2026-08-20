@@ -615,6 +615,13 @@ export default function RCDTypesGuidePage() {
     <GuideTemplate
       title="RCD Types UK Guide: RCCB vs RCBO vs SRCD"
       description="Complete guide to RCD types in UK electrical installations. RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements."
+      answerBox={{
+        question: 'What is the difference between an RCCB and an RCBO?',
+        answer:
+          'An RCCB protects multiple circuits against earth leakage but provides no overcurrent protection, so it must be paired with MCBs. An RCBO combines MCB overcurrent protection and RCD earth-fault protection in one device, eliminating nuisance tripping between circuits.',
+        detail:
+          'BS 7671 requires additional protection by 30 mA RCDs for socket-outlet circuits rated up to 20 A in most installations — one of the most commonly cited requirements during EICRs.',
+      }}
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

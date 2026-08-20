@@ -529,7 +529,7 @@ export default function CityGuilds2391Page() {
             </p>
             <p>
               Elec-Mate includes access to 70 electrical calculators, 8 Elec-AI agents plus 12 AI
-              tools, 36 or more training courses, and 16 certificate types. Whether you need to
+              tools, 36 or more training courses, and 19 certificate types. Whether you need to
               verify a Zs calculation, look up a maximum permitted earth fault loop impedance value,
               or practise completing an EIC from scratch, everything is in one platform. The app
               integrates with Xero and QuickBooks for electricians who are already managing their

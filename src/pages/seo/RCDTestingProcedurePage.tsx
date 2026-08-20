@@ -26,7 +26,7 @@ import {
 
 const PAGE_TITLE = 'RCD Trip Times: 30mA 300ms Max, Type S 130-500ms';
 const PAGE_DESCRIPTION =
-  'A 30 mA general RCD must operate within 300 ms at IΔn — Type S 130-500 ms. BS 7671 A4:2026 verifies with a single AC test at IΔn, both half-cycles.';
+  'RCD trip times: a 30 mA general RCD must trip within 300 ms at IΔn, Type S 130–500 ms. BS 7671 A4:2026 tests once with AC at IΔn, both half-cycles.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

@@ -47,7 +47,7 @@ export default function LightingLuxCalculatorPage() {
           Light Level for Every Room
         </>
       }
-      heroSubtitle="Calculate the number of luminaires needed to achieve CIBSE-recommended lux levels in any space. Enter room dimensions, select the room type, choose your luminaire, and get an instant result. Part of Elec-Mate's 50+ electrical calculators built for UK electricians."
+      heroSubtitle="Calculate the number of luminaires needed to achieve CIBSE-recommended lux levels in any space. Enter room dimensions, select the room type, choose your luminaire, and get an instant result. Part of Elec-Mate's 70+ electrical calculators built for UK electricians."
       heroFeaturePills={[
         { icon: Lightbulb, label: 'CIBSE Lux Tables' },
         { icon: Calculator, label: 'Instant Results' },

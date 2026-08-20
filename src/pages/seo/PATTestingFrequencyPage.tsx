@@ -97,7 +97,7 @@ const sections = [
           Electrical Equipment (5th Edition) provides recommended intervals based on the type of
           premises and the type of equipment. PAT testing is one of the{' '}
           <SEOInternalLink href="/guides/electrical-certificate-types-uk">
-            16 certificate types
+            19 certificate types
           </SEOInternalLink>{' '}
           that UK electricians commonly produce.
         </p>

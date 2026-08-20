@@ -44,6 +44,8 @@ interface QuoteRow {
   invoice_sent_at: string;
   total: number | string | null;
   total_paid: number | string | null;
+  /** ELE-1571 — carries grantEnabled / grantAmount. */
+  settings?: Record<string, unknown> | string | null;
   partial_payments: Array<{ amount?: number }> | null;
   client_data: Record<string, unknown> | null;
 }
@@ -56,7 +58,19 @@ function outstandingOf(q: QuoteRow): number {
       ? q.partial_payments.reduce((s, p) => s + (Number(p?.amount) || 0), 0)
       : 0
   );
-  return Math.max(0, (Number(q.total) || 0) - paid);
+  /*
+   * ELE-1571 — a third-party grant is money the customer never owed. Without
+   * netting it off, someone who has paid their full share still looks like a
+   * debtor and gets chased for the grant amount.
+   */
+  const settings =
+    typeof q.settings === 'string' ? JSON.parse(q.settings || '{}') : q.settings || {};
+  const grant =
+    (settings as Record<string, unknown>)?.grantEnabled &&
+    Number((settings as Record<string, unknown>)?.grantAmount) > 0
+      ? Math.min(Number((settings as Record<string, unknown>).grantAmount), Number(q.total) || 0)
+      : 0;
+  return Math.max(0, (Number(q.total) || 0) - grant - paid);
 }
 
 function clientNameFromQuote(q: QuoteRow): string {
@@ -151,7 +165,7 @@ serve(async (req) => {
     const { data: rows, error: pullErr } = await supabase
       .from('quotes')
       .select(
-        'id, user_id, invoice_number, invoice_status, invoice_sent_at, total, total_paid, partial_payments, client_data, last_payment_prompt_pushed_at'
+        'id, user_id, invoice_number, invoice_status, invoice_sent_at, total, total_paid, partial_payments, client_data, last_payment_prompt_pushed_at, settings'
       )
       .in('invoice_status', ['sent', 'overdue'])
       .not('invoice_sent_at', 'is', null)

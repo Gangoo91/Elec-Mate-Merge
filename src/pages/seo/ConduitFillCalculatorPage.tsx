@@ -151,7 +151,7 @@ export default function ConduitFillCalculatorPage() {
   useSEO({
     title: 'Conduit Size & Fill Calculator UK: 16-50mm',
     description:
-      'Conduit factors: 16mm 290, 20mm 460, 25mm 800, 32mm 1400. Cable factors 1.5mm² 22, 2.5mm² 30. Add your cables and get the minimum size, bends included.',
+      'Free conduit fill calculator: add your cables and get the minimum conduit size, bends included. Factors 16mm 290, 20mm 460, 25mm 800, 32mm 1400.',
   });
 
   return (

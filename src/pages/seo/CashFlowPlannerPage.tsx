@@ -107,12 +107,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
 };
 
 const faqSchema = {
@@ -362,7 +356,7 @@ export default function CashFlowPlannerPage() {
               specific cash flow patterns of an electrical business. Elec-Mate is different because
               it is purpose-built for UK electricians. The Cash Flow Planner is part of the Business
               Hub, which includes 14 specialist business calculators alongside 56 technical
-              calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses.
+              calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses.
               Everything is integrated — your jobs, quotes, invoices, expenses, and certificates all
               feed into the cash flow forecast.
             </p>

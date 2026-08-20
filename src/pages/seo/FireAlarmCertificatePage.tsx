@@ -158,13 +158,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 const faqSchema = {
@@ -558,7 +551,7 @@ export default function FireAlarmCertificatePage() {
               actually carried out on site.
             </p>
             <p>
-              The platform includes 70 electrical calculators, 16 certificate types ({' '}
+              The platform includes 70 electrical calculators, 19 certificate types ({' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works,{' '}

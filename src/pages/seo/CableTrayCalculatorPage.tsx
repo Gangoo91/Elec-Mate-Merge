@@ -19,7 +19,7 @@ export default function CableTrayCalculatorPage() {
   return (
     <ToolTemplate
       title="Cable Tray Sizing Calculator: Fill Capacity Tool"
-      description="Calculate cable tray fill percentage and select the correct tray size for any cable combination. BS EN 61537 aligned. UK electricians."
+      description="Cable tray sizing: calculate fill percentage against the 50% maximum and select the correct tray width to BS EN 61537, for tray and ladder installations."
       datePublished="2026-02-01"
       dateModified="2026-06-10"
       breadcrumbs={[
@@ -45,7 +45,7 @@ export default function CableTrayCalculatorPage() {
           for Your Cable Run
         </>
       }
-      heroSubtitle="Calculate cable tray fill capacity and select the correct tray width and depth for any combination of cables. Covers ladder tray, perforated tray, wire mesh tray, and solid-bottom tray to BS EN 61537. Part of Elec-Mate's 50+ electrical calculators for UK electricians."
+      heroSubtitle="Calculate cable tray fill capacity and select the correct tray width and depth for any combination of cables. Covers ladder tray, perforated tray, wire mesh tray, and solid-bottom tray to BS EN 61537. Part of Elec-Mate's 70+ electrical calculators for UK electricians."
       heroFeaturePills={[
         { icon: Layers, label: 'Tray Sizing' },
         { icon: Scale, label: 'Fill Percentage' },

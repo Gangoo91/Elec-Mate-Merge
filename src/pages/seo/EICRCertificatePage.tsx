@@ -1,3 +1,4 @@
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import { SEOPageShell } from '@/components/seo/SEOPageShell';
 import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
@@ -421,6 +422,13 @@ export default function EICRCertificatePage() {
           <SEOSocialFollow />
         </div>
       </section>
+
+      <SEOAnswerBox
+        question="What is the fastest way to produce an EICR?"
+        answer="Dictate test results by voice as you work the board, let the app validate readings against BS 7671 as you go, and send the finished EICR and the invoice together before you leave site — no evening paperwork."
+        detail="Elec-Mate's EICR software includes the AI board scanner, works offline in plant rooms, and covers all 19 certificate types on one subscription from £6.99/month."
+      />
+
 
       {/* Key Takeaways */}
       <section className="pb-10">

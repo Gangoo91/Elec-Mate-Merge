@@ -158,13 +158,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
 };
 
 const faqSchema = {
@@ -599,7 +592,7 @@ export default function EmergencyLightingCertificatePage() {
             <p>
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, diversity, conduit and trunking fill, prospective fault current, and
-              more. Combined with 16 certificate types — including{' '}
+              more. Combined with 19 certificate types — including{' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works, emergency lighting,{' '}

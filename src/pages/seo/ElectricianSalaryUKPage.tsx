@@ -812,7 +812,7 @@ export default function ElectricianSalaryUKPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries"
       relatedPages={relatedPages}
       ctaHeading="Earn more with better tools"
-      ctaSubheading="Hourly rate calculator, job profitability tracker, quoting tools, and 50+ training courses. Start your 7-day free trial."
+      ctaSubheading="Hourly rate calculator, job profitability tracker, quoting tools, and 46+ training courses. Start your 7-day free trial."
     />
   );
 }

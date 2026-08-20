@@ -512,7 +512,7 @@ export default function HowToDoSafeIsolationPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Safe isolation guidance, 70+ calculators, 16 certificate types, and 8 AI agents — all
+            Safe isolation guidance, 70+ calculators, 19 certificate types, and 8 AI agents — all
             built for UK electricians working on site.
           </p>
           <SEOFeatureGrid features={features} columns={3} />

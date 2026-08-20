@@ -565,7 +565,7 @@ export default function WhenIsEICRequiredPage() {
               </div>
               <SEOAppBridge
                 title="The Complete EIC — On Your Phone"
-                description="Elec-Mate has 16 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT."
+                description="Elec-Mate has 19 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT."
                 icon={FileCheck2}
               />
             </>

@@ -317,7 +317,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional Digital Certificates"
-          description="Impress clients and contractors with professionally branded digital certificates. Elec-Mate's 16 certificate types — EICR, EIC, Minor Works, EV Charger…"
+          description="Impress clients and contractors with professionally branded digital certificates. Elec-Mate's 19 certificate types — EICR, EIC, Minor Works, EV Charger…"
           icon={FileText}
         />
       </>

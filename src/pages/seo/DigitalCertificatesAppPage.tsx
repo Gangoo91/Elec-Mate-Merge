@@ -1,4 +1,5 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -24,7 +25,7 @@ export default function DigitalCertificatesAppPage() {
   return (
     <ToolTemplate
       title="Digital Electrical Certificates App: EICR & EIC"
-      description="Elec-Mate's digital certificates app for UK electricians: 16 certificate types including EICR, EIC, Minor Works, EV charger and Solar PV. 7-day free trial."
+      description="Elec-Mate's digital certificates app for UK electricians: 19 certificate types including EICR, EIC, Minor Works, EV charger and Solar PV. 7-day free trial."
       datePublished="2026-01-10"
       dateModified="2026-06-10"
       breadcrumbs={[
@@ -52,7 +53,7 @@ export default function DigitalCertificatesAppPage() {
           Minor Works, and 5 More
         </>
       }
-      heroSubtitle="16 certificate types. AI board scanner. Voice test entry. Defect code AI. Digital signatures. Professional PDF output. Email and WhatsApp delivery. Full offline support. Everything you need to complete, sign, and send electrical certificates from your phone — compliant with BS 7671:2018+A4:2026."
+      heroSubtitle="19 certificate types. AI board scanner. Voice test entry. Defect code AI. Digital signatures. Professional PDF output. Email and WhatsApp delivery. Full offline support. Everything you need to complete, sign, and send electrical certificates from your phone — compliant with BS 7671:2018+A4:2026."
       heroFeaturePills={[
         { icon: FileCheck2, label: '16 Certificate Types' },
         { icon: Camera, label: 'AI Board Scanner' },
@@ -61,7 +62,7 @@ export default function DigitalCertificatesAppPage() {
       ]}
       readingTime={12}
       keyTakeaways={[
-        'Elec-Mate supports 16 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing.',
+        'Elec-Mate supports 19 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing.',
         'The AI Board Scanner photographs a consumer unit and extracts circuit data, device ratings, and board layout in seconds — eliminating manual data entry on site.',
         'Voice Test Entry lets you speak test readings aloud while holding test leads, with AI transcribing them directly into the schedule of test results.',
         'Certificate forms follow the A4:2026 Appendix 6 model forms, including the new fields for recording SPD (surge protective device) and AFDD (arc fault detection device) details introduced by Reg 722.826.3.201.',
@@ -74,6 +75,11 @@ export default function DigitalCertificatesAppPage() {
           heading: 'The Complete Digital Certificate Solution',
           content: (
             <>
+              <SEOAnswerBox
+                question="Which certificates can you produce digitally?"
+                answer="All 19 types on one subscription: EICR, EIC, Minor Works, EV charger, Solar PV, battery storage, fire alarm (all five BS 5839-1 grades), emergency lighting, PAT and more — each as a professional PDF with digital signatures."
+                detail="Every certificate is BS 7671:2018+A4:2026 aligned, saved to the cloud, and can be sent with the invoice from the same app. From £6.99/month after a 7-day free trial."
+              />
               <p>
                 Elec-Mate's digital certificates are not just digital versions of paper forms. They
                 are intelligent, AI-powered documents that speed up the entire certification process
@@ -89,7 +95,7 @@ export default function DigitalCertificatesAppPage() {
                 requirements.
               </p>
               <p>
-                All 16 certificate types, all AI features, and unlimited certificate generation are
+                All 19 certificate types, all AI features, and unlimited certificate generation are
                 included in the standard Elec-Mate subscription from £6.99/month. There are no
                 per-certificate charges. You can produce as many certificates as you need, for any
                 type of work, without worrying about credit limits or usage caps.
@@ -367,7 +373,7 @@ export default function DigitalCertificatesAppPage() {
       howToSteps={[
         {
           name: 'Select your certificate type',
-          text: 'Choose from 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, or PAT. Each opens a form following the relevant model template.',
+          text: 'Choose from 19 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, or PAT. Each opens a form following the relevant model template.',
         },
         {
           name: 'Enter property and supply details',
@@ -436,7 +442,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How many certificate types does Elec-Mate support?',
           answer:
-            'Elec-Mate supports 16 certificate types including EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works Certificate, EV Charger Installation Certificate, Solar PV Certificate, Fire Alarm Commissioning Certificate, Emergency Lighting Certificate, and PAT Testing. All 16 certificate types are included in the standard subscription with unlimited usage — there are no per-certificate charges.',
+            'Elec-Mate supports 19 certificate types including EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works Certificate, EV Charger Installation Certificate, Solar PV Certificate, Fire Alarm Commissioning Certificate, Emergency Lighting Certificate, and PAT Testing. All 19 certificate types are included in the standard subscription with unlimited usage — there are no per-certificate charges.',
         },
         {
           question: 'Are certificates compliant with BS 7671?',
@@ -466,7 +472,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How much does Elec-Mate cost for certificates?',
           answer:
-            'Elec-Mate starts from £6.99 per month with unlimited certificate generation across all 16 certificate types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 8 AI specialist agents plus 12 AI tools, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
+            'Elec-Mate starts from £6.99 per month with unlimited certificate generation across all 19 certificate types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 8 AI specialist agents plus 12 AI tools, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
         },
       ]}
       relatedPages={[
@@ -498,7 +504,7 @@ export default function DigitalCertificatesAppPage() {
           href: '/tools/electrician-app-iphone',
           title: 'Electrician App for iPhone',
           description:
-            'Native iOS experience with all 16 certificate types, calculators, AI tools, and offline support.',
+            'Native iOS experience with all 19 certificate types, calculators, AI tools, and offline support.',
           icon: Smartphone,
           category: 'Tools',
         },
@@ -535,7 +541,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'Tools',
         },
       ]}
-      ctaHeading="Try all 16 certificate types free for 7 days"
+      ctaHeading="Try all 19 certificate types free for 7 days"
       ctaSubheading="AI Board Scanner, Voice Test Entry, Defect Code AI, digital signatures, PDF export, and unlimited certificates. One subscription, all features included."
       toolPath="/tools/digital-certificates-app"
     />

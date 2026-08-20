@@ -133,6 +133,18 @@ export interface QuoteSettings {
   depositPercentage?: number;
   /** How long this quote stands. Drives `quotes.expiry_date`. */
   validForDays?: number;
+  /*
+   * ELE-1571 — third-party grant (OZEV EV chargepoint grant and similar).
+   *
+   * Comes off the VAT-INCLUSIVE total, unlike `discountValue` which comes off
+   * the ex-VAT net and has VAT recalculated on the reduced figure. A grant is
+   * consideration from a third party, so VAT stays due on the full value of
+   * the supply — treating it as a discount would under-declare VAT.
+   */
+  grantEnabled?: boolean;
+  grantAmount?: number;
+  /** Shown on the quote and invoice, e.g. "OZEV Grant". */
+  grantLabel?: string;
 }
 
 export interface Quote {

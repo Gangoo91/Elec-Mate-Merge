@@ -127,7 +127,7 @@ const faqs = [
   },
   {
     q: 'Is Elec-Mate\u2019s cable sizing calculator free?',
-    a: 'Elec-Mate offers a 7-day free trial with full access to all 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses. After the trial, plans start from \u00A34.99/month. Cancel anytime \u2014 no contracts, no lock-in.',
+    a: 'Elec-Mate offers a 7-day free trial with full access to all 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses. After the trial, plans start from \u00A34.99/month. Cancel anytime \u2014 no contracts, no lock-in.',
   },
 ];
 
@@ -665,7 +665,7 @@ export default function HowToSizeCablesPage() {
 
       <SEOCTASection
         heading="Size Cables in Seconds, Not Minutes"
-        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
+        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 19 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
       />
     </PublicPageLayout>
   );

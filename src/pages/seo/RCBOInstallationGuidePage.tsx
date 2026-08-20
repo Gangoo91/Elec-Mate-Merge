@@ -631,7 +631,7 @@ export default function RCBOInstallationGuidePage() {
   return (
     <GuideTemplate
       title="How to Wire an RCBO: 4 Steps + Neutral Rule"
-      description="Prove dead, clip the RCBO to the busbar, take the circuit neutral into the RCBO's own terminal, not the neutral bar, then verify tripping within 300ms."
+      description="RCBO wiring and installation: prove dead, clip to the busbar, circuit neutral into the RCBO's own terminal, not the neutral bar, then verify a 300ms trip."
       datePublished="2024-07-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

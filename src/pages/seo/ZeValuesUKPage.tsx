@@ -728,7 +728,7 @@ export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
       title="Max Ze Values: TN-S 0.80Ω, TN-C-S 0.35Ω, TT 21Ω"
-      description="Maximum Ze: TN-S 0.80 Ω, TN-C-S (PME) 0.35 Ω, TT 21 Ω. How to measure Ze, why PME differs, and what to do when your reading is too high."
+      description="Maximum Ze: TN-S 0.80 Ω, TN-C-S (PME) 0.35 Ω, TT 21 Ω. How to measure Ze, why PME differs, and what to do when your reading is too high. Free Ze checker."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

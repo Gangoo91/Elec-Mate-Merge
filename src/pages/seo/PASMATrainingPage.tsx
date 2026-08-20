@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'PASMA Training Course Online: Mobile Towers';
 const PAGE_DESCRIPTION =
-  'PASMA training online: mobile tower assembly, safe working heights, inspection requirements. Mock exams + AI-powered study tools for UK trades.';
+  'PASMA training online: Towers for Users syllabus, 3T assembly method, inspections and safe use. Mock exams for the theory test — card valid five years.';
 
 const faqs = [
   {

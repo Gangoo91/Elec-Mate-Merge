@@ -603,7 +603,7 @@ export default function ECSCardTypesPage() {
   return (
     <GuideTemplate
       title="ECS Card Types: Which Card Do You Need?"
-      description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
+      description="ECS card types explained: Apprentice, Provisional, Installation Electrician (gold), Technician and Manager. Requirements, £36–£40 fees and how to apply."
       datePublished="2025-05-10"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

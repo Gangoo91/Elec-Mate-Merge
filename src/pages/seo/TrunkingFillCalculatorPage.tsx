@@ -164,7 +164,7 @@ export default function TrunkingFillCalculatorPage() {
   useSEO({
     title: 'Trunking Size Calculator: 45% Max Cable Fill',
     description:
-      "Max fill is 45% of the trunking's internal CSA. Enter your cables, get the minimum trunking size — 16 x 16 to 150 x 150 mm, plus compartment mode.",
+      'Free trunking size calculator: enter your cables, get the minimum trunking size to the 45% fill rule — 16 x 16 to 150 x 150 mm, plus compartment mode.',
   });
 
   return (

@@ -665,7 +665,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Max demand is just one of 50+ calculators on Elec-Mate. Others include{' '}
+                  Max demand is just one of 70+ calculators on Elec-Mate. Others include{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>

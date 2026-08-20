@@ -1,8 +1,9 @@
-import { Helmet } from 'react-helmet';
+import { JsonLd } from '@/components/seo/JsonLd';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -40,12 +41,6 @@ const softwareApplicationSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    ratingCount: '287',
-    bestRating: '5',
   },
 };
 
@@ -207,17 +202,11 @@ export default function AIElectricianToolsPage() {
 
   return (
     <PublicPageLayout>
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...softwareApplicationSchema })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...faqPageSchema })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
-        </script>
-      </Helmet>
+      {/* Body-inline JSON-LD — react-helmet never rendered these at runtime
+          (see JsonLd.tsx). */}
+      <JsonLd data={{ '@context': 'https://schema.org', ...softwareApplicationSchema }} />
+      <JsonLd data={{ '@context': 'https://schema.org', ...faqPageSchema }} />
+      <JsonLd data={{ '@context': 'https://schema.org', ...howToSchema }} />
 
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
@@ -246,6 +235,17 @@ export default function AIElectricianToolsPage() {
           </Link>
         </div>
       </section>
+
+      <section className="px-5 pb-4">
+        <div className="mx-auto max-w-4xl">
+          <SEOAnswerBox
+            question="What are the Elec-Mate AI specialists?"
+            answer="Eight AI agents trained on BS 7671:2018+A4:2026, the On-Site Guide and Guidance Notes 1-8: Circuit Designer, Cost Engineer, Installation Guide, Commissioning, Maintenance, Health & Safety, Fault Finder and Regulation Lookup — every answer cites the regulation number so you can verify it."
+            detail="The Circuit Designer produces complete consumer unit schedules with adiabatic cable sizing; the Cost Engineer prices jobs from live wholesaler data. From £19.99/month after a 7-day free trial."
+          />
+        </div>
+      </section>
+
 
       {/* Feature Grid */}
       <section className="px-5 pb-16">
@@ -580,7 +580,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="8 AI Specialists + All Your Electrical Tools"
-            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70+ calculators, 16 certificate types, and 46+ training courses in one mobile-first platform."
+            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70+ calculators, 19 certificate types, and 46+ training courses in one mobile-first platform."
             icon={Brain}
           />
           <p className="text-white mt-4 text-sm">

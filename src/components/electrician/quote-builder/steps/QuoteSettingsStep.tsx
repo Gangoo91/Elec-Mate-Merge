@@ -41,6 +41,10 @@ const settingsSchema = z.object({
   isEstimate: z.boolean().optional(),
   // ELE-1576 — per-quote overrides; undefined = use the company default.
   depositAmount: z.number().min(0).optional(),
+  // ELE-1571 — third-party grant, deducted from the VAT-INCLUSIVE total.
+  grantEnabled: z.boolean().optional(),
+  grantAmount: z.number().min(0).optional(),
+  grantLabel: z.string().optional(),
   validForDays: z.number().int().min(1).max(365).optional(),
 });
 
@@ -123,6 +127,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
 
   const isVatRegistered = form.watch('vatRegistered');
   const isDiscountEnabled = form.watch('discountEnabled');
+  const isGrantEnabled = form.watch('grantEnabled');
   const discountType = form.watch('discountType');
   const isReverseCharge = form.watch('reverseCharge');
   const isCisEnabled = form.watch('cisEnabled');
@@ -396,6 +401,53 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                   )}
                 />
               </div>
+            </div>
+          )}
+
+          {/* ELE-1571 — grant. Separate from the discount above because it is
+              NOT a price reduction: a third party pays part of the bill, so
+              VAT stays due on the full value of the supply and only the
+              customer's share falls. Running it through the discount would
+              take it off the ex-VAT net and under-declare VAT. */}
+          <ToggleRow
+            label="Third-party grant"
+            description="OZEV or similar. Comes off the total after VAT — VAT still charged on the full amount."
+            last={!isGrantEnabled}
+          >
+            {switchField('grantEnabled')}
+          </ToggleRow>
+
+          {isGrantEnabled && (
+            <div className="grid grid-cols-2 gap-3 pt-3">
+              <FormField
+                control={form.control}
+                name="grantAmount"
+                render={({ field }) => (
+                  <FormItem>
+                    <label className="text-xs font-medium text-white mb-1.5 block">Amount (£)</label>
+                    <FormControl>
+                      <DecimalInput
+                        placeholder="500.00"
+                        className={inputCn}
+                        value={(field.value as number) || 0}
+                        onChange={(val) => field.onChange(val)}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="grantLabel"
+                render={({ field }) => (
+                  <FormItem>
+                    <label className="text-xs font-medium text-white mb-1.5 block">Label</label>
+                    <FormControl>
+                      <Input placeholder="e.g. OZEV Grant" className={inputCn} {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
           )}
         </section>

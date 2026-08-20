@@ -21,7 +21,7 @@ export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
       title="Battery Backup Calculator: UPS Runtime, Ah & kVA"
-      description="Runtime (hrs) = Ah x battery V x efficiency / load W. Enter your load in watts or VA and get the UPS kVA rating (125% of load VA) and battery Ah needed."
+      description="Free battery backup calculator: enter load in watts or VA to get UPS kVA (125% of load VA), battery Ah and runtime — Ah × battery V × efficiency ÷ load W."
       datePublished="2026-01-25"
       dateModified="2026-06-10"
       breadcrumbs={[

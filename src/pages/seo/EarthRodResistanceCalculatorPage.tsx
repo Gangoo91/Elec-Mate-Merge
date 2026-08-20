@@ -19,7 +19,7 @@ export default function EarthRodResistanceCalculatorPage() {
   return (
     <ToolTemplate
       title="Earth Rod Resistance Calculator: Ra ≤ 200Ω (TT)"
-      description="Earth rod sizing with R = (ρ/2πL) × ln(4L/d): UK soil resistivity values, parallel-rod correction, and the BS 7671 Ra × IΔn ≤ 50V TT pass/fail check."
+      description="Earth rod resistance calculation: R = (ρ/2πL) × ln(4L/d), UK soil resistivity values, parallel-rod correction and the BS 7671 Ra × IΔn ≤ 50V TT check."
       datePublished="2026-01-22"
       dateModified="2026-06-10"
       breadcrumbs={[
@@ -48,7 +48,7 @@ export default function EarthRodResistanceCalculatorPage() {
           Electrode for TT Systems
         </>
       }
-      heroSubtitle="Calculate earth electrode resistance for TT earthing installations. Input rod dimensions and soil type, and instantly determine whether your earth rod achieves the resistance required by BS 7671 for RCD protection. Part of Elec-Mate's 50+ electrical calculators."
+      heroSubtitle="Calculate earth electrode resistance for TT earthing installations. Input rod dimensions and soil type, and instantly determine whether your earth rod achieves the resistance required by BS 7671 for RCD protection. Part of Elec-Mate's 70+ electrical calculators."
       heroFeaturePills={[
         { icon: ArrowDownToLine, label: 'Rod Sizing' },
         { icon: Globe, label: 'Soil Resistivity' },

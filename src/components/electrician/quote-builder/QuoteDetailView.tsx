@@ -616,18 +616,30 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
 
           {cisT.cisAmount > 0 && (
-            <>
-              <div className="flex justify-between text-white pt-1">
-                <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
-                <span className="font-medium text-red-300 tabular-nums">
-                  −£{cisT.cisAmount.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between text-lg font-bold">
-                <span className="text-white">Net payable</span>
-                <span className="text-elec-yellow">£{cisT.netPayable.toFixed(2)}</span>
-              </div>
-            </>
+            <div className="flex justify-between text-white pt-1">
+              <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
+              <span className="font-medium text-red-300 tabular-nums">
+                −£{cisT.cisAmount.toFixed(2)}
+              </span>
+            </div>
+          )}
+          {/* ELE-1571 — below the total: the grant comes off the VAT-inclusive
+              figure, so VAT above it stays on the full value. */}
+          {cisT.grantAmount > 0 && (
+            <div className="flex justify-between text-white pt-1">
+              <span className="text-white/80">Less: {cisT.grantLabel}</span>
+              <span className="font-medium text-red-300 tabular-nums">
+                −£{cisT.grantAmount.toFixed(2)}
+              </span>
+            </div>
+          )}
+          {(cisT.cisAmount > 0 || cisT.grantAmount > 0) && (
+            <div className="flex justify-between text-lg font-bold">
+              <span className="text-white">
+                {cisT.grantAmount > 0 ? 'Amount to pay' : 'Net payable'}
+              </span>
+              <span className="text-elec-yellow">£{cisT.netPayable.toFixed(2)}</span>
+            </div>
           )}
 
           {cisT.reverseCharge && (

@@ -167,13 +167,6 @@ const softwareAppSchema = {
   },
   ...(liveRating
     ? {
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: String(liveRating.ratingValue),
-          ratingCount: String(liveRating.ratingCount),
-          bestRating: String(liveRating.bestRating),
-          worstRating: String(liveRating.worstRating),
-        },
       }
     : {}),
 };
@@ -613,7 +606,7 @@ export default function AdiabaticEquationCalculatorPage() {
             </p>
             <p>
               These are two of 70 electrical calculators available in Elec-Mate — 56 technical
-              calculators plus 14 business calculators. Combined with 16 certificate types, 8
+              calculators plus 14 business calculators. Combined with 19 certificate types, 8
               Elec-AI agents, 12 AI tools, 46+ training courses, and integration with Xero and
               QuickBooks, it is the complete platform for UK electricians.
             </p>
@@ -722,7 +715,7 @@ export default function AdiabaticEquationCalculatorPage() {
               values, get the answer, verify the conductor, move on.
             </p>
             <p>
-              The platform also includes 16 certificate types (EICR, EIC, Minor Works, emergency
+              The platform also includes 19 certificate types (EICR, EIC, Minor Works, emergency
               lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI
               tools, and 46+ training courses. Xero and QuickBooks integration means you can manage
               your jobs, certificates, and invoicing all from one mobile-first app.

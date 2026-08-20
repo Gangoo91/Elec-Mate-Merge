@@ -1,6 +1,7 @@
-import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import {
@@ -147,14 +148,10 @@ export default function ElectricalQuotingAppPage() {
 
   return (
     <PublicPageLayout>
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
-        </script>
-      </Helmet>
+      {/* Body-inline JSON-LD — react-helmet never rendered these at runtime
+          (see JsonLd.tsx). */}
+      <JsonLd data={{ '@context': 'https://schema.org', ...softwareAppSchema }} />
+      <JsonLd data={{ '@context': 'https://schema.org', ...faqSchema }} />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
@@ -195,6 +192,16 @@ export default function ElectricalQuotingAppPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-4">
+        <div className="mx-auto max-w-4xl">
+          <SEOAnswerBox
+            question="What should an electrical quoting app do for you?"
+            answer="Describe the job and get an itemised materials-and-labour breakdown from live UK trade pricing — typically within 10 to 15% of the final quote — then send a branded PDF the client can accept online and convert to an invoice in one tap."
+            detail="Elec-Mate's AI Cost Engineer, client portal and Xero/QuickBooks sync handle the whole quote-to-paid flow, from £6.99/month after a 7-day free trial."
+          />
         </div>
       </section>
 
@@ -500,7 +507,7 @@ export default function ElectricalQuotingAppPage() {
               Elec-Mate is not just a quoting app — it is the complete platform for running an
               electrical business. Your subscription includes access to 70+ calculators (56
               technical + 14 business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with
-              16 certificate types,{' '}
+              19 certificate types,{' '}
               <SEOInternalLink href="/tools/eicr-certificate">
                 digital EICR and EIC certification
               </SEOInternalLink>

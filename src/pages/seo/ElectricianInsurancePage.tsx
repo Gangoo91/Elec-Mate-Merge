@@ -718,7 +718,7 @@ export default function ElectricianInsurancePage() {
     <GuideTemplate
       localArea="Insurance Uk"
       title="Electrician Insurance UK: Public Liability & PI"
-      description="Public liability, professional indemnity, employers liability, tools cover and van insurance for UK electricians. Costs, cover levels and what to avoid."
+      description="NICEIC public liability and professional indemnity: schemes require £2m cover, typically £150–£400 a year. Tools, van and employers liability compared."
       datePublished="2026-01-18"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -116,7 +116,7 @@ const relatedPages = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'All 16 certificate types explained — when to use each one.',
+    description: 'All 19 certificate types explained — when to use each one.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -596,7 +596,7 @@ const sections = [
           as you enter them, and the app flags incomplete fields before you sign off.
         </p>
         <p>
-          All 16 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
+          All 19 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
           Alarm, PAT Testing, EV Charger, and Solar PV. One subscription covers every certificate an
           electrician needs.
         </p>

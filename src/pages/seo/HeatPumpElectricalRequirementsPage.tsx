@@ -559,7 +559,7 @@ export default function HeatPumpElectricalRequirementsPage() {
   return (
     <GuideTemplate
       title="Heat Pump Electrical Requirements: 16–40A, 230V"
-      description="Air source heat pump circuit sizing: 16A on 2.5mm² for 5–8kW, 20–25A on 4mm² for 10–12kW, 32–40A on 6mm² for 16–20kW — single-phase 230V, plus immersion."
+      description="Air source heat pump electrical requirements: 16A on 2.5mm² for 5–8kW, 20–25A on 4mm² for 10–12kW, 32–40A on 6mm² for 16–20kW — single-phase 230V."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

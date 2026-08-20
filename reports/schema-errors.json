@@ -1,7 +1,3459 @@
 {
-  "checkedAt": "2026-05-18T12:29:49.570Z",
+  "checkedAt": "2026-08-20T13:50:41.879Z",
   "base": "https://www.elec-mate.com",
-  "total": 1,
-  "issuesCount": 0,
-  "issues": []
+  "total": 1379,
+  "issuesCount": 184,
+  "issues": [
+    {
+      "slug": "/guides/bs-7671-a4-2026-afdd-changes",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/bs-7671-a4-2026-eic-model-form",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ai-tools-for-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/am2-exam-tips",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/agricultural-electrical-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/appendix-4-tables-bs-7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/apprentice-first-year-revision",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/apprentice-rights-pay-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/apprentice-electrician-salary",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/apprentice-electrician-salary-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/armoured-cable-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/bs-7671-18th-edition-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/bs-7671-section-710-medical-locations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/bathroom-electrical-zones-bs7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/battery-storage-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/battery-storage-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/best-electrical-books",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/best-thermal-imaging-camera-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/bonding-conductors-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/bonding-in-bathroom",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/borrowed-neutral-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cis-for-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cpd-for-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/cable-basket-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cable-colour-codes-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cable-size-for-cooker-circuit",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cable-size-for-electric-shower",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cable-sizing-guide-bs-7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/car-park-lighting-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/caravan-park-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/cat6-cat6a-current-rating-poe",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/chapter-44-overvoltage-protection",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/city-guilds-2365-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/commercial-rewire-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/commissioning-electrical-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/competent-person-scheme-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/confined-space-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/construction-site-temporary-supply",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/consumer-unit-replacement-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/continuity-testing-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/continuity-testing-electricians-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/correction-factors-bs-7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/dali-lighting-control-wiring-bs-en-62386",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/dead-vs-live-testing",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/distribution-board-wiring",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ecs-card-types",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-bristol",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-cost-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-limitations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-observation-codes-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-plastic-consumer-unit-hmo",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/eicr-schedule-of-inspections",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/eicr-sunderland",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/ev-charging-legislation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/earth-electrode-testing",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/earth-electrode-testing",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/earth-fault-loop-impedance-calculation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/edwardian-house-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electric-boiler-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electric-shock-from-tap",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electric-shower-fault-finding",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electric-shower-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electrical-accident-reporting",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-apprenticeship-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electrical-engineering-degree",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Occupation",
+        "Occupation",
+        "Occupation",
+        "Occupation",
+        "Occupation",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-fault-finding-methodology",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-regulations-timeline-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-safety-on-site",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electrical-salary-benchmarking",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/electrical-survey-before-buying",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-symbols-chart",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject",
+        "ImageObject"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-wiring-regulations-history",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrical-work-pricing-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrician-working-abroad",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrician-day-rates-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "Service",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrician-salary-london",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "Service",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrician-tool-list-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "Service",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electrician-working-abroad-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/electricity-at-work-regulations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/emergency-lighting-certificate-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/extension-lead-safety",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/fp200-gold-cable-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/fire-alarm-certificate-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/first-fix-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/food-processing-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/fused-spur-installation-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/gs-38-proving-dead",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/garage-conversion-electrics",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/garage-electrical-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/garden-lighting-installation-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/generator-installation-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/gold-card-requirements-electrician",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ground-source-heat-pump-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/hmo-electrical-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/heat-pump-electrical-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/high-voltage-electrical-work-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/holiday-let-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/hot-tub-electrical-connection",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/hotel-eicr",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/how-to-fill-in-minor-works",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/how-to-read-electrical-drawings",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/how-to-test-insulation-resistance",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/humming-noise-from-consumer-unit",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/iet-code-of-practice-ev",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/industrial-electrical-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/insulated-tools-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/insulation-resistance-testing",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/insulation-resistance-testing-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/insulation-resistance-testing-bs7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/jib-gold-card",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/jib-grading-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/knx-wiring-installation-guide-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/kitchen-wiring-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/level-4-electrical-qualification",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/loop-impedance-testing-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/low-insulation-resistance",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/multifunction-tester-buying-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/marina-electrical-installations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/max-demand-calculation-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/method-statement-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/minor-works-vs-eic",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/mock-exams-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/mock-exams-electrician",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/napit-certificate-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/napit-registration",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "Article",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite"
+      ],
+      "errors": [
+        "Article: missing required field \"headline\"",
+        "Article: missing required field \"datePublished\""
+      ]
+    },
+    {
+      "slug": "/guides/niceic-certificate-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/niceic-vs-napit-comparison",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/nvq-level-3-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/new-build-electrical-cost-per-m2",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/no-power-to-sockets",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/off-the-job-training-hours",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/outbuilding-electrical-supply-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ppe-for-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/part-p-self-certification",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/pharmaceutical-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/polarity-test-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/polarity-testing-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/polarity-testing-guide-bs7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/pricing-electrical-work-per-point",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/prospective-fault-current-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/prosumer-low-voltage-electrical-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/protective-earthing-bonding",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/5357-complete-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/rcbo-installation-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/rcbo-keeps-tripping-common-causes",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/rcd-testing-procedure",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/radial-circuit-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/reference-methods-cable-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/regulation-314-division-of-circuits",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/regulation-530-3-201",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/restaurant-electrical-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/restaurant-kitchen-electrical-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/rewire-cost-birmingham",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/rewire-cost-manchester",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/rewire-cost-sheffield",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ring-circuit-fault-finding",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ring-vs-radial-circuits",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/safe-isolation-procedure-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/safe-isolation-procedure",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/sauna-electrical-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/schedule-of-test-results",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/section-701-bathrooms-complete-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/section-722-ev-charging-a4-2026-changes",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/section-722-ev-charging-complete-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/shop-fit-out-electrical-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/smart-home-wiring-cost",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/socket-outlet-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/solar-pv-certificate-requirements",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/solar-pv-system-sizing",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/spd-symbol",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "ImageObject"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/special-locations-part-7-bs-7671",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/spur-socket-regulations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/storage-heater-not-working",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/swimming-pool-electrical-regulations",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/earthing-systems-tns-tncs-tt-explained",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/temporary-installations-bs-7909",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/testing-three-phase-installation",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/trunking-installation-guide",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/underfloor-heating-electrical",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/v2h-bidirectional-ev-charging",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "HowTo",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/vat-for-electricians",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/why-choose-niceic-electrician",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/wiring-colours-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    },
+    {
+      "slug": "/guides/ze-values-uk",
+      "status": 200,
+      "schemas": [
+        "Organization",
+        "SoftwareApplication",
+        "WebPage",
+        "Article",
+        "FAQPage",
+        "BreadcrumbList",
+        "Organization",
+        "WebSite",
+        "WebPage"
+      ],
+      "errors": [
+        "WebPage: missing required field \"name\""
+      ]
+    }
+  ]
 }

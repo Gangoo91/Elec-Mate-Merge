@@ -42,24 +42,60 @@ interface CertShellFooterProps {
 export const certFooterNeutralButton =
   'h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6 outline-none focus:outline-none focus-visible:outline-none';
 
-/** Slide the footer away while the user is typing so it never covers a field. */
+/**
+ * Slide the footer away while the user is typing so it never covers a field.
+ *
+ * ELE-1579 — "occasionally the navigation buttons in bottom right disappear".
+ *
+ * This used to decide on `focusout`'s `relatedTarget`: stay hidden if focus
+ * moved to another text field, show again otherwise. Two ways that leaves the
+ * footer stuck off-screen with no way back:
+ *
+ *  - **A focused field is unmounted.** Removing a focused element does not
+ *    reliably fire `focusout` at all. The schedule of tests re-renders rows
+ *    constantly — autosave, validation, adding a circuit — so an input can
+ *    vanish mid-edit and `typing` is simply never cleared. The user is left
+ *    with no Back and no Continue until they happen to focus and blur another
+ *    field, which is exactly the "occasionally" in the report.
+ *  - **`relatedTarget` is null** in more cases than it looks: clicking blank
+ *    page space, focus leaving the document, some sheet/portal dismissals.
+ *
+ * Derived from `document.activeElement` instead, which is authoritative — it
+ * describes what IS focused rather than what an event guessed was about to be.
+ * Re-synced on a deferred tick (during focusout the active element has not
+ * settled yet) and on visibility change, so returning to the tab re-evaluates
+ * rather than trusting stale state.
+ */
 const useTypingFocus = () => {
   const [typing, setTyping] = useState(false);
   useEffect(() => {
-    const isTextEntry = (el: EventTarget | null): boolean =>
+    const isTextEntry = (el: Element | null): boolean =>
       el instanceof HTMLElement &&
       (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
-    const onFocusIn = (e: FocusEvent) => {
-      if (isTextEntry(e.target)) setTyping(true);
+
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const sync = () => {
+      clearTimeout(timer);
+      // Deferred: on focusout the active element is transiently <body>, and on
+      // an unmount it settles a tick later. Reading immediately would flicker.
+      //
+      // setTimeout, NOT requestAnimationFrame. rAF does not fire at all while
+      // the tab is backgrounded or throttled, so switching apps mid-form —
+      // which is routine on a phone, checking a photo or a message — would
+      // leave the footer frozen in whatever state it was in. A timer still
+      // runs. (Caught testing this: the reproduction reported "visible" on
+      // every step because the driving tab wasn't painting.)
+      timer = setTimeout(() => setTyping(isTextEntry(document.activeElement)), 0);
     };
-    const onFocusOut = (e: FocusEvent) => {
-      if (!isTextEntry(e.relatedTarget)) setTyping(false);
-    };
-    document.addEventListener('focusin', onFocusIn);
-    document.addEventListener('focusout', onFocusOut);
+
+    document.addEventListener('focusin', sync);
+    document.addEventListener('focusout', sync);
+    document.addEventListener('visibilitychange', sync);
     return () => {
-      document.removeEventListener('focusin', onFocusIn);
-      document.removeEventListener('focusout', onFocusOut);
+      clearTimeout(timer);
+      document.removeEventListener('focusin', sync);
+      document.removeEventListener('focusout', sync);
+      document.removeEventListener('visibilitychange', sync);
     };
   }, []);
   return typing;

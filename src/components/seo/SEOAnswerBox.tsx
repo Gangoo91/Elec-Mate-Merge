@@ -35,6 +35,9 @@ export function SEOAnswerBox({ question, answer, detail, speakable = true }: SEO
           data={{
             '@context': 'https://schema.org',
             '@type': 'WebPage',
+            // validate-schemas.mjs requires name on WebPage — the question is
+            // the most descriptive name this component can know.
+            name: question,
             speakable: {
               '@type': 'SpeakableSpecification',
               cssSelector: ['.seo-answer-box__q', '.seo-answer-box__a'],

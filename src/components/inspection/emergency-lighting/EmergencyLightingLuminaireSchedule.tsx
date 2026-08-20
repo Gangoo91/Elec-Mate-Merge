@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -43,8 +43,31 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
   const { applyLuminaireDefaults } = useEmergencyLightingSmartForm();
   const haptic = useHaptic();
 
+  /**
+   * References that appear on more than one fitting.
+   *
+   * The whole value of a reference is that a client can quote it and land on
+   * exactly one luminaire. Two rows sharing a code destroys that, and on a
+   * job with a dozen hand-typed labels a typo or a mis-copy is likely. Compared
+   * case-insensitively and trimmed, because "abr-11", "ABR-11 " and "ABR-11"
+   * are the same sticker to everyone except a string comparison.
+   */
+  const duplicateReferences = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const l of (formData.luminaires || []) as Luminaire[]) {
+      const key = String(l.reference || '').trim().toLowerCase();
+      if (!key) continue;
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+    return new Set([...counts.entries()].filter(([, n]) => n > 1).map(([k]) => k));
+  }, [formData.luminaires]);
+
+  const isDuplicateRef = (ref?: string) =>
+    !!ref && duplicateReferences.has(String(ref).trim().toLowerCase());
+
   const createEmptyLuminaire = () => ({
     id: `lum-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    reference: '',
     location: '',
     luminaireType: '',
     manufacturer: '',
@@ -77,14 +100,53 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
 
   const cloneLuminaire = useCallback(
     (luminaire: Luminaire) => {
+      /*
+       * Duplicating used to append " (copy)" unconditionally, so duplicating a
+       * duplicate compounded: "Ground Floor Corridor (copy) (copy) (copy)…".
+       * Reported from site with nine of them on one row, which pushed the
+       * actual location off the edge and would have printed that way on the
+       * certificate.
+       *
+       * Strip any suffix we previously added, then number instead. Numbering
+       * is also the more useful answer here — several emergency luminaires in
+       * one corridor is normal, so "Ground Floor Corridor (2)" describes the
+       * installation while "(copy)" only describes how the row was created.
+       */
+      const existing: Luminaire[] = formData.luminaires || [];
+      // One or more trailing "(copy)"/"(n)" groups, in a single pass — rows
+      // already poisoned by the old bug carry nine of them, so a fixed number
+      // of passes would leave some behind. Only strips OUR suffixes: a real
+      // name like "Plant Room (North)" is untouched.
+      const base = String(luminaire.location || '')
+        .replace(/(?:\s*\((?:copy|\d+)\))+\s*$/gi, '')
+        .trim();
+
+      // Next free number for this location, counting what is already there.
+      const taken = new Set(
+        existing.map((l) =>
+          String(l.location || '')
+            .trim()
+            .toLowerCase()
+        )
+      );
+      let n = 2;
+      while (taken.has(`${base} (${n})`.toLowerCase())) n++;
+
       const cloned = {
         ...luminaire,
         id: `lum-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-        location: `${luminaire.location} (copy)`,
+        location: base ? `${base} (${n})` : '',
+        // Cleared, never copied: the reference is the code on THIS fitting's
+        // label and is unique by definition. Carrying it over would put two
+        // rows on the certificate claiming the same physical fitting, which
+        // is worse than leaving it blank for the engineer to read off.
+        reference: '',
+        // Test results are never carried over — a duplicate is a new fitting
+        // that has not been tested yet.
         functionalTestResult: '',
         durationTestResult: '',
       };
-      onUpdate('luminaires', [...(formData.luminaires || []), cloned]);
+      onUpdate('luminaires', [...existing, cloned]);
     },
     [formData.luminaires, onUpdate]
   );
@@ -213,6 +275,22 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <span className="text-[13px] font-semibold text-elec-yellow">
                       #{index + 1}
                     </span>
+                    {/* The label reference, when there is one, reads before the
+                        location — it is the thing a client quotes back. Mono so
+                        a code like ABR-ETSPOT-11 is easy to check against the
+                        sticker without misreading 1 for I. */}
+                    {luminaire.reference && (
+                      <span
+                        className={cn(
+                          'shrink-0 rounded border px-1.5 py-0.5 font-mono text-[11.5px] text-white',
+                          isDuplicateRef(luminaire.reference)
+                            ? 'border-amber-400/50 bg-amber-500/[0.14]'
+                            : 'border-white/[0.14] bg-white/[0.06]'
+                        )}
+                      >
+                        {luminaire.reference}
+                      </span>
+                    )}
                     <span className="text-[13px] font-medium text-white truncate">
                       {luminaire.location || 'No location'}
                     </span>
@@ -239,6 +317,34 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  {/* Reference sits FIRST — it is how the fitting is identified
+                      on site, on the layout drawing and in a remedial request,
+                      so it reads before the description of where it is. */}
+                  <Field label="Reference / ID">
+                    <Input
+                      value={luminaire.reference || ''}
+                      onChange={(e) =>
+                        // Trimmed on write. A trailing space is invisible on
+                        // screen and makes the reference fail to match the
+                        // sticker everywhere it matters.
+                        updateLuminaire(luminaire.id, 'reference', e.target.value.trim())
+                      }
+                      className={inputCn}
+                      placeholder="e.g. ABR-ETSPOT-11"
+                      // Labels are printed uppercase and quoted back by clients
+                      // in that form; autocapitalise saves fighting the keyboard
+                      // on every fitting. autoCorrect off — these are codes.
+                      autoCapitalize="characters"
+                      autoCorrect="off"
+                      spellCheck={false}
+                    />
+                    {isDuplicateRef(luminaire.reference) && (
+                      <p className="mt-1 text-[11.5px] text-amber-300">
+                        Another fitting already uses this reference — a client
+                        quoting it would match two rows.
+                      </p>
+                    )}
+                  </Field>
                   <Field label="Location *">
                     <Input
                       value={luminaire.location || ''}

@@ -31,6 +31,9 @@ const EARTHING_SECTION_FIELDS = [
   'bondingCompliance',
   'bondingConductorContinuityVerified',
   'mainBondingLocations',
+  // ELE-1580 — supply tails
+  'tailsSize',
+  'tailsLength',
   // ELE-849 — limitation reason notes
   'meansOfEarthingNotes',
   'mainEarthingConductorTypeNotes',
@@ -144,8 +147,10 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         label: 'Maximum demand — load',
         unit: formData.maximumDemandUnit === 'kva' ? 'kVA' : 'A',
       },
+      tailsSize: { label: 'Supply tails — CSA', unit: 'mm²' },
+      tailsLength: { label: 'Supply tails — length', unit: 'm' },
     },
-    sequence: ['earthElectrodeResistance', 'maximumDemand'],
+    sequence: ['earthElectrodeResistance', 'maximumDemand', 'tailsSize', 'tailsLength'],
     getValue: (field) => String(formData[field] ?? ''),
     setValue: (field, value) => onUpdate(field, value),
   });
@@ -350,6 +355,47 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 </button>
               ))}
             </div>
+          </FormField>
+        </div>
+      </section>
+
+      {/*
+        Supply tails — ELE-1580.
+
+        Reported as missing: "EICR certificate does not have an entry for size
+        of Tails, only for Earthing and Bonding Cable Sizes". The data path
+        already existed end to end — `tailsSize` in form state and `tails_size`
+        in the payload, complete with custom-size and limitation-note handling —
+        but there was no input anywhere to fill it and no template row to print
+        it. Both ends were missing, not the middle.
+
+        Sits after Maximum demand because tails are sized for the demand, and
+        before the earthing arrangements the reporter was comparing them to.
+      */}
+      <section className={cardCn}>
+        <SectionTitle title="Supply tails" />
+        <div className="grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-4">
+          <FormField label="Tails size (mm²)">
+            <Input
+              type="text"
+              inputMode="decimal"
+              value={formData.tailsSize || ''}
+              onChange={(e) => onUpdate('tailsSize', e.target.value)}
+              placeholder="e.g., 25"
+              className={inputCn}
+              {...keypad.field('tailsSize')}
+            />
+          </FormField>
+          <FormField label="Tails length (m)">
+            <Input
+              type="text"
+              inputMode="decimal"
+              value={formData.tailsLength || ''}
+              onChange={(e) => onUpdate('tailsLength', e.target.value)}
+              placeholder="e.g., 2"
+              className={inputCn}
+              {...keypad.field('tailsLength')}
+            />
           </FormField>
         </div>
       </section>

@@ -48,7 +48,7 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires that most domestic electrical work is either carried out by a registered competent person or notified to Building Control before work begins.',
   'Registration with a competent person scheme such as NICEIC Domestic Installer, NAPIT, or ELECSA allows you to self-certify notifiable work without involving Building Control, saving your customers time and money.',
   'Typical domestic electrician earnings in the UK range from £30,000 to £55,000 employed, with self-employed electricians earning £40,000 to £70,000+ depending on location, specialisation, and efficiency.',
-  'Elec-Mate covers every domestic job — all 16 certificate types, cable sizing for house circuits, board scanner, quote builder, and invoice app. One subscription replaces multiple tools.',
+  'Elec-Mate covers every domestic job — all 19 certificate types, cable sizing for house circuits, board scanner, quote builder, and invoice app. One subscription replaces multiple tools.',
 ];
 
 const faqs = [
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types',
     description:
-      'All 16 certificate types explained — EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, and more.',
+      'All 19 certificate types explained — EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, and more.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -277,7 +277,7 @@ const sections = [
           certificate types that a domestic electrician needs, directly from your phone.
         </p>
         <SEOAppBridge
-          title="All 16 certificate types in one app"
+          title="All 19 certificate types in one app"
           description="EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, EV charger, and PAT testing certificates."
           icon={FileCheck2}
         />

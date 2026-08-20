@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import TapShockChecker from '@/components/seo/TapShockChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -27,6 +28,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'shock-checker', label: 'Likely Cause Checker' },
   { id: 'what-causes-shock', label: 'What Causes Electric Shock from a Tap' },
   { id: 'immersion-heater-fault', label: 'Immersion Heater Faults' },
   { id: 'bonding-failure', label: 'Bonding Failures' },
@@ -135,6 +137,19 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'shock-checker',
+    heading: 'Find the Likely Cause in Two Taps',
+    content: (
+      <>
+        <p>
+          The quick answer before the theory: where you feel the shock narrows the cause sharply —
+          pick what matches and get the immediate action.
+        </p>
+        <TapShockChecker />
+      </>
+    ),
+  },
   {
     id: 'what-causes-shock',
     heading: 'What Causes an Electric Shock from a Tap?',
@@ -628,7 +643,7 @@ export default function ElectricShockFromTapPage() {
   return (
     <GuideTemplate
       title="Electric Shock from Tap: Causes & How to Fix"
-      description="Usually a failed immersion heater element energising the pipework. Switch off the consumer unit first, then check main bonding and a broken PEN (TN-C-S)."
+      description="Shocks from a water tap usually mean a failed immersion heater element energising the pipework. Isolate at the consumer unit, check bonding and the PEN."
       datePublished="2025-04-20"
       dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}

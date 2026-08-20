@@ -708,7 +708,7 @@ export default function KitchenWiringGuidePage() {
   return (
     <GuideTemplate
       title="Kitchen Wiring Regulations UK: 5-8 Circuits"
-      description="A UK kitchen needs 5-8 circuits: cooker 32A or 45A on 6.0mm² or 10.0mm², ring or radial worktop sockets, and 30mA RCD protection on sockets and lighting."
+      description="Kitchen wiring regulations UK: 5-8 circuits — cooker 32A or 45A on 6.0mm² or 10.0mm², ring or radial worktop sockets, 30mA RCD on sockets and lighting."
       datePublished="2025-08-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

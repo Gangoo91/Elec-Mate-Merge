@@ -434,7 +434,7 @@ export default function EmployerElectricalPlatformPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 16 certificate types used by your team — EICR, EIC, Minor Works, and more.',
+            'All 19 certificate types used by your team — EICR, EIC, Minor Works, and more.',
           icon: FileCheck2,
           category: 'Certificates',
         },

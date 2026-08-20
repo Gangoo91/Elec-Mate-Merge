@@ -53,7 +53,7 @@ const keyTakeaways = [
   'There are 8 main types of electrical certificate used in the UK — each for a different type of work, and each with specific legal and regulatory requirements.',
   'An EICR is for periodic inspection of existing installations; an EIC is for new work and significant alterations; a Minor Works Certificate covers small additions and changes.',
   'Fire Alarm certificates (BS 5839), Emergency Lighting certificates (BS 5266), and Solar PV certificates (MCS) require specialist knowledge of their respective British Standards.',
-  'Elec-Mate is the only app that has all 16 certificate types in one platform — with board scanner, voice test entry, defect code AI, remedial estimator, digital signatures, and PDF export.',
+  'Elec-Mate is the only app that has all 19 certificate types in one platform — with board scanner, voice test entry, defect code AI, remedial estimator, digital signatures, and PDF export.',
   'Every certificate type in Elec-Mate validates test results against BS 7671 maximum permitted values automatically, eliminating manual cross-referencing errors.',
   'BS 7671:2018+A4:2026 introduced two key changes for domestic EICs: Reg 411.3.4 (mandatory 30 mA RCD on all luminaire circuits) and Reg 421.1.7 (recommended AFDDs on AC final circuits). EICs on domestic installations must now reflect both.',
 ];
@@ -92,7 +92,7 @@ const faqs = [
   {
     question: 'Can I complete all these certificates on my phone?',
     answer:
-      'Yes. Elec-Mate includes all 16 certificate types — EICR, EIC, Minor Works, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing — in one app that works on your phone, tablet, or laptop. Every certificate includes all the required fields per the relevant British Standard, with test result validation against BS 7671 maximum permitted values, digital signatures captured on-screen, and PDF export ready to send to clients by email or WhatsApp. The app works fully offline for on-site use and syncs to the cloud automatically when connectivity returns. All your certificates are stored in one place with full search, filtering, and client history.',
+      'Yes. Elec-Mate includes all 19 certificate types — EICR, EIC, Minor Works, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing — in one app that works on your phone, tablet, or laptop. Every certificate includes all the required fields per the relevant British Standard, with test result validation against BS 7671 maximum permitted values, digital signatures captured on-screen, and PDF export ready to send to clients by email or WhatsApp. The app works fully offline for on-site use and syncs to the cloud automatically when connectivity returns. All your certificates are stored in one place with full search, filtering, and client history.',
   },
 ];
 
@@ -122,7 +122,7 @@ const sections = [
           (emergency lighting), and the MCS standards for solar PV.
         </p>
         <SEOAppBridge
-          title="All 16 certificate types in one app"
+          title="All 19 certificate types in one app"
           description="Elec-Mate is the only platform that has EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV…"
           icon={FileCheck2}
         />
@@ -610,7 +610,7 @@ const sections = [
     content: (
       <>
         <p>
-          Elec-Mate is the only platform that brings all 16 certificate types together in one app,
+          Elec-Mate is the only platform that brings all 19 certificate types together in one app,
           with features designed specifically for how electricians work on site.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
@@ -771,7 +771,7 @@ export default function ElectricalCertificateTypesPage() {
       sections={sections}
       faqs={faqs}
       relatedPages={relatedPages}
-      ctaHeading="All 16 certificate types. One app. Your phone."
+      ctaHeading="All 19 certificate types. One app. Your phone."
       ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates. Board scanner, voice test entry, digital signatures. 7-day free trial."
     />
   );

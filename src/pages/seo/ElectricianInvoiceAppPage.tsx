@@ -1,5 +1,5 @@
-import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const faqs = [
@@ -113,12 +114,6 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £19.99/month',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
 };
 
 const faqSchema = {
@@ -148,14 +143,10 @@ export default function ElectricianInvoiceAppPage() {
 
   return (
     <PublicPageLayout>
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
-        </script>
-      </Helmet>
+      {/* Body-inline JSON-LD — react-helmet never rendered these at runtime
+          (see JsonLd.tsx). */}
+      <JsonLd data={{ '@context': 'https://schema.org', ...softwareAppSchema }} />
+      <JsonLd data={{ '@context': 'https://schema.org', ...faqSchema }} />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
@@ -198,6 +189,16 @@ export default function ElectricianInvoiceAppPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-4">
+        <div className="mx-auto max-w-4xl">
+          <SEOAnswerBox
+            question="What does an electrician invoice app need to do?"
+            answer="Turn a finished job into a paid invoice before you leave site: convert the accepted quote in one tap, add VAT or CIS automatically, send a branded PDF with a Stripe pay-by-card link, and chase overdue payments for you on a schedule you set."
+            detail="Elec-Mate does all of it in one app, syncs every invoice and payment to Xero or QuickBooks, and links expenses to jobs so you can see the real profit on every one. From £6.99/month after a 7-day free trial."
+          />
         </div>
       </section>
 

@@ -1708,6 +1708,52 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     });
   };
 
+  /**
+   * ELE-1579 — derive Max Zs for a circuit created from a preset.
+   *
+   * `circuitPresets.ts` deliberately omits maxZs, on the stated grounds that
+   * "the row components already fill it via getMaxZsFromDeviceDetails". They
+   * do not. Verified in the running app: eight circuits added from presets,
+   * every one with BS standard, curve and rating populated, and Max Zs blank
+   * on all eight.
+   *
+   * Nothing derives it on this path. The ELE-854 cascade below only fires from
+   * handleUpdate when `protectiveDeviceType`/`Curve`/`Rating` change as
+   * individual fields, and a preset never emits those — it writes the whole
+   * row in one spread. ProtectiveDeviceCells only derives when you open its
+   * dropdowns. So a preset-built schedule had no Max Zs anywhere.
+   *
+   * That is what the "stops auto populating after Way 5" report is: the board
+   * scanner DOES derive it (EICRForm.tsx), so scanned circuits carry a value
+   * while every circuit added afterwards from a preset does not.
+   *
+   * Never overwrites a value that is already there — a figure taken from the
+   * On-Site Guide by hand outranks anything we compute.
+   */
+  const withDerivedMaxZs = (row: TestResult): TestResult => {
+    if (row.maxZs && String(row.maxZs).trim() !== '') return row;
+
+    const deviceType = row.protectiveDeviceType || '';
+    const rating = row.protectiveDeviceRating || '';
+    if (!deviceType || !rating) return row;
+
+    const bsStandard = row.bsStandard || getDefaultBsStandard(deviceType) || '';
+    if (!bsStandard) return row;
+
+    const lookup = getMaxZsWithRcd({
+      bsStandard,
+      curve: row.protectiveDeviceCurve || '',
+      rating: String(rating),
+      protectiveDeviceType: deviceType,
+      rcdRating: row.rcdRating || null,
+      circuitDescription: row.circuitDescription || '',
+    });
+
+    return lookup.maxZs != null
+      ? { ...row, bsStandard, maxZs: String(lookup.maxZs) }
+      : { ...row, bsStandard };
+  };
+
   const handleCreateCircuit = (
     useAutoFill: boolean = false,
     circuitType?: string,
@@ -1728,14 +1774,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     if (blankIndex !== -1) {
       // Replace existing blank row instead of appending
       const existingResult = testResults[blankIndex];
-      const updatedResult: TestResult = {
+      const updatedResult: TestResult = withDerivedMaxZs({
         ...existingResult, // Keep existing id, circuitDesignation, circuitNumber, boardId
         circuitDescription: circuitType || '',
         circuitType: circuitType || '',
         type: circuitType || '',
         ...(suggestions || {}),
         autoFilled: useAutoFill,
-      };
+      });
 
       const updatedResults = [...testResults];
       updatedResults[blankIndex] = updatedResult;
@@ -1796,13 +1842,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       // Apply auto-fill suggestions if provided
       const newResult = suggestions
-        ? {
+        ? withDerivedMaxZs({
             ...baseResult,
             ...suggestions,
             circuitDescription: circuitType || '',
             type: circuitType || '',
             autoFilled: true,
-          }
+          })
         : baseResult;
 
       const updatedResults = [...testResults, newResult];
