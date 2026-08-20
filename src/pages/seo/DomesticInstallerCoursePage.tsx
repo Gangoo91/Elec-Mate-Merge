@@ -16,7 +16,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Domestic Installer Course | Part P Certification';
+const PAGE_TITLE = 'Domestic Installer Course: Part P Certification';
 const PAGE_DESCRIPTION =
   'Part P domestic installer training: Building Regs, notifiable work, competent person schemes, CUs, special locations, certification. 12 modules.';
 

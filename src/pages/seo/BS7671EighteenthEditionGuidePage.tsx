@@ -34,9 +34,9 @@ const tdCn = 'px-4 py-3 align-top text-sm text-white';
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 18th Edition Guide | A4:2026 Changes Explained';
+const PAGE_TITLE = 'BS 7671 18th Edition: A4:2026 Changes Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671:2018+A4:2026 — the parts of the standard, what each amendment actually changed, and the A4:2026 additions (Chapter 57 batteries, Section 716 PoE, Chapter 81 energy efficiency, bidirectional devices) in plain English.';
+  'BS 7671:2018+A4:2026 explained: the parts of the standard, what each amendment changed, and the A4:2026 additions — Chapter 57 batteries, Section 716 PoE.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

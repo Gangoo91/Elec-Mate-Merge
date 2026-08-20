@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236503Unit308Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-03-unit-308-career-awareness-in-building-services-engineering-revision',
-  title: 'City & Guilds 2365-03 Unit 308: Career awareness in',
+  title: 'City & Guilds 2365-03 Unit 308 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-03 Unit 308 (Career awareness in building services engineering).',
   datePublished: published,
   dateModified: modified,

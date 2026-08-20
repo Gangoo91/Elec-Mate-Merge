@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -28,6 +30,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'pfc-calculator', label: 'PFC Calculator' },
   { id: 'what-is-pfc', label: 'What Is Prospective Fault Current?' },
   { id: 'why-pfc-matters', label: 'Why PFC Matters' },
   { id: 'how-to-measure', label: 'How to Measure PFC' },
@@ -89,6 +92,21 @@ const faqs = [
 ];
 
 const sections = [
+  {
+    id: 'pfc-calculator',
+    heading: 'Calculate Prospective Fault Current',
+    content: (
+      <>
+        <p>
+          Work out PFC from your measured loop impedance and check it against the breaking capacity
+          of the protective devices — free, no sign-up.
+        </p>
+        <CalculatorSurface>
+          <PFCCalculator />
+        </CalculatorSurface>
+      </>
+    ),
+  },
   {
     id: 'what-is-pfc',
     heading: 'What Is Prospective Fault Current?',

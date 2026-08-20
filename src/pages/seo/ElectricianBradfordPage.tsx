@@ -509,7 +509,7 @@ export default function ElectricianBradfordPage() {
     <GuideTemplate
       noindex={true}
       localArea="Bradford"
-      title="Electrician Bradford | Find Qualified Electricians in"
+      title="Electrician Bradford: Qualified Electricians"
       description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

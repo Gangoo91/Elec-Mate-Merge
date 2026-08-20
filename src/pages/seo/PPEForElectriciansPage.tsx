@@ -879,8 +879,8 @@ const sections = [
 export default function PPEForElectriciansPage() {
   return (
     <GuideTemplate
-      title="PPE for Electricians: Gloves, Arc Flash, Boots & Legal Duties (2026)"
-      description="PPE for UK electricians: insulating glove classes to BS EN 60903, arc flash categories, BS EN 60900 tools, boots, eye and head protection, and the legal duties."
+      title="PPE for Electricians: Gloves, Arc Flash, Boots"
+      description="PPE for UK electricians: insulating glove classes to BS EN 60903, arc flash categories, BS EN 60900 tools, boots, eye and head protection, legal duties."
       datePublished="2025-04-20"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

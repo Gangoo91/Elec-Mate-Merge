@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-eicr-inspection',
   title:
-    'RAMS for an EICR Inspection — UK Electrical Method',
+    'RAMS for an EICR Inspection — UK Method',
   description:
     'A complete RAMS (Risk Assessment & Method Statement) guide for UK EICR inspections. Covers EICR-specific hazards…',
   datePublished: published,

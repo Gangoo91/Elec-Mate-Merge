@@ -19,7 +19,7 @@ import {
 export default function FP200CableGuidePage() {
   return (
     <GuideTemplate
-      title="FP200 Cable Guide | Fire Performance Cable UK"
+      title="FP200 Cable Guide: Fire Performance Cable UK"
       description="FP200 + fire performance cable guide for UK installations: fire survival ratings, BS EN 50200, installation rules, terminating, sizing, sourcing."
       datePublished="2025-06-01"
       dateModified="2026-05-18"

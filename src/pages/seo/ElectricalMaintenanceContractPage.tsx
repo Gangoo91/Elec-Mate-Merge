@@ -634,7 +634,7 @@ const sections = [
 export default function ElectricalMaintenanceContractPage() {
   return (
     <GuideTemplate
-      title="Electrical Maintenance Contract UK | PPM, EICR, Emergency"
+      title="Electrical Maintenance Contract UK: PPM & EICR"
       description="Complete guide to electrical maintenance contracts for commercial properties. Planned preventative maintenance (PPM) vs reactive, PPM schedules."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

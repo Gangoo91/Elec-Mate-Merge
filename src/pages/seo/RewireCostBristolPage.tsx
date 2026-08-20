@@ -561,7 +561,7 @@ const sections = [
 export default function RewireCostBristolPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Bristol 2025 | Full Rewire Prices Bristol"
+      title="House Rewire Cost Bristol 2025: Full Prices"
       description="How much does a house rewire cost in Bristol in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Clifton and Totterdown."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

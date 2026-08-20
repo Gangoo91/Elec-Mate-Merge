@@ -148,7 +148,7 @@ const breadcrumbSchema = {
 
 export default function EarthingArrangementsPage() {
   useSEO({
-    title: 'Earthing Arrangements Explained | TN-S TN-C-S TT Systems',
+    title: 'Earthing Systems: TN-S, TN-C-S, TT Explained',
     description: PAGE_DESCRIPTION,
   });
 

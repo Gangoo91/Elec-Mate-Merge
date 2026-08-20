@@ -8,7 +8,7 @@ const modified = '2026-06-10';
 
 export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-electric-shower',
-  title: 'Cable Size for an Electric Shower (8.5 / 9.5 / 10.8 kW)',
+  title: 'Electric Shower Cable Size (8.5/9.5/10.8kW)',
   description:
     'Cable size for UK electric showers explained: 6 mm² for most 8.5 kW units, 10 mm² for 9.5 kW and most 10.5/10.8 kW units.',
   datePublished: published,

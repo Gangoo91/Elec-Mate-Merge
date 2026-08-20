@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236603Unit306Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-unit-306-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision',
-  title: 'City & Guilds 2366-03 Unit 306: Understand the Requirements',
+  title: 'City & Guilds 2366-03 Unit 306 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2366-03 Unit 306 (Understand the Requirements of Electrical Installations BS 7671:2018 (2022)).',
   datePublished: published,
   dateModified: modified,

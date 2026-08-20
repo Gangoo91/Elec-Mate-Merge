@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostHullConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-hull',
-  title: 'EICR Cost Hull 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Hull 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Hull? Fair-margin 2026 prices for scheme-registered electricians — £190–260 for a 1-bed, £300–410 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

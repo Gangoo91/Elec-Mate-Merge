@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit105505Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-105-505-understand-how-to-plan-and-oversee-electrical-work-activities-revision',
-  title: 'City & Guilds 5357 Unit 105/505: Understand How to Plan and',
+  title: 'City & Guilds 5357 Unit 105/505: Understand How',
   description: 'Complete revision guide for City & Guilds 5357 Unit 105/505 (Understand How to Plan and Oversee Electrical Work Activities).',
   datePublished: published,
   dateModified: modified,

@@ -21,7 +21,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'MEWP Course | Mobile Elevated Work Platforms Training';
+const PAGE_TITLE = 'MEWP Course: Mobile Elevated Work Platforms';
 const PAGE_DESCRIPTION =
   'MEWP operator training for UK electricians: categories 3a/3b, IPAF, pre-use checks, safe ops, rescue plans, Work at Height Regs. 6 modules.';
 

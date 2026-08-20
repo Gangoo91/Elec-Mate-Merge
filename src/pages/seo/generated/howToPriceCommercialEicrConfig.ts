@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceCommercialEicrConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-commercial-eicr-as-an-electrician',
-  title: 'How to Price Commercial EICR as an Electrician — UK 2026',
+  title: 'How to Price Commercial EICR: UK 2026',
   description: 'How much should you charge for commercial eicr as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

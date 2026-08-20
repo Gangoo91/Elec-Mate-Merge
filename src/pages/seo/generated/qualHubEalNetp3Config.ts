@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHubEalNetp3Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-complete-guide',
-  title: 'EAL NETP3: EAL Level 3 NVQ in Electrotechnical Practice',
+  title: 'EAL NETP3: Level 3 NVQ Electrotechnical Practice',
   description: 'The complete 2026 guide to EAL NETP3 (EAL Level 3 NVQ in Electrotechnical Practice). Every unit listed with revision links, full structure…',
   datePublished: published,
   dateModified: modified,

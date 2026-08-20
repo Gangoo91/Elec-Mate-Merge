@@ -754,7 +754,7 @@ const sections = [
 export default function ConfinedSpaceElectricalPage() {
   return (
     <GuideTemplate
-      title="Confined Space Electrical Work UK | Safety Requirements"
+      title="Confined Space Electrical Work: UK Safety Rules"
       description="UK guide to electrical work in confined spaces. Confined Spaces Regulations 1997, what counts as a confined space, gas testing."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

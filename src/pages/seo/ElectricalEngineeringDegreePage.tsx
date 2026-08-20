@@ -881,7 +881,7 @@ export default function ElectricalEngineeringDegreePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(occupationSchema) }}
       />
       <GuideTemplate
-        title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
+        title="Electrical Engineering Degree UK: BEng vs MEng"
         description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership."
         datePublished="2026-03-27"
         dateModified="2026-06-10"

@@ -591,7 +591,7 @@ const sections = [
 export default function RingMainExplainedPage() {
   return (
     <GuideTemplate
-      title="Ring Main Explained | Ring Final Circuit Guide UK"
+      title="Ring Main Explained: Ring Final Circuit Guide UK"
       description="Complete guide to ring final circuits (ring mains) in the UK. How rings work, testing with R1, R2, and R1+R2, max demand, common faults, spurs."
       datePublished="2025-09-01"
       dateModified="2026-06-10"

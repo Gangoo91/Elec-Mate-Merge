@@ -607,7 +607,7 @@ const sections = [
 export default function SupplementaryBondingGuidePage() {
   return (
     <GuideTemplate
-      title="Supplementary Bonding | When Is It Required? UK Guide"
+      title="Supplementary Bonding: When Is It Required? UK"
       description="Complete guide to supplementary bonding under BS 7671. Covers Regulation 415.2, bathroom bonding requirements, when supplementary bonding can be omitted."
       datePublished="2025-05-25"
       dateModified="2026-05-18"

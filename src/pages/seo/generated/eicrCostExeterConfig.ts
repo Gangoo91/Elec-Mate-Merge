@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostExeterConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-exeter',
-  title: 'EICR Cost Exeter 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Exeter 2026 — Domestic & Commercial',
   description: 'How much does an EICR cost in Exeter? Fair-margin 2026 prices for scheme-registered electricians — £230–305 for a 1-bed, £355–475 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

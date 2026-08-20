@@ -10,10 +10,9 @@ const modified = '2026-06-10';
 
 export const a4EICModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-eic-model-form',
-  title:
-    'BS 7671 A4:2026 — Electrical Installation Certificate (EIC)',
+  title: 'EIC Model Form: BS 7671 A4:2026 Changes (IET)',
   description:
-    'Amendment 4 (January 2026) rebuilt the BS 7671 Electrical Installation Certificate. The new EIC introduces item 14.0 Prosumer LV installations…',
+    'Amendment 4 (January 2026) rebuilt the BS 7671 Electrical Installation Certificate. What changed on the IET model form, including item 14.0 Prosumer LV.',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

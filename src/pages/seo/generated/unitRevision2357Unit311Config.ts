@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit311Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-311-applying-health-and-safety-legislation-and-working-practices-installing-and-maintaining-electrotechnical-systems-and-equipment-eltp01-revision',
-  title: 'City & Guilds 2357 Unit 311: Applying Health and Safety',
+  title: 'City & Guilds 2357 Unit 311 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 311 (Applying Health and Safety legislation and working practices (installing and maintaining…',
   datePublished: published,
   dateModified: modified,

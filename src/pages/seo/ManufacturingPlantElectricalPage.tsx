@@ -618,7 +618,7 @@ const sections = [
 export default function ManufacturingPlantElectricalPage() {
   return (
     <GuideTemplate
-      title="Manufacturing Plant Electrical Installation | Industrial"
+      title="Manufacturing Plant Electrical Installation UK"
       description="Complete guide to manufacturing plant electrical installation in the UK. Motor starters, VFDs, PLC integration."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

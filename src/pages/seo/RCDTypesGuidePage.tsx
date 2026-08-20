@@ -613,7 +613,7 @@ const sections = [
 export default function RCDTypesGuidePage() {
   return (
     <GuideTemplate
-      title="RCD Types UK Guide | RCCB vs RCBO vs SRCD Explained"
+      title="RCD Types UK Guide: RCCB vs RCBO vs SRCD"
       description="Complete guide to RCD types in UK electrical installations. RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

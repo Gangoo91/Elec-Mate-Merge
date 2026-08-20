@@ -99,6 +99,17 @@ const matchesBundledScheme = (path: string): boolean =>
   SCHEMES.some((s) => path === s.logoPath);
 
 /**
+ * 1×1 fully transparent PNG.
+ *
+ * Stands in for "no logo" wherever a PDF template renders an unconditional
+ * `<img>`. An empty src makes Chrome draw its broken-image glyph onto the
+ * certificate; this draws nothing. ~70 bytes, so it costs nothing in the
+ * payload and is well under every size guard.
+ */
+export const TRANSPARENT_PIXEL =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
+/**
  * Convert any scheme-logo value into a PDF-safe form.
  * Pass either the stored URL/path OR the scheme name (or both).
  */
@@ -125,8 +136,20 @@ export const resolveSchemeLogo = async (
     }
   }
 
-  // 4) Nothing usable — return original (probably empty string), template will skip render
-  return storedLogo || '';
+  // 4) Nothing usable.
+  //
+  // ELE-1581 — this used to return '' on the assumption that "the template
+  // will skip render". It does not. As the header of this file says, the
+  // templates render `<img src="{{registration_scheme_logo}}" />`
+  // unconditionally, and Chrome draws its broken-image placeholder for an
+  // empty src. That placeholder is the "watermark ... requiring an image"
+  // users reported seeing on certificates when they had no scheme logo.
+  //
+  // A 1×1 transparent PNG renders as nothing at all, so the certificate comes
+  // out clean without needing the PDFMonkey template changed. Returning a
+  // real image also keeps the `<img>` valid rather than relying on renderer
+  // behaviour for a malformed one.
+  return storedLogo || TRANSPARENT_PIXEL;
 };
 
 /**

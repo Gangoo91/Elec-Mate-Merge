@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
   title:
-    'BS 7671 A4:2026 — Luminaire RCD Protection (Regulation',
+    'BS 7671 A4:2026 Luminaire RCD (Reg 411.3.4)',
   description:
     'Amendment 4 introduced Regulation 411.3.4: AC final circuits supplying luminaires in domestic premises require additional 30 mA RCD protection.',
   datePublished: published,

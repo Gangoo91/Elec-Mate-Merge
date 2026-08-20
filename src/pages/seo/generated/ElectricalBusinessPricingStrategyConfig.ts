@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const ElectricalBusinessPricingStrategyConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-business-pricing-strategy',
-  title: 'Electrical Business Pricing Strategy — How to Set Your',
+  title: 'Electrical Business Pricing Strategy 2026',
   description: 'A practical 2026 pricing strategy guide for UK electrical contractors. Calculate your true hourly cost, set a fair-margin rate…',
   datePublished: published,
   dateModified: modified,

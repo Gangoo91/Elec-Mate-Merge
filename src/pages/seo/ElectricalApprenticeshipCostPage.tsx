@@ -625,8 +625,8 @@ const sections = [
 export default function ElectricalApprenticeshipCostPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprenticeship Cost | Fees & Funding UK"
-      description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, 5% co-investment, tool and PPE costs, and apprentice wages from year 1 to qualified."
+      title="Electrical Apprenticeship Cost: Fees & Funding"
+      description="How much does an electrical apprenticeship cost in the UK? Levy explained, funding bands, 5% co-investment, tool and PPE costs, apprentice wages by year."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -570,7 +570,7 @@ const sections = [
 export default function EVChargerInstallationReadingPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Reading | Home EV Charging Reading"
+      title="EV Charger Installation Reading: Home Charging"
       description="EV charger installation in Reading. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, Building Regulations Part S for new-builds."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

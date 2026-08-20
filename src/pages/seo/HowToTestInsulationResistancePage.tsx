@@ -154,7 +154,7 @@ const faqSchema = {
 
 export default function HowToTestInsulationResistancePage() {
   useSEO({
-    title: 'How to Test Insulation Resistance | BS 7671 Guide',
+    title: 'How to Test Insulation Resistance: BS 7671 Guide',
     description:
       'Step-by-step guide to insulation resistance testing. Test voltages, minimum values, conductor combinations, and common faults.',
   });

@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostSwindonConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-swindon',
-  title: 'Consumer Unit Replacement Cost Swindon 2026 — Full Pricing',
+  title: 'CU Replacement Cost Swindon 2026: Pricing',
   description: 'Consumer unit (fuse board) replacement cost in Swindon — typical 2026 prices £468–750 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

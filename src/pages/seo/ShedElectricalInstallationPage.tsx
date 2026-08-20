@@ -676,7 +676,7 @@ const sections = [
 export default function ShedElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Shed Electrical Installation | Complete Wiring Guide UK"
+      title="Shed Electrical Installation: Complete UK Guide"
       description="Complete guide to shed electrical installation in the UK. SWA cable selection, sub-panel installation, lighting and sockets, IP ratings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

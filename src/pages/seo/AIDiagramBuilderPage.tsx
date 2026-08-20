@@ -418,7 +418,7 @@ const sections = [
 export default function AIDiagramBuilderPage() {
   return (
     <ToolTemplate
-      title="AI Diagram Builder | Circuit & Wiring Diagrams"
+      title="AI Diagram Builder: Circuit & Wiring Diagrams"
       description="Generate professional electrical diagrams with AI. Circuit schematics, distribution board layouts, cable routing diagrams."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

@@ -563,7 +563,7 @@ const sections = [
 export default function EICRHarogatePage() {
   return (
     <GuideTemplate
-      title="EICR Harrogate | Electrical Installation Condition Report"
+      title="EICR Harrogate: Cost & Requirements"
       description="EICR Harrogate — landlord regulations under the 2020 Regulations, North Yorkshire Council enforcement, inspection costs."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

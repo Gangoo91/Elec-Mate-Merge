@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const minorWorksCertificateCommonMistakesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-common-mistakes',
-  title: 'Minor Works Certificate Common Mistakes | Guide | Elec-Mate',
+  title: 'Minor Works Certificate: Common Mistakes',
   description:
     'Common mistakes made on Minor Works certificates, how to avoid them, and what to check before you issue the paperwork.',
   datePublished: published,

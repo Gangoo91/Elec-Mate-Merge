@@ -170,7 +170,11 @@ export function initSentry() {
         // transient mobile-network or slow-query event, not a server bug.
         // Sentry: JAVASCRIPT-REACT-58.
         const message = event.exception?.values?.[0]?.value || '';
-        if (/Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out/i.test(message)) {
+        if (
+          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out/i.test(
+            message
+          )
+        ) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'network' };
         }
@@ -182,7 +186,9 @@ export function initSentry() {
         // genuinely goes down — query category:realtime to see the trend.
         // Sentry: REACT-AR/AN (transport failure), AJ/AY (socket closed 1006),
         // B5/AZ (heartbeat timeout).
-        if (/channel error: transport failure|socket closed: 1006|heartbeat timeout/i.test(message)) {
+        if (
+          /channel error: transport failure|socket closed: 1006|heartbeat timeout/i.test(message)
+        ) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'realtime' };
         }
@@ -195,7 +201,31 @@ export function initSentry() {
         // cached clients. A capture WITHOUT chunkAutoRecovering (i.e.
         // `chunkReloadFailed`) stays at error level — the refresh did not save
         // them and they are looking at a broken page.
-        if (event.extra?.chunkAutoRecovering === true) {
+        //
+        // The message is checked as well as the flag, because every one of
+        // these arrives TWICE. Sentry's own global handler is installed by
+        // initSentry() at the top of main.tsx, before handleChunkError is
+        // registered further down, so it captures the raw event first —
+        // preventDefault() stops the browser's default handling, not a capture
+        // that has already happened. Only the ErrorBoundary copy carries
+        // `chunkAutoRecovering`, so the global copy kept full `error` level and
+        // alerted, while its twin sat quietly at `warning`: EH 15 warning + 7
+        // error, DC 5 + 5, EN 2 + 2, and so on down the list.
+        //
+        // Downgraded rather than added to `ignoreErrors` deliberately. Dropping
+        // them would undo ELE-1413, and the global capture is the ONLY record
+        // when the failure happens at module evaluation and never reaches
+        // React — which is exactly the case for the bare-ReferenceError family.
+        //
+        // Three wordings for one failure: Chrome/Edge "does not provide an
+        // export named", Firefox "doesn't provide an export named:", Safari
+        // "Importing binding name 'x' is not found".
+        const staleChunkMessage =
+          /provide an export|importing binding name/i.test(
+            event.exception?.values?.[0]?.value || ''
+          ) || /provide an export|importing binding name/i.test(event.message || '');
+
+        if (event.extra?.chunkAutoRecovering === true || staleChunkMessage) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'chunk' };
         }

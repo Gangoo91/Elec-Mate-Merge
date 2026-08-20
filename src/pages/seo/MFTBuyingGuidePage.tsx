@@ -756,8 +756,8 @@ const sections = [
 export default function MFTBuyingGuidePage() {
   return (
     <GuideTemplate
-      title="Multifunction Tester Buying Guide UK 2026 | Best MFTs for Electricians"
-      description="How to choose a multifunction tester (MFT) for UK electricians: the BS 7671:2018+A4:2026 tests it must cover, CAT IV 300 V rating, calibration, and the best MFTs in 2026."
+      title="Multifunction Tester (MFT) Buying Guide 2026"
+      description="How to choose a multifunction tester (MFT): the BS 7671 A4:2026 tests it must cover, CAT IV 300 V rating, calibration, and the best MFTs in 2026."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

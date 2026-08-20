@@ -468,7 +468,7 @@ const sections = [
 export default function DataCentreElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Data Centre Electrical Installation UK | Tier I–IV, UPS, BS"
+      title="Data Centre Electrical Installation: Tier I-IV"
       description="Complete guide to data centre electrical installation for UK electricians and engineers. Uptime Institute Tier I–IV classification, UPS, generators, ATS."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

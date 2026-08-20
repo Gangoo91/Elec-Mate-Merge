@@ -449,7 +449,7 @@ export default function ElectricianPeterboroughPage() {
     <GuideTemplate
       noindex={true}
       localArea="Peterborough"
-      title="Electrician in Peterborough | Local Electricians 2026"
+      title="Electrician in Peterborough: Local Electricians"
       description="Find qualified electricians in Peterborough. Part P compliance, UK Power Networks DNO, NICEIC and NAPIT registered electricians, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

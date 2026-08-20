@@ -569,7 +569,7 @@ const sections = [
 export default function SmokeDetectorBeepingPage() {
   return (
     <GuideTemplate
-      title="Smoke Detector Beeping | Why and What to Do"
+      title="Smoke Detector Beeping: Why and What to Do"
       description="Why is your smoke detector beeping? Learn the causes — low battery, end of life, false alarms, wiring faults — what to do step by step."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

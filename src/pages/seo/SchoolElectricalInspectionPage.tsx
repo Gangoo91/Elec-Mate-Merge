@@ -602,7 +602,7 @@ const sections = [
 export default function SchoolElectricalInspectionPage() {
   return (
     <GuideTemplate
-      title="School Electrical Inspection | Requirements UK"
+      title="School Electrical Inspection: Requirements UK"
       description="Complete guide to electrical inspection requirements for UK schools. 5-year EICR, emergency lighting testing, fire alarm maintenance, PAT testing."
       datePublished="2025-05-30"
       dateModified="2026-05-18"

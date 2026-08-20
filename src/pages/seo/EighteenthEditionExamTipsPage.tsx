@@ -597,7 +597,7 @@ const sections = [
 export default function EighteenthEditionExamTipsPage() {
   return (
     <GuideTemplate
-      title="18th Edition Exam Tips | How to Pass C&G 2382"
+      title="18th Edition Exam Tips: How to Pass C&G 2382"
       description="How to pass the C&G 2382 18th Edition exam. Covers exam format, key BS 7671 regulation areas, study strategy, book tabs, time management."
       datePublished="2025-03-15"
       dateModified="2026-06-10"

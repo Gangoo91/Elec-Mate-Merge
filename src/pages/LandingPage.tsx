@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { Link, useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { motion } from 'framer-motion';
@@ -307,6 +307,20 @@ const LandingPage = () => {
   const { user } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  // Hero phone shot is the LCP element on mobile. The preload used to sit in a
+  // <Helmet> block that never rendered; injected here instead, it lands in the
+  // live DOM AND — because seo-prerender captures the hydrated head — gets
+  // baked into the static HTML, where it fires before the bundle parses.
+  useEffect(() => {
+    if (document.querySelector('link[rel="preload"][href="/images/landing/hero-dashboard.webp"]'))
+      return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = '/images/landing/hero-dashboard.webp';
+    document.head.appendChild(link);
+  }, []);
+
   // Sticky CTA appears as soon as the hero CTA scrolls away. Section-view data
   // shows most visitors never scroll past section two — the button must follow.
   const [stickyVisible, setStickyVisible] = useState(false);
@@ -358,108 +372,52 @@ const LandingPage = () => {
   // the slightly-lighter #0a0a0a they showed as floating rectangles
   return (
     <div className="bg-black text-white">
-      <Helmet>
-        <title>Elec-Mate | The Complete Platform for UK Electricians</title>
-        <meta
-          name="description"
-          content="Training, AI tools, certificates & business management for UK electricians. Level 2 & 3 courses, BS 7671 AI assistants, EICR forms, voice quotes & Stripe payments. Start your free trial."
-        />
-        <meta
-          name="keywords"
-          content="electrician app, electrical training, EICR certificate, EIC form, Minor Works, BS 7671, 18th edition, electrical apprentice, UK electrician, cable sizing calculator, volt drop calculator, electrical quotes, AI electrician"
-        />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.elec-mate.com/" />
-        <meta property="og:title" content="Elec-Mate | The Complete Platform for UK Electricians" />
-        <meta
-          property="og:description"
-          content="Training, AI tools, certificates & business management for UK electricians. From apprentice to employer — everything you need to learn, work smarter, and grow."
-        />
-        <meta property="og:image" content="https://www.elec-mate.com/og-image.jpg" />
-        <meta property="og:site_name" content="Elec-Mate" />
-        <meta property="og:locale" content="en_GB" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.elec-mate.com/" />
-        <meta
-          name="twitter:title"
-          content="Elec-Mate | The Complete Platform for UK Electricians"
-        />
-        <meta
-          name="twitter:description"
-          content="Training, AI tools, certificates & business management for UK electricians. 8 AI specialists trained on BS 7671. Start free today."
-        />
-        <meta name="twitter:image" content="https://www.elec-mate.com/og-image.jpg" />
-
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="Elec-Mate" />
-        <meta name="geo.region" content="GB" />
-        <meta name="geo.placename" content="United Kingdom" />
-        <link rel="canonical" href="https://www.elec-mate.com/" />
-        {/* Hero phone shot is the LCP element on mobile — fetch it before the
-            bundle finishes parsing */}
-        <link rel="preload" as="image" href="/images/landing/hero-dashboard.webp" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'SoftwareApplication',
-            name: 'Elec-Mate',
-            applicationCategory: 'BusinessApplication',
-            operatingSystem: 'Web, iOS, Android',
-            description:
-              'The complete platform for UK electricians - training, AI tools, certificates, and business management.',
-            offers: {
-              '@type': 'AggregateOffer',
-              lowPrice: '6.99',
-              highPrice: '19.99',
-              priceCurrency: 'GBP',
-              offerCount: '2',
-            },
-            featureList: [
-              '46+ Electrical & Upskilling Courses',
-              'BS 7671 AI Assistants',
-              '19 Certificate Types',
-              'Voice Quotes & Invoices',
-              'Stripe Payment Integration',
-              '70+ Electrical Calculators',
-            ],
-          })}
-        </script>
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'Elec-Mate',
-            url: 'https://www.elec-mate.com',
-            logo: 'https://www.elec-mate.com/logo.jpg',
-            description: 'The complete platform for UK electricians',
-            address: { '@type': 'PostalAddress', addressCountry: 'GB' },
-            sameAs: [
-              'https://www.facebook.com/ElecMateUK',
-              'https://www.instagram.com/elec_mate',
-              'https://www.tiktok.com/@elec_mate',
-              'https://www.linkedin.com/company/elec-mate',
-              'https://t.me/Elec_MateOfficialGroup',
-              'https://apps.apple.com/gb/app/elec-mate/id6758948665',
-            ],
-          })}
-        </script>
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map((faq) => ({
-              '@type': 'Question',
-              name: faq.question,
-              acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-            })),
-          })}
-        </script>
-      </Helmet>
+      {/* The old <Helmet> block here (title, description, OG, canonical, image
+          preload, three schemas) NEVER rendered — react-helmet is silently
+          non-functional in this app (see JsonLd.tsx, verified 2026-08-20).
+          The landing page's served meta has always come from index.html, so
+          the dead duplicates are gone. What was actually being lost — the
+          FAQPage schema, the SoftwareApplication offers, and the hero LCP
+          preload — is re-emitted below through channels that work. The thin
+          Organization schema was dropped: index.html already bakes one into
+          every page. */}
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          name: 'Elec-Mate',
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Web, iOS, Android',
+          description:
+            'The complete platform for UK electricians - training, AI tools, certificates, and business management.',
+          offers: {
+            '@type': 'AggregateOffer',
+            lowPrice: '6.99',
+            highPrice: '19.99',
+            priceCurrency: 'GBP',
+            offerCount: '2',
+          },
+          featureList: [
+            '46+ Electrical & Upskilling Courses',
+            'BS 7671 AI Assistants',
+            '19 Certificate Types',
+            'Voice Quotes & Invoices',
+            'Stripe Payment Integration',
+            '70+ Electrical Calculators',
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+          })),
+        }}
+      />
 
       {/* ========== NAV ========== */}
       <nav

@@ -739,7 +739,7 @@ export default function ElectricalRegulationsTimelinePage() {
   return (
     <GuideTemplate
       title="UK Wiring Regulations: BS 7671:2018+A4:2026"
-      description="Current UK wiring regulations: BS 7671:2018+A4:2026, issued 15 April 2026. A4 adds Chapter 57 batteries, Section 716 PoE and Chapter 81. Every edition since 1882."
+      description="Current UK wiring regulations: BS 7671:2018+A4:2026, issued April 2026. A4 adds Chapter 57 batteries, Section 716 PoE and Chapter 81. Timeline since 1882."
       datePublished="2026-01-25"
       dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}

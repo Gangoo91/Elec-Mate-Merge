@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 Amendment 3 Course | A3:2024 Update Training';
+const PAGE_TITLE = 'BS 7671 Amendment 3 Course: A3:2024 Update';
 const PAGE_DESCRIPTION =
   'BS 7671 Amendment 3 (A3:2024) training: bidirectional/unidirectional devices, Section 530 updates, site implications. 6 modules, quizzes, AI tutor.';
 

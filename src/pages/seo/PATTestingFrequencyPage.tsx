@@ -16,7 +16,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'PAT Testing Frequency | How Often by Premises Type';
+const PAGE_TITLE = 'PAT Testing Frequency: How Often by Premises';
 const PAGE_DESCRIPTION =
   'PAT testing frequency in the UK: IET CoP 5th Ed intervals by premises type, risk-based approach, Class I vs II, managing testing schedules.';
 

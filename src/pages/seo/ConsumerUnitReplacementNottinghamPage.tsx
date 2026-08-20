@@ -539,7 +539,7 @@ const sections = [
 export default function ConsumerUnitReplacementNottinghamPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Nottingham | Fuse Box Nottingham"
+      title="Consumer Unit Replacement Nottingham: Fuse Box"
       description="Consumer unit replacement in Nottingham — metal enclosure rules, Part P Building Regulations, costs £380–700, BS EN 61439."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

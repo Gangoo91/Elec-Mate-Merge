@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236603Unit302Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-unit-302-inspection-testing-and-commissioning-of-electrotechnical-systems-and-equipment-revision',
-  title: 'City & Guilds 2366-03 Unit 302: Inspection, testing and',
+  title: 'City & Guilds 2366-03 Unit 302 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2366-03 Unit 302 (Inspection, testing and commissioning of electrotechnical systems and equipment).',
   datePublished: published,
   dateModified: modified,

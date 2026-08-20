@@ -121,7 +121,7 @@ const relatedPages = [
 export default function OnewaySwitchSymbolPage() {
   return (
     <GuideTemplate
-      title="One-Way Switch Symbol | IEC 60617 Reference"
+      title="One-Way Switch Symbol: IEC 60617 Reference"
       description="One-Way Switch IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

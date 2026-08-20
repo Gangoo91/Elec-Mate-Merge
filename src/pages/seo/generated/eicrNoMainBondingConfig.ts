@@ -8,7 +8,7 @@ const modified = '2026-06-10';
 
 export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-no-main-protective-bonding',
-  title: 'EICR: No Main Protective Bonding — The Classic C2',
+  title: 'EICR: No Main Protective Bonding — Classic C2',
   description:
     'Missing main protective bonding to gas, water or oil services is the most common C2 observation on UK domestic EICRs.',
   datePublished: published,

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit104Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-104-design-and-installation-practices-and-procedures-for-dwellings-and-associated-buildings-revision',
-  title: 'City & Guilds 5393-03 Unit 104: Design and installation',
+  title: 'City & Guilds 5393-03 Unit 104 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 104 (Design and installation practices and procedures for dwellings and associated buildings).',
   datePublished: published,
   dateModified: modified,

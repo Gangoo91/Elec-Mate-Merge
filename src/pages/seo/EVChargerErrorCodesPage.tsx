@@ -637,7 +637,7 @@ const sections = [
 export default function EVChargerErrorCodesPage() {
   return (
     <GuideTemplate
-      title="EV Charger Error Codes | Zappi, Pod Point & Andersen Guide"
+      title="EV Charger Error Codes: Zappi & Pod Point Guide"
       description="Common EV charger error codes explained — Zappi, Pod Point, and Andersen. RCD trips, earth faults, overcurrent, and communication faults."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

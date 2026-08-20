@@ -550,8 +550,8 @@ export default function ElectricianNorthamptonPage() {
   return (
     <GuideTemplate
       localArea="Northampton"
-      title="Electrician in Northampton | Find Qualified Electricians"
-      description="Find NICEIC/NAPIT-registered electricians in Northampton. 2026 prices for EICRs (from £170), consumer unit replacements, Victorian rewires, and NGED connections. Verify any electrician's registration online."
+      title="Electrician in Northampton: 2026 Guide"
+      description="Find NICEIC/NAPIT-registered electricians in Northampton. 2026 EICR prices from £170, consumer unit replacements, and NGED connections."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

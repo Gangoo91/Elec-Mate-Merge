@@ -44,9 +44,9 @@ function TestMeta({ state, reg }: { state: 'Dead test' | 'Live test'; reg: strin
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Testing Sequence: 8 Tests in Order (BS 7671)';
+const PAGE_TITLE = 'Electrical Testing Sequence: 8 Tests in Order';
 const PAGE_DESCRIPTION =
-  'The BS 7671 testing sequence in order: continuity, ring, insulation resistance, polarity, earth electrode — then loop impedance, PFC and functional testing. Reg 643.1 makes the order a requirement.';
+  'The BS 7671 testing sequence in order: continuity, ring, insulation resistance, polarity, earth electrode, loop impedance, PFC and functional. Reg 643.1.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

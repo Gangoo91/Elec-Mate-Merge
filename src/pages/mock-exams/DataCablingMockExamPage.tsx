@@ -8,7 +8,7 @@ import { dataCablingQuestionBank } from '@/data/upskilling/dataCablingMockExamDa
 export default function DataCablingMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Data Cabling Mock Exam 2026 — Network Cabling`}
+      title={`Free Data Cabling Mock Exam — Network Cabling`}
       description={`Free data cabling mock exam — 25 questions, 30-min timer, 150-question bank. Structured cabling, cable types, terminations, testing, PoE and standards.`}
       slug="data-cabling"
       heading={`Data Cabling Mock Exam`}

@@ -624,7 +624,7 @@ export default function ElectricianJobVacanciesPage() {
   return (
     <GuideTemplate
       localArea="Job Vacancies"
-      title="Electrician Job Vacancies UK | Where to Find Work in 2026"
+      title="Electrician Job Vacancies UK: Where to Find Work"
       description="Complete guide to finding electrician job vacancies in the UK. Best job boards, recruitment agencies, social media strategies, direct approaches."
       datePublished="2024-09-01"
       dateModified="2026-05-18"

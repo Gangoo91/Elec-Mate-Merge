@@ -649,7 +649,7 @@ const sections = [
 export default function ApprenticeMentalHealthPage() {
   return (
     <GuideTemplate
-      title="Mental Health for Electrical Apprentices | Support Guide"
+      title="Mental Health for Electrical Apprentices: Guide"
       description="Mental health support guide for UK electrical apprentices. Common pressures, recognising the signs, site culture, employer duties, building resilience."
       datePublished="2025-08-01"
       dateModified="2026-05-18"

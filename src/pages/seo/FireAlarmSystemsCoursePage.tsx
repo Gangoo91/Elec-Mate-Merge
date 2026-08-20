@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Fire Alarm Systems Course | BS 5839 Training';
+const PAGE_TITLE = 'Fire Alarm Systems Course: BS 5839 Training';
 const PAGE_DESCRIPTION =
   'BS 5839 fire alarm training for UK electricians: categories L1-L5, grades A-F, detector types, zoning, commissioning, maintenance. 8 modules.';
 

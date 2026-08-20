@@ -612,7 +612,7 @@ const sections = [
 export default function HospitalElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Hospital Electrical Installation UK | Healthcare Electrical"
+      title="Hospital Electrical Installation UK: Healthcare"
       description="Complete guide to hospital and healthcare electrical installation in the UK. IEC 60364-7-710, BS 7671 Section 710, Class 1 and 2 medical locations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -554,7 +554,7 @@ const sections = [
 export default function SecurityLightingCostPage() {
   return (
     <GuideTemplate
-      title="Security Lighting Installation Cost UK 2026 | Prices"
+      title="Security Lighting Installation Cost UK 2026"
       description="Security lighting installation cost in the UK 2026: £100–£600 per light. PIR, dusk-to-dawn, LED, smart-controlled — wiring, IP rating, RCD."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { CalculatorSurface } from '@/components/calculators/shared';
 import BS7671ZsLookupCalculator from '@/components/apprentice/calculators/BS7671ZsLookupCalculator';
+import ZeQuickChecker from '@/components/seo/ZeQuickChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -26,6 +27,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'ze-checker', label: 'Check Your Ze Reading' },
   { id: 'what-is-ze', label: 'What Is Ze?' },
   { id: 'tns-ze', label: 'TN-S — Expected Ze: 0.80 ohms Maximum' },
   { id: 'tncs-ze', label: 'TN-C-S (PME) — Expected Ze: 0.35 ohms Maximum' },
@@ -155,6 +157,20 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'ze-checker',
+    heading: 'Check Your Ze Reading Against the Maximum',
+    content: (
+      <>
+        <p>
+          The quick answer, before the theory: pick the earthing arrangement and type the reading
+          from your loop tester. The maxima are the distributor-quoted typical values the BS 7671
+          tables assume — TN-S 0.80 ohms, TN-C-S (PME) 0.35 ohms, TT 21 ohms.
+        </p>
+        <ZeQuickChecker />
+      </>
+    ),
+  },
   {
     id: 'what-is-ze',
     heading: 'What Is Ze (External Earth Fault Loop Impedance)?',

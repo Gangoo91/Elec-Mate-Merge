@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit399Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-399-electrotechnical-occupational-competence-elt-oc1-revision',
-  title: 'City & Guilds 2357 Unit 399: Electrotechnical occupational',
+  title: 'City & Guilds 2357 Unit 399 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 399 (Electrotechnical occupational competence (ELT OC1)).',
   datePublished: published,
   dateModified: modified,

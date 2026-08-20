@@ -496,7 +496,7 @@ const sections = [
 export default function ConsumerUnitReplacementCoventryPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Coventry | Fuse Box Upgrade CV"
+      title="Consumer Unit Replacement Coventry: Fuse Box"
       description="Consumer unit replacement in Coventry — costs £400–£800, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

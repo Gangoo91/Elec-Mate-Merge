@@ -507,7 +507,7 @@ const sections = [
 export default function NuclearSiteElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="Nuclear Site Electrical Work UK | Electrician Guide"
+      title="Nuclear Site Electrical Work: Electrician Guide"
       description="Complete guide to working as an electrician on UK nuclear licensed sites. Security vetting (BPSS, CTC, SC), SHEA Nuclear card, CCNSG Safety Passport."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

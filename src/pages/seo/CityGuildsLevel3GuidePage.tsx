@@ -615,7 +615,7 @@ const sections = [
 export default function CityGuildsLevel3GuidePage() {
   return (
     <GuideTemplate
-      title="City & Guilds Level 3 Electrical Installation Guide | 2365"
+      title="City & Guilds 2365 Level 3 Installation Guide"
       description="Complete guide to City & Guilds 2365 Level 3 Electrical Installation Diploma. Qualification structure, units covered (inspection & testing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

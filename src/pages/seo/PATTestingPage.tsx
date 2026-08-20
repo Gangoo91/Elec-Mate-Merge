@@ -172,7 +172,7 @@ const howToSchema = {
 
 export default function PATTestingPage() {
   useSEO({
-    title: 'PAT Testing App | Portable Appliance Testing',
+    title: 'PAT Testing App: Portable Appliance Testing',
     description:
       'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant.',
   });

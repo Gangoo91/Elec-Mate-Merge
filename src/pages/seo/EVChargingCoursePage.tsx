@@ -18,7 +18,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'EV Charger Installation Course | IET Code of Practice';
+const PAGE_TITLE = 'EV Charger Installation Course: IET Code';
 const PAGE_DESCRIPTION =
   'EV charger installation training: IET Code of Practice, Mode 1-4 charging, earthing, PME restrictions, load management, BS 7671. 7 modules.';
 

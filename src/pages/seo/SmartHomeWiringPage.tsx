@@ -664,7 +664,7 @@ const sections = [
 export default function SmartHomeWiringPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Guide | Electrician's Perspective"
+      title="Smart Home Wiring Guide: Electrician's View"
       description="Complete guide to smart home wiring for UK electricians. Cat 6 structured cabling, smart switches with neutral wire, Wi-Fi access points."
       datePublished="2025-09-15"
       dateModified="2026-06-10"

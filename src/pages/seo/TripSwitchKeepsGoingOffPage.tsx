@@ -645,7 +645,7 @@ const sections = [
 export default function TripSwitchKeepsGoingOffPage() {
   return (
     <GuideTemplate
-      title="Trip Switch Keeps Going Off | Why & How to Fix"
+      title="Trip Switch Keeps Going Off: Why & How to Fix"
       description="Trip switch keeps tripping? Learn why — MCB vs RCD tripping explained, overloaded circuits, earth faults, moisture ingress, faulty appliance isolation."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

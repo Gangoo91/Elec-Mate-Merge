@@ -11,9 +11,9 @@ const modified = '2026-05-18';
 export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lvdc-dc-microgrid-distribution',
   title:
-    'LVDC (Low-Voltage DC) Microgrid Distribution Guide for UK',
+    'LVDC (Low-Voltage DC) Microgrid Distribution',
   description:
-    'A UK electrician\'s guide to Low-Voltage DC (LVDC) microgrid distribution — the 380 V DC data centre bus, the 48 V DC ELV bus for USB-PD/PoE/lighting, native DC sources, DC fault and arc-flash behaviour, DC-rated switchgear and fuses, DC earthing, Type B RCDs, AC/DC hybrid topology and the BS 7671:2018+A4:2026 / BS EN 62109 standards landscape.',
+    'A UK electrician\'s guide to LVDC microgrid distribution: 380 V DC and 48 V DC buses, DC fault behaviour, earthing, Type B RCDs, BS 7671:2018+A4:2026.',
   datePublished: published,
   dateModified: modified,
   readingTime: 16,

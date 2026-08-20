@@ -447,7 +447,7 @@ const sections = [
 export default function AIFaultDiagnosisPage() {
   return (
     <ToolTemplate
-      title="AI Fault Diagnosis Tool | Electrical Troubleshooting"
+      title="AI Fault Diagnosis Tool: Electrical Faults"
       description="Diagnose electrical faults with AI trained for UK installations. Describe symptoms in plain English, get ranked probable causes with BS 7671 references."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

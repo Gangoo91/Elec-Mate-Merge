@@ -254,7 +254,7 @@ const sections = [
 export default function ApprenticeshipInterviewQuestionsPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprenticeship Interview Questions 2026"
+      title="Electrical Apprenticeship Interview Questions"
       description="The 10 questions apprenticeship interviews actually ask — with strong answers, aptitude test prep, trial days and questions to ask back."
       datePublished="2026-07-17"
       dateModified="2026-07-17"

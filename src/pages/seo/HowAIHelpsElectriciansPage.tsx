@@ -570,7 +570,7 @@ const sections = [
 export default function HowAIHelpsElectriciansPage() {
   return (
     <GuideTemplate
-      title="How AI Helps Electricians | Real World Uses"
+      title="How AI Helps Electricians: Real World Uses"
       description="Discover how AI is transforming electrical work in the UK. 8 specialist AI agents for fault diagnosis, circuit design, cost estimation, and compliance."
       datePublished="2025-08-01"
       dateModified="2026-05-18"

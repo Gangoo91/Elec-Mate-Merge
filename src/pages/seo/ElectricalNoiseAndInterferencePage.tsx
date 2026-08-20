@@ -19,7 +19,7 @@ import {
 export default function ElectricalNoiseAndInterferencePage() {
   return (
     <GuideTemplate
-      title="Electrical Noise & Interference | EMC Guide for Electricians"
+      title="Electrical Noise & Interference: EMC Guide"
       description="Comprehensive guide to electromagnetic interference (EMI) and radio frequency interference (RFI) in electrical installations."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

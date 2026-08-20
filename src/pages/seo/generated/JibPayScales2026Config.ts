@@ -8,8 +8,8 @@ const modified = '2026-05-18';
 
 export const JibPayScales2026Config: GeneratedGuideConfig = {
   pagePath: '/guides/jib-pay-scales-2026',
-  title: 'JIB Pay Scales 2026 — What Electricians Actually Earn',
-  description: 'The JIB (Joint Industry Board for the Electrical Contracting Industry) sets industry-wide pay scales for UK electricians employed by JIB-member firms.',
+  title: 'JIB Pay Scales 2026: What Electricians Earn',
+  description: 'JIB pay scales 2026: Electrician £18.38/hr, Approved Electrician £20.08, Site Technician £22.70 (Transport Provided), plus apprentice rates and allowances.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

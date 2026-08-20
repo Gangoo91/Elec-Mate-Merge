@@ -647,7 +647,7 @@ const sections = [
 export default function GarageElectricsGuidePage() {
   return (
     <GuideTemplate
-      title="Garage Electrics | Wiring, Sockets & Lighting Guide"
+      title="Garage Electrics: Wiring, Sockets & Lighting"
       description="Complete guide to garage electrics in the UK. SWA cable from house, sub-distribution board, IP ratings, RCD protection, sockets and lighting."
       datePublished="2025-07-01"
       dateModified="2026-06-10"

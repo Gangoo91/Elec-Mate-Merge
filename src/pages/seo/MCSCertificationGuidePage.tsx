@@ -573,8 +573,8 @@ const sections = [
 export default function MCSCertificationGuidePage() {
   return (
     <GuideTemplate
-      title="MCS Certification for Solar Installers UK | How to Become"
-      description="Complete guide to MCS certification for solar installers in the UK — how to get certified, MCS 001 costs, annual audit checklist, and the BS 7671 Section 712 requirements auditors check on every solar PV installation."
+      title="MCS Certification for Solar Installers UK"
+      description="Complete UK guide to MCS certification for solar installers — how to get certified, MCS 001 costs, annual audit checklist, BS 7671 Section 712 checks."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

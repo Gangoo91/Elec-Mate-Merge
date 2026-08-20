@@ -21,7 +21,7 @@ import {
 export default function ElectricianAppForiPhonePage() {
   return (
     <ToolTemplate
-      title="Best Electrician App for iPhone 2026 | Elec-Mate iOS"
+      title="Best Electrician App for iPhone 2026: Elec-Mate"
       description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 16 certificate types, AI board scanner."
       datePublished="2026-01-12"
       dateModified="2026-06-10"

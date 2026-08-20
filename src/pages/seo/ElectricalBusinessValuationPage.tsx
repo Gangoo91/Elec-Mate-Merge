@@ -607,7 +607,7 @@ const sections = [
 export default function ElectricalBusinessValuationPage() {
   return (
     <GuideTemplate
-      title="Electrical Business Valuation UK | How Much Is My"
+      title="Electrical Business Valuation UK: Complete Guide"
       description="Complete guide to valuing an electrical contracting business in the UK — EBITDA multiples (1–3x for small contractors), revenue multiples, asset value."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

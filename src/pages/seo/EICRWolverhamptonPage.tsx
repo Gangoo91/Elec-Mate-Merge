@@ -553,7 +553,7 @@ const sections = [
 export default function EICRWolverhamptonPage() {
   return (
     <GuideTemplate
-      title="EICR Wolverhampton | Electrical Installation Condition"
+      title="EICR Wolverhampton: Installation Condition"
       description="EICR Wolverhampton — landlord regulations, costs, common findings in older West Midlands properties, qualified electrician requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

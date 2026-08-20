@@ -641,7 +641,7 @@ const sections = [
 export default function SPDGuidePage() {
   return (
     <GuideTemplate
-      title="SPD Installation Guide | BS 7671 443.4 Walkthrough"
+      title="SPD Installation Guide: BS 7671 443.4"
       description="Installer-focused SPD walkthrough for UK electricians: Type 1/2/3 selection, 443.4 risk assessment, CU mounting, conductor lengths, and end-of-life checks."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

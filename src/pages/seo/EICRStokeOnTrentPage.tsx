@@ -544,7 +544,7 @@ const sections = [
 export default function EICRStokeOnTrentPage() {
   return (
     <GuideTemplate
-      title="EICR Stoke-on-Trent | Electrical Inspection Stoke"
+      title="EICR Stoke-on-Trent: Electrical Inspection Stoke"
       description="EICR Stoke-on-Trent — landlord regulations, inspection costs, common findings in the six towns' older terraced properties."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

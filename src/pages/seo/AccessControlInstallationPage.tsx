@@ -600,7 +600,7 @@ const sections = [
 export default function AccessControlInstallationPage() {
   return (
     <GuideTemplate
-      title="Access Control Installation UK | Door Entry & Access Systems"
+      title="Access Control Installation UK: Door Entry"
       description="Complete guide to access control installation in the UK. Keypad, fob, biometric and video intercom systems explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

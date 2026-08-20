@@ -473,7 +473,7 @@ const sections = [
 export default function ElectricianWorkingAbroadPage() {
   return (
     <GuideTemplate
-      title="UK Electricians Working Abroad | UAE, Australia, Canada"
+      title="UK Electricians Working Abroad: 2026 Guide"
       description="Guide for UK electricians working abroad — Middle East salaries (UAE £55,000–£100,000 tax-free), Australia, Canada."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

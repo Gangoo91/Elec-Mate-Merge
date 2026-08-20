@@ -527,7 +527,7 @@ const sections = [
 export default function ElectricStorageHeaterInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Storage Heater Installation UK | Modern Storage"
+      title="Electric Storage Heater Installation UK"
       description="Complete guide to electric storage heater installation in the UK. Modern vs old heaters (Dimplex Quantum, Elnur Ecombi), dedicated circuit requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

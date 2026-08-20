@@ -609,7 +609,7 @@ const sections = [
 export default function EmergencyLightingInstallationPage() {
   return (
     <GuideTemplate
-      title="Emergency Lighting Installation UK | BS 5266 Guide"
+      title="Emergency Lighting Installation UK: BS 5266"
       description="Complete guide to emergency lighting installation in the UK. BS 5266 Part 1 standard explained — escape route lighting (1 lux)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

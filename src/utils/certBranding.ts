@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { schemeDisplayLabel } from '@/utils/registrationScheme';
 
 /**
  * Company branding for certificate PDFs — ONE reader for the whole fleet.
@@ -61,7 +62,11 @@ export const brandingFromCompanyProfile = (
   // preview), and it is what the six smart-form hooks have always used — so it
   // wins here too. Accent is read as a fallback for anyone who only set that.
   companyAccentColor: hex(cp?.primary_color) || hex(cp?.accent_color) || fallbackAccent,
-  registrationScheme: cp?.registration_scheme || '',
+  // ELE-1570 — a display LABEL, never the raw column. `registration_scheme`
+  // has been written by more than one control with different casing, and this
+  // value goes straight onto page 1 of a legal certificate: a NICEIC-registered
+  // firm stored as `other` printed "Other" beside their NICEIC number.
+  registrationScheme: schemeDisplayLabel(cp?.registration_scheme),
   registrationNumber: cp?.registration_number || '',
   registrationSchemeLogo: cp?.scheme_logo_data_url || cp?.registration_scheme_logo || '',
 });

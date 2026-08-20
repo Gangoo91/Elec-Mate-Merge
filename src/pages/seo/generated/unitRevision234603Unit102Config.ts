@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision234603Unit102Config: GeneratedGuideConfig = {
   pagePath: '/guides/2346-03-unit-102-apply-health-safety-and-environmental-considerations-revision',
-  title: 'City & Guilds 2346-03 Unit 102: Apply Health, Safety and',
+  title: 'City & Guilds 2346-03 Unit 102 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2346-03 Unit 102 (Apply Health, Safety and Environmental Considerations).',
   datePublished: published,
   dateModified: modified,

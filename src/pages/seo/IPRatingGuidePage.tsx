@@ -20,7 +20,7 @@ import {
 export default function IPRatingGuidePage() {
   return (
     <ToolTemplate
-      title="IP Rating Guide | Ingress Protection Explained"
+      title="IP Rating Guide: Ingress Protection Explained"
       description="Complete guide to IP ratings for electrical equipment. Explains first digit (solids 0-6), second digit (liquids 0-9), IP2X, IPXXB."
       datePublished="2026-01-30"
       dateModified="2026-06-10"

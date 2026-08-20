@@ -515,7 +515,7 @@ const sections = [
 export default function ApprenticeFlashcardsPage() {
   return (
     <GuideTemplate
-      title="Apprentice Flashcards Tool | Electrical Revision"
+      title="Apprentice Flashcards Tool: Electrical Revision"
       description="Electrical apprentice flashcards using active recall and spaced repetition. 800+ cards covering BS 7671, testing procedures, earthing, protection."
       datePublished="2025-07-01"
       dateModified="2026-05-18"

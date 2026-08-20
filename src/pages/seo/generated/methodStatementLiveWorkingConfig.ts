@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const methodStatementLiveWorkingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-live-working',
   title:
-    'Method Statement for Live Working — UK Electrical Procedure',
+    'Method Statement for Live Working (UK)',
   description:
     'Method statement for live electrical working in the UK. When live work is lawful under EAWR 1989 Regulation 14, the three-part test, GS38 instruments…',
   datePublished: published,

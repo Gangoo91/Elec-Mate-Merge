@@ -443,7 +443,7 @@ const sections = [
 export default function LearningVideosElectricianPage() {
   return (
     <ToolTemplate
-      title="Learning Videos for Electricians | Video Training"
+      title="Learning Videos for Electricians: Training"
       description="Over 46 structured course videos for UK electricians. Practical demonstrations, theory explanations, and exam preparation for C&G 2382, 2391, and AM2."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

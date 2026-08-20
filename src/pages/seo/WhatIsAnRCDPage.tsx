@@ -588,7 +588,7 @@ const sections = [
 export default function WhatIsAnRCDPage() {
   return (
     <GuideTemplate
-      title="What Is an RCD? | Residual Current Device Explained"
+      title="What Is an RCD? Residual Current Explained"
       description="Plain English guide to RCDs (Residual Current Devices). How RCDs work, why 30mA is the trip threshold, RCD vs RCBO, RCD types explained."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

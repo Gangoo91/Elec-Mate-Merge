@@ -631,7 +631,7 @@ const sections = [
 export default function HowToReadWiringDiagramPage() {
   return (
     <GuideTemplate
-      title="How to Read a Wiring Diagram | UK Electrical Drawing Guide"
+      title="How to Read a Wiring Diagram: UK Guide"
       description="How to read electrical wiring diagrams, circuit diagrams, and single-line diagrams. IEC vs BS symbols, common symbols (switches, motors, transformers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

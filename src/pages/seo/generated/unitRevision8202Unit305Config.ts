@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit305Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-305-inspecting-testing-and-commissioning-electrical-systems-revision',
-  title: 'City & Guilds 8202 Unit 305: Inspecting, testing and',
+  title: 'City & Guilds 8202 Unit 305: Inspecting, testing',
   description: 'Complete revision guide for City & Guilds 8202 Unit 305 (Inspecting, testing and commissioning electrical systems).',
   datePublished: published,
   dateModified: modified,

@@ -680,8 +680,8 @@ const sections = [
 export default function EdwardianHouseElectricalPage() {
   return (
     <GuideTemplate
-      title="Edwardian House Electrical Guide | Rewiring 1900–1910 Homes"
-      description="Complete electrical guide for Edwardian houses built 1901–1910. VIR cable hazards, early consumer units, renovation considerations."
+      title="Rewiring an Edwardian House: Electrical Guide"
+      description="Electrical guide for Edwardian houses built 1901–1910: VIR cable hazards, early consumer units, and rewire costs of £4,500 to £9,500."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

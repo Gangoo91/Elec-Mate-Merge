@@ -461,7 +461,7 @@ export default function ElectricianIpswichPage() {
   return (
     <GuideTemplate
       localArea="Ipswich"
-      title="Electrician in Ipswich | Find Qualified Electricians 2026"
+      title="Electrician in Ipswich: 2026 Guide"
       description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

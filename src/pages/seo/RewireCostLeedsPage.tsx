@@ -472,7 +472,7 @@ const sections = [
 export default function RewireCostLeedsPage() {
   return (
     <GuideTemplate
-      title="Rewire Cost Leeds 2026 | House Rewire Prices Yorkshire"
+      title="Rewire Cost Leeds 2026: House Rewire Prices"
       description="How much does a house rewire cost in Leeds in 2026? Pricing for 2-bed, 3-bed, and 4-bed properties in Leeds and West Yorkshire — Victorian terraces."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

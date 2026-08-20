@@ -471,7 +471,7 @@ export default function ElectricianSwindonPage() {
   return (
     <GuideTemplate
       localArea="Swindon"
-      title="Electrician in Swindon | Local Electricians 2026"
+      title="Electrician in Swindon: Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

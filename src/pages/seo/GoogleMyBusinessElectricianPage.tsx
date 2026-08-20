@@ -723,7 +723,7 @@ const sections = [
 export default function GoogleMyBusinessElectricianPage() {
   return (
     <GuideTemplate
-      title="Google Business Profile for Electricians | Setup Guide 2026"
+      title="Google Business Profile for Electricians 2026"
       description="Complete guide to setting up and optimising Google Business Profile for electricians. Step-by-step setup, verification, categories, photo strategy."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

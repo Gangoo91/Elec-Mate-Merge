@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const OffTheJobTrainingHoursTrackingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/off-the-job-training-hours-tracking',
-  title: 'Off-The-Job (OTJ) Training Hours Tracking — Apprentice',
+  title: 'OTJ Training Hours Tracking: Apprentice Guide',
   description: 'A practical guide to off-the-job (OTJ) training hour tracking for UK electrical apprentices. What counts, what doesn\u2019t, the 20% minimum rule…',
   datePublished: published,
   dateModified: modified,

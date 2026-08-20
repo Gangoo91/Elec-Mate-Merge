@@ -711,7 +711,7 @@ const sections = [
 export default function WhyChooseNICEICPage() {
   return (
     <GuideTemplate
-      title="Why Choose a NICEIC Electrician | Consumer Guide"
+      title="Why Choose a NICEIC Electrician: Consumer Guide"
       description="Complete guide to NICEIC registration for consumers. What NICEIC registration means, the Platinum Promise guarantee, complaints procedure."
       datePublished="2025-07-01"
       dateModified="2026-06-10"

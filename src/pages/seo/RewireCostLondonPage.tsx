@@ -572,7 +572,7 @@ const sections = [
 export default function RewireCostLondonPage() {
   return (
     <GuideTemplate
-      title="Rewire Cost London 2026 | London House Rewire Prices"
+      title="Rewire Cost London 2026: House Rewire Prices"
       description="How much does a house rewire cost in London in 2026? Complete London rewire pricing guide covering Victorian terraces, flats, period properties, Part P."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

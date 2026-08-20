@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit114014Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-114-014-understand-fault-diagnosis-and-rectification-revision',
-  title: 'City & Guilds 5357 Unit 114/014: Understand Fault Diagnosis',
+  title: 'City & Guilds 5357 Unit 114/014: Understand',
   description: 'Complete revision guide for City & Guilds 5357 Unit 114/014 (Understand Fault Diagnosis and Rectification).',
   datePublished: published,
   dateModified: modified,

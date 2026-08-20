@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
   pagePath: '/guides/reduced-low-voltage-110v-cte-site-supplies',
   title:
-    'Reduced Low Voltage (110V CTE) Construction Site Supplies',
+    'Reduced Low Voltage (110V CTE) Site Supplies',
   description:
     '110V centre-tapped earth (CTE) reduced low voltage construction site supplies under BS 7671:2018+A4:2026 Section 704 — why 55V to earth is used on sites…',
   datePublished: published,

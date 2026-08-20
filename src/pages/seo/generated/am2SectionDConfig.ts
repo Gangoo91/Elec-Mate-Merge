@@ -9,9 +9,9 @@ const modified = '2026-05-19';
 
 export const am2SectionDConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-section-d-fault-diagnosis',
-  title: 'AM2 Section D — Fault Diagnosis + Rectification (2 hours)',
+  title: 'AM2 Section D: Fault Diagnosis (2 hours)',
   description:
-    'AM2 Section D: 2 hours of systematic fault diagnosis and rectification. Typical NET faults (open circuits, shorts, polarity swaps, missing CPCs) + method assessors mark.',
+    'AM2 Section D: 2 hours of systematic fault diagnosis and rectification. Typical NET faults — open circuits, shorts, polarity swaps, missing CPCs.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

@@ -599,7 +599,7 @@ const sections = [
 export default function GoogleAdsElectriciansPage() {
   return (
     <GuideTemplate
-      title="Google Ads for Electricians UK | PPC Guide for Electrical"
+      title="Google Ads for Electricians UK: PPC Guide"
       description="Google Ads for UK electricians: Local Services Ads, Google Guaranteed badge, costs of £3–£10 per click, and realistic budgets for every business size."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

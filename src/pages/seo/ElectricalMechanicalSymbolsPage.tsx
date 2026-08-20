@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalMechanicalSymbolsPage() {
   return (
     <GuideTemplate
-      title="Mechanical + HVAC Symbols | Boilers, Heaters, AC Drawings"
+      title="Mechanical + HVAC Symbols: Boilers & AC Drawings"
       description="Boiler, water heater, panel heater, air conditioning, fan coil unit, towel rail."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

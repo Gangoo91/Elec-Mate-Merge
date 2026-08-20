@@ -860,7 +860,7 @@ const sections = [
 export default function DistributionBoardWiringPage() {
   return (
     <GuideTemplate
-      title="Distribution Board Wiring Guide | Consumer Unit Layout"
+      title="Distribution Board Wiring: Consumer Unit Layout"
       description="Complete guide to distribution board wiring and consumer unit layout in the UK. Split load vs dual RCD vs RCBO boards, circuit arrangement."
       datePublished="2025-08-15"
       dateModified="2026-06-10"

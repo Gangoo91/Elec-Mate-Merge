@@ -793,7 +793,7 @@ const sections = [
 export default function CommercialElectricianGuidePage() {
   return (
     <GuideTemplate
-      title="Commercial Electrician Guide | Roles & Requirements UK"
+      title="Commercial Electrician Guide: Roles & Rules UK"
       description="Complete guide to working as a commercial electrician in the UK. Three-phase systems, fire alarms, emergency lighting, design work, CDM responsibilities."
       datePublished="2025-06-20"
       dateModified="2026-05-18"

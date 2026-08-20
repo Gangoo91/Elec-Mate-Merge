@@ -586,7 +586,7 @@ const sections = [
 export default function IntermittentElectricalFaultsPage() {
   return (
     <GuideTemplate
-      title="Intermittent Electrical Faults | How to Find Them"
+      title="Intermittent Electrical Faults: How to Find Them"
       description="Expert guide to diagnosing intermittent electrical faults. Covers temperature-dependent faults, vibration, loose connections, insulation breakdown."
       datePublished="2025-09-20"
       dateModified="2026-05-18"

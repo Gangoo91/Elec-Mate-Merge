@@ -634,7 +634,7 @@ const sections = [
 export default function Year2ElectricalApprenticePage() {
   return (
     <GuideTemplate
-      title="Year 2 Apprentice Testing Guide | Continuity, IR, EFLI, RCD"
+      title="Year 2 Apprentice Testing Guide: Continuity, RCD"
       description="Year 2 testing walkthrough for UK electrical apprentices. Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD — every test."
       datePublished="2025-10-01"
       dateModified="2026-05-19"

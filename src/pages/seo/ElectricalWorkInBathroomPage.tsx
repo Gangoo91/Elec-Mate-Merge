@@ -726,7 +726,7 @@ const sections = [
 export default function ElectricalWorkInBathroomPage() {
   return (
     <GuideTemplate
-      title="Electrical Work in Bathroom | Zones & Regulations UK"
+      title="Electrical Work in Bathroom: Zones & Regs UK"
       description="Complete guide to electrical work in bathrooms in the UK. Zone 0, Zone 1, Zone 2 explained, IP ratings per zone, what can go where, extract fans."
       datePublished="2025-09-05"
       dateModified="2026-06-10"

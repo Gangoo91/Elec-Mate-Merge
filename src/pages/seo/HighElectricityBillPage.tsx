@@ -614,7 +614,7 @@ const sections = [
 export default function HighElectricityBillPage() {
   return (
     <GuideTemplate
-      title="High Electricity Bill | Electrical Causes & Fixes"
+      title="High Electricity Bill: Electrical Causes & Fixes"
       description="Unexpectedly high electricity bill? Expert guide to electrical causes including earth leakage, faulty immersion heater thermostats."
       datePublished="2025-09-05"
       dateModified="2026-06-10"

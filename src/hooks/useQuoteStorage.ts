@@ -437,10 +437,30 @@ export const useQuoteStorage = () => {
               : new Date(quote.lastReminderSentAt).toISOString()
             : null,
           notes: quote.notes,
-          expiry_date:
-            quote.expiryDate instanceof Date
+          // ELE-1576 — a per-quote `validForDays` wins over whatever expiry
+          // was carried on the quote, so changing it in the builder actually
+          // moves the date the client is shown. Falls through to the previous
+          // behaviour (existing expiry, else 30 days) when it isn't set, so
+          // quotes that don't use it are untouched.
+          //
+          // Anchored to the quote's CREATION date, never `Date.now()`. Saving
+          // is not the same event as issuing: measuring from the save would
+          // push the expiry forward every time the quote was touched, so
+          // opening a sent quote to fix a typo would silently extend the
+          // deadline the client had already been given.
+          expiry_date: (() => {
+            const days = quote.settings?.validForDays;
+            if (typeof days === 'number' && days > 0) {
+              const createdMs = quote.createdAt
+                ? new Date(quote.createdAt).getTime()
+                : Date.now();
+              const anchor = Number.isFinite(createdMs) ? createdMs : Date.now();
+              return new Date(anchor + days * 24 * 60 * 60 * 1000).toISOString();
+            }
+            return quote.expiryDate instanceof Date
               ? quote.expiryDate.toISOString()
-              : new Date(quote.expiryDate || Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+              : new Date(quote.expiryDate || Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+          })(),
           acceptance_status: quote.acceptance_status || 'pending',
           accepted_at: quote.accepted_at
             ? quote.accepted_at instanceof Date

@@ -596,7 +596,7 @@ const sections = [
 export default function ApprenticeAssessmentGuidePage() {
   return (
     <GuideTemplate
-      title="Apprentice Assessment Guide | What to Expect UK"
+      title="Apprentice Assessment Guide: What to Expect UK"
       description="Complete guide to electrical apprentice assessment in the UK. On-programme assessment, gateway requirements, EPA synoptic project."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

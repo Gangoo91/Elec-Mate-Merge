@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const partialRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/partial-rewire-labour-and-materials',
-  title: 'Partial Rewire Labour and Materials | Pricing Guide',
+  title: 'Partial Rewire Labour and Materials Guide',
   description:
     'How electricians can separate labour and materials on a partial rewire, explain the price clearly, and keep the job easy for the client to understand.',
   datePublished: published,

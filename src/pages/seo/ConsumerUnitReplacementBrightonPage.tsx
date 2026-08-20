@@ -563,7 +563,7 @@ const sections = [
 export default function ConsumerUnitReplacementBrightonPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Brighton | Fuse Box Brighton"
+      title="Consumer Unit Replacement Brighton: Fuse Box"
       description="Consumer unit replacement in Brighton — typical cost £450–£800, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

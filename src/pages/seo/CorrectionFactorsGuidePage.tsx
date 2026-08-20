@@ -18,7 +18,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 Correction Factors | Ca Cg Ci Cf Explained';
+const PAGE_TITLE = 'BS 7671 Correction Factors: Ca, Cg, Ci, Cf';
 const PAGE_DESCRIPTION =
   'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C6), Ci (Reg 523.9), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
 

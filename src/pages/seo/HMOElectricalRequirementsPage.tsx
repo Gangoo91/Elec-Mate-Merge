@@ -889,8 +889,8 @@ const sections = [
 export default function HMOElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="HMO Electrical Requirements 2026 | Licensing + EICR"
-      description="HMO electrical rules: 5-year EICR, AFDDs required under Reg 421.1.7, 30 mA RCD on sockets and lighting, BS 5839-6 fire detection, BS 5266-1 emergency lighting, and licensing thresholds."
+      title="HMO Electrical Requirements 2026: EICR Rules"
+      description="HMO electrical rules: 5-year EICR, AFDDs under Reg 421.1.7, 30 mA RCD on sockets and lighting, BS 5839-6 fire detection and licensing thresholds."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

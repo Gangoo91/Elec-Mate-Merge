@@ -187,7 +187,7 @@ export default function ConnectAIPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <title>Connect Elec-Mate to ChatGPT, Claude, Cursor + more | UK Electrical AI</title>
+        <title>Connect Elec-Mate to ChatGPT, Claude, Cursor</title>
         <meta
           name="description"
           content="Install Elec-Mate inside ChatGPT, Claude, Cursor, Perplexity, Windsurf, Cline + Continue. 20 verified BS 7671:2018+A4:2026 tools — one URL, every AI."

@@ -490,7 +490,7 @@ const sections = [
 export default function CSCSvsECSCardPage() {
   return (
     <GuideTemplate
-      title="CSCS vs ECS Card | Which Card Do Electricians Need? UK 2026"
+      title="CSCS vs ECS Card: Which Do Electricians Need?"
       description="CSCS vs ECS card comparison for UK electricians. Which sites accept which, how to get each card, costs, renewal, and which one you actually need."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

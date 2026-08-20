@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostSheffieldConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-sheffield',
-  title: 'Consumer Unit Replacement Cost Sheffield 2026 — Full',
+  title: 'Consumer Unit Replacement Cost Sheffield 2026',
   description: 'Consumer unit (fuse board) replacement cost in Sheffield — typical 2026 prices £434–680 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

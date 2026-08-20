@@ -615,7 +615,7 @@ const sections = [
 export default function AgriculturalInstallationsPage() {
   return (
     <GuideTemplate
-      title="Agricultural Electrical Installations | BS 7671 Part 7"
+      title="Agricultural Electrical Installations: BS 7671"
       description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Earthing and bonding for livestock buildings, IP ratings."
       datePublished="2025-07-20"
       dateModified="2026-06-10"

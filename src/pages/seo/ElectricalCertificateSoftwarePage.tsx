@@ -18,8 +18,8 @@ import {
 export default function ElectricalCertificateSoftwarePage() {
   return (
     <ToolTemplate
-      title="Electrical Certificate Software UK | EICR, EIC + 14 More"
-      description="Electrical certificate software for UK electricians: 16 certificate types, unlimited certificates from £6.99/month, AI board scanner, voice test entry, offline support. BS 7671:2018+A4:2026 model forms. 7-day free trial."
+      title="Electrical Certificate Software UK: EICR + More"
+      description="Electrical certificate software for UK electricians: 16 certificate types, unlimited from £6.99/month, AI board scanner, voice entry, offline support."
       datePublished="2026-06-10"
       dateModified="2026-06-10"
       breadcrumbs={[

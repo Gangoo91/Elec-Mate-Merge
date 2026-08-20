@@ -509,8 +509,8 @@ const relatedPages = [
 export default function ExpensesManagerPage() {
   return (
     <BusinessTemplate
-      title="Expenses Manager for Electricians | Track & Claim"
-      description="Track mileage, materials, tools and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture and MTD-ready reporting."
+      title="Expenses Manager for Electricians: Track & Claim"
+      description="Track mileage, materials, tools and receipts for your electrical business. HMRC-compliant categories, digital receipt capture and MTD-ready reporting."
       datePublished="2025-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

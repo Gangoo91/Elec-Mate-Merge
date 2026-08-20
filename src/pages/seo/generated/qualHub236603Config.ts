@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHub236603Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-complete-guide',
-  title: 'City & Guilds 2366-03: Level 3 Diploma in Electrotechnical',
+  title: 'City & Guilds 2366-03: Level 3 Diploma',
   description: 'The complete 2026 guide to City & Guilds 2366-03 (Level 3 Diploma in Electrotechnical Technology).',
   datePublished: published,
   dateModified: modified,

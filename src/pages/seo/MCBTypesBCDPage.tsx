@@ -612,7 +612,7 @@ const sections = [
 export default function MCBTypesBCDPage() {
   return (
     <GuideTemplate
-      title="MCB Types B, C and D Explained | Trip Characteristics"
+      title="MCB Types B, C, D Explained: Trip Ratings"
       description="Complete guide to MCB types B, C, and D for UK electricians. Magnetic trip characteristics (Type B 3-5x, Type C 5-10x, Type D 10-20x)."
       datePublished="2025-06-01"
       dateModified="2026-06-10"

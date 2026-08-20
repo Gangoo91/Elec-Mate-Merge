@@ -421,7 +421,7 @@ const sections = [
 export default function CookerConnectionCostPage() {
   return (
     <GuideTemplate
-      title="Cooker Connection Cost 2026 | UK Price Guide"
+      title="Cooker Connection Cost 2026: UK Price Guide"
       description="How much does it cost to connect an electric cooker in 2026? UK price guide covering existing circuit connections, new cooker circuits, cable sizes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

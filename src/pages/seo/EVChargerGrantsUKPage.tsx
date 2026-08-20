@@ -592,7 +592,7 @@ const sections = [
 export default function EVChargerGrantsUKPage() {
   return (
     <GuideTemplate
-      title="EV Charger Grants UK 2026 | WCS, EV Infrastructure Grant &"
+      title="EV Charger Grants 2026: WCS & What's Available"
       description="Complete guide to EV charger grants in the UK in 2026. The EVHS closed March 2022 — find out what is still available."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

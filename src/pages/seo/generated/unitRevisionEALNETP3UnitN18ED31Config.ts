@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitN18ED31Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-N18ED3-1-understand-the-requirements-for-electrical-installations-bs-7671-2018-revision',
-  title: 'EAL NETP3 Unit N18ED3/1: Understand the Requirements for',
+  title: 'EAL NETP3 Unit N18ED3/1 Revision Guide',
   description: 'Complete revision guide for EAL NETP3 Unit N18ED3/1 (Understand the Requirements for Electrical Installations BS 7671:2018).',
   datePublished: published,
   dateModified: modified,

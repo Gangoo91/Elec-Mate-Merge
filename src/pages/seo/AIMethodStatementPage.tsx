@@ -453,7 +453,7 @@ const sections = [
 export default function AIMethodStatementPage() {
   return (
     <ToolTemplate
-      title="AI Method Statement Generator | RAMS Tool"
+      title="AI Method Statement Generator: RAMS Tool"
       description="Generate site-specific method statements + risk assessments for UK electrical work using AI. CDM 2015, COSHH, RAMS — minutes, not hours."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

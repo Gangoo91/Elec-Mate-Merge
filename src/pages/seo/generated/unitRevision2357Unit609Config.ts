@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit609Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-609-understanding-the-electricalprinciples-associated-with-the-design-building-installation-and-maintenance-of-electrical-equipment-and-systems-eltk08-revision',
-  title: 'City & Guilds 2357 Unit 609: Understanding the',
+  title: 'City & Guilds 2357 Unit 609 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 609 (Understanding the electricalprinciples associated with the design, building…',
   datePublished: published,
   dateModified: modified,

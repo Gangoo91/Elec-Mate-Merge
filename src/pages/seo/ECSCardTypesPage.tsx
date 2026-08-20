@@ -602,7 +602,7 @@ const sections = [
 export default function ECSCardTypesPage() {
   return (
     <GuideTemplate
-      title="ECS Card Types | Which Card Do You Need?"
+      title="ECS Card Types: Which Card Do You Need?"
       description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
       datePublished="2025-05-10"
       dateModified="2026-08-07"

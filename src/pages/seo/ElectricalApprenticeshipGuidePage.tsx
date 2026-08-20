@@ -540,7 +540,7 @@ const sections = [
 export default function ElectricalApprenticeshipGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Apprenticeship UK 2026 | Complete Guide"
+      title="Electrical Apprenticeship UK 2026: Full Guide"
       description="Complete guide to electrical apprenticeships in the UK for 2026. How to find one, what to expect, pay rates, qualifications earned, EPA preparation."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

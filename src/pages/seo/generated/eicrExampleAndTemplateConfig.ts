@@ -5,7 +5,7 @@ const modified = '2026-06-10';
 
 export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-example-and-template',
-  title: 'EICR Example and Template | Electrician Guide | Elec-Mate',
+  title: 'EICR Example and Template: Electrician Guide',
   description:
     'What a strong EICR example or template should include, how to keep the schedule and limitations clear, and how to move cleanly into a finished report.',
   datePublished: published,

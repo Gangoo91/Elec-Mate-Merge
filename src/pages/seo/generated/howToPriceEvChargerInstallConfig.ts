@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceEvChargerInstallConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-ev-charger-install-as-an-electrician',
-  title: 'How to Price EV Charger Installation as an Electrician — UK',
+  title: 'How to Price EV Charger Installation: UK 2026',
   description: 'How much should you charge for ev charger installation as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

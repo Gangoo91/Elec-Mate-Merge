@@ -37,7 +37,7 @@ export default function IPAFMockExamPage() {
   return (
     <PublicMockExamPage
       title={`IPAF Mock Test 2026: Free MEWP Theory Practice`}
-      description={`Free MEWP theory mock test: 25 questions from a 200-Q bank. Work at height law, machine selection, ground conditions, harness use, entrapment and rescue. 30-min timer.`}
+      description={`Free MEWP theory mock test: 25 questions from a 200-Q bank, 30-min timer. Work at height law, machine selection, ground conditions, harness use.`}
       slug="ipaf"
       heading={`IPAF Mock Test — Free MEWP Theory Practice`}
       intro={`Free mock test for MEWP operators preparing for IPAF theory assessment. 25 questions drawn from a 200-question bank covering the Work at Height Regulations 2005, LOLER and PUWER duties, selecting the right machine, ground conditions and stability, wind limits, harness and work restraint in boom-type platforms, overhead hazards and entrapment, thorough examination, and emergency lowering and rescue planning. Grounded in HSE guidance. This covers the theory framework rather than machine-specific operating procedures, and is not a substitute for accredited operator training.`}

@@ -558,7 +558,7 @@ const sections = [
 export default function ElectricalRescueProcedurePage() {
   return (
     <GuideTemplate
-      title="Electrical Rescue Procedure UK | Electric Shock First Aid"
+      title="Electrical Rescue Procedure UK: Shock First Aid"
       description="UK electrical rescue procedure guide — do not touch the casualty, isolate the supply, call 999, CPR for electric shock, burn treatment."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

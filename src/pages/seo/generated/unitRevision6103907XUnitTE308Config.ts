@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE308Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-08-electrical-scientific-principles-revision',
-  title: 'EAL Level 3 Unit TE3-08: Electrical Scientific Principles',
+  title: 'EAL Level 3 Unit TE3-08: Electrical Scientific',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-08 (Electrical Scientific Principles). Every topic structured as a study checklist, with mock exams…',
   datePublished: published,
   dateModified: modified,

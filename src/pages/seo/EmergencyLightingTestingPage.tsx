@@ -603,8 +603,8 @@ const sections = [
 export default function EmergencyLightingTestingPage() {
   return (
     <GuideTemplate
-      title="Emergency Lighting Testing Guide UK | Monthly & Annual Tests"
-      description="Complete guide to emergency lighting testing in the UK. BS 5266-1 requirements — monthly function test (1 minute), annual full-duration test (1, 2."
+      title="Emergency Lighting Testing: Monthly & Annual"
+      description="Complete guide to emergency lighting testing in the UK. BS 5266-1 requirements — monthly function test (1 minute), annual test (1, 2, or 3 hours)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

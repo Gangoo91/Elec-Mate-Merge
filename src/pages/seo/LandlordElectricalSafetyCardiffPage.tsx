@@ -702,7 +702,7 @@ const sections = [
 export default function LandlordElectricalSafetyCardiffPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Cardiff | EICR Wales Landlords"
+      title="Landlord Electrical Safety Cardiff: EICR Wales"
       description="Landlord electrical safety requirements in Cardiff under the Renting Homes (Wales) Act 2022. Welsh law explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

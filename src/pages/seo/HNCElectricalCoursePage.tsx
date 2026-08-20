@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'HNC Electrical Course | Higher National Certificate Guide';
+const PAGE_TITLE = 'HNC Electrical Course: Higher National Cert';
 const PAGE_DESCRIPTION =
   'HNC in Electrical & Electronic Engineering: entry requirements, modules, part-time study, career benefits, HNC vs NVQ L3 vs degree. AI tutor.';
 

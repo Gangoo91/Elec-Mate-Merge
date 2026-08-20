@@ -546,7 +546,7 @@ const sections = [
 export default function EICRCoventryPage() {
   return (
     <GuideTemplate
-      title="EICR Coventry | Electrical Safety Certificate Cost 2026"
+      title="EICR Coventry: Cost & Safety Certificate 2026"
       description="EICR costs in Coventry for 2026. Landlord legal requirements, Coventry City Council enforcement, post-war housing stock findings, observation codes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

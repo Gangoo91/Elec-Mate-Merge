@@ -500,7 +500,7 @@ const relatedPages = [
 export default function EquipmentROICalculatorPage() {
   return (
     <BusinessTemplate
-      title="Equipment ROI Calculator | Tool Investment Tool"
+      title="Equipment ROI Calculator: Tool Investment Tool"
       description="Calculate the return on investment for test equipment, vans, tools, and training courses. See payback periods, lifetime ROI."
       datePublished="2025-06-01"
       dateModified="2026-05-18"

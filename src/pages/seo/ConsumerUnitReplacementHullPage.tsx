@@ -468,7 +468,7 @@ const sections = [
 export default function ConsumerUnitReplacementHullPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Hull | Fuse Box Hull — Costs"
+      title="Consumer Unit Replacement Hull: Costs"
       description="Consumer unit replacement in Hull — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

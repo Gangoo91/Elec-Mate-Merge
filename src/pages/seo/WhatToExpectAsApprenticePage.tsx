@@ -638,7 +638,7 @@ const sections = [
 export default function WhatToExpectAsApprenticePage() {
   return (
     <GuideTemplate
-      title="What to Expect as an Electrical Apprentice | Honest Guide"
+      title="What to Expect as an Electrical Apprentice"
       description="The honest guide to life as an electrical apprentice in the UK. Day-to-day reality, early starts, physical demands, site culture, the hard parts."
       datePublished="2025-12-10"
       dateModified="2026-05-18"

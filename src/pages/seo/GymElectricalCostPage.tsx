@@ -513,7 +513,7 @@ const sections = [
 export default function GymElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Gym Electrical Cost 2026 | UK Commercial Gym Installation"
+      title="Gym Electrical Cost 2026: Commercial Gym"
       description="How much does gym electrical installation cost in 2026? UK guide covering 3-phase for commercial equipment, shower area IP ratings, emergency lighting."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceSmartHomeInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-smart-home-installation-as-an-electrician',
-  title: 'How to Price Smart Home Installation as an Electrician — UK',
+  title: 'How to Price Smart Home Installations (UK)',
   description: 'How much should you charge for smart home installation as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

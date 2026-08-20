@@ -519,7 +519,7 @@ const sections = [
 export default function EVChargerNotWorkingPage() {
   return (
     <GuideTemplate
-      title="EV Charger Not Working | Home EV Charger Fault Finding UK"
+      title="EV Charger Not Working: EVSE Fault Finding UK"
       description="Home EV charger not working? This guide explains error codes, EVSE communication faults, supply voltage issues, RCD nuisance tripping, earthing faults."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

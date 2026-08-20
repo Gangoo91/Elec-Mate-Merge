@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostSwindonConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-swindon',
-  title: 'EICR Cost Swindon 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Swindon 2026 — Domestic & Commercial',
   description: 'How much does an EICR cost in Swindon? Fair-margin 2026 prices for scheme-registered electricians — £220–295 for a 1-bed, £340–465 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

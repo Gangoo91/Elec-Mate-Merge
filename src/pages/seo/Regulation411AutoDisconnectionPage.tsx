@@ -673,7 +673,7 @@ const sections = [
 export default function Regulation411AutoDisconnectionPage() {
   return (
     <GuideTemplate
-      title="Regulation 411 | Automatic Disconnection of Supply Explained"
+      title="Regulation 411: Auto Disconnection of Supply"
       description="Complete guide to Regulation 411 (Automatic Disconnection of Supply) in BS 7671. Disconnection times, Zs values, MCB types B/C/D."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

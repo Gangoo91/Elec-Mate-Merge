@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236603Unit303Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-unit-303-fault-finding-and-diagnosis-revision',
-  title: 'City & Guilds 2366-03 Unit 303: Fault finding and diagnosis',
+  title: 'City & Guilds 2366-03 Unit 303 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2366-03 Unit 303 (Fault finding and diagnosis). Every topic structured as a study checklist, with mock exams…',
   datePublished: published,
   dateModified: modified,

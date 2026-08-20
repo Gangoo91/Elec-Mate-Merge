@@ -18,7 +18,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Asbestos Awareness Course | Category A Training';
+const PAGE_TITLE = 'Asbestos Awareness Course: Category A Training';
 const PAGE_DESCRIPTION =
   'Category A asbestos awareness for UK electricians: types, where found, CAR 2012 duties, what to do if you find it. 5 modules with quizzes + AI tutor.';
 

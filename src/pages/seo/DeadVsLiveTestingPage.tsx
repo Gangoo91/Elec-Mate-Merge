@@ -772,7 +772,7 @@ const sections = [
 export default function DeadVsLiveTestingPage() {
   return (
     <GuideTemplate
-      title="Dead Testing vs Live Testing | What's the Difference?"
+      title="Dead Testing vs Live Testing: The Difference"
       description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671."
       datePublished="2025-07-01"
       dateModified="2026-06-10"

@@ -18,7 +18,7 @@ import {
 export default function RCDKeepsTrippingPage() {
   return (
     <GuideTemplate
-      title="RCD Keeps Tripping | Causes & How to Fix It"
+      title="RCD Keeps Tripping: Causes & How to Fix It"
       description="Why does your RCD keep tripping? Expert guide to diagnosing common causes including earth leakage, faulty appliances, moisture ingress."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

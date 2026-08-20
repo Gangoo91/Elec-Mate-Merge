@@ -5,7 +5,7 @@ const modified = '2026-06-10';
 
 export const eicWhatToIncludeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-what-to-include',
-  title: 'What an EIC Should Include | Electrician Guide | Elec-Mate',
+  title: 'What an EIC Should Include: Electrician Guide',
   description:
     'What a strong Electrical Installation Certificate should include, how to keep the paperwork clear, and how to hand the job over properly.',
   datePublished: published,

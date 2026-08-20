@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostLeedsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-leeds',
-  title: 'Consumer Unit Replacement Cost Leeds 2026 — Full Pricing',
+  title: 'Consumer Unit Replacement Cost Leeds 2026',
   description: 'Consumer unit (fuse board) replacement cost in Leeds — typical 2026 prices £459–720 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

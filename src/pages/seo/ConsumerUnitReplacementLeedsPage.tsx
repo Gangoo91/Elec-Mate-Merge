@@ -466,7 +466,7 @@ const sections = [
 export default function ConsumerUnitReplacementLeedsPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Leeds | Fuse Board Upgrade Cost"
+      title="Consumer Unit Replacement Leeds: Fuse Board"
       description="How much does a consumer unit replacement cost in Leeds in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

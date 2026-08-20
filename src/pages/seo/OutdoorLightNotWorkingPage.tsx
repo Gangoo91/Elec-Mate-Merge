@@ -744,7 +744,7 @@ const sections = [
 export default function OutdoorLightNotWorkingPage() {
   return (
     <GuideTemplate
-      title="Outdoor Light Not Working | Troubleshooting Guide"
+      title="Outdoor Light Not Working: Troubleshooting Guide"
       description="Outdoor light not working? Learn the common causes — moisture ingress, PIR/photocell faults, SWA cable damage, LED driver failure, RCD tripping."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

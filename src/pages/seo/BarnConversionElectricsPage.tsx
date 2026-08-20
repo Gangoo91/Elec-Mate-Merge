@@ -772,7 +772,7 @@ const sections = [
 export default function BarnConversionElectricsPage() {
   return (
     <GuideTemplate
-      title="Barn Conversion Electrical Installation | Guide UK"
+      title="Barn Conversion Electrics: UK Installation Guide"
       description="Complete guide to barn conversion electrical installation in the UK. Heritage constraints, long cable runs, voltage drop, three-phase supply."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -642,7 +642,7 @@ export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
       title="Electric Boiler Size & Wiring: 9kW = 39A, 10mm²"
-      description="Size an electric boiler at ~1kW per 10m² of floor area. A 9kW boiler draws 39A: wire it in 10mm² twin and earth on a dedicated 40A radial. Part P, testing and costs."
+      description="Size an electric boiler at ~1kW per 10m² of floor area. A 9kW boiler draws 39A: wire it in 10mm² twin and earth on a 40A radial. Part P, testing and costs."
       datePublished="2024-06-01"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

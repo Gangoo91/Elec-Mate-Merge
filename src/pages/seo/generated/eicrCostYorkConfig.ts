@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostYorkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-york',
-  title: 'EICR Cost York 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost York 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in York? Fair-margin 2026 prices for scheme-registered electricians — £210–280 for a 1-bed, £320–440 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

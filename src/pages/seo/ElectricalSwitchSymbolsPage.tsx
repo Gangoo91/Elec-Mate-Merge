@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalSwitchSymbolsPage() {
   return (
     <GuideTemplate
-      title="Electrical Switch Symbols | IEC 60617 Reference UK"
+      title="Electrical Switch Symbols: IEC 60617 UK"
       description="One-way, two-way, intermediate, dimmer, key, PIR, pull-cord, timer, isolator, fan-isolator + emergency stop switch symbols to IEC 60617 for UK."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

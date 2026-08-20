@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const semi1930sConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/1930s-semi-consumer-unit-upgrade',
-  title: '1930s Semi Consumer Unit Upgrade | Electrician Guide',
+  title: '1930s Semi Consumer Unit Upgrade Guide',
   description:
     'What to expect when upgrading a consumer unit in a 1930s semi, including access, cable condition, earthing, testing, and common cost drivers.',
   datePublished: published,

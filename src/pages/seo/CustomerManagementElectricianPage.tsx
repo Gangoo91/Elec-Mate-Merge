@@ -22,7 +22,7 @@ const PAGE_PATH = '/tools/customer-management-electrician';
 export default function CustomerManagementElectricianPage() {
   return (
     <BusinessTemplate
-      title="Customer Management for Electricians | CRM Tool"
+      title="Customer Management for Electricians: CRM Tool"
       description="Manage customers, job history, certificate records, and follow-ups with a CRM built for UK electricians. Linked to your EICR + invoice flow."
       datePublished="2025-09-15"
       dateModified="2026-05-18"

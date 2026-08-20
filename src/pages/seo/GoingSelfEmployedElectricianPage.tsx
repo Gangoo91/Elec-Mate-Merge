@@ -642,7 +642,7 @@ const sections = [
 export default function GoingSelfEmployedElectricianPage() {
   return (
     <GuideTemplate
-      title="Going Self-Employed as an Electrician | Complete Guide"
+      title="Going Self-Employed as an Electrician: UK Guide"
       description="Complete guide to going self-employed as an electrician in the UK. Covers HMRC registration, competent person schemes, pricing, getting customers."
       datePublished="2026-01-12"
       dateModified="2026-05-18"

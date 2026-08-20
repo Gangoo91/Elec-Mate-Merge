@@ -648,7 +648,7 @@ const sections = [
 export default function EICRCommercialPage() {
   return (
     <GuideTemplate
-      title="Commercial EICR Guide UK | Intervals, Scope, Qualifications"
+      title="Commercial EICR Guide UK: Intervals & Scope"
       description="Complete guide to commercial property EICRs in the UK. Inspection intervals, scope vs domestic EICR, qualifications required, three-phase installations."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

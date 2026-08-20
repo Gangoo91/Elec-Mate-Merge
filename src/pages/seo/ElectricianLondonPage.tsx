@@ -569,7 +569,7 @@ export default function ElectricianLondonPage() {
   return (
     <GuideTemplate
       localArea="London"
-      title="Electrician in London | Find Qualified Electricians 2026"
+      title="Electrician in London: 2026 Guide"
       description="Find qualified, registered electricians in London. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian rewiring costs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

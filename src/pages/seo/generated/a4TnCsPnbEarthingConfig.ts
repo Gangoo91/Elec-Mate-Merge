@@ -11,7 +11,7 @@ const modified = '2026-06-10';
 
 export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
-  title: 'BS 7671 A4:2026 — TN-C-S (PNB) Earthing Arrangement',
+  title: 'BS 7671 A4:2026 — TN-C-S (PNB) Earthing',
   description:
     'Amendment 4 (January 2026) formally split TN-C-S into two distinct earthing arrangements on the EICR/EIC model form: TN-C-S (PME) and TN-C-S (PNB).',
   datePublished: published,

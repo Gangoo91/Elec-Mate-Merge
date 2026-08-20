@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostGlasgowConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-glasgow',
-  title: 'EICR Cost Glasgow 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Glasgow 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Glasgow? Fair-margin 2026 prices for scheme-registered electricians — £220–290 for a 1-bed, £335–455 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

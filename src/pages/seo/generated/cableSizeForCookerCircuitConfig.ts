@@ -8,7 +8,7 @@ const modified = '2026-06-10';
 
 export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-cooker-circuit',
-  title: 'Cable Size for a Cooker Circuit — UK Sizing Guide (with Diversity Calculation)',
+  title: 'Cable Size for a Cooker Circuit: UK Guide',
   description:
     'Cable size for UK cooker circuits explained: 6 mm² for most domestic single-oven + hob installations after applying BS 7671 diversity…',
   datePublished: published,

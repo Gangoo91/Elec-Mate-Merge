@@ -729,7 +729,7 @@ const sections = [
 export default function CityGuilds2365GuidePage() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 Diploma 2026 | Level 2 + 3 Guide"
+      title="City & Guilds 2365 Diploma 2026: Level 2 & 3"
       description="C&G 2365 Diploma in Electrical Installations: Level 2 vs 3 structure, unit list, exams + practicals, college routes + how it feeds NVQ + AM2."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE303Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-03-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-revision',
-  title: 'EAL Level 3 Unit TE3-03: Practices and Procedures for',
+  title: 'EAL Level 3 Unit TE3-03 Revision Guide',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-03 (Practices and Procedures for Planning and Overseeing Electrical Work Activities).',
   datePublished: published,
   dateModified: modified,

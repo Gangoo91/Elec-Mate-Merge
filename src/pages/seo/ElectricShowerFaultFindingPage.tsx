@@ -829,7 +829,7 @@ const sections = [
 export default function ElectricShowerFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Electric Shower Not Working | Fault Finding & Repair Guide"
+      title="Electric Shower Not Working: Fault Finding Guide"
       description="Electric shower fault finding guide for UK homeowners and electricians. RCD tripping, solenoid valve, heating element, flow switch, pressure issues."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

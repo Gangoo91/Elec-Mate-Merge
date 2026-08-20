@@ -467,7 +467,7 @@ export default function ElectricianCheltenhamPage() {
     <GuideTemplate
       noindex={true}
       localArea="Cheltenham"
-      title="Electrician in Cheltenham | Local Electricians 2026"
+      title="Electrician in Cheltenham: Local Electricians"
       description="Find qualified electricians in Cheltenham. Part P compliance, NGED DNO, listed building consent, Regency property rewiring, EICR costs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

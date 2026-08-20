@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit312212Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-312-212-inspection-testing-and-commissioning-revision',
-  title: 'City & Guilds 5357 Unit 312/212: Inspection, Testing and',
+  title: 'City & Guilds 5357 Unit 312/212 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5357 Unit 312/212 (Inspection, Testing and Commissioning).',
   datePublished: published,
   dateModified: modified,

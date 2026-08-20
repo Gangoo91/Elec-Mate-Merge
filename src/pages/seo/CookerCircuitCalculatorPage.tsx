@@ -18,7 +18,7 @@ import {
 export default function CookerCircuitCalculatorPage() {
   return (
     <ToolTemplate
-      title="Cooker Circuit Calculator: Diversity + Cable Size (UK)"
+      title="Cooker Circuit Calculator: Diversity + Cable"
       description="Free cooker circuit calculator applying the standard UK diversity allowance. Work out cooker current, cable size and MCB rating to BS 7671 in seconds."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

@@ -627,8 +627,8 @@ const sections = [
 export default function LandlordElectricalSafetyEdinburghPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Edinburgh | Repairing Standard 2026"
-      description="Landlord electrical safety requirements in Edinburgh. Scotland's Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement, HMO rules, EICR costs and BS 7671:2018+A4:2026 requirements explained."
+      title="Landlord Safety Edinburgh: Repairing Standard"
+      description="Landlord electrical safety requirements in Edinburgh. Housing (Scotland) Act 2006 Repairing Standard, HMO rules and EICR costs explained."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

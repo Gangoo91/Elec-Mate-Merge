@@ -542,7 +542,7 @@ const sections = [
 export default function SmartEVChargingPage() {
   return (
     <GuideTemplate
-      title="Smart EV Charging UK | Smart Charge Points Guide 2025"
+      title="Smart EV Charging UK: Charge Points Guide 2025"
       description="Complete guide to smart EV charging in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021 explained, off-peak tariffs."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

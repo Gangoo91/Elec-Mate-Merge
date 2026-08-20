@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostBelfastConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-belfast',
-  title: 'EICR Cost Belfast 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Belfast 2026 — Full Pricing Guide',
   description: 'How much does an EICR cost in Belfast? Fair-margin 2026 prices for scheme-registered electricians — £210–285 for a 1-bed, £320–440 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

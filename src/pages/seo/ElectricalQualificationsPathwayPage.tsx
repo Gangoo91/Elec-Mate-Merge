@@ -659,7 +659,7 @@ const sections = [
 export default function ElectricalQualificationsPathwayPage() {
   return (
     <GuideTemplate
-      title="Electrical Qualifications Pathway UK | From Apprentice to"
+      title="Electrical Qualifications Pathway UK Guide"
       description="Complete map of UK electrical qualifications from Level 1 to specialist certifications. Level 2, Level 3, AM2, 18th Edition, C&G 2391, C&G 2396, EV."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

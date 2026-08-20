@@ -614,7 +614,7 @@ const sections = [
 export default function WarehouseElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Warehouse Electrical Installation UK | Industrial Lighting"
+      title="Warehouse Electrical Installation UK: Guide"
       description="Complete guide to warehouse electrical installation in the UK. High-bay LED lighting design, three-phase distribution, EV charging infrastructure."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

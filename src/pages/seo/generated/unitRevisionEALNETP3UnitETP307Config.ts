@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETP307Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETP3-07-apply-fault-diagnosis-and-rectification-revision',
-  title: 'EAL NETP3 Unit ETP3-07: Apply Fault Diagnosis and',
+  title: 'EAL NETP3 Unit ETP3-07: Fault Diagnosis',
   description: 'Complete revision guide for EAL NETP3 Unit ETP3-07 (Apply Fault Diagnosis and Rectification).',
   datePublished: published,
   dateModified: modified,

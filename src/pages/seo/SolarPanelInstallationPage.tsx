@@ -18,7 +18,7 @@ import {
 export default function SolarPanelInstallationPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation UK 2026 | Guide & Requirements"
+      title="Solar Panel Installation UK 2026: Requirements"
       description="Complete UK guide to domestic solar panel installation. MCS certification, DNO notification (G98/G99), Part P, earthing considerations, inverter types."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

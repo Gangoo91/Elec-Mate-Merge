@@ -129,9 +129,27 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
   // Helper to update a single field
   const handleFieldChange = useCallback(
     (field: keyof ClientSectionFields, value: string) => {
+      // ELE-1578 — "Same as client address" has to stay true as you type.
+      //
+      // installationAddress was only ever copied from clientAddress at two
+      // moments: picking a customer, and switching the toggle ON. Editing the
+      // client address afterwards left the installation address on its old
+      // value — and because the installation field is HIDDEN while the toggle
+      // is on, there was nothing on screen to show they had diverged.
+      //
+      // That is the reported bug: a user fixed a typo in the client address,
+      // regenerated, and the certificate still carried the old address on the
+      // installation line. Their workaround — toggling "same as" off and on —
+      // worked precisely because that re-ran the copy.
+      //
+      // A toggle that says "same as" must mean it continuously, not once.
+      if (field === 'clientAddress' && localValues.sameAsClientAddress === 'true') {
+        setValues({ clientAddress: value, installationAddress: value });
+        return;
+      }
       setValue(field, value);
     },
-    [setValue]
+    [setValue, setValues, localValues.sameAsClientAddress]
   );
 
   const handleSameAddressToggle = useCallback(

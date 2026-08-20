@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Site Manager | Role & Responsibilities';
+const PAGE_TITLE = 'Electrical Site Manager: Role & Duties';
 const PAGE_DESCRIPTION =
   'How to become an electrical site manager: responsibilities, quals, managing subbies, CDM 2015 duties, H&S, and the route from spark to manager.';
 

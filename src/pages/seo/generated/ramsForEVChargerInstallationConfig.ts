@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-ev-charger-installation',
   title:
-    'RAMS for EV Charger Installation — UK Method Statement',
+    'RAMS for EV Charger Installation: UK Method',
   description:
     'EV charger installation RAMS for UK electricians. Hazards, control measures, BS 7671:2018+A4:2026 Section 722 references, PME/PNB earthing…',
   datePublished: published,

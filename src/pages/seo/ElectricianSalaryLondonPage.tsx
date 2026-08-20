@@ -599,7 +599,7 @@ export default function ElectricianSalaryLondonPage() {
   return (
     <GuideTemplate
       localArea="Salary London"
-      title="Electrician Salary London 2026 | Employed & Self-Employed"
+      title="Electrician Salary London 2026: £38k–£90k"
       description="Realistic electrician salary figures for London in 2026. Employed rates £38,000–£65,000, self-employed £55,000–£90,000, specialist roles £70,000+."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

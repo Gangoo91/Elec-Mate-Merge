@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'First Aid Course for Electricians | Emergency Response';
+const PAGE_TITLE = 'First Aid Course for Electricians: Emergency';
 const PAGE_DESCRIPTION =
   'First aid training for UK electricians: shock response, CPR, burns, height injuries, workplace emergencies. 5 video modules + AI tutor.';
 

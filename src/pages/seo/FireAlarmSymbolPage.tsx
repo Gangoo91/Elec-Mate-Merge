@@ -120,7 +120,7 @@ const relatedPages = [
 export default function FireAlarmSymbolPage() {
   return (
     <GuideTemplate
-      title="Fire Alarm Sounder Symbol | BS EN 54-3 Reference"
+      title="Fire Alarm Sounder Symbol: BS EN 54-3 Reference"
       description="Fire Alarm Sounder IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

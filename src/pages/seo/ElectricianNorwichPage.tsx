@@ -541,7 +541,7 @@ export default function ElectricianNorwichPage() {
   return (
     <GuideTemplate
       localArea="Norwich"
-      title="Electrician in Norwich | Find Qualified Electricians 2026"
+      title="Electrician in Norwich: Find Electricians 2026"
       description="Find qualified, registered electricians in Norwich. Realistic 2026 pricing, UKPN connections, heritage property rewiring, flood-risk electrical safety."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

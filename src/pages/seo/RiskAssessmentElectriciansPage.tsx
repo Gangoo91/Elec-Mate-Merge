@@ -723,7 +723,7 @@ const sections = [
 export default function RiskAssessmentElectriciansPage() {
   return (
     <GuideTemplate
-      title="Risk Assessment for Electricians | Free Template Guide"
+      title="Risk Assessment for Electricians: Free Template"
       description="Complete guide to risk assessments for electricians. HSE 5-step process, electrical-specific hazards, template structure."
       datePublished="2025-03-15"
       dateModified="2026-05-18"

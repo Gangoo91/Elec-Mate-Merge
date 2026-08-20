@@ -541,7 +541,7 @@ const sections = [
 export default function ApprenticeMathsElectricianPage() {
   return (
     <GuideTemplate
-      title="Maths for Electrical Apprentices | Essential Electrical"
+      title="Maths for Electrical Apprentices: Essentials"
       description="Essential electrical maths for apprentices. Ohm's Law calculations, power triangle (P=IV), voltage drop formula, percentage voltage drop."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

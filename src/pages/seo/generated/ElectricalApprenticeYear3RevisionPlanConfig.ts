@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const ElectricalApprenticeYear3RevisionPlanConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-apprentice-year-3-revision-plan',
-  title: 'Year 3 Electrical Apprentice Revision Plan — Complete 2026',
+  title: 'Year 3 Electrical Apprentice Revision Plan 2026',
   description: 'A complete revision plan for third-year electrical apprentices. Year 3 is the heaviest — full inspection & testing, electrical systems design…',
   datePublished: published,
   dateModified: modified,

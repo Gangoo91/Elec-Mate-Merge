@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHub234603Config: GeneratedGuideConfig = {
   pagePath: '/guides/2346-03-complete-guide',
-  title: 'City & Guilds 2346-03: Electrotechnical Experienced Worker',
+  title: 'City & Guilds 2346-03: Experienced Worker',
   description: 'The complete 2026 guide to City & Guilds 2346-03 (Electrotechnical Experienced Worker Qualification).',
   datePublished: published,
   dateModified: modified,

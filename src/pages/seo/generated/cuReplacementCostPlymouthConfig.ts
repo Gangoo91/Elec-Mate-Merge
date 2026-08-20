@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostPlymouthConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-plymouth',
-  title: 'Consumer Unit Replacement Cost Plymouth 2026 — Full Pricing',
+  title: 'Consumer Unit Replacement Cost Plymouth 2026',
   description: 'Consumer unit (fuse board) replacement cost in Plymouth — typical 2026 prices £459–720 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

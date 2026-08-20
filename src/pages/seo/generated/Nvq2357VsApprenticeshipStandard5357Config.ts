@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const Nvq2357VsApprenticeshipStandard5357Config: GeneratedGuideConfig = {
   pagePath: '/guides/nvq-2357-vs-apprenticeship-standard-5357',
-  title: 'NVQ 2357 vs Apprenticeship Standard 5357 — Which Pathway?',
+  title: 'NVQ 2357 vs Apprenticeship Standard 5357',
   description: 'NVQ 2357 and the Apprenticeship Standard 5357 are the two main on-the-job evidence routes for UK electrical qualification.',
   datePublished: published,
   dateModified: modified,

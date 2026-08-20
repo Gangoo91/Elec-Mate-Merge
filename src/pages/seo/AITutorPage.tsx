@@ -437,7 +437,7 @@ const sections = [
 export default function AITutorPage() {
   return (
     <ToolTemplate
-      title="AI Tutor for Electricians | Study Assistant"
+      title="AI Tutor for Electricians: Study Assistant"
       description="AI study assistant for UK electricians. Explains any BS 7671 regulation in plain English, generates unlimited practice questions for C&G 2382, 2391."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

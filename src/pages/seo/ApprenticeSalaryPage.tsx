@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import ApprenticeWageChecker from '@/components/seo/ApprenticeWageChecker';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import {
@@ -19,6 +20,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'wage-checker', label: 'What Should You Be Paid?' },
   { id: 'minimum-wage-rates', label: 'Apprentice Minimum Wage Rates' },
   { id: 'jib-ecs-rates', label: 'JIB/ECS Rates' },
   { id: 'weekly-take-home', label: 'Weekly Take-Home Pay' },
@@ -145,6 +147,19 @@ const relatedPages = [
 ];
 
 const sections = [
+  {
+    id: 'wage-checker',
+    heading: 'Check Your Rate in Two Taps',
+    content: (
+      <>
+        <p>
+          The quick answer before the detail: pick your situation and see the 2026 hourly rate that
+          applies — statutory minimum or JIB stage rate, national or London.
+        </p>
+        <ApprenticeWageChecker />
+      </>
+    ),
+  },
   {
     id: 'minimum-wage-rates',
     heading: 'Apprentice Minimum Wage Rates 2026',

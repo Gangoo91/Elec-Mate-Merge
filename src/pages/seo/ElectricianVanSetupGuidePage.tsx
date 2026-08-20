@@ -626,7 +626,7 @@ const sections = [
 export default function ElectricianVanSetupGuidePage() {
   return (
     <GuideTemplate
-      title="Electrician Van Setup Guide 2026 | Best Van Racking"
+      title="Electrician Van Setup Guide 2026"
       description="Complete guide to setting up an electrician van. Racking systems compared (Sortimo, Bott, Van Guard), tool organisation, cable storage."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

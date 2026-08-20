@@ -697,7 +697,7 @@ const sections = [
 export default function CableSelectionGuidePage() {
   return (
     <GuideTemplate
-      title="Cable Selection Guide BS 7671 | Choosing the Right Cable UK"
+      title="Cable Selection Guide BS 7671: Which Cable UK"
       description="Complete cable selection guide for UK electrical installations under BS 7671. T&E flat twin, SWA armoured, MICC mineral insulated, FP200 fire resistant."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

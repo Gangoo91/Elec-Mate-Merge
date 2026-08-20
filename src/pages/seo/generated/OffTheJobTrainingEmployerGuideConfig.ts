@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const OffTheJobTrainingEmployerGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/off-the-job-training-employer-guide',
-  title: 'Off-The-Job Training for Electrical Employers — 2026 Guide',
+  title: 'Off-The-Job Training for Electrical Employers',
   description: 'A practical employer guide to OTJ training requirements. How to plan the 20% minimum, what activities count, the ESFA audit…',
   datePublished: published,
   dateModified: modified,

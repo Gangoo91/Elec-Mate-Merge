@@ -24,7 +24,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-const PAGE_TITLE = 'AI Electrician Tools | 8 BS 7671 Trained Specialists';
+const PAGE_TITLE = 'AI Electrician Tools: 8 BS 7671 Specialists';
 const PAGE_DESCRIPTION =
   '8 AI specialists trained on BS 7671:2018+A4:2026 — Circuit Designer, Cost Engineer, Fault Finder, Reg Lookup, and 4 more — plus 12 AI tools.';
 
@@ -200,7 +200,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function AIElectricianToolsPage() {
   useSEO({
-    title: 'AI Electrician Tools | 8 BS 7671 Trained Specialists',
+    title: 'AI Electrician Tools: 8 BS 7671 Specialists',
     description: PAGE_DESCRIPTION,
     schema: softwareApplicationSchema,
   });

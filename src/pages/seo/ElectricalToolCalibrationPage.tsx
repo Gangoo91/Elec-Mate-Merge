@@ -662,7 +662,7 @@ const sections = [
 export default function ElectricalToolCalibrationPage() {
   return (
     <GuideTemplate
-      title="Electrical Tool Calibration | When & Why UK Guide"
+      title="Electrical Tool Calibration: When & Why UK"
       description="Complete guide to electrical test instrument calibration. 12-month calibration cycle, UKAS accredited labs, what happens during calibration, costs."
       datePublished="2026-01-25"
       dateModified="2026-05-18"

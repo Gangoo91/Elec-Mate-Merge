@@ -666,7 +666,7 @@ const sections = [
 export default function ElectricalSafetyOnSitePage() {
   return (
     <GuideTemplate
-      title="Electrical Safety on Site | Construction Guide UK"
+      title="Electrical Safety on Site: Construction Guide UK"
       description="Complete UK guide: 110V CTE systems, PAT testing, BS 7671 Section 704 temporary supplies, permit to work, and cable routing for construction sites."
       datePublished="2025-05-20"
       dateModified="2026-06-10"

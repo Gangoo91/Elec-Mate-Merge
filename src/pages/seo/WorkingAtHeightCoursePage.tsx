@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Working at Height Course | Electrical Safety Training';
+const PAGE_TITLE = 'Working at Height Course: Safety Training';
 const PAGE_DESCRIPTION =
   'Working at height training for UK electricians: WAHR 2005, hierarchy of controls, ladder safety, mobile towers, fall arrest, RAs. 6 modules.';
 

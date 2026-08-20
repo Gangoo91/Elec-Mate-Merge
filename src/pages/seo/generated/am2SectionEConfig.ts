@@ -9,9 +9,9 @@ const modified = '2026-05-19';
 
 export const am2SectionEConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-section-e-online-knowledge-test',
-  title: 'AM2 Section E — Online Knowledge Test (1 hour, 30 Questions)',
+  title: 'AM2 Section E — Online Knowledge Test (30 Qs)',
   description:
-    'AM2 Section E: 60-minute online test, 30 multiple-choice questions on BS 7671, electrical science, H&S, inspection + testing. Format, navigation, prep strategy.',
+    'AM2 Section E: 60-minute online test, 30 multiple-choice questions covering BS 7671, science, H&S, inspection and testing. Format, navigation, prep tips.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const section715ElvLightingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-715-elv-lighting-a4-2026',
   title:
-    'BS 7671 Section 715 Extra-Low Voltage Lighting (A4:2026)',
+    'BS 7671 Section 715: ELV Lighting (A4:2026)',
   description:
     'BS 7671:2018+A4:2026 Section 715 explained: ELV definition, SELV vs PELV vs FELV, Class III equipment, transformer / driver selection under BS EN 61347…',
   datePublished: published,

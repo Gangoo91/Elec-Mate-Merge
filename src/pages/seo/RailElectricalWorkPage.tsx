@@ -377,7 +377,7 @@ const sections = [
 export default function RailElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="Rail Electrical Work UK | PTS Card, Sentinel, OLEC Guide"
+      title="Rail Electrical Work UK: PTS, Sentinel, OLEC"
       description="Complete guide to rail electrical work in the UK. Network Rail PTS card, Sentinel competency scheme, OLEC (Overhead Line Electrical Competency)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

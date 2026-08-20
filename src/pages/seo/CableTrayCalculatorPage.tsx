@@ -18,7 +18,7 @@ import {
 export default function CableTrayCalculatorPage() {
   return (
     <ToolTemplate
-      title="Cable Tray Sizing Calculator | Fill Capacity Tool"
+      title="Cable Tray Sizing Calculator: Fill Capacity Tool"
       description="Calculate cable tray fill percentage and select the correct tray size for any cable combination. BS EN 61537 aligned. UK electricians."
       datePublished="2026-02-01"
       dateModified="2026-06-10"

@@ -638,7 +638,7 @@ const sections = [
 export default function LightsFlickeringPage() {
   return (
     <GuideTemplate
-      title="Lights Flickering | Electrical Causes & Fixes"
+      title="Lights Flickering: Electrical Causes & Fixes"
       description="Complete guide to diagnosing flickering lights. Covers loose connections, voltage fluctuations, LED dimmer compatibility, neutral faults."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

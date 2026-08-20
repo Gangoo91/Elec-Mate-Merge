@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const ElectricalApprenticeYear1RevisionPlanConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-apprentice-year-1-revision-plan',
-  title: 'Year 1 Electrical Apprentice Revision Plan — Complete 2026',
+  title: 'Year 1 Apprentice Revision Plan: Complete 2026',
   description: 'A complete revision plan for first-year electrical apprentices in the UK. Covers the Level 2 foundation units, AM1 (where applicable)…',
   datePublished: published,
   dateModified: modified,

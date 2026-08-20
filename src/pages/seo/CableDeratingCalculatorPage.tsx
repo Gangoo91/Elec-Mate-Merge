@@ -20,8 +20,8 @@ import {
 export default function CableDeratingCalculatorPage() {
   return (
     <ToolTemplate
-      title="Cable Derating Calculator | Correction Factors Tool"
-      description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation), and Cf (BS 3036 fuse) correction factors. Free cable derating calculator for UK electricians."
+      title="Cable Derating Calculator: Ca Cg Ci Factors"
+      description="Free cable derating calculator to BS 7671: apply Ca (ambient), Cg (grouping), Ci (insulation) and Cf (BS 3036 fuse) correction factors to find It."
       datePublished="2026-01-22"
       dateModified="2026-06-10"
       breadcrumbs={[

@@ -17,7 +17,7 @@ import {
 export default function AIComponentIdentificationPage() {
   return (
     <ToolTemplate
-      title="AI Component ID | Photo Scanner Tool"
+      title="AI Component ID: Photo Scanner Tool"
       description="Point your phone camera at any electrical component and Elec-Mate's AI identifies it instantly. UK-spec accessories, MCBs, RCDs, conduit, more."
       datePublished="2026-01-20"
       dateModified="2026-06-10"

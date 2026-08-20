@@ -615,7 +615,7 @@ const sections = [
 export default function NICEICvsNAPITvsELECSAPage() {
   return (
     <GuideTemplate
-      title="NICEIC vs NAPIT vs ELECSA vs STROMA | Honest Comparison for"
+      title="NICEIC vs NAPIT vs ELECSA vs STROMA Compared"
       description="NICEIC vs NAPIT vs ELECSA vs STROMA — honest comparison of UK competent person schemes on cost, assessment, support, brand recognition."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

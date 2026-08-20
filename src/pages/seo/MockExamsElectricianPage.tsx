@@ -530,8 +530,8 @@ const relatedPages: RelatedPage[] = [
 export default function MockExamsElectricianPage() {
   return (
     <GuideTemplate
-      title="How to Revise for Electrician Exams: 18th Ed, 2391, AM2"
-      description="Step-by-step revision strategy for UK electrician exams: how mock exams work, what to revise, study schedules, exam-day technique, common traps + which mock test to take when."
+      title="Electrician Exam Revision: 18th Ed, 2391, AM2"
+      description="Step-by-step revision strategy for UK electrician exams: how mock exams work, what to revise, study schedules, exam-day technique and common traps."
       datePublished="2025-08-12"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

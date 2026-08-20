@@ -938,8 +938,8 @@ const sections = [
 export default function EICRCostUKPage() {
   return (
     <GuideTemplate
-      title="EICR Cost UK 2026: Prices by Property Type & Region"
-      description="How much does an EICR cost? UK prices for 2026: £120-£180 for a 1-bed flat, £180-£280 for a 3-bed house, £250-£450+ for HMOs. Costs by property type, city-by-city prices, and what electricians should charge."
+      title="EICR Cost UK 2026: Prices by Property & Region"
+      description="How much does an EICR cost? UK 2026 prices: £120-£180 for a 1-bed flat, £180-£280 for a 3-bed house, £250-£450+ for HMOs, by property type and city."
       datePublished="2025-02-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -129,7 +129,7 @@ const faqSchema = {
 
 export default function CashFlowPlannerPage() {
   useSEO({
-    title: 'Cash Flow Planner for Electricians | Financial Management',
+    title: 'Cash Flow Planner for Electricians',
     description:
       'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions.',
   });

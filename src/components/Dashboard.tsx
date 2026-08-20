@@ -491,20 +491,34 @@ const Dashboard = ({
         inProgressCount > 0 ? `${inProgressCount} in progress` : '4 core types',
     },
     {
+      /*
+       * ELE-1581 — was third and called "My Reports".
+       *
+       * A user asked "Can you view all Certificates in one place, or do you
+       * have to go into a job to find the certificate?" — while this card was
+       * on the dashboard the whole time. Two reasons they missed it: it was
+       * called Reports, not Certificates, so it did not match the word they
+       * were looking for; and it sat below the two cards for CREATING certs,
+       * when finding an existing one is the far more frequent errand.
+       *
+       * Named to MATCH the destination exactly — the screen's own heading is
+       * already "My Certificates". The entry point saying Reports while the
+       * page said Certificates is what made it unfindable.
+       */
+      id: 'my-reports',
+      eyebrow: 'Library',
+      title: 'My Certificates',
+      description: 'Every certificate you have ever issued, in one place.',
+      onClick: () => onNavigate('my-reports'),
+      meta: totalCount > 0 ? `${totalCount} on file` : 'Empty',
+    },
+    {
       id: 'specialist',
       eyebrow: 'Specialist',
       title: 'Specialist',
       description: 'Fire, EV, solar, BESS, lightning, PAT and more.',
       onClick: () => onNavigate('specialist'),
       meta: '14 cert types',
-    },
-    {
-      id: 'my-reports',
-      eyebrow: 'Library',
-      title: 'My Reports',
-      description: 'Every certificate you have ever issued.',
-      onClick: () => onNavigate('my-reports'),
-      meta: totalCount > 0 ? `${totalCount} on file` : 'Empty',
     },
     {
       id: 'labels-warnings',

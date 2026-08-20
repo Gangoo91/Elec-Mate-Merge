@@ -577,7 +577,7 @@ const sections = [
 export default function SolarPanelInstallationNottinghamPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Nottingham 2025 | Solar PV East"
+      title="Solar Panel Installation Nottingham 2025"
       description="Solar panel installation costs in Nottingham 2026: typical 4kW system £5,500–£8,000 installed, ~960 kWh/kWp/year, G98 grid connection, MCS."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

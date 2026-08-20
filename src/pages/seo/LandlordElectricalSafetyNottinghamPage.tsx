@@ -613,7 +613,7 @@ const sections = [
 export default function LandlordElectricalSafetyNottinghamPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Nottingham | EICR Requirements"
+      title="Landlord Electrical Safety Nottingham: EICR"
       description="Landlord electrical safety requirements in Nottingham. 2020 Regulations explained, Nottingham City Council selective licensing and enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

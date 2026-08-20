@@ -21,7 +21,7 @@ import {
 export default function BoardScannerToolPage() {
   return (
     <ToolTemplate
-      title="AI Board Scanner | Consumer Unit Photo Recognition"
+      title="AI Board Scanner: Consumer Unit Photo Scan"
       description="Elec-Mate's AI Board Scanner photographs consumer units and automatically identifies MCBs, RCBOs, RCDs, circuit details, and board layout."
       datePublished="2026-01-15"
       dateModified="2026-05-18"

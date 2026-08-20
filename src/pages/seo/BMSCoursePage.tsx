@@ -139,7 +139,7 @@ export default function BMSCoursePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useSEO({
-    title: 'BMS Course Online | Building Management Systems Training',
+    title: 'BMS Course Online: Building Management Systems',
     description:
       'Study Building Management Systems (BMS) online. HVAC controls, sensors, communication protocols (BACnet, Modbus, KNX), energy management.',
     schema: {

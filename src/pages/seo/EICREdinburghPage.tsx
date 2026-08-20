@@ -760,7 +760,7 @@ const sections = [
 export default function EICREdinburghPage() {
   return (
     <GuideTemplate
-      title="EICR Edinburgh | Electrical Safety Certificate 2026"
+      title="EICR Edinburgh: Safety Certificate 2026"
       description="EICR costs in Edinburgh for 2026. Scottish landlord requirements under the Housing (Scotland) Act 2006, Repairing Standard, tenement property challenges."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

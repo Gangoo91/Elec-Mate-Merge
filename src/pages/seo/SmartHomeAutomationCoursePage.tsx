@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Smart Home Automation Course | KNX & IoT Training';
+const PAGE_TITLE = 'Smart Home Automation Course: KNX & IoT Training';
 const PAGE_DESCRIPTION =
   'Smart home automation training for UK electricians: KNX protocol, IoT, lighting control, HVAC integration, security, voice assistants. 9 modules.';
 

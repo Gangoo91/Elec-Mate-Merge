@@ -760,7 +760,7 @@ const sections = [
 export default function ElectricalInspectionChecklistPage() {
   return (
     <GuideTemplate
-      title="Electrical Inspection Checklist | What to Check"
+      title="Electrical Inspection Checklist: What to Check"
       description="Comprehensive electrical inspection checklist for UK electricians. Visual inspection items, consumer unit checks, earthing and bonding, labelling."
       datePublished="2026-01-22"
       dateModified="2026-06-10"

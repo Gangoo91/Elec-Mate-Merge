@@ -17,7 +17,6 @@
  *   - Best-in-class SEO: LearningResource, Quiz, FAQPage, HowTo,
  *     BreadcrumbList JSON-LD; `dateModified` + `publisher` for E-A-T.
  */
-import { Helmet } from 'react-helmet';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOMockExam, type SEOMockExamQuestion } from '@/components/seo/SEOMockExam';
 import useSEO from '@/hooks/useSEO';
@@ -51,6 +50,10 @@ interface PublicMockExamPageProps {
   difficultyMix?: Record<string, number>;
   /** Topic label shown in the breadcrumb above the H1. */
   breadcrumbLabel?: string;
+  /** Exam-specific FAQs appended after the three evergreen ones — rendered
+   *  visibly AND emitted in the FAQPage JSON-LD. Answers must state facts the
+   *  page (or the linked guide) already carries; never invent exam formats. */
+  extraFaqs?: Array<{ q: string; a: string }>;
 }
 
 // Last edit of this template — bumps date-modified on every page that
@@ -92,6 +95,7 @@ export function PublicMockExamPage({
   timeLimitMinutes = 30,
   passThreshold = 70,
   breadcrumbLabel = 'Mock exam',
+  extraFaqs,
 }: PublicMockExamPageProps) {
   const canonical = `https://www.elec-mate.com/mock-exams/${slug}`;
 
@@ -122,25 +126,7 @@ export function PublicMockExamPage({
     ? MOCK_EXAM_CATALOG.find((e) => e.slug === parentExamSlug)
     : null;
 
-  useSEO({
-    title,
-    description,
-    type: 'article',
-    breadcrumbs: parentExam
-      ? [
-          { name: 'Home', url: '/' },
-          { name: 'Mock Exams', url: '/mock-exams' },
-          { name: parentExam.title, url: `/mock-exams/${parentExamSlug}` },
-          { name: breadcrumbLabel, url: `/mock-exams/${slug}` },
-        ]
-      : [
-          { name: 'Home', url: '/' },
-          { name: 'Mock Exams', url: '/mock-exams' },
-          { name: breadcrumbLabel, url: `/mock-exams/${slug}` },
-        ],
-  });
-
-  const faq = useMemo(() => buildFaq(heading), [heading]);
+  const faq = useMemo(() => [...buildFaq(heading), ...(extraFaqs ?? [])], [heading, extraFaqs]);
   const sampleQuestions = useMemo(
     () => questionBank.slice(0, Math.min(3, questionBank.length)),
     [questionBank]
@@ -248,12 +234,34 @@ export function PublicMockExamPage({
     ],
   };
 
+  // The @graph goes through useSEO, whose direct DOM injection demonstrably
+  // renders. It previously went through a <Helmet><script> here, which never
+  // reached the DOM on any mock-exam page (verified against production
+  // 2026-08-20) — the Quiz/FAQPage/LearningResource markup was silently
+  // missing site-wide. No <link rel="canonical"> here either: the static
+  // prerender bakes one in and useSEO() maintains it, so a Helmet copy
+  // rendered a SECOND canonical (Bing flagged 20 pages).
+  useSEO({
+    title,
+    description,
+    type: 'article',
+    schema,
+    breadcrumbs: parentExam
+      ? [
+          { name: 'Home', url: '/' },
+          { name: 'Mock Exams', url: '/mock-exams' },
+          { name: parentExam.title, url: `/mock-exams/${parentExamSlug}` },
+          { name: breadcrumbLabel, url: `/mock-exams/${slug}` },
+        ]
+      : [
+          { name: 'Home', url: '/' },
+          { name: 'Mock Exams', url: '/mock-exams' },
+          { name: breadcrumbLabel, url: `/mock-exams/${slug}` },
+        ],
+  });
+
   return (
     <PublicPageLayout>
-      <Helmet>
-        <link rel="canonical" href={canonical} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
 
       <article className="px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-14">
         <div className="max-w-6xl mx-auto">

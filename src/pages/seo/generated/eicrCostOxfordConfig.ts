@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostOxfordConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-oxford',
-  title: 'EICR Cost Oxford 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Oxford 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Oxford? Fair-margin 2026 prices for scheme-registered electricians — £275–380 for a 1-bed, £420–560 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

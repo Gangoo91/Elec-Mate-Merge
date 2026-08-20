@@ -688,7 +688,7 @@ const sections = [
 export default function EICRLeicesterPage() {
   return (
     <GuideTemplate
-      title="EICR Leicester | Electrical Safety Certificate Cost 2026"
+      title="EICR Leicester: Cost & Safety Certificate 2026"
       description="EICR costs in Leicester for 2026. Landlord legal requirements, Leicester City Council enforcement, observation codes explained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

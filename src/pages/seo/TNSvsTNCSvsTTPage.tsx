@@ -571,7 +571,7 @@ const sections = [
 export default function TNSvsTNCSvsTTPage() {
   return (
     <GuideTemplate
-      title="Earthing Systems Explained: TN-S, TN-C-S and TT | UK Guide"
+      title="TN-S, TN-C-S and TT Earthing Systems Explained"
       description="UK earthing systems compared: TN-S, TN-C-S (PME) and TT. Typical Ze, BS 7671 disconnection times, Zs limits, PME risks and Regulation 9 of the ESQCR 2002."
       datePublished="2026-03-27"
       dateModified="2026-08-07"

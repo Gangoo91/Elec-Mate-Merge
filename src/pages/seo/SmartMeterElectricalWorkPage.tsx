@@ -397,7 +397,7 @@ const sections = [
 export default function SmartMeterElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="Electrical Work Around Smart Meters — UK Electrician Guide"
+      title="Electrical Work Around Smart Meters: UK Guide"
       description="Guide for electricians working near SMETS2 smart meters — what is and is not allowed, consumer unit upgrades, meter tails, safe isolation, IHD devices."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

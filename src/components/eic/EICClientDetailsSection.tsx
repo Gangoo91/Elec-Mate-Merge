@@ -80,8 +80,19 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
   const { values: localValues, setValue, setValues, flush } = useMultiFieldSync(initialFieldValues, handleBatchUpdate, 500);
 
   const handleFieldChange = useCallback(
-    (field: keyof ClientSectionFields, value: string) => { setValue(field, value); },
-    [setValue]
+    (field: keyof ClientSectionFields, value: string) => {
+      // ELE-1578 — same fix as ClientDetailsSection (EICR). "Same as client
+      // address" only copied on customer-select and on toggling ON, so editing
+      // the client address afterwards left installationAddress stale — and the
+      // installation field is hidden while the toggle is on, so nothing showed
+      // they had diverged. Reported on EICR; the EIC form had it too.
+      if (field === 'clientAddress' && localValues.sameAsClientAddress === 'true') {
+        setValues({ clientAddress: value, installationAddress: value });
+        return;
+      }
+      setValue(field, value);
+    },
+    [setValue, setValues, localValues.sameAsClientAddress]
   );
 
   const handleSameAddressToggle = useCallback(

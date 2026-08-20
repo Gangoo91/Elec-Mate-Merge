@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Instrumentation Course | Process Control for Electricians';
+const PAGE_TITLE = 'Instrumentation Course: Process Control';
 const PAGE_DESCRIPTION =
   'Instrumentation training for UK electricians: process control, sensors, PLCs, SCADA, 4-20mA loops, calibration, industrial measurement. 8 modules.';
 

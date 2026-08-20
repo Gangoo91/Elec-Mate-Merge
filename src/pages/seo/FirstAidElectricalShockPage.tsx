@@ -558,7 +558,7 @@ const sections = [
 export default function FirstAidElectricalShockPage() {
   return (
     <GuideTemplate
-      title="First Aid for Electrical Shock | Emergency Response"
+      title="First Aid for Electrical Shock: Emergency Care"
       description="Emergency first aid guide for electrical shock incidents. Covers danger assessment, supply isolation, CPR, burns treatment, when to call 999."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

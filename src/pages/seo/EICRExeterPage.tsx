@@ -596,7 +596,7 @@ const sections = [
 export default function EICRExeterPage() {
   return (
     <GuideTemplate
-      title="EICR Exeter | Electrical Installation Condition Report"
+      title="EICR Exeter: Inspection Condition Report"
       description="EICR Exeter — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Exeter."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

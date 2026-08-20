@@ -569,7 +569,7 @@ const sections = [
 export default function EICRFrequencyGuidePage() {
   return (
     <GuideTemplate
-      title="How Often Do You Need an EICR? | EICR Frequency Guide UK"
+      title="How Often Do You Need an EICR? Frequency Guide"
       description="EICR frequency guide for all property types. Owner-occupied homes every 10 years, rental properties every 5 years (legally required)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

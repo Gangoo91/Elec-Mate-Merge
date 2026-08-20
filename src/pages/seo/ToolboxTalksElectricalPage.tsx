@@ -560,7 +560,7 @@ const sections = [
 export default function ToolboxTalksElectricalPage() {
   return (
     <GuideTemplate
-      title="Toolbox Talks for Electricians | Topics & Templates"
+      title="Toolbox Talks for Electricians: Topics"
       description="Complete guide to toolbox talks for UK electricians. Common topics, 5-minute format, record keeping, sample talks, and legal requirements under CDM 2015."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

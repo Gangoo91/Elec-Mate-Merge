@@ -494,7 +494,7 @@ const sections = [
 export default function SolarPanelFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Solar Panels Not Working | Solar PV Fault Finding Guide UK"
+      title="Solar Panels Not Working: PV Fault Finding UK"
       description="Solar panels not working or underperforming? This guide covers inverter faults, DC isolator issues, string faults, shading problems, MCS monitoring."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

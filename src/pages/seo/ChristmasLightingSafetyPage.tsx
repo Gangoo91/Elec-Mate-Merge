@@ -529,7 +529,7 @@ const sections = [
 export default function ChristmasLightingSafetyPage() {
   return (
     <GuideTemplate
-      title="Christmas Lighting Safety | Electrical Safety Guide UK"
+      title="Christmas Lighting Safety: UK Guide"
       description="Complete guide to Christmas lighting safety in the UK. Indoor vs outdoor lights, IP ratings, overloading sockets, PAT testing for commercial displays."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

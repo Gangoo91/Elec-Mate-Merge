@@ -560,8 +560,8 @@ const sections = [
 export default function FireAlarmFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Fire Alarm Fault Finding | Fire Detection System Problems UK"
-      description="Fire alarm showing a fault? This guide explains zone faults, detector contamination, panel faults, power supply issues and BS 5839-1 compliance for UK electricians."
+      title="Fire Alarm Fault Finding: Causes & Fixes UK"
+      description="Fire alarm showing a fault? Zone faults, detector contamination, panel faults, power supply issues and BS 5839-1 compliance for UK electricians."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

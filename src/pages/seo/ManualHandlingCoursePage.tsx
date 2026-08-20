@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const PAGE_TITLE = 'Manual Handling Course | Online for UK Electricians';
+const PAGE_TITLE = 'Manual Handling Course for UK Electricians';
 const PAGE_DESCRIPTION =
   'Manual handling training for UK electricians: safe lifting, TILE risk assessment, load handling, MHOR 1992 compliant. Mock exams included.';
 

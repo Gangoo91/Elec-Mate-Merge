@@ -405,7 +405,7 @@ const sections = [
 export default function SinglePhaseVsThreePhasePage() {
   return (
     <GuideTemplate
-      title="Single Phase vs Three Phase Power | UK Electrician's Guide"
+      title="Single Phase vs Three Phase: UK Guide"
       description="Complete guide to single phase vs three phase electrical supplies for UK electricians. When three phase is needed (above 15kW)."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

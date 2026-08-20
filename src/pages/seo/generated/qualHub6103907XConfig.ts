@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHub6103907XConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eal-level-3-electrotechnical-complete-guide',
-  title: 'EAL Level 3: EAL Level 3 Electrotechnical Technical',
+  title: 'EAL Level 3 Electrotechnical: Complete Guide',
   description: 'The complete 2026 guide to EAL Level 3 (EAL Level 3 Electrotechnical Technical Occupational Entry qualification).',
   datePublished: published,
   dateModified: modified,

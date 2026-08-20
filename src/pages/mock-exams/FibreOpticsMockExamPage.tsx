@@ -8,7 +8,7 @@ import { fiberOpticsQuestionBank } from '@/data/upskilling/fiberOpticsMockExamDa
 export default function FibreOpticsMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Fibre Optics Mock Exam 2026 (UK Practice Test)`}
+      title={`Free Fibre Optics Mock Exam (UK Practice Test)`}
       description={`Free fibre optics mock exam — 25 questions, 30-min timer, 250-question bank. Singlemode vs multimode, connectors, splicing, installation, fault finding.`}
       slug="fibre-optics"
       heading={`Fibre Optics Mock Exam`}

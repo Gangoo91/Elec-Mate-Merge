@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit101Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-101-health-safety-and-environmental-considerations-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 101: Health, safety and',
+  title: 'City & Guilds 5393-03 Unit 101: Health, safety',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 101 (Health, safety and environmental considerations in dwellings).',
   datePublished: published,
   dateModified: modified,

@@ -9,7 +9,7 @@ import { inspectionTestingQuestionBank } from '@/data/upskilling/inspectionTesti
 export default function C2391MockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free 2391-52 Mock Exam 2026 — Inspection & Testing`}
+      title={`Free 2391-52 Mock Exam: Inspection & Testing`}
       description={`Free City & Guilds 2391-52 mock test: 30 questions, 90-min timer, 300-Q bank. Initial verification, periodic inspection, EICR coding, GN3 sequence.`}
       slug="2391-inspection-testing"
       heading={`C&G 2391-52 Mock Exam — Inspection & Testing`}

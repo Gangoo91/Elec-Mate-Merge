@@ -9,7 +9,7 @@ const modified = '2026-05-19';
 
 export const am2SectionAConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-section-a-composite-installation',
-  title: 'AM2 Section A — Composite Installation (8h 30min) | NET Spec',
+  title: 'AM2 Section A — Composite Install (8h 30min)',
   description:
     'AM2 Section A1 + A2-A5: composite installation. 8 hours 30 minutes — the longest section. Cable, containment, terminations, drawings, time management.',
   datePublished: published,

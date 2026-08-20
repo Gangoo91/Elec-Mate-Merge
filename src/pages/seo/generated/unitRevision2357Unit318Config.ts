@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit318Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-318-diagnosing-and-correcting-electrical-faults-in-electrical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp07-revision',
-  title: 'City & Guilds 2357 Unit 318: Diagnosing and correcting',
+  title: 'City & Guilds 2357 Unit 318 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 318 (Diagnosing and correcting electrical faults in electrical systems and equipment in buildings…',
   datePublished: published,
   dateModified: modified,

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit307Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-307-requirements-for-electrical-installations-revision',
-  title: 'City & Guilds 8202 Unit 307: Requirements for electrical',
+  title: 'City & Guilds 8202 Unit 307 Revision Guide',
   description: 'Complete revision guide for City & Guilds 8202 Unit 307 (Requirements for electrical installations).',
   datePublished: published,
   dateModified: modified,

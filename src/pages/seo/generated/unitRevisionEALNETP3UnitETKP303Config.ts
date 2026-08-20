@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETKP303Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETKP3-03-organise-and-oversee-the-electrical-work-environment-revision',
-  title: 'EAL NETP3 Unit ETKP3-03: Organise and Oversee the',
+  title: 'EAL NETP3 ETKP3-03: Oversee Work Environment',
   description: 'Complete revision guide for EAL NETP3 Unit ETKP3-03 (Organise and Oversee the Electrical Work Environment).',
   datePublished: published,
   dateModified: modified,

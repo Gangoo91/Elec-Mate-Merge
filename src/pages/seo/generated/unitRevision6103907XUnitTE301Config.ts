@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE301Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-01-health-safety-and-environmental-considerations-revision',
-  title: 'EAL Level 3 Unit TE3-01: Health, Safety and Environmental',
+  title: 'EAL Level 3 Unit TE3-01 Revision Guide',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-01 (Health, Safety and Environmental Considerations).',
   datePublished: published,
   dateModified: modified,

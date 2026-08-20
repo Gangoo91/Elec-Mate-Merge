@@ -448,7 +448,7 @@ const sections = [
 export default function AIClientExplainerPage() {
   return (
     <ToolTemplate
-      title="AI Client Explainer | Plain English Reports"
+      title="AI Client Explainer: Plain English EICR Reports"
       description="Turn technical EICR and EIC findings into plain-English explanations for homeowners and landlords. Built for UK electricians. 7-day free trial."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

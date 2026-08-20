@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'COSHH Course | Control of Substances Training';
+const PAGE_TITLE = 'COSHH Course: Control of Substances Training';
 const PAGE_DESCRIPTION =
   'Online COSHH training for UK electricians: CoSHH Regs 2002, assessments, chemical safety, PPE, emergencies. 5 video modules, quizzes + AI tutor.';
 

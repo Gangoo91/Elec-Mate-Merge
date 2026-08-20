@@ -817,7 +817,7 @@ const sections = [
 export default function Section701BathroomsGuidePage() {
   return (
     <GuideTemplate
-      title="Section 701 Bathrooms | BS 7671 Bathroom Regulations Guide"
+      title="Section 701 Bathrooms: BS 7671 Regulations UK"
       description="Complete guide to Section 701 of BS 7671 — bathroom zones 0, 1, 2, IP ratings, supplementary bonding (701.415.2), RCD protection, SELV."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

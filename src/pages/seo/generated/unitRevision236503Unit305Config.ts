@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236503Unit305Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-03-unit-305-electrical-systems-design-revision',
-  title: 'City & Guilds 2365-03 Unit 305: Electrical Systems Design',
+  title: 'City & Guilds 2365-03 Unit 305 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-03 Unit 305 (Electrical Systems Design). Every topic structured as a study checklist, with mock exams…',
   datePublished: published,
   dateModified: modified,

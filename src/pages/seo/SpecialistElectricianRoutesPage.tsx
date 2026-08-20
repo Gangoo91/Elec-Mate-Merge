@@ -347,7 +347,7 @@ const sections = [
 export default function SpecialistElectricianRoutesPage() {
   return (
     <GuideTemplate
-      title="Specialist Electrician Routes UK | ATEX, HV, Rail, Offshore"
+      title="Specialist Electrician Routes UK: ATEX, HV, Rail"
       description="Overview of 8 specialist electrician routes in the UK — ATEX/CompEx, HV, nuclear, rail, offshore, data centre, BMS, and fire/security."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

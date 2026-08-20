@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHub236502Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-02-complete-guide',
-  title: 'City & Guilds 2365-02: Level 2 Diploma in Electrical',
+  title: 'City & Guilds 2365-02: Level 2 Diploma',
   description: 'The complete 2026 guide to City & Guilds 2365-02 (Level 2 Diploma in Electrical Installations).',
   datePublished: published,
   dateModified: modified,

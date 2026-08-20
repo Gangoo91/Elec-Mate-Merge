@@ -17,7 +17,7 @@ import {
 export default function AIInstallationVerificationPage() {
   return (
     <ToolTemplate
-      title="AI Installation Verification | Quality Check Tool"
+      title="AI Installation Verification: Quality Check Tool"
       description="Automated checking of electrical installations against BS 7671:2018+A4:2026. AI-powered verification checklists, compliance reporting."
       datePublished="2026-01-22"
       dateModified="2026-06-10"

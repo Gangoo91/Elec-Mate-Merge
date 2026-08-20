@@ -639,8 +639,8 @@ const sections = [
 export default function CheckatradeVsMyBuilderPage() {
   return (
     <GuideTemplate
-      title="Checkatrade vs MyBuilder vs Bark 2026: Real Cost Compared"
-      description="Bark vs Checkatrade vs MyBuilder 2026 for UK electricians: real cost per lead, lead quality, vetting + review rules. Which trade platform actually pays back."
+      title="Checkatrade vs MyBuilder vs Bark: Cost 2026"
+      description="Bark vs Checkatrade vs MyBuilder 2026 for UK electricians: real cost per lead, lead quality, vetting and review rules. Which platform pays back."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

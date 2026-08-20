@@ -545,7 +545,7 @@ export default function ElectricianBirminghamPage() {
   return (
     <GuideTemplate
       localArea="Birmingham"
-      title="Electrician in Birmingham | Find Local Electricians 2026"
+      title="Electrician in Birmingham: 2026 Guide"
       description="Find qualified, registered electricians in Birmingham. 2026 pricing guide, NICEIC/NAPIT verification, Victorian and 1930s rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

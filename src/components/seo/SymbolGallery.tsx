@@ -39,7 +39,7 @@
 
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { JsonLd } from '@/components/seo/JsonLd';
 import {
   SYMBOLS,
   SYMBOL_CATEGORIES,
@@ -194,15 +194,10 @@ export function SymbolGallery({
 
   return (
     <section className="py-8">
-      {schemas.length > 0 && (
-        <Helmet>
-          {schemas.map((schema, idx) => (
-            <script key={`symbol-schema-${idx}`} type="application/ld+json">
-              {JSON.stringify(schema)}
-            </script>
-          ))}
-        </Helmet>
-      )}
+      {/* One script carrying the ImageObject array — react-helmet never
+          rendered the old per-schema scripts (see JsonLd.tsx), so Google
+          Images was never actually offered these. */}
+      {schemas.length > 0 && <JsonLd data={schemas} />}
 
       {heading && <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl">{heading}</h2>}
 

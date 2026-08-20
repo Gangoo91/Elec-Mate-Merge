@@ -19,7 +19,7 @@ import {
 export default function EVChargerInstallationPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation UK 2026 | Requirements & Cost"
+      title="EV Charger Installation UK 2026: Cost & Rules"
       description="Complete guide to EV charger installation in the UK. Types of chargers, installation requirements, RCD and earthing regulations, IET Code of Practice."
       datePublished="2025-03-10"
       dateModified="2026-06-10"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit109Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-109-apply-design-and-installation-practices-including-termination-and-connection-of-conductors-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 109: Apply design and',
+  title: 'City & Guilds 5393-03 Unit 109 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 109 (Apply design and installation practices including termination and connection of conductors in…',
   datePublished: published,
   dateModified: modified,

@@ -562,7 +562,7 @@ const sections = [
 export default function ExhibitionElectricalPage() {
   return (
     <GuideTemplate
-      title="Exhibition & Event Electrical | Temporary Installations BS"
+      title="Exhibition & Event Electrical: BS 7909 Guide"
       description="Complete guide to temporary electrical installations for exhibitions, events, and entertainment under BS 7909."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

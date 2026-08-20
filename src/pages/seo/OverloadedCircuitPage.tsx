@@ -640,7 +640,7 @@ const sections = [
 export default function OverloadedCircuitPage() {
   return (
     <GuideTemplate
-      title="Overloaded Circuit | Signs, Dangers & Solutions"
+      title="Overloaded Circuit: Signs, Dangers & Solutions"
       description="Expert guide to overloaded electrical circuits. Covers signs of overload, maximum demand calculation, MCB tripping, the dangers of overloading."
       datePublished="2025-10-10"
       dateModified="2026-06-10"

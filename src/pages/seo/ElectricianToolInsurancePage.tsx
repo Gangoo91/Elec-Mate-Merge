@@ -699,8 +699,8 @@ const sections = [
 export default function ElectricianToolInsurancePage() {
   return (
     <GuideTemplate
-      title="Electrician Tool Insurance UK 2026 | Cover Your Kit"
-      description="Complete guide to tool insurance for UK electricians: cover types, van security discounts, provider comparison, and how to document your kit for a successful claim."
+      title="Electrician Tool Insurance UK 2026"
+      description="Guide to tool insurance for UK electricians: cover types, van security discounts, provider comparison, and claim documentation."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -564,7 +564,7 @@ const sections = [
 export default function EICRLutonPage() {
   return (
     <GuideTemplate
-      title="EICR Luton | Electrical Installation Condition Report Luton"
+      title="EICR Luton: Installation Condition Report"
       description="EICR Luton — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Luton."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

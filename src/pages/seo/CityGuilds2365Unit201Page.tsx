@@ -454,7 +454,7 @@ const sections = [
 export default function CityGuilds2365Unit201Page() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 Unit 201 — Health and Safety | Revision"
+      title="City & Guilds 2365 Unit 201 — H&S Revision"
       description="C&G 2365 Unit 201 revision: Health and Safety in Building Services Engineering. Learning outcomes, key terms, mock questions for UK apprentices."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

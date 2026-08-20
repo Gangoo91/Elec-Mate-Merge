@@ -650,7 +650,7 @@ const sections = [
 export default function HomeOfficeElectricalGuidePage() {
   return (
     <GuideTemplate
-      title="Home Office Electrical Guide UK | Wiring for Working from Home"
+      title="Home Office Electrical Guide UK: Wiring for WFH"
       description="Complete electrical guide for home offices in the UK. Dedicated circuits, data point installation, lighting design, EV charging."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

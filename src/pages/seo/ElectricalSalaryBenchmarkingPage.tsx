@@ -606,8 +606,8 @@ const sections = [
 export default function ElectricalSalaryBenchmarkingPage() {
   return (
     <GuideTemplate
-      title="UK Electrician Salary 2026 | JIB Rates + Regional Pay"
-      description="UK electrician pay in 2026: JIB grade rates (Apprentice Stages 1-4, Trainee, Electrician, Approved, Technician), London Zone rates + employed vs self-employed split."
+      title="UK Electrician Salary 2026: JIB Rates + Pay"
+      description="UK electrician pay in 2026: JIB grade rates (Apprentice to Technician), London Zone rates, and employed vs self-employed comparison."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

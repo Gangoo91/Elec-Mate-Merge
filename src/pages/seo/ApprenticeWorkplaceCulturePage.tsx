@@ -546,7 +546,7 @@ const sections = [
 export default function ApprenticeWorkplaceCulturePage() {
   return (
     <GuideTemplate
-      title="Workplace Culture for Electrical Apprentices | Fitting In"
+      title="Workplace Culture for Electrical Apprentices"
       description="Guide to workplace culture for electrical apprentices. Fitting in on site, professional behaviour, communication, dealing with bullying."
       datePublished="2026-01-22"
       dateModified="2026-05-18"

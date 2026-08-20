@@ -563,7 +563,7 @@ const sections = [
 export default function ECSCardGuidePage() {
   return (
     <GuideTemplate
-      title="ECS Card Guide UK | Electrotechnical Certification Scheme"
+      title="ECS Card Guide UK: Certification Scheme"
       description="Complete guide to ECS cards for UK electricians — all card types (trainee, apprentice, qualified, technician, manager), how to apply."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

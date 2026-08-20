@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit106Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-106-organise-and-oversee-the-electrical-work-environment-revision',
-  title: 'City & Guilds 5357 Unit 106: Organise and Oversee the',
+  title: 'City & Guilds 5357 Unit 106 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5357 Unit 106 (Organise and Oversee the Electrical Work Environment).',
   datePublished: published,
   dateModified: modified,

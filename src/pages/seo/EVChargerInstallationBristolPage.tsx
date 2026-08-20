@@ -481,7 +481,7 @@ const sections = [
 export default function EVChargerInstallationBristolPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Bristol 2026 | Costs, DNO, and"
+      title="EV Charger Installation Bristol: Cost & DNO 2026"
       description="How much does EV charger installation cost in Bristol in 2026? Local costs, National Grid DNO notification, OZEV grant, Clean Air Zone."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

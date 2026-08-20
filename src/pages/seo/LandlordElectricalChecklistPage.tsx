@@ -484,7 +484,7 @@ const sections = [
 export default function LandlordElectricalChecklistPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Checklist | UK Legal Requirements"
+      title="Landlord Electrical Safety Checklist (UK)"
       description="Complete landlord electrical safety checklist for UK rental properties. 5-year EICR requirement, smoke alarm regulations 2022, carbon monoxide alarms."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

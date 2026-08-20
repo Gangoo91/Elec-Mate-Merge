@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostAberdeenConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-aberdeen',
-  title: 'EICR Cost Aberdeen 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Aberdeen 2026 — Full Pricing Guide',
   description: 'How much does an EICR cost in Aberdeen? Fair-margin 2026 prices for scheme-registered electricians — £230–305 for a 1-bed, £350–470 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

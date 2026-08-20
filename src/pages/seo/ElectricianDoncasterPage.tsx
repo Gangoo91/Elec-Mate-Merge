@@ -468,7 +468,7 @@ export default function ElectricianDoncasterPage() {
     <GuideTemplate
       noindex={true}
       localArea="Doncaster"
-      title="Electrician in Doncaster | Local Electricians 2026"
+      title="Electrician in Doncaster: Local Electricians"
       description="Find qualified electricians in Doncaster. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

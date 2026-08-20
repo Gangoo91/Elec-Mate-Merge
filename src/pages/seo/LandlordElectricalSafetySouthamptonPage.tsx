@@ -653,7 +653,7 @@ const sections = [
 export default function LandlordElectricalSafetySouthamptonPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Southampton | EICR Requirements"
+      title="Landlord Electrical Safety Southampton: EICR"
       description="Landlord electrical safety requirements in Southampton. 2020 Regulations explained, Southampton City Council enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

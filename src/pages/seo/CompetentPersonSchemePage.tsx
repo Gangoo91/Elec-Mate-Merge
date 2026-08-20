@@ -666,7 +666,7 @@ const sections = [
 export default function CompetentPersonSchemePage() {
   return (
     <GuideTemplate
-      title="Competent Person Scheme | Electrical Registration UK"
+      title="Competent Person Scheme: UK Registration"
       description="Competent person schemes for UK electricians: NICEIC, NAPIT, ELECSA, Stroma, BRE compared on cost, assessment, and notifiable work coverage."
       datePublished="2025-05-10"
       dateModified="2026-06-10"

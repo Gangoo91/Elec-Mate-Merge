@@ -616,7 +616,7 @@ const sections = [
 export default function ElectricalBusinessWebsitePage() {
   return (
     <GuideTemplate
-      title="Electrician Website Guide UK | How to Build & Market Your"
+      title="Electrician Website Guide UK: Build & Market"
       description="Complete guide to building and marketing an electrician website in the UK. Trust signals, website builders vs custom, SEO basics, call tracking."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

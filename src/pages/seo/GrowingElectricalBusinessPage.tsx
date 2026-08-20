@@ -584,7 +584,7 @@ const sections = [
 export default function GrowingElectricalBusinessPage() {
   return (
     <GuideTemplate
-      title="How to Grow Your Electrical Business UK | Scaling Guide"
+      title="How to Grow Your Electrical Business UK"
       description="Complete guide to growing a UK electrical business — from sole trader to small team to established contractor."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

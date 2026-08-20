@@ -599,7 +599,7 @@ const sections = [
 export default function ImmersionHeaterInstallationPage() {
   return (
     <GuideTemplate
-      title="Immersion Heater Installation UK | Electrical Requirements"
+      title="Immersion Heater Installation UK: Requirements"
       description="Complete guide to immersion heater installation in the UK. Dedicated 20A circuit, thermostat at 60-65°C for Legionella prevention, element types."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

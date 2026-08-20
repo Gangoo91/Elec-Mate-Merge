@@ -409,7 +409,7 @@ const sections = [
 export default function AIProjectManagerPage() {
   return (
     <ToolTemplate
-      title="AI Project Manager for Electricians | Planning Tool"
+      title="AI Project Manager for Electricians: Planning"
       description="Plan and manage electrical projects with AI tailored for UK work. Smart scheduling, resource allocation, material estimation, and timeline tracking."
       datePublished="2025-08-01"
       dateModified="2026-05-18"

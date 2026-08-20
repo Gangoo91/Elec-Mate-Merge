@@ -20,7 +20,7 @@ import {
 export default function CircuitBreakerSizingCalculatorPage() {
   return (
     <ToolTemplate
-      title="Circuit Breaker Sizing Calculator | MCB Selection"
+      title="Circuit Breaker Sizing Calculator: MCB Select"
       description="Calculate the correct circuit breaker size for any circuit to BS 7671. Verify the Ib ≤ In ≤ Iz relationship, select the right MCB type (B, C, or D)."
       datePublished="2026-01-25"
       dateModified="2026-06-10"

@@ -55,6 +55,12 @@ export const MOCK_EXAM_CATALOG: MockExamCatalogEntry[] = [
     qCount: 275,
   },
   {
+    slug: '2392-fundamental-inspection-testing',
+    title: 'C&G 2392 Fundamental Inspection & Testing',
+    group: 'electrical',
+    qCount: 275,
+  },
+  {
     slug: 'am2-online-knowledge-test',
     title: 'AM2 Online Knowledge Test',
     group: 'electrical',

@@ -648,7 +648,7 @@ const sections = [
 export default function CCTVInstallationCostPage() {
   return (
     <GuideTemplate
-      title="CCTV Installation Electrical Cost UK 2026 | Wiring Guide"
+      title="CCTV Installation Cost UK 2026: Wiring Guide"
       description="How much does CCTV installation cost for the electrical and cabling work in 2026? Complete UK guide covering PoE vs traditional power."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit104004Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-104-004-understand-design-and-installation-practices-and-procedures-revision',
-  title: 'City & Guilds 5357 Unit 104/004: Understand Design and',
+  title: 'City & Guilds 5357 Unit 104/004: Understand',
   description: 'Complete revision guide for City & Guilds 5357 Unit 104/004 (Understand Design and Installation Practices and Procedures).',
   datePublished: published,
   dateModified: modified,

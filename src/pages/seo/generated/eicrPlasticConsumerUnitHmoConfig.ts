@@ -10,9 +10,9 @@ const modified = '2026-06-10';
 
 export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-plastic-consumer-unit-hmo',
-  title: 'EICR: Plastic Consumer Unit in an HMO — C2 or C3?',
+  title: 'EICR: Plastic Consumer Unit in HMO — C2 or C3?',
   description:
-    "When a plastic consumer unit in an HMO is a C2 (potentially dangerous, makes the EICR unsatisfactory) and when it's a C3 (improvement recommended). BS 7671 Regulation 421.1.201, escape route considerations, and the remedial pathway for landlords.",
+    "When a plastic consumer unit in an HMO is a C2 and when it's a C3. BS 7671 Regulation 421.1.201, escape routes, and the remedial pathway for landlords.",
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

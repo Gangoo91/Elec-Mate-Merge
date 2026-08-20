@@ -597,7 +597,7 @@ const sections = [
 export default function RewireCostNottinghamPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Nottingham 2025 | Rewire Prices East"
+      title="House Rewire Cost Nottingham 2025: Prices"
       description="House rewire costs in Nottingham for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

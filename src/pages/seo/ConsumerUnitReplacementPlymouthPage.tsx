@@ -514,7 +514,7 @@ const sections = [
 export default function ConsumerUnitReplacementPlymouthPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Plymouth | Fuse Box Plymouth"
+      title="Consumer Unit Replacement Plymouth: Fuse Box"
       description="Consumer unit replacement in Plymouth — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

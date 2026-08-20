@@ -67,7 +67,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
     if (design.status === 'archived' || design.status === 'completed') {
       if (design.certificate_id) {
         navigate(`/electrician/inspection-testing?section=my-reports`);
-        toast.info('Navigate to My Reports to view the certificate');
+        toast.info('Open My Certificates to view the certificate');
       }
       return;
     }

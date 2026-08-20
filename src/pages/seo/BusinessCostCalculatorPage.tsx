@@ -22,7 +22,7 @@ const PAGE_PATH = '/tools/business-cost-calculator';
 export default function BusinessCostCalculatorPage() {
   return (
     <BusinessTemplate
-      title="Business Cost Calculator | Electrician Overheads Tool"
+      title="Business Cost Calculator: Electrician Overheads"
       description="Calculate the true running costs of your UK electrical business: van, tools, insurance, fuel, training, scheme fees, CPD. Real overhead, real numbers."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const minorWorksCertificateWhatToIncludeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-what-to-include',
-  title: 'Minor Works Certificate What to Include | Electrician Guide',
+  title: 'Minor Works Certificate: What to Include',
   description:
     'What a strong Minor Works certificate should include, from the job scope and test results to observations, notes, and client handover.',
   datePublished: published,

@@ -124,7 +124,7 @@ const relatedPages = [
 export default function IsolatorSwitchSymbolPage() {
   return (
     <GuideTemplate
-      title="Isolator Symbol | IEC 60617 Switch-Disconnector"
+      title="Isolator Symbol: IEC 60617 Switch-Disconnector"
       description="Isolator (Switch-Disconnector) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

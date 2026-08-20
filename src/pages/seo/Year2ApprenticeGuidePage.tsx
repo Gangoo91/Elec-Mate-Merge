@@ -654,7 +654,7 @@ const sections = [
 export default function Year2ApprenticeGuidePage() {
   return (
     <GuideTemplate
-      title="Year 2 Electrical Apprentice | Skills & Progression"
+      title="Year 2 Electrical Apprentice: Skills & Progress"
       description="Complete guide to Year 2 of your electrical apprenticeship. More responsibility on site, introduction to testing, circuit installation, Level 3 theory."
       datePublished="2025-11-20"
       dateModified="2026-06-10"

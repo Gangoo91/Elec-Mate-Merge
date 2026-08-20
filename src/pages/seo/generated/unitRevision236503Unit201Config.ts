@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236503Unit201Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-03-unit-201-health-and-safety-in-building-services-engineering-revision',
-  title: 'City & Guilds 2365-03 Unit 201: Health and safety in',
+  title: 'City & Guilds 2365-03 Unit 201 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-03 Unit 201 (Health and safety in building services engineering).',
   datePublished: published,
   dateModified: modified,

@@ -584,7 +584,7 @@ const sections = [
 export default function ImmersionHeaterFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Immersion Heater Not Working | Fault Finding Guide UK"
+      title="Immersion Heater Not Working: Fault Finding UK"
       description="Immersion heater fault finding guide for UK homeowners and electricians. Thermostat failure, element burn-out, sacrificial anode, wiring faults."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceEmergencyCalloutConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-emergency-callout-as-an-electrician',
-  title: 'How to Price Emergency Callout (24/7) as an Electrician',
+  title: 'How to Price Emergency Callout (24/7)',
   description: 'How much should you charge for emergency callout (24/7) as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

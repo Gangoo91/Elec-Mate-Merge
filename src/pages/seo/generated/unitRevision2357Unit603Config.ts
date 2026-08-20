@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit603Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-603-understanding-the-practices-and-procedures-for-overseeing-and-organising-the-work-environment-electrical-installation-eltk03-revision',
-  title: 'City & Guilds 2357 Unit 603: Understanding the practices',
+  title: 'City & Guilds 2357 Unit 603 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 603 (Understanding the practices and procedures for overseeing and organising the work environment…',
   datePublished: published,
   dateModified: modified,

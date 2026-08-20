@@ -506,7 +506,7 @@ const sections = [
 export default function SolarPVMaintenancePage() {
   return (
     <GuideTemplate
-      title="Solar Panel Maintenance UK | Solar PV Servicing & Cleaning"
+      title="Solar Panel Maintenance UK: Servicing & Cleaning"
       description="Complete guide to solar panel maintenance in the UK. Annual inspection checklist, professional cleaning costs £100–£200, inverter replacement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

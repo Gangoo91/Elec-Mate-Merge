@@ -550,7 +550,7 @@ const sections = [
 export default function EICRSwanseaPage() {
   return (
     <GuideTemplate
-      title="EICR Swansea | Electrical Installation Condition Report"
+      title="EICR Swansea: Installation Condition Report"
       description="EICR Swansea — Welsh landlord regulations under the Renting Homes (Wales) Act 2016, Rent Smart Wales requirements, inspection costs."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

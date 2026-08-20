@@ -563,7 +563,7 @@ const sections = [
 export default function HiringElectricianApprenticesPage() {
   return (
     <GuideTemplate
-      title="Hiring Electrical Apprentices UK | Employer Guide to"
+      title="Hiring Electrical Apprentices UK: Employer Guide"
       description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit303Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-303-electrical-design-and-installation-practices-and-procedures-revision',
-  title: 'City & Guilds 8202 Unit 303: Electrical design and',
+  title: 'City & Guilds 8202 Unit 303: Electrical design',
   description: 'Complete revision guide for City & Guilds 8202 Unit 303 (Electrical design and installation practices and procedures).',
   datePublished: published,
   dateModified: modified,

@@ -16,7 +16,7 @@ const indexLetters = Object.keys(guidesByLetter).sort((a, b) =>
   a === '0-9' ? -1 : b === '0-9' ? 1 : a.localeCompare(b)
 );
 
-const PAGE_TITLE = 'UK Electrical Guides | BS 7671, Testing, Compliance';
+const PAGE_TITLE = 'UK Electrical Guides: BS 7671 & Compliance';
 const PAGE_DESCRIPTION =
   'Elec-Mate electrical guides: BS 7671, inspection + testing, Part P, earthing, consumer units, EV charging, solar PV, practical workflows.';
 

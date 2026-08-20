@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236502Unit204Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-02-unit-204-installation-of-wiring-systems-and-enclosures-revision',
-  title: 'City & Guilds 2365-02 Unit 204: Installation of wiring',
+  title: 'City & Guilds 2365-02 Unit 204 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-02 Unit 204 (Installation of wiring systems and enclosures).',
   datePublished: published,
   dateModified: modified,

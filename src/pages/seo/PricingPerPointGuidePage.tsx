@@ -1,4 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import PerPointEstimator from '@/components/seo/PerPointEstimator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -14,6 +15,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'estimator', label: 'Per-Point Estimator' },
   { id: 'overview', label: 'What Is Per-Point Pricing?' },
   { id: 'what-is-a-point', label: 'What Counts as a Point' },
   { id: 'rates-by-region', label: 'Per-Point Rates by Region' },
@@ -136,6 +138,19 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'estimator',
+    heading: 'Price a Job in Ten Seconds',
+    content: (
+      <>
+        <p>
+          The quick answer before the detail: pick your region and property type, enter the point
+          count, and get the 2026 range from the table below.
+        </p>
+        <PerPointEstimator />
+      </>
+    ),
+  },
   {
     id: 'overview',
     heading: 'What Is Per-Point Pricing?',

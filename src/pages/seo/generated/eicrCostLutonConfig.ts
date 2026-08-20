@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostLutonConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-luton',
-  title: 'EICR Cost Luton 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Luton 2026 — Domestic & Commercial',
   description: 'How much does an EICR cost in Luton? Fair-margin 2026 prices for scheme-registered electricians — £240–320 for a 1-bed, £365–495 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

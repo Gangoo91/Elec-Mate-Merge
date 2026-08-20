@@ -664,7 +664,7 @@ const sections = [
 export default function DomesticVsCommercialElectricianPage() {
   return (
     <GuideTemplate
-      title="Domestic vs Commercial Electrician | Key Differences"
+      title="Domestic vs Commercial Electrician: Compared"
       description="Complete comparison of domestic and commercial electrician careers in the UK. Work types, qualifications, earning potential, career paths, pros and cons."
       datePublished="2025-07-01"
       dateModified="2026-05-18"

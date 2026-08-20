@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostLiverpoolConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-liverpool',
-  title: 'Consumer Unit Replacement Cost Liverpool 2026 — Full',
+  title: 'Consumer Unit Replacement Cost Liverpool 2026',
   description: 'Consumer unit (fuse board) replacement cost in Liverpool — typical 2026 prices £442–700 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

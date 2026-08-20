@@ -434,7 +434,7 @@ export default function ElectricianCrawleyPage() {
   return (
     <GuideTemplate
       localArea="Crawley"
-      title="Electrician in Crawley | Find Qualified Electricians 2026"
+      title="Electrician in Crawley: Qualified 2026"
       description="Find qualified, registered electricians in Crawley. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new town rewiring costs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

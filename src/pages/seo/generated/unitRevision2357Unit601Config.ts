@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit601Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-601-understanding-health-and-safety-legislation-practices-and-procedures-installing-and-maintaining-electrotechnical-systems-and-equipment-eltk-01-revision',
-  title: 'City & Guilds 2357 Unit 601: Understanding Health and',
+  title: 'City & Guilds 2357 Unit 601 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 601 (Understanding Health and Safety legislation…',
   datePublished: published,
   dateModified: modified,

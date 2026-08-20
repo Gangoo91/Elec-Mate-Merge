@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const confinedSpaceElectricalWorkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/confined-space-electrical-work',
   title:
-    'Confined Space Electrical Work — UK Procedure for',
+    'Confined Space Electrical Work: UK Procedure',
   description:
     'Confined space electrical work in the UK: what counts as a confined space, the Confined Spaces Regulations 1997 procedure, electrical-specific hazards…',
   datePublished: published,

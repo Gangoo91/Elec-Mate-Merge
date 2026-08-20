@@ -621,7 +621,7 @@ const sections = [
 export default function GardenLightingRegsPage() {
   return (
     <GuideTemplate
-      title="Garden Lighting Regulations | Outdoor Electrical Guide"
+      title="Garden Lighting Regulations: Outdoor Guide UK"
       description="Complete guide to garden lighting regulations for UK electricians. IP ratings, SWA cable burial depths, RCD protection, SELV/PELV options."
       datePublished="2025-05-10"
       dateModified="2026-06-10"

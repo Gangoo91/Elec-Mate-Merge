@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const ElectricalContractorMarketingGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-contractor-marketing-guide',
-  title: 'Electrical Contractor Marketing — How to Get Customers',
+  title: 'Electrical Contractor Marketing: Get Customers',
   description: 'A practical 2026 marketing playbook for UK electrical contractors. What channels work, what they cost, what to expect for first-12-months results…',
   datePublished: published,
   dateModified: modified,

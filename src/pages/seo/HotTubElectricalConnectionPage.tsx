@@ -670,7 +670,7 @@ const sections = [
 export default function HotTubElectricalConnectionPage() {
   return (
     <GuideTemplate
-      title="Hot Tub Electrical Connection | Dedicated Circuit Guide UK"
+      title="Hot Tub Electrical Connection: Circuit Guide UK"
       description="Complete guide to hot tub electrical connections in the UK. Dedicated 32A/40A circuit, RCD protection, SWA cable, outdoor IP ratings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

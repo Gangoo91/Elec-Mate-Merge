@@ -664,7 +664,7 @@ const sections = [
 export default function EICRNottinghamPage() {
   return (
     <GuideTemplate
-      title="EICR Nottingham | Electrical Safety Certificate Cost 2026"
+      title="EICR Nottingham: Safety Certificate Cost 2026"
       description="EICR cost in Nottingham 2026: prices by property type, selective licensing rules, landlord obligations and observation codes. Get a compliant report today."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

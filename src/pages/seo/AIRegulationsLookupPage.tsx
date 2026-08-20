@@ -451,7 +451,7 @@ const sections = [
 export default function AIRegulationsLookupPage() {
   return (
     <ToolTemplate
-      title="AI Regulations Lookup | BS 7671 Search Tool"
+      title="AI Regulations Lookup: BS 7671 Search Tool"
       description="Search BS 7671:2018+A4:2026 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

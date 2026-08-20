@@ -641,7 +641,7 @@ const sections = [
 export default function DividendVsSalaryElectricianPage() {
   return (
     <GuideTemplate
-      title="Dividend vs Salary for Electricians | Ltd Company Tax 2026"
+      title="Dividend vs Salary for Electricians: 2026 Tax"
       description="Optimal salary and dividend split for electricians with a limited company. 2026/27 tax rates, corporation tax, NI thresholds."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

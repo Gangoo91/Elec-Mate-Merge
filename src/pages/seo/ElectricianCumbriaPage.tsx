@@ -615,7 +615,7 @@ export default function ElectricianCumbriaPage() {
     <GuideTemplate
       noindex={false}
       localArea="Cumbria"
-      title="Cumbria Electricians 2026 | Carlisle, Barrow, Sellafield"
+      title="Cumbria Electricians 2026: Carlisle & Sellafield"
       description="Cumbria electricians covering Carlisle, Barrow + Sellafield. BS 7671:2018+A4:2026 EICRs, EV chargers, nuclear-site experience. Electricity North West area."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

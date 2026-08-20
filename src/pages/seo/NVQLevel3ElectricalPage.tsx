@@ -749,7 +749,7 @@ const sections = [
 export default function NVQLevel3ElectricalPage() {
   return (
     <GuideTemplate
-      title="NVQ Level 3 Electrical Installation UK | Qualification"
+      title="NVQ Level 3 Electrical Installation UK: Guide"
       description="Complete guide to the NVQ Level 3 Electrotechnical Installation qualification. What it is, how it differs from City and Guilds 2365, who needs it."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

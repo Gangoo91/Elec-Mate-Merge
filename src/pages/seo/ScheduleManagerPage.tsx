@@ -453,7 +453,7 @@ const relatedPages = [
 export default function ScheduleManagerPage() {
   return (
     <BusinessTemplate
-      title="Schedule Manager for Electricians | Job Booking"
+      title="Schedule Manager for Electricians: Job Booking"
       description="Schedule manager built for UK electricians. Calendar view, job booking, customer notifications, route planning, recurring jobs, and team scheduling."
       datePublished="2025-06-01"
       dateModified="2026-05-18"

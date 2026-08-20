@@ -463,7 +463,7 @@ const sections = [
 export default function LandlordElectricalSafetyBirminghamPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Birmingham | EICR Requirements"
+      title="Landlord Electrical Safety Birmingham: EICR"
       description="Landlord electrical safety requirements in Birmingham. 2020 Regulations, council enforcement, HMO licensing, penalties up to £30,000, tenant rights."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

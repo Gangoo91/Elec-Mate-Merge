@@ -644,7 +644,7 @@ const sections = [
 export default function HowToFindAnElectricianPage() {
   return (
     <GuideTemplate
-      title="How to Find a Good Electrician UK | What to Check"
+      title="How to Find a Good Electrician: What to Check"
       description="Finding a qualified electrician in the UK: NICEIC, NAPIT, ELECSA, Stroma explained. Questions to ask, certs to demand, red flags to avoid."
       datePublished="2026-01-22"
       dateModified="2026-06-10"

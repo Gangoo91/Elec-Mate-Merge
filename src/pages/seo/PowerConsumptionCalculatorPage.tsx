@@ -19,7 +19,7 @@ import {
 export default function PowerConsumptionCalculatorPage() {
   return (
     <ToolTemplate
-      title="Power Consumption Calculator | kWh & Running Cost"
+      title="Power Consumption Calculator: kWh & Running Cost"
       description="Calculate power consumption in kWh and running costs for any electrical appliance. Convert wattage to annual energy use."
       datePublished="2026-02-01"
       dateModified="2026-06-10"

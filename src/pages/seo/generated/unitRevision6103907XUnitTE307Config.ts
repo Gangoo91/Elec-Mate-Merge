@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE307Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-07-practices-and-procedures-for-fault-for-diagnosis-and-rectification-revision',
-  title: 'EAL Level 3 Unit TE3-07: Practices and Procedures for Fault',
+  title: 'EAL Level 3 Unit TE3-07 Revision Guide',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-07 (Practices and Procedures for Fault for Diagnosis and Rectification).',
   datePublished: published,
   dateModified: modified,

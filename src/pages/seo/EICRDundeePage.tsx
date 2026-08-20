@@ -571,7 +571,7 @@ const sections = [
 export default function EICRDundeePage() {
   return (
     <GuideTemplate
-      title="EICR Dundee | Electrical Inspection Dundee"
+      title="EICR Dundee: Cost & Inspection 2026"
       description="EICR Dundee 2026: typical costs, Scottish letting + landlord legal duties, and what to expect from an electrical inspection — for trade + clients."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

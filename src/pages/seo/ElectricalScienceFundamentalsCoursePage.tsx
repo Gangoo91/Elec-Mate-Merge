@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Science Fundamentals | Theory Course';
+const PAGE_TITLE = 'Electrical Science Fundamentals: Theory Course';
 const PAGE_DESCRIPTION =
   "Electrical science theory for UK apprentices: Ohm's law, Kirchhoff, magnetism, transformers, AC theory, power factor, three-phase. 12 modules.";
 

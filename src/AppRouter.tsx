@@ -301,7 +301,25 @@ const AppRouter = () => {
     <>
       <PendingCollegeInviteRedeemer />
       <MfaGate />
-      <AnimatePresence mode="sync">
+      {/*
+        mode="wait", not "sync". With "sync" the outgoing and incoming route
+        trees are mounted at the same time, and because <Routes> is keyed on
+        the pathname every navigation mounts a whole new tree while the old one
+        is still running its exit transition. framer-motion's PopChild
+        relocates the exiting subtree's DOM nodes to hold layout during that
+        overlap, so React can then be asked to remove a node from a parent that
+        no longer owns it — "Failed to execute 'removeChild' on 'Node': The
+        node to be removed is not a child of this node", which took the page
+        down through the error boundary 97 times (JAVASCRIPT-REACT-B7),
+        concentrated on the SEO pages where visitors navigate fastest and the
+        overlap is therefore most likely.
+
+        "wait" lets the outgoing route finish unmounting before the next one
+        mounts, so the two trees never contend for the same nodes. The exit is
+        0.15s, so the cost is a barely perceptible sequencing of a transition
+        that was previously overlapped.
+      */}
+      <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Walkthrough (first launch only) */}
           <Route

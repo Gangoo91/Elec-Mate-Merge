@@ -15,7 +15,7 @@ import {
   Wrench,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Tools | Certificates, Calculators, AI, Business';
+const PAGE_TITLE = 'Electrical Tools: Certificates, Calculators, AI';
 const PAGE_DESCRIPTION =
   'Elec-Mate tools for UK electricians: digital certificates, BS 7671 calculators, AI specialists, quoting, invoicing, RAMS, training, oversight.';
 

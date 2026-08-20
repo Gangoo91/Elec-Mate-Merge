@@ -800,8 +800,8 @@ const sections = [
 export default function CommercialRewireCostPage() {
   return (
     <GuideTemplate
-      title="Commercial Rewire Cost UK 2026: Per m² Price Guide"
-      description="Commercial rewire costs £30–£80 per m² in 2026. Per square metre pricing for 3-phase distribution, containment, data cabling, fire alarm, and BS 7671:2018+A4:2026 compliance."
+      title="Commercial Rewire Cost UK 2026: £30–£80 per m²"
+      description="Commercial rewire costs £30–£80 per m² in 2026: 3-phase distribution, containment, data cabling, fire alarm and BS 7671 compliance pricing."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

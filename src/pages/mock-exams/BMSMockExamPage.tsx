@@ -8,7 +8,7 @@ import { bmsStandardQuestionBank } from '@/data/upskilling/bmsMockExamData';
 export default function BMSMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free BMS Mock Exam 2026 — Building Management Systems`}
+      title={`Free BMS Mock Exam: Building Management Systems`}
       description={`Free BMS mock exam — 25 questions, 30-min timer, 245-question bank. Building management fundamentals, HVAC integration, protocols and commissioning.`}
       slug="bms"
       heading={`Building Management Systems (BMS) Mock Exam`}

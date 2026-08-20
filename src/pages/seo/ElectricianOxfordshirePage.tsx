@@ -474,7 +474,7 @@ export default function ElectricianOxfordshirePage() {
   return (
     <GuideTemplate
       localArea="Oxfordshire"
-      title="Electrician Oxfordshire — Find Qualified Electricians in"
+      title="Electrician Oxfordshire: Qualified & Registered"
       description="Find NICEIC and NAPIT registered electricians across Oxfordshire, covering Oxford, Abingdon, Banbury, Bicester, Witney, and Didcot."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

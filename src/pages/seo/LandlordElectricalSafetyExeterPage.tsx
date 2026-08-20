@@ -729,7 +729,7 @@ const sections = [
 export default function LandlordElectricalSafetyExeterPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Exeter | EICR Landlords Devon"
+      title="Landlord Electrical Safety Exeter: EICR Devon"
       description="Landlord electrical safety requirements in Exeter and Devon. 2020 Regulations, Exeter City Council enforcement, HMO licensing, rural Devon TT earthing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -589,8 +589,8 @@ const sections = [
 export default function ElectricalSafetyChecksNewHomePage() {
   return (
     <GuideTemplate
-      title="Electrical Safety Checks for a New Home | EICR Buyer's"
-      description="What to check in the electrical installation when buying a home in the UK. How to commission an EICR, wiring age indicators (rubber pre-1960s."
+      title="Electrical Safety Checks: New Home Buyer's Guide"
+      description="What to check in the electrical installation when buying a home in the UK: wiring age indicators (rubber pre-1960s), consumer unit types, red flags."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

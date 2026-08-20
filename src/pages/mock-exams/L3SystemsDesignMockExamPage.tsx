@@ -9,8 +9,8 @@ import { module6Questions } from '@/data/apprentice-courses/level3/module6/quest
 export default function L3SystemsDesignMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`C&G 2365-03 Level 3 Mock Exam with Answers — Systems Design`}
-      description={`Free City & Guilds 2365-03 Level 3 mock exam with answers explained — Systems Design. 25 Qs from 201-Q bank. Load assessment, diversity, cable sizing, voltage drop, distribution board layout, schematics.`}
+      title={`Level 3 Systems Design Mock Exam (2365-03)`}
+      description={`Free C&G 2365-03 Level 3 Systems Design mock exam with answers. 25 Qs from a 201-Q bank. Diversity, cable sizing, volt drop, schematics.`}
       slug="level-3-systems-design"
       heading={`Free Level 3 Mock Exam: Systems Design (Unit 6)`}
       intro={`Free mock exam for Level 3 Electrical apprentices on Systems Design. 25 questions from a 201-question bank covering load assessment and maximum demand, BS 7671 diversity factors, cable sizing per Appendix 4, voltage drop calculations, distribution board layout, single-line schematics and selection coordination of protective devices.`}

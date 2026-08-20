@@ -194,7 +194,7 @@ const howToSchema = {
 
 export default function FireAlarmCertificatePage() {
   useSEO({
-    title: 'Fire Alarm Certificate App | BS 5839 Compliant',
+    title: 'Fire Alarm Certificate App: BS 5839 Compliant',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

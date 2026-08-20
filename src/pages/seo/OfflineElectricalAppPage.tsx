@@ -21,7 +21,7 @@ import {
 export default function OfflineElectricalAppPage() {
   return (
     <ToolTemplate
-      title="Offline Electrical App | Work Without Signal"
+      title="Offline Electrical App: Work Without Signal"
       description="Elec-Mate works fully offline: complete EICR, EIC, and Minor Works certificates, use 70+ BS 7671 calculators in basements + remote sites."
       datePublished="2026-01-20"
       dateModified="2026-06-10"

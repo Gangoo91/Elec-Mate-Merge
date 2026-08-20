@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'Consumer Unit Regulations 2024 | Amendment 4 Guide';
+const PAGE_TITLE = 'Consumer Unit Regulations: 18th Edition A4 Guide';
 const PAGE_DESCRIPTION =
   'Consumer unit regulations under BS 7671:2018+A4:2026: metal CU rules, RCDs, RCBO vs split-load, A4 Section 530 bidirectional devices, SPDs.';
 
@@ -155,7 +155,7 @@ const breadcrumbSchema = {
 
 export default function ConsumerUnitRegulationsPage() {
   useSEO({
-    title: 'Consumer Unit Regulations 2024 | Amendment 4 Guide',
+    title: 'Consumer Unit Regulations: 18th Edition A4 Guide',
     description: PAGE_DESCRIPTION,
   });
 

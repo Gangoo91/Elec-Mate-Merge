@@ -9,7 +9,7 @@ const modified = '2026-05-19';
 
 export const eicrCodeFIConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-fi-further-investigation',
-  title: 'EICR Code FI — Further Investigation Required | When to Use',
+  title: 'EICR Code FI: Further Investigation Required',
   description:
     'EICR code FI explained: when "further investigation required" is the right classification, and how to scope the follow-up work clearly.',
   datePublished: published,

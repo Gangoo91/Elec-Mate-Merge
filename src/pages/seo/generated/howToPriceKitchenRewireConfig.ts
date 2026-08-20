@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceKitchenRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-kitchen-rewire-as-an-electrician',
-  title: 'How to Price Kitchen Rewire as an Electrician — UK 2026',
+  title: 'How to Price Kitchen Rewire as an Electrician',
   description: 'How much should you charge for kitchen rewire as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

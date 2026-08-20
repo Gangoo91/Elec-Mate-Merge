@@ -699,7 +699,7 @@ const sections = [
 export default function CDM2015ElectriciansPage() {
   return (
     <GuideTemplate
-      title="CDM 2015 for Electricians | Duties & Responsibilities"
+      title="CDM 2015 for Electricians: Duties Guide"
       description="Complete guide to CDM 2015 for electrical contractors. Contractor duties, principal designer, principal contractor, pre-construction information."
       datePublished="2025-05-10"
       dateModified="2026-05-18"

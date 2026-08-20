@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnit18ED302Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-18ED3-02-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision',
-  title: 'EAL Level 3 Unit 18ED3-02: Understand the Requirements of',
+  title: 'EAL Level 3 Unit 18ED3-02 Revision Guide',
   description: 'Complete revision guide for EAL Level 3 Unit 18ED3-02 (Understand the Requirements of Electrical Installations BS 7671:2018 (2022)).',
   datePublished: published,
   dateModified: modified,

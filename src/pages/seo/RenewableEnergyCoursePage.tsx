@@ -18,7 +18,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Renewable Energy Course | Solar PV & Battery Storage';
+const PAGE_TITLE = 'Renewable Energy Course: Solar PV & Storage';
 const PAGE_DESCRIPTION =
   'Solar PV + battery storage training for UK electricians: inverters, string design, G98/G99 grid connection, MCS certification, BS 7671. 10 modules.';
 

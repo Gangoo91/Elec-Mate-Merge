@@ -42,6 +42,7 @@ const C239151PeriodicMockExamPage = lazyWithRetry(
 const C239150InitialMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/C239150InitialMockExamPage')
 );
+const C2392MockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/C2392MockExamPage'));
 const AM2OnlineMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/AM2OnlineMockExamPage'));
 
 // Upskilling / specialist electrical
@@ -135,6 +136,7 @@ const MockExamRoutes = () => (
     <Route path="2391-inspection-testing" element={wrap(C2391MockExamPage)} />
     <Route path="2391-51-periodic-inspection" element={wrap(C239151PeriodicMockExamPage)} />
     <Route path="2391-50-initial-verification" element={wrap(C239150InitialMockExamPage)} />
+    <Route path="2392-fundamental-inspection-testing" element={wrap(C2392MockExamPage)} />
     <Route path="am2-online-knowledge-test" element={wrap(AM2OnlineMockExamPage)} />
 
     {/* Upskilling / specialist electrical */}

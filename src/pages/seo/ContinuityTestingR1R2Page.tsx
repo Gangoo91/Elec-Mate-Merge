@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Continuity Testing R1+R2 | How to Test Protective Conductors';
+const PAGE_TITLE = 'R1+R2 Test: Continuity of Protective Conductors';
 const PAGE_DESCRIPTION =
   'Continuity testing R1+R2 for UK electricians: why it matters for Zs, long lead method, ring circuit testing, acceptable values. BS 7671 compliant.';
 

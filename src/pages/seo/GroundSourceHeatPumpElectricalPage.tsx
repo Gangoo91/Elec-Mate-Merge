@@ -857,8 +857,8 @@ const sections = [
 export default function GroundSourceHeatPumpElectricalPage() {
   return (
     <GuideTemplate
-      title="Ground Source Heat Pump Electrical | Wiring Guide UK"
-      description="Complete guide to ground source heat pump electrical installation in the UK. Covers power demands, three-phase supply, circuit wiring, earthing, and BS 7671:2018+A4:2026 compliance."
+      title="Ground Source Heat Pump Electrical Guide UK"
+      description="Ground source heat pump electrical installation in the UK: power demands, three-phase supply, circuit wiring, earthing and BS 7671 compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -9,9 +9,9 @@ const modified = '2026-05-19';
 
 export const am2SectionCConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-section-c-safe-isolation',
-  title: 'AM2 Section C — Safe Isolation (45 min) | 10-Step + 10-Point Test',
+  title: 'AM2 Section C — Safe Isolation (45 min)',
   description:
-    'AM2 Section C: 45 minutes of safe isolation across single-phase, three-phase, and distribution board scenarios. 10-step procedure, 10-point test sequence, critical fails.',
+    'AM2 Section C: 45 min safe isolation — single-phase, three-phase, distribution board. 10-step procedure, 10-point test, critical fails.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

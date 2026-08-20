@@ -577,7 +577,7 @@ const sections = [
 export default function ELECSARegistrationPage() {
   return (
     <GuideTemplate
-      title="ELECSA Registration | How to Join & Costs UK"
+      title="ELECSA Registration: How to Join & Costs UK"
       description="Complete guide to ELECSA registration for UK electricians. What ELECSA offers, the registration process, assessment details, costs."
       datePublished="2025-08-10"
       dateModified="2026-05-18"

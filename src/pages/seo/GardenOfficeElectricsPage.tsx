@@ -616,7 +616,7 @@ const sections = [
 export default function GardenOfficeElectricsPage() {
   return (
     <GuideTemplate
-      title="Garden Office Electrics | Power Supply Guide UK"
+      title="Garden Office Electrics: Power Supply Guide UK"
       description="Complete guide to garden office electrics in the UK. SWA cable run, dedicated circuit, sub-distribution board, Part P notification, IP-rated accessories."
       datePublished="2025-08-10"
       dateModified="2026-06-10"

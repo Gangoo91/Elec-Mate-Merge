@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Environmental Sustainability Course | Electricians & Green Skills';
+const PAGE_TITLE = 'Environmental Sustainability: Green Skills';
 const PAGE_DESCRIPTION =
   'Sustainability training for UK electricians: efficiency, renewables, waste, green building standards, carbon reduction, sustainable installs.';
 

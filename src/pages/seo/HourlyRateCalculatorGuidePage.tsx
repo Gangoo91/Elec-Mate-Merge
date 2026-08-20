@@ -608,8 +608,8 @@ const sections = [
 export default function HourlyRateCalculatorGuidePage() {
   return (
     <GuideTemplate
-      title="Hourly Rate Calculator for Electricians | Set Your Rate"
-      description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, and pricing methods — so you charge enough to cover every cost and earn the income you deserve."
+      title="Electrician Hourly Rate Calculator UK"
+      description="Calculate your true hourly rate as a UK electrician: overheads, billable hours, profit margin and pricing methods so you charge enough to cover every cost."
       datePublished="2026-01-22"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

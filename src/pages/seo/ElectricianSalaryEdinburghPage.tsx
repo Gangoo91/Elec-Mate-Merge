@@ -620,7 +620,7 @@ const sections = [
 export default function ElectricianSalaryEdinburghPage() {
   return (
     <GuideTemplate
-      title="Electrician Salary Edinburgh 2025 | Electrician Pay Scotland"
+      title="Electrician Salary Edinburgh 2025: Pay Scotland"
       description="Electrician salary guide for Edinburgh 2025. JIB-SECTA Scotland rates, SECTT apprenticeships, employed vs self-employed earnings, specialist uplifts."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

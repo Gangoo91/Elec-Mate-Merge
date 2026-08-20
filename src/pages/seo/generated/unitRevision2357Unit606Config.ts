@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit606Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-606-understanding-the-principles-practices-and-legislation-for-the-termination-and-connection-of-conductors-cables-and-cords-in-electrical-systems-eltk05-revision',
-  title: 'City & Guilds 2357 Unit 606: Understanding the principles,',
+  title: 'City & Guilds 2357 Unit 606 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 606 (Understanding the principles…',
   datePublished: published,
   dateModified: modified,

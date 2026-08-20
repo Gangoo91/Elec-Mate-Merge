@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit317Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-317-inspecting-testing-commissioning-and-certifying-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp06-revision',
-  title: 'City & Guilds 2357 Unit 317: Inspecting, testing,',
+  title: 'City & Guilds 2357 Unit 317 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 317 (Inspecting, testing, commissioning and certifying electrotechnical systems and equipment in…',
   datePublished: published,
   dateModified: modified,

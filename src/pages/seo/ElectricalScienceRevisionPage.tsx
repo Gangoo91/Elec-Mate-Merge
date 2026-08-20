@@ -652,7 +652,7 @@ const sections = [
 export default function ElectricalScienceRevisionPage() {
   return (
     <GuideTemplate
-      title="Electrical Science Revision | Ohm's Law to 3-Phase"
+      title="Electrical Science Revision: Ohm's to 3-Phase"
       description="Complete electrical science revision guide for apprentices. Ohm's law, power triangle, Kirchhoff's laws, series and parallel circuits, AC theory."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

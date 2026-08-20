@@ -621,7 +621,7 @@ const sections = [
 export default function ElectricalCareersForSchoolLeaversPage() {
   return (
     <GuideTemplate
-      title="Electrical Careers for School Leavers | How to Start"
+      title="Electrical Careers for School Leavers Guide"
       description="Complete guide to starting an electrical career from school. GCSE requirements, how to apply for an apprenticeship, what the job involves."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

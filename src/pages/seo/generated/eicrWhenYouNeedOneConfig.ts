@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const eicrWhenYouNeedOneConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-when-you-need-one',
-  title: 'When Do You Need an EICR? | EICR Guide | Elec-Mate',
+  title: 'When Do You Need an EICR? — Full Guide',
   description:
     'A practical guide to when clients or electricians need an EICR, what usually triggers one, and how to explain the next step clearly.',
   datePublished: published,

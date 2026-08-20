@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const eicrCodeC1Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c1-danger-present',
   title:
-    'EICR Code C1 — Danger Present | Immediate Remedial Action',
+    'EICR Code C1: Danger Present, Immediate Action',
   description:
     'EICR code C1 explained: when to use it, real-world examples, what happens to the overall report assessment, and what the responsible person must do next.',
   datePublished: published,

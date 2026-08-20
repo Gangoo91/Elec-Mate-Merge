@@ -607,7 +607,7 @@ const sections = [
 export default function SmokeAlarmRegs2022Page() {
   return (
     <GuideTemplate
-      title="Smoke Alarm Regulations 2022 | England Requirements"
+      title="Smoke Alarm Regulations 2022: England Rules"
       description="Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022 for England: what landlords must fit, where, when, penalties, BS 5839-6 alignment."
       datePublished="2025-03-20"
       dateModified="2026-05-18"

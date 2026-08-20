@@ -543,7 +543,7 @@ const sections = [
 export default function SelfAssessmentElectricianPage() {
   return (
     <GuideTemplate
-      title="Self-Assessment Tax Return for Electricians UK | Complete"
+      title="Self-Assessment Tax Return for Electricians UK"
       description="Complete guide to self-assessment tax returns for UK electricians — what to include, allowable expenses (tools, van, PPE, training, subscriptions)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

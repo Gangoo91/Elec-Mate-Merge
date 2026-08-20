@@ -696,7 +696,7 @@ const sections = [
 export default function BestLabelPrinterElectriciansPage() {
   return (
     <GuideTemplate
-      title="Best Label Printer for Electricians 2026 | Circuit Labels"
+      title="Best Label Printer for Electricians 2026: Labels"
       description="Honest comparison of the best label printers for UK electricians in 2026. Brother P-Touch, Dymo XTL, Brady BMP21."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

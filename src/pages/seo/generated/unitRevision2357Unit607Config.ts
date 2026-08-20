@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit607Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-607-understanding-principles-practices-and-legislation-for-the-inspection-testing-commissioning-and-certification-of-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk06-revision',
-  title: 'City & Guilds 2357 Unit 607: Understanding principles,',
+  title: 'City & Guilds 2357 Unit 607 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 607 (Understanding principles, practices and legislation for the inspection, testing…',
   datePublished: published,
   dateModified: modified,

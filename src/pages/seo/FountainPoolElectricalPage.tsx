@@ -536,7 +536,7 @@ const sections = [
 export default function FountainPoolElectricalPage() {
   return (
     <GuideTemplate
-      title="Decorative Fountain & Feature Pool Electrical | BS 7671"
+      title="Decorative Fountain & Pool Electrical: BS 7671"
       description="Complete guide to decorative fountain, feature pool, and garden water feature electrical installations under BS 7671 Section 702."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

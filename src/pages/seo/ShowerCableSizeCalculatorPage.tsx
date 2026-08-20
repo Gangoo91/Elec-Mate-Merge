@@ -18,7 +18,7 @@ import {
 export default function ShowerCableSizeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Shower Cable Size Calculator: 8.5kW-10.5kW (BS 7671)"
+      title="Shower Cable Size Calculator: 8.5-10.5kW"
       description="Free shower cable size calculator for 8.5kW, 9.5kW and 10.5kW electric showers. Work out current, cable size and MCB rating to BS 7671 in seconds."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

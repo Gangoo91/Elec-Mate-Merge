@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalLightingSymbolsPage() {
   return (
     <GuideTemplate
-      title="Lighting Symbols | IEC 60617 Light Fitting Reference"
+      title="Lighting Symbols: IEC 60617 Reference"
       description="Pendant, ceiling, downlight, wall, bulkhead, high bay, fluorescent, LED strip, emergency light."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

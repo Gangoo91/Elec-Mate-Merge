@@ -530,7 +530,7 @@ const sections = [
 export default function EVChargerInstallationCardiffPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Cardiff | Home EV Charging Wales"
+      title="EV Charger Installation Cardiff, Wales"
       description="EV charger installation costs in Cardiff 2026: 7kW charger £800-1,200 installed, Welsh Government EV grants, OZEV grant up to £350."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

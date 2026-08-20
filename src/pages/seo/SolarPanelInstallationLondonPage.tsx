@@ -659,7 +659,7 @@ const sections = [
 export default function SolarPanelInstallationLondonPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation London 2025 | Solar PV London Costs"
+      title="Solar Panel Installation London 2025: PV Costs"
       description="Solar panel installation costs in London 2025: 4kW system £5,000–£8,000. London generates ~1,000 kWh/kWp/year."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

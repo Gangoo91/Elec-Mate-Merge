@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Nuisance Tripping | Why Your RCD Keeps Tripping';
+const PAGE_TITLE = 'Nuisance Tripping: Why Your RCD Keeps Tripping';
 const PAGE_DESCRIPTION =
   'RCD nuisance tripping causes: cumulative earth leakage, Type AC vs DC kit, EMC from VFD + LED drivers, moisture, shared neutrals. Fix with Type A/F.';
 

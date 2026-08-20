@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-meiwc-model-form',
   title:
-    'BS 7671 A4:2026 — Minor Electrical Installation Works',
+    'BS 7671 A4:2026 — MEIWC Model Form',
   description:
     'Amendment 4 (2026) added AFDD and SPD recording to the BS 7671 Minor Electrical Installation Works Certificate.',
   datePublished: published,

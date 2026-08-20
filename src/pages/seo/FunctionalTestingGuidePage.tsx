@@ -18,7 +18,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Functional Testing Guide | What to Check After Installation';
+const PAGE_TITLE = 'Electrical Functional Testing: What to Check';
 const PAGE_DESCRIPTION =
   'Functional testing for UK electricians: RCD test buttons, switching devices, isolators, interlocks, circuit ID, labelling. BS 7671 compliant.';
 

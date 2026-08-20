@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Data Cabling Course | Cat 6 & Fibre Optic Training';
+const PAGE_TITLE = 'Data Cabling Course: Cat 6 & Fibre Optic';
 const PAGE_DESCRIPTION =
   'Data cabling training for UK electricians: Cat 5e/6/6A copper, single-mode + multimode fibre, termination, testing. 8 modules + AI tutor.';
 

@@ -9,7 +9,7 @@ const modified = '2026-06-10';
 export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig: GeneratedGuideConfig =
   {
     pagePath: '/guides/18th-edition-chapter-41-protection-against-electric-shock-exam',
-    title: 'BS 7671 Chapter 41 — Protection Against Electric Shock',
+    title: 'BS 7671 Chapter 41: Electric Shock Protection',
     description:
       'Chapter 41 is the single most-tested chapter in the 18th Edition exam — Automatic Disconnection of Supply (ADS), maximum Zs values, RCD requirements…',
     datePublished: published,

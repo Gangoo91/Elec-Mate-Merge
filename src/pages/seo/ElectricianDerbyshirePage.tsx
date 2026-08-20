@@ -480,7 +480,7 @@ const sections = [
 export default function ElectricianDerbyshirePage() {
   return (
     <GuideTemplate
-      title="Electrician Derbyshire — Derby, Chesterfield, Matlock, Peak"
+      title="Electrician Derbyshire: Qualified & Registered"
       description="Find registered electricians in Derbyshire covering Derby, Chesterfield, Matlock, Belper, Ilkeston, and Long Eaton."
       datePublished="2024-08-01"
       dateModified="2026-05-18"

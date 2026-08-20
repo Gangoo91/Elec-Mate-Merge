@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostCardiffConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-cardiff',
-  title: 'EICR Cost Cardiff 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Cardiff 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Cardiff? Fair-margin 2026 prices for scheme-registered electricians — £220–290 for a 1-bed, £330–450 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

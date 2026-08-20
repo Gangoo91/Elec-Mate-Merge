@@ -9,7 +9,7 @@ const modified = '2026-05-19';
 
 export const am2OverviewConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-overview-and-structure',
-  title: 'AM2 Assessment: Structure, Timings + Pass Criteria | UK 2026',
+  title: 'AM2 Assessment: Structure & Pass Criteria',
   description:
     'The AM2 is a 2½-day, 16.5-hour practical assessment for NVQ Level 3 electrical apprentices. Full structure: Sections A-E, real timings, pass criteria.',
   datePublished: published,

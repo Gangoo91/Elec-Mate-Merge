@@ -421,7 +421,7 @@ const sections = [
 export default function AIWiringInstructionsPage() {
   return (
     <ToolTemplate
-      title="AI Wiring Instructions | Step-by-Step Guidance"
+      title="AI Wiring Instructions: Step-by-Step Guidance"
       description="Get step-by-step wiring instructions for any UK electrical circuit type. Circuit-specific guides, cable routing, connection diagrams."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

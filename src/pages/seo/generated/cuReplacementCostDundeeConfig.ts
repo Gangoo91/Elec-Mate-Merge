@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostDundeeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-dundee',
-  title: 'Consumer Unit Replacement Cost Dundee 2026 — Full Pricing',
+  title: 'Consumer Unit Replacement Cost Dundee 2026',
   description: 'Consumer unit (fuse board) replacement cost in Dundee — typical 2026 prices £442–700 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

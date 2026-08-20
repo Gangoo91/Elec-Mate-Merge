@@ -20,7 +20,7 @@ const PAGE_PATH = '/tools/vat-scheme-comparison';
 export default function VATSchemeComparisonPage() {
   return (
     <BusinessTemplate
-      title="VAT Scheme Comparison | Flat Rate vs Standard for"
+      title="VAT Scheme Comparison: Flat Rate vs Standard"
       description="Compare VAT schemes for your electrical business. Standard rate, flat rate scheme, limited cost trader rules, cash accounting."
       datePublished="2025-05-20"
       dateModified="2026-05-18"

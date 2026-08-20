@@ -604,7 +604,7 @@ export default function ElectricianCoventryPage() {
   return (
     <GuideTemplate
       localArea="Coventry"
-      title="Electrician in Coventry | Local Electrical Guide"
+      title="Electrician in Coventry: Local Electrical Guide"
       description="Complete guide for electricians working in Coventry. NGED DNO, post-war housing rewiring, ring main vs radial circuits, university student HMOs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

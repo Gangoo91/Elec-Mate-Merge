@@ -557,7 +557,7 @@ const sections = [
 export default function RewireCostLiverpoolPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Liverpool 2025 | Rewire Prices Merseyside"
+      title="House Rewire Cost Liverpool 2025: Merseyside"
       description="How much does a house rewire cost in Liverpool in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Toxteth and Wavertree."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

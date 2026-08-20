@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostSheffieldConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-sheffield',
-  title: 'EICR Cost Sheffield 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Sheffield 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Sheffield? Fair-margin 2026 prices for scheme-registered electricians — £200–270 for a 1-bed, £315–430 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

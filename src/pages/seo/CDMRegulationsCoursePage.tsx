@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'CDM Regulations Course for Electricians | CDM 2015 Training';
+const PAGE_TITLE = 'CDM Regulations Course for Electricians';
 const PAGE_DESCRIPTION =
   'CDM 2015 training for UK electricians: duty holders, principal designer/contractor roles, phase plans, documentation. 6 modules, quizzes + AI tutor.';
 

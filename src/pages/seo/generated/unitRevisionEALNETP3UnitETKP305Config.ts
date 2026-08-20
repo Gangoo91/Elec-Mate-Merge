@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETKP305Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETKP3-05-terminate-and-connect-conductors-revision',
-  title: 'EAL NETP3 Unit ETKP3-05: Terminate and Connect Conductors',
+  title: 'EAL NETP3 Unit ETKP3-05: Terminate & Connect',
   description: 'Complete revision guide for EAL NETP3 Unit ETKP3-05 (Terminate and Connect Conductors). Every topic structured as a study checklist, with mock exams…',
   datePublished: published,
   dateModified: modified,

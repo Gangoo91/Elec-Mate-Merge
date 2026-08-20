@@ -10,9 +10,9 @@ const modified = '2026-06-10';
 export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-afdd-changes',
   title:
-    'BS 7671 A4:2026 — AFDD Changes Explained (Reg 421.1.7 + Item 4.23)',
+    'BS 7671 A4:2026 AFDD Changes (Reg 421.1.7)',
   description:
-    'Amendment 4 introduced Regulation 421.1.7 recommending AFDDs, and added EICR inspection item 4.23. What it actually says, and where AFDDs are prohibited (medical, medical IT, EV charging exemption), what evidence inspectors need and the operational test.',
+    "Amendment 4 added Regulation 421.1.7 recommending AFDDs and EICR item 4.23. Where they're required, prohibited, and what evidence inspectors need.",
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

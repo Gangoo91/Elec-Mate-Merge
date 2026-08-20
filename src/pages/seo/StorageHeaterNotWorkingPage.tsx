@@ -658,7 +658,7 @@ const sections = [
 export default function StorageHeaterNotWorkingPage() {
   return (
     <GuideTemplate
-      title="Storage Heater Not Working | Causes & Fixes"
+      title="Storage Heater Not Working: Causes & Fixes"
       description="Why is your storage heater not heating? Covers input/output controls, Economy 7 off-peak supply faults, element failure, and time switch problems."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

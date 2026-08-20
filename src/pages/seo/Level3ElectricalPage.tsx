@@ -161,7 +161,7 @@ const breadcrumbSchema = {
 
 export default function Level3ElectricalPage() {
   useSEO({
-    title: 'Level 3 Electrical Installation Course Online | Advanced',
+    title: 'Level 3 Electrical Installation Course Online',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

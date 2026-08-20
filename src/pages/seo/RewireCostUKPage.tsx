@@ -773,7 +773,7 @@ const relatedPages = [
 export default function RewireCostUKPage() {
   return (
     <GuideTemplate
-      title="Rewire Cost UK 2026 | How Much Does a House Rewire Cost?"
+      title="Rewire Cost UK 2026: How Much Does It Cost?"
       description="Complete guide to house rewire costs in the UK for 2026. Average prices by property size (1-bed flat to 5-bed house), what affects the cost."
       datePublished="2024-07-01"
       dateModified="2026-06-10"

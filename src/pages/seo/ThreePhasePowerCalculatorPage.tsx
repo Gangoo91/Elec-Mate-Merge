@@ -126,7 +126,7 @@ const faqSchema = {
 
 export default function ThreePhasePowerCalculatorPage() {
   useSEO({
-    title: 'Three Phase Power Calculator | Electrical Power Calculations',
+    title: 'Three Phase Power Calculator: Star & Delta',
     description:
       'Calculate three-phase power, current, and voltage for balanced and unbalanced loads. Star and delta configurations.',
   });

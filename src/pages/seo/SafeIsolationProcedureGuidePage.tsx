@@ -959,8 +959,8 @@ const sections = [
 export default function SafeIsolationProcedureGuidePage() {
   return (
     <GuideTemplate
-      title="6 Step Safe Isolation Procedure | GS38"
-      description="The 6 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove, GS38 test instrument rules, lock-off methods and the BS 7671 regulations behind them."
+      title="6 Step Safe Isolation Procedure: GS38"
+      description="The 6 step safe isolation sequence for UK electrical work: prove-isolate-secure-prove, GS38 test instrument rules and lock-off methods."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

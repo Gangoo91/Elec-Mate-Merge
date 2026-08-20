@@ -194,7 +194,7 @@ const howToSchema = {
 
 export default function SolarPVCertificatePage() {
   useSEO({
-    title: 'Solar PV Installation Certificate App | G98/G99 Compliant',
+    title: 'Solar PV Certificate App: G98/G99 Compliant',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -271,9 +271,8 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
 
   return (
     <div className="bg-[#0a0a0a] text-white min-h-screen">
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(organizationWebsiteSchema)}</script>
-      </Helmet>
+      {/* Body-inline JSON-LD — react-helmet never rendered this (see JsonLd.tsx). */}
+      <JsonLd data={organizationWebsiteSchema} />
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top,0px)]">

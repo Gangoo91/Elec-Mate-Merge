@@ -21,7 +21,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Permit to Work for Electricians | Electrical Safety';
+const PAGE_TITLE = 'Permit to Work for Electricians: Safety Guide';
 const PAGE_DESCRIPTION =
   'Permit-to-work for electrical work: when PTW is required, permit types, process, safe isolation, EAWR 1989, templates, common mistakes.';
 

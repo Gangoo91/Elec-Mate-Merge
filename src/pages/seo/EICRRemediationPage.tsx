@@ -547,8 +547,8 @@ const sections = [
 export default function EICRRemediationPage() {
   return (
     <GuideTemplate
-      title="EICR Remediation Work UK | Fixing EICR Failures Guide"
-      description="EICR remediation work explained: C1 (danger present), C2 (potentially dangerous), C3 (improvement), FI. What to fix, costs, time, certification."
+      title="EICR Remedial Works: C1, C2, C3 Fixes Explained"
+      description="EICR remedial works explained: C1 (danger present), C2 (potentially dangerous), C3 (improvement), FI. What to fix, costs, time, certification."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

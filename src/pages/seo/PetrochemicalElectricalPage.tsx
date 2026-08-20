@@ -622,7 +622,7 @@ const sections = [
 export default function PetrochemicalElectricalPage() {
   return (
     <GuideTemplate
-      title="Petrochemical Electrical Installation UK | Refinery &"
+      title="Petrochemical Electrical Installation UK: ATEX"
       description="Complete guide to petrochemical electrical installation in the UK — ATEX/DSEAR zone classification, Ex d/e/i/m/n protection concepts."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

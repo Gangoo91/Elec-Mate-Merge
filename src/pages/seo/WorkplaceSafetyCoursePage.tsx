@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Workplace Safety Course | Electrical Industry Health & Safety';
+const PAGE_TITLE = 'Workplace Safety Course: H&S Training';
 const PAGE_DESCRIPTION =
   'Workplace safety training for UK electricians: HASAWA, risk assessment, manual handling, COSHH, fire, first aid, PPE, electrical safety. 8 modules.';
 

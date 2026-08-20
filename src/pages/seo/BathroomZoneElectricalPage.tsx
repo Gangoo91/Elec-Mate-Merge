@@ -787,8 +787,8 @@ const sections = [
 export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
-      title="Bathroom Zones: Zone 1 2.25 m, Zone 2 0.60 m, IPX4"
-      description="Zone 0 = inside the bath: IPX7, SELV 12 V AC / 30 V ripple-free DC. Zone 1 = up to 2.25 m or the highest shower head, IPX4. Zone 2 = 0.60 m beyond, IPX4. 30 mA RCD required."
+      title="Bathroom Zones BS 7671: Zone 1 2.25 m, IPX4"
+      description="Zone 0 inside the bath: IPX7, SELV. Zone 1 to 2.25 m or highest shower head: IPX4. Zone 2 a further 0.60 m: IPX4. 30 mA RCD required on bathroom circuits."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

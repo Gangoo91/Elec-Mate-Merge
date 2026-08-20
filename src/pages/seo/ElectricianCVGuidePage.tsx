@@ -577,7 +577,7 @@ export default function ElectricianCVGuidePage() {
   return (
     <GuideTemplate
       localArea="Cv Guide"
-      title="Electrician CV Guide 2026 | Template & Tips UK"
+      title="Electrician CV Guide 2026: Template & Tips UK"
       description="Complete guide to writing an electrician CV that gets interviews. CV structure, qualifications section, experience tips, common mistakes to avoid."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

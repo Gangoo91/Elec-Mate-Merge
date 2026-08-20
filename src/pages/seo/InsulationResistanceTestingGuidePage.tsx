@@ -625,7 +625,7 @@ const sections = [
 export default function InsulationResistanceTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Insulation Resistance Testing Guide | IR Testing BS 7671"
+      title="Insulation Resistance Testing Guide: BS 7671"
       description="Complete guide to insulation resistance (IR) testing. Test voltages per BS 7671 Table 64, minimum values, disconnecting electronic components."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

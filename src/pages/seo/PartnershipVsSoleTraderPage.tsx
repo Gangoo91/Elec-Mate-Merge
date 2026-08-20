@@ -638,7 +638,7 @@ const sections = [
 export default function PartnershipVsSoleTraderPage() {
   return (
     <GuideTemplate
-      title="Partnership vs Sole Trader vs Ltd for Electricians UK 2026"
+      title="Partnership vs Sole Trader vs Ltd: Electricians"
       description="Compare sole trader, partnership, LLP, and limited company for electricians. Tax comparison with 2026/27 figures, liability, admin burden."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

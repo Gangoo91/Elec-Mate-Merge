@@ -361,7 +361,7 @@ const relatedPages = [
 export default function SpdSymbolPage() {
   return (
     <GuideTemplate
-      title="SPD Symbol | BS EN 61643-11 Surge Protection Drawing"
+      title="SPD Symbol: Surge Protection Device Drawing"
       description="SPD (Surge Protection Device) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-06-10"

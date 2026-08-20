@@ -5,7 +5,7 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { LOCAL_PAGES_INDEX } from '@/data/localPagesIndex';
 
-const PAGE_TITLE = 'Electrical Guides by City | EICR, Rewires, EV Charging';
+const PAGE_TITLE = 'Electrical Guides by City: EICR, Rewires, EV';
 const PAGE_DESCRIPTION =
   'Local UK electrical guides by city: EICR costs, consumer unit replacement, rewire costs, EV charger installation, landlord safety and electrician pay.';
 

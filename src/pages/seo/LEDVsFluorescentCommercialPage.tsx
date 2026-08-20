@@ -441,7 +441,7 @@ const sections = [
 export default function LEDVsFluorescentCommercialPage() {
   return (
     <GuideTemplate
-      title="LED vs Fluorescent Commercial Lighting | UK Electrician's"
+      title="LED vs Fluorescent Commercial Lighting (UK)"
       description="Complete guide to LED vs fluorescent commercial lighting for UK electricians. Energy savings (50–70%), lifespan comparisons, dimming and DALI controls."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

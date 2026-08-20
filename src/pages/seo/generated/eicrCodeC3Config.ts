@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const eicrCodeC3Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c3-improvement-recommended',
   title:
-    'EICR Code C3 — Improvement Recommended | When (and When',
+    'EICR Code C3: Improvement Recommended',
   description:
     'EICR code C3 explained: when "improvement recommended" is the right classification, when it would actually be a C2 in disguise…',
   datePublished: published,

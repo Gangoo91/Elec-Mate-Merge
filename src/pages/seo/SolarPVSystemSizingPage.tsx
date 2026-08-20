@@ -580,8 +580,8 @@ const sections = [
 export default function SolarPVSystemSizingPage() {
   return (
     <GuideTemplate
-      title="Solar PV System Sizing — UK Guide | kWp Calculation & G98/G99"
-      description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, and BS 7671 Section 712 requirements."
+      title="Solar PV System Sizing: kWp & G98/G99"
+      description="How to size a solar PV system for UK homes: kWp calculations, orientation/tilt factors, MCS standards, G98/G99 thresholds, BS 7671 Section 712."
       datePublished="2024-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

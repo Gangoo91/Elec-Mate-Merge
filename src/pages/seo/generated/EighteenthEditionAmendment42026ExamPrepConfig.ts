@@ -8,7 +8,7 @@ const modified = '2026-05-19';
 
 export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig = {
   pagePath: '/guides/18th-edition-amendment-4-2026-exam-prep',
-  title: '18th Edition Amendment 4:2026 Exam Prep — 2026 Guide',
+  title: '18th Edition Amendment 4:2026 Exam Prep',
   description: 'A focused study guide for the City & Guilds 2382-23 (or equivalent) 18th Edition Amendment 4:2026 exam.',
   datePublished: published,
   dateModified: modified,

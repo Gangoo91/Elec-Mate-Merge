@@ -136,7 +136,7 @@ export default function ElectricalQuotingAppPage() {
   useSEO({
     title: 'Electrical Quoting App for UK Electricians',
     description:
-      'AI quoting app built for UK electricians: real trade material prices, labour costs and instant PDF quotes for rewires, CU upgrades, EICRs and EV chargers. Free to start.',
+      'AI quoting app for UK electricians: real trade material prices, labour costs and instant PDF quotes for rewires, CU upgrades, EICRs and EV chargers.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Electrical Quoting App', url: '/tools/electrical-quoting-app' },

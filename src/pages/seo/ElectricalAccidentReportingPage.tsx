@@ -707,7 +707,7 @@ const sections = [
 export default function ElectricalAccidentReportingPage() {
   return (
     <GuideTemplate
-      title="Electrical Accident Reporting UK | RIDDOR & Near Miss Guide"
+      title="Electrical Accident Reporting: RIDDOR Guide UK"
       description="UK guide to electrical accident reporting under RIDDOR 2013. What must be reported including electric shock and arc flash, how to report to the HSE."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

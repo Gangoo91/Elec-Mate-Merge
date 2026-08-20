@@ -602,7 +602,7 @@ const sections = [
 export default function ExternalLightingInstallationPage() {
   return (
     <GuideTemplate
-      title="External Lighting Installation UK | Outdoor Electrical"
+      title="External Lighting Installation UK: IP44 Guide"
       description="Complete UK guide to external lighting installation. Cable requirements, IP ratings (IP44 minimum), RCD protection, underground SWA cable depth."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

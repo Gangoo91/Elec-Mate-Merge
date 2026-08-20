@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceCommercialInstallConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-commercial-install-as-an-electrician',
-  title: 'How to Price Commercial Electrical Installation as an',
+  title: 'How to Price Commercial Electrical Install',
   description: 'How much should you charge for commercial electrical installation as a UK electrician in 2026?',
   datePublished: published,
   dateModified: modified,

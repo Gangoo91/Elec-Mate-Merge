@@ -693,7 +693,7 @@ const sections = [
 export default function Regulation530Page() {
   return (
     <GuideTemplate
-      title="Regulation 530.3.201 BS 7671 | Bidirectional Devices"
+      title="Regulation 530.3.201: Bidirectional Devices"
       description="Complete guide to Regulation 530.3.201 from BS 7671:2018+A4:2026 (Amendment 4). Bidirectional vs unidirectional switching devices, impact on solar PV."
       datePublished="2025-09-01"
       dateModified="2026-06-10"

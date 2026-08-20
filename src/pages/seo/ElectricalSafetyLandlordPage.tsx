@@ -640,7 +640,7 @@ const sections = [
 export default function ElectricalSafetyLandlordPage() {
   return (
     <GuideTemplate
-      title="Electrical Safety Landlord Checklist | Complete 2026 Guide"
+      title="Landlord Electrical Safety Checklist 2026"
       description="Complete electrical safety checklist for UK landlords. Covers EICR requirements, PAT testing, smoke alarms, CO alarms, tenant notification."
       datePublished="2025-04-15"
       dateModified="2026-05-18"

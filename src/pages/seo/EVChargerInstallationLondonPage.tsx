@@ -543,7 +543,7 @@ const sections = [
 export default function EVChargerInstallationLondonPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation London 2026 | Costs, DNO, and Grants"
+      title="EV Charger Installation London 2026"
       description="How much does EV charger installation cost in London in 2026? Local costs, UKPN DNO notification, London borough grants, terraced house cable routing."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

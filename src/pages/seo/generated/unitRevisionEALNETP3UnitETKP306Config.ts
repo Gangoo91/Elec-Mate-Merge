@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETKP306Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETKP3-06-inspect-test-and-commission-electrical-systems-revision',
-  title: 'EAL NETP3 Unit ETKP3-06: Inspect, Test and Commission',
+  title: 'EAL NETP3 ETKP3-06: Inspect, Test, Commission',
   description: 'Complete revision guide for EAL NETP3 Unit ETKP3-06 (Inspect, Test and Commission Electrical Systems).',
   datePublished: published,
   dateModified: modified,

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit301Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-301-planning-and-overseeing-electrical-work-activities-revision',
-  title: 'City & Guilds 8202 Unit 301: Planning and overseeing',
+  title: 'City & Guilds 8202 Unit 301 Revision Guide',
   description: 'Complete revision guide for City & Guilds 8202 Unit 301 (Planning and overseeing electrical work activities).',
   datePublished: published,
   dateModified: modified,

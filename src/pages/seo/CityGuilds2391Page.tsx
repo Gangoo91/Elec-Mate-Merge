@@ -21,7 +21,7 @@ import {
   Target,
 } from 'lucide-react';
 
-const PAGE_TITLE = '2391 Course Online — 2391-52 Lessons, Mock Exams & Revision';
+const PAGE_TITLE = '2391 Course Online: Lessons + Mock Exams';
 const PAGE_DESCRIPTION =
   'Study C&G 2391-52 Inspection & Testing online: AI quiz prep, GN3 testing sequence walkthroughs, mock exams, practical guidance. From £6.99/mo.';
 
@@ -158,7 +158,7 @@ const breadcrumbSchema = {
 
 export default function CityGuilds2391Page() {
   useSEO({
-    title: '2391 Course Online — 2391-52 Lessons, Mock Exams & Revision',
+    title: '2391 Course Online: Lessons + Mock Exams',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

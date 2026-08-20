@@ -19,7 +19,7 @@ import {
 export default function ElectricalCustomerServicePage() {
   return (
     <GuideTemplate
-      title="Customer Service for Electricians | Win Repeat Work"
+      title="Customer Service for Electricians: Win Repeat"
       description="Practical customer service guide for UK electricians. First impressions, communication, cleanliness on site, professional paperwork, follow-up."
       datePublished="2026-02-01"
       dateModified="2026-05-18"

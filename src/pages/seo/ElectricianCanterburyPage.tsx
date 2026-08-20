@@ -477,7 +477,7 @@ export default function ElectricianCanterburyPage() {
     <GuideTemplate
       noindex={true}
       localArea="Canterbury"
-      title="Electrician in Canterbury | Local Electricians 2026"
+      title="Electrician in Canterbury: Local Electricians"
       description="Find qualified electricians in Canterbury. NICEIC and NAPIT registered, Part P compliant. South East rates, listed building work, student HMO EICRs."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

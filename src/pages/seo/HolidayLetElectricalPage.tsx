@@ -702,8 +702,8 @@ const sections = [
 export default function HolidayLetElectricalPage() {
   return (
     <GuideTemplate
-      title="Do You Need an EICR for a Holiday Let? UK Rules 2026"
-      description="Do you need an electrical certificate for a UK holiday let? No mandatory EICR — but Occupiers Liability Act + Airbnb + insurance expect one. Frequency, PAT, alarms."
+      title="Do You Need an EICR for a Holiday Let? (UK 2026)"
+      description="No mandatory EICR for UK holiday lets — but the Occupiers Liability Act, Airbnb and insurers expect one. Inspection frequency, PAT testing and alarms."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

@@ -8,7 +8,7 @@ import { smartHomeQuestionBank } from '@/data/upskilling/smartHomeMockExamData';
 export default function SmartHomeMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Smart Home Mock Exam 2026 — Installer Practice`}
+      title={`Free Smart Home Mock Exam — Installer Practice`}
       description={`Free smart home mock exam — 25 questions, 30-min timer, 200-question bank. Zigbee and Z-Wave protocols, lighting, HVAC, security and installation.`}
       slug="smart-home"
       heading={`Smart Home Technology Mock Exam`}

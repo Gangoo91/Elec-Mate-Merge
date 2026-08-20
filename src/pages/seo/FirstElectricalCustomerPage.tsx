@@ -619,7 +619,7 @@ const sections = [
 export default function FirstElectricalCustomerPage() {
   return (
     <GuideTemplate
-      title="How to Get Your First Electrical Customer | New Business"
+      title="How to Get Your First Electrical Customer"
       description="Practical guide for new self-employed electricians on getting your first customer. Insurance, registration, pricing, Checkatrade vs MyBuilder."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

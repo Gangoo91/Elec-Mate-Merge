@@ -497,7 +497,7 @@ const sections = [
 export default function PartialPowerLossPage() {
   return (
     <GuideTemplate
-      title="Partial Power Loss Fault Finding | Missing Phase, Open"
+      title="Partial Power Loss Fault Finding: Missing Phase"
       description="Complete guide to diagnosing partial power loss for UK electricians. Covers missing phase in three-phase premises, open circuit neutral dangers."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

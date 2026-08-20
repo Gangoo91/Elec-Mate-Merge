@@ -647,7 +647,7 @@ const sections = [
 export default function ConsumerUnitUpgradePage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Upgrade | Cost, Regulations & Guide UK"
+      title="Consumer Unit Upgrade: Cost & Regulations UK"
       description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, Amendment 4, AFDDs and SPDs, Part P certification."
       datePublished="2025-05-20"
       dateModified="2026-06-10"

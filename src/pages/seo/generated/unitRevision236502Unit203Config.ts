@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236502Unit203Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-02-unit-203-electrical-installations-technology-revision',
-  title: 'City & Guilds 2365-02 Unit 203: Electrical installations',
+  title: 'City & Guilds 2365-02 Unit 203 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-02 Unit 203 (Electrical installations technology).',
   datePublished: published,
   dateModified: modified,

@@ -480,7 +480,7 @@ const sections = [
 export default function CompetentPersonSchemeGuidePage() {
   return (
     <GuideTemplate
-      title="Competent Person Scheme Guide | NICEIC NAPIT ELECSA Part P"
+      title="Competent Person Scheme Guide: NICEIC, NAPIT"
       description="Complete guide to competent person schemes for UK electricians. NICEIC, NAPIT, ELECSA, STROMA — what they mean, costs, self-certification under Part P."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

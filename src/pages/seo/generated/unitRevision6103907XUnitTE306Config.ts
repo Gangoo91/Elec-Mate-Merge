@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE306Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-06-practices-and-procedures-for-inspection-testing-and-commissioning-revision',
-  title: 'EAL Level 3 Unit TE3-06: Practices and Procedures for',
+  title: 'EAL Level 3 Unit TE3-06 Revision Guide',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-06 (Practices and Procedures for Inspection, Testing and Commissioning).',
   datePublished: published,
   dateModified: modified,

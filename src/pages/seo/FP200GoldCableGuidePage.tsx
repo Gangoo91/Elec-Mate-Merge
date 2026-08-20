@@ -959,7 +959,7 @@ export default function FP200GoldCableGuidePage() {
   return (
     <GuideTemplate
       title="FP200 Cable: Termination, Clipping, Pros & Cons"
-      description="How to terminate FP200 Gold with standard tools and fire-rated glands — BS 7629-1, the Reg 560.8 one-hour default, 250mm/400mm clip spacing, segregation and FP200 vs MICC."
+      description="How to terminate FP200 Gold with standard tools and fire-rated glands — BS 7629-1, Reg 560.8 one-hour default, 250mm/400mm clip spacing, FP200 vs MICC."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

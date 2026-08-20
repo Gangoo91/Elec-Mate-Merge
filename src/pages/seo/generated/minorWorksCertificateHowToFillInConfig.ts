@@ -5,7 +5,7 @@ const modified = '2026-06-10';
 
 export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-how-to-fill-in',
-  title: 'Minor Works Certificate How to Fill In | Electrician Guide',
+  title: 'Minor Works Certificate: How to Fill It In',
   description:
     'How to fill in a Minor Works certificate properly, keep the readings and description clear, and complete the paperwork cleanly from site.',
   datePublished: published,

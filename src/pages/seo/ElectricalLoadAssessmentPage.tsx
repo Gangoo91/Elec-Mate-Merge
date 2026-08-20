@@ -19,7 +19,7 @@ import {
 export default function ElectricalLoadAssessmentPage() {
   return (
     <GuideTemplate
-      title="Electrical Load Assessment | Maximum Demand Guide"
+      title="Electrical Load Assessment: Maximum Demand"
       description="Electrical load assessments + max demand calculations for UK electricians. Diversity factors, single + three-phase, supply upgrades, DNO submissions."
       datePublished="2026-01-22"
       dateModified="2026-06-10"

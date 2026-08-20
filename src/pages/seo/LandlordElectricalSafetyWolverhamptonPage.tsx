@@ -666,7 +666,7 @@ const sections = [
 export default function LandlordElectricalSafetyWolverhamptonPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Wolverhampton | EICR West"
+      title="Landlord Electrical Safety Wolverhampton: EICR"
       description="Landlord electrical safety requirements in Wolverhampton. The 2020 Regulations explained, City of Wolverhampton Council enforcement, HMO requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

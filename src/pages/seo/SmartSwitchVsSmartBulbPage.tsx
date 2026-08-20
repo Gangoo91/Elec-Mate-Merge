@@ -382,7 +382,7 @@ const sections = [
 export default function SmartSwitchVsSmartBulbPage() {
   return (
     <GuideTemplate
-      title="Smart Switch vs Smart Bulb | Neutral Wire Requirements UK"
+      title="Smart Switch vs Smart Bulb: Neutral Wire Rules"
       description="Complete guide to smart switches vs smart bulbs for UK electricians. The neutral wire problem in UK switch wiring, BS 7671 compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

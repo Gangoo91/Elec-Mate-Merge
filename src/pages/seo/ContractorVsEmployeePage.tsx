@@ -612,7 +612,7 @@ const sections = [
 export default function ContractorVsEmployeePage() {
   return (
     <GuideTemplate
-      title="Contractor vs Employee | Which Is Better for Electricians?"
+      title="Contractor vs Employee: Which Is Better?"
       description="Complete comparison of self-employed contractor versus employed electrician. Tax differences, IR35, CIS, financial comparison, benefits."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

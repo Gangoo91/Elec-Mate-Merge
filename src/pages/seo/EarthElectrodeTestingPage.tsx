@@ -673,7 +673,7 @@ const sections = [
 export default function EarthElectrodeTestingPage() {
   return (
     <GuideTemplate
-      title="Earth Electrode Testing Guide UK | Rod, Plate & Strip"
+      title="Earth Electrode Testing Guide UK: Rod & Strip"
       description="Complete guide to earth electrode testing for UK electricians. Types of earth electrode, fall of potential method, stakeless clamp method."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

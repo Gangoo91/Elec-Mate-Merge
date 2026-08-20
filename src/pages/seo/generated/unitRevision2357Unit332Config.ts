@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit332Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-332-plan-and-prepare-to-maintain-electrotechnical-systems-and-equipment-eltp-09a-revision',
-  title: 'City & Guilds 2357 Unit 332: Plan and prepare to maintain',
+  title: 'City & Guilds 2357 Unit 332 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 332 (Plan and prepare to maintain electrotechnical systems and equipment (ELTP 09a)).',
   datePublished: published,
   dateModified: modified,

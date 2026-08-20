@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const Cg2365Vs5357Vs2366Config: GeneratedGuideConfig = {
   pagePath: '/guides/cg-2365-vs-5357-vs-2366',
-  title: 'City & Guilds 2365 vs 5357 vs 2366 — Electrical Apprentice',
+  title: 'City & Guilds 2365 vs 5357 vs 2366 Compared',
   description: 'A side-by-side comparison of the three main City & Guilds pathways for UK electrical apprentices.',
   datePublished: published,
   dateModified: modified,

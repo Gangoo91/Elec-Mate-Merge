@@ -18,9 +18,9 @@ const modified = '2026-08-07';
 
 export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/knx-wiring-installation-guide-uk',
-  title: 'KNX Wiring & Bus Installation Guide for UK Electricians (BS 7671)',
+  title: 'KNX Wiring & Installation Guide UK (BS 7671)',
   description:
-    'KNX wiring installation guide for UK electricians — TP1 bus limits, J-Y(St)Y cable, line/area/backbone topology, power supply sizing, and BS 7671 Reg 528.1 and 414.4 segregation.',
+    'KNX wiring for UK electricians: TP1 bus limits, J-Y(St)Y cable, line, area and backbone topology, power supply sizing and BS 7671 Reg 528.1 segregation.',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,

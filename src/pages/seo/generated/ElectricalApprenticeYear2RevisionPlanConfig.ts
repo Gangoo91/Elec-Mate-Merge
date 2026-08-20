@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const ElectricalApprenticeYear2RevisionPlanConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-apprentice-year-2-revision-plan',
-  title: 'Year 2 Electrical Apprentice Revision Plan — Complete 2026',
+  title: 'Year 2 Electrical Apprentice Revision Plan 2026',
   description: 'A complete revision plan for second-year electrical apprentices. Year 2 introduces Level 3 theory — fault diagnosis foundations, three-phase principles…',
   datePublished: published,
   dateModified: modified,

@@ -597,7 +597,7 @@ const sections = [
 export default function LedLightingUpgradePage() {
   return (
     <GuideTemplate
-      title="LED Lighting Upgrade UK | Replacing Fluorescent & Halogen"
+      title="LED Lighting Upgrade UK: Fluorescent & Halogen"
       description="Complete guide to LED lighting upgrades in the UK. T8 fluorescent to LED (Type A/B/C), GU10 halogen replacement, MR16 transformer compatibility."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

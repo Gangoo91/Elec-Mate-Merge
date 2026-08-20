@@ -9,7 +9,7 @@ import { pasmaQuestionBank } from '@/data/general-upskilling/pasmaMockExamData';
 export default function PASMAMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`PASMA Mock Test 2026: Free Tower Scaffolding Quiz`}
+      title={`PASMA Mock Test: Free Tower Scaffolding Quiz`}
       description={`Free PASMA Towers for Users mock test: 25 questions, 200-Q bank. Aluminium tower assembly, bracing, guardrails, max heights, dismantling sequence.`}
       slug="pasma"
       heading={`PASMA Mock Test — Towers for Users`}

@@ -533,7 +533,7 @@ const sections = [
 export default function CISGuideElectricianPage() {
   return (
     <GuideTemplate
-      title="Construction Industry Scheme (CIS) Guide for Electricians UK"
+      title="CIS Guide for Electricians UK: 2026"
       description="Complete CIS guide for UK electricians — how CIS works, 20% vs 30% deduction rates, registering as a subcontractor, gross payment status."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

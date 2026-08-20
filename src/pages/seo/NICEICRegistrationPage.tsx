@@ -14,7 +14,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'NICEIC Registration 2026 | How to Join & Requirements';
+const PAGE_TITLE = 'NICEIC Registration 2026: How to Join & Costs';
 const PAGE_DESCRIPTION =
   'NICEIC registration in 2026: Domestic Installer + Approved Contractor, qual requirements, costs, application, assessment vs NAPIT + ELECSA.';
 

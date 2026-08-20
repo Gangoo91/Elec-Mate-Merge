@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit602Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-602-understanding-environmental-legislation-working-practices-and-the-principles-of-environmental-technology-systems-eltk-02-revision',
-  title: 'City & Guilds 2357 Unit 602: Understanding environmental',
+  title: 'City & Guilds 2357 Unit 602 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 602 (Understanding environmental legislation…',
   datePublished: published,
   dateModified: modified,

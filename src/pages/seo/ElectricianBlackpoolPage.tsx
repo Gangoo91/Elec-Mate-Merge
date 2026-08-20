@@ -488,7 +488,7 @@ export default function ElectricianBlackpoolPage() {
     <GuideTemplate
       noindex={true}
       localArea="Blackpool"
-      title="Electrician in Blackpool | Local Electricians 2026"
+      title="Electrician in Blackpool: Local Electricians"
       description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

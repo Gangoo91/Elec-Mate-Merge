@@ -170,7 +170,7 @@ const howToSchema = {
 
 export default function MinorWorksCertificatePage() {
   useSEO({
-    title: 'Minor Works Certificate App | Digital EWC Form',
+    title: 'Minor Works Certificate App: Digital EWC Form',
     description:
       'Create Minor Works certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export.',
   });

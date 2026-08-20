@@ -592,7 +592,7 @@ const sections = [
 export default function SmokeDetectorWiringPage() {
   return (
     <GuideTemplate
-      title="Smoke Detector Wiring Guide | Mains Interlinked UK"
+      title="Smoke Detector Wiring: Mains Interlinked UK"
       description="Complete guide to wiring mains-interlinked smoke detectors in UK dwellings. BS 5839-6 Grade D systems, interconnection methods, battery backup."
       datePublished="2025-07-01"
       dateModified="2026-05-18"

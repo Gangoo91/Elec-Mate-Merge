@@ -650,7 +650,7 @@ const sections = [
 export default function NewHomeElectricalChecklistPage() {
   return (
     <GuideTemplate
-      title="New Home Electrical Checklist UK | Moving into a New House"
+      title="New Home Electrical Checklist UK"
       description="Complete electrical checklist for moving into a new home in the UK. Locate consumer unit, test RCDs, check smoke and CO detectors."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

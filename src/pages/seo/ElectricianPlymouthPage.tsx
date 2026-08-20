@@ -575,7 +575,7 @@ export default function ElectricianPlymouthPage() {
   return (
     <GuideTemplate
       localArea="Plymouth"
-      title="Electrician in Plymouth | Find Qualified Electricians 2026"
+      title="Electrician in Plymouth: 2026 Guide"
       description="Find qualified, registered electricians in Plymouth. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, post-war rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

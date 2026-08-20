@@ -788,7 +788,7 @@ export default function FirstFixElectricalPage() {
   return (
     <GuideTemplate
       title="First Fix Electrical: What It Is vs Second Fix"
-      description="First fix is the cabling, back boxes and containment fitted before plastering. Prescribed zones within 150 mm, Table 52.1, 50 mm through joists, then second fix."
+      description="First fix is the cabling, back boxes and containment fitted before plastering. Zones within 150 mm, Table 52.1, 50 mm through joists, then second fix."
       datePublished="2025-07-01"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const fullRewirePriceBreakdownConfig: GeneratedGuideConfig = {
   pagePath: '/guides/full-rewire-price-breakdown',
-  title: 'Full Rewire Price Breakdown | Electrician Guide | Elec-Mate',
+  title: 'Full Rewire Price Breakdown: Electrician Guide',
   description:
     'A clear breakdown of what goes into a full rewire price, from labour and materials to testing, making good, and client handover.',
   datePublished: published,

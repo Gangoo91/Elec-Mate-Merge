@@ -634,7 +634,7 @@ const sections = [
 export default function ElectricalSurveyCostPage() {
   return (
     <GuideTemplate
-      title="Electrical Survey Cost UK 2026 | What to Expect"
+      title="Electrical Survey Cost UK 2026: What to Expect"
       description="Complete guide to electrical survey costs in the UK for 2026. Pre-purchase survey prices, commercial EICR costs, large installation assessments."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

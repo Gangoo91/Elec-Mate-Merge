@@ -665,7 +665,7 @@ const sections = [
 export default function EICRSouthamptonPage() {
   return (
     <GuideTemplate
-      title="EICR Southampton | Electrical Safety Certificate Cost 2026"
+      title="EICR Southampton: Electrical Safety Cost 2026"
       description="EICR costs in Southampton for 2026. Landlord legal requirements, Southampton City Council enforcement, post-war housing stock findings."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

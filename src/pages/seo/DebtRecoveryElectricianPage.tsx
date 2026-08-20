@@ -631,7 +631,7 @@ const sections = [
 export default function DebtRecoveryElectricianPage() {
   return (
     <GuideTemplate
-      title="Debt Recovery for Electricians | Getting Paid UK Guide"
+      title="Debt Recovery for Electricians: Getting Paid UK"
       description="Complete guide to debt recovery for UK electricians. Covers payment terms, late payment interest under the 1998 Act, Letter Before Action."
       datePublished="2026-01-25"
       dateModified="2026-05-18"

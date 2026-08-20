@@ -623,8 +623,8 @@ const sections = [
 export default function ElectricalComplianceCertificatePage() {
   return (
     <GuideTemplate
-      title="Electrical Compliance Certificate | What You Need"
-      description="Complete guide to UK electrical compliance certificates (EIC, MEIWC, EICR), Part P building regulations, competent person schemes, and landlord requirements."
+      title="Electrical Compliance Certificate: What You Need"
+      description="Complete guide to UK electrical compliance certificates (EIC, MEIWC, EICR), Part P building regulations, competent person schemes and landlord duties."
       datePublished="2025-07-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

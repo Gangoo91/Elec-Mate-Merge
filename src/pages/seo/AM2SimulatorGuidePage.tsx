@@ -589,8 +589,8 @@ const sections = [
 export default function AM2SimulatorGuidePage() {
   return (
     <GuideTemplate
-      title="AM2 Practical Simulator: Timed Scenarios + Fault Diagnosis"
-      description="In-app AM2 practical simulator (separate from the online knowledge test mock): timed scenarios, cable termination practice, full testing-sequence walkthrough, fault diagnosis trainer."
+      title="AM2 Practical Simulator: Scenarios + Diagnosis"
+      description="In-app AM2 practical simulator (separate from the online knowledge test mock): timed scenarios, cable termination practice, testing-sequence walkthrough."
       datePublished="2025-06-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

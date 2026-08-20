@@ -23,7 +23,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Project Planning | Tender to Completion';
+const PAGE_TITLE = 'Electrical Project Planning: Tender to Complete';
 const PAGE_DESCRIPTION =
   'Electrical project planning end-to-end: tender review, pricing, programming, procurement, labour, testing, commissioning, O&Ms, close-out.';
 

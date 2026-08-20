@@ -915,8 +915,8 @@ const sections = [
 export default function SpecialLocationsPart7Page() {
   return (
     <GuideTemplate
-      title="BS 7671 Special Locations: Part 7 Sections 701-753"
-      description="Part 7 special locations list, 701 to 753, with detail on 701 bathrooms, 702 pools, 703 saunas, 704 sites, 705 agricultural, 706 restrictive, 708 caravans, 709 marinas, 711 shows, 712 solar PV."
+      title="BS 7671 Special Locations: Part 7, 701-753"
+      description="Part 7 special locations list, 701 to 753: 701 bathrooms, 702 pools, 703 saunas, 704 sites, 705 agricultural, 708 caravans, 709 marinas, 712 solar PV."
       datePublished="2025-03-15"
       dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}

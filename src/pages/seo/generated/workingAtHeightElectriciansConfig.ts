@@ -10,8 +10,7 @@ const modified = '2026-05-18';
 
 export const workingAtHeightElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/working-at-height-electricians',
-  title:
-    'Working at Height for UK Electricians — Procedure &',
+  title: 'Working at Height: UK Electricians Guide',
   description:
     'Working at height guide for UK electricians: hierarchy of control, ladders, towers, MEWPs, harnesses, PASMA / IPAF training…',
   datePublished: published,

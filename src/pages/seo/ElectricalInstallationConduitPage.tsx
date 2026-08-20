@@ -591,7 +591,7 @@ const sections = [
 export default function ElectricalInstallationConduitPage() {
   return (
     <GuideTemplate
-      title="Electrical Installation Conduit Guide — Steel, PVC, Fill"
+      title="Electrical Installation Conduit Guide"
       description="UK electrical conduit installation guide: steel vs PVC, BS EN 61386 classification, fill calcs, bonding, fixings, fire stopping, BS 7671 alignment."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

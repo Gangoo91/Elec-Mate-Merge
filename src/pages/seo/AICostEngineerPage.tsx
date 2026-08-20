@@ -139,7 +139,7 @@ const faqSchema = {
 
 export default function AICostEngineerPage() {
   useSEO({
-    title: 'AI Cost Engineer | Electrical Job Estimator',
+    title: 'AI Cost Engineer: Electrical Job Estimator',
     description: PAGE_DESCRIPTION,
     breadcrumbs: [
       { name: 'Home', url: '/' },

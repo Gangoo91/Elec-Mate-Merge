@@ -568,7 +568,7 @@ const sections = [
 export default function ECAMembershipGuidePage() {
   return (
     <GuideTemplate
-      title="ECA Membership Guide UK | Electrical Contractors Association"
+      title="ECA Membership Guide UK: Electrical Contractors"
       description="Complete guide to ECA membership for UK electricians — benefits including technical helpline, legal support, BS 7671 guidance, lobbying."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

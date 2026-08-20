@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const fullRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/full-rewire-labour-and-materials',
-  title: 'Full Rewire Labour and Materials | Electrician Guide',
+  title: 'Full Rewire Labour and Materials Guide',
   description:
     'How electricians break down full rewire labour and materials, what changes the price, and how to explain the cost clearly to clients.',
   datePublished: published,

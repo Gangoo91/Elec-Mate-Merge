@@ -643,7 +643,7 @@ const sections = [
 export default function ElectricShowerTrippingRCDPage() {
   return (
     <GuideTemplate
-      title="Electric Shower Keeps Tripping RCD | Causes & Solutions"
+      title="Electric Shower Tripping RCD: Causes & Fixes"
       description="Why does your electric shower keep tripping the RCD? Learn the common causes — heating element failure, water ingress."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

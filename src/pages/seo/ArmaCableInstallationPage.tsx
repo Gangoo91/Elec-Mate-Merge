@@ -885,7 +885,7 @@ const sections = [
 export default function ArmaCableInstallationPage() {
   return (
     <GuideTemplate
-      title="Armoured Cable Installation UK | SWA Cable Guide"
+      title="Armoured Cable Installation UK: SWA Cable Guide"
       description="Complete UK guide to Steel Wire Armoured (SWA) cable installation. Types, current ratings, stripping and terminating with SWA glands."
       datePublished="2026-03-27"
       dateModified="2026-08-07"

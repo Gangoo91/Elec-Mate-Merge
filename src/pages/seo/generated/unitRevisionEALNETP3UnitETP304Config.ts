@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETP304Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETP3-04-apply-design-and-installation-practices-and-procedures-revision',
-  title: 'EAL NETP3 Unit ETP3-04: Apply Design and Installation',
+  title: 'EAL NETP3 Unit ETP3-04: Design & Installation',
   description: 'Complete revision guide for EAL NETP3 Unit ETP3-04 (Apply Design and Installation Practices and Procedures).',
   datePublished: published,
   dateModified: modified,

@@ -572,7 +572,7 @@ const sections = [
 export default function ElectricalAppWithAIPage() {
   return (
     <ToolTemplate
-      title="Electrical App with AI | Smart Tools for Electricians"
+      title="Electrical App with AI: Tools for Electricians"
       description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation."
       datePublished="2025-10-01"
       dateModified="2026-06-10"

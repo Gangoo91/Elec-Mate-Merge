@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostEdinburghConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-edinburgh',
-  title: 'EICR Cost Edinburgh 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Edinburgh 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Edinburgh? Fair-margin 2026 prices for scheme-registered electricians — £235–315 for a 1-bed, £360–490 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

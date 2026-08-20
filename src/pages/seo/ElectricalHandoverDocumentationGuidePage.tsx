@@ -720,7 +720,7 @@ const sections = [
 export default function ElectricalHandoverDocumentationGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Handover Documentation Guide | EIC, EICR, MEIWC,"
+      title="Electrical Handover Documentation: EIC & EICR"
       description="Complete guide to electrical handover documentation requirements. When to use EIC, EICR, or MEIWC, what test results must be recorded."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

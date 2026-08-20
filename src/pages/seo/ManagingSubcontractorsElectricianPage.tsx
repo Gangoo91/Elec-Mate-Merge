@@ -565,7 +565,7 @@ const sections = [
 export default function ManagingSubcontractorsElectricianPage() {
   return (
     <GuideTemplate
-      title="Managing Electrical Subcontractors UK | Subcontractor"
+      title="Managing Electrical Subcontractors UK Guide"
       description="Complete guide to managing electrical subcontractors in the UK. Checking NICEIC/NAPIT registration, CIS verification, written subcontract agreements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

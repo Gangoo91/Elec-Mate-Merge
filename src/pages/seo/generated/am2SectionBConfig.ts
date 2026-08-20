@@ -9,9 +9,9 @@ const modified = '2026-05-19';
 
 export const am2SectionBConfig: GeneratedGuideConfig = {
   pagePath: '/guides/am2-section-b-inspection-testing-certification',
-  title: 'AM2 Section B — Inspection, Testing + Certification (3h 30min)',
+  title: 'AM2 Section B: Inspection & Testing (3h 30min)',
   description:
-    'AM2 Section B: 3 hours 30 minutes of inspection, testing and certification. GN3 dead-then-live sequence, IR, EFLI, RCDs, EIC paperwork — what assessors look for.',
+    'AM2 Section B: 3 hours 30 minutes of inspection, testing and certification. GN3 dead-then-live sequence, IR, EFLI, RCDs, EIC paperwork — what to expect.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

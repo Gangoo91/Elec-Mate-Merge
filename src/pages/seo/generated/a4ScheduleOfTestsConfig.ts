@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const a4ScheduleOfTestsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-schedule-of-tests',
   title:
-    'BS 7671 A4:2026 — New Schedule of Test Results Columns',
+    'BS 7671 A4:2026: New Schedule of Test Columns',
   description:
     'Amendment 4 (January 2026) added new columns to the BS 7671 Schedule of Test Results: reference method, maximum permitted Zs, SPD type per board…',
   datePublished: published,

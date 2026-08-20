@@ -483,7 +483,7 @@ const sections = [
 export default function HeatPumpElectricalFaultPage() {
   return (
     <GuideTemplate
-      title="Heat Pump Electrical Fault | Heat Pump Wiring Problems UK"
+      title="Heat Pump Electrical Fault: Wiring Problems UK"
       description="Heat pump electrical fault? This guide covers control board issues, compressor starting problems, power supply faults, dedicated circuit requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

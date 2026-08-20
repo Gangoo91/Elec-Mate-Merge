@@ -631,7 +631,7 @@ const sections = [
 export default function PeriodPropertyElectricalPage() {
   return (
     <GuideTemplate
-      title="Period Property Electrical Guide | Old House Electrical"
+      title="Period Property Electrical Guide UK"
       description="Complete guide to electrical safety in period properties — all pre-1966 homes. What to look for at survey, EICR importance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

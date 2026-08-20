@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit323Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-323-understanding-the-practices-and-procedures-for-maintaining-electrotechnical-systems-and-equipment-eltk-09-revision',
-  title: 'City & Guilds 2357 Unit 323: Understanding the practices',
+  title: 'City & Guilds 2357 Unit 323 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 323 (Understanding the practices and procedures for maintaining electrotechnical systems and…',
   datePublished: published,
   dateModified: modified,

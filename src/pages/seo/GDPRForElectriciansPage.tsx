@@ -540,7 +540,7 @@ const sections = [
 export default function GDPRForElectriciansPage() {
   return (
     <GuideTemplate
-      title="GDPR for Electricians UK 2026 | Data Protection Guide"
+      title="GDPR for Electricians UK 2026: Data Protection"
       description="GDPR guide for electricians. What data you hold, customer consent, data retention, ICO registration (£40/year), breaches, and practical compliance steps."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

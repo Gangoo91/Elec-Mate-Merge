@@ -635,7 +635,7 @@ const sections = [
 export default function OJTEvidenceGuidePage() {
   return (
     <GuideTemplate
-      title="OJT Evidence Guide | Apprentice On-the-Job Training"
+      title="OJT Evidence Guide: Apprentice On-the-Job"
       description="Complete guide to on-the-job training (OJT) evidence for electrical apprentices. Types of evidence, photographic documentation, witness testimonies."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

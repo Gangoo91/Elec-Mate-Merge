@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const afddHmoCareHomeA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/afdd-hmo-care-home-a4-2026',
   title:
-    'AFDD Recommended in HMOs, Care Homes & Student Accommodation',
+    'AFDD Recommended in HMOs & Care Homes',
   description:
     'AFDDs recommended in HMOs, care homes and student accommodation under BS 7671:2018+A4:2026. Expanded scope of Regulation 421.1.7 and 421.1.7.101…',
   datePublished: published,

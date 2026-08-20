@@ -9,7 +9,7 @@ import { fireSafetyQuestionBank } from '@/data/general-upskilling/fireSafetyMock
 export default function FireSafetyMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Fire Safety Mock Test 2026: Free UK Awareness Exam`}
+      title={`Fire Safety Mock Test: Free UK Awareness Exam`}
       description={`Free Fire Safety Awareness mock test (RRO 2005): 25 questions from a 200-Q bank. Classes A-F, extinguishers, alarm systems, evacuation, fire warden role.`}
       slug="fire-safety"
       heading={`Fire Safety Awareness Mock Test`}

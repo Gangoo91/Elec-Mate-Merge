@@ -485,7 +485,7 @@ export default function ElectricianLancasterPage() {
     <GuideTemplate
       noindex={true}
       localArea="Lancaster"
-      title="Electrician in Lancaster | Local Electricians 2026"
+      title="Electrician in Lancaster: Local Electricians"
       description="Find qualified electricians in Lancaster. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

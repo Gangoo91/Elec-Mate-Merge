@@ -678,7 +678,7 @@ const sections = [
 export default function LandlordElectricalSafetyCambridgePage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Cambridge | EICR for Landlords"
+      title="Landlord Electrical Safety Cambridge: EICR Guide"
       description="Landlord electrical safety requirements in Cambridge. 2020 Regulations, Cambridge City Council enforcement, student HMO licensing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

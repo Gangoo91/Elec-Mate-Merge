@@ -571,8 +571,8 @@ export default function ElectricianBarrowPage() {
   return (
     <GuideTemplate
       localArea="Barrow In Furness"
-      title="Electrician in Barrow-in-Furness | Local Electricians 2026"
-      description="Find qualified electricians in Barrow-in-Furness. BAE Systems defence rates, EV charger installations, EICR for rental properties, and Victorian terrace rewires."
+      title="Electrician in Barrow-in-Furness 2026"
+      description="Find qualified electricians in Barrow-in-Furness. BAE Systems defence rates, EV charger installs, EICR for rentals, Victorian terrace rewires."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

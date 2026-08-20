@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const cdm2015ForElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cdm-2015-for-electricians',
-  title: 'CDM 2015 for Electricians — UK Compliance Guide | Elec-Mate',
+  title: 'CDM 2015 for Electricians — UK Compliance Guide',
   description:
     'CDM 2015 explained for UK electricians: who carries which duty, when CDM applies to electrical work, pre-construction information…',
   datePublished: published,

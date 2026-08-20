@@ -578,7 +578,7 @@ const sections = [
 export default function EPAWhatToExpectPage() {
   return (
     <GuideTemplate
-      title="EPA What to Expect | End Point Assessment Electrician"
+      title="EPA What to Expect: End Point Assessment"
       description="Complete guide to the electrical apprenticeship End Point Assessment (EPA). What the three components involve, grading criteria."
       datePublished="2025-10-05"
       dateModified="2026-05-18"

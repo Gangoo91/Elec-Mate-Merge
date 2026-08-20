@@ -558,7 +558,7 @@ const sections = [
 export default function SiteDiaryApprenticeGuidePage() {
   return (
     <GuideTemplate
-      title="Site Diary for Apprentices | How to Keep a Daily Log"
+      title="How to Keep a Site Diary as an Apprentice"
       description="Complete guide to keeping an effective site diary as an electrical apprentice. What to record, tips for detailed entries, linking to assessment criteria."
       datePublished="2025-11-01"
       dateModified="2026-05-18"

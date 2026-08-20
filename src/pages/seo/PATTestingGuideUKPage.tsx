@@ -6,7 +6,7 @@ import { PlugZap, ClipboardCheck, FileText, Users, Receipt, Zap } from 'lucide-r
 export default function PATTestingGuideUKPage() {
   return (
     <GuideTemplate
-      title="PAT Testing Guide UK 2026 | Requirements & Law"
+      title="PAT Testing Guide UK 2026: Requirements & Law"
       description="Complete guide to PAT testing in the UK. Covers legal requirements, Electricity at Work Regulations 1989, IET Code of Practice 5th Edition."
       datePublished="2026-01-25"
       dateModified="2026-05-18"

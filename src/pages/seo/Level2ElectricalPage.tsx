@@ -160,7 +160,7 @@ const breadcrumbSchema = {
 
 export default function Level2ElectricalPage() {
   useSEO({
-    title: 'Level 2 Electrical Installation Course Online | C&G 2365',
+    title: 'Level 2 Electrical Installation Course: C&G 2365',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

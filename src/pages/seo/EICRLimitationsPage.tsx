@@ -847,7 +847,7 @@ export default function EICRLimitationsPage() {
   return (
     <GuideTemplate
       title="EICR Limitations: Operational vs Agreed Examples"
-      description="Operational limitations are what couldn't be switched off or accessed; agreed limitations are the scope the client chose. Section D wording, sampling and examples."
+      description="Operational limitations are what couldn't be switched off or accessed; agreed limitations are the scope the client chose. Section D wording and examples."
       datePublished="2025-03-20"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

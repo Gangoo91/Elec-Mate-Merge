@@ -575,7 +575,7 @@ const sections = [
 export default function CityGuilds2396DesignCoursePage() {
   return (
     <GuideTemplate
-      title="City & Guilds 2396 Design Course | Electrical Design"
+      title="City & Guilds 2396 Design Course: Electrical"
       description="Complete guide to the City & Guilds 2396 Electrical Installation Design qualification. Course content, exam format, prerequisites, career benefits."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

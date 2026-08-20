@@ -663,7 +663,7 @@ const sections = [
 export default function HighVoltageElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="High Voltage Electrical Work UK | HV Electrician Guide"
+      title="High Voltage Electrical Work UK: HV Guide"
       description="Complete guide to high voltage electrical work in the UK. HV definition (above 1kV AC), AP/CP/SAP authorisation roles, ENA G74 and G82."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -591,7 +591,7 @@ const sections = [
 export default function CircuitBreakerTypesPage() {
   return (
     <GuideTemplate
-      title="Types of Circuit Breakers UK | MCB, MCCB, RCCB Guide"
+      title="Types of Circuit Breakers UK: MCB, MCCB, RCCB"
       description="Complete guide to circuit breaker types used in UK electrical installations. MCB, MCCB, RCCB and RCBO explained with curve types, breaking capacity."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

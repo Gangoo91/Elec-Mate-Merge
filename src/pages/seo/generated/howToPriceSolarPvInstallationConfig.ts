@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceSolarPvInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-solar-pv-installation-as-an-electrician',
-  title: 'How to Price Solar PV Installation as an Electrician — UK',
+  title: 'How to Price Solar PV Install as an Electrician',
   description: 'How much should you charge for solar pv installation as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

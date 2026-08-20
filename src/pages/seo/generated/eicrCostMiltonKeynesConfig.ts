@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostMiltonKeynesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-milton-keynes',
-  title: 'EICR Cost Milton Keynes 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Milton Keynes 2026 — Prices',
   description: 'How much does an EICR cost in Milton Keynes? Fair-margin 2026 prices for scheme-registered electricians — £250–340 for a 1-bed, £385–520 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

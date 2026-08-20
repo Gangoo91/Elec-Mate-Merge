@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceFullRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-full-rewire-as-an-electrician',
-  title: 'How to Price Full Domestic Rewire as an Electrician — UK',
+  title: 'How to Price Full Rewire as an Electrician — UK',
   description: 'How much should you charge for full domestic rewire as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit113Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-113-inspect-test-report-and-commission-electrical-systems-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 113: Inspect, test, report and',
+  title: 'City & Guilds 5393-03 Unit 113 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 113 (Inspect, test, report and commission electrical systems in dwellings).',
   datePublished: published,
   dateModified: modified,

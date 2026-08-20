@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const FindingAnElectricalApprenticeshipUkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/finding-an-electrical-apprenticeship-uk',
-  title: 'How to Find an Electrical Apprenticeship in the UK — 2026',
+  title: 'How to Find an Electrical Apprenticeship 2026',
   description: 'A practical guide to finding and securing an electrical apprenticeship in 2026. Application sites, what employers look for, interview preparation…',
   datePublished: published,
   dateModified: modified,

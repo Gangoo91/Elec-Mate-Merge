@@ -564,7 +564,7 @@ const sections = [
 export default function InterwarPropertyElectricalPage() {
   return (
     <GuideTemplate
-      title="1920s/1930s House Electrical Guide | Interwar Property"
+      title="1920s/1930s House Electrical Guide: Interwar"
       description="Complete electrical guide for interwar properties built 1918–1939. Early rubber wiring degradation, 5-amp round pin sockets, rewiring challenges."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit316Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-316-terminating-and-connecting-conductors-cables-and-flexible-cords-in-electrical-systems-eltp05-revision',
-  title: 'City & Guilds 2357 Unit 316: Terminating and connecting',
+  title: 'City & Guilds 2357 Unit 316 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 316 (Terminating and connecting conductors, cables and flexible cords in electrical systems (ELTP05)).',
   datePublished: published,
   dateModified: modified,

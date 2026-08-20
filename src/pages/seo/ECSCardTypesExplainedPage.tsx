@@ -475,8 +475,8 @@ const sections = [
 export default function ECSCardTypesExplainedPage() {
   return (
     <GuideTemplate
-      title="ECS Card Types Explained | Electrician Card Guide UK 2026"
-      description="Complete guide to ECS card types for UK electricians. Apprentice, Trainee, Installation Electrician, Maintenance, and Approved Electrician gold cards — requirements."
+      title="ECS Card Types Explained: UK Card Guide 2026"
+      description="Complete guide to ECS card types for UK electricians: Apprentice, Trainee, Installation, Maintenance, and Approved Electrician gold cards — requirements."
       datePublished="2026-03-27"
       dateModified="2026-07-25"
       breadcrumbs={breadcrumbs}

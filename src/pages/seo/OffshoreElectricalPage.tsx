@@ -623,7 +623,7 @@ const sections = [
 export default function OffshoreElectricalPage() {
   return (
     <GuideTemplate
-      title="Offshore Electrical Engineer UK | Oil & Gas Platform"
+      title="Offshore Electrical Engineer UK: Oil & Gas"
       description="Complete guide to offshore electrical engineering in the UK — ATEX Zone 0/1/2 classification, Ex equipment selection, essential services, ESD."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

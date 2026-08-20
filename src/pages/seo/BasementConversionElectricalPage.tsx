@@ -494,7 +494,7 @@ const sections = [
 export default function BasementConversionElectricalPage() {
   return (
     <GuideTemplate
-      title="Basement Conversion Electrical Work UK | Cellar Wiring Guide"
+      title="Basement Conversion Electrical Work: UK Guide"
       description="Complete guide to electrical work in a basement conversion. Damp considerations, IP ratings for zones near drainage, sump pump electrical supply."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

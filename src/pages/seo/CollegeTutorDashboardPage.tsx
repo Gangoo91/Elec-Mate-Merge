@@ -393,7 +393,7 @@ const sections = [
 export default function CollegeTutorDashboardPage() {
   return (
     <ToolTemplate
-      title="College Tutor Dashboard | Electrical Training Platform"
+      title="College Tutor Dashboard: Electrical Training"
       description="College tutor dashboard for managing electrical apprentice progress. Student tracking, course assignment, assessment tools, automated reporting."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

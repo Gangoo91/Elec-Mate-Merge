@@ -804,8 +804,8 @@ const sections = [
 export default function ArcFlashProtectionPage() {
   return (
     <GuideTemplate
-      title="Arc Flash Protection | Risk Assessment & PPE Guide"
-      description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels (cal/cm²), PPE categories (Category 1–4), boundary distances, UK legal requirements, and BS 7671:2018+A4:2026 Reg 421.1.7 AFDD guidance."
+      title="Arc Flash Protection: Risk Assessment & PPE"
+      description="Arc flash protection for electricians: incident energy (cal/cm²), PPE Category 1–4, boundary distances, UK legal duties, BS 7671 Reg 421.1.7 AFDD guidance."
       datePublished="2025-04-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

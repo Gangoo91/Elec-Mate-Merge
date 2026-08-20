@@ -9,9 +9,9 @@ const modified = '2026-05-18';
 
 export const loneWorkingElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lone-working-electricians',
-  title: 'Lone Working Procedures for UK Electricians | Elec-Mate',
+  title: 'Lone Working Procedures for UK Electricians',
   description:
-    'Lone working procedures for UK electricians: what counts as lone working in the trade…',
+    'Lone working procedures for UK electricians: what counts as lone working, HSE duties, check-in systems and whether apprentices can work alone.',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

@@ -19,7 +19,7 @@ import {
 export default function RCDTypesExplainedPage() {
   return (
     <GuideTemplate
-      title="RCD Types Explained | Type AC, A, B, F | Which Do You Need?"
+      title="RCD Types Explained: AC, A, B, F"
       description="Complete guide to RCD types for UK electricians. Type AC (sinusoidal AC only), Type A (AC + pulsating DC), Type B (AC + smooth DC for EV chargers)."
       datePublished="2025-06-01"
       dateModified="2026-06-10"

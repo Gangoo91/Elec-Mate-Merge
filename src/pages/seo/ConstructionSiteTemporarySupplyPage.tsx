@@ -991,7 +991,7 @@ const sections = [
 export default function ConstructionSiteTemporarySupplyPage() {
   return (
     <GuideTemplate
-      title="Construction Site Temporary Supply | 110V Guide UK"
+      title="Construction Site Temporary Supply: 110V Guide"
       description="Complete guide to construction site temporary electrical supply in the UK. BS 7375, 110V CTE supply, site distribution boards, RCD protection."
       datePublished="2025-11-12"
       dateModified="2026-08-07"

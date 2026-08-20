@@ -69,6 +69,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: Googlebot-Image
 Allow: /
@@ -116,6 +117,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: Bingbot
 Allow: /
@@ -163,6 +165,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: Applebot
 Allow: /
@@ -210,6 +213,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: DuckDuckBot
 Allow: /
@@ -257,6 +261,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: YandexBot
 Allow: /
@@ -304,6 +309,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 User-agent: SeznamBot
 Allow: /
@@ -351,6 +357,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 
 # ==========================================================
 # 2. SOCIAL / LINK-PREVIEW BOTS
@@ -669,6 +676,7 @@ Disallow: /certificate-expiry
 Disallow: /training-upload
 Disallow: /early-access
 Disallow: /announcements
+Disallow: /*_cb=
 Crawl-delay: 1
 
 # ==========================================================

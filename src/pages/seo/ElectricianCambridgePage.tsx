@@ -590,7 +590,7 @@ export default function ElectricianCambridgePage() {
   return (
     <GuideTemplate
       localArea="Cambridge"
-      title="Electrician in Cambridge | Local Electrical Guide"
+      title="Electrician in Cambridge: Local Electrical Guide"
       description="Complete guide for electricians working in Cambridge. UKPN DNO, university college electrical maintenance, listed building work."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

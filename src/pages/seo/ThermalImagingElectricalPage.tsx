@@ -485,7 +485,7 @@ const sections = [
 export default function ThermalImagingElectricalPage() {
   return (
     <GuideTemplate
-      title="Thermal Imaging for Electrical Inspections | IEC 62446-3"
+      title="Thermal Imaging for Electrical Inspections UK"
       description="Complete guide to thermal imaging in electrical inspections for UK electricians. Covers use in EICRs, hotspot identification, IEC 62446-3 for solar PV."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

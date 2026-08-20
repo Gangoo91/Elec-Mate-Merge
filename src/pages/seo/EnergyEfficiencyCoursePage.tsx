@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Energy Efficiency Course | Electrical & Building Services';
+const PAGE_TITLE = 'Energy Efficiency Course: Electrical & Building';
 const PAGE_DESCRIPTION =
   'Energy efficiency for UK electricians: Part L Building Regs, LED lighting design, power factor, voltage optimisation, EPCs, energy auditing.';
 

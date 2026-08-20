@@ -584,7 +584,7 @@ const sections = [
 export default function EICRAberdeenPage() {
   return (
     <GuideTemplate
-      title="EICR Aberdeen | Electrical Installation Condition Report"
+      title="EICR Aberdeen: Installation Condition Report"
       description="EICR Aberdeen — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Aberdeen."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

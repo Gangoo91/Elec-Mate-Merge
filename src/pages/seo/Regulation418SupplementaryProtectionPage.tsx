@@ -611,7 +611,7 @@ const sections = [
 export default function Regulation418SupplementaryProtectionPage() {
   return (
     <GuideTemplate
-      title="Regulation 418 | Supplementary Protection by RCDs"
+      title="Regulation 418: Supplementary Protection RCDs"
       description="Complete guide to supplementary protection by RCDs in BS 7671. Regulation 411.3.3 additional protection, mandatory RCD circuits, exemptions."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

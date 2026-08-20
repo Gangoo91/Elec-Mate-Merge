@@ -744,8 +744,8 @@ const sections = [
 export default function VATForElectriciansPage() {
   return (
     <GuideTemplate
-      title="VAT for Electricians UK | When to Register & VAT Schemes"
-      description="Complete VAT guide for UK electricians — the £90,000 registration threshold, voluntary registration, flat rate scheme (9.5% / 14.5%), cash accounting, domestic reverse charge and MTD obligations."
+      title="VAT for Electricians UK: Registration & Schemes"
+      description="UK VAT guide for electricians: £90,000 registration threshold, 9.5%/14.5% flat rate scheme, cash accounting, reverse charge and MTD rules."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

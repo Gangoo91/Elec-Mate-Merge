@@ -172,7 +172,7 @@ const howToSchema = {
 
 export default function EICCertificatePage() {
   useSEO({
-    title: 'EIC Certificate App | Electrical Installation Certificate',
+    title: 'EIC Certificate App: Create EICs on Your Phone',
     description:
       'Create Electrical Installation Certificates (EIC) on your phone. Design, construction, inspection, and testing sections.',
   });

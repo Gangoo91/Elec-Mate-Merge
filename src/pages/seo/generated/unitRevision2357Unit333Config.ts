@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit333Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-333-maintain-electrotechnical-systems-and-equipment-eltp-09-revision',
-  title: 'City & Guilds 2357 Unit 333: Maintain electrotechnical',
+  title: 'City & Guilds 2357 Unit 333 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 333 (Maintain electrotechnical systems and equipment (ELTP 09)).',
   datePublished: published,
   dateModified: modified,

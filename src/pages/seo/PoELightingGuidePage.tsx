@@ -643,7 +643,7 @@ const sections = [
 export default function PoELightingGuidePage() {
   return (
     <GuideTemplate
-      title="Power over Ethernet Lighting | PoE Installation Guide"
+      title="Power over Ethernet Lighting: PoE Install Guide"
       description="Complete guide to Power over Ethernet (PoE) lighting installation. IEEE 802.3bt (90W), Cat6/Cat6a cabling, PoE switches, commercial applications."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

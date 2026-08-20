@@ -643,7 +643,7 @@ const sections = [
 export default function ElectricalEmergencyPage() {
   return (
     <GuideTemplate
-      title="Electrical Emergency | What to Do & Who to Call UK"
+      title="Electrical Emergency: What to Do & Who to Call"
       description="Complete guide to electrical emergencies in the UK. What to do during a power cut, burning smell, electric shock, or flooding."
       datePublished="2025-08-01"
       dateModified="2026-05-18"

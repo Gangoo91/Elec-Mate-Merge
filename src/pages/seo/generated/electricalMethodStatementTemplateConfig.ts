@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const electricalMethodStatementTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-method-statement-template',
   title:
-    'Electrical Method Statement Template (UK) — Free Guide +',
+    'Electrical Method Statement Template (UK)',
   description:
     'The complete UK electrical method statement template — section-by-section structure, hazards table, safe isolation procedure, PPE list, sign-off lines…',
   datePublished: published,

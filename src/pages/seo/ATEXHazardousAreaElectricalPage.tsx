@@ -434,7 +434,7 @@ const sections = [
 export default function ATEXHazardousAreaElectricalPage() {
   return (
     <GuideTemplate
-      title="ATEX Hazardous Area Electrical Installations UK | Guide"
+      title="ATEX Hazardous Area Electrical Installations UK"
       description="Complete guide to ATEX hazardous area electrical installations for UK electricians. Zone classification, Ex equipment markings."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

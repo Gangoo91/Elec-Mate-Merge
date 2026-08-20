@@ -635,7 +635,7 @@ const sections = [
 export default function RCBOvsRCDMCBPage() {
   return (
     <GuideTemplate
-      title="RCBO vs RCD + MCB | Which Is Better?"
+      title="RCBO vs RCD + MCB: Which Is Better?"
       description="Complete comparison of RCBO boards vs split-load RCD+MCB consumer units for UK electricians. Cost comparison, nuisance tripping advantage."
       datePublished="2025-07-01"
       dateModified="2026-06-10"

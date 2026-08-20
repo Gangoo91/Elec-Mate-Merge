@@ -39,6 +39,23 @@ interface QueuedPhoto {
   preview: string;
 }
 
+/**
+ * ELE-1582 — how many photos may sit in the queue at once.
+ *
+ * Each preview is a base64 data URL held in React state at roughly 1.33× the
+ * source file, so the ceiling is memory, not taste: 50 × 4 MB photos is
+ * already ~270 MB of string. Well above any realistic single visit, and low
+ * enough that a phone survives someone selecting their whole camera roll.
+ */
+const MAX_QUEUE = 50;
+
+/**
+ * Identity for de-duplication. name + size + lastModified is what the File API
+ * gives us — there is no path or hash — and it is enough to catch the real
+ * case: the same photos picked or dropped twice.
+ */
+const fileKey = (f: File): string => `${f.name}:${f.size}:${f.lastModified}`;
+
 export default function CameraTab({
   onPhotoUploaded,
   projectReference: initialProject,
@@ -60,6 +77,17 @@ export default function CameraTab({
 
   // Quick capture queue
   const [quickQueue, setQuickQueue] = useState<QueuedPhoto[]>([]);
+  /**
+   * ELE-1582 — synchronous mirror of `quickQueue`.
+   *
+   * De-duplication and the queue cap have to be decided BEFORE the toasts that
+   * report them, and a `setState` updater is the wrong place for that: React
+   * may run it asynchronously, and runs it twice under StrictMode, so counts
+   * read back after the call are unreliable and double. Deciding against a ref
+   * keeps the accounting synchronous and exact. Assigned in the same tick as
+   * the state update so two fast drops still see each other.
+   */
+  const queueRef = useRef<QueuedPhoto[]>([]);
   const [isUploadingQueue, setIsUploadingQueue] = useState(false);
   const [queueProgress, setQueueProgress] = useState(0);
 
@@ -74,17 +102,128 @@ export default function CameraTab({
   const { classifyPhoto } = usePhotoAI();
   const { enqueue: enqueueOffline, pendingCount: offlinePendingCount } = useOfflinePhotoQueue();
 
+  const [isReadingBatch, setIsReadingBatch] = useState(false);
+
+  /**
+   * ELE-1582 — one place that turns a batch of files into queued photos.
+   * The gallery picker and the desktop drop zone both land here.
+   *
+   * Three things a naive version gets wrong on a real batch of site photos:
+   *
+   *  1. ORDER. FileReader is async, so pushing each result as it lands queues
+   *     the photos in completion order, not the order they were chosen. Small
+   *     files overtake large ones and a before/during/after sequence comes out
+   *     shuffled. Read is awaited into an indexed array so order is the order
+   *     you picked.
+   *
+   *  2. MEMORY. Every preview is a base64 data URL, roughly 1.33× the file it
+   *     came from, held in React state. Fifty 4 MB photos is ~270 MB of string
+   *     — enough to have mobile Safari kill the tab. Hence MAX_QUEUE.
+   *
+   *  3. DUPLICATES. Dropping the same folder twice, or dropping then picking
+   *     the same photos from the gallery, silently queued them again and they
+   *     uploaded twice.
+   *
+   * Dedupe and cap are decided synchronously against `queueRef`, never inside
+   * a setState updater — React may run that asynchronously and runs it twice
+   * under StrictMode, which would make the counts these toasts report both
+   * unreliable and doubled.
+   */
+  const enqueueFiles = useCallback(
+    async (files: FileList | File[], opts?: { dedupe?: boolean }) => {
+    const dedupe = opts?.dedupe !== false;
+    const all = Array.from(files);
+    const accepted = all.filter(
+      (f) => f.type.startsWith('image/') || f.type.startsWith('video/')
+    );
+    const rejected = all.length - accepted.length;
+    if (rejected > 0) {
+      toast({
+        title: `${rejected} file${rejected === 1 ? '' : 's'} skipped`,
+        description: 'Photos and videos only.',
+        variant: 'destructive',
+      });
+    }
+    if (accepted.length === 0) return 0;
+
+    setIsReadingBatch(true);
+    try {
+      // Indexed read — resolves in selection order regardless of file size.
+      const read = await Promise.all(
+        accepted.map(
+          (file) =>
+            new Promise<QueuedPhoto | null>((resolve) => {
+              const reader = new FileReader();
+              reader.onload = (ev) =>
+                resolve({ file, preview: ev.target?.result as string });
+              // A read failure loses one photo, never the whole batch.
+              reader.onerror = () => resolve(null);
+              reader.readAsDataURL(file);
+            })
+        )
+      );
+
+      let addedCount = 0;
+      let duplicateCount = 0;
+      let overflowCount = 0;
+
+      const seen = new Set(queueRef.current.map((p) => fileKey(p.file)));
+      const next = [...queueRef.current];
+      for (const item of read) {
+        if (!item) continue;
+        const key = fileKey(item.file);
+        if (dedupe && seen.has(key)) {
+          duplicateCount++;
+          continue;
+        }
+        if (next.length >= MAX_QUEUE) {
+          overflowCount++;
+          continue;
+        }
+        seen.add(key);
+        next.push(item);
+        addedCount++;
+      }
+      queueRef.current = next;
+      setQuickQueue(next);
+
+      if (duplicateCount > 0) {
+        toast({
+          title: `${duplicateCount} already in the queue`,
+          description: 'Skipped so they are not uploaded twice.',
+        });
+      }
+      if (overflowCount > 0) {
+        toast({
+          title: `Queue full — ${overflowCount} not added`,
+          description: `Upload the ${MAX_QUEUE} queued first, then add the rest.`,
+          variant: 'destructive',
+        });
+      }
+      return addedCount;
+    } finally {
+      setIsReadingBatch(false);
+    }
+    },
+    []
+  );
+
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
         if (captureMode === 'quick') {
-          // Add to queue
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            setQuickQueue((prev) => [...prev, { file, preview: ev.target?.result as string }]);
-          };
-          reader.readAsDataURL(file);
+          // ELE-1582 — the camera path goes through enqueueFiles too. It used
+          // to push straight onto the queue, so it honoured neither the cap nor
+          // the type check: quick-capture is the most-used control on this
+          // screen, and sixty taps walked into exactly the memory problem the
+          // cap exists to prevent.
+          //
+          // dedupe OFF here. Two shots of the same board seconds apart can
+          // share a name and land on the same byte count, and refusing the
+          // second as a "duplicate" would quietly lose a photo the electrician
+          // deliberately took.
+          void enqueueFiles([file], { dedupe: false });
           // Reset input for next capture
           if (quickInputRef.current) quickInputRef.current.value = '';
         } else {
@@ -98,7 +237,7 @@ export default function CameraTab({
         }
       }
     },
-    [captureMode]
+    [captureMode, enqueueFiles]
   );
 
   const handleCameraCapture = useCallback(() => {
@@ -108,6 +247,69 @@ export default function CameraTab({
       fileInputRef.current?.click();
     }
   }, [captureMode]);
+
+  /**
+   * ELE-1582 — desktop drag and drop.
+   *
+   * Photo Docs was built camera-first, which is right on a phone but leaves a
+   * desktop user with only a file picker. Dropping a batch of site photos
+   * straight onto the page is the thing that was asked for, and it goes to the
+   * same queue the gallery picker fills.
+   *
+   * Counter-based rather than a plain boolean: dragenter/dragleave also fire
+   * for child elements, so a single flag flickers off as the pointer crosses
+   * the overlay's own children.
+   */
+  const [isDragging, setIsDragging] = useState(false);
+  const dragDepth = useRef(0);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    // Only react to an actual file drag — not text selection or a dragged link.
+    if (!Array.from(e.dataTransfer?.types || []).includes('Files')) return;
+    e.preventDefault();
+    dragDepth.current += 1;
+    setIsDragging(true);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    if (!Array.from(e.dataTransfer?.types || []).includes('Files')) return;
+    // Without preventDefault the browser navigates to the dropped file.
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    if (!Array.from(e.dataTransfer?.types || []).includes('Files')) return;
+    e.preventDefault();
+    dragDepth.current = Math.max(0, dragDepth.current - 1);
+    if (dragDepth.current === 0) setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      if (!Array.from(e.dataTransfer?.types || []).includes('Files')) return;
+      e.preventDefault();
+      dragDepth.current = 0;
+      setIsDragging(false);
+
+      const files = e.dataTransfer?.files;
+      if (!files?.length) return;
+
+      // Dropping is inherently a batch action, so it always fills the queue —
+      // even from single-capture mode, where the alternative would be silently
+      // throwing away every file but the first.
+      if (captureMode !== 'quick') setCaptureMode('quick');
+      void enqueueFiles(files).then((added) => {
+        if (added > 0) {
+          toast({
+            title: `${added} photo${added === 1 ? '' : 's'} added`,
+            description: "Add details and upload when you're ready.",
+          });
+        }
+      });
+    },
+    [captureMode, enqueueFiles]
+  );
 
   const handleGallerySelect = useCallback(() => {
     const input = document.createElement('input');
@@ -119,13 +321,10 @@ export default function CameraTab({
       if (!files) return;
 
       if (captureMode === 'quick') {
-        Array.from(files).forEach((file) => {
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            setQuickQueue((prev) => [...prev, { file, preview: ev.target?.result as string }]);
-          };
-          reader.readAsDataURL(file);
-        });
+        // ELE-1582 — shares enqueueFiles with the drop zone so the two cannot
+        // drift on ordering, de-duplication or the queue cap. Previously an
+        // inline copy of the same loop, which had none of them.
+        void enqueueFiles(files);
       } else {
         const file = files[0];
         if (file) {
@@ -140,7 +339,7 @@ export default function CameraTab({
       }
     };
     input.click();
-  }, [captureMode]);
+  }, [captureMode, enqueueFiles]);
 
   const handleRetake = useCallback(() => {
     setCapturedImage(null);
@@ -260,13 +459,24 @@ export default function CameraTab({
     setIsUploadingQueue(true);
     setQueueProgress(0);
 
+    // ELE-1582 — snapshot what we are uploading.
+    //
+    // Photos can now arrive mid-upload (drop zone, gallery, camera). This loop
+    // used to iterate the live queue and then clear it wholesale on success,
+    // so anything added while the upload ran was deleted WITHOUT being
+    // uploaded — silent loss of site photos someone had just taken. We upload
+    // exactly this batch and, at the end, remove exactly this batch, leaving
+    // later arrivals queued.
+    const batch = [...queueRef.current];
+    const uploadedKeys = new Set<string>();
+
     let uploaded = 0;
-    for (let i = 0; i < quickQueue.length; i++) {
-      const photo = quickQueue[i];
+    for (let i = 0; i < batch.length; i++) {
+      const photo = batch[i];
       const options: UploadOptions = {
         description:
-          quickQueue.length > 1
-            ? `${description.trim()} (${i + 1}/${quickQueue.length})`
+          batch.length > 1
+            ? `${description.trim()} (${i + 1}/${batch.length})`
             : description.trim(),
         category: selectedCategory,
         location: location || undefined,
@@ -278,19 +488,49 @@ export default function CameraTab({
       };
 
       const result = await uploadPhoto(photo.file, options);
-      if (result) uploaded++;
-      setQueueProgress(Math.round(((i + 1) / quickQueue.length) * 100));
+      // ELE-1582 — track WHICH succeeded, not just how many.
+      //
+      // The removal below used to clear every key in the batch regardless of
+      // outcome, so a partial failure discarded the photos that failed: upload
+      // 5 on a weak site connection, 2 succeed, and the other 3 disappeared
+      // from the queue with only a "2 photos uploaded" toast. Failures now
+      // stay queued so they can simply be sent again.
+      if (result) {
+        uploaded++;
+        uploadedKeys.add(fileKey(photo.file));
+      }
+      setQueueProgress(Math.round(((i + 1) / batch.length) * 100));
     }
 
     setIsUploadingQueue(false);
     setQueueProgress(0);
+
+    const failed = batch.length - uploaded;
 
     if (uploaded > 0) {
       toast({
         title: `${uploaded} photo${uploaded !== 1 ? 's' : ''} uploaded`,
         description: `Successfully uploaded to ${projectReference || 'Photo Docs'}`,
       });
-      setQuickQueue([]);
+      // Remove only what actually uploaded. Anything added mid-upload, and
+      // anything that failed, stays in the queue.
+      const remaining = queueRef.current.filter((p) => !uploadedKeys.has(fileKey(p.file)));
+      queueRef.current = remaining;
+      setQuickQueue(remaining);
+    }
+
+    if (failed > 0) {
+      toast({
+        title: `${failed} photo${failed !== 1 ? 's' : ''} didn't upload`,
+        description: 'Still in the queue — tap upload again to retry.',
+        variant: 'destructive',
+      });
+    }
+
+    // Only clear the form and leave the screen once everything is away.
+    // Closing on a partial success would strand the failures behind a sheet
+    // the electrician has just been navigated out of.
+    if (uploaded > 0 && failed === 0) {
       setDescription('');
       setLocation('');
       if (!isProjectLocked) setProjectReference('');
@@ -298,6 +538,8 @@ export default function CameraTab({
       setCaptureState('ready');
       onPhotoUploaded?.();
       onClose?.();
+    } else if (uploaded > 0) {
+      onPhotoUploaded?.();
     }
   }, [
     quickQueue,
@@ -316,7 +558,11 @@ export default function CameraTab({
   ]);
 
   const handleRemoveFromQueue = useCallback((index: number) => {
-    setQuickQueue((prev) => prev.filter((_, i) => i !== index));
+    setQuickQueue((prev) => {
+      const next = prev.filter((_, i) => i !== index);
+      queueRef.current = next;
+      return next;
+    });
   }, []);
 
   // Ready state - camera/gallery selection
@@ -526,7 +772,37 @@ export default function CameraTab({
   const isQuickMode = captureMode === 'quick' && quickQueue.length > 0;
 
   return (
-    <div className="flex flex-col h-full bg-elec-dark">
+    <div
+      className="relative flex flex-col h-full bg-elec-dark"
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      {/* ELE-1582 — reading a big batch takes a moment (a 50-photo drop is
+          50 base64 decodes). Without this the page looks frozen and people
+          drop again, which is how duplicates got queued. */}
+      {isReadingBatch && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-50 flex items-center justify-center gap-2 bg-elec-yellow px-4 py-2">
+          <Loader2 className="h-3.5 w-3.5 animate-spin text-black" />
+          <span className="text-[12.5px] font-semibold text-black">Adding photos…</span>
+        </div>
+      )}
+
+      {/* ELE-1582 — desktop drop target. Pointer-events-none so it never
+          intercepts a tap on a phone; it only appears mid-drag, which cannot
+          happen on touch. */}
+      {isDragging && (
+        <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center bg-elec-dark/85 backdrop-blur-sm">
+          <div className="mx-6 flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-elec-yellow/70 bg-elec-yellow/[0.06] px-8 py-10 text-center">
+            <ImageIcon className="h-10 w-10 text-elec-yellow" />
+            <p className="text-[15px] font-semibold text-white">Drop photos to add them</p>
+            <p className="text-[12.5px] text-white">
+              They go straight to the queue — add details before uploading.
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex-1 momentum-scroll-y scrollbar-hide">
         <div className="p-3 md:p-6 space-y-4 max-w-2xl mx-auto">
           {/* Photo thumbnail(s) */}

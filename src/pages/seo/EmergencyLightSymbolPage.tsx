@@ -120,7 +120,7 @@ const relatedPages = [
 export default function EmergencyLightSymbolPage() {
   return (
     <GuideTemplate
-      title="Emergency Light Symbol | BS 5266 Non-Maintained"
+      title="Emergency Light Symbol: BS 5266 Non-Maintained"
       description="Emergency Light IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

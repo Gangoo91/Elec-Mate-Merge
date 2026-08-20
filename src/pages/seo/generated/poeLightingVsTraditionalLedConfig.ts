@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const poeLightingVsTraditionalLedConfig: GeneratedGuideConfig = {
   pagePath: '/guides/poe-lighting-vs-traditional-led-wiring',
   title:
-    'PoE Lighting vs Traditional Mains LED Wiring — Comparison',
+    'PoE Lighting vs Traditional LED Wiring',
   description:
     'Head-to-head comparison of Power-over-Ethernet (PoE) lighting and traditional mains LED for UK electricians — capex, installation labour…',
   datePublished: published,

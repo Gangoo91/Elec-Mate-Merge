@@ -622,7 +622,7 @@ const sections = [
 export default function RewireCostBrightonPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Brighton 2026 | Rewire East Sussex"
+      title="House Rewire Cost Brighton 2026: East Sussex"
       description="House rewire costs in Brighton for 2026. Prices for all property sizes including Regency and Victorian terraces, Part P compliance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

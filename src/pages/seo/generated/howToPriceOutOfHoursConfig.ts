@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceOutOfHoursConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-out-of-hours-as-an-electrician',
-  title: 'How to Price Out-of-Hours / Unsocial Work as an Electrician',
+  title: 'How to Price Out-of-Hours Work as an Electrician',
   description: 'How much should you charge for out-of-hours / unsocial work as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

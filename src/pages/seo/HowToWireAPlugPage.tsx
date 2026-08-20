@@ -578,7 +578,7 @@ const sections = [
 export default function HowToWireAPlugPage() {
   return (
     <GuideTemplate
-      title="How to Wire a Plug | Step-by-Step Guide UK"
+      title="How to Wire a Plug: Step-by-Step Guide UK"
       description="Step-by-step guide to wiring a UK 13A plug. Wire colours explained (brown live, blue neutral, green/yellow earth), fuse selection (3A vs 13A)."
       datePublished="2025-10-01"
       dateModified="2026-05-18"

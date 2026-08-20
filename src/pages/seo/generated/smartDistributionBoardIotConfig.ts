@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
   pagePath: '/guides/smart-distribution-board-iot-consumer-unit',
   title:
-    'Smart Distribution Board / IoT Consumer Unit Installation',
+    'Smart Distribution Board / IoT Consumer Unit',
   description:
     'UK installation guide for smart consumer units and IoT distribution boards — per-circuit energy monitoring, remote breaker switching…',
   datePublished: published,

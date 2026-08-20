@@ -701,7 +701,7 @@ export default function ElectricianCareerProgressionPage() {
   return (
     <GuideTemplate
       localArea="Career Progression"
-      title="Electrician Career Progression | From Apprentice to MD"
+      title="Electrician Career Progression: Apprentice to MD"
       description="Complete guide to electrician career progression in the UK. Every stage from apprentice to business owner with typical salaries, qualifications needed."
       datePublished="2025-06-20"
       dateModified="2026-06-10"

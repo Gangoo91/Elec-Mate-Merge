@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236502Unit210Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-02-unit-210-understand-how-to-communicate-with-others-within-building-services-engineering-revision',
-  title: 'City & Guilds 2365-02 Unit 210: Understand how to',
+  title: 'City & Guilds 2365-02 Unit 210 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-02 Unit 210 (Understand how to communicate with others within building services engineering).',
   datePublished: published,
   dateModified: modified,

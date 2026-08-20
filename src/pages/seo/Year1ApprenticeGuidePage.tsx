@@ -662,7 +662,7 @@ const sections = [
 export default function Year1ApprenticeGuidePage() {
   return (
     <GuideTemplate
-      title="Year 1 Electrical Apprentice | What to Expect"
+      title="Year 1 Electrical Apprentice: What to Expect"
       description="Complete guide for first-year electrical apprentices in the UK. What year 1 looks like day by day, what you learn, employer expectations."
       datePublished="2025-11-15"
       dateModified="2026-06-10"

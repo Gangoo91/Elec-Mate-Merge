@@ -688,7 +688,7 @@ const sections = [
 export default function ElectricalSurveyBeforeBuyingPage() {
   return (
     <GuideTemplate
-      title="Electrical Survey When Buying a House UK | EICR for House"
+      title="Electrical Survey When Buying a House UK: EICR"
       description="Do you need an EICR when buying a house? Not legally required but strongly recommended for properties over 25 years old."
       datePublished="2026-03-27"
       dateModified="2026-08-07"

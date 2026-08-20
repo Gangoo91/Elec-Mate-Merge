@@ -590,7 +590,7 @@ const sections = [
 export default function RewireCostGlasgowPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Glasgow 2025 | Full Rewire Glasgow"
+      title="House Rewire Cost Glasgow 2025: Full Rewire"
       description="House rewire cost in Glasgow 2026: tenement flats £2,800–£4,200, semis £4,000–£6,000, detached £5,500–£8,500. Scottish letting compliance included."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

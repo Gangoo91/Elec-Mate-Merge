@@ -823,8 +823,8 @@ const sections = [
 export default function EICRObservationCodesPage() {
   return (
     <GuideTemplate
-      title="C1 C2 C3 FI EICR Codes Explained: Examples + What Each Means"
-      description="EICR observation codes C1 (Danger Present), C2 (Potentially Dangerous), C3 (Improvement Recommended), FI (Further Investigation). Real examples, BS 7671 cites."
+      title="C1 C2 C3 FI EICR Codes Explained: Examples"
+      description="EICR codes C1 (Danger Present), C2 (Potentially Dangerous), C3 (Improvement Recommended), FI (Further Investigation) — real examples, BS 7671 cites."
       datePublished="2025-01-15"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

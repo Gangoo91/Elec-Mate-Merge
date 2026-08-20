@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceEicrConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-eicr-as-an-electrician',
-  title: 'How to Price EICR (Periodic Inspection) as an Electrician',
+  title: 'How to Price EICR: Periodic Inspection Guide',
   description: 'How much should you charge for eicr (periodic inspection) as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

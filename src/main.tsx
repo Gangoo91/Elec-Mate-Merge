@@ -18,6 +18,17 @@ console.log('[Elec-Mate] Core imports loaded');
 // ── SENTRY FIRST — initialise BEFORE anything else so boot errors are captured ──
 initSentry();
 
+// Strip the one-shot `_cb` cache-buster left over from a chunk-recovery reload
+// (lazyWithRetry / ErrorBoundary) so it can't be bookmarked, shared, or
+// indexed — Bingbot executes the recovery path and had 464 `?_cb=` duplicates
+// of real pages in its index. The navigation it busted has already completed,
+// so rewriting the address bar here is side-effect-free.
+if (window.location.search.includes('_cb=')) {
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.searchParams.delete('_cb');
+  window.history.replaceState(window.history.state, '', cleanUrl);
+}
+
 // Global network error detection
 window.addEventListener('offline', () => {
   addBreadcrumb('Network went offline', 'network', { online: false });

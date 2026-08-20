@@ -487,7 +487,7 @@ const sections = [
 export default function DentalSurgeryElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Dental Surgery Electrical Cost 2026 | UK Medical Location"
+      title="Dental Surgery Electrical Cost 2026: UK Guide"
       description="How much does dental surgery electrical installation cost in 2026? UK guide covering Section 710 medical locations, dental chair supply, X-ray."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

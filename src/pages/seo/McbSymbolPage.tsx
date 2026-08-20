@@ -123,7 +123,7 @@ const relatedPages = [
 export default function McbSymbolPage() {
   return (
     <GuideTemplate
-      title="MCB Symbol | BS EN 60898 Circuit Breaker Diagram"
+      title="MCB Symbol: BS EN 60898 Circuit Breaker Diagram"
       description="MCB (Miniature Circuit Breaker) IEC 60617 symbol — what it represents, when used in UK electrical drawings."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

@@ -693,7 +693,7 @@ const sections = [
 export default function ElectricalWiringRegulationsHistoryPage() {
   return (
     <GuideTemplate
-      title="History of UK Wiring Regulations | IEE to IET"
+      title="History of UK Wiring Regulations: IEE to IET"
       description="History of UK wiring regulations from the first IEE rules (1882) through every edition to BS 7671:2018+A4:2026. Major changes, drivers, milestones."
       datePublished="2025-10-01"
       dateModified="2026-06-10"

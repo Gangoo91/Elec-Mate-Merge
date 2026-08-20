@@ -19,7 +19,7 @@ import {
 export default function AFDDGuidePage() {
   return (
     <GuideTemplate
-      title="AFDD Guide | Arc Fault Detection Devices BS 7671"
+      title="AFDD Guide: Arc Fault Detection Devices BS 7671"
       description="Complete guide to Arc Fault Detection Devices (AFDDs). BS 7671 Regulation 421.1.6, where AFDDs are required (HMOs, buildings over 4 storeys, care homes."
       datePublished="2025-05-01"
       dateModified="2026-05-18"

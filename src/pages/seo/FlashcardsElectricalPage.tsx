@@ -605,7 +605,7 @@ const sections = [
 export default function FlashcardsElectricalPage() {
   return (
     <GuideTemplate
-      title="Flashcards for Electrical Exams | Study Tool"
+      title="Flashcards for Electrical Exams: Study Tool"
       description="Complete guide to using flashcards for UK electrical exams. Active recall, spaced repetition, key topics for 18th Edition, 2391, AM2, and EPA."
       datePublished="2025-03-05"
       dateModified="2026-05-18"

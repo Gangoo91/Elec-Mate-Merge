@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const StartingAnElectricalBusinessUkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/starting-an-electrical-business-uk',
-  title: 'Starting an Electrical Business in the UK — Practical 2026',
+  title: 'Starting an Electrical Business in the UK 2026',
   description: 'A practical step-by-step guide to starting your own UK electrical business in 2026. Covers sole trader vs limited company, registering with HMRC…',
   datePublished: published,
   dateModified: modified,
@@ -93,7 +93,7 @@ export const StartingAnElectricalBusinessUkConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'The single biggest survival factor. Charge £55-80/hour or fixed-price by job type, not whatever the customer wants. A typical 3-bed EICR fair-margin price is £270-360 (regional variation applies). A consumer unit replacement is £450-650. Quote in writing, itemise every line, exclude variations, and never absorb scope creep. Cheap quotes are how electrical businesses die — see our \"How to Price X as an Electrician\" guides for every common job.',
+          text: 'The single biggest survival factor. Charge £55-80/hour or fixed-price by job type, not whatever the customer wants. A typical 3-bed EICR fair-margin price is £270-360 (regional variation applies). A consumer unit replacement is £450-650. Quote in writing, itemise every line, exclude variations, and never absorb scope creep. Cheap quotes are how electrical businesses die — see our "How to Price X as an Electrician" guides for every common job.',
         },
       ],
     },

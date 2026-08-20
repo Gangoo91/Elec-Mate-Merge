@@ -612,7 +612,7 @@ const sections = [
 export default function EPASimulatorGuidePage() {
   return (
     <GuideTemplate
-      title="EPA Simulator | End-Point Assessment Practice Tool"
+      title="EPA Simulator: End-Point Assessment Tool"
       description="Complete guide to end-point assessment (EPA) for electrical apprentices. EPA components, synoptic project practice, professional discussion preparation."
       datePublished="2025-07-25"
       dateModified="2026-05-18"

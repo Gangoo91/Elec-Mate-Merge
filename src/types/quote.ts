@@ -112,6 +112,27 @@ export interface QuoteSettings {
   // ELE-1081 — document type. true = Estimate (ball-park, may vary), shown
   // with an ESTIMATE title + disclaimer on the PDF. false/undefined = Quote.
   isEstimate?: boolean;
+  /*
+   * ELE-1576 — per-quote overrides for two terms that were global-only.
+   *
+   * Both live here rather than in a column because they are terms of THIS
+   * quote, and `settings` is already the per-quote store. Undefined means
+   * "use the company default" (`company_profiles.deposit_percentage` /
+   * `quote_validity_days`), so every existing quote is unaffected.
+   *
+   * depositAmount is a CASH figure, not a percentage — a 30% deposit is the
+   * wrong instrument on a commercial job, which is what prompted this.
+   */
+  depositAmount?: number;
+  /**
+   * Pre-existing per-quote percentage override. Undeclared until ELE-1576 but
+   * live — `accept-quote-public` has always read it. Declared here so it stops
+   * being invisible to anyone reading the type. `depositAmount` takes
+   * precedence over it.
+   */
+  depositPercentage?: number;
+  /** How long this quote stands. Drives `quotes.expiry_date`. */
+  validForDays?: number;
 }
 
 export interface Quote {

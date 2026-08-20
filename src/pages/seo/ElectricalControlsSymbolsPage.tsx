@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalControlsSymbolsPage() {
   return (
     <GuideTemplate
-      title="Controls + BMS Symbols | DALI, KNX, Sensor Reference"
+      title="Controls + BMS Symbols: DALI, KNX Reference"
       description="BMS controller, control panel, lighting control, sensor and humidity sensor symbols to IEC 60617 for UK building management and smart lighting."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

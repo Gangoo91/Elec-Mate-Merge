@@ -912,8 +912,8 @@ const relatedPages = [
 export default function DALILightingControlWiringPage() {
   return (
     <GuideTemplate
-      title="DALI Lighting Control Wiring Guide (BS EN 62386) for UK"
-      description="A UK electrician guide to DALI lighting control wiring under BS EN 62386 — DALI-1 vs DALI-2 vs D4i, bus topology, 16V DC power, cable selection and BS 7671 Section 528 segregation."
+      title="DALI Lighting Control Wiring (BS EN 62386) UK"
+      description="UK guide to DALI lighting control wiring under BS EN 62386: DALI-1 vs DALI-2 vs D4i, 16V DC bus, cable selection and BS 7671 Section 528 segregation."
       datePublished="2026-05-17"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

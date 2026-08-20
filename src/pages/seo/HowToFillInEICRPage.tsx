@@ -200,7 +200,7 @@ const breadcrumbSchema = {
 
 export default function HowToFillInEICRPage() {
   useSEO({
-    title: 'How to Fill In an EICR Form | Step-by-Step Guide',
+    title: 'How to Fill In an EICR Form: Step-by-Step Guide',
     description: PAGE_DESCRIPTION,
   });
 

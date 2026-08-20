@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit022Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-022-understand-the-requirements-for-electrical-installations-bs-7671-2018-2022-revision',
-  title: 'City & Guilds 5393-03 Unit 022: Understand the Requirements',
+  title: 'City & Guilds 5393-03 Unit 022 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 022 (Understand the Requirements for Electrical Installations BS 7671: 2018 (2022)).',
   datePublished: published,
   dateModified: modified,

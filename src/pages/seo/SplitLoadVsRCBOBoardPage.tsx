@@ -403,7 +403,7 @@ const sections = [
 export default function SplitLoadVsRCBOBoardPage() {
   return (
     <GuideTemplate
-      title="Split Load vs RCBO Consumer Unit | BS 7671 Guide UK"
+      title="Split Load vs RCBO Consumer Unit: BS 7671 UK"
       description="Complete guide to split load vs RCBO consumer units for UK electricians. BS 7671 Regulation 314.1 requirements, nuisance tripping causes and solutions."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

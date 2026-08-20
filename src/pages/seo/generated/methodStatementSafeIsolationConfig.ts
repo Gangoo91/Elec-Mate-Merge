@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const methodStatementSafeIsolationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-safe-isolation',
   title:
-    'Method Statement for Safe Isolation — UK Electrical',
+    'Method Statement for Safe Isolation: UK Guide',
   description:
     'The full UK method statement for safe isolation of electrical circuits — 10-step procedure, GS38-compliant voltage indicators, lock-off and tagging…',
   datePublished: published,

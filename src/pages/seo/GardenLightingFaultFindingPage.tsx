@@ -670,7 +670,7 @@ const sections = [
 export default function GardenLightingFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Garden Lighting Not Working | Outdoor Electrical Fault"
+      title="Garden Lighting Not Working: Fault Finding Guide"
       description="Garden lighting fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, cable damage, transformer faults."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

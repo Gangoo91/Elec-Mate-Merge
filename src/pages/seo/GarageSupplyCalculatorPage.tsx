@@ -18,7 +18,7 @@ import {
 export default function GarageSupplyCalculatorPage() {
   return (
     <ToolTemplate
-      title="Garage Supply Calculator: Submain & Consumer Unit (UK)"
+      title="Garage Supply Calculator: Submain & CU (UK)"
       description="Free garage supply calculator. Assess outbuilding load with diversity, size the SWA submain and choose the consumer unit and RCD to BS 7671 in seconds."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

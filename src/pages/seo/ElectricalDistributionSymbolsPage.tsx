@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalDistributionSymbolsPage() {
   return (
     <GuideTemplate
-      title="Distribution Board Symbols | MCB, RCD, RCBO, SPD IEC 60617"
+      title="Distribution Board Symbols: MCB, RCD, RCBO, SPD"
       description="Consumer unit, distribution board, MCB, MCCB, RCD, RCBO, SPD, meter, contactor, isolator and changeover switch symbols to IEC 60617 for UK electricians."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

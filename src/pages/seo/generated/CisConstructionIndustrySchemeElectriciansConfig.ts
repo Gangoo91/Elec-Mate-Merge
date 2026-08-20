@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const CisConstructionIndustrySchemeElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cis-construction-industry-scheme-electricians',
-  title: 'CIS for Electricians — The 2026 Guide — Practical 2026 Guide',
+  title: 'CIS for Electricians: The 2026 Guide',
   description: 'The Construction Industry Scheme (CIS) is the HMRC system for deducting tax at source from construction sub-contractors — including electricians.',
   datePublished: published,
   dateModified: modified,

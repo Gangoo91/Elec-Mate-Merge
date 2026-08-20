@@ -648,7 +648,7 @@ const sections = [
 export default function PeriodicInspectionGuidePage() {
   return (
     <GuideTemplate
-      title="Periodic Inspection Guide | EICR Testing Procedure"
+      title="Periodic Inspection Guide: EICR Testing"
       description="Periodic inspection and EICR testing procedure: when required, BS 7671 intervals, observation codes, what gets tested, what doesn't, costs."
       datePublished="2025-09-15"
       dateModified="2026-05-18"

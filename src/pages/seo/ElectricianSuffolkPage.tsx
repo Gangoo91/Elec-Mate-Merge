@@ -378,7 +378,7 @@ const sections = [
 export default function ElectricianSuffolkPage() {
   return (
     <GuideTemplate
-      title="Electrician Suffolk — Find Registered Electricians Near You"
+      title="Electrician Suffolk: Registered Electricians"
       description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Suffolk including Ipswich, Bury St Edmunds, Lowestoft, Felixstowe, Sudbury, and Newmarket."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

@@ -667,7 +667,7 @@ const sections = [
 export default function RestaurantElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Restaurant Electrical Installation Cost UK 2025/2026 | Catering"
+      title="Restaurant Electrical Cost UK 2025/2026"
       description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1."
       datePublished="2025-01-01"
       dateModified="2026-06-10"

@@ -578,7 +578,7 @@ const sections = [
 export default function SecondFixElectricalPage() {
   return (
     <GuideTemplate
-      title="Second Fix Electrical | Completion & Testing Guide"
+      title="Second Fix Electrical: Completion & Testing"
       description="Second fix electrical work in the UK: fitting accessories, consumer unit wiring, labelling, testing sequence, snagging, sign-off documentation."
       datePublished="2025-07-15"
       dateModified="2026-06-10"

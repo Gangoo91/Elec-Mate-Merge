@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const permitToWorkElectricalIsolationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/permit-to-work-electrical-isolation',
   title:
-    'Permit to Work for Electrical Isolation — UK Procedure',
+    'Permit to Work Electrical Isolation: UK Guide',
   description:
     'Permit to Work (PTW) for electrical isolation — the UK procedure for HV work, multi-source LV isolation, and high-risk commercial / industrial supplies.',
   datePublished: published,

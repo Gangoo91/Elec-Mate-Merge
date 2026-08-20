@@ -696,7 +696,7 @@ export default function ElectricianSheffieldPage() {
   return (
     <GuideTemplate
       localArea="Sheffield"
-      title="Electrician in Sheffield | Find Qualified Electricians 2026"
+      title="Electrician in Sheffield: 2026 Guide"
       description="Find qualified, registered electricians in Sheffield. Realistic 2026 pricing, Northern Powergrid DNO, steel city industrial conversions."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

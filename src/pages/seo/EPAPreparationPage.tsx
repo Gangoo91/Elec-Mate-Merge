@@ -157,7 +157,7 @@ const breadcrumbSchema = {
 
 export default function EPAPreparationPage() {
   useSEO({
-    title: 'Electrical EPA Preparation | End Point Assessment Simulator',
+    title: 'Electrical EPA Preparation: AI-Graded Simulator',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

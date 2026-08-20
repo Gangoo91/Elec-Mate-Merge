@@ -390,7 +390,7 @@ const sections = [
 export default function ElecIDProfessionalCardPage() {
   return (
     <ToolTemplate
-      title="ElecID Professional Card | Digital Electrician ID"
+      title="ElecID Professional Card: Digital Electrician ID"
       description="Digital professional card for electricians. Display verified qualifications, certifications, and ECS card details."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

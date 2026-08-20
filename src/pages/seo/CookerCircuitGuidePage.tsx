@@ -664,7 +664,7 @@ const sections = [
 export default function CookerCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Cooker Circuit Guide | Cable Size, Fuse & Wiring UK"
+      title="Cooker Circuit Guide: Cable Size & Wiring UK"
       description="Complete guide to cooker circuit design and installation in the UK. Cable sizing with diversity factor, cooker control unit positioning."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

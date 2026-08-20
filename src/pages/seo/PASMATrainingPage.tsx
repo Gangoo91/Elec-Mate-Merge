@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'PASMA Training Course Online | Mobile Tower Scaffolds';
+const PAGE_TITLE = 'PASMA Training Course Online: Mobile Towers';
 const PAGE_DESCRIPTION =
   'PASMA training online: mobile tower assembly, safe working heights, inspection requirements. Mock exams + AI-powered study tools for UK trades.';
 

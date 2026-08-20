@@ -625,7 +625,7 @@ const sections = [
 export default function SolarPanelInstallationBirminghamPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Birmingham 2025 | Solar PV West"
+      title="Solar Panel Installation Birmingham 2025"
       description="Solar panel installation in Birmingham 2026: 4kW system £5,000–£7,500, irradiance ~940 kWh/kWp/year, G98 grid connection, MCS, BS 7671 Section 712."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

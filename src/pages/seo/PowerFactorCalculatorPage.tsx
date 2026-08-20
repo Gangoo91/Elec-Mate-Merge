@@ -149,7 +149,7 @@ const howToSchema = {
 
 export default function PowerFactorCalculatorPage() {
   useSEO({
-    title: 'Power Factor Calculator (kW kVA kVAr) — Free UK Tool',
+    title: 'Power Factor Calculator: kW, kVA & kVAr (Free)',
     description:
       'Free UK power factor calculator: convert between kW, kVA and kVAr, calculate cos φ, size capacitor banks for PF correction. Instant results, no signup.',
   });

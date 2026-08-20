@@ -573,7 +573,7 @@ const sections = [
 export default function EICRForHMOPage() {
   return (
     <GuideTemplate
-      title="EICR for HMO Properties UK | Houses in Multiple Occupation"
+      title="EICR for HMO Properties UK: Landlord Guide"
       description="Mandatory EICR requirements for HMO properties explained. Licensed HMO conditions, what inspectors check, common C2 codes, remediation costs."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

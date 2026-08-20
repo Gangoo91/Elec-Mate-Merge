@@ -610,7 +610,7 @@ const relatedPages = [
 export default function ElectricalProjectCostEstimatorPage() {
   return (
     <BusinessTemplate
-      title="Electrical Project Cost Estimator | Quoting Tool"
+      title="Electrical Project Cost Estimator: Quoting Tool"
       description="Electrical project cost estimator and quoting tool. Calculate labour rates, materials markup, overhead recovery, contingency, and profit margins."
       datePublished="2026-01-20"
       dateModified="2026-05-18"

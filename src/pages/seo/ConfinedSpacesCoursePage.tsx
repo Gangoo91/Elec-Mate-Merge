@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Confined Spaces Course | Awareness Training';
+const PAGE_TITLE = 'Confined Spaces Course: Awareness Training';
 const PAGE_DESCRIPTION =
   'Confined spaces training for UK electricians: CSR 1997, hazards, atmospheric monitoring, safe systems, rescue. 5 video modules, quizzes + AI tutor.';
 

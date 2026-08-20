@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 export const siteInductionElectricalContractorsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/site-induction-electrical-contractors',
   title:
-    'Site Induction Checklist for Electrical Contractors (UK)',
+    'Site Induction Checklist: Electrical Contractors',
   description:
     'Site induction checklist for UK electrical contractors. CDM 2015 duties, isolation arrangements, asbestos awareness, RIDDOR…',
   datePublished: published,

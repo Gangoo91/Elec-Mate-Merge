@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Insulation Resistance Testing | How to Test & Minimum Values';
+const PAGE_TITLE = 'Insulation Resistance Testing: Minimum Values';
 const PAGE_DESCRIPTION =
   'Insulation resistance testing for UK electricians: test voltages, BS 7671 Table 64 minimums (1 MΩ), L-N/L-E/N-E, three-phase, low-reading causes.';
 

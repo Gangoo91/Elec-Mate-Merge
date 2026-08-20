@@ -504,7 +504,7 @@ const sections = [
 export default function EVChargerInstallationEdinburghPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Edinburgh 2026 | Costs, DNO,"
+      title="EV Charger Installation Edinburgh 2026"
       description="How much does EV charger installation cost in Edinburgh in 2026? Local costs, SPEN DNO notification, OZEV grant, Scottish Building Standards."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

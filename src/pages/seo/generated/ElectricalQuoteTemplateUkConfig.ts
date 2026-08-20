@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const ElectricalQuoteTemplateUkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-quote-template-uk',
-  title: 'Electrical Quote Template UK — How to Quote Like a Pro',
+  title: 'Electrical Quote Template UK: Quote Like a Pro',
   description: 'A practical template + walk-through for electrical contractors writing professional customer quotes.',
   datePublished: published,
   dateModified: modified,

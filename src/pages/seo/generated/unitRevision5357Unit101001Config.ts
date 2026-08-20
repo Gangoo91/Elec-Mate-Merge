@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit101001Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-101-001-understand-health-safety-and-environmental-considerations-revision',
-  title: 'City & Guilds 5357 Unit 101/001: Understand Health, Safety',
+  title: 'City & Guilds 5357 Unit 101/001: Understand',
   description: 'Complete revision guide for City & Guilds 5357 Unit 101/001 (Understand Health, Safety and Environmental Considerations).',
   datePublished: published,
   dateModified: modified,

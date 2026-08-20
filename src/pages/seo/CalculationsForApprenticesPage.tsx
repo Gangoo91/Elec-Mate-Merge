@@ -644,7 +644,7 @@ const sections = [
 export default function CalculationsForApprenticesPage() {
   return (
     <GuideTemplate
-      title="Electrical Calculations for Apprentices | Easy Guide"
+      title="Electrical Calculations for Apprentices: Guide"
       description="Beginner-friendly guide to electrical calculations for UK apprentices. Ohm's law, power triangle, cable sizing, voltage drop, diversity."
       datePublished="2025-11-01"
       dateModified="2026-06-10"

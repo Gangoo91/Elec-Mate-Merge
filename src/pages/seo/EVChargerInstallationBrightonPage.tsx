@@ -582,7 +582,7 @@ const sections = [
 export default function EVChargerInstallationBrightonPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Brighton | EV Charging Brighton &"
+      title="EV Charger Installation Brighton & Hove"
       description="EV charger installation in Brighton & Hove 2026: OZEV grants up to £350, 7kW installs £800–£1,200, BS 7671 Section 722 compliant. NICEIC-grade."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

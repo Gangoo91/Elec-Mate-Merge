@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const ElectricianCareerProgressionUkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrician-career-progression-uk',
-  title: 'Electrician Career Progression in the UK — 2026 Guide',
+  title: 'Electrician Career Progression UK: 2026',
   description: 'A practical map of UK electrician career progression — the recognised roles, what they pay, how to move between them…',
   datePublished: published,
   dateModified: modified,

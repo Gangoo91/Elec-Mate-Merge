@@ -544,7 +544,7 @@ const sections = [
 export default function RewireCostPlymouthPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Plymouth 2025 | Rewire Prices Devon"
+      title="House Rewire Cost Plymouth 2025: Devon Prices"
       description="House rewire costs in Plymouth for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

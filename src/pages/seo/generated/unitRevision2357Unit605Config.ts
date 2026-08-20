@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit605Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-605-understanding-the-practices-and-procedures-for-the-preparation-and-installation-of-wiring-systems-and-electrotechnical-equipment-in-buildings-structures-and-the-environment-eltk04-revision',
-  title: 'City & Guilds 2357 Unit 605: Understanding the practices',
+  title: 'City & Guilds 2357 Unit 605 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 605 (Understanding the practices and procedures for the preparation and installation of wiring…',
   datePublished: published,
   dateModified: modified,

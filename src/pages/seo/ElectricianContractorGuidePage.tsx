@@ -686,7 +686,7 @@ const sections = [
 export default function ElectricianContractorGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Contractor Guide | Running a Team UK"
+      title="Electrical Contractor Guide: Running a Team UK"
       description="Complete guide to growing an electrical contracting business in the UK. Sole trader to limited company, employing staff, apprenticeships."
       datePublished="2025-09-10"
       dateModified="2026-05-18"

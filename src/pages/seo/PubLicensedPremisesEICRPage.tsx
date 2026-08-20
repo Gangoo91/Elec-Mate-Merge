@@ -741,7 +741,7 @@ const sections = [
 export default function PubLicensedPremisesEICRPage() {
   return (
     <GuideTemplate
-      title="EICR for Pubs & Licensed Premises UK | Licensing"
+      title="EICR for Pubs & Licensed Premises UK: Licensing"
       description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

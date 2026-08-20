@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostCambridgeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-cambridge',
-  title: 'EICR Cost Cambridge 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Cambridge 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Cambridge? Fair-margin 2026 prices for scheme-registered electricians — £270–370 for a 1-bed, £410–550 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

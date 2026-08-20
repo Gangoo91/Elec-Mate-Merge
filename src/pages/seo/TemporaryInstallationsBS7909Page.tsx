@@ -1060,8 +1060,8 @@ const sections = [
 export default function TemporaryInstallationsBS7909Page() {
   return (
     <GuideTemplate
-      title="Temporary Installations BS 7909 | Events & Construction"
-      description="Temporary electrical installations under BS 7909:2023 and BS 7671:2018+A4:2026. Which section applies, TT earthing figures, RCD rules, testing and certification."
+      title="Temporary Installations BS 7909: Events & Sites"
+      description="Temporary electrical installations to BS 7909:2023 and BS 7671: which section applies, TT earthing figures, RCD rules, testing and certification."
       datePublished="2025-09-12"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

@@ -384,7 +384,7 @@ const sections = [
 export default function ElectricianLincolnshirePage() {
   return (
     <GuideTemplate
-      title="Electrician Lincolnshire — Find Registered Electricians"
+      title="Electricians in Lincolnshire — Find Registered"
       description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Lincolnshire including Lincoln, Grimsby, Scunthorpe, Grantham, Boston, Skegness."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

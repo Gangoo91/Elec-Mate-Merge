@@ -552,8 +552,8 @@ const sections = [
 export default function ElectricalToolInsurancePage2025Page() {
   return (
     <GuideTemplate
-      title="Electrician Tool Insurance UK 2025 | Van & Tool Cover Guide"
-      description="Complete guide to electrician tool insurance in the UK for 2025. What's covered (tools in van, on site, at home), common exclusions (unattended vehicle."
+      title="Electrician Tool Insurance UK 2025: Cover Guide"
+      description="What UK electrician tool insurance covers, common exclusions, claims excess, and typical 2025 premiums — £15–£40/month for £5,000 of tools."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

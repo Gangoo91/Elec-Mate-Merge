@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostNewcastleConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-newcastle',
-  title: 'EICR Cost Newcastle 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Newcastle 2026: Domestic & Commercial',
   description: 'How much does an EICR cost in Newcastle? Fair-margin 2026 prices for scheme-registered electricians — £195–265 for a 1-bed, £310–420 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

@@ -582,7 +582,7 @@ const sections = [
 export default function MultimeterGuideElectriciansPage() {
   return (
     <GuideTemplate
-      title="Multimeter Guide for Electricians UK 2026 | CAT Ratings,"
+      title="Multimeter Guide for Electricians UK 2026"
       description="Complete multimeter guide for UK electricians. CAT III vs CAT IV ratings, True RMS vs average sensing, voltage and resistance measurements."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

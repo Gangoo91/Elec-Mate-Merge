@@ -668,7 +668,7 @@ const sections = [
 export default function TenderWritingElectricianPage() {
   return (
     <GuideTemplate
-      title="How to Write Electrical Tenders UK | Winning Tender Guide"
+      title="How to Write Electrical Tenders: Winning Guide"
       description="How to price and write winning tenders for commercial electrical contracts. Prelims, labour rates, materials markup, programme, H&S documentation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

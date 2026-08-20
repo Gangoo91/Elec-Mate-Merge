@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = "Non-Notifiable Electrical Work | What Doesn't Need Part P";
+const PAGE_TITLE = "Non-Notifiable Electrical Work: No Part P";
 const PAGE_DESCRIPTION =
   "Non-notifiable electrical work under Part P: like-for-like replacements, adding sockets outside special locations, what doesn't need notification.";
 

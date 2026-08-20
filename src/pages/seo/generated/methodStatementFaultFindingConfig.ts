@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const methodStatementFaultFindingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-fault-finding',
   title:
-    'Method Statement for Electrical Fault Finding — UK',
+    'Method Statement: Electrical Fault Finding',
   description:
     'Method statement for electrical fault finding in the UK: hazard identification, systematic diagnostic procedure, dead vs live testing decision…',
   datePublished: published,

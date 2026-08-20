@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'How to Do Safe Isolation | GS38 Procedure Steps';
+const PAGE_TITLE = 'How to Do Safe Isolation: GS38 Procedure Steps';
 const PAGE_DESCRIPTION =
   'Step-by-step safe isolation per HSE GS38: prove-test-prove method, approved voltage indicators, lockout/tagout. Essential for UK electricians.';
 
@@ -173,7 +173,7 @@ const breadcrumbSchema = {
 
 export default function HowToDoSafeIsolationPage() {
   useSEO({
-    title: 'How to Do Safe Isolation | GS38 Procedure Steps',
+    title: 'How to Do Safe Isolation: GS38 Procedure Steps',
     description: PAGE_DESCRIPTION,
   });
 

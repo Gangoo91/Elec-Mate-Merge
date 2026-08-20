@@ -655,7 +655,7 @@ const sections = [
 export default function SolarPanelInstallationBristolPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Bristol 2025 | Solar PV Southwest"
+      title="Solar Panel Installation Bristol 2025: Solar PV"
       description="Solar panel installation in Bristol 2026: 4kW system £5,000–£7,500, South West irradiance ~1,100 kWh/kWp/year, G98 grid connection, MCS install."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

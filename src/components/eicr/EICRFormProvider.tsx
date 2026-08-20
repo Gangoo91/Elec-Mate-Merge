@@ -274,7 +274,20 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       customTestInstrument: '',
       testInstrumentSerial: '',
       calibrationDate: '',
-      testTemperature: '',
+      /*
+       * ELE-1579 — a REAL default, not a placeholder.
+       *
+       * The field showed "20°C" as placeholder text while the stored value was
+       * '', so electricians reasonably read it as a default, left it, and the
+       * certificate went out with no test temperature at all. `loadFromProfile`
+       * fills make, serial and calibration date but not this, so it sat blank
+       * next to three populated fields and looked identical to them.
+       *
+       * 20 °C is the BS 7671 reference temperature, and it is what users
+       * already believed was being used. Plain number — the label carries the
+       * unit. Only affects NEW certificates; saved ones keep what they stored.
+       */
+      testTemperature: '20',
       testMethod: '',
       testVoltage: '',
       testNotes: '',
@@ -1084,7 +1097,20 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       customTestInstrument: '',
       testInstrumentSerial: '',
       calibrationDate: '',
-      testTemperature: '',
+      /*
+       * ELE-1579 — a REAL default, not a placeholder.
+       *
+       * The field showed "20°C" as placeholder text while the stored value was
+       * '', so electricians reasonably read it as a default, left it, and the
+       * certificate went out with no test temperature at all. `loadFromProfile`
+       * fills make, serial and calibration date but not this, so it sat blank
+       * next to three populated fields and looked identical to them.
+       *
+       * 20 °C is the BS 7671 reference temperature, and it is what users
+       * already believed was being used. Plain number — the label carries the
+       * unit. Only affects NEW certificates; saved ones keep what they stored.
+       */
+      testTemperature: '20',
       testMethod: '',
       testVoltage: '',
       testNotes: '',

@@ -792,7 +792,7 @@ const sections = [
 export default function IndustrialElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Industrial Electrical Installation Cost UK 2025 | Factory"
+      title="Industrial Electrical Installation Cost UK 2025"
       description="Industrial electrical installation costs UK 2025. Per square metre estimates, 3-phase distribution, motor control centres, cable containment systems."
       datePublished="2025-01-01"
       dateModified="2026-06-10"

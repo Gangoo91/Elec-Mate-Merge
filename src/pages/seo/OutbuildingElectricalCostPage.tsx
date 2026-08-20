@@ -499,7 +499,7 @@ const sections = [
 export default function OutbuildingElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Outbuilding Electrical Installation Cost UK 2025 | Garden"
+      title="Outbuilding Electrical Installation Cost UK 2025"
       description="Outbuilding electrical installation costs UK 2026: garden shed and office wiring from £800–£3,000. SWA armoured, sub-main sizing, BS 7671 compliance."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

@@ -660,7 +660,7 @@ const sections = [
 export default function OutdoorSocketsGuidePage() {
   return (
     <GuideTemplate
-      title="Outdoor Sockets Regulations | IP Rating & RCD Guide"
+      title="Outdoor Sockets Regulations: IP & RCD Guide"
       description="Complete guide to outdoor socket regulations in the UK. IP65/IP66 requirements, 30mA RCD protection, cable burial depth."
       datePublished="2025-10-01"
       dateModified="2026-06-10"

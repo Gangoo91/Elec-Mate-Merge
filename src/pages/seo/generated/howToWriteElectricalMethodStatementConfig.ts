@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const howToWriteElectricalMethodStatementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-write-electrical-method-statement',
   title:
-    'How to Write an Electrical Method Statement (UK Guide)',
+    'How to Write an Electrical Method Statement',
   description:
     'Step-by-step UK guide to writing a compliant electrical method statement: scope, hazards, control measures, sequence of operations, safe isolation, PPE…',
   datePublished: published,

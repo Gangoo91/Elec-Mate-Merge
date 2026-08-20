@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Commercial EICR Guide | Industrial Inspection UK';
+const PAGE_TITLE = 'Commercial EICR Guide: Industrial Inspection UK';
 const PAGE_DESCRIPTION =
   'Commercial + industrial EICR guide: HASAWA duties, three-phase testing, TT/TN-S earthing, observation codes, costs, inspection frequency.';
 

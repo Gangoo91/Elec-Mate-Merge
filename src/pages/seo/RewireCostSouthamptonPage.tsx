@@ -539,7 +539,7 @@ const sections = [
 export default function RewireCostSouthamptonPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Southampton 2025 | Rewire Hampshire"
+      title="House Rewire Cost Southampton 2025: Hants"
       description="House rewire costs in Southampton for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

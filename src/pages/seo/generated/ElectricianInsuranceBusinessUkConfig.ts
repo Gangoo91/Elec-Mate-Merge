@@ -9,8 +9,8 @@ const modified = '2026-05-18';
 
 export const ElectricianInsuranceBusinessUkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrician-insurance-business-uk',
-  title: 'Electrician Insurance for Your Business — UK 2026 Guide',
-  description: 'A practical 2026 guide to the insurance an electrical business must carry. Public Liability, Professional Indemnity, Tools-in-Van, Employers\' Liability — what each covers, what it costs, and where small electricians get caught out.',
+  title: 'Electrician Insurance for Your Business: UK 2026',
+  description: 'A practical 2026 guide to electrical business insurance — Public Liability, Professional Indemnity, Tools-in-Van, Employers\' Liability, what each costs.',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

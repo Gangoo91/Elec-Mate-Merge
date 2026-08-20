@@ -18,7 +18,7 @@ import {
 export default function ElectricalLoadSchedulePage() {
   return (
     <ToolTemplate
-      title="Electrical Load Schedule Calculator | Free Tool"
+      title="Electrical Load Schedule Calculator: Free Tool"
       description="Build a circuit-by-circuit electrical load schedule with automatic diversity, total demand, and BS 7671 Appendix A factors. For UK electricians."
       datePublished="2026-01-28"
       dateModified="2026-06-10"

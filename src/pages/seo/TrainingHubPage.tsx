@@ -43,7 +43,7 @@ import {
   Users,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Training Hub | BS 7671:2018+A4:2026, 18th Edition, AM2, 2391';
+const PAGE_TITLE = 'Electrical Training Hub: 18th Edition, AM2, 2391';
 const PAGE_DESCRIPTION =
   'Elec-Mate training for apprentices + qualified UK electricians: 18th Edition, AM2, I&T, 2391, Level 2, Level 3, EPA prep, Study Centre.';
 

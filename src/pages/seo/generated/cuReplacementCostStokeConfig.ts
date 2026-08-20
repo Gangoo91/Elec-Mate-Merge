@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostStokeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-stoke',
-  title: 'Consumer Unit Replacement Cost Stoke-on-Trent 2026 — Full',
+  title: 'Consumer Unit Replacement Cost Stoke 2026',
   description: 'Consumer unit (fuse board) replacement cost in Stoke-on-Trent — typical 2026 prices £425–670 for a domestic swap with RCBOs…',
   datePublished: published,
   dateModified: modified,

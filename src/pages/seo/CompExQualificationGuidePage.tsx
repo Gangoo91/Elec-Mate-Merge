@@ -438,7 +438,7 @@ const sections = [
 export default function CompExQualificationGuidePage() {
   return (
     <GuideTemplate
-      title="CompEx Qualification Guide UK | Explosive Atmospheres"
+      title="CompEx Qualification Guide UK: Explosive Areas"
       description="Complete guide to CompEx certification for UK electricians. Units EX01–EX04, assessment process, approved training centres, cost (£1,500–£3,000)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

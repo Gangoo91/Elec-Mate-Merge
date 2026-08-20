@@ -139,7 +139,7 @@ const faqSchema = {
 
 export default function AIHealthSafetyAgentPage() {
   useSEO({
-    title: 'AI Health & Safety Agent | RAMS Generator for Electricians',
+    title: 'AI Health & Safety Agent: RAMS for Electricians',
     description: PAGE_DESCRIPTION,
   });
 

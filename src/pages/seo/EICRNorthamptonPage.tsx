@@ -565,7 +565,7 @@ const sections = [
 export default function EICRNorthamptonPage() {
   return (
     <GuideTemplate
-      title="EICR Northampton | Electrical Inspection Northampton"
+      title="EICR Northampton: Electrical Inspection"
       description="EICR Northampton — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Northampton."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

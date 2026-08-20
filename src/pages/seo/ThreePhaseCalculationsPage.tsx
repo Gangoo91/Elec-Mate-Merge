@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Three Phase Calculations | Power, Current & Voltage';
+const PAGE_TITLE = 'Three Phase Formulas: Power, Current, Voltage';
 const PAGE_DESCRIPTION =
   'Three-phase electrical calculations: power formula (P = √3·VL·IL·cosφ), line vs phase, star vs delta, current, PF, balancing, VD, cable sizing.';
 

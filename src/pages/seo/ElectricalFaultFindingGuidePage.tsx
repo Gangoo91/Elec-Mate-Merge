@@ -428,7 +428,7 @@ const sections = [
 export default function ElectricalFaultFindingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Fault Finding Guide — Systematic Approach for UK"
+      title="Electrical Fault Finding Guide: UK Approach"
       description="A complete guide to electrical fault finding: earth faults, open circuits, short circuits, and high resistance faults."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

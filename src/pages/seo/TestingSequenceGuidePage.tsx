@@ -152,7 +152,7 @@ const breadcrumbSchema = {
 
 export default function TestingSequenceGuidePage() {
   useSEO({
-    title: 'Electrical Testing Sequence | GN3 Order Explained',
+    title: 'Electrical Testing Sequence: GN3 Order Explained',
     description: PAGE_DESCRIPTION,
   });
 

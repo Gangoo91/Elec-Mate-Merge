@@ -577,7 +577,7 @@ const sections = [
 export default function EVChargerInstallationYorkPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation York | Home EV Charging York"
+      title="EV Charger Installation York: Costs & Grants"
       description="EV charger installation in York. OZEV grants up to £350, installation costs £800–£1,150 for 7kW, conservation area and listed building guidance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

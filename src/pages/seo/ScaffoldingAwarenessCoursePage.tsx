@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Scaffolding Awareness Course | Safe Use for Electricians';
+const PAGE_TITLE = 'Scaffolding Awareness Course: Electrician Safety';
 const PAGE_DESCRIPTION =
   'Scaffolding awareness for UK electricians: scaffold types, inspection, tag systems, safe use, load limits, Work at Height Regs. 6 modules + quizzes.';
 

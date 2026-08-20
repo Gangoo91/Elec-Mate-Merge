@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision234603Unit110Config: GeneratedGuideConfig = {
   pagePath: '/guides/2346-03-unit-110-apply-practices-and-procedures-for-maintenance-revision',
-  title: 'City & Guilds 2346-03 Unit 110: Apply Practices and',
+  title: 'City & Guilds 2346-03 Unit 110 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2346-03 Unit 110 (Apply Practices and Procedures for Maintenance).',
   datePublished: published,
   dateModified: modified,

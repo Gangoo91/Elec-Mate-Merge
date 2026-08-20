@@ -673,7 +673,7 @@ const sections = [
 export default function EarthElectrodeTestPage() {
   return (
     <GuideTemplate
-      title="Earth Electrode Testing | TT System Guide UK"
+      title="Earth Electrode Testing: TT System Guide UK"
       description="Complete guide to earth electrode resistance testing for TT systems. Fall of potential method, 3-pin test procedure, acceptable RA values."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

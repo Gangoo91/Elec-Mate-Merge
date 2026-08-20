@@ -19,7 +19,7 @@ import {
 export default function SWACableInstallationPage() {
   return (
     <GuideTemplate
-      title="SWA Cable Installation | Armoured Cable Guide UK"
+      title="SWA Cable Installation: Armoured Cable Guide UK"
       description="Complete guide to SWA (Steel Wire Armoured) cable installation in the UK. Cable selection, burial depth requirements, gland types, bonding the armour."
       datePublished="2025-06-01"
       dateModified="2026-05-18"

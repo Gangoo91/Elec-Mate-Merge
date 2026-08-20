@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevisionEALNETP3UnitETKP301Config: GeneratedGuideConfig = {
   pagePath: '/guides/eal-netp3-unit-ETKP3-01-apply-health-safety-and-environmental-considerations-revision',
-  title: 'EAL NETP3 Unit ETKP3-01: Apply Health, Safety and',
+  title: 'EAL NETP3 ETKP3-01: Health, Safety & Environment',
   description: 'Complete revision guide for EAL NETP3 Unit ETKP3-01 (Apply Health, Safety and Environmental Considerations).',
   datePublished: published,
   dateModified: modified,

@@ -122,7 +122,7 @@ const relatedPages = [
 export default function Double13aSocketSymbolPage() {
   return (
     <GuideTemplate
-      title="Double 13A Socket Symbol | BS 1363 Drawing Reference"
+      title="Double 13A Socket Symbol: BS 1363 Reference"
       description="Double 13A Socket Outlet IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

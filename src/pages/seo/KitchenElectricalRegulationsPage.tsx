@@ -565,7 +565,7 @@ const sections = [
 export default function KitchenElectricalRegulationsPage() {
   return (
     <GuideTemplate
-      title="Kitchen Electrical Regulations UK | Circuits, Sockets and"
+      title="Kitchen Electrical Regulations: Circuits"
       description="Complete guide to kitchen electrical regulations under BS 7671. Cooker circuit sizing (32A/45A), appliance dedicated circuits."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

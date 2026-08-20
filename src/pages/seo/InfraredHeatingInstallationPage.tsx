@@ -579,7 +579,7 @@ const sections = [
 export default function InfraredHeatingInstallationPage() {
   return (
     <GuideTemplate
-      title="Infrared Heating Installation UK | Infrared Panel Heater"
+      title="Infrared Heating Installation UK: Panel Heaters"
       description="Complete guide to infrared heating installation in the UK. How infrared heating works (radiant heat), panel sizes 300W–1800W."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

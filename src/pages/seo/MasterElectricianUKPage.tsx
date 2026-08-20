@@ -422,7 +422,7 @@ const sections = [
 export default function MasterElectricianUKPage() {
   return (
     <GuideTemplate
-      title="Master Electrician UK | What It Means and How to"
+      title="Master Electrician UK: What It Means"
       description="There is no formal Master Electrician title in the UK. This guide explains what mastery means in the UK context — NVQ Level 4, 2391, 2396 design, CEng."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

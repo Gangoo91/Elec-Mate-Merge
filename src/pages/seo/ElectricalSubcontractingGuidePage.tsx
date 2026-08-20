@@ -19,7 +19,7 @@ import {
 export default function ElectricalSubcontractingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Subcontracting Guide | Working for Main"
+      title="Electrical Subcontracting Guide UK"
       description="Complete guide to electrical subcontracting in the UK. Covers finding subcontract work, pricing subcontract jobs, CIS obligations, payment terms."
       datePublished="2026-01-05"
       dateModified="2026-05-18"

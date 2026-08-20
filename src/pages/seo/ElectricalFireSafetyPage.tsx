@@ -605,7 +605,7 @@ const sections = [
 export default function ElectricalFireSafetyPage() {
   return (
     <GuideTemplate
-      title="Electrical Fire Safety UK | Preventing Electrical Fires"
+      title="Electrical Fire Safety UK: Preventing Fires"
       description="UK electrical fire safety guide — leading causes of electrical fires, arcing faults and AFDDs, overloaded sockets, old wiring risks, smoke detection."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

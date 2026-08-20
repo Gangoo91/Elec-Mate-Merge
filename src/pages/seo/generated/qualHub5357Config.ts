@@ -14,7 +14,7 @@ const modified = '2026-08-07';
 
 export const qualHub5357Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-complete-guide',
-  title: 'City & Guilds 5357: Level 3 Electrotechnical Qualification',
+  title: 'City & Guilds 5357: Level 3 Qualification',
   description: 'The complete 2026 guide to City & Guilds 5357 (Level 3 Electrotechnical Qualification (Apprenticeship Standard)).',
   datePublished: published,
   dateModified: modified,

@@ -155,7 +155,7 @@ const breadcrumbSchema = {
 
 export default function ApprenticePortfolioGuidePage() {
   useSEO({
-    title: 'Electrical Apprentice Portfolio Guide | Evidence Tracking',
+    title: 'Electrical Apprentice Portfolio Guide',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

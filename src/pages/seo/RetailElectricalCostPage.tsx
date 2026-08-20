@@ -532,7 +532,7 @@ const sections = [
 export default function RetailElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Retail Shop Electrical Fit Out Cost UK 2025 | Shop Wiring"
+      title="Retail Shop Electrical Fit-Out Cost UK 2025"
       description="Retail shop electrical fit-out costs in the UK for 2025. Small retail unit £3,000–£12,000. Display lighting, till points, EPoS power, CCTV."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

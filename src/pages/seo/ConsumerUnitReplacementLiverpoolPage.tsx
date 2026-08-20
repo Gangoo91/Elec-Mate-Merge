@@ -538,7 +538,7 @@ const sections = [
 export default function ConsumerUnitReplacementLiverpoolPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Liverpool | Fuse Box Upgrade"
+      title="Consumer Unit Replacement Liverpool: Cost Guide"
       description="Consumer unit replacement in Liverpool — metal enclosure rules since 2016, costs £400–750, BS EN 61439, Part P Building Regulations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

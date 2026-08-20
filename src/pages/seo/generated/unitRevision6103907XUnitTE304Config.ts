@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision6103907XUnitTE304Config: GeneratedGuideConfig = {
   pagePath: '/guides/610-3907-x-unit-TE3-04-design-and-installation-practices-and-procedures-revision',
-  title: 'EAL Level 3 Unit TE3-04: Design and Installation Practices',
+  title: 'EAL Level 3 Unit TE3-04: Design and Installation',
   description: 'Complete revision guide for EAL Level 3 Unit TE3-04 (Design and Installation Practices and Procedures).',
   datePublished: published,
   dateModified: modified,

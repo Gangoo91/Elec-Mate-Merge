@@ -600,7 +600,7 @@ const sections = [
 export default function OutdoorSocketFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Outdoor Socket Not Working | External Socket Fault Finding"
+      title="Outdoor Socket Not Working: Fault Finding Guide"
       description="Outdoor socket fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, weatherproof requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

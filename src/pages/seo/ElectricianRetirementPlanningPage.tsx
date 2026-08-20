@@ -492,7 +492,7 @@ export default function ElectricianRetirementPlanningPage() {
   return (
     <GuideTemplate
       localArea="Retirement Planning Uk"
-      title="Electrician Retirement Planning UK | Pensions, Business"
+      title="Electrician Retirement Planning UK: Pensions"
       description="Retirement planning guide for UK electricians — sole trader SIPPs, limited company employer pension contributions."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

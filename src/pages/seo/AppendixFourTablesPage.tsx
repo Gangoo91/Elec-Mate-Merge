@@ -8,9 +8,9 @@ import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'l
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Table 4D1A, 4D2A and 4D5 — BS 7671 Appendix 4 Tables';
+const PAGE_TITLE = 'Table 4D1A, 4D2A, 4D5: BS 7671 Appendix 4';
 const PAGE_DESCRIPTION =
-  'Every BS 7671 Appendix 4 table, per Table 4A3: 4D1A single-core PVC, 4D2A multicore PVC, 4D5 flat twin and earth, the 4E series for 90°C thermosetting, 4F flexible, 4G MICC, 4H/4J aluminium. Reference methods, correction factors and voltage drop.';
+  'Every BS 7671 Appendix 4 table: 4D1A single-core PVC, 4D2A multicore, 4D5 flat twin and earth, 4E thermosetting. Reference methods and volt drop.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

@@ -15,7 +15,7 @@ import {
 export default function AIForElectricalApprenticesPage() {
   return (
     <GuideTemplate
-      title="AI for Electrical Apprentices | Study Tools Guide"
+      title="AI for Electrical Apprentices: Study Tools Guide"
       description="How electrical apprentices can use AI to study BS 7671, practise exam questions, understand regulations, prepare for the AM2, and build on-site skills."
       datePublished="2026-01-18"
       dateModified="2026-05-18"

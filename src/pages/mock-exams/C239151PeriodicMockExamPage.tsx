@@ -21,7 +21,7 @@ const periodicQuestionBank = inspectionTestingQuestionBank.filter(
 export default function C239151PeriodicMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free 2391-51 Mock Exam 2026 — Periodic Inspection & Testing`}
+      title={`Free 2391-51 Mock Exam: Periodic Inspection`}
       description={`Free City & Guilds 2391-51 mock test: 30 questions, 90-min timer. Periodic inspection, EICR observations + C1/C2/C3/FI coding, sampling, GN3 test sequence.`}
       slug="2391-51-periodic-inspection"
       heading={`C&G 2391-51 Mock Exam — Periodic Inspection & Testing`}

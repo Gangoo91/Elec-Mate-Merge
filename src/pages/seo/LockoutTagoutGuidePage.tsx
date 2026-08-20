@@ -607,7 +607,7 @@ const sections = [
 export default function LockoutTagoutGuidePage() {
   return (
     <GuideTemplate
-      title="Lockout Tagout (LOTO) Guide UK | Electrical Isolation"
+      title="Lockout Tagout (LOTO) Guide UK: Isolation"
       description="UK lockout tagout (LOTO) and safe isolation procedures for electrical systems. HSE GS 38 compliant, prove-test-prove, EAWR 1989 duties covered."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

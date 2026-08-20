@@ -606,7 +606,7 @@ const sections = [
 export default function PubElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Pub Electrical Installation Cost UK 2025 | Licensed"
+      title="Pub Electrical Installation Cost UK 2025"
       description="Pub electrical installation costs UK 2025. Cellar cooling circuits, gaming machine wiring, emergency lighting to BS 5266-1, fire alarms, CCTV."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

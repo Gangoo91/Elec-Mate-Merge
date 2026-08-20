@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit105Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-105-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 105: Practices and procedures',
+  title: 'City & Guilds 5393-03 Unit 105 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 105 (Practices and procedures for planning and overseeing electrical work activities in dwellings).',
   datePublished: published,
   dateModified: modified,

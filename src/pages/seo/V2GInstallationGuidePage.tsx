@@ -631,7 +631,7 @@ const sections = [
 export default function V2GInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Vehicle to Grid (V2G) Installation | UK Electrician Guide"
+      title="Vehicle to Grid (V2G) Installation: UK Guide"
       description="Complete guide to Vehicle to Grid (V2G) installation in the UK. Bidirectional chargers, BS 7671 regulations, G99 DNO application, compatible vehicles."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

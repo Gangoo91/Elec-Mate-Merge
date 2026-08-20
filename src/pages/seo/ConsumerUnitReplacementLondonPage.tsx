@@ -491,7 +491,7 @@ const sections = [
 export default function ConsumerUnitReplacementLondonPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement London | Fuse Board Upgrade Cost"
+      title="Consumer Unit Replacement London: 2026 Cost"
       description="How much does a consumer unit replacement cost in London in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

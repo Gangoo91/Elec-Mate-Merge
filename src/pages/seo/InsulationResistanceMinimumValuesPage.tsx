@@ -19,9 +19,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Insulation Resistance Minimum Values | BS 7671 Guide';
+const PAGE_TITLE = 'Insulation Resistance Minimum Values: BS 7671';
 const PAGE_DESCRIPTION =
-  'Insulation resistance minimums per BS 7671 Table 64 (Chapter 64): 1 MΩ floor, test voltage by circuit voltage, Reg 643.3.3 two-stage procedure, what affects readings, low-IR troubleshooting.';
+  'Insulation resistance minimums per BS 7671 Table 64 (Chapter 64): 1 MΩ floor, test voltage by circuit voltage, Reg 643.3.3 two-stage procedure.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalSafetySymbolsPage() {
   return (
     <GuideTemplate
-      title="Fire Alarm + Security Symbols | BS 5839 Detection Diagrams"
+      title="Fire Alarm & Security Symbols: BS 5839 Diagrams"
       description="Smoke detector, heat detector, CO detector, fire alarm sounder, manual call point, CCTV, access control."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

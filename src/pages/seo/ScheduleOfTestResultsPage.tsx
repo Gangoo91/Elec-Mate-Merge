@@ -599,7 +599,7 @@ export default function ScheduleOfTestResultsPage() {
   return (
     <GuideTemplate
       title="Schedule of Test Results Guide for Electricians"
-      description="What the schedule of test results records, the Appendix 6 fields on each schedule, the Regulation 643 test order, RCD and insulation resistance limits, and the A4:2026 split into two schedules."
+      description="What the schedule of test results records: Appendix 6 fields, Regulation 643 test order, RCD and insulation limits, and the A4:2026 two-schedule split."
       datePublished="2026-04-12"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

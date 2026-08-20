@@ -626,7 +626,7 @@ const sections = [
 export default function EarthingSystemsGuidePage() {
   return (
     <GuideTemplate
-      title="UK Earthing Systems Guide | TN-S, TN-C-S, TT Systems"
+      title="UK Earthing Systems Guide: TN-S, TN-C-S, TT"
       description="Complete guide to UK earthing systems. TN-S, TN-C-S (PME) and TT explained with PME limitations, EV charging requirements, outbuilding supplies."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

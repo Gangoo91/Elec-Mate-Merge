@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostSouthamptonConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-southampton',
-  title: 'EICR Cost Southampton 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Southampton: Domestic & Commercial',
   description: 'How much does an EICR cost in Southampton? Fair-margin 2026 prices for scheme-registered electricians — £235–315 for a 1-bed, £360–490 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

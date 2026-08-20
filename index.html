@@ -536,9 +536,14 @@
               <path d="M12 9v4M12 17h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 style="font-size: 20px; font-weight: 600; margin-bottom: 12px; color: #facc15">
+          <!-- Not an <h1>: this block sits (hidden) in the DOM of every page, so an
+               h1 here gives every SEO page two h1s — Bing flagged it as High severity. -->
+          <p
+            role="alert"
+            style="font-size: 20px; font-weight: 600; margin-bottom: 12px; color: #facc15"
+          >
             Loading Issue
-          </h1>
+          </p>
           <p style="font-size: 14px; margin-bottom: 20px; line-height: 1.6">
             The page is taking longer than expected to load. This can happen if your browser cache
             is out of date.

@@ -598,7 +598,7 @@ const sections = [
 export default function LandlordElectricalSafetyBristolPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Bristol | EICR Requirements 2026"
+      title="Landlord Electrical Safety Bristol: EICR 2026"
       description="Landlord electrical safety requirements in Bristol. 2020 Regulations explained, Bristol City Council enforcement, HMO requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

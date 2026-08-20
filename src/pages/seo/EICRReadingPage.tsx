@@ -584,7 +584,7 @@ const sections = [
 export default function EICRReadingPage() {
   return (
     <GuideTemplate
-      title="EICR Reading | Electrical Inspection Reading"
+      title="EICR Reading: Electrical Inspection Reading"
       description="EICR Reading — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Reading."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

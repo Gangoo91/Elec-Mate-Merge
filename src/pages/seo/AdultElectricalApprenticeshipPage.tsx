@@ -235,7 +235,7 @@ const sections = [
 export default function AdultElectricalApprenticeshipPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprenticeships for Adults: 2026 Guide"
+      title="Electrical Apprenticeships for Adults: 2026"
       description="Retraining as an electrician at 30, 40 or 50: no age limit, the honest pay numbers, the three adult routes, and how career changers make the money work."
       datePublished="2026-07-17"
       dateModified="2026-07-17"

@@ -15,7 +15,7 @@ import {
 export default function BathroomElectricalRegsPage() {
   return (
     <GuideTemplate
-      title="Bathroom Electrical Regulations UK | BS 7671 Zones"
+      title="Bathroom Electrical Regulations: BS 7671 Zones"
       description="Complete guide to bathroom electrical regulations under BS 7671 Part 7 Section 701. Bathroom zones (0, 1, 2, outside zones), IP ratings."
       datePublished="2025-04-20"
       dateModified="2026-06-10"

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const section712ProsumerA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-712-prosumer-a4-2026',
   title:
-    'Section 712 Prosumer\u2019s LV Installations under BS',
+    'Section 712 Prosumer\u2019s LV Installations Guide',
   description:
     'Complete guide to Section 712 of BS 7671:2018+A4:2026 \u2014 prosumer\u2019s low-voltage installations, battery energy storage systems…',
   datePublished: published,

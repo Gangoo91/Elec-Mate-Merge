@@ -508,7 +508,7 @@ const sections = [
 export default function EICRForNewBuildPage() {
   return (
     <GuideTemplate
-      title="EICR for New Build Properties UK | Do New Builds Need an"
+      title="EICR for New Build Properties UK"
       description="New builds receive an EIC, not an EICR. Find out when new build properties need their first EICR, the difference between an EIC and an EICR."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

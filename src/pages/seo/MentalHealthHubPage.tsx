@@ -439,7 +439,7 @@ const sections = [
 export default function MentalHealthHubPage() {
   return (
     <ToolTemplate
-      title="Mental Health Hub for Tradespeople | Wellbeing Tools"
+      title="Mental Health Hub for Tradespeople: Wellbeing"
       description="Mental health and wellbeing resources designed for electricians and tradespeople. Self-assessment tools, mindfulness exercises."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

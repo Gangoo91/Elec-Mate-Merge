@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const HowToHireAnElectricalApprenticeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-hire-an-electrical-apprentice',
-  title: 'How to Hire an Electrical Apprentice in the UK — Practical',
+  title: 'How to Hire an Electrical Apprentice in the UK',
   description: 'A practical 2026 guide for UK electrical contractors hiring their first (or next) apprentice.',
   datePublished: published,
   dateModified: modified,

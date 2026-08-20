@@ -485,7 +485,7 @@ const sections = [
 export default function BuildingManagementSystemsElectricalPage() {
   return (
     <GuideTemplate
-      title="Building Management Systems (BMS) Electrical Guide UK"
+      title="Building Management Systems (BMS) Guide UK"
       description="Complete guide to building management systems for UK electricians. BMS architecture (DDC controllers, sensors, actuators), BACnet, Modbus, KNX."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

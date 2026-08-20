@@ -774,8 +774,8 @@ const relatedPages = [
 export default function Cat6Cat6aCurrentRatingPoEPage() {
   return (
     <GuideTemplate
-      title="Cat6 vs Cat6a Current Rating for PoE Installations | Bundle"
-      description="Cat6 vs Cat6a current rating for PoE — conductor area, current per pair by PoE type, bundle de-rating, ambient impact, LSZH vs PVC and BS 7671:2018+A4:2026 considerations."
+      title="Cat6 vs Cat6a Current Rating for PoE: Bundle"
+      description="Cat6 vs Cat6a current rating for PoE — conductor area, current per pair, bundle de-rating, ambient impact, and BS 7671:2018+A4:2026 considerations."
       datePublished={published}
       dateModified={modified}
       breadcrumbs={breadcrumbs}

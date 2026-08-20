@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const TLevelVsApprenticeshipElectricalConfig: GeneratedGuideConfig = {
   pagePath: '/guides/t-level-vs-apprenticeship-electrical',
-  title: 'T Level vs Apprenticeship — Which Is Right for Electrical?',
+  title: 'T Level vs Apprenticeship: Which Is Right?',
   description: 'T Levels (Building Services Engineering — Electrical Installation, 8202) launched in 2020 as an alternative to apprenticeships.',
   datePublished: published,
   dateModified: modified,

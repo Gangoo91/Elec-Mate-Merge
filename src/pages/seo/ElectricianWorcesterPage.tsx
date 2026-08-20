@@ -438,7 +438,7 @@ export default function ElectricianWorcesterPage() {
     <GuideTemplate
       noindex={true}
       localArea="Worcester"
-      title="Electrician in Worcester | Local Electricians 2026"
+      title="Electrician Worcester: Local Electricians 2026"
       description="Find qualified electricians in Worcester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

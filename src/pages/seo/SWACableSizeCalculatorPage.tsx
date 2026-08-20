@@ -18,7 +18,7 @@ import {
 export default function SWACableSizeCalculatorPage() {
   return (
     <ToolTemplate
-      title="SWA Cable Size Calculator: Submains & Outbuildings"
+      title="SWA Cable Size Calculator: Submains & Sheds"
       description="Free SWA cable size calculator for garden offices, garages and submains. Steel wire armoured sizing with voltage drop and burial guidance to BS 7671."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

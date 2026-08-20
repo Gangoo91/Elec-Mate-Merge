@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit313Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-313-overseeing-and-organising-the-work-environment-electrical-installation-eltp03-revision',
-  title: 'City & Guilds 2357 Unit 313: Overseeing and organising the',
+  title: 'City & Guilds 2357 Unit 313 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 313 (Overseeing and organising the work environment (electrical installation) (ELTP03)).',
   datePublished: published,
   dateModified: modified,

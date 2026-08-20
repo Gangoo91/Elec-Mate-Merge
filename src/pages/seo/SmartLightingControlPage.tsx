@@ -606,7 +606,7 @@ const sections = [
 export default function SmartLightingControlPage() {
   return (
     <GuideTemplate
-      title="Smart Lighting Control Systems UK | DALI, KNX & Lutron Guide"
+      title="Smart Lighting Control UK: DALI, KNX & Lutron"
       description="Smart lighting control systems for UK installations: DALI (BS EN 62386), KNX, Lutron Caseta/RA2 explained — protocols, cabling, commissioning, cost."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -587,7 +587,7 @@ const sections = [
 export default function EVChargerInstallationNorwichPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Norwich | EV Charging Norfolk"
+      title="EV Charger Installation Norwich: EV Charging"
       description="EV charger installation in Norwich and Norfolk. OZEV grants up to £350, installation costs £800–£1,100 for 7kW, rural Norfolk TT earthing considerations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

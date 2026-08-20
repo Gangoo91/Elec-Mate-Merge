@@ -594,7 +594,7 @@ const sections = [
 export default function EICRBelfastPage() {
   return (
     <GuideTemplate
-      title="EICR Belfast | Electrical Safety Certificate Cost 2026"
+      title="EICR Belfast: Safety Certificate Cost 2026"
       description="EICR costs in Belfast for 2026. Northern Ireland landlord legal requirements under the Housing (Amendment) Act (NI) 2022, Belfast housing stock findings."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

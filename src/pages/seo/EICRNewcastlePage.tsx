@@ -728,7 +728,7 @@ const sections = [
 export default function EICRNewcastlePage() {
   return (
     <GuideTemplate
-      title="EICR Newcastle | Electrical Safety Report Cost 2026"
+      title="EICR Newcastle: Safety Report Cost 2026"
       description="EICR costs in Newcastle for 2026. Landlord legal requirements, Tyneside flat conversion challenges, student area enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const bsEn50174DataCableInstallConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-en-50174-data-cable-installation',
   title:
-    'BS EN 50174 Data Cable Installation Practice — UK',
+    'BS EN 50174 Data Cable Installation Practice',
   description:
     'BS EN 50174 explained for UK electricians — installation planning under Parts 1, 2 and 3, pull tension, bend radius…',
   datePublished: published,

@@ -560,7 +560,7 @@ const sections = [
 export default function EICRBradfordPage() {
   return (
     <GuideTemplate
-      title="EICR Bradford | Electrical Installation Condition Report"
+      title="EICR Bradford: Installation Condition Report"
       description="EICR requirements for Bradford landlords and homeowners. Legal obligations under the 2020 Regulations, Bradford Council enforcement, costs £150–300."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

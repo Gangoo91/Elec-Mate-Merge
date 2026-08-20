@@ -580,7 +580,7 @@ const sections = [
 export default function ProfessionalDevelopmentElectricianPage() {
   return (
     <GuideTemplate
-      title="Professional Development for Electricians | CPD Guide"
+      title="Professional Development for Electricians: CPD"
       description="Complete guide to CPD for electricians. Requirements for NICEIC, NAPIT, ELECSA registration. Upskilling options, conferences, industry memberships."
       datePublished="2025-05-20"
       dateModified="2026-05-18"

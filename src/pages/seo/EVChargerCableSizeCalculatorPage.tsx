@@ -18,7 +18,7 @@ import {
 export default function EVChargerCableSizeCalculatorPage() {
   return (
     <ToolTemplate
-      title="EV Charger Cable Size Calculator: 7.4kW + 22kW Circuits"
+      title="EV Charger Cable Size Calculator: 7.4/22kW"
       description="Free EV charger cable sizing calculator. Size the circuit for 7.4kW single-phase and 22kW three-phase chargers with voltage drop checks to BS 7671."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

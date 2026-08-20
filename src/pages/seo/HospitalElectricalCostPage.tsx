@@ -657,7 +657,7 @@ const sections = [
 export default function HospitalElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Hospital Electrical Cost UK | Healthcare Electrical"
+      title="Hospital Electrical Cost UK: Healthcare Guide"
       description="Hospital electrical installation costs UK 2025. HTM 06-01 compliance, Medical IT systems, essential services, UPS, standby generation, operating theatres."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

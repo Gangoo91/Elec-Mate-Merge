@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import InsulationResistanceInterpreter from '@/components/apprentice/calculators/InsulationResistanceInterpreter';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -23,6 +25,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'ir-checker', label: 'Check Your IR Reading' },
   { id: 'overview', label: 'Why Test Insulation Resistance?' },
   { id: 'test-voltages', label: 'Test Voltages (250V, 500V, 1000V)' },
   { id: 'minimum-values', label: 'Minimum Values (≥1 MΩ)' },
@@ -136,6 +139,21 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'ir-checker',
+    heading: 'Check Your Insulation Resistance Reading',
+    content: (
+      <>
+        <p>
+          Type the reading from your tester and get the verdict against the BS 7671 minimum for the
+          test voltage — free, no sign-up.
+        </p>
+        <CalculatorSurface>
+          <InsulationResistanceInterpreter />
+        </CalculatorSurface>
+      </>
+    ),
+  },
   {
     id: 'overview',
     heading: 'Why Test Insulation Resistance?',

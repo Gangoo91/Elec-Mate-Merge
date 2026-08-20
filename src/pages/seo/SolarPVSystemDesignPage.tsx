@@ -531,7 +531,7 @@ const sections = [
 export default function SolarPVSystemDesignPage() {
   return (
     <GuideTemplate
-      title="Solar PV System Design UK | Designing a Solar Panel System"
+      title="Solar PV System Design UK: Sizing & Cable Guide"
       description="Complete guide to solar PV system design in the UK. kWp calculation, string design, inverter sizing, DC cable sizing, AC connection."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

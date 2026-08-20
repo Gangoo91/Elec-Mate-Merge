@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { PANEL, LABEL } from '@/components/seo/seoSurface';
 
 interface SEOAnswerBoxProps {
@@ -31,18 +31,16 @@ export function SEOAnswerBox({ question, answer, detail, speakable = true }: SEO
   return (
     <div className={`seo-answer-box ${PANEL} px-4 py-6 sm:px-7 sm:py-7`}>
       {speakable && (
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebPage',
-              speakable: {
-                '@type': 'SpeakableSpecification',
-                cssSelector: ['.seo-answer-box__q', '.seo-answer-box__a'],
-              },
-            })}
-          </script>
-        </Helmet>
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            speakable: {
+              '@type': 'SpeakableSpecification',
+              cssSelector: ['.seo-answer-box__q', '.seo-answer-box__a'],
+            },
+          }}
+        />
       )}
       <p className={`${LABEL} text-white`}>The short answer</p>
       <h2 className="seo-answer-box__q mt-3 text-left text-[21px] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[25px]">

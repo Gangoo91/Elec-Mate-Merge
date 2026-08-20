@@ -247,8 +247,8 @@ const relatedPages: RelatedPage[] = [
 export default function FireAlarmLogBookPage() {
   return (
     <GuideTemplate
-      title="Fire Alarm Log Book — BS 5839-1:2025 Requirements & Digital Logs"
-      description="What the fire alarm log book must record under BS 5839-1:2025: weekly call point tests, false alarms, service visits and variations — and why clause 48.2 now permits keeping it digitally."
+      title="Fire Alarm Log Book: BS 5839-1:2025 Rules"
+      description="What the fire alarm log book must record under BS 5839-1:2025: call point tests, false alarms, service visits — and why clause 48.2 permits digital logs."
       datePublished="2026-07-27"
       dateModified="2026-07-27"
       breadcrumbs={breadcrumbs}

@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const section714OutdoorLightingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-section-714-outdoor-lighting',
   title:
-    'BS 7671 Section 714 Outdoor Lighting Installations',
+    'BS 7671 Section 714: Outdoor Lighting',
   description:
     'BS 7671 Section 714 explained: scope, exclusions, 5 second disconnection time, IP44 minimum…',
   datePublished: published,

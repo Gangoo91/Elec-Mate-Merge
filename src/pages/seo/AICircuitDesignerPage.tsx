@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'AI Circuit Designer | BS 7671 Compliant Design Tool';
+const PAGE_TITLE = 'AI Circuit Designer: BS 7671 Compliant Tool';
 const PAGE_DESCRIPTION =
   'Design circuits with AI trained for UK electrical work. Cable sizing, protection device selection, and voltage drop to BS 7671:2018+A4:2026.';
 
@@ -150,7 +150,7 @@ const faqSchema = {
 
 export default function AICircuitDesignerPage() {
   useSEO({
-    title: 'AI Circuit Designer | BS 7671 Compliant Design Tool',
+    title: 'AI Circuit Designer: BS 7671 Compliant Tool',
     description: PAGE_DESCRIPTION,
   });
 

@@ -604,7 +604,7 @@ const sections = [
 export default function MileageClaimsElectricianPage() {
   return (
     <GuideTemplate
-      title="Mileage Claims for Electricians UK 2026 | Tax Guide"
+      title="Mileage Claims for Electricians UK 2026"
       description="Complete guide to mileage claims for self-employed electricians. HMRC rates (45p/25p), van vs car rules, what travel qualifies, record keeping."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

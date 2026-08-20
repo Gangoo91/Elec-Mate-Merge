@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Fire Safety Course | Awareness Training for Electricians';
+const PAGE_TITLE = 'Fire Safety Course: Awareness Training';
 const PAGE_DESCRIPTION =
   'Fire safety training for UK electricians: fire triangle, extinguisher types, evacuation, hot works permits, site fire prevention. 4 modules.';
 

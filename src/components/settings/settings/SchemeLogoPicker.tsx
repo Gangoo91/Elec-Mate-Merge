@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { SCHEMES, getSchemeInfo } from '@/constants/schemeLogos';
+import { normaliseScheme } from '@/utils/registrationScheme';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -38,7 +39,14 @@ export function SchemeLogoPicker({
   onExpiryChange,
   onLogoDataUrlChange,
 }: SchemeLogoPickerProps) {
-  const showFields = scheme && scheme !== 'none';
+  // ELE-1570 — compare case-insensitively. `registration_scheme` has been
+  // written by more than one control with different casing, so a stored
+  // `niceic` or `Other` matched no tile and the picker showed nothing
+  // selected — which is what "I've looked on every page and can't see it"
+  // actually looks like once you HAVE found the page.
+  const selected = normaliseScheme(scheme);
+  const isNone = !selected;
+  const showFields = !isNone;
 
   const handleSelect = useCallback(
     async (value: string) => {
@@ -70,12 +78,12 @@ export function SchemeLogoPicker({
           onClick={() => handleSelect('none')}
           className={cn(
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
-            scheme === 'none' || !scheme
+            isNone
               ? 'border-elec-yellow/60 bg-elec-yellow/10'
               : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
-          {(scheme === 'none' || !scheme) && (
+          {isNone && (
             <span className="absolute top-1.5 right-1.5 text-[11px] font-semibold text-elec-yellow">
               ✓
             </span>
@@ -85,7 +93,7 @@ export function SchemeLogoPicker({
 
         {/* Scheme logos */}
         {SCHEMES.map((s) => {
-          const isSelected = scheme === s.value;
+          const isSelected = selected === normaliseScheme(s.value);
           return (
             <button
               key={s.value}
@@ -123,12 +131,12 @@ export function SchemeLogoPicker({
           onClick={() => handleSelect('other')}
           className={cn(
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
-            scheme === 'other'
+            selected === 'OTHER'
               ? 'border-elec-yellow/60 bg-elec-yellow/10'
               : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
-          {scheme === 'other' && (
+          {selected === 'OTHER' && (
             <span className="absolute top-1.5 right-1.5 text-[11px] font-semibold text-elec-yellow">
               ✓
             </span>

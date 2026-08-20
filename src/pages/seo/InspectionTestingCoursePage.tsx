@@ -20,7 +20,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Inspection & Testing Course | C&G 2391 Online Prep';
 const PAGE_DESCRIPTION =
-  'Study for the C&G 2391 Inspection and Testing qualification online. AI-powered study assistant, mock exams, and practical scenario walkthroughs. From £6.99/mo.';
+  'Study for the C&G 2391 Inspection and Testing qualification online. AI-powered study assistant, mock exams and practical walkthroughs. From £6.99/mo.';
 
 const faqs = [
   {
@@ -177,7 +177,7 @@ const breadcrumbSchema = {
 
 export default function InspectionTestingCoursePage() {
   useSEO({
-    title: 'Inspection and Testing Course Online | C&G 2391 Preparation',
+    title: '2391 Inspection and Testing Course Online',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

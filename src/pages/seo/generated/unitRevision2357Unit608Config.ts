@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit608Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-608-understanding-the-principles-practices-and-legislation-for-diagnosing-and-correcting-electrical-faults-in-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk07-revision',
-  title: 'City & Guilds 2357 Unit 608: Understanding the principles,',
+  title: 'City & Guilds 2357 Unit 608 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 608 (Understanding the principles…',
   datePublished: published,
   dateModified: modified,

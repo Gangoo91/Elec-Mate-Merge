@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const CityAndGuildsVsEalConfig: GeneratedGuideConfig = {
   pagePath: '/guides/city-and-guilds-vs-eal',
-  title: 'City & Guilds vs EAL — UK Electrical Awarding Bodies',
+  title: 'City & Guilds vs EAL: Electrical Awarding Bodies',
   description: 'City & Guilds and EAL are the two largest awarding bodies for UK electrical qualifications. Most apprentices are with one or the other.',
   datePublished: published,
   dateModified: modified,

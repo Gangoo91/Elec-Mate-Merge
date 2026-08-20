@@ -512,7 +512,7 @@ const sections = [
 export default function EarthingSystemFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Earthing System Fault Finding | Earth Electrode, Open"
+      title="Earthing System Fault Finding: Earth Electrode"
       description="Complete guide to earthing system fault finding for UK electricians. Covers open circuit earth, poor main earth connections, corroded earth electrodes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

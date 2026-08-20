@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Leadership on Site Course | Electrical Supervisors & Foremen';
+const PAGE_TITLE = 'Leadership on Site Course for Electricians';
 const PAGE_DESCRIPTION =
   'Leadership + site supervision for UK electricians: team management, communication, QC, mentoring apprentices, CDM duties, coordination. 8 modules.';
 

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 export const ipCameraPoeInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/ip-camera-poe-installation-uk',
   title:
-    'IP Camera PoE Installation Guide (UK) — CCTV over',
+    'IP Camera PoE Installation Guide (UK)',
   description:
     'A definitive UK installer guide to IP camera systems powered over Ethernet — PoE class selection under IEEE 802.3at/bt, NVR PoE switch sizing…',
   datePublished: published,

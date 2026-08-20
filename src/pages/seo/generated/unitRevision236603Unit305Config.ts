@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236603Unit305Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-unit-305-organising-and-overseeing-electrical-work-activities-in-buildings-revision',
-  title: 'City & Guilds 2366-03 Unit 305: Organising and overseeing',
+  title: 'City & Guilds 2366-03 Unit 305 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2366-03 Unit 305 (Organising and overseeing electrical work activities in buildings).',
   datePublished: published,
   dateModified: modified,

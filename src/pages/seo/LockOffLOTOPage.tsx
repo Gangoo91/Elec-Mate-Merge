@@ -803,7 +803,7 @@ const sections = [
 export default function LockOffLOTOPage() {
   return (
     <GuideTemplate
-      title="Lock Off / LOTO Procedure for Electricians | Complete Guide"
+      title="Lock Off / LOTO Procedure for Electricians"
       description="Complete guide to lockout/tagout (LOTO) for electricians. Step-by-step lock off procedure, MCB lock off devices, distribution board isolation."
       datePublished="2025-04-10"
       dateModified="2026-05-18"

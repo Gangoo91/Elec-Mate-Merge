@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit306Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-306-electrical-system-fault-diagnosis-and-rectification-revision',
-  title: 'City & Guilds 8202 Unit 306: Electrical system fault',
+  title: 'City & Guilds 8202 Unit 306: Electrical system',
   description: 'Complete revision guide for City & Guilds 8202 Unit 306 (Electrical system fault diagnosis and rectification).',
   datePublished: published,
   dateModified: modified,

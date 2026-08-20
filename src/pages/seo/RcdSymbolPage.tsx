@@ -124,7 +124,7 @@ const relatedPages = [
 export default function RcdSymbolPage() {
   return (
     <GuideTemplate
-      title="RCD Symbol Electrical | IEC 60617 + BS 7671"
+      title="RCD Symbol Electrical: IEC 60617 + BS 7671"
       description="RCD (Residual Current Device) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

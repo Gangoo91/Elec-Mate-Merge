@@ -628,7 +628,7 @@ const sections = [
 export default function WomenInElectricalTradePage() {
   return (
     <GuideTemplate
-      title="Women in the Electrical Trade | Career Guide UK"
+      title="Women in the Electrical Trade: Career Guide UK"
       description="Complete guide for women considering or pursuing a career in the UK electrical trade. Industry statistics, apprenticeship advice, support networks."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

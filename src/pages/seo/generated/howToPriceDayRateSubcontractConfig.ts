@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceDayRateSubcontractConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-day-rate-subcontract-as-an-electrician',
-  title: 'How to Price Day-Rate / Sub-Contract Work as an Electrician',
+  title: 'How to Price Day-Rate Sub-Contract Work UK',
   description: 'How much should you charge for day-rate / sub-contract work as a UK electrician in 2026? Fair-margin pricing, what to include…',
   datePublished: published,
   dateModified: modified,

@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalSocketSymbolsPage() {
   return (
     <GuideTemplate
-      title="Electrical Socket Symbols | IEC 60617 Outlet Reference"
+      title="Electrical Socket Symbols: IEC 60617 Reference"
       description="Single 13A, double 13A, fused spur, cooker, shaver, USB, data RJ45, telephone, TV, EV charger and outdoor IP66 socket outlet symbols to IEC 60617."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

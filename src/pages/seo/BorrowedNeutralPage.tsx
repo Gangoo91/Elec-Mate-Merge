@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Borrowed Neutral | What It Is & How to Find It';
+const PAGE_TITLE = 'Borrowed Neutral: What It Is & How to Find It';
 const PAGE_DESCRIPTION =
   'Borrowed neutral faults explained: what causes RCD tripping when neutrals cross circuits, symptoms, how to identify at the DB, and how to fix safely.';
 

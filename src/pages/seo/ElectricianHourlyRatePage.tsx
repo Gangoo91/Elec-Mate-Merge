@@ -592,7 +592,7 @@ const sections = [
 export default function ElectricianHourlyRatePage() {
   return (
     <GuideTemplate
-      title="Electrician Hourly Rate UK 2026 | Regional Rates, Callouts"
+      title="Electrician Hourly Rate UK 2026: Regional Rates"
       description="What electricians charge per hour in the UK in 2026. Regional rates: London £65–£90/hr, South East £55–£75/hr, Midlands/North £40–£60/hr."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -535,7 +535,7 @@ const sections = [
 export default function CityGuilds2365Unit202Page() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 Unit 202 — Electrical Principles"
+      title="C&G 2365 Unit 202: Electrical Principles"
       description="C&G 2365 Unit 202 revision: Principles of Building Services Engineering. Learning outcomes, key terms, mock questions for UK apprentices."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

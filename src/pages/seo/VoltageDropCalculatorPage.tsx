@@ -166,7 +166,7 @@ const howToSchema = {
 
 export default function VoltageDropCalculatorPage() {
   useSEO({
-    title: 'Voltage Drop Calculator UK | BS 7671 Compliant',
+    title: 'Voltage Drop Calculator UK: BS 7671 Compliant',
     description:
       'Calculate voltage drop to BS 7671 limits. Check maximum cable run lengths, verify compliance with 3% lighting and 5% power limits.',
   });

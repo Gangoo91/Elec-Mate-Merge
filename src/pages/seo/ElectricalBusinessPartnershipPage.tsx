@@ -562,7 +562,7 @@ const sections = [
 export default function ElectricalBusinessPartnershipPage() {
   return (
     <GuideTemplate
-      title="Electrical Business Partnership UK | Starting a Partnership"
+      title="Electrical Business Partnership UK: Starting"
       description="Complete guide to starting an electrical business partnership in the UK. Partnership vs LLP vs Ltd company, partnership agreement essentials."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit604Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-604-understanding-the-principles-of-planning-and-selection-for-the-installation-of-electrotechnical-equipment-and-systems-in-buildings-structures-and-the-environment-eltk04a-revision',
-  title: 'City & Guilds 2357 Unit 604: Understanding the principles',
+  title: 'City & Guilds 2357 Unit 604 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 604 (Understanding the principles of planning and selection for the installation of electrotechnical…',
   datePublished: published,
   dateModified: modified,

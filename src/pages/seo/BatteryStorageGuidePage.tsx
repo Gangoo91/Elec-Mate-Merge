@@ -763,7 +763,7 @@ const sections = [
 export default function BatteryStorageGuidePage() {
   return (
     <GuideTemplate
-      title="Battery Storage Installation | Home Battery Guide UK"
+      title="Battery Storage Installation: Home Guide UK"
       description="Complete guide to home battery storage installation in the UK. AC-coupled vs DC-coupled, battery sizing, inverter selection, safety requirements."
       datePublished="2025-09-01"
       dateModified="2026-06-10"

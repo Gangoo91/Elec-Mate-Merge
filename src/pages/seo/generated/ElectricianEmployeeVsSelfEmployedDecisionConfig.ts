@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const ElectricianEmployeeVsSelfEmployedDecisionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrician-employee-vs-self-employed-decision',
-  title: 'Employee vs Self-Employed Electrician — Which Is Right?',
+  title: 'Employee vs Self-Employed Electrician?',
   description: 'A clear-eyed 2026 decision guide for UK electricians choosing between PAYE employee and self-employed (sole trader or limited company).',
   datePublished: published,
   dateModified: modified,

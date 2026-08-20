@@ -120,7 +120,7 @@ const relatedPages = [
 export default function BreakGlassSymbolPage() {
   return (
     <GuideTemplate
-      title="Break Glass Call Point Symbol | BS EN 54-11"
+      title="Break Glass Call Point Symbol: BS EN 54-11"
       description="Manual Call Point (Break Glass) IEC 60617 symbol — what it represents, when used in UK electrical drawings."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

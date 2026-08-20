@@ -19,7 +19,7 @@ import {
 export default function ConsumerUnitChangePage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Change UK 2026 | Cost, Regulations & Guide"
+      title="Consumer Unit Change UK 2026: Cost & Rules"
       description="Complete guide to changing a consumer unit in the UK. Costs from £500 to £1,200, Part P notification requirements."
       datePublished="2025-04-20"
       dateModified="2026-06-10"

@@ -805,8 +805,8 @@ const sections = [
 export default function FireAlarmCertificateRequirementsPage() {
   return (
     <GuideTemplate
-      title="Fire Alarm Certificate Requirements | BS 5839 UK"
-      description="Complete guide to fire alarm certificate requirements under BS 5839-1. Design, commissioning, and annual service records explained. Who can issue and how long to keep them."
+      title="Fire Alarm Certificate Requirements: BS 5839 UK"
+      description="Fire alarm certificate requirements under BS 5839-1: design, commissioning and annual service records. Who can issue them and how long to keep them."
       datePublished="2026-02-01"
       dateModified="2026-08-06"
       breadcrumbs={breadcrumbs}

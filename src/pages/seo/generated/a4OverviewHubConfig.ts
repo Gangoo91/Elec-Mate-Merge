@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const a4OverviewHubConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-summary',
   title:
-    'BS 7671 A4:2026 — Every Model Form Change Explained',
+    'BS 7671 A4:2026 — Every Model Form Explained',
   description:
     'Comprehensive index to every BS 7671:2018+A4:2026 change: AFDD inspection (item 4.23 + column 30), luminaire RCD protection (Regulation 411.3.4)…',
   datePublished: published,

@@ -19,7 +19,7 @@ import {
 export default function ElectricalBoardTypesPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Types | Split Load, Dual RCD & RCBO Boards"
+      title="Consumer Unit Types: Split Load, Dual RCD & RCBO"
       description="Consumer unit types in UK domestic + commercial installations: split-load, dual-RCD, all-RCBO, high-integrity, metal-clad, and BS 7671 A4:2026 rules."
       datePublished="2025-06-01"
       dateModified="2026-05-18"

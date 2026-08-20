@@ -847,7 +847,7 @@ const sections = [
 export default function DomesticElectricianGuidePage() {
   return (
     <GuideTemplate
-      title="Domestic Electrician Guide UK 2026 | Everything You Need"
+      title="Domestic Electrician Guide UK 2026: Full Guide"
       description="Complete guide to working as a domestic electrician in the UK. Typical jobs, Part P requirements, competent person schemes, qualifications, earnings."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

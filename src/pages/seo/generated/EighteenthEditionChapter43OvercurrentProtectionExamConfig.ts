@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const EighteenthEditionChapter43OvercurrentProtectionExamConfig: GeneratedGuideConfig = {
   pagePath: '/guides/18th-edition-chapter-43-overcurrent-protection-exam',
-  title: 'BS 7671 Chapter 43 — Overcurrent Protection (Exam Prep)',
+  title: 'BS 7671 Chapter 43: Overcurrent Protection',
   description: 'Chapter 43 covers overcurrent protection — protective device selection, discrimination, cable adiabatic. The second-most-tested chapter after 41.',
   datePublished: published,
   dateModified: modified,

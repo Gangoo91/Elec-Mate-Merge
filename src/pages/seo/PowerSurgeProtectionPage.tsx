@@ -509,7 +509,7 @@ const sections = [
 export default function PowerSurgeProtectionPage() {
   return (
     <GuideTemplate
-      title="Power Surge Protection UK | SPD Installation Guide"
+      title="Power Surge Protection UK: SPD Installation"
       description="Complete guide to power surge protection in the UK. What causes surges, Type 1/2/3 SPDs explained, BS 7671 Amendment 2 requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

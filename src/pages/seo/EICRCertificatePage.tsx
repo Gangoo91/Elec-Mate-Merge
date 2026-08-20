@@ -45,7 +45,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'EICR Certificate Guide 2026 | Digital EICR App UK';
+const PAGE_TITLE = 'EICR Certificate App: Digital EICR Software UK';
 const PAGE_DESCRIPTION =
   'EICR certificates for UK electricians: create EICRs on your phone, digital signatures, observation coding, PDF export, BS 7671. Start free.';
 
@@ -330,7 +330,7 @@ const howToSchema = SEOSchemas.howTo(
 
 export default function EICRCertificatePage() {
   useSEO({
-    title: 'EICR Certificate Guide 2026 | Digital EICR App UK',
+    title: 'EICR Certificate App: Digital EICR Software UK',
     description: PAGE_DESCRIPTION,
     schemas: [softwareAppSchema, faqSchema, howToSchema],
     breadcrumbs: [

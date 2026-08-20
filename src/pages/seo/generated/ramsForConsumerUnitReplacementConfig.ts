@@ -9,8 +9,7 @@ const modified = '2026-05-18';
 
 export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-consumer-unit-replacement',
-  title:
-    'RAMS for a Consumer Unit Replacement — UK Method Statement',
+  title: 'RAMS for a Consumer Unit Replacement: UK Guide',
   description:
     'Complete RAMS (Risk Assessment & Method Statement) for a UK consumer unit replacement. Hazards, control measures, safe isolation, DNO seal authority…',
   datePublished: published,

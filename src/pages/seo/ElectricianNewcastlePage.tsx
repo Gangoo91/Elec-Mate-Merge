@@ -617,7 +617,7 @@ export default function ElectricianNewcastlePage() {
   return (
     <GuideTemplate
       localArea="Newcastle"
-      title="Electrician in Newcastle | Local Electricians 2026"
+      title="Electrician in Newcastle: 2026 Guide"
       description="Find qualified electricians in Newcastle. Northern Powergrid DNO, Tyneside flat conversions, quayside regeneration, cold climate EV charging."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

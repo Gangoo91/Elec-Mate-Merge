@@ -529,7 +529,7 @@ const sections = [
 export default function HowElectricityWorksPage() {
   return (
     <GuideTemplate
-      title="How Electricity Works | Basic Electrical Theory Guide"
+      title="How Electricity Works: Basic Electrical Theory"
       description="Plain English guide to how electricity works. Covers voltage, current, resistance, Ohm's Law, AC vs DC, power calculations, and circuit types."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

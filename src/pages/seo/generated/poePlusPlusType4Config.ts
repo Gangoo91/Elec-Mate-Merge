@@ -9,9 +9,9 @@ const modified = '2026-06-10';
 
 export const poePlusPlusType4Config: GeneratedGuideConfig = {
   pagePath: '/guides/poe-plus-plus-type-4-90w-installation',
-  title: 'PoE++ Type 4 (IEEE 802.3bt) 90W Installation Guide for UK',
+  title: 'PoE++ Type 4 (IEEE 802.3bt) 90W Install Guide',
   description:
-    'Practical UK installation guide to Power over Ethernet Type 4 (IEEE 802.3bt) at 90W — power budgeting, cable selection (Cat6 vs Cat6a vs Cat7)…',
+    'UK installation guide to PoE++ Type 4 (IEEE 802.3bt) at 90W: cable selection, voltage-drop budgeting, bundle de-rating and BS 7671 Section 716.',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,

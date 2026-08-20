@@ -8,7 +8,7 @@ import { patTestingQuestionBank } from '@/data/upskilling/patTestingMockExamData
 export default function PATTestingMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free PAT Testing Mock Exam 2026 (C&G 2377 Practice)`}
+      title={`Free PAT Testing Mock Exam (C&G 2377 Practice)`}
       description={`Free PAT testing mock exam — 25 questions, 30-minute timer, 120-question bank. In-service inspection and testing, equipment classes, EAWR 1989 duties.`}
       slug="pat-testing"
       heading={`PAT Testing Mock Exam (C&G 2377)`}

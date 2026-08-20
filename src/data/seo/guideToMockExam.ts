@@ -263,4 +263,129 @@ export const GUIDE_TO_MOCK_EXAM: Record<string, MockExamPairing> = {
     examName: 'Level 3 Electrical Science',
     reason: 'power factor, AC theory and the rest of the science unit',
   },
+  '/guides/2391-exam-tips': {
+    examSlug: '2391-inspection-testing',
+    examName: 'C&G 2391 Inspection & Testing',
+    reason: 'put the exam tips into practice on a timed paper',
+  },
+  '/guides/city-guilds-2382-exam-guide': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise the regulations the 2382 paper examines',
+  },
+  '/guides/bathroom-electrical-zones-bs7671': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'check your Section 701 zones and bonding knowledge',
+  },
+  '/consumer-unit-regulations': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise consumer unit and device selection rules',
+  },
+  '/guides/electrical-equipment-symbols': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise the regulations behind the drawings',
+  },
+  '/agricultural-electrical-installation': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise Section 705 and the other special locations',
+  },
+  '/guides/marina-electrical-installations': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise Section 709 and the other special locations',
+  },
+  '/guides/sauna-electrical-installation': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise Section 703 and the other special locations',
+  },
+  '/fused-spur-installation-guide': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise fused connection units and final circuit rules',
+  },
+  '/electric-boiler-installation': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise heating circuit design and protection',
+  },
+  '/cable-basket-installation': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'revise containment selection and support rules',
+  },
+  '/guides/best-electrical-books': {
+    examSlug: '18th-edition-bs-7671',
+    examName: '18th Edition (BS 7671)',
+    reason: 'test what the reading has actually stuck',
+  },
+  '/guides/eicr-schedule-of-inspections': {
+    examSlug: '2391-inspection-testing',
+    examName: 'C&G 2391 Inspection & Testing',
+    reason: 'practise the schedule of inspections under exam conditions',
+  },
+  '/guides/continuity-testing-r1-r2': {
+    examSlug: '2391-inspection-testing',
+    examName: 'C&G 2391 Inspection & Testing',
+    reason: 'check your continuity testing and R1+R2 knowledge',
+  },
+  '/guides/how-to-fill-in-minor-works': {
+    examSlug: '2391-inspection-testing',
+    examName: 'C&G 2391 Inspection & Testing',
+    reason: 'revise minor works certification and the tests behind it',
+  },
+  '/guides/best-multifunction-tester-2026': {
+    examSlug: '2391-inspection-testing',
+    examName: 'C&G 2391 Inspection & Testing',
+    reason: 'practise the tests your new tester will be doing',
+  },
+  '/guides/hmo-electrical-requirements': {
+    examSlug: '2391-51-periodic-inspection',
+    examName: 'C&G 2391-51 Periodic Inspection',
+    reason: 'revise periodic inspection on rented property',
+  },
+  '/holiday-let-electrical': {
+    examSlug: '2391-51-periodic-inspection',
+    examName: 'C&G 2391-51 Periodic Inspection',
+    reason: 'revise the periodic inspection a holiday let needs',
+  },
+  '/eic-certificate': {
+    examSlug: '2391-50-initial-verification',
+    examName: 'C&G 2391-50 Initial Verification',
+    reason: 'revise initial verification and the EIC that records it',
+  },
+  '/guides/iet-code-of-practice-ev': {
+    examSlug: 'ev-charging',
+    examName: 'EV Charging Installation',
+    reason: 'test yourself on the material the code of practice covers',
+  },
+  '/guides/ground-source-heat-pump-electrical': {
+    examSlug: 'renewable-energy',
+    examName: 'Renewable Energy & Solar PV',
+    reason: 'revise heat pump supplies and renewable technologies',
+  },
+  '/guides/knx-wiring-installation-guide-uk': {
+    examSlug: 'smart-home',
+    examName: 'Smart Home Technology',
+    reason: 'revise smart building control systems and their wiring',
+  },
+  '/tools/motor-starting-current-calculator': {
+    examSlug: 'industrial-electrical',
+    examName: 'Industrial Electrical',
+    reason: 'revise motor circuits, starting methods and protection',
+  },
+  '/guides/jib-grading-explained': {
+    examSlug: 'am2-online-knowledge-test',
+    examName: 'AM2',
+    reason: 'prepare for the assessment that moves your grading up',
+  },
+  '/guides/permit-to-work-electrical-isolation': {
+    examSlug: 'level-3-electrical-health-safety',
+    examName: 'Level 3 Health & Safety',
+    reason: 'revise permits to work and safe systems of work',
+  },
 };

@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Earth Fault Loop Impedance Explained | Ze & Zs Guide';
+const PAGE_TITLE = 'Earth Fault Loop Impedance Explained: Ze & Zs';
 const PAGE_DESCRIPTION =
   'Earth fault loop impedance explained: Ze vs Zs, disconnection time, BS 7671 Tables 41.3/41.4 max values, 0.8 correction, TN-C-S/TN-S/TT values.';
 

@@ -582,7 +582,7 @@ const sections = [
 export default function EICRCambridgePage() {
   return (
     <GuideTemplate
-      title="EICR Cambridge | Electrical Safety Certificate Cost 2026"
+      title="EICR Cambridge: Cost & Safety Certificate 2026"
       description="EICR costs in Cambridge for 2026. Landlord legal requirements, Cambridge City Council enforcement, Victorian terraced HMO findings, observation codes."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const rcboKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-test-sequence',
-  title: 'RCBO Keeps Tripping Test Sequence | Electrician Guide',
+  title: 'RCBO Keeps Tripping: Test Sequence Guide',
   description:
     'A practical test sequence for an RCBO that keeps tripping, with a simple order for isolating the fault, checking the circuit, and recording the fix.',
   datePublished: published,

@@ -628,7 +628,7 @@ const sections = [
 export default function AirBnBElectricalSafetyPage() {
   return (
     <GuideTemplate
-      title="Airbnb Electrical Safety UK | Host Guide to Electrical"
+      title="Airbnb Electrical Safety UK: Host Guide"
       description="Airbnb electrical safety guide for UK hosts. Host responsibilities under the Occupiers Liability Act 1957, electrical checks before listing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostDundeeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-dundee',
-  title: 'EICR Cost Dundee 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Dundee 2026: Pricing Guide',
   description: 'How much does an EICR cost in Dundee? Fair-margin 2026 prices for scheme-registered electricians — £210–280 for a 1-bed, £320–440 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

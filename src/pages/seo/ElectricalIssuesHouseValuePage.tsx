@@ -631,7 +631,7 @@ const sections = [
 export default function ElectricalIssuesHouseValuePage() {
   return (
     <GuideTemplate
-      title="How Electrical Issues Affect House Value UK | Rewire Effect"
+      title="Does a Rewire Add Value? Electrical Issues UK"
       description="How rewires, consumer unit upgrades, and EICR failures affect property value in the UK. What mortgage surveyors flag."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

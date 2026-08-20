@@ -122,7 +122,7 @@ const relatedPages = [
 export default function Single13aSocketSymbolPage() {
   return (
     <GuideTemplate
-      title="Single 13A Socket Symbol | BS 1363 Drawing Reference"
+      title="Single 13A Socket Symbol: BS 1363 Reference"
       description="Single 13A Socket Outlet IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

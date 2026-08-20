@@ -8,7 +8,7 @@ const modified = '2026-05-18';
 
 export const EighteenthEditionAppendix4CableCurrentRatingExamConfig: GeneratedGuideConfig = {
   pagePath: '/guides/18th-edition-appendix-4-cable-current-rating-exam',
-  title: 'BS 7671 Appendix 4 — Cable Current Rating (Exam Prep)',
+  title: 'BS 7671 Appendix 4: Cable Rating (Exam Prep)',
   description: 'Appendix 4 is the most-used part of BS 7671 in the exam — current-carrying capacity, installation methods, grouping factors, voltage drop.',
   datePublished: published,
   dateModified: modified,

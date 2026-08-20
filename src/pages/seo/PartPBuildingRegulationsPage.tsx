@@ -152,7 +152,7 @@ const breadcrumbSchema = {
 
 export default function PartPBuildingRegulationsPage() {
   useSEO({
-    title: 'Part P Building Regulations Explained | Electrical Work',
+    title: 'Part P Building Regulations: Electrical Work',
     description: PAGE_DESCRIPTION,
   });
 

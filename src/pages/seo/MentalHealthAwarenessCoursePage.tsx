@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Mental Health Awareness Course | Construction Industry';
+const PAGE_TITLE = 'Mental Health Awareness Course for Construction';
 const PAGE_DESCRIPTION =
   'Mental health awareness for UK electricians + construction: spot the signs, start conversations, support colleagues, look after yourself. 4 modules.';
 

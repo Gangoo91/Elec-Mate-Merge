@@ -505,7 +505,7 @@ const sections = [
 export default function StormDamageElectricalPage() {
   return (
     <GuideTemplate
-      title="Storm Damage Electrical Safety | Emergency Guide UK"
+      title="Storm Damage Electrical Safety: Emergency Guide"
       description="What to do about electrical damage after a storm. Downed power lines (call 105), water ingress in consumer units, emergency isolation."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

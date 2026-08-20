@@ -722,7 +722,7 @@ const sections = [
 export default function ElectricalApprenticeshipEmployerPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprenticeship Employer Guide | Hiring & Training"
+      title="Electrical Apprenticeship Employer Guide UK"
       description="Complete employer guide to electrical apprenticeships. Funding, levy, training providers, supervision duties, EPA preparation, employer responsibilities."
       datePublished="2026-01-28"
       dateModified="2026-05-18"

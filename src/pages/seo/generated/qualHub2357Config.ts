@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const qualHub2357Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-complete-guide',
-  title: 'City & Guilds 2357: Level 3 NVQ Diploma in Installing',
+  title: 'City & Guilds 2357: Level 3 NVQ Diploma',
   description: 'The complete 2026 guide to City & Guilds 2357 (Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment).',
   datePublished: published,
   dateModified: modified,

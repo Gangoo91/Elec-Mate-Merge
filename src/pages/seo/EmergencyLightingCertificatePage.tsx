@@ -194,7 +194,7 @@ const howToSchema = {
 
 export default function EmergencyLightingCertificatePage() {
   useSEO({
-    title: 'Emergency Lighting Certificate App | BS 5266 Compliant',
+    title: 'Emergency Lighting Certificate App: BS 5266',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

@@ -8,7 +8,7 @@ import { fireAlarmQuestionBank } from '@/data/upskilling/fireAlarmMockExamData';
 export default function FireAlarmMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Fire Alarm Mock Exam 2026 (BS 5839-1 Practice)`}
+      title={`Free Fire Alarm Mock Exam (BS 5839-1 Practice)`}
       description={`Free BS 5839-1 fire alarm mock exam — 25 questions, 30-min timer, 150-question bank. System categories L1-L5 and P1/P2, detectors, zoning, testing.`}
       slug="fire-alarm"
       heading={`Fire Alarm Systems Mock Exam (BS 5839-1)`}

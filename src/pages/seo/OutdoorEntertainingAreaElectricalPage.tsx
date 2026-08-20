@@ -577,7 +577,7 @@ const sections = [
 export default function OutdoorEntertainingAreaElectricalPage() {
   return (
     <GuideTemplate
-      title="Outdoor Entertaining Area Electrical UK | IP Ratings,"
+      title="Outdoor Entertaining Area Electrical UK Guide"
       description="Complete guide to outdoor entertaining area electrical installations in the UK. IP ratings for outdoor equipment, IP66 sockets, outdoor kitchen circuits."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

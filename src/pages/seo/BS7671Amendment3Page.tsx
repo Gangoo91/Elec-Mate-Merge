@@ -660,7 +660,7 @@ const sections = [
 export default function BS7671Amendment3Page() {
   return (
     <GuideTemplate
-      title="BS 7671 Amendment 3 (A3:2024) | Changes Explained"
+      title="BS 7671 Amendment 3 (A3:2024): Changes Explained"
       description="Complete guide to BS 7671:2018+A3:2024: Reg 530.3.201 bidirectional device requirements for solar PV, battery storage and V2G installations explained."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

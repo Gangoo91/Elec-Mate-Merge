@@ -612,7 +612,7 @@ const sections = [
 export default function ThermostatWiringGuidePage() {
   return (
     <GuideTemplate
-      title="Thermostat Wiring Guide UK | Room & Cylinder Thermostat"
+      title="Thermostat Wiring Guide UK: Room & Cylinder"
       description="Complete UK thermostat wiring guide. S-Plan and Y-Plan heating systems, room thermostat wiring, cylinder thermostat (60°C minimum for Legionella)."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

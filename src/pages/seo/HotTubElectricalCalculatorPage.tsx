@@ -18,7 +18,7 @@ import {
 export default function HotTubElectricalCalculatorPage() {
   return (
     <ToolTemplate
-      title="Hot Tub Electrical Calculator: 13A vs 32A Supply (UK)"
+      title="Hot Tub Electrical Calculator: 13A vs 32A Supply"
       description="Free hot tub electrical calculator. Plan a 13A plug-in or 32A hardwired supply with RCD protection, outdoor cabling and voltage drop checks to BS 7671."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

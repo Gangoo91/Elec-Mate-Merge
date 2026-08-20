@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Observation Codes | C1, C2, C3, FI Explained';
 const PAGE_DESCRIPTION =
-  'Complete guide to EICR observation codes C1, C2, C3 and FI. Real examples, classification criteria, and which codes actually make a report Unsatisfactory. For UK electricians.';
+  'Complete guide to EICR observation codes C1, C2, C3 and FI. Real examples, classification criteria, and which codes make a report Unsatisfactory.';
 
 const faqs = [
   {
@@ -141,7 +141,7 @@ const TH =
 
 export default function BS7671ObservationCodesPage() {
   useSEO({
-    title: 'BS 7671 Observation Codes Explained | C1, C2, C3, FI Guide',
+    title: 'Electrical Codes C1, C2, C3, FI: EICR Examples',
     description: PAGE_DESCRIPTION,
     schema: articleSchema,
   });

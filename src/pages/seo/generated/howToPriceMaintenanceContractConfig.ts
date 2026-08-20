@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPriceMaintenanceContractConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-maintenance-contract-as-an-electrician',
-  title: 'How to Price Maintenance Contract (Annual / Quarterly) as',
+  title: 'How to Price a Maintenance Contract — UK',
   description: 'How much should you charge for maintenance contract (annual / quarterly) as a UK electrician in 2026?',
   datePublished: published,
   dateModified: modified,

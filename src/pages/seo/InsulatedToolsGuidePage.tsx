@@ -757,8 +757,8 @@ const sections = [
 export default function InsulatedToolsGuidePage() {
   return (
     <GuideTemplate
-      title="Insulated Tools for Electricians UK | 1000V Rated Tools"
-      description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required under the Electricity at Work Regulations 1989, plus top brands and inspection schedules for UK electricians."
+      title="Insulated Tools for Electricians UK: 1000V Rated"
+      description="UK guide to IEC 60900 insulated tools: VDE ratings, when they're legally required under the Electricity at Work Regulations 1989, brands and inspection."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

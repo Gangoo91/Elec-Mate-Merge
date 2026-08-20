@@ -402,7 +402,7 @@ export default function ElectricianSalaryBirminghamPage() {
   return (
     <GuideTemplate
       localArea="Salary Birmingham"
-      title="Electrician Salary Birmingham 2026 | Employed &"
+      title="Electrician Salary Birmingham 2026"
       description="Realistic electrician salary figures for Birmingham and the West Midlands in 2026. Employed rates £30,000–£50,000, self-employed £42,000–£65,000."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

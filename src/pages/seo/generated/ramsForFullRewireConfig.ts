@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const ramsForFullRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-full-rewire',
   title:
-    'RAMS for a Full House Rewire — UK Method Statement Template',
+    'RAMS for a Full House Rewire — UK Template',
   description:
     'Risk assessment and method statement for a full house rewire in the UK. Hazards, CDM 2015 duties, asbestos awareness, phased isolation…',
   datePublished: published,

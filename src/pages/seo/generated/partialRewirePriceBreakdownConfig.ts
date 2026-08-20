@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const partialRewirePriceBreakdownConfig: GeneratedGuideConfig = {
   pagePath: '/guides/partial-rewire-price-breakdown',
-  title: 'Partial Rewire Price Breakdown | Guide | Elec-Mate',
+  title: 'Partial Rewire Price Breakdown Guide',
   description:
     'A clear breakdown of partial rewire pricing for electricians and customers, including labour, materials, testing, and common cost drivers.',
   datePublished: published,

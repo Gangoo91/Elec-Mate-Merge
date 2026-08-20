@@ -10,8 +10,7 @@ const modified = '2026-06-10';
 
 export const section722EvChargingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-722-ev-charging-a4-2026-changes',
-  title:
-    'Section 722 EV Charging Changes (BS 7671:2018+A4:2026)',
+  title: 'Section 722 EV Charging: A4:2026 Changes',
   description:
     'A clause-by-clause walk-through of what Amendment 4:2026 changed in Section 722 of BS 7671 for electric vehicle charging installations — RDC-DD…',
   datePublished: published,

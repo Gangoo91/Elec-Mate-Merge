@@ -668,7 +668,7 @@ const sections = [
 export default function ApprenticeEndpointAssessmentPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprentice End-Point Assessment (EPA) Guide UK"
+      title="Electrical Apprentice End-Point Assessment Guide"
       description="Complete guide to the Electrical Installation apprenticeship End-Point Assessment (EPA). Knowledge test, practical observation, professional discussion."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -620,7 +620,7 @@ const sections = [
 export default function ThreePhaseInstallationPage() {
   return (
     <GuideTemplate
-      title="Three Phase Installation Guide | BS 7671 UK"
+      title="Three Phase Installation Guide: BS 7671 UK"
       description="Complete guide to three phase electrical installations in the UK. Covers when three phase is needed, load balancing, TPN distribution boards."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'AM2 Exam Preparation: How to Pass the Practical First Time';
 const PAGE_DESCRIPTION =
-  'Step-by-step AM2 preparation strategy: what to revise, how to simulate the 6 NET sections, time management for the 16.5h assessment, consumer unit build, ring final, fault diagnosis pitfalls.';
+  'Step-by-step AM2 preparation: what to revise, how to simulate the 6 NET sections, time management for the 16.5h assessment and fault diagnosis pitfalls.';
 
 const faqs = [
   {
@@ -191,7 +191,7 @@ const breadcrumbSchema = {
 
 export default function AM2ExamPreparationPage() {
   useSEO({
-    title: 'AM2 Exam Preparation Online | Practice Tests & Mock Exams',
+    title: 'AM2 Exam Preparation: Practice Tests Online',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });

@@ -682,7 +682,7 @@ const sections = [
 export default function EmergencyLightingCostPage() {
   return (
     <GuideTemplate
-      title="Emergency Lighting Installation Cost 2026 | UK Price Guide"
+      title="Emergency Lighting Installation Cost 2026"
       description="How much does emergency lighting installation cost in 2026? Complete UK price guide covering maintained vs non-maintained."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

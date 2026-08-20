@@ -17,7 +17,7 @@ import {
 export default function EicrCodeCheckerPage() {
   return (
     <ToolTemplate
-      title="EICR Codes Explained: C1, C2, C3 + FI Checker (Free Tool)"
+      title="EICR Codes Explained: C1, C2, C3 + FI Checker"
       description="Free EICR code checker — search 76 real observations and see how most inspectors code them: C1, C2, C3 or FI, with reasoning and landlord rules."
       datePublished="2026-07-02"
       dateModified="2026-07-02"

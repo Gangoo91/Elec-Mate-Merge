@@ -17,7 +17,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Test Instruments Guide | What You Need';
+const PAGE_TITLE = 'Electrical Test Instruments Guide: What You Need';
 const PAGE_DESCRIPTION =
   'Electrical test instruments for UK electricians: MFT, clamp meter, proving unit, socket tester, PAT tester, calibration. What you need + cost.';
 

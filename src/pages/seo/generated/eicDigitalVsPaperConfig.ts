@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const eicDigitalVsPaperConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-digital-vs-paper',
-  title: 'Digital vs Paper EIC | Which Workflow Works Better?',
+  title: 'Digital vs Paper EIC: Which Works Better?',
   description:
     'Compare digital and paper EIC workflows for electricians, including speed, accuracy, client handover, and what works best on site.',
   datePublished: published,

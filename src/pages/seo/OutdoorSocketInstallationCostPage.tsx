@@ -536,7 +536,7 @@ const sections = [
 export default function OutdoorSocketInstallationCostPage() {
   return (
     <GuideTemplate
-      title="Outdoor Socket Installation Cost UK 2026 | Price Guide"
+      title="Outdoor Socket Installation Cost UK 2026"
       description="How much does an outdoor socket cost to install in the UK in 2026? Typical prices £150–£400 depending on cable run, IP66 socket, RCD protection."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

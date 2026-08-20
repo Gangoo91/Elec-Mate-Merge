@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const ElectricalApprenticeYear4RevisionPlanConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-apprentice-year-4-revision-plan',
-  title: 'Year 4 Electrical Apprentice Revision Plan — Complete 2026',
+  title: 'Year 4 Electrical Apprentice Revision 2026',
   description: 'A complete revision plan for fourth-year electrical apprentices. Year 4 is dominated by the AM2 end-point assessment, NVQ portfolio completion…',
   datePublished: published,
   dateModified: modified,

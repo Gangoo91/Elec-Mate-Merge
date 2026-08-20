@@ -10,8 +10,7 @@ const modified = '2026-05-18';
 
 export const ramsForSolarPVInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-solar-pv-installation',
-  title:
-    'RAMS for Solar PV Installation — UK Method Statement Guide',
+  title: 'RAMS for Solar PV Installation: UK Guide',
   description:
     'How to write a Risk Assessment and Method Statement (RAMS) for a UK solar PV installation. Covers working at height, live DC strings, inverter mounting…',
   datePublished: published,

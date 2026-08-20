@@ -616,7 +616,7 @@ const sections = [
 export default function VoltageTooHighLowPage() {
   return (
     <GuideTemplate
-      title="Voltage Too High or Too Low | Causes & Solutions"
+      title="Voltage Too High or Too Low: Causes & Solutions"
       description="Is your voltage too high or too low? Expert guide covering the acceptable UK range (216V-253V), loose neutral faults, DNO supply issues."
       datePublished="2025-05-10"
       dateModified="2026-06-10"

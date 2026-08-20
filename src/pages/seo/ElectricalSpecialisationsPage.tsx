@@ -629,7 +629,7 @@ const sections = [
 export default function ElectricalSpecialisationsPage() {
   return (
     <GuideTemplate
-      title="Electrical Specialisations | Career Options UK"
+      title="Electrical Specialisations: Career Options UK"
       description="Guide to electrical specialisations in the UK: fire alarm, EV charging, solar PV, data cabling, BMS, industrial, and testing specialist."
       datePublished="2025-07-10"
       dateModified="2026-05-18"

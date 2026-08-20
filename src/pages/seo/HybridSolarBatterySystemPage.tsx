@@ -498,7 +498,7 @@ const sections = [
 export default function HybridSolarBatterySystemPage() {
   return (
     <GuideTemplate
-      title="Hybrid Solar Battery System UK | Solar + Storage Explained"
+      title="Hybrid Solar Battery System UK: Solar + Storage"
       description="Complete guide to hybrid solar battery systems in the UK. What hybrid means (grid-tied + battery), hybrid inverter vs AC-coupling."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

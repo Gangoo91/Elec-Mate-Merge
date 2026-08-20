@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const eicClientHandoverGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-client-handover-guide',
-  title: 'EIC Client Handover Guide | Electrician Handover Advice',
+  title: 'EIC Client Handover Guide: Electrician Advice',
   description:
     'How to hand over an Electrical Installation Certificate clearly, so clients understand what was done, what was tested, and what happens next.',
   datePublished: published,

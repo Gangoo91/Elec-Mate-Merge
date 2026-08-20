@@ -120,7 +120,7 @@ const relatedPages = [
 export default function ExitSignSymbolPage() {
   return (
     <GuideTemplate
-      title="Exit Sign Symbol | BS EN 1838 + BS 5266 Reference"
+      title="Exit Sign Symbol: BS EN 1838 + BS 5266 Reference"
       description="Exit Sign IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

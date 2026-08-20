@@ -19,7 +19,7 @@ import {
 export default function ElectricalSafetyAuditPage() {
   return (
     <GuideTemplate
-      title="Electrical Safety Audit | Workplace Compliance Guide"
+      title="Electrical Safety Audit: Workplace Compliance"
       description="Complete guide to electrical safety audits in UK workplaces. Covers the difference between audits and inspections."
       datePublished="2026-01-20"
       dateModified="2026-05-18"

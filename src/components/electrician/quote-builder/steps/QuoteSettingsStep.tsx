@@ -10,6 +10,7 @@ import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { inputCn, cardCn } from '@/components/forms/fieldStyles';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 const settingsSchema = z.object({
   vatRate: z.number().min(0).max(100, 'VAT rate must be between 0-100%'),
@@ -38,6 +39,9 @@ const settingsSchema = z.object({
   cisRate: z.number().optional(),
   reverseCharge: z.boolean().optional(),
   isEstimate: z.boolean().optional(),
+  // ELE-1576 — per-quote overrides; undefined = use the company default.
+  depositAmount: z.number().min(0).optional(),
+  validForDays: z.number().int().min(1).max(365).optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -80,6 +84,12 @@ const ToggleRow = ({
 );
 
 export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsStepProps) => {
+  // ELE-1576 — shown as placeholders so the electrician can see what leaving
+  // a field blank will actually do, rather than guessing their own defaults.
+  const { companyProfile } = useCompanyProfile();
+  const companyDepositPercentage = companyProfile?.deposit_percentage ?? 0;
+  const companyValidityDays = companyProfile?.quote_validity_days ?? 30;
+
   const form = useForm<QuoteSettings>({
     resolver: zodResolver(settingsSchema),
     defaultValues: settings || {
@@ -409,6 +419,86 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
           >
             {switchField('hideMarkupFromCustomer')}
           </ToggleRow>
+        </section>
+
+        {/* ============ 04 · TERMS ============
+            ELE-1576 — deposit and validity were global-only, in Settings.
+            Both change per job ("a Domestic and Commercial" need different
+            deposits), so they belong on the quote. Left blank they fall back
+            to the company defaults, so nothing changes for anyone who
+            doesn't touch them. */}
+        <section className={cardCn}>
+          <GroupHeader
+            n="04"
+            title="Terms"
+            sub="Deposit and validity for this quote — blank uses your defaults"
+          />
+
+          <FormField
+            control={form.control}
+            name="depositAmount"
+            render={({ field }) => (
+              <FormItem>
+                <label htmlFor="depositAmount" className="text-[12px] font-medium text-white mb-1 block">
+                  Deposit required (£)
+                </label>
+                <FormControl>
+                  {/* Plain numeric input, not DecimalInput: that component
+                      takes `value: number` and cannot express "blank", which
+                      is exactly what "use my default" needs here. */}
+                  <Input
+                    id="depositAmount"
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    className={inputCn}
+                    placeholder={
+                      companyDepositPercentage
+                        ? `Default: ${companyDepositPercentage}% of the total`
+                        : 'No deposit'
+                    }
+                    value={field.value ?? ''}
+                    onChange={(e) =>
+                      field.onChange(e.target.value === '' ? undefined : Number(e.target.value))
+                    }
+                  />
+                </FormControl>
+                <p className="mt-1 text-[11px] text-white">
+                  A cash amount, not a percentage. Leave blank for your usual terms.
+                </p>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="validForDays"
+            render={({ field }) => (
+              <FormItem>
+                <label htmlFor="validForDays" className="text-[12px] font-medium text-white mb-1 block">
+                  Quote valid for (days)
+                </label>
+                <FormControl>
+                  <Input
+                    id="validForDays"
+                    type="number"
+                    inputMode="numeric"
+                    min={1}
+                    max={365}
+                    className={inputCn}
+                    placeholder={`Default: ${companyValidityDays} days`}
+                    value={field.value ?? ''}
+                    onChange={(e) =>
+                      field.onChange(e.target.value === '' ? undefined : Number(e.target.value))
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </section>
       </div>
     </Form>

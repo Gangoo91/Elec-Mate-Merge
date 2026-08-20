@@ -25,7 +25,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Certificate Types UK | Complete Guide';
+const PAGE_TITLE = 'Electrical Certificate Types UK: Complete Guide';
 const PAGE_DESCRIPTION =
   'Every UK electrical certificate type: EICR, EIC, MWC, EV, BS 5839 fire alarm, BS 5266 emergency lighting, MCS solar PV, PAT. When + who + legal.';
 

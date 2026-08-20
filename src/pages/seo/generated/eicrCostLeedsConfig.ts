@@ -13,7 +13,7 @@ const modified = '2026-05-18';
 
 export const eicrCostLeedsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-cost-leeds',
-  title: 'EICR Cost Leeds 2026 — Domestic & Commercial Pricing',
+  title: 'EICR Cost Leeds 2026 — Domestic & Commercial',
   description: 'How much does an EICR cost in Leeds? Fair-margin 2026 prices for scheme-registered electricians — £220–290 for a 1-bed, £330–450 for a 4-bed…',
   datePublished: published,
   dateModified: modified,

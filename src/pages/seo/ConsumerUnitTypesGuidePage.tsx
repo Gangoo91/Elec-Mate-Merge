@@ -512,7 +512,7 @@ const sections = [
 export default function ConsumerUnitTypesGuidePage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Types Guide — Split-Load, RCBO,"
+      title="Consumer Unit Types Guide: Split-Load & RCBO"
       description="Complete UK guide to consumer unit types. Metal-clad enclosures required since 2016 under BS EN 61439-3, split-load, high-integrity."
       datePublished="2024-07-01"
       dateModified="2026-05-18"

@@ -705,8 +705,8 @@ const sections = [
 export default function ElectricalFaultFindingMethodologyPage() {
   return (
     <GuideTemplate
-      title="Electrical Fault Finding Methodology | The Six-Step Approach"
-      description="The six-step approach to electrical fault finding for UK electricians: gather information, visual inspection, test, diagnose, fix and verify — plus half-split, elimination and BS 7671 safe isolation."
+      title="Electrical Fault Finding: The Six-Step Method"
+      description="The six-step approach to electrical fault finding: gather information, visual inspection, test, diagnose, fix and verify — plus half-split and elimination."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

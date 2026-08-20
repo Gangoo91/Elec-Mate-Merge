@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Quality Assurance | QA on Site Guide';
+const PAGE_TITLE = 'Electrical Quality Assurance: QA on Site Guide';
 const PAGE_DESCRIPTION =
   'Electrical QA on construction sites: ITPs, snagging, quality docs, client acceptance, witness/hold points, NCRs. Right-first-time installs.';
 

@@ -655,7 +655,7 @@ const sections = [
 export default function LandlordElectricalSafetyReadingPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Reading | EICR for Landlords"
+      title="Landlord Electrical Safety Reading: EICR Guide"
       description="Landlord electrical safety requirements in Reading. 2020 Regulations, Reading Borough Council enforcement, HMO licensing, penalties up to £30,000."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

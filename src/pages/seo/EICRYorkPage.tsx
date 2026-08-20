@@ -583,7 +583,7 @@ const sections = [
 export default function EICRYorkPage() {
   return (
     <GuideTemplate
-      title="EICR York | Electrical Safety Certificate Cost 2026"
+      title="EICR York: Cost & Safety Certificate 2026"
       description="EICR costs in York for 2026. Landlord legal requirements, City of York Council enforcement, historic housing stock challenges."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

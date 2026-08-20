@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/near-miss-reporting-electricians',
   title:
-    'Near-Miss Reporting for Electricians (UK HSE Framework)',
+    'Near-Miss Reporting for Electricians (UK HSE)',
   description:
     'Near-miss reporting for UK electricians: what counts, why under-reporting is dangerous, the HSE framework, RIDDOR dangerous-occurrence scope…',
   datePublished: published,

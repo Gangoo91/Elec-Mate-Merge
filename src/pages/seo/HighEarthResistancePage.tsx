@@ -659,7 +659,7 @@ const sections = [
 export default function HighEarthResistancePage() {
   return (
     <GuideTemplate
-      title="High Earth Resistance | Causes and Solutions for UK"
+      title="High Earth Resistance: Causes and Solutions UK"
       description="Complete guide to high earth resistance for UK electricians. Causes, soil conditions, electrode types (rods, plates, tapes)."
       datePublished="2025-08-01"
       dateModified="2026-06-10"

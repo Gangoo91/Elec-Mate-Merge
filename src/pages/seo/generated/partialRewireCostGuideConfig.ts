@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const partialRewireCostGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/partial-rewire-cost-guide',
-  title: 'Partial Rewire Cost Guide | Electrician Pricing | Elec-Mate',
+  title: 'Partial Rewire Cost Guide: Electrician Pricing',
   description:
     'How to price a partial rewire clearly, what changes the cost, and how to keep the quote understandable for both electricians and customers.',
   datePublished: published,

@@ -522,7 +522,7 @@ const sections = [
 export default function ContinuityTestingPage() {
   return (
     <GuideTemplate
-      title="Continuity Testing Guide | R1+R2 + Ring Final 2026"
+      title="Continuity Testing Guide: R1+R2, Ring Final"
       description="Continuity testing for UK electricians: R1+R2 method, r1+r2/4 ring final check, CPC continuity, lead-resistance null + recording on the EIC schedule."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

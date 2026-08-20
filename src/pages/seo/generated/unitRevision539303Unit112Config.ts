@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit112Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-112-practices-and-procedures-for-inspection-testing-and-commissioning-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 112: Practices and procedures',
+  title: 'City & Guilds 5393-03 Unit 112 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 112 (Practices and procedures for inspection, testing and commissioning in dwellings).',
   datePublished: published,
   dateModified: modified,

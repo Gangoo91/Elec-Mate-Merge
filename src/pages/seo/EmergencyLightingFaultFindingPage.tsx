@@ -472,7 +472,7 @@ const sections = [
 export default function EmergencyLightingFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Emergency Lighting Not Working | Fault Finding Guide UK"
+      title="Emergency Lighting Not Working: Fault Finding UK"
       description="Emergency lighting not working or failing tests? This guide covers battery failure, charging circuit faults, lamp failure, test mode issues."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

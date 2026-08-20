@@ -742,7 +742,7 @@ const sections = [
 export default function HiringFirstEmployeePage() {
   return (
     <GuideTemplate
-      title="Hiring Your First Employee as an Electrician | Guide"
+      title="Hiring Your First Employee as an Electrician"
       description="Complete guide to hiring your first employee as a self-employed electrician. PAYE, pension auto-enrolment, employers liability insurance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

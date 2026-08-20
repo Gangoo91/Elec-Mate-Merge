@@ -771,7 +771,7 @@ const sections = [
 export default function EarthFaultLoopImpedancePage() {
   return (
     <GuideTemplate
-      title="Earth Fault Loop Impedance Calculation | Zs Guide"
+      title="Earth Fault Loop Impedance Calculation: Zs Guide"
       description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors."
       datePublished="2025-05-10"
       dateModified="2026-08-06"

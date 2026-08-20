@@ -20,7 +20,7 @@ const PAGE_PATH = '/tools/business-analytics-electrician';
 export default function BusinessAnalyticsElectricianPage() {
   return (
     <BusinessTemplate
-      title="Business Analytics for Electricians | Dashboard"
+      title="Business Analytics for Electricians: Dashboard"
       description="Track revenue, job profitability, customer trends, and cash flow with analytics built for UK electricians. Live dashboards. 7-day free trial."
       datePublished="2025-08-10"
       dateModified="2026-05-18"

@@ -651,7 +651,7 @@ const sections = [
 export default function ElectricalFrameworkContractsPage() {
   return (
     <GuideTemplate
-      title="Electrical Framework Contracts UK | Getting on Approved"
+      title="Electrical Framework Contracts UK Guide"
       description="How UK electricians get onto local authority, NHS, and housing association framework contracts: prequalification, accreditations, tender pricing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

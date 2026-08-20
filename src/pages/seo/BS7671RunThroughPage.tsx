@@ -504,7 +504,7 @@ const relatedPages: RelatedPage[] = [
 export default function BS7671RunThroughPage() {
   return (
     <GuideTemplate
-      title="BS 7671 Run-Through Study Guide | 18th Edition Part by Part"
+      title="BS 7671 Run-Through Study Guide: 18th Edition"
       description="Complete run-through of BS 7671:2018+A4:2026 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy."
       datePublished="2025-07-20"
       dateModified="2026-06-10"

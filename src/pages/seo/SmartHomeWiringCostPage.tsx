@@ -611,8 +611,8 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Cost UK 2026: Full Price Breakdown"
-      description="What smart home wiring really costs in the UK (2026) — room-by-room prices, whole-house retrofits, Cat6 structured cabling, hubs and labour. See where the money goes, what to budget, and what electricians should charge."
+      title="Smart Home Installation & Wiring Cost UK 2026"
+      description="Smart home wiring costs in the UK (2026): room-by-room prices, whole-house retrofits, Cat6 structured cabling, hubs and labour — what to budget and charge."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

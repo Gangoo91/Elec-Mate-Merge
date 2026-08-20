@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision539303Unit114Config: GeneratedGuideConfig = {
   pagePath: '/guides/5393-03-unit-114-practices-and-procedures-for-fault-diagnosis-and-rectification-in-dwellings-revision',
-  title: 'City & Guilds 5393-03 Unit 114: Practices and procedures',
+  title: 'City & Guilds 5393-03 Unit 114 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5393-03 Unit 114 (Practices and procedures for fault diagnosis and rectification in dwellings).',
   datePublished: published,
   dateModified: modified,

@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalContainmentSymbolsPage() {
   return (
     <GuideTemplate
-      title="Cable Containment Symbols | Conduit, Trunking, Tray BS EN"
+      title="Cable Containment Symbols: Conduit & Trunking"
       description="Conduit, trunking, busbar trunking, cable tray, floor trunking, underfloor trunking."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

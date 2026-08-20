@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const eicCommonMistakesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-common-mistakes',
-  title: 'EIC Common Mistakes | Electrical Installation Certificate',
+  title: 'EIC Common Mistakes: What to Avoid',
   description:
     'The common mistakes that weaken an Electrical Installation Certificate, from missing readings to vague handover notes, and how to avoid them on site.',
   datePublished: published,

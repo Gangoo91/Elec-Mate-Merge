@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit302Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-302-principles-of-electrical-science-revision',
-  title: 'City & Guilds 8202 Unit 302: Principles of electrical',
+  title: 'City & Guilds 8202 Unit 302 Revision Guide',
   description: 'Complete revision guide for City & Guilds 8202 Unit 302 (Principles of electrical science). Every topic structured as a study checklist, with mock exams…',
   datePublished: published,
   dateModified: modified,

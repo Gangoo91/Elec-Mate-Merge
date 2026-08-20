@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const howToPricePatTestingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-price-pat-testing-as-an-electrician',
-  title: 'How to Price PAT Testing (Portable Appliance Testing) as an',
+  title: 'How to Price PAT Testing: UK Electrician Guide',
   description: 'How much should you charge for pat testing (portable appliance testing) as a UK electrician in 2026?',
   datePublished: published,
   dateModified: modified,

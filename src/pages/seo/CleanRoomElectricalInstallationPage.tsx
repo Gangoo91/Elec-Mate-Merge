@@ -411,7 +411,7 @@ const sections = [
 export default function CleanRoomElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Clean Room Electrical Installation UK | ISO 14644-1, GMP,"
+      title="Clean Room Electrical Installation: ISO 14644-1"
       description="Complete guide to clean room electrical installation for UK electricians. ISO 14644-1 classifications (Class 1–9), pharmaceutical GMP requirements."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

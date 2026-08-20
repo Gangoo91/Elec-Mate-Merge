@@ -551,7 +551,7 @@ const sections = [
 export default function ConsumerUnitReplacementSheffieldPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Sheffield | Fuse Box Sheffield"
+      title="Consumer Unit Replacement Sheffield"
       description="Consumer unit replacement in Sheffield — metal enclosure rules, Part P Building Regulations, costs £400–750, BS EN 61439, NICEIC registered electricians."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

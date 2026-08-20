@@ -216,7 +216,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function ElectricalTestingCalculatorsPage() {
   useSEO({
-    title: 'Electrical Testing Calculators | Zs, Fault Current, RCD',
+    title: 'Fault Loop Impedance Calculator: Zs + 70 More',
     description: PAGE_DESCRIPTION,
     schema: softwareApplicationSchema,
   });

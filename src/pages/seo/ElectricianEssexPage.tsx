@@ -477,7 +477,7 @@ export default function ElectricianEssexPage() {
   return (
     <GuideTemplate
       localArea="Essex"
-      title="Electrician Essex — Find Qualified Electricians in"
+      title="Electrician Essex: Find Qualified Electricians"
       description="Find NICEIC and NAPIT registered electricians across Essex, covering Chelmsford, Colchester, Southend-on-Sea, Basildon, Brentwood, and Harlow."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

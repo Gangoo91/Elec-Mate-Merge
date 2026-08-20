@@ -626,7 +626,7 @@ const sections = [
 export default function PowerCutWhatToDoPage() {
   return (
     <GuideTemplate
-      title="Power Cut | What to Do & Who to Call UK"
+      title="Power Cut: What to Do & Who to Call UK"
       description="Complete guide to power cuts in the UK. What to check first, how to use your consumer unit, when to call 105, DNO vs internal faults."
       datePublished="2026-01-15"
       dateModified="2026-05-18"

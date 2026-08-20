@@ -8,7 +8,7 @@ import { evChargingQuestionBank } from '@/data/upskilling/evChargingMockExamData
 export default function EVChargingMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free EV Charging Mock Exam 2026 (C&G 2921 Practice)`}
+      title={`Free EV Charging Mock Exam (C&G 2921 Practice)`}
       description={`Free EV charging installation mock exam — 25 questions, 30-min timer, 150-question bank. Connectors, earthing and protection, smart charging, testing.`}
       slug="ev-charging"
       heading={`EV Charging Installation Mock Exam`}

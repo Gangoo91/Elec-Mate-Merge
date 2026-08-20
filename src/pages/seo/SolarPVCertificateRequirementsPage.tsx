@@ -895,7 +895,7 @@ const sections = [
 export default function SolarPVCertificateRequirementsPage() {
   return (
     <GuideTemplate
-      title="Solar PV Certificate Requirements | MCS UK"
+      title="Solar PV Certificate Requirements: MCS UK"
       description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation."
       datePublished="2026-02-01"
       dateModified="2026-06-10"

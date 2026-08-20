@@ -558,8 +558,8 @@ const sections = [
 export default function ProsumerLVInstallationPage() {
   return (
     <GuideTemplate
-      title="Prosumer's Low Voltage Electrical Installation (BS 7671 A4:2026 Chapter 82)"
-      description='A "prosumer" installation both consumes and produces electricity — solar PV, battery storage, EV V2G, wind, CHP. How BS 7671:2018+A4:2026 Chapter 82 governs design, isolation, RCD type and labelling.'
+      title="Prosumer's LV Electrical Installation: Ch.82"
+      description='Prosumer installations consume and produce electricity — solar PV, battery storage, V2G. How BS 7671 A4:2026 Chapter 82 governs design, isolation and RCDs.'
       datePublished={published}
       dateModified={modified}
       breadcrumbs={breadcrumbs}

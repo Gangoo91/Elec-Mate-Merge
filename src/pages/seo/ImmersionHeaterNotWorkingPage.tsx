@@ -498,7 +498,7 @@ const sections = [
 export default function ImmersionHeaterNotWorkingPage() {
   return (
     <GuideTemplate
-      title="Immersion Heater Not Working | Causes & Fixes"
+      title="Immersion Heater Not Working: Causes & Fixes"
       description="Why is your immersion heater not heating water? Covers tripped MCBs, faulty thermostats, failed elements, and timer problems."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

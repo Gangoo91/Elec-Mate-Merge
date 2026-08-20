@@ -138,7 +138,7 @@ const sections = [
 export default function ElectricalRenewablesSymbolsPage() {
   return (
     <GuideTemplate
-      title="Solar PV + Renewables Symbols | BS 7671 Section 712"
+      title="Solar PV + Renewables Symbols: Section 712"
       description="Solar PV panel, inverter, battery storage, generator and EV distribution symbols to IEC 60617 for BS 7671 Section 712 prosumer installations."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostMiltonKeynesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-milton-keynes',
-  title: 'Consumer Unit Replacement Cost Milton Keynes 2026 — Full',
+  title: 'Consumer Unit Replacement Cost Milton Keynes',
   description: 'Consumer unit (fuse board) replacement cost in Milton Keynes — typical 2026 prices £527–840 for a domestic swap with RCBOs…',
   datePublished: published,
   dateModified: modified,

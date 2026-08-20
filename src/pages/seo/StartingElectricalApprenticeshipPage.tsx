@@ -420,7 +420,7 @@ const sections = [
 export default function StartingElectricalApprenticeshipPage() {
   return (
     <GuideTemplate
-      title="Starting an Electrical Apprenticeship: 2026 Guide"
+      title="Starting an Electrical Apprenticeship: 2026"
       description="How to start an electrical apprenticeship: routes in, what you study, 2026 pay, year-by-year expectations, the AM2 and a September checklist."
       datePublished="2026-07-17"
       dateModified="2026-07-17"

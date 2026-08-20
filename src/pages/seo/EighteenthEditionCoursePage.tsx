@@ -138,7 +138,7 @@ export default function EighteenthEditionCoursePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useSEO({
-    title: '18th Edition Course Online | BS 7671 Amendment 4 Training',
+    title: '18th Edition Course Online: Amendment 4 Training',
     description:
       'Study BS 7671:2018 + Amendment 4:2026 online. AI-powered study assistant, practice quizzes, and progress tracking. From £6.99/mo with 7-day free trial.',
     schema: {

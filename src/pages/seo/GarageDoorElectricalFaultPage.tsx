@@ -717,7 +717,7 @@ const sections = [
 export default function GarageDoorElectricalFaultPage() {
   return (
     <GuideTemplate
-      title="Garage Door Electrical Fault | Wiring & Motor Faults UK"
+      title="Garage Door Electrical Fault: Motor Faults UK"
       description="Garage door electrical fault finding guide for UK homeowners and electricians. Motor control board faults, limit switch issues, safety sensors."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

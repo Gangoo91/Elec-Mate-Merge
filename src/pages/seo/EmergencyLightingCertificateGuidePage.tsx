@@ -729,7 +729,7 @@ const sections = [
 export default function EmergencyLightingCertificateGuidePage() {
   return (
     <GuideTemplate
-      title="Emergency Lighting Certificate Guide | BS 5266 UK"
+      title="Emergency Lighting Certificate Guide: BS 5266"
       description="Complete guide to emergency lighting certificate requirements under BS 5266. Covers completion certificates, verification."
       datePublished="2026-02-01"
       dateModified="2026-06-10"

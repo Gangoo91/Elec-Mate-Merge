@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 export const poeStructuredCablingHubConfig: GeneratedGuideConfig = {
   pagePath: '/guides/poe-structured-cabling-hub',
   title:
-    'Power over Ethernet & Structured Cabling Hub — UK Installer',
+    'Power over Ethernet & Structured Cabling Hub',
   description:
     'Complete UK installer hub for Power over Ethernet, structured cabling, PoE lighting, IP cameras, DALI and KNX.',
   datePublished: published,

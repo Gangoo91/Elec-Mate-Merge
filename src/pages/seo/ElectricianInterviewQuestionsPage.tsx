@@ -643,7 +643,7 @@ export default function ElectricianInterviewQuestionsPage() {
   return (
     <GuideTemplate
       localArea="Interview Questions"
-      title="Electrician Interview Questions | Top 25 & Answers"
+      title="Electrician Interview Questions: Top 25"
       description="Top 25 electrician interview questions with model answers. Technical questions on BS 7671, safe isolation, and Zs values."
       datePublished="2025-06-20"
       dateModified="2026-05-18"

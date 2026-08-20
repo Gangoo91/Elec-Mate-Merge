@@ -707,7 +707,7 @@ const sections = [
 export default function HomeOfficeElectricalPage() {
   return (
     <GuideTemplate
-      title="Home Office Electrical Setup | Wiring & Power Guide"
+      title="Home Office Electrical Setup: Wiring & Power"
       description="Complete guide to home office electrical setup in the UK. Dedicated circuits, ergonomic socket placement, Cat6/Cat6a data cabling, USB-C charging points."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

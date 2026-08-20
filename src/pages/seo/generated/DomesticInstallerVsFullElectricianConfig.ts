@@ -10,7 +10,7 @@ const modified = '2026-05-18';
 
 export const DomesticInstallerVsFullElectricianConfig: GeneratedGuideConfig = {
   pagePath: '/guides/domestic-installer-vs-full-electrician',
-  title: 'Domestic Installer vs Full Electrician — Two Different',
+  title: 'Domestic Installer vs Full Electrician: Compared',
   description: 'A "Domestic Installer" (Part P qualification) is a short course covering domestic electrical work only.',
   datePublished: published,
   dateModified: modified,

@@ -614,7 +614,7 @@ const sections = [
 export default function LightsDimmingWhenApplianceTurnsOnPage() {
   return (
     <GuideTemplate
-      title="Lights Dimming When Appliance Turns On | Causes & Fixes"
+      title="Lights Dimming When Appliance Turns On: Fixes"
       description="Why do your lights dim when an appliance turns on? Learn the causes — from normal inrush current to dangerous loose connections — and when to call an."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

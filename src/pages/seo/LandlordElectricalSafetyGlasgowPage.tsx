@@ -552,7 +552,7 @@ const sections = [
 export default function LandlordElectricalSafetyGlasgowPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Glasgow | Scottish Repairing"
+      title="Landlord Safety Glasgow: Repairing Standard"
       description="Landlord electrical safety requirements in Glasgow under Scottish law. Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

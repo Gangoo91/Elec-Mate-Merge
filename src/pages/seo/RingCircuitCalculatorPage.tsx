@@ -162,7 +162,7 @@ const howToSchema = {
 
 export default function RingCircuitCalculatorPage() {
   useSEO({
-    title: 'Ring Final Circuit Calculator | R1 R2 Rn Testing',
+    title: 'Ring Final Circuit Calculator: R1 R2 Rn Testing',
     description:
       'Validate ring final circuit test results using the cross-connection method. Check r1, rn, r2 readings, identify spurs and breaks. Built to GN3 and BS 7671.',
   });

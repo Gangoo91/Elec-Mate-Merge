@@ -556,7 +556,7 @@ export default function ElectricianManchesterPage() {
   return (
     <GuideTemplate
       localArea="Manchester"
-      title="Electrician in Manchester | Qualified Electricians 2026"
+      title="Electrician in Manchester: 2026 Guide"
       description="Find qualified, registered electricians in Manchester. 2026 pricing guide, how to verify NICEIC/NAPIT registration, terraced house rewiring."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -475,7 +475,7 @@ export default function ElectricianLutonPage() {
     <GuideTemplate
       noindex={true}
       localArea="Luton"
-      title="Electrician in Luton | Local Electricians 2026"
+      title="Electrician in Luton: Local Electricians 2026"
       description="Find qualified electricians in Luton. Part P compliance, NICEIC registered, EICR for landlords and HMOs, consumer unit replacement."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

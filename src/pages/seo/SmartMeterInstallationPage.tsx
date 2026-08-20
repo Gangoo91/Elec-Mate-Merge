@@ -526,7 +526,7 @@ const sections = [
 export default function SmartMeterInstallationPage() {
   return (
     <GuideTemplate
-      title="Smart Meter Installation — An Electrician's Guide"
+      title="Smart Meter Installation: Electrician's Guide"
       description="Understand what happens during a smart meter installation from an electrician's perspective. SMETS1 vs SMETS2, DNO vs supplier responsibilities."
       datePublished="2024-06-01"
       dateModified="2026-05-18"

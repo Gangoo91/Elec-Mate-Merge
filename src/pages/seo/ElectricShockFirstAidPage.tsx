@@ -560,7 +560,7 @@ const sections = [
 export default function ElectricShockFirstAidPage() {
   return (
     <GuideTemplate
-      title="Electric Shock First Aid UK | What to Do if Someone Gets an"
+      title="Electric Shock First Aid UK: What to Do"
       description="Electric shock first aid for the UK: do NOT touch the casualty — isolate supply first. CPR, burns treatment, when to call 999, RIDDOR reporting."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

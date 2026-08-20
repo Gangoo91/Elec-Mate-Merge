@@ -539,7 +539,7 @@ const sections = [
 export default function PartialRewireGuidePage() {
   return (
     <GuideTemplate
-      title="Partial Rewire Guide | When Full Rewire Isn't Needed"
+      title="Partial Rewire Guide: Full Rewire Not Needed"
       description="Complete guide to partial rewires in the UK. When a partial rewire is appropriate vs a full rewire, cost comparison, connecting old and new wiring."
       datePublished="2025-08-10"
       dateModified="2026-05-18"

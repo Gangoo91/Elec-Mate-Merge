@@ -774,7 +774,7 @@ const sections = [
 export default function BS5839FireAlarmStandardPage() {
   return (
     <GuideTemplate
-      title="BS 5839 Fire Alarm Standard | Complete Guide UK"
+      title="BS 5839 Fire Alarm Standard: Complete Guide UK"
       description="Complete guide to BS 5839 fire alarm standard. Part 1 commercial, Part 6 domestic, system categories L1-L5 and P1-P2, grades A-F, design, installation."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

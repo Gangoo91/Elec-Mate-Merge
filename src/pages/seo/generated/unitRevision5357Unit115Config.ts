@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit115Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-115-apply-fault-diagnosis-and-rectification-revision',
-  title: 'City & Guilds 5357 Unit 115: Apply Fault Diagnosis and',
+  title: 'City & Guilds 5357 Unit 115: Apply Fault',
   description: 'Complete revision guide for City & Guilds 5357 Unit 115 (Apply Fault Diagnosis and Rectification).',
   datePublished: published,
   dateModified: modified,

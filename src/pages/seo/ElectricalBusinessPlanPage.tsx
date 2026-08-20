@@ -495,7 +495,7 @@ const sections = [
 export default function ElectricalBusinessPlanPage() {
   return (
     <GuideTemplate
-      title="Electrical Business Plan Template UK 2026 | Start-Up Guide"
+      title="Electrical Business Plan Template UK 2026"
       description="Free electrical business plan template: financial projections, marketing plan, pricing strategy, services, target market. Built for UK sparks."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

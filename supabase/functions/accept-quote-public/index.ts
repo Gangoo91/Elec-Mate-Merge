@@ -101,7 +101,31 @@ const handler = async (req: Request): Promise<Response> => {
 
     let depositRequired = false;
     let depositAmountPennies = 0;
-    if (depositPct > 0 && (quote.total || 0) > 0) {
+
+    // ELE-1576 — a per-quote CASH deposit set in the quote builder beats any
+    // percentage. A percentage is the wrong instrument on a commercial job,
+    // which is why this was asked for; when the electrician has named an
+    // amount, that is the number, not a share of the total.
+    //
+    // Precedence: settings.depositAmount → settings.depositPercentage →
+    // company_profiles.deposit_percentage. The two percentage rungs are
+    // unchanged, so every existing quote behaves exactly as before.
+    const settingsDepositAmount = Number(quoteSettings.depositAmount);
+    // Never ask for more than the job is worth — a stale deposit left on a
+    // quote that was later reduced would otherwise overcharge the client.
+    const cappedDeposit = Math.min(settingsDepositAmount, Number(quote.total) || 0);
+    if (
+      Number.isFinite(settingsDepositAmount) &&
+      settingsDepositAmount > 0 &&
+      // The cap must be checked too, not just the raw amount. A £0 total would
+      // otherwise mark the quote deposit-required for £0 — acceptance would
+      // land on 'accepted_pending_deposit' waiting on a payment that can never
+      // be made, and the client could not proceed.
+      cappedDeposit > 0
+    ) {
+      depositRequired = true;
+      depositAmountPennies = Math.round(cappedDeposit * 100);
+    } else if (depositPct > 0 && (quote.total || 0) > 0) {
       depositRequired = true;
       depositAmountPennies = Math.round(Number(quote.total) * 100 * (depositPct / 100));
     }

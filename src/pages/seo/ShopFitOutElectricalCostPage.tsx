@@ -688,7 +688,7 @@ const sections = [
 export default function ShopFitOutElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Shop Fit-Out Electrical Cost UK 2026 | Commercial Pricing"
+      title="Shop Fit-Out Electrical Cost UK 2026: Pricing"
       description="Shop fit-out electrical installation cost in the UK 2026: £3,000–£15,000+ depending on size, lighting, sockets, EPOS power, CCTV, BS 7671 EIC."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

@@ -790,8 +790,8 @@ const relatedPages = [
 export default function ElectricianSalaryUKPage() {
   return (
     <GuideTemplate
-      title="Electrician Salary UK 2026: £32k-£75k by Year + Region"
-      description="UK electrician salary 2026: qualified £32-£45k employed, £50-£75k self-employed. JIB rates, day rates, regional pay, specialism premiums, take-home explained."
+      title="Electrician Salary UK 2026: £32k-£75k Guide"
+      description="UK electrician salary 2026: qualified £32-£45k employed, £50-£75k self-employed. JIB rates, day rates, regional pay and take-home explained."
       datePublished="2024-06-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

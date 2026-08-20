@@ -578,7 +578,7 @@ const sections = [
 export default function BuildingRegulationsElectricalPage() {
   return (
     <GuideTemplate
-      title="Building Regulations Part P Electrical | UK Guide for"
+      title="Building Regulations Part P Electrical: UK Guide"
       description="Complete guide to Part P Building Regulations for UK electricians. What work is notifiable, who can self-certify, competent person schemes (NICEIC."
       datePublished="2025-04-01"
       dateModified="2026-05-18"

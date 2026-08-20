@@ -9,8 +9,8 @@ import { module3Questions } from '@/data/apprentice-courses/level3/module3/quest
 export default function L3ElectricalScienceMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`C&G 2365-03 Level 3 Mock Exam with Answers — Electrical Science`}
-      description={`Free City & Guilds 2365-03 Level 3 mock exam with answers explained — Electrical Science. 25 Qs from 251-Q bank. Three-phase, motors, transformers, voltage drop, Zs, prospective fault current, RLC.`}
+      title={`Level 3 Electrical Science Mock Exam (2365-03)`}
+      description={`Free C&G 2365-03 Level 3 Electrical Science mock exam with answers. 25 Qs from a 251-Q bank. Three-phase, motors, transformers, Zs, RLC.`}
       slug="level-3-electrical-science"
       heading={`Level 3 Electrical Science Mock Exam`}
       intro={`Free mock exam for Level 3 Electrical apprentices on Electrical Science. 25 questions from a 251-question bank covering three-phase systems, motor and transformer theory, voltage drop calculations, earth fault loop impedance, prospective fault current, power factor and RLC circuit analysis.`}

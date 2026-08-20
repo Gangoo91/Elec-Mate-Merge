@@ -632,7 +632,7 @@ const sections = [
 export default function MotorStartersInstallationPage() {
   return (
     <GuideTemplate
-      title="Motor Starter Installation UK | DOL, Star-Delta & VFD Guide"
+      title="Motor Starter Installation UK: DOL & VFD Guide"
       description="Complete guide to motor starter installation in the UK. DOL, star-delta, and VFD drives explained — wiring, overload protection."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

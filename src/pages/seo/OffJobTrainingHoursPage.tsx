@@ -756,8 +756,8 @@ const sections = [
 export default function OffJobTrainingHoursPage() {
   return (
     <GuideTemplate
-      title="Off-the-Job Training Hours for Electrical Apprentices | 1,066h on ST0152"
-      description="Off-the-job training hours for UK electrical apprentices: 1,066 hours on ST0152 under the 2025 fixed-hours rule, the older 20% rule for earlier starts, what counts, and how to log evidence."
+      title="Off-the-Job Training Hours: 1,066 on ST0152"
+      description="Off-the-job training hours for electrical apprentices: 1,066 hours on ST0152 under the 2025 fixed-hours rule, what counts, and how to log evidence."
       datePublished="2025-10-15"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

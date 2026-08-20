@@ -21,7 +21,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Circuit Breaker Keeps Tripping | Causes & Fixes';
+const PAGE_TITLE = 'Circuit Breaker Keeps Tripping: Causes & Fixes';
 const PAGE_DESCRIPTION =
   'Why a circuit breaker keeps tripping: MCB vs RCD, overload, short circuit, earth fault, faulty appliance vs wiring. Diagnose the root cause.';
 

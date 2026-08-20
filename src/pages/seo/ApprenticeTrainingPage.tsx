@@ -139,7 +139,7 @@ export default function ApprenticeTrainingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useSEO({
-    title: 'Electrical Apprentice Training Online | Level 2, 3 & AM2',
+    title: 'Electrical Apprentice Training: Level 2, 3 & AM2',
     description:
       'Complete electrical apprentice training platform. Level 2 & 3 courses, AM2 preparation, EPA simulator with AI grading, portfolio tracking.',
     schema: {

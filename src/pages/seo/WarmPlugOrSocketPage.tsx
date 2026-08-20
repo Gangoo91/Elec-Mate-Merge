@@ -693,7 +693,7 @@ const sections = [
 export default function WarmPlugOrSocketPage() {
   return (
     <GuideTemplate
-      title="Warm Plug or Socket | Causes & What to Do"
+      title="Warm Plug or Socket: Causes & What to Do"
       description="Why is your plug or socket warm? Learn the causes — loose connections, overloaded sockets, worn contacts — the fire risk, what to do immediately."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

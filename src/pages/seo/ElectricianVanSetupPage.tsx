@@ -606,7 +606,7 @@ const relatedPages = [
 export default function ElectricianVanSetupPage() {
   return (
     <GuideTemplate
-      title="Electrician Van Setup | Racking, Tools & Organisation"
+      title="Electrician Van Setup: Racking & Tools"
       description="Complete guide to setting up an electrician van in the UK. Best vans, racking systems, tool organisation, stock management, security, and running costs."
       datePublished="2025-01-15"
       dateModified="2026-05-18"

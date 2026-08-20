@@ -723,7 +723,7 @@ const sections = [
 export default function PolarityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing | BS 7671 Procedure + Mistakes to Avoid"
+      title="Polarity Testing: BS 7671 Procedure & Mistakes"
       description="Polarity testing per BS 7671: visual + continuity + instrument checks. Why reversed polarity bypasses fusing, common ring + lighting circuit traps."
       datePublished="2025-06-15"
       dateModified="2026-06-10"

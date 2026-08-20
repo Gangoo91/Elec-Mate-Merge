@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit118Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-118-termination-and-connection-of-conductors-revision',
-  title: 'City & Guilds 5357 Unit 118: Termination and Connection of',
+  title: 'City & Guilds 5357 Unit 118 Revision Guide',
   description: 'Complete revision guide for City & Guilds 5357 Unit 118 (Termination and Connection of Conductors).',
   datePublished: published,
   dateModified: modified,

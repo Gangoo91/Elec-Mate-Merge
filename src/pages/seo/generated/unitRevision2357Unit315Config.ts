@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision2357Unit315Config: GeneratedGuideConfig = {
   pagePath: '/guides/2357-unit-315-planning-preparing-and-installing-wiring-systems-and-associated-equipment-in-buildings-structures-and-the-environment-eltp04-revision',
-  title: 'City & Guilds 2357 Unit 315: Planning, preparing and',
+  title: 'City & Guilds 2357 Unit 315 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2357 Unit 315 (Planning, preparing and installing wiring systems and associated equipment in buildings…',
   datePublished: published,
   dateModified: modified,

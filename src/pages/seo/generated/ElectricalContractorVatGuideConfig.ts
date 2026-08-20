@@ -9,7 +9,7 @@ const modified = '2026-05-18';
 
 export const ElectricalContractorVatGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-contractor-vat-guide',
-  title: 'VAT for Electrical Contractors — The 2026 Guide — Practical',
+  title: 'VAT for Electrical Contractors: 2026 Guide',
   description: 'A practical VAT guide for UK electrical contractors in 2026. When you must register, when you should register voluntarily…',
   datePublished: published,
   dateModified: modified,

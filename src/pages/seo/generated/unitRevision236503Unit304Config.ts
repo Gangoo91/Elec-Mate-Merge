@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236503Unit304Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-03-unit-304-electrical-installations-inspection-testing-and-commissioning-revision',
-  title: 'City & Guilds 2365-03 Unit 304: Electrical Installations',
+  title: 'City & Guilds 2365-03 Unit 304 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-03 Unit 304 (Electrical Installations: Inspection, Testing and Commissioning).',
   datePublished: published,
   dateModified: modified,

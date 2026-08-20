@@ -10,9 +10,9 @@ const modified = '2026-06-10';
 
 export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/v2h-bidirectional-ev-charging',
-  title: 'V2H Bidirectional EV Charging Installation Guide (UK) — BS',
+  title: 'V2H Bidirectional EV Charging: UK Install Guide',
   description:
-    'Vehicle-to-Home (V2H) bidirectional EV charging installation guide for UK electricians — V2G vs V2H vs V2L, CHAdeMO vs CCS, ISO 15118-20…',
+    'Vehicle-to-Home (V2H) bidirectional EV charging installation for UK electricians: V2G vs V2H vs V2L, CHAdeMO vs CCS, ISO 15118-20 and DNO notification.',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,

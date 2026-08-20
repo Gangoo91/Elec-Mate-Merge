@@ -792,7 +792,7 @@ const sections = [
 export default function CommissioningGuidePage() {
   return (
     <GuideTemplate
-      title="Commissioning an Electrical Installation | Guide UK"
+      title="Commissioning an Electrical Installation: Guide"
       description="Complete guide to commissioning an electrical installation. What commissioning involves, how it differs from testing, functional checks."
       datePublished="2025-10-01"
       dateModified="2026-06-10"

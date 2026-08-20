@@ -533,7 +533,7 @@ const sections = [
 export default function MineralInsulatedCableGuidePage() {
   return (
     <GuideTemplate
-      title="Mineral Insulated Cable (MICC/PYRO) UK | Installation Guide"
+      title="Mineral Insulated Cable (MICC/PYRO): UK Guide"
       description="Complete UK guide to Mineral Insulated Copper Clad (MICC) cable — Pyrotenax, magnesium oxide insulation, extreme fire and temperature resistance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

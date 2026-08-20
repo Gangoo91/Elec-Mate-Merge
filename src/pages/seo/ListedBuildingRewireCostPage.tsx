@@ -495,7 +495,7 @@ const sections = [
 export default function ListedBuildingRewireCostPage() {
   return (
     <GuideTemplate
-      title="Listed Building Rewire Cost 2026 | UK Heritage Electrical"
+      title="Listed Building Rewire Cost 2026: Heritage UK"
       description="How much does it cost to rewire a listed building in 2026? UK guide covering conservation officer requirements, surface mount wiring."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

@@ -49,21 +49,53 @@ cleanupOutdatedCaches();
 // then to any cached index.html. The host rewrites SPA routes to index.html
 // (verified: / and /auth/signup both return 200 text/html), so the network leg
 // is a genuine answer rather than a 404.
+// Network FIRST, precache second — the order matters more than it looks
+// ---------------------------------------------------------------------
+// This handler used to try the precache first and only reach the network on a
+// precache *miss*. A miss is the rare case, so in practice a client served its
+// precached index.html indefinitely: the shell only changed when the service
+// worker itself happened to update. That is why stale clients persisted for
+// days after a deploy rather than minutes, and it is the root cause behind the
+// whole "does not provide an export named" / "ReferenceError: Gauge is not
+// defined" family — an old index.html names chunk files from a build that no
+// longer matches, and the module graph fails at evaluation.
+//
+// Asking the network first means a deploy is picked up on the very next
+// navigation. The precache stays as the offline answer, so a deep link still
+// works with no connection — that capability is why the precache is here, and
+// it is preserved exactly.
+//
+// The ELE-1503 guarantee is preserved and in fact strengthened: this never
+// returns "no response". During the activate window — skipWaiting() +
+// clients.claim() before the new precache is populated, with
+// cleanupOutdatedCaches() having dropped the old revision — the network leg now
+// answers first, so the ERR_FAILED window closes rather than being recovered
+// from.
+const NAVIGATION_NETWORK_TIMEOUT_MS = 3000;
+
 const precachedIndex = createHandlerBoundToURL('/index.html');
 
 const navigationHandler = async (options: Parameters<typeof precachedIndex>[0]) => {
+  // Skip the network leg entirely when the browser already knows it is offline,
+  // so an offline navigation is instant instead of waiting out the timeout.
+  if (self.navigator.onLine !== false) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), NAVIGATION_NETWORK_TIMEOUT_MS);
+    try {
+      const fresh = await fetch(options.request, { signal: controller.signal });
+      if (fresh && fresh.ok) return fresh;
+    } catch {
+      // Offline, aborted on timeout, or a captive portal — fall back below.
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   try {
     const precached = await precachedIndex(options);
     if (precached) return precached;
   } catch {
-    // precache miss or cache API failure — fall through to the network
-  }
-
-  try {
-    const fresh = await fetch(options.request);
-    if (fresh && fresh.ok) return fresh;
-  } catch {
-    // offline — fall through to whatever copy we still hold
+    // precache miss or cache API failure — fall through
   }
 
   const cached = await caches.match('/index.html', { ignoreSearch: true });
@@ -432,9 +464,7 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       // to overdue so the user sees all unpaid in one place (ELE-1051: was
       // deep-linking to the removed /electrician/quote-invoice-dashboard page).
       url =
-        role === 'employer'
-          ? `/employer?section=quotes`
-          : `/electrician/invoices?filter=overdue`;
+        role === 'employer' ? `/employer?section=quotes` : `/electrician/invoices?filter=overdue`;
       break;
     case 'application':
       url =

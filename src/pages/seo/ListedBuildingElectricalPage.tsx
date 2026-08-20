@@ -641,7 +641,7 @@ const sections = [
 export default function ListedBuildingElectricalPage() {
   return (
     <GuideTemplate
-      title="Listed Building Electrical Guide | Rewiring Grade I & II"
+      title="Listed Building Electrical Guide: Grade I & II"
       description="Complete guide to electrical work in listed buildings. Listed building consent requirements, working with conservation officers, surface wiring methods."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

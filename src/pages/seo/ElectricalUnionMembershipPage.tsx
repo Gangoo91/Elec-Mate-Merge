@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Electrical Trade Unions | Unite & GMB Guide UK';
+const PAGE_TITLE = 'Electrical Trade Unions: Unite & GMB Guide UK';
 const PAGE_DESCRIPTION =
   'Trade union membership for UK electricians: Unite, GMB, JIB agreements, benefits, collective bargaining, legal support, pay rates, disputes.';
 

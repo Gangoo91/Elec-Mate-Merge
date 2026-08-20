@@ -835,7 +835,7 @@ export default function ReferenceMethodsGuidePage() {
   return (
     <GuideTemplate
       title="Reference Methods A-G, 100-103: C Clipped Direct"
-      description="Method C is clipped direct. Every BS 7671 reference method — A, B, C, D1, D2, E, F, G — plus 100 to 103 for flat T+E above a plasterboard ceiling or in an insulated stud wall."
+      description="Method C is clipped direct. Every BS 7671 reference method — A, B, C, D1, D2, E, F, G — plus 100 to 103 for flat T+E above plasterboard or in stud walls."
       datePublished="2025-04-20"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

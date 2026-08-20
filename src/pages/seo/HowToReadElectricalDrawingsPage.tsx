@@ -672,7 +672,7 @@ const sections = [
 export default function HowToReadElectricalDrawingsPage() {
   return (
     <GuideTemplate
-      title="How to Read Electrical Drawings | Symbols Guide UK"
+      title="How to Read Electrical Drawings: Symbols Guide"
       description="Learn how to read electrical drawings and diagrams. IEC 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams."
       datePublished="2025-07-01"
       dateModified="2026-06-10"

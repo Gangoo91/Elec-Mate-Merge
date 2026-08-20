@@ -9,8 +9,7 @@ const modified = '2026-05-18';
 
 export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-rams-template-uk',
-  title:
-    'Electrical RAMS Template (UK) — Free Guide + In-App',
+  title: 'Electrical RAMS Template UK: Free Guide',
   description:
     'Electrical RAMS template for UK electricians — what a Risk Assessment and Method Statement must cover, CDM 2015 duties, EAWR 1989 obligations…',
   datePublished: published,

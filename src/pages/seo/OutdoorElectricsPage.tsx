@@ -17,7 +17,7 @@ import {
 export default function OutdoorElectricsPage() {
   return (
     <GuideTemplate
-      title="Outdoor Electrical Installations UK | Garden & External"
+      title="Outdoor Electrical Installations UK: Garden"
       description="Complete UK guide to outdoor electrical installations. BS 7671 Section 714, IP ratings (IP44/IP65), RCD protection, SWA and Hi-Tuf cable, burial depths."
       datePublished="2025-06-01"
       dateModified="2026-06-10"

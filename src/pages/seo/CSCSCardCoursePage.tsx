@@ -20,7 +20,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'CSCS Card Course | Construction Skills Test Guide';
+const PAGE_TITLE = 'CSCS Card Course: Construction Skills Test Guide';
 const PAGE_DESCRIPTION =
   'CSCS card prep for UK electricians: HSE test revision, card types, application process, mock tests. 6 modules with quizzes + AI tutor.';
 

@@ -803,7 +803,7 @@ const sections = [
 export default function FoodProcessingElectricalPage() {
   return (
     <GuideTemplate
-      title="Food Processing Electrical Installation UK | Food Factory"
+      title="Food Processing Electrical Installation UK"
       description="Complete guide to food processing electrical installation in the UK — IP69K wash-down environments, ATEX dust zones (Zone 20/21/22), hygienic design."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

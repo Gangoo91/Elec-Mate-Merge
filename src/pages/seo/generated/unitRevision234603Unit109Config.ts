@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision234603Unit109Config: GeneratedGuideConfig = {
   pagePath: '/guides/2346-03-unit-109-apply-design-and-installation-practices-and-procedures-level-revision',
-  title: 'City & Guilds 2346-03 Unit 109: Apply Design and',
+  title: 'City & Guilds 2346-03 Unit 109 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2346-03 Unit 109 (Apply Design and Installation Practices and Procedures Level:).',
   datePublished: published,
   dateModified: modified,

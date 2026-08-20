@@ -586,7 +586,7 @@ const sections = [
 export default function UnderfloorHeatingFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Electric Underfloor Heating Not Working | Fault Finding"
+      title="Underfloor Heating Not Working: Fault Finding"
       description="Electric underfloor heating fault finding guide for UK homeowners and electricians. Thermostat faults, floor sensor issues."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

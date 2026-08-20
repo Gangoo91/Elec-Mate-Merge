@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit103003Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-103-003-electrical-scientific-principles-and-technologies-revision',
-  title: 'City & Guilds 5357 Unit 103/003: Electrical Scientific',
+  title: 'City & Guilds 5357 Unit 103/003: Electrical',
   description: 'Complete revision guide for City & Guilds 5357 Unit 103/003 (Electrical Scientific Principles and Technologies).',
   datePublished: published,
   dateModified: modified,

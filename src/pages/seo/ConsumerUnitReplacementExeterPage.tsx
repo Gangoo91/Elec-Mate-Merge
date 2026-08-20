@@ -480,7 +480,7 @@ const sections = [
 export default function ConsumerUnitReplacementExeterPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Exeter | Fuse Box Upgrade EX"
+      title="Consumer Unit Replacement Exeter: Fuse Box"
       description="Consumer unit replacement in Exeter — typical cost £450–£800, metal enclosures mandatory since 2016, Part P Building Regulations."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

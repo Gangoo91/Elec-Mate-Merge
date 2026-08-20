@@ -663,8 +663,8 @@ const sections = [
 export default function RCDTestingGuidePage() {
   return (
     <GuideTemplate
-      title="RCD Testing Guide UK | RCD Test Procedures BS 7671"
-      description="Complete guide to RCD testing for UK electricians. Half-rated current test, rated current trip time (300ms for 30mA type), 5 times current test, A4:2026 updates."
+      title="RCD Testing Guide UK: BS 7671 Procedures"
+      description="Complete guide to RCD testing for UK electricians. Half-rated test, rated trip time (300ms for 30mA type), 5x current test, A4:2026 updates."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

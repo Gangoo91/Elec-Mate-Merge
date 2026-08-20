@@ -553,7 +553,7 @@ const sections = [
 export default function RewireCostNewcastlePage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Newcastle 2025 | Rewire Prices North East"
+      title="House Rewire Cost Newcastle 2025: North East"
       description="How much does a house rewire cost in Newcastle in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Heaton and Jesmond."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

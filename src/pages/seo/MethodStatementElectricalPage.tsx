@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Method Statement for Electrical Work | Template & Guide';
+const PAGE_TITLE = 'Electrical Method Statement: Template & Guide';
 const PAGE_DESCRIPTION =
   'Method statements for electrical work: what to include, when required, common MS (rewire, CU change, testing, EV charger), RAMS, templates.';
 

@@ -444,7 +444,7 @@ const sections = [
 export default function HairSalonElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Hair Salon Electrical Cost 2026 | UK Salon Fit-Out Guide"
+      title="Hair Salon Electrical Cost 2026: Fit-Out Guide"
       description="How much does hair salon electrical installation cost in 2026? UK guide covering styling station wiring, wash station IP ratings, salon lighting."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

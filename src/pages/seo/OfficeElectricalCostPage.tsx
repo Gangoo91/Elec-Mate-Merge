@@ -526,7 +526,7 @@ const sections = [
 export default function OfficeElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Office Electrical Fit Out Cost UK 2025 | Commercial Office"
+      title="Office Electrical Fit-Out Cost UK 2025"
       description="Office electrical fit-out costs in the UK for 2025. Small office £2,000–£8,000, per-desk estimates £500–£1,500."
       datePublished="2025-01-01"
       dateModified="2026-05-18"

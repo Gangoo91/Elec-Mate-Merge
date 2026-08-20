@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision5357Unit107Config: GeneratedGuideConfig = {
   pagePath: '/guides/5357-unit-107-understand-terminations-and-connections-of-conductors-revision',
-  title: 'City & Guilds 5357 Unit 107: Understand Terminations and',
+  title: 'City & Guilds 5357 Unit 107: Understand',
   description: 'Complete revision guide for City & Guilds 5357 Unit 107 (Understand Terminations and Connections of Conductors).',
   datePublished: published,
   dateModified: modified,

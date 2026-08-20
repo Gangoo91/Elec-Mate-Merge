@@ -23,8 +23,8 @@ import {
 export default function DigitalCertificatesAppPage() {
   return (
     <ToolTemplate
-      title="Digital Electrical Certificates App | EICR, EIC, EV Charger, Solar PV, PAT"
-      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, PAT Testing. BS 7671:2018+A4:2026 compliant. Start a 7-day free trial."
+      title="Digital Electrical Certificates App: EICR & EIC"
+      description="Elec-Mate's digital certificates app for UK electricians: 16 certificate types including EICR, EIC, Minor Works, EV charger and Solar PV. 7-day free trial."
       datePublished="2026-01-10"
       dateModified="2026-06-10"
       breadcrumbs={[

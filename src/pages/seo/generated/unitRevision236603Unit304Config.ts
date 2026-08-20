@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236603Unit304Config: GeneratedGuideConfig = {
   pagePath: '/guides/2366-03-unit-304-electrical-design-practices-and-procedures-revision',
-  title: 'City & Guilds 2366-03 Unit 304: Electrical Design Practices',
+  title: 'City & Guilds 2366-03 Unit 304 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2366-03 Unit 304 (Electrical Design Practices and Procedures).',
   datePublished: published,
   dateModified: modified,

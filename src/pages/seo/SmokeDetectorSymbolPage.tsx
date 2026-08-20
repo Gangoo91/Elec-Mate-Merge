@@ -122,7 +122,7 @@ const relatedPages = [
 export default function SmokeDetectorSymbolPage() {
   return (
     <GuideTemplate
-      title="Smoke Detector Symbol | BS 5839 + BS EN 14604"
+      title="Smoke Detector Symbol: BS 5839 + BS EN 14604"
       description="Smoke Detector IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

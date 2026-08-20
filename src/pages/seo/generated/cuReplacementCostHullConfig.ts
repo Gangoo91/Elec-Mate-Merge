@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostHullConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-hull',
-  title: 'Consumer Unit Replacement Cost Hull 2026 — Full Pricing',
+  title: 'Consumer Unit Replacement Cost Hull 2026',
   description: 'Consumer unit (fuse board) replacement cost in Hull — typical 2026 prices £408–650 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

@@ -15,7 +15,7 @@ import {
 export default function AIElectricalFaultFindingPage() {
   return (
     <GuideTemplate
-      title="AI Electrical Fault Finding | How It Works"
+      title="AI Electrical Fault Finding: How It Works"
       description="How AI analyses electrical fault symptoms, matches them against known fault patterns, suggests probable causes ranked by likelihood."
       datePublished="2026-01-28"
       dateModified="2026-06-10"

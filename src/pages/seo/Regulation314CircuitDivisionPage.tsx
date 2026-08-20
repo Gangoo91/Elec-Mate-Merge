@@ -820,7 +820,7 @@ const sections = [
 export default function Regulation314CircuitDivisionPage() {
   return (
     <GuideTemplate
-      title="Regulation 314 | Division of Installation Into Circuits"
+      title="Regulation 314: Division of Circuits (BS 7671)"
       description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions."
       datePublished="2026-03-27"
       dateModified="2026-08-07"

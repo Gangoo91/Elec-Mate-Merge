@@ -877,7 +877,7 @@ const sections = [
 export default function ApprenticeFirstYearRevisionPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprentice Year 1 Revision | First Year Study"
+      title="Electrical Apprentice Year 1 Revision Guide"
       description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits."
       datePublished="2026-03-27"
       dateModified="2026-08-07"

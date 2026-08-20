@@ -21,7 +21,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Risk Assessment for Electrical Work | Template & Guide';
+const PAGE_TITLE = 'Risk Assessment for Electrical Work: Template';
 const PAGE_DESCRIPTION =
   'Risk assessment for electrical work: MHSWR 1999 legal duties, HSE five-step process, hazards, risk matrix, control measures, dynamic RAs, RAMS.';
 

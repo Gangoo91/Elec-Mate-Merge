@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const fullRewireCostGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/full-rewire-cost-guide',
-  title: 'Full Rewire Cost Guide | Electrical Rewire Pricing',
+  title: 'Full Rewire Cost Guide: Pricing Explained',
   description:
     'A clear guide to full rewire pricing for homeowners and electricians, including the main cost drivers, what changes the quote…',
   datePublished: published,

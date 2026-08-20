@@ -498,7 +498,7 @@ const sections = [
 export default function ConsumerUnitReplacementBirminghamPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Birmingham | Fuse Board Upgrade"
+      title="Consumer Unit Replacement Birmingham: 2026 Cost"
       description="How much does a consumer unit replacement cost in Birmingham in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

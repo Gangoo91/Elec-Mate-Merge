@@ -383,7 +383,7 @@ const sections = [
 export default function ApprenticeTrainingAppPage() {
   return (
     <ToolTemplate
-      title="Apprentice Training App | Electrical Study Tools"
+      title="Apprentice Training App: Electrical Study Tools"
       description="Complete training app for UK electrical apprentices. Flashcards with spaced repetition, mock exams, EPA simulator, AM2 preparation, site diary."
       datePublished="2025-06-15"
       dateModified="2026-05-18"

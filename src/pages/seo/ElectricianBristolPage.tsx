@@ -596,7 +596,7 @@ export default function ElectricianBristolPage() {
   return (
     <GuideTemplate
       localArea="Bristol"
-      title="Electrician in Bristol | Find Electricians 2026"
+      title="Electrician in Bristol: Find Electricians 2026"
       description="Find qualified electricians in Bristol. WPD DNO, Georgian and Victorian properties in Clifton and Redland, eco-retrofit demand, HMO compliance."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

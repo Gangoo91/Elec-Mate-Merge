@@ -123,7 +123,7 @@ const relatedPages = [
 export default function ConsumerUnitSymbolPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Symbol | BS EN 61439-3 Fuseboard"
+      title="Consumer Unit Symbol: BS EN 61439-3 Fuseboard"
       description="Consumer Unit IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

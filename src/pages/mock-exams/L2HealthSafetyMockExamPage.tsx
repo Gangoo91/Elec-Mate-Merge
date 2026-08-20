@@ -9,8 +9,8 @@ import { module1Questions } from '@/data/apprentice-courses/level2/module1/quest
 export default function L2HealthSafetyMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`C&G 2365-02 Level 2 Mock Exam with Answers — Health & Safety`}
-      description={`Free City & Guilds 2365-02 Level 2 mock exam with answers explained — Health & Safety in Building Services Engineering. 25 questions, 30-min timer, 301-Q bank. HASAWA, RIDDOR, COSHH, EAWR.`}
+      title={`Level 2 Health & Safety Mock Exam (2365-02)`}
+      description={`Free C&G 2365-02 Level 2 Health & Safety mock exam with answers. 25 questions, 30-min timer, 301-Q bank. HASAWA, RIDDOR, COSHH, EAWR.`}
       slug="level-2-electrical-health-safety"
       heading={`Level 2 Electrical: Health & Safety Mock Exam`}
       intro={`Free mock exam for Level 2 Electrical apprentices on Unit 201 (Health and Safety in Building Services Engineering). 25 questions from a 301-question bank covering HASAWA 1974, EAWR 1989, RIDDOR, COSHH 2002, manual handling, CDM 2015, fire safety, PPE and asbestos awareness.`}

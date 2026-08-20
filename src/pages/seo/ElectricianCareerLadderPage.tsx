@@ -500,7 +500,7 @@ export default function ElectricianCareerLadderPage() {
   return (
     <GuideTemplate
       localArea="Career Ladder Uk"
-      title="Electrician Career Ladder UK 2026 | Apprentice to"
+      title="Electrician Career Ladder UK 2026 Guide"
       description="Complete guide to the UK electrician career ladder — apprentice, qualified electrician, senior electrician, contracts supervisor, contracts manager."
       datePublished="2026-03-27"
       dateModified="2026-05-18"

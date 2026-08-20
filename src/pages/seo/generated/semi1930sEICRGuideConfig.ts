@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const semi1930sEICRGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/1930s-semi-eicr-guide',
-  title: '1930s Semi EICR Guide | What Electricians Check | Elec-Mate',
+  title: '1930s Semi EICR Guide: What Electricians Check',
   description:
     'What electricians look for on an EICR in a 1930s semi, which issues are common, and how the findings are usually explained to clients.',
   datePublished: published,

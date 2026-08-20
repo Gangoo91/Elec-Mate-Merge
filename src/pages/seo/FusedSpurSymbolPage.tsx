@@ -123,7 +123,7 @@ const relatedPages = [
 export default function FusedSpurSymbolPage() {
   return (
     <GuideTemplate
-      title="Fused Spur Symbol | FCU Drawing Reference UK"
+      title="Fused Spur Symbol: FCU Drawing Reference UK"
       description="Fused Spur (Unswitched) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

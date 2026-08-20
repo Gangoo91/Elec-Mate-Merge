@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { CalculatorSurface } from '@/components/calculators/shared';
+import R1R2Calculator from '@/components/apprentice/calculators/R1R2Calculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -22,6 +24,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'r1r2-calculator', label: 'R1+R2 Calculator' },
   { id: 'what-is-continuity-testing', label: 'What Is Continuity Testing?' },
   { id: 'ring-final-test-1', label: 'Ring Final: End-to-End Test' },
   { id: 'ring-final-test-2', label: 'Ring Final: Cross-Connected Test' },
@@ -134,6 +137,21 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'r1r2-calculator',
+    heading: 'Work Out Your Expected R1+R2',
+    content: (
+      <>
+        <p>
+          Calculate the expected R1+R2 for a circuit from conductor sizes and length, then compare
+          it with the reading from your tester — free, no sign-up.
+        </p>
+        <CalculatorSurface>
+          <R1R2Calculator />
+        </CalculatorSurface>
+      </>
+    ),
+  },
   {
     id: 'what-is-continuity-testing',
     heading: 'What Is Continuity Testing?',

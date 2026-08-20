@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision8202Unit304Config: GeneratedGuideConfig = {
   pagePath: '/guides/8202-unit-304-principles-of-inspection-testing-and-commissioning-electrical-systems-revision',
-  title: 'City & Guilds 8202 Unit 304: Principles of inspection,',
+  title: 'City & Guilds 8202 Unit 304 Revision Guide',
   description: 'Complete revision guide for City & Guilds 8202 Unit 304 (Principles of inspection, testing and commissioning electrical systems).',
   datePublished: published,
   dateModified: modified,

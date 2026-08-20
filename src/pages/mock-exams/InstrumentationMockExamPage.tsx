@@ -8,7 +8,7 @@ import { instrumentationMockExamQuestions } from '@/data/upskilling/instrumentat
 export default function InstrumentationMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Instrumentation Mock Exam 2026 — Process Control`}
+      title={`Free Instrumentation Mock Exam: Process Control`}
       description={`Free instrumentation mock exam — 25 questions, 30-min timer, 125-question bank. Sensors, 4-20mA loops, PID control, calibration and fault finding.`}
       slug="instrumentation"
       heading={`Instrumentation Mock Exam`}

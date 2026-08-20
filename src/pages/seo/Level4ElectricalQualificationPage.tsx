@@ -513,8 +513,8 @@ const sections = [
 export default function Level4ElectricalQualificationPage() {
   return (
     <GuideTemplate
-      title="Level 4 Electrical Qualification | HNC Equivalent for Electricians"
-      description="Complete guide to Level 4 electrical qualifications for UK electricians. Course content, entry requirements, career progression, HNC comparison, costs and funding."
+      title="Level 4 Electrical Qualification: HNC Guide"
+      description="Complete guide to Level 4 electrical qualifications: course content, entry requirements, career progression and HNC comparison."
       answerBox={{
         question: 'What is the Level 4 electrical qualification?',
         answer:

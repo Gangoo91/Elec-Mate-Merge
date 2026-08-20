@@ -614,7 +614,7 @@ const sections = [
 export default function BurningSmellFromSocketPage() {
   return (
     <GuideTemplate
-      title="Burning Smell from Socket | Causes & What to Do"
+      title="Burning Smell from Socket: Causes & What to Do"
       description="Burning smell from an electrical socket? Expert guide covering loose connections, overloaded circuits, arcing faults, when to isolate."
       datePublished="2025-08-20"
       dateModified="2026-06-10"

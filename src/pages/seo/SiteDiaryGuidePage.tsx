@@ -592,7 +592,7 @@ const sections = [
 export default function SiteDiaryGuidePage() {
   return (
     <GuideTemplate
-      title="Site Diary for Apprentices | What to Record Daily"
+      title="Site Diary for Apprentices: What to Record Daily"
       description="Complete guide to keeping a site diary as an electrical apprentice. What to record daily, skills logging, health and safety observations."
       datePublished="2025-11-01"
       dateModified="2026-05-18"

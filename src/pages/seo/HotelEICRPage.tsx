@@ -1172,8 +1172,8 @@ const sections = [
 export default function HotelEICRPage() {
   return (
     <GuideTemplate
-      title="Hotel EICR UK | EICR for Hotels, Guest Houses & B&Bs"
-      description="EICR for UK hotels, guest houses and holiday lets: how often, Fire Safety Order duties, en-suite Section 701 zones, bedroom RCD rules, emergency lighting and fire alarm."
+      title="Hotel EICR: Hotels, Guest Houses & B&Bs UK"
+      description="EICR for UK hotels, guest houses and holiday lets: how often, Fire Safety Order duties, en-suite Section 701 zones, emergency lighting and fire alarms."
       datePublished="2026-03-27"
       dateModified="2026-08-07"
       breadcrumbs={breadcrumbs}

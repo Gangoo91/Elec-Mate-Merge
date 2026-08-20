@@ -12,7 +12,7 @@ const modified = '2026-05-18';
 
 export const cuReplacementCostNewcastleConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-replacement-cost-newcastle',
-  title: 'Consumer Unit Replacement Cost Newcastle 2026 — Full',
+  title: 'Consumer Unit Replacement Cost Newcastle 2026',
   description: 'Consumer unit (fuse board) replacement cost in Newcastle — typical 2026 prices £425–670 for a domestic swap with RCBOs, BS 7671:2018+A4:2026 compliant.',
   datePublished: published,
   dateModified: modified,

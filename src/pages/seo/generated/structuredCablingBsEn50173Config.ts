@@ -10,9 +10,9 @@ const modified = '2026-05-18';
 export const structuredCablingBsEn50173Config: GeneratedGuideConfig = {
   pagePath: '/guides/structured-cabling-bs-en-50173-electricians',
   title:
-    'Structured Cabling BS EN 50173 — UK Electrician Guide to',
+    'Structured Cabling BS EN 50173: Electrician',
   description:
-    'BS EN 50173 structured cabling explained for UK electricians — the six-part standard, hierarchical CD/BD/FD/TO topology…',
+    'BS EN 50173 structured cabling explained for UK electricians: the six-part standard, CD/BD/FD/TO topology, and the 100 metre channel rule.',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,

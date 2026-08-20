@@ -9,8 +9,8 @@ import { module5Questions } from '@/data/apprentice-courses/level3/module5/quest
 export default function L3InspectionTestingMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`C&G 2365-03 Level 3 Mock Exam with Answers — Inspection & Testing`}
-      description={`Free City & Guilds 2365-03 Level 3 mock exam with answers explained — Inspection, Testing & Commissioning (Unit 5). 25 questions from a 201-question bank. GN3 sequence, EICR coding, RCD testing, instrumentation, certification. Instant results, no sign-up.`}
+      title={`Level 3 Inspection & Testing Mock Exam (2365-03)`}
+      description={`Free C&G 2365-03 Level 3 Inspection & Testing mock exam (Unit 5). 25 Qs from a 201-Q bank. GN3 sequence, EICR coding, RCD testing. No sign-up.`}
       slug="level-3-inspection-testing"
       heading={`Level 3 Inspection, Testing & Commissioning Mock Exam`}
       intro={`Free mock exam for Level 3 Electrical apprentices on Inspection, Testing and Commissioning. 25 questions from a 201-question bank covering the BS 7671 testing sequence per GN3, initial verification, periodic inspection (EICR), RCD test methods, MFT use, polarity, continuity, insulation resistance and the certification process.`}

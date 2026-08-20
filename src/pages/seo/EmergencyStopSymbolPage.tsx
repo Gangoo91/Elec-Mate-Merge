@@ -124,7 +124,7 @@ const relatedPages = [
 export default function EmergencyStopSymbolPage() {
   return (
     <GuideTemplate
-      title="Emergency Stop Symbol | E-Stop Drawing Reference"
+      title="Emergency Stop Symbol: E-Stop Drawing Reference"
       description="Emergency Stop (E-Stop) IEC 60617 symbol — what it represents, when used in UK electrical drawings, and where it appears on EIC + EICR schedules."
       datePublished="2026-05-18"
       dateModified="2026-05-18"

@@ -15,7 +15,7 @@ import {
 export default function AIvsManualDesignPage() {
   return (
     <GuideTemplate
-      title="AI vs Manual Electrical Design | Comparison"
+      title="AI vs Manual Electrical Design: Comparison"
       description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application."
       datePublished="2026-01-25"
       dateModified="2026-06-10"

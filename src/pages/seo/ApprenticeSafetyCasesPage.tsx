@@ -531,7 +531,7 @@ const sections = [
 export default function ApprenticeSafetyCasesPage() {
   return (
     <GuideTemplate
-      title="Safety Cases for Electrical Apprentices | Real Scenarios"
+      title="Safety Cases for Electrical Apprentices: Guide"
       description="Real-world safety scenarios for electrical apprentices. Learn from near misses, understand safe isolation for beginners, master incident reporting."
       datePublished="2026-01-20"
       dateModified="2026-05-18"

@@ -21,9 +21,9 @@ import {
   Gauge,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'EV Charger Installation Certificate App | BS 7671 Section 722';
+const PAGE_TITLE = 'EV Charger Certificate App: BS 7671 Section 722';
 const PAGE_DESCRIPTION =
-  'Create EV charger installation certificates on your phone. BS 7671 Section 722 compliant. PME assessment, load management, and digital signatures. Start free.';
+  'Create EV charger installation certificates on your phone. BS 7671 Section 722 compliant. PME assessment, load management and digital signatures.';
 
 const faqs = [
   {

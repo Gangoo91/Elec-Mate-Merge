@@ -640,7 +640,7 @@ const sections = [
 export default function MethodStatementGuidePage() {
   return (
     <GuideTemplate
-      title="Method Statement for Electricians | Template Guide"
+      title="Method Statement for Electricians: Template"
       description="Complete guide to writing method statements for electrical work. Template structure, sections explained, consumer unit change and rewire examples."
       datePublished="2025-05-10"
       dateModified="2026-05-18"

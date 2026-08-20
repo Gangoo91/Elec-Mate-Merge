@@ -19,7 +19,7 @@ import {
 export default function ElectricalSiteInductionPage() {
   return (
     <GuideTemplate
-      title="Site Induction for Electricians | What to Expect"
+      title="Site Induction for Electricians: What to Expect"
       description="Site inductions for electricians on UK construction + commercial sites: what to expect, paperwork, PPE, permits, CDM 2015 duties, RAMS sign-off."
       datePublished="2026-01-28"
       dateModified="2026-06-10"

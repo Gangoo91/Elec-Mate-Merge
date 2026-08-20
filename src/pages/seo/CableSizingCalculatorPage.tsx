@@ -20,9 +20,9 @@ import {
   Database,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Cable Size Calculator UK: T&E + SWA Current Ratings (Free)';
+const PAGE_TITLE = 'Cable Size Calculator UK: T&E + SWA (BS 7671)';
 const PAGE_DESCRIPTION =
-  'Enter load, length and installation method — get the right cable size to BS 7671:2018+A4:2026 with current rating, volt drop and Ca/Cg/Ci correction factors applied. Twin & earth, SWA and singles.';
+  'Enter load, length and installation method — get the cable size to BS 7671 with volt drop and Ca/Cg/Ci correction factors. Twin & earth, SWA, singles.';
 
 const faqs = [
   {

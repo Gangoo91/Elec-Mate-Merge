@@ -5,7 +5,7 @@ const modified = '2026-05-18';
 
 export const semi1930sElectricalRequirementsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/1930s-semi-electrical-requirements',
-  title: '1930s Semi Electrical Requirements | Survey and Upgrade',
+  title: '1930s Semi Electrical Requirements Guide',
   description:
     'Common electrical requirements and survey issues in a 1930s semi, including the signs that point to upgrades, rewire work, and a clearer next step.',
   datePublished: published,

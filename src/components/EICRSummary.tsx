@@ -39,6 +39,8 @@ import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useEICRValidation } from '@/hooks/useEICRValidation';
 import RaiseRemedialItemsSheet from '@/components/inspection/RaiseRemedialItemsSheet';
+import { normaliseScheme, schemeDisplayLabel } from '@/utils/registrationScheme';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -123,6 +125,8 @@ const EICRSummary = ({
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  // ELE-1570 — read-only here; used to preview the registration line.
+  const { companyProfile } = useCompanyProfile();
 
   // Needed to give a precise error message when the QS gate blocks PDF generation.
   // 'approved' + hash mismatch = edited after approval; 'pending' = not yet reviewed.
@@ -289,10 +293,14 @@ const EICRSummary = ({
       const currentLogo = dataForPdf.registrationSchemeLogo || '';
       const isPlaceholderLogo =
         !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
-      if (schemeName && schemeName !== 'none' && schemeName !== 'other' && isPlaceholderLogo) {
+      // ELE-1570 — normalised, not compared raw. certBranding now hands back a
+      // display label ('NICEIC', 'Other', '' for none), and the old
+      // `!== 'other'` test was case-sensitive so 'Other' slipped past it.
+      const schemeKey = normaliseScheme(schemeName);
+      if (schemeKey && schemeKey !== 'OTHER' && isPlaceholderLogo) {
         try {
           const { getSchemeInfo } = await import('@/constants/schemeLogos');
-          const info = getSchemeInfo(schemeName);
+          const info = getSchemeInfo(schemeKey);
           if (info) {
             const resp = await fetch(info.logoPath);
             const blob = await resp.blob();
@@ -799,6 +807,22 @@ const EICRSummary = ({
   }));
   const showCompletionHint =
     (missingItems.length > 0 || advisoryItems.length > 0) && qsReviewStatus?.status !== 'approved';
+
+  /**
+   * ELE-1570 — the registration line as it will appear on page 1.
+   *
+   * Only shown when a registration NUMBER exists: a firm with no scheme and no
+   * number isn't making a mistake, and nagging them would be noise. The amber
+   * follow-up is reserved for the actual failure mode — a number printed
+   * against "Other" instead of the body that issued it.
+   */
+  const registrationLabel = schemeDisplayLabel(companyProfile?.registration_scheme);
+  const registrationNumber = companyProfile?.registration_number || '';
+  const registrationNeedsAttention =
+    !!registrationNumber && (!registrationLabel || registrationLabel === 'Other');
+  const registrationHint = registrationNumber
+    ? `${registrationLabel || 'no scheme'} ${registrationNumber}`.trim()
+    : '';
 
   // Section completion chips — same derivation as the shell's step ticks
   // (no validation errors for that step), so a tab full of auto-seeded blank
@@ -1471,6 +1495,37 @@ const EICRSummary = ({
             {missingItems.length > 0
               ? `${missingItems.length} item${missingItems.length === 1 ? '' : 's'} to complete before generating — tap to see`
               : `${advisoryItems.length} thing${advisoryItems.length === 1 ? '' : 's'} worth checking before you issue — tap to see`}
+          </button>
+        )}
+
+        {/* ELE-1570 — what will actually print on page 1, and where to change
+            it. Steve Fairless is NICEIC-registered but had the scheme stored
+            as "Other", so his certificate read "Other" beside his NICEIC
+            number — and he had no way to tell until the PDF came out, nor any
+            hint that the control lives in Settings → Business → Inspector.
+            Shown at the point of generating, which is the last moment it can
+            still be caught. */}
+        {registrationHint && (
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              navigate('/settings?tab=business');
+            }}
+            className="flex w-full min-h-11 items-center justify-between gap-3 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 py-2.5 text-left touch-manipulation"
+          >
+            <span className="min-w-0">
+              <span className="block text-[12px] text-white">
+                Certificate will show{' '}
+                <span className="font-semibold">{registrationHint}</span>
+              </span>
+              {registrationNeedsAttention && (
+                <span className="mt-0.5 block text-[11px] text-amber-300">
+                  Registered with a scheme? Set it so the body name prints instead.
+                </span>
+              )}
+            </span>
+            <span className="shrink-0 text-[12px] font-semibold text-elec-yellow">Change</span>
           </button>
         )}
 

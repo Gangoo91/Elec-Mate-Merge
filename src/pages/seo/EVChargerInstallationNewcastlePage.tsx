@@ -554,7 +554,7 @@ const sections = [
 export default function EVChargerInstallationNewcastlePage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Newcastle | Home EV Charging"
+      title="EV Charger Installation Newcastle: Home Charging"
       description="EV charger installation costs in Newcastle 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

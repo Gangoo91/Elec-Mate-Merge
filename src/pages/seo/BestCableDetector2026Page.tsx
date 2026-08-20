@@ -733,8 +733,8 @@ const sections = [
 export default function BestCableDetector2026Page() {
   return (
     <GuideTemplate
-      title="Best Cable Detector 2026 | Pipe & Wire Finders UK"
-      description="Best cable detectors &amp; underground cable avoidance tools (CAT scanner UK) for electricians in 2026. Radiodetection C.A.T4+, Leica DD220, Amprobe AT-3500, Fluke 2042 &amp; budget wall scanners compared."
+      title="Best Cable Detector 2026: Pipe & Wire Finders UK"
+      description="Best cable detectors and cable avoidance tools (CAT scanners) for UK electricians in 2026: Radiodetection C.A.T4+, Leica DD220, Fluke 2042 compared."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

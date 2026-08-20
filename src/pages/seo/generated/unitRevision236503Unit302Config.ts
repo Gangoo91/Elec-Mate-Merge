@@ -11,7 +11,7 @@ const modified = '2026-05-18';
 
 export const unitRevision236503Unit302Config: GeneratedGuideConfig = {
   pagePath: '/guides/2365-03-unit-302-principles-of-electrical-science-revision',
-  title: 'City & Guilds 2365-03 Unit 302: Principles of Electrical',
+  title: 'City & Guilds 2365-03 Unit 302 Revision Guide',
   description: 'Complete revision guide for City & Guilds 2365-03 Unit 302 (Principles of Electrical Science).',
   datePublished: published,
   dateModified: modified,

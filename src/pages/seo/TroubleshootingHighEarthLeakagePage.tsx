@@ -485,7 +485,7 @@ const sections = [
 export default function TroubleshootingHighEarthLeakagePage() {
   return (
     <GuideTemplate
-      title="Troubleshooting High Earth Leakage | RCD Nuisance Tripping"
+      title="Troubleshooting High Earth Leakage: RCD Tripping"
       description="Troubleshoot high earth leakage + RCD nuisance tripping for UK electricians: split-load boards, cumulative leakage, Type A/F RCDs, fault tracing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
